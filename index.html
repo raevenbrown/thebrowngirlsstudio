@@ -14,7 +14,7 @@
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 
-<!-- Supabase JS Library -->
+<!-- Supabase client library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Public+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
@@ -163,37 +163,25 @@ section{ padding:96px 0; }
 .reality-row b{ display:block; color:var(--cream); font-weight:600; margin-bottom:3px; font-family:'Public Sans'; }
 @media (max-width:760px){ .reality{ grid-template-columns:1fr; } .reality-col.blind .reality-row{ border-right:none; } }
 
-/* AUDIT CHECKLIST STYLES */
+/* ---------- NATIVE STYLED AUDIT CHECKLIST ---------- */
 .audit-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:start; }
 @media (max-width:900px){ .audit-grid{ grid-template-columns:1fr; } }
 .audit-check{ border:1px solid var(--line); padding:8px; }
 
-.check-item{
-  display:flex; align-items:flex-start; gap:14px; padding:16px 18px;
+.native-check-item{
+  display:flex; align-items:flex-start; gap:16px; padding:16px 18px;
   border-bottom:1px solid var(--line); cursor:pointer; transition:background 0.15s;
-  user-select:none; -webkit-user-select:none;
 }
-.check-item:last-child{ border-bottom:none; }
-.check-item:hover{ background:rgba(243,232,214,0.04); }
-.check-item.checked{ background:rgba(199,153,79,0.06); }
+.native-check-item:last-child{ border-bottom:none; }
+.native-check-item:hover{ background:rgba(243,232,214,0.04); }
 
-.check-box{
-  width:22px; height:22px; flex:none; border:1.5px solid var(--gold); border-radius:3px;
-  display:flex; align-items:center; justify-content:center; margin-top:2px;
-  background:transparent; transition:all 0.15s ease-in-out;
-}
-.check-item.checked .check-box{
-  background:var(--gold);
-}
-.check-box-icon{
-  display:none; color:var(--espresso); font-weight:900; font-size:14px; line-height:1;
-}
-.check-item.checked .check-box-icon{
-  display:block;
+.native-checkbox{
+  width:22px; height:22px; flex:none; margin-top:3px;
+  accent-color:var(--gold); cursor:pointer;
 }
 
-.check-text{ font-size:14.5px; color:var(--cream-dim); transition:color 0.15s; }
-.check-item.checked .check-text{ color:var(--cream); font-weight:500; }
+.check-content{ flex:1; }
+.check-text{ font-size:14.5px; color:var(--cream-dim); }
 .check-leak{ font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--leak-bright); margin-top:3px; }
 
 .receipt{
@@ -378,56 +366,87 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   </div>
 </section>
 
-<!-- AUDIT SECTION WITH REPAIRED INTERACTION -->
+<!-- AUDIT SECTION (REPAIRED WITH RELIABLE EVENT LISTENERS) -->
 <section id="audit" style="background:var(--espresso-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap entry-frame" style="border-top:none;">
     <span class="entry-tag mono">ENTRY NO. 02 — THE DIAGNOSTIC</span>
     <div class="section-head">
       <div class="eyebrow">Live growth &amp; leak audit</div>
       <h2>What's happening behind your counter?</h2>
-      <p>Click every box that applies. The ledger on the right calculates your estimated monthly revenue leak in real time.</p>
+      <p>Check off the items below. The ledger on the right updates your estimated monthly revenue loss and recommended solution instantly.</p>
     </div>
 
     <div class="audit-grid">
       <div class="audit-check" id="auditCheck">
-        <div class="check-item" data-leak="350" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">I haven't replied to every Google or social review in the last 30 days.</div><div class="check-leak">~$350/mo in lost trust &amp; repeat visits</div></div>
-        </div>
-        <div class="check-item" data-leak="450" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">I don't track which channel leads come from (IG vs. TikTok vs. events vs. walk-ins).</div><div class="check-leak">~$450/mo in untracked lead channels</div></div>
-        </div>
-        <div class="check-item" data-leak="425" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">I can't track which event, flyer, or ad actually drove a sale this month.</div><div class="check-leak">~$425/mo in unmeasured promo spend</div></div>
-        </div>
-        <div class="check-item" data-leak="400" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">I cannot see a single, unified picture of how my entire business is operating.</div><div class="check-leak">~$400/mo in blind business decisions</div></div>
-        </div>
-        <div class="check-item" data-leak="200" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">My website hasn't been updated for mobile conversion in six-plus months.</div><div class="check-leak">~$200/mo in dropped mobile traffic</div></div>
-        </div>
-        <div class="check-item" data-leak="300" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">Inquiries from DMs, phone calls, and my website all sit in different places.</div><div class="check-leak">~$300/mo in missed customer inquiries</div></div>
-        </div>
-        <div class="check-item" data-leak="375" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">I have no automated system to bring past customers back to purchase again.</div><div class="check-leak">~$375/mo in lost repeat business</div></div>
-        </div>
-        <div class="check-item" data-leak="250" onclick="toggleCheck(this)">
-          <div class="check-box"><span class="check-box-icon">✓</span></div>
-          <div><div class="check-text">I'm not consistently documenting behind-the-scenes moments to build trust online.</div><div class="check-leak">~$250/mo in weaker brand pull</div></div>
-        </div>
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="350" data-label="Unanswered Google & Social Reviews" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">I haven't replied to every Google or social review in the last 30 days.</div>
+            <div class="check-leak">~$350/mo in lost trust &amp; repeat visits</div>
+          </div>
+        </label>
+
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="450" data-label="No Multi-Channel Attribution" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">I don't track which channel leads come from (IG vs. TikTok vs. events vs. walk-ins).</div>
+            <div class="check-leak">~$450/mo in untracked lead channels</div>
+          </div>
+        </label>
+
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="425" data-label="Unmeasured Promo Spend" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">I can't track which event, flyer, or ad actually drove a sale this month.</div>
+            <div class="check-leak">~$425/mo in unmeasured promo spend</div>
+          </div>
+        </label>
+
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="400" data-label="No Central Operational Dashboard" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">I cannot see a single, unified picture of how my entire business is operating.</div>
+            <div class="check-leak">~$400/mo in blind business decisions</div>
+          </div>
+        </label>
+
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="200" data-label="Outdated Website / Mobile UX" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">My website hasn't been updated for mobile conversion in six-plus months.</div>
+            <div class="check-leak">~$200/mo in dropped mobile traffic</div>
+          </div>
+        </label>
+
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="300" data-label="Disconnected Inquiries & DMs" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">Inquiries from DMs, phone calls, and my website all sit in different places.</div>
+            <div class="check-leak">~$300/mo in missed customer inquiries</div>
+          </div>
+        </label>
+
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="375" data-label="Zero Repeat Buyer Automation" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">I have no automated system to bring past customers back to purchase again.</div>
+            <div class="check-leak">~$375/mo in lost repeat business</div>
+          </div>
+        </label>
+
+        <label class="native-check-item">
+          <input type="checkbox" class="native-checkbox" value="250" data-label="Inconsistent Brand Storytelling" onchange="runAuditCalculation()">
+          <div class="check-content">
+            <div class="check-text">I'm not consistently documenting behind-the-scenes moments to build trust online.</div>
+            <div class="check-leak">~$250/mo in weaker brand pull</div>
+          </div>
+        </label>
       </div>
 
       <div class="receipt">
         <div class="receipt-head"><span>Leak Ledger</span><span id="receiptDate"></span></div>
         <div id="receiptLines">
-          <div class="receipt-empty">Click any box on the left to start the tally →</div>
+          <div class="receipt-empty">Check any box on the left to calculate →</div>
         </div>
         <div class="receipt-total"><span>Estimated monthly leak</span><b id="totalLeak">$0</b></div>
         <div class="receipt-grade"><span>Operational health grade</span><b id="healthGrade">100 / 100</b></div>
@@ -452,8 +471,8 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
     </div>
 
     <div class="cadence-toggle">
-      <button class="active" data-cadence="monthly">Monthly</button>
-      <button data-cadence="biweekly">Bi‑weekly</button>
+      <button class="active" data-cadence="monthly" onclick="setCadence('monthly')">Monthly</button>
+      <button data-cadence="biweekly" onclick="setCadence('biweekly')">Bi‑weekly</button>
     </div>
 
     <div class="tiers">
@@ -461,15 +480,15 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
         <div class="tier-eyebrow">Tier 1 · Done‑With‑You</div>
         <h3>Foundations &amp; Systems Training</h3>
         <p class="desc">Dashboard setup, four weeks of one‑on‑one team training, and a full SOP manual so your team runs it without us.</p>
-        <div class="price" data-monthly="$950" data-biweekly="$475">$950<span>/mo</span></div>
-        <div class="sub-price" data-monthly-sub="2‑month sprint" data-biweekly-sub="2‑month sprint">2‑month sprint</div>
+        <div class="price" data-monthly="$950" data-biweekly="$475" id="priceTier1">$950<span>/mo</span></div>
+        <div class="sub-price" id="subTier1">2‑month sprint</div>
         <a href="#business-intake" class="btn btn-ghost">Start here</a>
       </div>
       <div class="tier featured" id="tier2">
         <div class="tier-eyebrow">Tier 2 · Done‑For‑You</div>
         <h3>Managed Growth Engine</h3>
         <p class="desc">Full back‑end integration, automated review capture, and monthly reporting — we run it, you get the numbers.</p>
-        <div class="price" data-monthly="$1,250" data-biweekly="$625">$1,250<span>/mo</span></div>
+        <div class="price" data-monthly="$1,250" data-biweekly="$625" id="priceTier2">$1,250<span>/mo</span></div>
         <div class="sub-price">Most-recommended tier</div>
         <a href="#business-intake" class="btn btn-primary">Start here</a>
       </div>
@@ -477,7 +496,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
         <div class="tier-eyebrow">Tier 3 · Full Ecosystem</div>
         <h3>Full‑Scale Operations + Marketing</h3>
         <p class="desc">Everything in Tier 2, plus web redesign, social storytelling, local PR, and targeted ad campaigns.</p>
-        <div class="price" data-monthly="$2,500" data-biweekly="$1,250">$2,500<span>/mo</span></div>
+        <div class="price" data-monthly="$2,500" data-biweekly="$1,250" id="priceTier3">$2,500<span>/mo</span></div>
         <div class="sub-price">For full-scale growth</div>
         <a href="#business-intake" class="btn btn-ghost">Start here</a>
       </div>
@@ -674,7 +693,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 </footer>
 
 <script>
-// SUPABASE CLIENT INITIALIZATION
+// SUPABASE CLIENT
 const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
 const SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
 const supabaseClient = (SUPABASE_URL.includes('YOUR-PROJECT-REF'))
@@ -685,71 +704,11 @@ const urlParams = new URLSearchParams(window.location.search);
 const utmSource = urlParams.get('utm_source') || 'direct';
 const utmCampaign = urlParams.get('utm_campaign') || null;
 
-// RADIO BUTTON SELECTION
-document.querySelectorAll('.radio-opt input').forEach(inp=>{
-  inp.addEventListener('change',()=>{
-    document.getElementsByName(inp.name).forEach(r=>r.closest('.radio-opt').classList.remove('checked'));
-    inp.closest('.radio-opt').classList.add('checked');
-  });
-});
-
-// FORM HANDLER
-async function handleSubmit(e, type, successId, errorId){
-  e.preventDefault();
-  const form = e.target;
-  const fd = new FormData(form);
-  const detailFields = [];
-  fd.forEach((val, key)=>{
-    if(key !== 'name' && key !== 'contact') detailFields.push(`${key}: ${val}`);
-  });
-
-  const row = {
-    type,
-    name: fd.get('name'),
-    contact: fd.get('contact'),
-    detail: detailFields.join(' | '),
-    utm_source: utmSource,
-    utm_campaign: utmCampaign
-  };
-
-  const errorEl = document.getElementById(errorId);
-  errorEl.textContent = '';
-  const btn = form.querySelector('.submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Sending…';
-
-  if(!supabaseClient){
-    document.getElementById(successId).style.display='block';
-    btn.textContent = 'Received ✓';
-    return false;
-  }
-
-  const { error } = await supabaseClient.from('submissions').insert([row]);
-  if(error){
-    errorEl.textContent = 'Something went wrong — please try again or reach out directly.';
-    btn.disabled = false;
-    btn.textContent = form.querySelector('.submit-btn').classList.contains('biz') ? 'Get my custom growth roadmap' : 'Submit partnership / application';
-    console.error(error);
-    return false;
-  }
-
-  document.getElementById(successId).style.display='block';
-  btn.textContent = 'Received ✓';
-  return false;
-}
-
-// -------------------------------------------------------------
-// RELIABLE AUDIT TALLY ENGINE
-// -------------------------------------------------------------
+// AUDIT CALCULATION ENGINE
 let currentAudit = { checkedLabels: [], total: 0, health: 100, tier: '' };
 
-function toggleCheck(element) {
-  element.classList.toggle('checked');
-  calculateAudit();
-}
-
-function calculateAudit() {
-  const allItems = document.querySelectorAll('#auditCheck .check-item');
+function runAuditCalculation() {
+  const checkboxes = document.querySelectorAll('.native-checkbox');
   const receiptLines = document.getElementById('receiptLines');
   const totalLeakEl = document.getElementById('totalLeak');
   const healthGradeEl = document.getElementById('healthGrade');
@@ -762,16 +721,14 @@ function calculateAudit() {
   let linesHtml = '';
   let fullLabels = [];
 
-  allItems.forEach(item => {
-    if (item.classList.contains('checked')) {
+  checkboxes.forEach(cb => {
+    if (cb.checked) {
       checkedCount++;
-      const leak = parseInt(item.getAttribute('data-leak'), 10) || 0;
-      total += leak;
-      const text = item.querySelector('.check-text').innerText;
-      fullLabels.push(text);
-
-      const short = text.length > 40 ? text.substring(0, 38) + '…' : text;
-      linesHtml += `<div class="receipt-line"><span>${short}</span><span>$${leak}</span></div>`;
+      const val = parseInt(cb.value, 10) || 0;
+      total += val;
+      const label = cb.getAttribute('data-label');
+      fullLabels.push(label);
+      linesHtml += `<div class="receipt-line"><span>${label}</span><span>$${val}</span></div>`;
     }
   });
 
@@ -779,14 +736,14 @@ function calculateAudit() {
     receiptLines.innerHTML = linesHtml;
     saveBtn.style.display = 'flex';
   } else {
-    receiptLines.innerHTML = '<div class="receipt-empty">Click any box on the left to start the tally →</div>';
+    receiptLines.innerHTML = '<div class="receipt-empty">Check any box on the left to calculate →</div>';
     saveBtn.style.display = 'none';
   }
 
   totalLeakEl.innerText = '$' + total.toLocaleString();
 
-  const step = Math.round(100 / allItems.length);
-  const health = Math.max(0, 100 - (checkedCount * step));
+  const totalPossible = checkboxes.length;
+  const health = Math.max(0, Math.round(100 - (checkedCount * (100 / totalPossible))));
   healthGradeEl.innerText = health + ' / 100';
 
   if (health < 50) {
@@ -831,7 +788,7 @@ async function saveAuditResult(){
   };
 
   if(!supabaseClient){
-    savedEl.textContent = '✓ Results calculated (connect Supabase to store permanently).';
+    savedEl.textContent = '✓ Results calculated (ready to connect Supabase).';
     btn.textContent = 'Save my results';
     btn.disabled = false;
     return;
@@ -843,24 +800,71 @@ async function saveAuditResult(){
   savedEl.textContent = error ? 'Could not save — please try again.' : '✓ Saved to your results.';
 }
 
-// CADENCE TOGGLE LOGIC
-document.querySelectorAll('.cadence-toggle button').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    document.querySelectorAll('.cadence-toggle button').forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    const cadence = btn.dataset.cadence;
-    document.querySelectorAll('.tier').forEach(tier=>{
-      const priceEl = tier.querySelector('.price');
-      const subEl = tier.querySelector('.sub-price');
-      const val = priceEl.dataset[cadence];
-      priceEl.childNodes[0].textContent = val;
-      priceEl.querySelector('span').textContent = cadence === 'monthly' ? '/mo' : '/2wk';
-      if(subEl.dataset[cadence+'Sub']){ subEl.textContent = subEl.dataset[cadence+'Sub']; }
-    });
-  });
-});
+// PRICING CADENCE TOGGLE
+function setCadence(cadence) {
+  document.querySelectorAll('.cadence-toggle button').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[data-cadence="${cadence}"]`).classList.add('active');
 
-// AVATAR LOGIC
+  const p1 = document.getElementById('priceTier1');
+  const p2 = document.getElementById('priceTier2');
+  const p3 = document.getElementById('priceTier3');
+
+  if (cadence === 'monthly') {
+    p1.innerHTML = '$950<span>/mo</span>';
+    p2.innerHTML = '$1,250<span>/mo</span>';
+    p3.innerHTML = '$2,500<span>/mo</span>';
+  } else {
+    p1.innerHTML = '$475<span>/2wk</span>';
+    p2.innerHTML = '$625<span>/2wk</span>';
+    p3.innerHTML = '$1,250<span>/2wk</span>';
+  }
+}
+
+// INTAKE FORM HANDLER
+async function handleSubmit(e, type, successId, errorId){
+  e.preventDefault();
+  const form = e.target;
+  const fd = new FormData(form);
+  const detailFields = [];
+  fd.forEach((val, key)=>{
+    if(key !== 'name' && key !== 'contact') detailFields.push(`${key}: ${val}`);
+  });
+
+  const row = {
+    type,
+    name: fd.get('name'),
+    contact: fd.get('contact'),
+    detail: detailFields.join(' | '),
+    utm_source: utmSource,
+    utm_campaign: utmCampaign
+  };
+
+  const errorEl = document.getElementById(errorId);
+  errorEl.textContent = '';
+  const btn = form.querySelector('.submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  if(!supabaseClient){
+    document.getElementById(successId).style.display='block';
+    btn.textContent = 'Received ✓';
+    return false;
+  }
+
+  const { error } = await supabaseClient.from('submissions').insert([row]);
+  if(error){
+    errorEl.textContent = 'Something went wrong — please try again.';
+    btn.disabled = false;
+    btn.textContent = form.querySelector('.submit-btn').classList.contains('biz') ? 'Get my custom growth roadmap' : 'Submit partnership / application';
+    return false;
+  }
+
+  document.getElementById(successId).style.display='block';
+  btn.textContent = 'Received ✓';
+  return false;
+}
+
+// AVATAR RENDER
 let avatarState = { hair:true, hoodie:true, glasses:true };
 
 function renderAvatar(){
@@ -876,7 +880,7 @@ function renderAvatar(){
   </svg>`;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+window.onload = function() {
   renderAvatar();
   const d = document.getElementById('receiptDate');
   if(d) d.textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
@@ -892,7 +896,7 @@ document.addEventListener('DOMContentLoaded', () => {
       renderAvatar();
     });
   }
-});
+};
 </script>
 </body>
 </html>
