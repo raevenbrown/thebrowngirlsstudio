@@ -146,7 +146,7 @@ nav{
 .tape-item .lbl{ font-size:12px; color:var(--cream-dim); letter-spacing:0.04em; margin-top:4px; }
 
 section{ padding:96px 0; }
-.section-head{ max-width:640px; margin-bottom:52px; }
+.section-head{ max-width:640px; margin-bottom:52px; position:relative; }
 .section-head h2{ font-size:clamp(28px,3.4vw,42px); margin-top:16px; }
 .section-head p{ color:var(--cream-dim); margin-top:14px; font-size:16px; }
 
@@ -163,7 +163,7 @@ section{ padding:96px 0; }
 .reality-row b{ display:block; color:var(--cream); font-weight:600; margin-bottom:3px; font-family:'Public Sans'; }
 @media (max-width:760px){ .reality{ grid-template-columns:1fr; } .reality-col.blind .reality-row{ border-right:none; } }
 
-/* AUDIT STYLES */
+/* AUDIT CHECKLIST */
 .audit-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:start; }
 @media (max-width:900px){ .audit-grid{ grid-template-columns:1fr; } }
 .audit-check{ border:1px solid var(--line); padding:8px; }
@@ -222,23 +222,9 @@ section{ padding:96px 0; }
 .tier .sub-price{ font-size:12px; color:var(--cream-dim); margin-bottom:20px; }
 .tier a.btn{ text-align:center; justify-content:center; }
 
-.solution-split{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
-@media (max-width:860px){ .solution-split{ grid-template-columns:1fr; gap:36px; } }
-.modes{ display:flex; flex-direction:column; gap:16px; margin-top:26px; }
-.mode-card{ border:1px solid var(--line); padding:18px 20px; }
-.mode-card b{ display:block; font-family:'Fraunces'; font-size:17px; color:var(--gold-bright); margin-bottom:5px; }
-.mode-card p{ font-size:13.5px; color:var(--cream-dim); }
-.blueprint-art{
-  border:1px solid var(--line); aspect-ratio:1/1; position:relative;
-  background:
-    linear-gradient(rgba(199,153,79,0.09) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(199,153,79,0.09) 1px, transparent 1px);
-  background-size:24px 24px;
-  display:flex; align-items:center; justify-content:center;
-}
-
-.eco-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px; }
-@media (max-width:900px){ .eco-grid{ grid-template-columns:repeat(2,1fr); } }
+.eco-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px; }
+@media (max-width:900px){ .eco-grid{ grid-template-columns:repeat(2,1fr) !important; } }
+@media (max-width:600px){ .eco-grid{ grid-template-columns:1fr !important; } }
 .eco-cell{ background:var(--espresso); padding:28px 22px; }
 .eco-cell .eco-num{ font-family:'IBM Plex Mono'; font-size:12px; color:var(--gold-bright); }
 .eco-cell h4{ font-size:18px; margin:14px 0 8px; }
@@ -504,55 +490,82 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   </div>
 </section>
 
-<!-- CORE SOLUTION -->
+<!-- CORE SOLUTION: ALL 10 CREATIVE METRIX MODULES -->
 <section id="metrix" style="background:var(--espresso-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap entry-frame" style="border-top:none;">
-    <span class="entry-tag mono">ENTRY NO. 04 — THE SYSTEM</span>
-    <div class="solution-split">
-      <div>
-        <div class="eyebrow">The core solution</div>
-        <h2 style="margin-top:16px;">Creative Metrix.</h2>
-        <p style="color:var(--cream-dim); margin-top:16px; font-size:16px;">An all‑in‑one operational command center customized for your business. We don't sell you expensive new software — we integrate your current POS, Google Workspace, and sales channels into one unified, visual narrative that shows exactly where your profit is coming from.</p>
-        <div class="modes">
-          <div class="mode-card"><b>Done‑For‑You</b><p>We build, maintain, and report on your data infrastructure every month.</p></div>
-          <div class="mode-card"><b>Done‑With‑You</b><p>We build your system and train you or your staff to manage it independently.</p></div>
-        </div>
-      </div>
-      <div class="blueprint-art">
-        <svg width="70%" height="70%" viewBox="0 0 200 200" fill="none">
-          <circle cx="100" cy="100" r="70" stroke="#C7994F" stroke-width="1" opacity="0.5"/>
-          <circle cx="100" cy="100" r="46" stroke="#C7994F" stroke-width="1" opacity="0.35"/>
-          <line x1="100" y1="8" x2="100" y2="192" stroke="#C7994F" stroke-width="1" opacity="0.3"/>
-          <line x1="8" y1="100" x2="192" y2="100" stroke="#C7994F" stroke-width="1" opacity="0.3"/>
-          <rect x="80" y="80" width="40" height="40" stroke="#E3BD79" stroke-width="1.5"/>
-          <circle cx="100" cy="100" r="4" fill="#E3BD79"/>
-        </svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ECOSYSTEM -->
-<section>
-  <div class="wrap entry-frame">
-    <span class="entry-tag mono">ENTRY NO. 05 — THE ECOSYSTEM</span>
+    <span class="entry-tag mono">ENTRY NO. 04 — THE ARCHITECTURE</span>
     <div class="section-head">
-      <div class="eyebrow">Add-on modules</div>
-      <h2>Once the back end is clean, scale the front end.</h2>
+      <div class="eyebrow">The Complete System</div>
+      <h2>10 Creative Metrix modules built for owners.</h2>
+      <p>We do not push expensive software subscriptions. We integrate your current POS, CRM, Google Workspace, and ad channels into 10 purpose-built modules spanning back-end automation and front-end revenue growth.</p>
     </div>
-    <div class="eco-grid">
-      <div class="eco-cell"><div class="eco-num">01</div><h4>Web &amp; funnel design</h4><p>High‑converting landing pages and responsive websites.</p></div>
-      <div class="eco-cell"><div class="eco-num">02</div><h4>Brand storytelling</h4><p>Real-world documentation, video strategy, and community building.</p></div>
-      <div class="eco-cell"><div class="eco-num">03</div><h4>Local PR &amp; media</h4><p>Press releases, event marketing support, and local visibility.</p></div>
-      <div class="eco-cell"><div class="eco-num">04</div><h4>Targeted ad campaigns</h4><p>Multi‑channel advertising with end‑to‑end conversion tracking.</p></div>
+
+    <!-- BACK END (6 MODULES) -->
+    <h3 style="font-size:20px; color:var(--gold-bright); margin-bottom:16px;">Operational &amp; Back-End Architecture (6)</h3>
+    <div class="eco-grid" style="grid-template-columns:repeat(3, 1fr); margin-bottom:48px;">
+      <div class="eco-cell">
+        <div class="eco-num">MOD 01</div>
+        <h4>Review &amp; Trust Automation</h4>
+        <p>Automated alerts, review capture workflows, and sentiment tracking across Google and social channels.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 02</div>
+        <h4>Multi-Touch Attribution</h4>
+        <p>Real-time source tracking connecting physical foot traffic, events, and digital campaigns to actual sales.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 03</div>
+        <h4>Lead Pipeline Centralization</h4>
+        <p>Consolidating DMs, website inquiries, and incoming calls into a single unified dashboard.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 04</div>
+        <h4>Real-Time POS &amp; Sales Intel</h4>
+        <p>Automated daily, weekly, and monthly revenue summaries integrated directly with your POS system.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 05</div>
+        <h4>Customer Retention Engine</h4>
+        <p>Automated re-engagement sequences to turn one-time shoppers into repeat, loyal buyers.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 06</div>
+        <h4>Owner Command Dashboard</h4>
+        <p>A single, unified Looker/Power BI view giving owners clear operational health at a glance.</p>
+      </div>
+    </div>
+
+    <!-- FRONT END (4 MODULES) -->
+    <h3 style="font-size:20px; color:var(--gold-bright); margin-bottom:16px;">Front-End &amp; Market Expansion (4)</h3>
+    <div class="eco-grid" style="grid-template-columns:repeat(4, 1fr);">
+      <div class="eco-cell">
+        <div class="eco-num">MOD 07</div>
+        <h4>Web &amp; Funnel Design</h4>
+        <p>High-converting landing pages and responsive UX built for mobile conversion.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 08</div>
+        <h4>Brand Storytelling Systems</h4>
+        <p>Real-world documentation frameworks, content workflows, and video strategy.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 09</div>
+        <h4>Local PR &amp; Media Engine</h4>
+        <p>Targeted press distribution, event marketing support, and local visibility campaigns.</p>
+      </div>
+      <div class="eco-cell">
+        <div class="eco-num">MOD 10</div>
+        <h4>Conversion-Tracked Ads</h4>
+        <p>Multi-channel digital ad execution connected directly to POS purchase data.</p>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- EDUCATION -->
-<section id="education" style="background:var(--espresso-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+<section id="education" style="background:var(--espresso); border-bottom:1px solid var(--line);">
   <div class="wrap entry-frame" style="border-top:none;">
-    <span class="entry-tag mono">ENTRY NO. 06 — THE NEXT GENERATION</span>
+    <span class="entry-tag mono">ENTRY NO. 05 — THE NEXT GENERATION</span>
     <div class="section-head">
       <div class="eyebrow">Education &amp; workforce</div>
       <h2>Applied AI labs for schools.</h2>
@@ -591,7 +604,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 <!-- APPRENTICESHIP -->
 <section id="apprenticeship">
   <div class="wrap entry-frame">
-    <span class="entry-tag mono">ENTRY NO. 07 — THE PIPELINE</span>
+    <span class="entry-tag mono">ENTRY NO. 06 — THE PIPELINE</span>
     <div class="section-head">
       <div class="eyebrow">Careers &amp; talent</div>
       <h2>Apprenticeship &amp; internship tracks.</h2>
@@ -621,7 +634,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 <!-- INTAKE -->
 <section style="padding-bottom:0;">
   <div class="wrap entry-frame" style="border-bottom:none;">
-    <span class="entry-tag mono">ENTRY NO. 08 — GET STARTED</span>
+    <span class="entry-tag mono">ENTRY NO. 07 — GET STARTED</span>
     <div class="section-head">
       <div class="eyebrow">Two paths in</div>
       <h2>Tell us where you're building from.</h2>
@@ -903,7 +916,7 @@ function renderAvatar(){
   '</svg>';
 }
 
-// RUN ON LOAD
+// INITIALIZATION
 document.addEventListener('DOMContentLoaded', function() {
   renderAvatar();
   var d = document.getElementById('receiptDate');
