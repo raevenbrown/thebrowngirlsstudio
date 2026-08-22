@@ -1106,39 +1106,37 @@ function setCadence(cadence) {
   }
 }
 
-// FORM SUBMISSION
+// FORM SUBMISSION WITH DEDICATED COLUMNS
 async function handleSubmit(e, type, successId, errorId){
   e.preventDefault();
   var form = e.target;
   var fd = new FormData(form);
-  var detailFields = [];
 
-  // Capture multi-select checkboxes (services)
   var selectedServices = [];
   form.querySelectorAll('input[name="services"]:checked').forEach(function(cb){
     selectedServices.push(cb.value);
-  });
-  if(selectedServices.length > 0) {
-    detailFields.push('Services: ' + selectedServices.join(', '));
-  }
-
-  fd.forEach(function(val, key){
-    if(key !== 'name' && key !== 'contact' && key !== 'services') {
-      detailFields.push(key + ': ' + val);
-    }
   });
 
   var row = {
     type: type,
     name: fd.get('name'),
     contact: fd.get('contact'),
-    detail: detailFields.join(' | '),
+    role_title: fd.get('title'),
+    business_institution: fd.get('business_name') || fd.get('institution'),
+    website_social: fd.get('website_social') || null,
+    package_tier: fd.get('biz_package') || fd.get('edutype'),
+    selected_services: selectedServices.length > 0 ? selectedServices : null,
+    meeting_date: fd.get('meeting_date') || fd.get('connect_date'),
+    meeting_time: fd.get('meeting_time') || fd.get('connect_time'),
+    billing_cadence: fd.get('bizcadence') || fd.get('edulevel'),
     utm_source: utmSource,
     utm_campaign: utmCampaign
   };
 
   var errorEl = document.getElementById(errorId);
+  var sEl = document.getElementById(successId);
   if (errorEl) errorEl.textContent = '';
+  
   var btn = form.querySelector('.submit-btn');
   if (btn) {
     btn.disabled = true;
@@ -1146,28 +1144,26 @@ async function handleSubmit(e, type, successId, errorId){
   }
 
   if(!supabaseClient){
-    var sEl = document.getElementById(successId);
-    if (sEl) sEl.style.display='block';
+    if (sEl) sEl.style.display = 'block';
     if (btn) btn.textContent = 'Meeting Request Received ✓';
     return false;
   }
 
   var res = await supabaseClient.from('submissions').insert([row]);
   if(res.error){
-    if (errorEl) errorEl.textContent = 'Something went wrong — please try again.';
+    if (errorEl) errorEl.textContent = 'Submission error: ' + res.error.message;
     if (btn) {
       btn.disabled = false;
-      btn.textContent = form.querySelector('.submit-btn').classList.contains('biz') ? 'Confirm discovery meeting & roadmap' : 'Submit partnership / application';
+      btn.textContent = 'Try again';
     }
     return false;
   }
 
-  var sEl = document.getElementById(successId);
-  if (sEl) sEl.style.display='block';
+  if (sEl) sEl.style.display = 'block';
   if (btn) btn.textContent = 'Meeting Request Received ✓';
+  form.reset();
   return false;
 }
-
 // AVATAR LOGIC
 var avatarState = { hair:true, hoodie:true, glasses:true };
 
