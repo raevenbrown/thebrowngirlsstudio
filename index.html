@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Brown Girls Creative Studio — Data Architecture, AI Innovation, Workforce Impact</title>
 
+<!-- Google Analytics 4 -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -13,7 +14,7 @@
   gtag('config', 'G-XXXXXXXXXX');
 </script>
 
-<!-- Supabase client library -->
+<!-- Supabase JS Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Public+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
@@ -53,13 +54,8 @@ h1,h2,h3,h4{
 }
 .mono{ font-family:'IBM Plex Mono', monospace; }
 a{ color:inherit; }
-img,svg{ display:block; }
 button{ font-family:inherit; cursor:pointer; }
 ::selection{ background:var(--gold); color:var(--espresso); }
-
-@media (prefers-reduced-motion: reduce){
-  *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
-}
 
 .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
 .eyebrow{
@@ -167,28 +163,37 @@ section{ padding:96px 0; }
 .reality-row b{ display:block; color:var(--cream); font-weight:600; margin-bottom:3px; font-family:'Public Sans'; }
 @media (max-width:760px){ .reality{ grid-template-columns:1fr; } .reality-col.blind .reality-row{ border-right:none; } }
 
+/* AUDIT CHECKLIST STYLES */
 .audit-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:start; }
 @media (max-width:900px){ .audit-grid{ grid-template-columns:1fr; } }
-.audit-check{
-  border:1px solid var(--line); padding:8px;
-}
+.audit-check{ border:1px solid var(--line); padding:8px; }
+
 .check-item{
   display:flex; align-items:flex-start; gap:14px; padding:16px 18px;
   border-bottom:1px solid var(--line); cursor:pointer; transition:background 0.15s;
-  user-select:none;
+  user-select:none; -webkit-user-select:none;
 }
 .check-item:last-child{ border-bottom:none; }
-.check-item:hover{ background:rgba(243,232,214,0.03); }
+.check-item:hover{ background:rgba(243,232,214,0.04); }
+.check-item.checked{ background:rgba(199,153,79,0.06); }
+
 .check-box{
-  width:20px; height:20px; flex:none; border:1.5px solid var(--gold); border-radius:2px;
+  width:22px; height:22px; flex:none; border:1.5px solid var(--gold); border-radius:3px;
   display:flex; align-items:center; justify-content:center; margin-top:2px;
-  transition:background 0.15s;
+  background:transparent; transition:all 0.15s ease-in-out;
 }
-.check-item.on .check-box{ background:var(--gold); }
-.check-box svg{ width:12px; height:12px; opacity:0; transition:opacity 0.1s; }
-.check-item.on .check-box svg{ opacity:1; }
-.check-text{ font-size:14.5px; color:var(--cream-dim); }
-.check-item.on .check-text{ color:var(--cream); }
+.check-item.checked .check-box{
+  background:var(--gold);
+}
+.check-box-icon{
+  display:none; color:var(--espresso); font-weight:900; font-size:14px; line-height:1;
+}
+.check-item.checked .check-box-icon{
+  display:block;
+}
+
+.check-text{ font-size:14.5px; color:var(--cream-dim); transition:color 0.15s; }
+.check-item.checked .check-text{ color:var(--cream); font-weight:500; }
 .check-leak{ font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--leak-bright); margin-top:3px; }
 
 .receipt{
@@ -198,10 +203,10 @@ section{ padding:96px 0; }
 }
 .receipt-head{ display:flex; justify-content:space-between; font-size:11px; letter-spacing:0.1em; color:var(--cream-dim); text-transform:uppercase; padding-bottom:14px; border-bottom:1px dashed var(--line); }
 .receipt-line{ display:flex; justify-content:space-between; font-size:13px; padding:9px 0; border-bottom:1px dashed var(--line); color:var(--cream-dim); }
-.receipt-line span:last-child{ color:var(--leak-bright); }
+.receipt-line span:last-child{ color:var(--leak-bright); font-weight:600; }
 .receipt-empty{ font-size:13px; color:var(--cream-dim); opacity:0.6; padding:14px 0; text-align:center; }
 .receipt-total{ display:flex; justify-content:space-between; align-items:baseline; padding:18px 0 6px; font-size:15px; }
-.receipt-total b{ font-size:22px; color:var(--gold-bright); }
+.receipt-total b{ font-size:24px; color:var(--gold-bright); }
 .receipt-grade{ display:flex; justify-content:space-between; font-size:12px; color:var(--cream-dim); padding-top:4px; }
 .receipt-grade b{ color:var(--cream); font-size:14px; }
 .receipt-rec{
@@ -215,7 +220,7 @@ section{ padding:96px 0; }
   background:none; border:none; color:var(--cream-dim); padding:9px 18px; font-size:12.5px;
   font-family:'IBM Plex Mono'; letter-spacing:0.05em; transition:all 0.15s;
 }
-.cadence-toggle button.active{ background:var(--gold); color:var(--espresso); }
+.cadence-toggle button.active{ background:var(--gold); color:var(--espresso); font-weight:600; }
 
 .tiers{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:8px; }
 @media (max-width:900px){ .tiers{ grid-template-columns:1fr; } }
@@ -373,49 +378,49 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   </div>
 </section>
 
-<!-- AUDIT -->
+<!-- AUDIT SECTION WITH REPAIRED INTERACTION -->
 <section id="audit" style="background:var(--espresso-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
   <div class="wrap entry-frame" style="border-top:none;">
     <span class="entry-tag mono">ENTRY NO. 02 — THE DIAGNOSTIC</span>
     <div class="section-head">
       <div class="eyebrow">Live growth &amp; leak audit</div>
       <h2>What's happening behind your counter?</h2>
-      <p>Check what applies. We'll total the estimated monthly leak in real time and hand you the tier built to close it.</p>
+      <p>Click every box that applies. The ledger on the right calculates your estimated monthly revenue leak in real time.</p>
     </div>
 
     <div class="audit-grid">
       <div class="audit-check" id="auditCheck">
-        <div class="check-item" data-leak="350">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">I haven't replied to every Google or social review in the last 30 days.</span><div class="check-leak">~$350/mo in lost trust &amp; repeat visits</div></span>
+        <div class="check-item" data-leak="350" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">I haven't replied to every Google or social review in the last 30 days.</div><div class="check-leak">~$350/mo in lost trust &amp; repeat visits</div></div>
         </div>
-        <div class="check-item" data-leak="450">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">I don't track which channel leads come from (IG vs. TikTok vs. events vs. walk-ins).</span><div class="check-leak">~$450/mo in untracked lead channels</div></span>
+        <div class="check-item" data-leak="450" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">I don't track which channel leads come from (IG vs. TikTok vs. events vs. walk-ins).</div><div class="check-leak">~$450/mo in untracked lead channels</div></div>
         </div>
-        <div class="check-item" data-leak="425">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">I can't track which event, flyer, or ad actually drove a sale this month.</span><div class="check-leak">~$425/mo in unmeasured promo spend</div></span>
+        <div class="check-item" data-leak="425" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">I can't track which event, flyer, or ad actually drove a sale this month.</div><div class="check-leak">~$425/mo in unmeasured promo spend</div></div>
         </div>
-        <div class="check-item" data-leak="400">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">I cannot see a single, unified picture of how my entire business is operating.</span><div class="check-leak">~$400/mo in blind business decisions</div></span>
+        <div class="check-item" data-leak="400" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">I cannot see a single, unified picture of how my entire business is operating.</div><div class="check-leak">~$400/mo in blind business decisions</div></div>
         </div>
-        <div class="check-item" data-leak="200">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">My website hasn't been updated for mobile conversion in six-plus months.</span><div class="check-leak">~$200/mo in dropped mobile traffic</div></span>
+        <div class="check-item" data-leak="200" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">My website hasn't been updated for mobile conversion in six-plus months.</div><div class="check-leak">~$200/mo in dropped mobile traffic</div></div>
         </div>
-        <div class="check-item" data-leak="300">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">Inquiries from DMs, phone calls, and my website all sit in different places.</span><div class="check-leak">~$300/mo in missed customer inquiries</div></span>
+        <div class="check-item" data-leak="300" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">Inquiries from DMs, phone calls, and my website all sit in different places.</div><div class="check-leak">~$300/mo in missed customer inquiries</div></div>
         </div>
-        <div class="check-item" data-leak="375">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">I have no automated system to bring past customers back to purchase again.</span><div class="check-leak">~$375/mo in lost repeat business</div></span>
+        <div class="check-item" data-leak="375" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">I have no automated system to bring past customers back to purchase again.</div><div class="check-leak">~$375/mo in lost repeat business</div></div>
         </div>
-        <div class="check-item" data-leak="250">
-          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
-          <span><span class="check-text">I'm not consistently documenting behind-the-scenes moments to build trust online.</span><div class="check-leak">~$250/mo in weaker brand pull</div></span>
+        <div class="check-item" data-leak="250" onclick="toggleCheck(this)">
+          <div class="check-box"><span class="check-box-icon">✓</span></div>
+          <div><div class="check-text">I'm not consistently documenting behind-the-scenes moments to build trust online.</div><div class="check-leak">~$250/mo in weaker brand pull</div></div>
         </div>
       </div>
 
@@ -669,6 +674,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 </footer>
 
 <script>
+// SUPABASE CLIENT INITIALIZATION
 const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
 const SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
 const supabaseClient = (SUPABASE_URL.includes('YOUR-PROJECT-REF'))
@@ -679,6 +685,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const utmSource = urlParams.get('utm_source') || 'direct';
 const utmCampaign = urlParams.get('utm_campaign') || null;
 
+// RADIO BUTTON SELECTION
 document.querySelectorAll('.radio-opt input').forEach(inp=>{
   inp.addEventListener('change',()=>{
     document.getElementsByName(inp.name).forEach(r=>r.closest('.radio-opt').classList.remove('checked'));
@@ -686,6 +693,7 @@ document.querySelectorAll('.radio-opt input').forEach(inp=>{
   });
 });
 
+// FORM HANDLER
 async function handleSubmit(e, type, successId, errorId){
   e.preventDefault();
   const form = e.target;
@@ -730,49 +738,72 @@ async function handleSubmit(e, type, successId, errorId){
   return false;
 }
 
-// Fixed Audit Ledger Interaction
-const items = document.querySelectorAll('#auditCheck .check-item');
-const receiptLines = document.getElementById('receiptLines');
-const totalLeakEl = document.getElementById('totalLeak');
-const healthGradeEl = document.getElementById('healthGrade');
-const recBox = document.getElementById('recBox');
-const stepPoints = Math.round(100/items.length);
-
-function shortLabel(text){
-  return text.length > 46 ? text.slice(0,44)+'…' : text;
-}
-
+// -------------------------------------------------------------
+// RELIABLE AUDIT TALLY ENGINE
+// -------------------------------------------------------------
 let currentAudit = { checkedLabels: [], total: 0, health: 100, tier: '' };
 
-function updateLedger(){
-  let total = 0, checkedCount = 0, lines = [], fullLabels = [];
-  items.forEach(item=>{
-    if(item.classList.contains('on')){
+function toggleCheck(element) {
+  element.classList.toggle('checked');
+  calculateAudit();
+}
+
+function calculateAudit() {
+  const allItems = document.querySelectorAll('#auditCheck .check-item');
+  const receiptLines = document.getElementById('receiptLines');
+  const totalLeakEl = document.getElementById('totalLeak');
+  const healthGradeEl = document.getElementById('healthGrade');
+  const recBox = document.getElementById('recBox');
+  const saveBtn = document.getElementById('saveAuditBtn');
+  const savedEl = document.getElementById('auditSaved');
+
+  let total = 0;
+  let checkedCount = 0;
+  let linesHtml = '';
+  let fullLabels = [];
+
+  allItems.forEach(item => {
+    if (item.classList.contains('checked')) {
       checkedCount++;
-      const leak = parseInt(item.dataset.leak, 10);
+      const leak = parseInt(item.getAttribute('data-leak'), 10) || 0;
       total += leak;
-      const fullText = item.querySelector('.check-text').textContent;
-      lines.push({label: shortLabel(fullText), leak});
-      fullLabels.push(fullText);
+      const text = item.querySelector('.check-text').innerText;
+      fullLabels.push(text);
+
+      const short = text.length > 40 ? text.substring(0, 38) + '…' : text;
+      linesHtml += `<div class="receipt-line"><span>${short}</span><span>$${leak}</span></div>`;
     }
   });
 
-  receiptLines.innerHTML = lines.length
-    ? lines.map(l=>`<div class="receipt-line"><span>${l.label}</span><span>$${l.leak}</span></div>`).join('')
-    : '<div class="receipt-empty">Click any box on the left to start the tally →</div>';
+  if (checkedCount > 0) {
+    receiptLines.innerHTML = linesHtml;
+    saveBtn.style.display = 'flex';
+  } else {
+    receiptLines.innerHTML = '<div class="receipt-empty">Click any box on the left to start the tally →</div>';
+    saveBtn.style.display = 'none';
+  }
 
-  totalLeakEl.textContent = '$' + total.toLocaleString();
-  const health = Math.max(0, 100 - (checkedCount * stepPoints));
-  healthGradeEl.textContent = health + ' / 100';
-  healthGradeEl.style.color = health < 50 ? 'var(--leak-bright)' : (health < 80 ? 'var(--gold-bright)' : 'var(--good-bright)');
+  totalLeakEl.innerText = '$' + total.toLocaleString();
+
+  const step = Math.round(100 / allItems.length);
+  const health = Math.max(0, 100 - (checkedCount * step));
+  healthGradeEl.innerText = health + ' / 100';
+
+  if (health < 50) {
+    healthGradeEl.style.color = 'var(--leak-bright)';
+  } else if (health < 80) {
+    healthGradeEl.style.color = 'var(--gold-bright)';
+  } else {
+    healthGradeEl.style.color = 'var(--good-bright)';
+  }
 
   let tierLabel = '';
-  if(checkedCount === 0){
+  if (checkedCount === 0) {
     recBox.innerHTML = '<b>Recommended path</b>Check a few boxes above and we\\'ll match you to a tier.';
-  } else if(checkedCount <= 2){
+  } else if (checkedCount <= 2) {
     tierLabel = 'Tier 1 — Foundations & Systems Training';
     recBox.innerHTML = `<b>Recommended path</b>${tierLabel}. Light leaks, quick fix.`;
-  } else if(checkedCount <= 4){
+  } else if (checkedCount <= 5) {
     tierLabel = 'Tier 2 — Managed Growth Engine';
     recBox.innerHTML = `<b>Recommended path</b>${tierLabel}. Meaningful leak, worth automating.`;
   } else {
@@ -780,9 +811,8 @@ function updateLedger(){
     recBox.innerHTML = `<b>Recommended path</b>${tierLabel}. High leak across the board — go all in.`;
   }
 
-  currentAudit = { checkedLabels: fullLabels, total, health, tier: tierLabel };
-  document.getElementById('saveAuditBtn').style.display = checkedCount > 0 ? 'flex' : 'none';
-  document.getElementById('auditSaved').textContent = '';
+  currentAudit = { checkedLabels: fullLabels, total: total, health: health, tier: tierLabel };
+  savedEl.textContent = '';
 }
 
 async function saveAuditResult(){
@@ -813,15 +843,7 @@ async function saveAuditResult(){
   savedEl.textContent = error ? 'Could not save — please try again.' : '✓ Saved to your results.';
 }
 
-items.forEach(item=>{
-  item.addEventListener('click', ()=>{
-    item.classList.toggle('on');
-    updateLedger();
-  });
-});
-
-document.getElementById('receiptDate').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
-
+// CADENCE TOGGLE LOGIC
 document.querySelectorAll('.cadence-toggle button').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.cadence-toggle button').forEach(b=>b.classList.remove('active'));
@@ -838,10 +860,12 @@ document.querySelectorAll('.cadence-toggle button').forEach(btn=>{
   });
 });
 
+// AVATAR LOGIC
 let avatarState = { hair:true, hoodie:true, glasses:true };
 
 function renderAvatar(){
   const s = document.getElementById('avatarStage');
+  if(!s) return;
   s.innerHTML = `
   <svg width="220" height="220" viewBox="0 0 220 220">
     <circle cx="110" cy="120" r="58" fill="#D9B48A"/>
@@ -851,15 +875,23 @@ function renderAvatar(){
     ${avatarState.hoodie ? `<path d="M45 220 Q45 165 110 165 Q175 165 175 220 Z" fill="#C7994F"/><path d="M70 175 Q110 195 150 175 L150 190 Q110 210 70 190 Z" fill="#3B2216"/>` : `<path d="M50 220 Q50 170 110 170 Q170 170 170 220 Z" fill="#3B2216"/>`}
   </svg>`;
 }
-renderAvatar();
 
-document.getElementById('styleRow').addEventListener('click',(e)=>{
-  const btn = e.target.closest('.style-btn');
-  if(!btn) return;
-  if(btn.dataset.hair !== undefined){ avatarState.hair = !avatarState.hair; btn.classList.toggle('active', avatarState.hair); }
-  if(btn.dataset.hoodie !== undefined){ avatarState.hoodie = !avatarState.hoodie; btn.classList.toggle('active', avatarState.hoodie); }
-  if(btn.dataset.glasses !== undefined){ avatarState.glasses = !avatarState.glasses; btn.classList.toggle('active', avatarState.glasses); }
+document.addEventListener('DOMContentLoaded', () => {
   renderAvatar();
+  const d = document.getElementById('receiptDate');
+  if(d) d.textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+  const sRow = document.getElementById('styleRow');
+  if(sRow){
+    sRow.addEventListener('click',(e)=>{
+      const btn = e.target.closest('.style-btn');
+      if(!btn) return;
+      if(btn.dataset.hair !== undefined){ avatarState.hair = !avatarState.hair; btn.classList.toggle('active', avatarState.hair); }
+      if(btn.dataset.hoodie !== undefined){ avatarState.hoodie = !avatarState.hoodie; btn.classList.toggle('active', avatarState.hoodie); }
+      if(btn.dataset.glasses !== undefined){ avatarState.glasses = !avatarState.glasses; btn.classList.toggle('active', avatarState.glasses); }
+      renderAvatar();
+    });
+  }
 });
 </script>
 </body>
