@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Applied AI Labs & Engines — The Brown Girls Creative Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #140d0a;
+      --card-bg: rgba(28, 18, 14, 0.7);
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --text: #fdfbf7;
+      --text-muted: #a89f91;
+      --border: rgba(245, 158, 11, 0.18);
+      --border-hover: rgba(245, 158, 11, 0.45);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 40%);
+      background-attachment: fixed;
+    }
+    .nav {
+      padding: 24px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(20, 13, 10, 0.85);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    .brand {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+    }
+    .brand span { color: var(--gold); }
+    .back-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--gold); }
+
+    .header-section {
+      padding: 70px 8% 40px;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      background: rgba(245, 158, 11, 0.1);
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      line-height: 1.15;
+      margin-bottom: 18px;
+      letter-spacing: -0.03em;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+      gap: 32px;
+      padding: 40px 8% 100px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+    }
+
+    .project-preview {
+      height: 220px;
+      position: relative;
+      background: #000;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .preview-bg {
+      position: absolute;
+      inset: 0;
+      opacity: 0.35;
+      background-size: cover;
+      background-position: center;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .project-card:hover .preview-bg {
+      opacity: 0.5;
+      transform: scale(1.03);
+    }
+    .preview-overlay {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 20px;
+    }
+    .engine-icon {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+
+    .project-body {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    .category-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .project-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .tech-stack {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .tech-pill {
+      font-size: 0.72rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 4px 10px;
+      border-radius: 6px;
+      color: #e5e5e5;
+    }
+
+    .btn-launch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--gold) 0%, #d97706 100%);
+      color: #000;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 12px 18px;
+      border-radius: 10px;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-launch:hover {
+      opacity: 0.95;
+      transform: scale(1.01);
+    }
+
+    .footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 8%;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="brand">the brown girls <span>creative studio</span></a>
+    <a href="index.html" class="back-link">← Return to Main Site</a>
+  </nav>
+
+  <section class="header-section">
+    <span class="badge">Live Studio & Student Labs</span>
+    <h1>Applied AI & Enterprise Engines</h1>
+    <p class="subtitle">
+      Explore live platforms and analytics architectures built in our labs—serving production enterprise clients, district institutional modeling, and hands-on student workforce capstones.
+    </p>
+  </section>
+
+  <main class="gallery-grid">
+
+    <!-- 1. Creative Metrix -->
+    <div class="project-card">
+      <div class="project-preview">
+        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80');"></div>
+        <div class="preview-overlay">
+          <div class="engine-icon">📊</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div>
+          <span class="category-tag">Growth BI & SaaS Integration</span>
+          <h2 class="project-title">Creative Metrix</h2>
+          <p class="project-desc">
+            An automated multi-touch attribution platform monitoring client pipeline health, sync telemetry across Google Ads & Meta, and conversion performance.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-pill">Vercel Deployment</span>
+            <span class="tech-pill">REST APIs</span>
+            <span class="tech-pill">Next.js</span>
+          </div>
+        </div>
+        <a href="https://v0-open-in-v0-gamma-nine-95.vercel.app/integrations" target="_blank" rel="noopener" class="btn-launch">
+          Launch Live Platform ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 2. AutoGuard Claims -->
+    <div class="project-card">
+      <div class="project-preview">
+        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80');"></div>
+        <div class="preview-overlay">
+          <div class="engine-icon">🛡️</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div>
+          <span class="category-tag">Operations & Claims Telemetry</span>
+          <h2 class="project-title">AutoGuard Claims Dashboard</h2>
+          <p class="project-desc">
+            Production claims processing console tracking vehicle rental allocations, insurer lifecycle turnarounds, and automated customer experience registries.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Streamlit</span>
+            <span class="tech-pill">Pandas Dataframes</span>
+          </div>
+        </div>
+        <a href="https://autoguard-claims-dashboard-lyuc6v8avzfjjmt5kt4qn3.streamlit.app/" target="_blank" rel="noopener" class="btn-launch">
+          Launch Live Dashboard ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 3. KSU IR Engine -->
+    <div class="project-card">
+      <div class="project-preview">
+        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80');"></div>
+        <div class="preview-overlay">
+          <div class="engine-icon">🎓</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div>
+          <span class="category-tag">Higher Ed & District Analytics</span>
+          <h2 class="project-title">Coles Navigate360 IR Engine</h2>
+          <p class="project-desc">
+            Institutional research engine modeling student retention risk markers, yield progression forecasting, and automated advisor nudge triggers.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-pill">Predictive Analytics</span>
+            <span class="tech-pill">Streamlit</span>
+            <span class="tech-pill">Plotly Express</span>
+          </div>
+        </div>
+        <a href="https://ksu-institutional-ir-engine-nsfzyeyxgrogvxuzssmxib.streamlit.app/" target="_blank" rel="noopener" class="btn-launch">
+          Launch Live Engine ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- 4. Omnimetrix MSP Engine -->
+    <div class="project-card">
+      <div class="project-preview">
+        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80');"></div>
+        <div class="preview-overlay">
+          <div class="engine-icon">📋</div>
+        </div>
+      </div>
+      <div class="project-body">
+        <div>
+          <span class="category-tag">IT Infrastructure & Automation</span>
+          <h2 class="project-title">Omnimetrix MSP Console</h2>
+          <p class="project-desc">
+            Enterprise Syncro MSP telemetry desk with SLA breach probability curves, automated RMM status alerts, and SOC 2 scope mapping.
+          </p>
+          <div class="tech-stack">
+            <span class="tech-pill">Syncro MSP</span>
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Automated Alerts</span>
+          </div>
+        </div>
+        <a href="https://omnimetrix-msp-engine-mbx2qgs8zkdv2vx5jkprkd.streamlit.app/" target="_blank" rel="noopener" class="btn-launch">
+          Launch Live Console ↗
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>© The Brown Girls Creative Studio. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
