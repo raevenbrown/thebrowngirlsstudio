@@ -875,11 +875,9 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 
 <script>
 // SUPABASE CLIENT
-const SUPABASE_URL = 'https://YOUR-PROJECT-REF.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR-ANON-PUBLIC-KEY';
-const supabaseClient = (SUPABASE_URL.includes('YOUR-PROJECT-REF'))
-  ? null
-  : window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const SUPABASE_URL = 'https://qlgnstoesdzmkmcyaqyw.supabase.co';
+const SUPABASE_ANON_KEY = 'PASTE_YOUR_FULL_KEY_HERE';
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 const urlParams = new URLSearchParams(window.location.search);
 const utmSource = urlParams.get('utm_source') || 'direct';
