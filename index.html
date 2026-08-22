@@ -718,20 +718,25 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
             <input type="text" name="name" placeholder="First & Last Name" required>
           </div>
           <div class="field">
-            <label>Business email</label>
-            <input type="email" name="contact" placeholder="owner@yourbrand.com" required>
+            <label>Role / Job Title</label>
+            <input type="text" name="title" placeholder="e.g., Owner, Founder, CEO" required>
           </div>
         </div>
 
         <div class="form-row-2">
           <div class="field">
+            <label>Business email</label>
+            <input type="email" name="contact" placeholder="owner@yourbrand.com" required>
+          </div>
+          <div class="field">
             <label>Business name</label>
             <input type="text" name="business_name" placeholder="Brand / Company" required>
           </div>
-          <div class="field">
-            <label>Website or social profile</label>
-            <input type="text" name="website_social" placeholder="yourdomain.com or @handle" required>
-          </div>
+        </div>
+
+        <div class="field">
+          <label>Website or social profile</label>
+          <input type="text" name="website_social" placeholder="yourdomain.com or @handle" required>
         </div>
 
         <div class="field">
@@ -801,18 +806,24 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
       <form onsubmit="return handleSubmit(event,'school','eduSuccess','eduError')">
         <div class="form-row-2">
           <div class="field">
-            <label>Full name &amp; title</label>
-            <input type="text" name="name" placeholder="Name, Title" required>
+            <label>Full name</label>
+            <input type="text" name="name" placeholder="First & Last Name" required>
           </div>
+          <div class="field">
+            <label>Role / Title</label>
+            <input type="text" name="title" placeholder="e.g., Principal, STEM Lead, Instructor" required>
+          </div>
+        </div>
+
+        <div class="form-row-2">
           <div class="field">
             <label>Email address</label>
             <input type="email" name="contact" placeholder="educator@school.edu" required>
           </div>
-        </div>
-
-        <div class="field">
-          <label>School / institution / organization</label>
-          <input type="text" name="institution" placeholder="District, School, or Organization Name" required>
+          <div class="field">
+            <label>School / institution / organization</label>
+            <input type="text" name="institution" placeholder="District, School, or Organization Name" required>
+          </div>
         </div>
 
         <div class="field">
@@ -875,8 +886,6 @@ const utmSource = urlParams.get('utm_source') || 'direct';
 const utmCampaign = urlParams.get('utm_campaign') || null;
 
 // TWO-WAY PACKAGE & SERVICE LOGIC
-var isUserCustomizing = false;
-
 function setCheckboxesByTier(tierVal) {
   var cbs = document.querySelectorAll('.biz-service-cb');
   cbs.forEach(function(cb) {
@@ -885,7 +894,7 @@ function setCheckboxesByTier(tierVal) {
     } else if (tierVal.includes('Tier 2')) {
       cb.checked = (cb.value === 'CRM & Pipeline Setup' || cb.value === 'Review Automation' || cb.value === 'Attribution & Analytics');
     } else if (tierVal.includes('Tier 3')) {
-      cb.checked = true; // All services included in full ecosystem
+      cb.checked = true;
     }
   });
 }
@@ -946,7 +955,6 @@ function updateFormDisplay() {
   var isBiweekly = document.querySelector('input[name="bizcadence"][value="Bi-weekly billing"]:checked');
 
   if(selectedOpt.value.includes('Custom')) {
-    // Calculate custom sum of selected services
     var cbs = document.querySelectorAll('.biz-service-cb:checked');
     var customSum = 0;
     cbs.forEach(function(cb){ customSum += parseInt(cb.dataset.cost, 10) || 0; });
