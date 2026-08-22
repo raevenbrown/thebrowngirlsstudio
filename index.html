@@ -1117,14 +1117,29 @@ async function handleSubmit(e, type, successId, errorId){
     selectedServices.push(cb.value);
   });
 
-  // Extract dynamically calculated price display
+// Extract dynamically calculated price display with fallback
   var calculatedPrice = null;
   if (type === 'business') {
-    var priceEl = document.getElementById('bizTotal');
-    if (priceEl) calculatedPrice = priceEl.textContent.trim();
+    var pEl = document.getElementById('bizTotal') || 
+              document.getElementById('bizEstimate') || 
+              document.querySelector('.biz-price-val') ||
+              document.querySelector('[id*="price"]') ||
+              document.querySelector('[id*="total"]');
+    if (pEl) calculatedPrice = pEl.textContent.replace(/\s+/g, ' ').trim();
+    
+    // Fallback: Calculate from tier or selected services
+    if (!calculatedPrice) {
+      var tier = fd.get('biz_package') || '';
+      if (tier.includes('Tier 1')) calculatedPrice = '$1,500/mo';
+      else if (tier.includes('Tier 2')) calculatedPrice = '$2,800/mo';
+      else if (tier.includes('Tier 3')) calculatedPrice = '$4,500/mo';
+      else if (selectedServices.length > 0) calculatedPrice = '$' + (selectedServices.length * 600) + '/mo';
+    }
   } else {
-    var eduPriceEl = document.getElementById('eduEstimate') || document.getElementById('eduTotal');
-    if (eduPriceEl) calculatedPrice = eduPriceEl.textContent.trim();
+    var eduPEl = document.getElementById('eduEstimate') || 
+                 document.getElementById('eduTotal') || 
+                 document.querySelector('.edu-price-val');
+    if (eduPEl) calculatedPrice = eduPEl.textContent.replace(/\s+/g, ' ').trim();
   }
 
   var row = {
