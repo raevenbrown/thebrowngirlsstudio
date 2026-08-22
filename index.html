@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Brown Girls Creative Studio — Data Architecture, AI Innovation, Workforce Impact</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;0,9..144,700;1,9..144,450&family=Public+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --espresso:#2A160E;
+  --espresso-2:#3B2216;
+  --espresso-3:#4A2C1C;
+  --cream:#F3E8D6;
+  --cream-dim:#DCC9A8;
+  --gold:#C7994F;
+  --gold-bright:#E3BD79;
+  --ink:#1C2A3A;
+  --ink-bright:#3D5A78;
+  --leak:#A3462E;
+  --leak-bright:#C96448;
+  --good:#5F7A4E;
+  --good-bright:#8AA873;
+  --line: rgba(243,232,214,0.16);
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--espresso);
+  color:var(--cream);
+  font-family:'Public Sans', sans-serif;
+  font-weight:400;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4{
+  font-family:'Fraunces', serif;
+  font-weight:600;
+  letter-spacing:-0.01em;
+  line-height:1.08;
+}
+.mono{ font-family:'IBM Plex Mono', monospace; }
+a{ color:inherit; }
+img,svg{ display:block; }
+button{ font-family:inherit; cursor:pointer; }
+::selection{ background:var(--gold); color:var(--espresso); }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+}
+
+/* ---------- shared layout ---------- */
+.wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+.eyebrow{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11.5px;
+  letter-spacing:0.22em;
+  text-transform:uppercase;
+  color:var(--gold-bright);
+  display:flex; align-items:center; gap:10px;
+}
+.eyebrow::before{ content:''; width:22px; height:1px; background:var(--gold); display:inline-block; }
+.hairline{ height:1px; background:var(--line); border:0; margin:0; }
+
+.entry-frame{ position:relative; border-top:1px solid var(--line); }
+.entry-tag{
+  position:absolute; left:0; top:44px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px; letter-spacing:0.16em; color:var(--cream-dim);
+  writing-mode:vertical-rl; text-orientation:mixed;
+  opacity:0.55;
+}
+@media (max-width:900px){ .entry-tag{ display:none; } }
+
+/* ---------- nav ---------- */
+nav{
+  position:sticky; top:0; z-index:50;
+  background:rgba(42,22,14,0.92);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1180px; margin:0 auto; padding:16px 32px;
+  display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.logo-mark{ font-family:'Fraunces', serif; font-weight:700; font-size:20px; letter-spacing:-0.01em; white-space:nowrap; }
+.logo-mark span{ color:var(--gold-bright); }
+.nav-links{ display:flex; gap:30px; font-size:14.5px; }
+.nav-links a{ text-decoration:none; color:var(--cream-dim); transition:color 0.2s; position:relative; }
+.nav-links a:hover{ color:var(--cream); }
+.nav-cta{
+  background:var(--gold); color:var(--espresso); border:none;
+  padding:11px 20px; border-radius:2px; font-size:13.5px; font-weight:600;
+  letter-spacing:0.02em; white-space:nowrap;
+  transition:background 0.2s, transform 0.15s;
+}
+.nav-cta:hover{ background:var(--gold-bright); transform:translateY(-1px); }
+@media (max-width:860px){ .nav-links{ display:none; } }
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative; padding:120px 0 100px; overflow:hidden;
+  background-image:
+    linear-gradient(rgba(243,232,214,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243,232,214,0.05) 1px, transparent 1px);
+  background-size:56px 56px;
+}
+.hero::after{
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 55% at 78% 18%, rgba(199,153,79,0.16), transparent 70%),
+             radial-gradient(ellipse 45% 45% at 8% 92%, rgba(163,70,46,0.10), transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{ position:relative; max-width:800px; }
+.hero h1{
+  font-size:clamp(38px, 5.4vw, 68px);
+  margin:22px 0 26px;
+  color:var(--cream);
+}
+.hero h1 em{ font-style:italic; color:var(--gold-bright); font-weight:450; }
+.hero p.lede{ font-size:18px; color:var(--cream-dim); max-width:560px; margin-bottom:38px; }
+.btn-row{ display:flex; gap:16px; flex-wrap:wrap; }
+.btn{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:14px 26px; border-radius:2px; font-size:14.5px; font-weight:600;
+  text-decoration:none; border:1px solid transparent; transition:all 0.2s;
+}
+.btn-primary{ background:var(--gold); color:var(--espresso); }
+.btn-primary:hover{ background:var(--gold-bright); transform:translateY(-1px); }
+.btn-ghost{ border-color:var(--line); color:var(--cream); }
+.btn-ghost:hover{ border-color:var(--gold); color:var(--gold-bright); }
+
+.ledger-tape{
+  margin-top:56px; display:flex; gap:0; flex-wrap:wrap;
+  border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.tape-item{
+  flex:1; min-width:150px; padding:16px 20px; border-right:1px solid var(--line);
+}
+.tape-item:last-child{ border-right:none; }
+.tape-item .num{ font-family:'IBM Plex Mono'; font-size:22px; color:var(--gold-bright); }
+.tape-item .lbl{ font-size:12px; color:var(--cream-dim); letter-spacing:0.04em; margin-top:4px; }
+
+/* ---------- section generic ---------- */
+section{ padding:96px 0; }
+.section-head{ max-width:640px; margin-bottom:52px; }
+.section-head h2{ font-size:clamp(28px,3.4vw,42px); margin-top:16px; }
+.section-head p{ color:var(--cream-dim); margin-top:14px; font-size:16px; }
+
+/* ---------- reality check table ---------- */
+.reality{ display:grid; grid-template-columns:1fr 1fr; gap:0; border:1px solid var(--line); }
+.reality-col{ padding:0; }
+.reality-col-head{
+  padding:22px 26px; font-family:'IBM Plex Mono'; font-size:13px; letter-spacing:0.08em;
+  text-transform:uppercase; display:flex; align-items:center; gap:10px;
+}
+.reality-col.blind .reality-col-head{ background:rgba(163,70,46,0.14); color:var(--leak-bright); border-bottom:1px solid var(--line); }
+.reality-col.dialed .reality-col-head{ background:rgba(199,153,79,0.14); color:var(--gold-bright); border-bottom:1px solid var(--line); }
+.reality-row{ padding:20px 26px; border-top:1px solid var(--line); font-size:15px; color:var(--cream-dim); }
+.reality-col.blind .reality-row{ border-right:1px solid var(--line); }
+.reality-row b{ display:block; color:var(--cream); font-weight:600; margin-bottom:3px; font-family:'Public Sans'; }
+@media (max-width:760px){ .reality{ grid-template-columns:1fr; } .reality-col.blind .reality-row{ border-right:none; } }
+
+/* ---------- audit / ledger ---------- */
+.audit-grid{ display:grid; grid-template-columns:1.05fr 0.95fr; gap:48px; align-items:start; }
+@media (max-width:900px){ .audit-grid{ grid-template-columns:1fr; } }
+.audit-check{
+  border:1px solid var(--line); padding:8px;
+}
+.check-item{
+  display:flex; align-items:flex-start; gap:14px; padding:16px 18px;
+  border-bottom:1px solid var(--line); cursor:pointer; transition:background 0.15s;
+}
+.check-item:last-child{ border-bottom:none; }
+.check-item:hover{ background:rgba(243,232,214,0.03); }
+.check-box{
+  width:20px; height:20px; flex:none; border:1.5px solid var(--gold); border-radius:2px;
+  display:flex; align-items:center; justify-content:center; margin-top:2px;
+  transition:background 0.15s;
+}
+.check-box.on{ background:var(--gold); }
+.check-box svg{ width:12px; height:12px; opacity:0; transition:opacity 0.1s; }
+.check-box.on svg{ opacity:1; }
+.check-text{ font-size:14.5px; color:var(--cream-dim); }
+.check-item.on .check-text{ color:var(--cream); }
+.check-leak{ font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--leak-bright); margin-top:3px; }
+
+.receipt{
+  background:var(--espresso-2); border:1px solid var(--line);
+  padding:28px 26px; font-family:'IBM Plex Mono';
+  position:sticky; top:96px;
+}
+.receipt-head{ display:flex; justify-content:space-between; font-size:11px; letter-spacing:0.1em; color:var(--cream-dim); text-transform:uppercase; padding-bottom:14px; border-bottom:1px dashed var(--line); }
+.receipt-line{ display:flex; justify-content:space-between; font-size:13px; padding:9px 0; border-bottom:1px dashed var(--line); color:var(--cream-dim); }
+.receipt-line span:last-child{ color:var(--leak-bright); }
+.receipt-empty{ font-size:13px; color:var(--cream-dim); opacity:0.6; padding:14px 0; text-align:center; }
+.receipt-total{ display:flex; justify-content:space-between; align-items:baseline; padding:18px 0 6px; font-size:15px; }
+.receipt-total b{ font-size:22px; color:var(--gold-bright); }
+.receipt-grade{ display:flex; justify-content:space-between; font-size:12px; color:var(--cream-dim); padding-top:4px; }
+.receipt-grade b{ color:var(--cream); font-size:14px; }
+.receipt-rec{
+  margin-top:18px; background:rgba(199,153,79,0.1); border:1px solid var(--gold); padding:14px 16px;
+  font-family:'Public Sans'; font-size:13.5px; color:var(--cream);
+}
+.receipt-rec b{ color:var(--gold-bright); display:block; margin-bottom:4px; font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; }
+
+.cadence-toggle{ display:flex; gap:0; border:1px solid var(--line); width:fit-content; margin:0 0 22px; }
+.cadence-toggle button{
+  background:none; border:none; color:var(--cream-dim); padding:9px 18px; font-size:12.5px;
+  font-family:'IBM Plex Mono'; letter-spacing:0.05em; transition:all 0.15s;
+}
+.cadence-toggle button.active{ background:var(--gold); color:var(--espresso); }
+
+/* ---------- pricing ---------- */
+.tiers{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:8px; }
+@media (max-width:900px){ .tiers{ grid-template-columns:1fr; } }
+.tier{ border:1px solid var(--line); padding:30px 26px; display:flex; flex-direction:column; transition:border-color 0.2s; }
+.tier.featured{ border-color:var(--gold); background:rgba(199,153,79,0.06); }
+.tier-eyebrow{ font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.1em; color:var(--gold-bright); text-transform:uppercase; }
+.tier h3{ font-size:22px; margin:12px 0 10px; }
+.tier .desc{ font-size:14px; color:var(--cream-dim); margin-bottom:22px; flex:1; }
+.tier .price{ font-family:'IBM Plex Mono'; font-size:30px; color:var(--cream); margin-bottom:4px; }
+.tier .price span{ font-size:13px; color:var(--cream-dim); }
+.tier .sub-price{ font-size:12px; color:var(--cream-dim); margin-bottom:20px; }
+.tier a.btn{ text-align:center; justify-content:center; }
+
+/* ---------- solution split ---------- */
+.solution-split{ display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; }
+@media (max-width:860px){ .solution-split{ grid-template-columns:1fr; gap:36px; } }
+.modes{ display:flex; flex-direction:column; gap:16px; margin-top:26px; }
+.mode-card{ border:1px solid var(--line); padding:18px 20px; }
+.mode-card b{ display:block; font-family:'Fraunces'; font-size:17px; color:var(--gold-bright); margin-bottom:5px; }
+.mode-card p{ font-size:13.5px; color:var(--cream-dim); }
+.blueprint-art{
+  border:1px solid var(--line); aspect-ratio:1/1; position:relative;
+  background:
+    linear-gradient(rgba(199,153,79,0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(199,153,79,0.09) 1px, transparent 1px);
+  background-size:24px 24px;
+  display:flex; align-items:center; justify-content:center;
+}
+
+/* ---------- ecosystem grid ---------- */
+.eco-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:8px; }
+@media (max-width:900px){ .eco-grid{ grid-template-columns:repeat(2,1fr); } }
+.eco-cell{ background:var(--espresso); padding:28px 22px; }
+.eco-cell .eco-num{ font-family:'IBM Plex Mono'; font-size:12px; color:var(--gold-bright); }
+.eco-cell h4{ font-size:18px; margin:14px 0 8px; }
+.eco-cell p{ font-size:13.5px; color:var(--cream-dim); }
+
+/* ---------- education / avatar lab ---------- */
+.edu-wrap{ display:grid; grid-template-columns:0.85fr 1.15fr; gap:56px; align-items:start; }
+@media (max-width:900px){ .edu-wrap{ grid-template-columns:1fr; } }
+.avatar-box{ border:1px solid var(--line); padding:26px; background:var(--espresso-2); }
+.avatar-stage{
+  width:100%; aspect-ratio:1/1; max-width:280px; margin:0 auto 22px;
+  display:flex; align-items:center; justify-content:center;
+}
+.style-row{ display:flex; gap:8px; flex-wrap:wrap; margin-top:8px; justify-content:center; }
+.style-btn{
+  background:none; border:1px solid var(--line); color:var(--cream-dim);
+  padding:9px 14px; border-radius:20px; font-size:12.5px; transition:all 0.15s;
+}
+.style-btn.active{ border-color:var(--gold); color:var(--gold-bright); background:rgba(199,153,79,0.1); }
+.avatar-caption{ text-align:center; font-size:12.5px; color:var(--cream-dim); margin-top:16px; font-family:'IBM Plex Mono'; }
+
+.edu-tracks{ display:flex; flex-direction:column; gap:0; }
+.edu-track{ padding:24px 0; border-top:1px solid var(--line); display:grid; grid-template-columns:110px 1fr; gap:20px; }
+.edu-track:last-child{ border-bottom:1px solid var(--line); }
+.edu-track .grade{ font-family:'IBM Plex Mono'; font-size:11.5px; color:var(--gold-bright); letter-spacing:0.04em; }
+.edu-track h4{ font-size:18px; margin-bottom:6px; }
+.edu-track p{ font-size:14px; color:var(--cream-dim); }
+
+/* ---------- apprenticeship ---------- */
+.appr-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:20px; margin-top:8px; }
+@media (max-width:900px){ .appr-grid{ grid-template-columns:repeat(2,1fr); } }
+.appr-card{ border:1px solid var(--line); padding:24px 20px; }
+.appr-card h4{ font-size:16.5px; margin-bottom:10px; color:var(--gold-bright); }
+.appr-card ul{ list-style:none; font-size:13px; color:var(--cream-dim); display:flex; flex-direction:column; gap:6px; }
+.appr-card li::before{ content:'—'; color:var(--gold); margin-right:6px; }
+
+/* ---------- intake forms ---------- */
+.intake-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
+@media (max-width:860px){ .intake-wrap{ grid-template-columns:1fr; } }
+.intake-panel{ background:var(--espresso); padding:38px 34px; }
+.intake-panel.biz{ background:linear-gradient(180deg, rgba(163,70,46,0.06), transparent 40%); }
+.intake-panel.edu{ background:linear-gradient(180deg, rgba(199,153,79,0.08), transparent 40%); }
+.intake-panel h3{ font-size:22px; margin-bottom:6px; }
+.intake-panel .intake-sub{ font-size:13.5px; color:var(--cream-dim); margin-bottom:26px; }
+.field{ margin-bottom:16px; }
+.field label{ display:block; font-size:12px; letter-spacing:0.05em; color:var(--cream-dim); margin-bottom:6px; font-family:'IBM Plex Mono'; text-transform:uppercase; }
+.field input, .field select{
+  width:100%; background:var(--espresso-2); border:1px solid var(--line); color:var(--cream);
+  padding:11px 12px; border-radius:2px; font-size:14px; font-family:'Public Sans';
+}
+.field input:focus, .field select:focus{ outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold); }
+.radio-row{ display:flex; gap:10px; flex-wrap:wrap; }
+.radio-opt{ display:flex; align-items:center; gap:7px; border:1px solid var(--line); padding:9px 13px; border-radius:2px; font-size:13px; cursor:pointer; flex:1; min-width:140px; }
+.radio-opt input{ width:auto; accent-color:var(--gold); }
+.radio-opt.checked{ border-color:var(--gold); background:rgba(199,153,79,0.08); }
+.submit-btn{ width:100%; border:none; padding:14px; margin-top:8px; border-radius:2px; font-weight:600; font-size:14px; letter-spacing:0.02em; transition:all 0.2s; }
+.submit-btn.biz{ background:var(--leak); color:var(--cream); }
+.submit-btn.biz:hover{ background:var(--leak-bright); }
+.submit-btn.edu{ background:var(--gold); color:var(--espresso); }
+.submit-btn.edu:hover{ background:var(--gold-bright); }
+.form-success{ font-size:13.5px; color:var(--good-bright); font-family:'IBM Plex Mono'; padding-top:10px; display:none; }
+
+footer{ border-top:1px solid var(--line); padding:36px 0; }
+.footer-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+.footer-inner .logo-mark{ font-size:16px; }
+.footer-inner p{ font-size:12.5px; color:var(--cream-dim); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo-mark">the brown girls <span>creative studio</span></div>
+    <div class="nav-links">
+      <a href="#solution">Studio Services</a>
+      <a href="#metrix">Creative Metrix</a>
+      <a href="#education">School Labs</a>
+      <a href="#apprenticeship">Apprenticeships</a>
+    </div>
+    <button class="nav-cta" onclick="document.getElementById('audit').scrollIntoView({behavior:'smooth'})">Run Free Audit</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Data Architecture · AI Innovation · Workforce Impact</div>
+    <h1>Building the front end, back end, <em>and future</em> of local business.</h1>
+    <p class="lede">We turn disconnected operations into streamlined, data-driven growth machines with Creative Metrix — while training the next generation of AI and tech talent right here in our community.</p>
+    <div class="btn-row">
+      <a href="#audit" class="btn btn-primary">Run your 2-minute growth audit</a>
+      <a href="#education" class="btn btn-ghost">Partner with our studio</a>
+    </div>
+    <div class="ledger-tape">
+      <div class="tape-item"><div class="num">10</div><div class="lbl">Creative Metrix modules built for owners</div></div>
+      <div class="tape-item"><div class="num">0</div><div class="lbl">New software subscriptions required</div></div>
+      <div class="tape-item"><div class="num">K–12</div><div class="lbl">Applied AI labs open to district partners</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- REALITY CHECK -->
+<section id="solution">
+  <div class="wrap entry-frame">
+    <span class="entry-tag mono">ENTRY NO. 01 — THE PROBLEM</span>
+    <div class="section-head">
+      <div class="eyebrow">Where most businesses lose revenue</div>
+      <h2>Half‑stepping vs. clean architecture.</h2>
+      <p>Profit hides operational chaos. Most owners work fourteen‑hour days and assume everything is fine — until foot traffic dips, an ad flops, or a batch of bad reviews sits unanswered for three weeks.</p>
+    </div>
+
+    <div class="reality">
+      <div class="reality-col blind">
+        <div class="reality-col-head">🛑 Operating blind</div>
+        <div class="reality-row"><b>Ignored reputation</b>Unanswered Google reviews and outdated profiles.</div>
+        <div class="reality-row"><b>Blind marketing</b>Running ads or attending events with zero source tracking.</div>
+        <div class="reality-row"><b>Data in silos</b>DMs, POS, calls, and spreadsheets living in separate places.</div>
+        <div class="reality-row"><b>Tool fatigue</b>Paying for five different subscriptions nobody actually uses.</div>
+      </div>
+      <div class="reality-col dialed">
+        <div class="reality-col-head">🟢 Creative Metrix standard</div>
+        <div class="reality-row"><b>Automated alerts &amp; replies</b>Active engagement across every review channel.</div>
+        <div class="reality-row"><b>True attribution</b>Real-time visibility into foot traffic vs. digital ROI.</div>
+        <div class="reality-row"><b>Centralized intake</b>Every lead and transaction captured in one pipeline.</div>
+        <div class="reality-row"><b>Zero overhead</b>Dashboards built directly inside your existing tools.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIT -->
+<section id="audit" style="background:var(--espresso-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap entry-frame" style="border-top:none;">
+    <span class="entry-tag mono">ENTRY NO. 02 — THE DIAGNOSTIC</span>
+    <div class="section-head">
+      <div class="eyebrow">Live growth &amp; leak audit</div>
+      <h2>What's happening behind your counter?</h2>
+      <p>Check what applies. We'll total the estimated monthly leak in real time and hand you the tier built to close it.</p>
+    </div>
+
+    <div class="audit-grid">
+      <div class="audit-check" id="auditCheck">
+        <label class="check-item" data-leak="350">
+          <input type="checkbox" style="display:none">
+          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span><span class="check-text">I haven't replied to every Google or social review in the last 30 days.</span><div class="check-leak">~$350/mo in lost trust &amp; repeat visits</div></span>
+        </label>
+        <label class="check-item" data-leak="425">
+          <input type="checkbox" style="display:none">
+          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span><span class="check-text">I can't track which event, flyer, or ad actually drove a sale this month.</span><div class="check-leak">~$425/mo in unmeasured ad spend</div></span>
+        </label>
+        <label class="check-item" data-leak="200">
+          <input type="checkbox" style="display:none">
+          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span><span class="check-text">My website hasn't been updated for mobile conversion in six-plus months.</span><div class="check-leak">~$200/mo in dropped mobile traffic</div></span>
+        </label>
+        <label class="check-item" data-leak="300">
+          <input type="checkbox" style="display:none">
+          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span><span class="check-text">Inquiries from DMs, phone calls, and my website all sit in different places.</span><div class="check-leak">~$300/mo in missed inquiries</div></span>
+        </label>
+        <label class="check-item" data-leak="375">
+          <input type="checkbox" style="display:none">
+          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span><span class="check-text">I have no automated system to bring past customers back to purchase again.</span><div class="check-leak">~$375/mo in lost repeat business</div></span>
+        </label>
+        <label class="check-item" data-leak="250">
+          <input type="checkbox" style="display:none">
+          <span class="check-box"><svg viewBox="0 0 24 24" fill="none" stroke="#2A160E" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          <span><span class="check-text">I'm not consistently documenting behind-the-scenes moments to build trust online.</span><div class="check-leak">~$250/mo in weaker brand pull</div></span>
+        </label>
+      </div>
+
+      <div class="receipt">
+        <div class="receipt-head"><span>Leak Ledger</span><span id="receiptDate"></span></div>
+        <div id="receiptLines">
+          <div class="receipt-empty">Check a box to start the tally →</div>
+        </div>
+        <div class="receipt-total"><span>Estimated monthly leak</span><b id="totalLeak">$0</b></div>
+        <div class="receipt-grade"><span>Operational health grade</span><b id="healthGrade">100 / 100</b></div>
+        <div class="receipt-rec" id="recBox">
+          <b>Recommended path</b>
+          Check a few boxes above and we'll match you to a tier.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section>
+  <div class="wrap entry-frame">
+    <span class="entry-tag mono">ENTRY NO. 03 — THE INVESTMENT</span>
+    <div class="section-head">
+      <div class="eyebrow">Pricing tiers</div>
+      <h2>Three ways to close the leak.</h2>
+    </div>
+
+    <div class="cadence-toggle">
+      <button class="active" data-cadence="monthly">Monthly</button>
+      <button data-cadence="biweekly">Bi‑weekly</button>
+    </div>
+
+    <div class="tiers">
+      <div class="tier" id="tier1">
+        <div class="tier-eyebrow">Tier 1 · Done‑With‑You</div>
+        <h3>Foundations &amp; Systems Training</h3>
+        <p class="desc">Dashboard setup, four weeks of one‑on‑one team training, and a full SOP manual so your team runs it without us.</p>
+        <div class="price" data-monthly="$950" data-biweekly="$475">$950<span>/mo</span></div>
+        <div class="sub-price" data-monthly-sub="2‑month sprint" data-biweekly-sub="2‑month sprint">2‑month sprint</div>
+        <a href="#business-intake" class="btn btn-ghost">Start here</a>
+      </div>
+      <div class="tier featured" id="tier2">
+        <div class="tier-eyebrow">Tier 2 · Done‑For‑You</div>
+        <h3>Managed Growth Engine</h3>
+        <p class="desc">Full back‑end integration, automated review capture, and monthly reporting — we run it, you get the numbers.</p>
+        <div class="price" data-monthly="$1,250" data-biweekly="$625">$1,250<span>/mo</span></div>
+        <div class="sub-price">Most-recommended tier</div>
+        <a href="#business-intake" class="btn btn-primary">Start here</a>
+      </div>
+      <div class="tier" id="tier3">
+        <div class="tier-eyebrow">Tier 3 · Full Ecosystem</div>
+        <h3>Full‑Scale Operations + Marketing</h3>
+        <p class="desc">Everything in Tier 2, plus web redesign, social storytelling, local PR, and targeted ad campaigns.</p>
+        <div class="price" data-monthly="$2,500" data-biweekly="$1,250">$2,500<span>/mo</span></div>
+        <div class="sub-price">For full-scale growth</div>
+        <a href="#business-intake" class="btn btn-ghost">Start here</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE SOLUTION -->
+<section id="metrix" style="background:var(--espresso-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap entry-frame" style="border-top:none;">
+    <span class="entry-tag mono">ENTRY NO. 04 — THE SYSTEM</span>
+    <div class="solution-split">
+      <div>
+        <div class="eyebrow">The core solution</div>
+        <h2 style="margin-top:16px;">Creative Metrix.</h2>
+        <p style="color:var(--cream-dim); margin-top:16px; font-size:16px;">An all‑in‑one operational command center customized for your business. We don't sell you expensive new software — we integrate your current POS, Google Workspace, and sales channels into one unified, visual narrative that shows exactly where your profit is coming from.</p>
+        <div class="modes">
+          <div class="mode-card"><b>Done‑For‑You</b><p>We build, maintain, and report on your data infrastructure every month.</p></div>
+          <div class="mode-card"><b>Done‑With‑You</b><p>We build your system and train you or your staff to manage it independently.</p></div>
+        </div>
+      </div>
+      <div class="blueprint-art">
+        <svg width="70%" height="70%" viewBox="0 0 200 200" fill="none">
+          <circle cx="100" cy="100" r="70" stroke="#C7994F" stroke-width="1" opacity="0.5"/>
+          <circle cx="100" cy="100" r="46" stroke="#C7994F" stroke-width="1" opacity="0.35"/>
+          <line x1="100" y1="8" x2="100" y2="192" stroke="#C7994F" stroke-width="1" opacity="0.3"/>
+          <line x1="8" y1="100" x2="192" y2="100" stroke="#C7994F" stroke-width="1" opacity="0.3"/>
+          <rect x="80" y="80" width="40" height="40" stroke="#E3BD79" stroke-width="1.5"/>
+          <circle cx="100" cy="100" r="4" fill="#E3BD79"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM -->
+<section>
+  <div class="wrap entry-frame">
+    <span class="entry-tag mono">ENTRY NO. 05 — THE ECOSYSTEM</span>
+    <div class="section-head">
+      <div class="eyebrow">Add-on modules</div>
+      <h2>Once the back end is clean, scale the front end.</h2>
+    </div>
+    <div class="eco-grid">
+      <div class="eco-cell"><div class="eco-num">01</div><h4>Web &amp; funnel design</h4><p>High‑converting landing pages and responsive websites.</p></div>
+      <div class="eco-cell"><div class="eco-num">02</div><h4>Brand storytelling</h4><p>Real-world documentation, video strategy, and community building.</p></div>
+      <div class="eco-cell"><div class="eco-num">03</div><h4>Local PR &amp; media</h4><p>Press releases, event marketing support, and local visibility.</p></div>
+      <div class="eco-cell"><div class="eco-num">04</div><h4>Targeted ad campaigns</h4><p>Multi‑channel advertising with end‑to‑end conversion tracking.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" style="background:var(--espresso-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="wrap entry-frame" style="border-top:none;">
+    <span class="entry-tag mono">ENTRY NO. 06 — THE NEXT GENERATION</span>
+    <div class="section-head">
+      <div class="eyebrow">Education &amp; workforce</div>
+      <h2>Applied AI labs for schools.</h2>
+      <p>Open to partnerships with K–12 schools, district academies, and community organizations.</p>
+    </div>
+
+    <div class="edu-wrap">
+      <div class="avatar-box">
+        <div class="avatar-stage" id="avatarStage"></div>
+        <div class="style-row" id="styleRow">
+          <button class="style-btn active" data-hair="braids">Neon braids</button>
+          <button class="style-btn" data-hoodie="on">Tech hoodie</button>
+          <button class="style-btn" data-glasses="on">Studio glasses</button>
+        </div>
+        <div class="avatar-caption">MEET BYTE — THE STUDIO AI MASCOT</div>
+      </div>
+
+      <div class="edu-tracks">
+        <div class="edu-track">
+          <div class="grade">GRADES<br>1–5</div>
+          <div><h4>Avatar AI &amp; dress‑up studio</h4><p>Gamified learning where students solve logic puzzles and prompt styling attributes to unlock outfits and build their own custom digital avatar — like the one above.</p></div>
+        </div>
+        <div class="edu-track">
+          <div class="grade">GRADES<br>6–12</div>
+          <div><h4>Applied AI &amp; coding labs</h4><p>Practical AI literacy: vector search, local knowledge bases (RAG concepts), Python fundamentals, and building functional chatbots.</p></div>
+        </div>
+        <div class="edu-track">
+          <div class="grade">HS &amp;<br>BEYOND</div>
+          <div><h4>Project‑based practicum</h4><p>Students shadow real client projects, earn Work‑Based Learning portfolio credit, and gain hands‑on tech experience.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APPRENTICESHIP -->
+<section id="apprenticeship">
+  <div class="wrap entry-frame">
+    <span class="entry-tag mono">ENTRY NO. 07 — THE PIPELINE</span>
+    <div class="section-head">
+      <div class="eyebrow">Careers &amp; talent</div>
+      <h2>Apprenticeship &amp; internship tracks.</h2>
+      <p>Bridging classroom theory with real client deliverables for secondary and university students.</p>
+    </div>
+    <div class="appr-grid">
+      <div class="appr-card">
+        <h4>AI Engineering &amp; Data Science</h4>
+        <ul><li>Vector indexing</li><li>Python data pipelines</li><li>Local AI prototypes</li></ul>
+      </div>
+      <div class="appr-card">
+        <h4>Operations &amp; Dashboard Analytics</h4>
+        <ul><li>Looker Studio / Power BI</li><li>SQL querying</li><li>CRM workflows</li></ul>
+      </div>
+      <div class="appr-card">
+        <h4>Front‑End &amp; Creative Web</h4>
+        <ul><li>UI wireframing</li><li>Streamlit prototyping</li><li>Web design</li></ul>
+      </div>
+      <div class="appr-card">
+        <h4>Growth Marketing &amp; Content</h4>
+        <ul><li>Video documentation</li><li>PR support</li><li>Community storytelling</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTAKE -->
+<section style="padding-bottom:0;">
+  <div class="wrap entry-frame" style="border-bottom:none;">
+    <span class="entry-tag mono">ENTRY NO. 08 — GET STARTED</span>
+    <div class="section-head">
+      <div class="eyebrow">Two paths in</div>
+      <h2>Tell us where you're building from.</h2>
+    </div>
+  </div>
+
+  <div class="intake-wrap">
+    <div class="intake-panel biz" id="business-intake">
+      <h3>🚀 For business owners</h3>
+      <p class="intake-sub">Ready to stop half‑stepping and plug your operational leaks?</p>
+      <form onsubmit="return handleSubmit(event,'bizSuccess')">
+        <div class="field"><label>Business name</label><input type="text" required></div>
+        <div class="field"><label>Website / social profile</label><input type="text" required></div>
+        <div class="field">
+          <label>Service model desired</label>
+          <div class="radio-row">
+            <label class="radio-opt"><input type="radio" name="bizmodel" required>Build &amp; train</label>
+            <label class="radio-opt"><input type="radio" name="bizmodel">Manage it for me</label>
+            <label class="radio-opt"><input type="radio" name="bizmodel">Full ecosystem</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Billing cadence</label>
+          <div class="radio-row">
+            <label class="radio-opt"><input type="radio" name="bizcadence" required>Monthly retainer</label>
+            <label class="radio-opt"><input type="radio" name="bizcadence">Bi‑weekly billing</label>
+          </div>
+        </div>
+        <button class="submit-btn biz" type="submit">Get my custom growth roadmap</button>
+        <div class="form-success" id="bizSuccess">✓ Received — we'll follow up within one business day.</div>
+      </form>
+    </div>
+
+    <div class="intake-panel edu" id="edu-intake">
+      <h3>🎓 For educators &amp; students</h3>
+      <p class="intake-sub">Bring applied AI labs to your school or join our technical apprenticeship.</p>
+      <form onsubmit="return handleSubmit(event,'eduSuccess')">
+        <div class="field"><label>Name &amp; title</label><input type="text" required></div>
+        <div class="field"><label>School / institution</label><input type="text" required></div>
+        <div class="field">
+          <label>Inquiry type</label>
+          <div class="radio-row">
+            <label class="radio-opt"><input type="radio" name="edutype" required>AI lab partner</label>
+            <label class="radio-opt"><input type="radio" name="edutype">Student internship</label>
+          </div>
+        </div>
+        <div class="field">
+          <label>Target level</label>
+          <div class="radio-row">
+            <label class="radio-opt"><input type="radio" name="edulevel" required>Elementary (K–5)</label>
+            <label class="radio-opt"><input type="radio" name="edulevel">Middle / high school</label>
+            <label class="radio-opt"><input type="radio" name="edulevel">College / grad intern</label>
+          </div>
+        </div>
+        <button class="submit-btn edu" type="submit">Submit partnership / application</button>
+        <div class="form-success" id="eduSuccess">✓ Received — we'll follow up within one business day.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="logo-mark">the brown girls <span>creative studio</span></div>
+    <p>Data architecture, AI innovation, workforce impact — built in‑house, monthly.</p>
+  </div>
+</footer>
+
+<script>
+// ---- radio highlight ----
+document.querySelectorAll('.radio-opt input').forEach(inp=>{
+  inp.addEventListener('change',()=>{
+    document.getElementsByName(inp.name).forEach(r=>r.closest('.radio-opt').classList.remove('checked'));
+    inp.closest('.radio-opt').classList.add('checked');
+  });
+});
+
+// ---- form submit ----
+function handleSubmit(e, successId){
+  e.preventDefault();
+  document.getElementById(successId).style.display='block';
+  e.target.querySelector('.submit-btn').textContent = 'Received ✓';
+  e.target.querySelector('.submit-btn').disabled = true;
+  return false;
+}
+
+// ---- audit ledger ----
+const items = document.querySelectorAll('#auditCheck .check-item');
+const receiptLines = document.getElementById('receiptLines');
+const totalLeakEl = document.getElementById('totalLeak');
+const healthGradeEl = document.getElementById('healthGrade');
+const recBox = document.getElementById('recBox');
+const stepPoints = Math.round(100/items.length);
+
+function shortLabel(text){
+  return text.length > 46 ? text.slice(0,44)+'…' : text;
+}
+
+function updateLedger(){
+  let total = 0, checkedCount = 0, lines = [];
+  items.forEach(item=>{
+    const box = item.querySelector('.check-box');
+    const on = box.classList.contains('on');
+    if(on){
+      checkedCount++;
+      const leak = parseInt(item.dataset.leak,10);
+      total += leak;
+      lines.push({label: shortLabel(item.querySelector('.check-text').textContent), leak});
+    }
+  });
+
+  receiptLines.innerHTML = lines.length
+    ? lines.map(l=>`<div class="receipt-line"><span>${l.label}</span><span>$${l.leak}</span></div>`).join('')
+    : '<div class="receipt-empty">Check a box to start the tally →</div>';
+
+  totalLeakEl.textContent = '$' + total.toLocaleString();
+  const health = Math.max(0, 100 - checkedCount*stepPoints);
+  healthGradeEl.textContent = health + ' / 100';
+  healthGradeEl.style.color = health < 50 ? 'var(--leak-bright)' : (health < 80 ? 'var(--gold-bright)' : 'var(--good-bright)');
+
+  if(checkedCount === 0){
+    recBox.innerHTML = '<b>Recommended path</b>Check a few boxes above and we\\'ll match you to a tier.';
+  } else if(checkedCount <= 2){
+    recBox.innerHTML = '<b>Recommended path</b>Tier 1 — Foundations &amp; Systems Training. Light leaks, quick fix.';
+  } else if(checkedCount <= 4){
+    recBox.innerHTML = '<b>Recommended path</b>Tier 2 — Managed Growth Engine. Meaningful leak, worth automating.';
+  } else {
+    recBox.innerHTML = '<b>Recommended path</b>Tier 3 — Full‑Scale Ecosystem. High leak across the board — go all in.';
+  }
+}
+
+items.forEach(item=>{
+  item.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const box = item.querySelector('.check-box');
+    box.classList.toggle('on');
+    item.classList.toggle('on');
+    updateLedger();
+  });
+});
+
+// receipt date
+document.getElementById('receiptDate').textContent = new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+
+// ---- cadence toggle ----
+document.querySelectorAll('.cadence-toggle button').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.cadence-toggle button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const cadence = btn.dataset.cadence;
+    document.querySelectorAll('.tier').forEach(tier=>{
+      const priceEl = tier.querySelector('.price');
+      const subEl = tier.querySelector('.sub-price');
+      const val = priceEl.dataset[cadence];
+      priceEl.childNodes[0].textContent = val;
+      priceEl.querySelector('span').textContent = cadence === 'monthly' ? '/mo' : '/2wk';
+      if(subEl.dataset[cadence+'Sub']){ subEl.textContent = subEl.dataset[cadence+'Sub']; }
+    });
+  });
+});
+
+// ---- avatar mini demo ----
+const hairColors = {braids:'#E3BD79'};
+let state = { hair:true, hoodie:true, glasses:true };
+
+function renderAvatar(){
+  const s = document.getElementById('avatarStage');
+  s.innerHTML = `
+  <svg width="220" height="220" viewBox="0 0 220 220">
+    <circle cx="110" cy="120" r="58" fill="#D9B48A"/>
+    ${state.hair ? `<path d="M55 100 Q60 40 110 40 Q160 40 165 100 Q165 60 150 60 Q145 90 130 70 Q120 100 105 65 Q95 100 80 68 Q70 92 60 65 Q55 80 55 100 Z" fill="#E3BD79"/>` : `<path d="M60 95 Q65 45 110 45 Q155 45 160 95 Z" fill="#3B2216"/>`}
+    ${state.glasses ? `<rect x="78" y="112" width="30" height="20" rx="4" fill="none" stroke="#2A160E" stroke-width="4"/><rect x="112" y="112" width="30" height="20" rx="4" fill="none" stroke="#2A160E" stroke-width="4"/><line x1="108" y1="120" x2="112" y2="120" stroke="#2A160E" stroke-width="4"/>` : `<circle cx="93" cy="122" r="4" fill="#2A160E"/><circle cx="127" cy="122" r="4" fill="#2A160E"/>`}
+    <path d="M95 148 Q110 158 125 148" stroke="#2A160E" stroke-width="4" fill="none" stroke-linecap="round"/>
+    ${state.hoodie ? `<path d="M45 220 Q45 165 110 165 Q175 165 175 220 Z" fill="#C7994F"/><path d="M70 175 Q110 195 150 175 L150 190 Q110 210 70 190 Z" fill="#3B2216"/>` : `<path d="M50 220 Q50 170 110 170 Q170 170 170 220 Z" fill="#3B2216"/>`}
+  </svg>`;
+}
+renderAvatar();
+
+document.getElementById('styleRow').addEventListener('click',(e)=>{
+  const btn = e.target.closest('.style-btn');
+  if(!btn) return;
+  if(btn.dataset.hair !== undefined){ state.hair = !state.hair; btn.classList.toggle('active', state.hair); }
+  if(btn.dataset.hoodie !== undefined){ state.hoodie = !state.hoodie; btn.classList.toggle('active', state.hoodie); }
+  if(btn.dataset.glasses !== undefined){ state.glasses = !state.glasses; btn.classList.toggle('active', state.glasses); }
+  renderAvatar();
+});
+</script>
+
+</body>
+</html>
