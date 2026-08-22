@@ -1106,7 +1106,7 @@ function setCadence(cadence) {
   }
 }
 
-// FORM SUBMISSION WITH DEDICATED COLUMNS
+// FORM SUBMISSION WITH DEDICATED COLUMNS & ESTIMATED PRICE
 async function handleSubmit(e, type, successId, errorId){
   e.preventDefault();
   var form = e.target;
@@ -1117,6 +1117,16 @@ async function handleSubmit(e, type, successId, errorId){
     selectedServices.push(cb.value);
   });
 
+  // Extract dynamically calculated price display
+  var calculatedPrice = null;
+  if (type === 'business') {
+    var priceEl = document.getElementById('bizTotal');
+    if (priceEl) calculatedPrice = priceEl.textContent.trim();
+  } else {
+    var eduPriceEl = document.getElementById('eduEstimate') || document.getElementById('eduTotal');
+    if (eduPriceEl) calculatedPrice = eduPriceEl.textContent.trim();
+  }
+
   var row = {
     type: type,
     name: fd.get('name'),
@@ -1126,6 +1136,7 @@ async function handleSubmit(e, type, successId, errorId){
     website_social: fd.get('website_social') || null,
     package_tier: fd.get('biz_package') || fd.get('edutype'),
     selected_services: selectedServices.length > 0 ? selectedServices : null,
+    estimated_price: calculatedPrice,
     meeting_date: fd.get('meeting_date') || fd.get('connect_date'),
     meeting_time: fd.get('meeting_time') || fd.get('connect_time'),
     billing_cadence: fd.get('bizcadence') || fd.get('edulevel'),
