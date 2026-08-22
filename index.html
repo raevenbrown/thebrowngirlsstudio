@@ -210,13 +210,17 @@ section{ padding:96px 0; }
 }
 .cadence-toggle button.active{ background:var(--gold); color:var(--espresso); font-weight:600; }
 
+/* TIERS WITH ITEM LISTS */
 .tiers{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; margin-top:8px; }
 @media (max-width:900px){ .tiers{ grid-template-columns:1fr; } }
 .tier{ border:1px solid var(--line); padding:30px 26px; display:flex; flex-direction:column; transition:border-color 0.2s; }
 .tier.featured{ border-color:var(--gold); background:rgba(199,153,79,0.06); }
 .tier-eyebrow{ font-family:'IBM Plex Mono'; font-size:11px; letter-spacing:0.1em; color:var(--gold-bright); text-transform:uppercase; }
 .tier h3{ font-size:22px; margin:12px 0 10px; }
-.tier .desc{ font-size:14px; color:var(--cream-dim); margin-bottom:22px; flex:1; }
+.tier .desc{ font-size:14px; color:var(--cream-dim); margin-bottom:18px; }
+.tier-items{ list-style:none; padding:16px 0; margin-bottom:20px; border-top:1px dashed var(--line); border-bottom:1px dashed var(--line); display:flex; flex-direction:column; gap:10px; flex:1; }
+.tier-items li{ font-size:13px; color:var(--cream); display:flex; align-items:flex-start; gap:8px; line-height:1.4; }
+.tier-items li::before{ content:'✓'; color:var(--gold-bright); font-weight:bold; }
 .tier .price{ font-family:'IBM Plex Mono'; font-size:30px; color:var(--cream); margin-bottom:4px; }
 .tier .price span{ font-size:13px; color:var(--cream-dim); }
 .tier .sub-price{ font-size:12px; color:var(--cream-dim); margin-bottom:20px; }
@@ -447,13 +451,14 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- PRICING TIERS -->
 <section>
   <div class="wrap entry-frame">
     <span class="entry-tag mono">ENTRY NO. 03 — THE INVESTMENT</span>
     <div class="section-head">
       <div class="eyebrow">Pricing tiers</div>
       <h2>Three ways to close the leak.</h2>
+      <p>Select the level of support your business needs. All tiers build directly on your existing tools.</p>
     </div>
 
     <div class="cadence-toggle">
@@ -462,26 +467,60 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
     </div>
 
     <div class="tiers">
+      <!-- TIER 1 -->
       <div class="tier" id="tier1">
         <div class="tier-eyebrow">Tier 1 · Done‑With‑You</div>
         <h3>Foundations &amp; Systems Training</h3>
-        <p class="desc">Dashboard setup, four weeks of one‑on‑one team training, and a full SOP manual so your team runs it without us.</p>
+        <p class="desc">We build the infrastructure, then train you and your team to operate it independently.</p>
+        
+        <ul class="tier-items">
+          <li>Custom Looker / Power BI Dashboard Setup</li>
+          <li>POS &amp; Sales Channel Pipeline Integration</li>
+          <li>4 Weeks of 1-on-1 Operational Training</li>
+          <li>Standard Operating Procedure (SOP) Manual</li>
+          <li>Email &amp; Slack Support During Setup</li>
+        </ul>
+
         <div class="price" data-monthly="$950" data-biweekly="$475" id="priceTier1">$950<span>/mo</span></div>
         <div class="sub-price" id="subTier1">2‑month sprint</div>
         <a href="#business-intake" class="btn btn-ghost">Start here</a>
       </div>
+
+      <!-- TIER 2 -->
       <div class="tier featured" id="tier2">
         <div class="tier-eyebrow">Tier 2 · Done‑For‑You</div>
         <h3>Managed Growth Engine</h3>
-        <p class="desc">Full back‑end integration, automated review capture, and monthly reporting — we run it, you get the numbers.</p>
+        <p class="desc">Full back‑end integration and ongoing management — we maintain the engine, you get the numbers.</p>
+        
+        <ul class="tier-items">
+          <li>Everything in Tier 1 (Foundations Setup)</li>
+          <li>Automated Google &amp; Social Review Alerts</li>
+          <li>Multi-Channel Attribution &amp; ROI Tracking</li>
+          <li>Centralized DM, Call, &amp; Inquiry Hub</li>
+          <li>Monthly KPI &amp; Revenue Growth Reporting</li>
+          <li>Dedicated Monthly Systems Optimization</li>
+        </ul>
+
         <div class="price" data-monthly="$1,250" data-biweekly="$625" id="priceTier2">$1,250<span>/mo</span></div>
         <div class="sub-price">Most-recommended tier</div>
         <a href="#business-intake" class="btn btn-primary">Start here</a>
       </div>
+
+      <!-- TIER 3 -->
       <div class="tier" id="tier3">
         <div class="tier-eyebrow">Tier 3 · Full Ecosystem</div>
         <h3>Full‑Scale Operations + Marketing</h3>
-        <p class="desc">Everything in Tier 2, plus web redesign, social storytelling, local PR, and targeted ad campaigns.</p>
+        <p class="desc">Complete operational management paired with full-service creative, web, and growth marketing.</p>
+        
+        <ul class="tier-items">
+          <li>Everything in Tier 2 (Managed Growth Engine)</li>
+          <li>Full Website &amp; High-Converting Funnel Redesign</li>
+          <li>Brand Storytelling &amp; Video Content Strategy</li>
+          <li>Local PR, Media Outreach &amp; Event Promo</li>
+          <li>Managed Multi-Channel Ad Campaigns (Meta/Google)</li>
+          <li>Bi-Weekly Executive Strategy &amp; Pipeline Reviews</li>
+        </ul>
+
         <div class="price" data-monthly="$2,500" data-biweekly="$1,250" id="priceTier3">$2,500<span>/mo</span></div>
         <div class="sub-price">For full-scale growth</div>
         <a href="#business-intake" class="btn btn-ghost">Start here</a>
