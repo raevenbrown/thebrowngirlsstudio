@@ -296,6 +296,15 @@ section{ padding:96px 0; }
 .radio-opt{ display:flex; align-items:center; gap:7px; border:1px solid var(--line); padding:9px 13px; border-radius:2px; font-size:13px; cursor:pointer; flex:1; min-width:140px; }
 .radio-opt input{ width:auto; accent-color:var(--gold); }
 
+/* DYNAMIC PRICE BADGE IN FORM */
+.package-cost-badge{
+  display:none; align-items:center; justify-content:space-between;
+  background:rgba(199,153,79,0.12); border:1px solid var(--gold);
+  padding:12px 16px; border-radius:2px; margin-top:10px; margin-bottom:16px;
+  font-family:'IBM Plex Mono'; font-size:13px; color:var(--gold-bright);
+}
+.package-cost-badge b{ font-size:16px; color:var(--cream); }
+
 .submit-btn{ width:100%; border:none; padding:14px; margin-top:12px; border-radius:2px; font-weight:600; font-size:14px; letter-spacing:0.02em; transition:all 0.2s; }
 .submit-btn.biz{ background:var(--leak); color:var(--cream); }
 .submit-btn.biz:hover{ background:var(--leak-bright); }
@@ -616,14 +625,14 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   </div>
 </section>
 
-<!-- EDUCATION -->
+<!-- EDUCATION: WITH PARTNER PROGRAM HIGHLIGHTS (Girls Who Code / CTE) -->
 <section id="education" style="background:var(--espresso); border-bottom:1px solid var(--line);">
   <div class="wrap entry-frame" style="border-top:none;">
     <span class="entry-tag mono">ENTRY NO. 05 — THE NEXT GENERATION</span>
     <div class="section-head">
-      <div class="eyebrow">Education &amp; workforce</div>
-      <h2>Applied AI labs for schools.</h2>
-      <p>Open to partnerships with K–12 schools, district academies, and community organizations.</p>
+      <div class="eyebrow">Education &amp; Workforce Labs</div>
+      <h2>Applied AI labs &amp; co-curricular partnerships.</h2>
+      <p>Our programs run in-house through The Brown Girls Creative Studio, and we actively partner with established clubs and curricula (such as <b>Girls Who Code</b>, school STEM clubs, and district CTE programs) to give students real-world business and client-facing tech experience.</p>
     </div>
 
     <div class="edu-wrap">
@@ -644,11 +653,11 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
         </div>
         <div class="edu-track">
           <div class="grade">GRADES<br>6–12</div>
-          <div><h4>Applied AI &amp; coding labs</h4><p>Practical AI literacy: vector search, local knowledge bases (RAG concepts), Python fundamentals, and building functional chatbots.</p></div>
+          <div><h4>Applied AI, Python &amp; Girls Who Code integration</h4><p>Students learn practical AI literacy, prompt engineering, vector search, and chatbot architecture while integrating national curricula like Girls Who Code into applied studio challenges.</p></div>
         </div>
         <div class="edu-track">
           <div class="grade">HS &amp;<br>BEYOND</div>
-          <div><h4>Project‑based practicum</h4><p>Students shadow real client projects, earn Work‑Based Learning portfolio credit, and gain hands‑on tech experience.</p></div>
+          <div><h4>Project‑based practicum on live client data</h4><p>Students shadow live client systems, assist in real dashboard builds, earn Work‑Based Learning portfolio credit, and gain actual workforce experience.</p></div>
         </div>
       </div>
     </div>
@@ -726,13 +735,19 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
 
         <div class="field">
           <label>Target package / service model</label>
-          <select name="biz_package" required>
-            <option value="" disabled selected>Select a Tier...</option>
-            <option value="Tier 1: Foundations & Systems Training ($950/mo)">Tier 1: Foundations &amp; Systems Training ($950/mo)</option>
-            <option value="Tier 2: Managed Growth Engine ($1,250/mo)">Tier 2: Managed Growth Engine ($1,250/mo)</option>
-            <option value="Tier 3: Full-Scale Operations + Marketing ($2,500/mo)">Tier 3: Full-Scale Operations + Marketing ($2,500/mo)</option>
-            <option value="Custom Project / Audit Only">Custom Project / Audit Consultation</option>
+          <select name="biz_package" id="bizPackageSelect" onchange="updatePackageCostDisplay()" required>
+            <option value="" disabled selected>Select a Tier to see investment &amp; options...</option>
+            <option value="Tier 1: Foundations & Systems Training" data-m="$950/mo" data-bw="$475/2wk">Tier 1: Foundations &amp; Systems Training</option>
+            <option value="Tier 2: Managed Growth Engine" data-m="$1,250/mo" data-bw="$625/2wk">Tier 2: Managed Growth Engine (Most Popular)</option>
+            <option value="Tier 3: Full-Scale Operations + Marketing" data-m="$2,500/mo" data-bw="$1,250/2wk">Tier 3: Full-Scale Operations + Marketing</option>
+            <option value="Custom Project / Audit Only" data-m="Custom Quote" data-bw="Custom Quote">Custom Project / Audit Consultation</option>
           </select>
+        </div>
+
+        <!-- DYNAMIC COST BADGE -->
+        <div class="package-cost-badge" id="packageCostBadge">
+          <span>Investment Rate:</span>
+          <b id="packageCostVal">$950/mo</b>
         </div>
 
         <div class="field">
@@ -766,8 +781,8 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
         <div class="field">
           <label>Billing cadence preference</label>
           <div class="radio-row">
-            <label class="radio-opt"><input type="radio" name="bizcadence" value="Monthly retainer" required>Monthly retainer</label>
-            <label class="radio-opt"><input type="radio" name="bizcadence" value="Bi-weekly billing">Bi‑weekly billing</label>
+            <label class="radio-opt"><input type="radio" name="bizcadence" value="Monthly retainer" onchange="updatePackageCostDisplay()" checked required>Monthly retainer</label>
+            <label class="radio-opt"><input type="radio" name="bizcadence" value="Bi-weekly billing" onchange="updatePackageCostDisplay()">Bi‑weekly billing</label>
           </div>
         </div>
 
@@ -777,10 +792,10 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
       </form>
     </div>
 
-    <!-- EDUCATOR & STUDENT INTAKE -->
+    <!-- EDUCATOR & STUDENT INTAKE (With Partner Integration options) -->
     <div class="intake-panel edu" id="edu-intake">
       <h3>🎓 For educators &amp; students</h3>
-      <p class="intake-sub">Bring applied AI labs to your school or join our technical apprenticeship.</p>
+      <p class="intake-sub">Bring applied AI labs to your school, integrate Girls Who Code / STEM clubs, or join our technical apprenticeship.</p>
       
       <form onsubmit="return handleSubmit(event,'school','eduSuccess','eduError')">
         <div class="form-row-2">
@@ -795,20 +810,21 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
         </div>
 
         <div class="field">
-          <label>School / institution</label>
-          <input type="text" name="institution" placeholder="District, School, or Organization" required>
+          <label>School / institution / organization</label>
+          <input type="text" name="institution" placeholder="District, School, or Organization Name" required>
         </div>
 
         <div class="field">
           <label>Inquiry type</label>
           <div class="radio-row">
-            <label class="radio-opt"><input type="radio" name="edutype" value="AI Lab Partner" required>AI lab partner</label>
+            <label class="radio-opt"><input type="radio" name="edutype" value="AI Lab Partnership" required>AI lab partnership</label>
+            <label class="radio-opt"><input type="radio" name="edutype" value="Girls Who Code / Club Co-Op">Girls Who Code / Club Co-Op</label>
             <label class="radio-opt"><input type="radio" name="edutype" value="Student Internship">Student internship</label>
           </div>
         </div>
 
         <div class="field">
-          <label>Target level</label>
+          <label>Target student level</label>
           <div class="radio-row">
             <label class="radio-opt"><input type="radio" name="edulevel" value="Elementary (K-5)" required>Elementary (K–5)</label>
             <label class="radio-opt"><input type="radio" name="edulevel" value="Middle / High School">Middle / High</label>
@@ -856,6 +872,30 @@ const supabaseClient = (SUPABASE_URL.includes('YOUR-PROJECT-REF'))
 const urlParams = new URLSearchParams(window.location.search);
 const utmSource = urlParams.get('utm_source') || 'direct';
 const utmCampaign = urlParams.get('utm_campaign') || null;
+
+// DYNAMIC COST DISPLAY IN FORM
+function updatePackageCostDisplay() {
+  var sel = document.getElementById('bizPackageSelect');
+  var badge = document.getElementById('packageCostBadge');
+  var costVal = document.getElementById('packageCostVal');
+  if(!sel || !badge || !costVal) return;
+
+  var selectedOpt = sel.options[sel.selectedIndex];
+  if(!selectedOpt || !selectedOpt.value) {
+    badge.style.display = 'none';
+    return;
+  }
+
+  var isBiweekly = document.querySelector('input[name="bizcadence"][value="Bi-weekly billing"]:checked');
+  var priceStr = isBiweekly ? selectedOpt.getAttribute('data-bw') : selectedOpt.getAttribute('data-m');
+
+  if(priceStr) {
+    badge.style.display = 'flex';
+    costVal.textContent = priceStr;
+  } else {
+    badge.style.display = 'none';
+  }
+}
 
 // GLOBAL AUDIT CALCULATION ENGINE
 var currentAudit = { checkedLabels: [], total: 0, health: 100, tier: '' };
@@ -998,7 +1038,7 @@ async function handleSubmit(e, type, successId, errorId){
   var fd = new FormData(form);
   var detailFields = [];
 
-  // Capture multi-select checkboxes (e.g. services)
+  // Capture multi-select checkboxes (services)
   var selectedServices = [];
   form.querySelectorAll('input[name="services"]:checked').forEach(function(cb){
     selectedServices.push(cb.value);
