@@ -263,6 +263,7 @@ section{ padding:96px 0; }
 .appr-card ul{ list-style:none; font-size:13px; color:var(--cream-dim); display:flex; flex-direction:column; gap:6px; }
 .appr-card li::before{ content:'—'; color:var(--gold); margin-right:6px; }
 
+/* INTAKE FORM GRID & FIELDS */
 .intake-wrap{ display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line); border:1px solid var(--line); }
 @media (max-width:860px){ .intake-wrap{ grid-template-columns:1fr; } }
 .intake-panel{ background:var(--espresso); padding:38px 34px; }
@@ -270,6 +271,10 @@ section{ padding:96px 0; }
 .intake-panel.edu{ background:linear-gradient(180deg, rgba(199,153,79,0.08), transparent 40%); }
 .intake-panel h3{ font-size:22px; margin-bottom:6px; }
 .intake-panel .intake-sub{ font-size:13.5px; color:var(--cream-dim); margin-bottom:26px; }
+
+.form-row-2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+@media (max-width:600px){ .form-row-2{ grid-template-columns:1fr; } }
+
 .field{ margin-bottom:16px; }
 .field label{ display:block; font-size:12px; letter-spacing:0.05em; color:var(--cream-dim); margin-bottom:6px; font-family:'IBM Plex Mono'; text-transform:uppercase; }
 .field input, .field select{
@@ -277,11 +282,21 @@ section{ padding:96px 0; }
   padding:11px 12px; border-radius:2px; font-size:14px; font-family:'Public Sans';
 }
 .field input:focus, .field select:focus{ outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold); }
+.field select option{ background:var(--espresso-2); color:var(--cream); }
+
+.checkbox-cluster{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; }
+@media (max-width:600px){ .checkbox-cluster{ grid-template-columns:1fr; } }
+.cluster-opt{
+  display:flex; align-items:center; gap:8px; border:1px solid var(--line); padding:8px 10px;
+  border-radius:2px; font-size:12.5px; color:var(--cream-dim); cursor:pointer; background:rgba(243,232,214,0.02);
+}
+.cluster-opt input{ accent-color:var(--gold); width:auto; margin:0; }
+
 .radio-row{ display:flex; gap:10px; flex-wrap:wrap; }
 .radio-opt{ display:flex; align-items:center; gap:7px; border:1px solid var(--line); padding:9px 13px; border-radius:2px; font-size:13px; cursor:pointer; flex:1; min-width:140px; }
 .radio-opt input{ width:auto; accent-color:var(--gold); }
-.radio-opt.checked{ border-color:var(--gold); background:rgba(199,153,79,0.08); }
-.submit-btn{ width:100%; border:none; padding:14px; margin-top:8px; border-radius:2px; font-weight:600; font-size:14px; letter-spacing:0.02em; transition:all 0.2s; }
+
+.submit-btn{ width:100%; border:none; padding:14px; margin-top:12px; border-radius:2px; font-weight:600; font-size:14px; letter-spacing:0.02em; transition:all 0.2s; }
 .submit-btn.biz{ background:var(--leak); color:var(--cream); }
 .submit-btn.biz:hover{ background:var(--leak-bright); }
 .submit-btn.edu{ background:var(--gold); color:var(--espresso); }
@@ -670,7 +685,7 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   </div>
 </section>
 
-<!-- INTAKE -->
+<!-- INTAKE & SCHEDULING SECTION -->
 <section style="padding-bottom:0;">
   <div class="wrap entry-frame" style="border-bottom:none;">
     <span class="entry-tag mono">ENTRY NO. 07 — GET STARTED</span>
@@ -681,56 +696,142 @@ footer{ border-top:1px solid var(--line); padding:36px 0; }
   </div>
 
   <div class="intake-wrap">
+    <!-- BUSINESS OWNER INTAKE -->
     <div class="intake-panel biz" id="business-intake">
       <h3>🚀 For business owners</h3>
-      <p class="intake-sub">Ready to stop half‑stepping and plug your operational leaks?</p>
+      <p class="intake-sub">Schedule your discovery roadmap session and select your target package.</p>
+      
       <form onsubmit="return handleSubmit(event,'business','bizSuccess','bizError')">
-        <div class="field"><label>Business name</label><input type="text" name="name" required></div>
-        <div class="field"><label>Website / social profile</label><input type="text" name="contact" required></div>
-        <div class="field">
-          <label>Service model desired</label>
-          <div class="radio-row">
-            <label class="radio-opt"><input type="radio" name="bizmodel" value="Build & train" required>Build &amp; train</label>
-            <label class="radio-opt"><input type="radio" name="bizmodel" value="Manage it for me">Manage it for me</label>
-            <label class="radio-opt"><input type="radio" name="bizmodel" value="Full ecosystem">Full ecosystem</label>
+        <div class="form-row-2">
+          <div class="field">
+            <label>Full name</label>
+            <input type="text" name="name" placeholder="First & Last Name" required>
+          </div>
+          <div class="field">
+            <label>Business email</label>
+            <input type="email" name="contact" placeholder="owner@yourbrand.com" required>
           </div>
         </div>
+
+        <div class="form-row-2">
+          <div class="field">
+            <label>Business name</label>
+            <input type="text" name="business_name" placeholder="Brand / Company" required>
+          </div>
+          <div class="field">
+            <label>Website or social profile</label>
+            <input type="text" name="website_social" placeholder="yourdomain.com or @handle" required>
+          </div>
+        </div>
+
         <div class="field">
-          <label>Billing cadence</label>
+          <label>Target package / service model</label>
+          <select name="biz_package" required>
+            <option value="" disabled selected>Select a Tier...</option>
+            <option value="Tier 1: Foundations & Systems Training ($950/mo)">Tier 1: Foundations &amp; Systems Training ($950/mo)</option>
+            <option value="Tier 2: Managed Growth Engine ($1,250/mo)">Tier 2: Managed Growth Engine ($1,250/mo)</option>
+            <option value="Tier 3: Full-Scale Operations + Marketing ($2,500/mo)">Tier 3: Full-Scale Operations + Marketing ($2,500/mo)</option>
+            <option value="Custom Project / Audit Only">Custom Project / Audit Consultation</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Services interested in (Check all that apply)</label>
+          <div class="checkbox-cluster">
+            <label class="cluster-opt"><input type="checkbox" name="services" value="CRM & Pipeline Setup"> CRM &amp; Pipeline Setup</label>
+            <label class="cluster-opt"><input type="checkbox" name="services" value="Review Automation"> Review &amp; Trust Automation</label>
+            <label class="cluster-opt"><input type="checkbox" name="services" value="Attribution & Analytics"> Attribution &amp; ROI Dashboards</label>
+            <label class="cluster-opt"><input type="checkbox" name="services" value="Website / Funnel Redesign"> Website / Funnel Redesign</label>
+            <label class="cluster-opt"><input type="checkbox" name="services" value="Brand Storytelling / Video"> Storytelling &amp; Video</label>
+            <label class="cluster-opt"><input type="checkbox" name="services" value="Multi-Channel Ad Campaigns"> Conversion Ad Campaigns</label>
+          </div>
+        </div>
+
+        <div class="form-row-2">
+          <div class="field">
+            <label>Preferred meeting date</label>
+            <input type="date" name="meeting_date" required>
+          </div>
+          <div class="field">
+            <label>Preferred meeting time</label>
+            <select name="meeting_time" required>
+              <option value="" disabled selected>Select a time window...</option>
+              <option value="Morning (9:00 AM – 11:30 AM EST)">Morning (9:00 AM – 11:30 AM EST)</option>
+              <option value="Midday (12:00 PM – 2:30 PM EST)">Midday (12:00 PM – 2:30 PM EST)</option>
+              <option value="Afternoon (3:00 PM – 5:30 PM EST)">Afternoon (3:00 PM – 5:30 PM EST)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Billing cadence preference</label>
           <div class="radio-row">
             <label class="radio-opt"><input type="radio" name="bizcadence" value="Monthly retainer" required>Monthly retainer</label>
             <label class="radio-opt"><input type="radio" name="bizcadence" value="Bi-weekly billing">Bi‑weekly billing</label>
           </div>
         </div>
-        <button class="submit-btn biz" type="submit">Get my custom growth roadmap</button>
-        <div class="form-success" id="bizSuccess">✓ Received — we'll follow up within one business day.</div>
+
+        <button class="submit-btn biz" type="submit">Confirm discovery meeting &amp; roadmap</button>
+        <div class="form-success" id="bizSuccess">✓ Received — we will confirm your meeting date and roadmap details within one business day.</div>
         <div class="form-success" id="bizError" style="color:var(--leak-bright);"></div>
       </form>
     </div>
 
+    <!-- EDUCATOR & STUDENT INTAKE -->
     <div class="intake-panel edu" id="edu-intake">
       <h3>🎓 For educators &amp; students</h3>
       <p class="intake-sub">Bring applied AI labs to your school or join our technical apprenticeship.</p>
+      
       <form onsubmit="return handleSubmit(event,'school','eduSuccess','eduError')">
-        <div class="field"><label>Name &amp; title</label><input type="text" name="name" required></div>
-        <div class="field"><label>School / institution</label><input type="text" name="contact" required></div>
+        <div class="form-row-2">
+          <div class="field">
+            <label>Full name &amp; title</label>
+            <input type="text" name="name" placeholder="Name, Title" required>
+          </div>
+          <div class="field">
+            <label>Email address</label>
+            <input type="email" name="contact" placeholder="educator@school.edu" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>School / institution</label>
+          <input type="text" name="institution" placeholder="District, School, or Organization" required>
+        </div>
+
         <div class="field">
           <label>Inquiry type</label>
           <div class="radio-row">
-            <label class="radio-opt"><input type="radio" name="edutype" value="AI lab partner" required>AI lab partner</label>
-            <label class="radio-opt"><input type="radio" name="edutype" value="Student internship">Student internship</label>
+            <label class="radio-opt"><input type="radio" name="edutype" value="AI Lab Partner" required>AI lab partner</label>
+            <label class="radio-opt"><input type="radio" name="edutype" value="Student Internship">Student internship</label>
           </div>
         </div>
+
         <div class="field">
           <label>Target level</label>
           <div class="radio-row">
             <label class="radio-opt"><input type="radio" name="edulevel" value="Elementary (K-5)" required>Elementary (K–5)</label>
-            <label class="radio-opt"><input type="radio" name="edulevel" value="Middle / high school">Middle / high school</label>
-            <label class="radio-opt"><input type="radio" name="edulevel" value="College / grad intern">College / grad intern</label>
+            <label class="radio-opt"><input type="radio" name="edulevel" value="Middle / High School">Middle / High</label>
+            <label class="radio-opt"><input type="radio" name="edulevel" value="College / Grad Intern">College / Intern</label>
           </div>
         </div>
+
+        <div class="form-row-2">
+          <div class="field">
+            <label>Preferred connect date</label>
+            <input type="date" name="connect_date">
+          </div>
+          <div class="field">
+            <label>Preferred time</label>
+            <select name="connect_time">
+              <option value="Morning">Morning</option>
+              <option value="Afternoon">Afternoon</option>
+            </select>
+          </div>
+        </div>
+
         <button class="submit-btn edu" type="submit">Submit partnership / application</button>
-        <div class="form-success" id="eduSuccess">✓ Received — we'll follow up within one business day.</div>
+        <div class="form-success" id="eduSuccess">✓ Received — we will follow up within one business day.</div>
         <div class="form-success" id="eduError" style="color:var(--leak-bright);"></div>
       </form>
     </div>
@@ -890,14 +991,26 @@ function setCadence(cadence) {
   }
 }
 
-// FORM SUBMISSION
+// FORM SUBMISSION (Gathers all detailed fields cleanly)
 async function handleSubmit(e, type, successId, errorId){
   e.preventDefault();
   var form = e.target;
   var fd = new FormData(form);
   var detailFields = [];
+
+  // Capture multi-select checkboxes (e.g. services)
+  var selectedServices = [];
+  form.querySelectorAll('input[name="services"]:checked').forEach(function(cb){
+    selectedServices.push(cb.value);
+  });
+  if(selectedServices.length > 0) {
+    detailFields.push('Services: ' + selectedServices.join(', '));
+  }
+
   fd.forEach(function(val, key){
-    if(key !== 'name' && key !== 'contact') detailFields.push(key + ': ' + val);
+    if(key !== 'name' && key !== 'contact' && key !== 'services') {
+      detailFields.push(key + ': ' + val);
+    }
   });
 
   var row = {
@@ -920,7 +1033,7 @@ async function handleSubmit(e, type, successId, errorId){
   if(!supabaseClient){
     var sEl = document.getElementById(successId);
     if (sEl) sEl.style.display='block';
-    if (btn) btn.textContent = 'Received ✓';
+    if (btn) btn.textContent = 'Meeting Request Received ✓';
     return false;
   }
 
@@ -929,14 +1042,14 @@ async function handleSubmit(e, type, successId, errorId){
     if (errorEl) errorEl.textContent = 'Something went wrong — please try again.';
     if (btn) {
       btn.disabled = false;
-      btn.textContent = form.querySelector('.submit-btn').classList.contains('biz') ? 'Get my custom growth roadmap' : 'Submit partnership / application';
+      btn.textContent = form.querySelector('.submit-btn').classList.contains('biz') ? 'Confirm discovery meeting & roadmap' : 'Submit partnership / application';
     }
     return false;
   }
 
   var sEl = document.getElementById(successId);
   if (sEl) sEl.style.display='block';
-  if (btn) btn.textContent = 'Received ✓';
+  if (btn) btn.textContent = 'Meeting Request Received ✓';
   return false;
 }
 
