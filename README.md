@@ -1,11 +1,6 @@
 # The Brown Girls Creative Studio 🚀
 > **Data Architecture • AI Innovation • Workforce Impact**
 
-[![GitHub Pages](https://img.shields.io/badge/Hosted-GitHub_Pages-gold.svg)](https://raevenbrown.github.io/thebrowngirlsstudio/)
-[![Vercel Deployment](https://img.shields.io/badge/Demo-Vercel_Platform-black.svg)](https://v0-open-in-v0-gamma-nine-95.vercel.app/integrations)
-[![Streamlit Engine](https://img.shields.io/badge/Telemetry-Streamlit_Apps-FF4B4B.svg)](https://raevenbrown.github.io/thebrowngirlsstudio/labs.html)
-[![Database](https://img.shields.io/badge/Backend-Supabase_PostgreSQL-3ECF8E.svg)](https://supabase.com)
-
 The Brown Girls Creative Studio delivers high-impact operational data architectures and marketing engines for growing businesses, while running hands-on Applied AI & STEM workforce practicums for K–12 school districts and aspiring technical fellows.
 
 ---
