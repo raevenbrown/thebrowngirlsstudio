@@ -1,387 +1,1407 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Applied AI Labs & Engines — The Brown Girls Creative Studio</title>
+
+  <title>The AI Lab — The Brown Girls Creative Studio</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #140d0a;
-      --card-bg: rgba(28, 18, 14, 0.7);
+      --bg-soft: #1d120e;
+      --card-bg: rgba(31, 20, 15, 0.86);
+
       --gold: #f59e0b;
       --gold-light: #fbbf24;
+      --gold-soft: rgba(245, 158, 11, 0.10);
+
       --text: #fdfbf7;
-      --text-muted: #a89f91;
-      --border: rgba(245, 158, 11, 0.18);
-      --border-hover: rgba(245, 158, 11, 0.45);
+      --text-muted: #b9ad9e;
+
+      --border: rgba(245, 158, 11, 0.20);
+      --border-hover: rgba(245, 158, 11, 0.55);
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      line-height: 1.6;
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
       padding: 0;
-      background-image: 
-        radial-gradient(circle at 10% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(217, 119, 6, 0.04) 0%, transparent 40%);
-      background-attachment: fixed;
     }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(
+          circle at 10% 10%,
+          rgba(245, 158, 11, 0.08),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 90% 80%,
+          rgba(217, 119, 6, 0.06),
+          transparent 35%
+        ),
+        var(--bg);
+
+      color: var(--text);
+
+      font-family: 'Plus Jakarta Sans', sans-serif;
+
+      line-height: 1.6;
+
+      overflow-x: hidden;
+    }
+
+
+    /* =========================
+       NAVIGATION
+    ========================== */
+
     .nav {
-      padding: 24px 8%;
+      padding: 22px 7%;
+
       display: flex;
       justify-content: space-between;
       align-items: center;
+
+      gap: 20px;
+
       border-bottom: 1px solid var(--border);
-      background: rgba(20, 13, 10, 0.85);
+
+      background: rgba(20, 13, 10, 0.92);
+
       backdrop-filter: blur(12px);
+
       position: sticky;
       top: 0;
       z-index: 50;
     }
+
     .brand {
       font-family: 'Space Grotesk', sans-serif;
+
       font-weight: 700;
+
       color: var(--text);
+
       text-decoration: none;
-      font-size: 1.1rem;
+
+      font-size: 1.05rem;
+
       letter-spacing: -0.02em;
     }
-    .brand span { color: var(--gold); }
+
+    .brand span {
+      color: var(--gold);
+    }
+
     .back-link {
       color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-    .back-link:hover { color: var(--gold); }
 
-    .header-section {
-      padding: 70px 8% 40px;
-      text-align: center;
-      max-width: 900px;
+      text-decoration: none;
+
+      font-size: 0.86rem;
+
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: var(--gold-light);
+    }
+
+
+    /* =========================
+       GENERAL
+    ========================== */
+
+    .container {
+      width: min(1120px, 88%);
       margin: 0 auto;
     }
-    .badge {
-      display: inline-block;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--gold);
-      background: rgba(245, 158, 11, 0.1);
-      padding: 6px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      margin-bottom: 18px;
-      font-weight: 700;
+
+    .section {
+      padding: 85px 0;
     }
-    h1 {
+
+    .section-dark {
+      background: rgba(255, 255, 255, 0.018);
+
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .eyebrow {
+      color: var(--gold);
+
+      text-transform: uppercase;
+
+      font-size: 0.75rem;
+
+      font-weight: 800;
+
+      letter-spacing: 0.14em;
+
+      margin-bottom: 12px;
+    }
+
+    h1,
+    h2,
+    h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: clamp(2.2rem, 4vw, 3.2rem);
-      line-height: 1.15;
-      margin-bottom: 18px;
+
+      line-height: 1.08;
+
       letter-spacing: -0.03em;
     }
-    .subtitle {
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+
+      margin-bottom: 18px;
+    }
+
+    p {
       color: var(--text-muted);
-      font-size: 1.05rem;
-      max-width: 700px;
-      margin: 0 auto;
     }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
-      gap: 32px;
-      padding: 40px 8% 100px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
 
-    .project-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      backdrop-filter: blur(10px);
-      transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    .project-card:hover {
-      transform: translateY(-5px);
-      border-color: var(--border-hover);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
-    }
+    /* =========================
+       HERO
+    ========================== */
 
-    .project-preview {
-      height: 220px;
-      position: relative;
-      background: #000;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    .preview-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.35;
-      background-size: cover;
-      background-position: center;
-      transition: opacity 0.3s, transform 0.3s;
-    }
-    .project-card:hover .preview-bg {
-      opacity: 0.5;
-      transform: scale(1.03);
-    }
-    .preview-overlay {
-      position: relative;
-      z-index: 2;
+    .hero {
+      padding: 110px 0 90px;
+
       text-align: center;
-      padding: 20px;
-    }
-    .engine-icon {
-      font-size: 2.2rem;
-      margin-bottom: 8px;
-      display: inline-block;
     }
 
-    .project-body {
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-      justify-content: space-between;
-    }
-    .category-tag {
-      font-size: 0.72rem;
+    .hero-badge {
+      display: inline-block;
+
+      color: var(--gold-light);
+
+      background: var(--gold-soft);
+
+      border: 1px solid var(--border);
+
+      padding: 8px 16px;
+
+      border-radius: 999px;
+
+      font-size: 0.75rem;
+
+      font-weight: 800;
+
       text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--gold);
-      font-weight: 700;
-      margin-bottom: 6px;
-      display: block;
-    }
-    .project-title {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-    .project-desc {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      line-height: 1.5;
-      margin-bottom: 20px;
-    }
-    .tech-stack {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
+
+      letter-spacing: 0.14em;
+
       margin-bottom: 24px;
     }
-    .tech-pill {
-      font-size: 0.72rem;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 4px 10px;
-      border-radius: 6px;
-      color: #e5e5e5;
+
+    .hero h1 {
+      font-size: clamp(3rem, 9vw, 6.5rem);
+
+      max-width: 950px;
+
+      margin: 0 auto;
     }
 
-    .btn-launch {
+    .hero h1 span {
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      max-width: 760px;
+
+      margin: 28px auto 0;
+
+      font-size: clamp(1rem, 2vw, 1.22rem);
+
+      line-height: 1.75;
+    }
+
+    .hero-buttons {
+      margin-top: 36px;
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 14px;
+
+      flex-wrap: wrap;
+    }
+
+
+    /* =========================
+       BUTTONS
+    ========================== */
+
+    .btn {
       display: inline-flex;
+
       align-items: center;
       justify-content: center;
+
       gap: 8px;
-      background: linear-gradient(135deg, var(--gold) 0%, #d97706 100%);
-      color: #000;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 12px 18px;
+
+      padding: 14px 22px;
+
       border-radius: 10px;
-      transition: opacity 0.2s, transform 0.2s;
+
+      font-size: 0.9rem;
+
+      font-weight: 800;
+
+      text-decoration: none;
+
+      transition:
+        transform 0.2s,
+        opacity 0.2s,
+        border-color 0.2s;
     }
-    .btn-launch:hover {
-      opacity: 0.95;
-      transform: scale(1.01);
+
+    .btn:hover {
+      transform: translateY(-2px);
     }
+
+    .btn-primary {
+      background: linear-gradient(
+        135deg,
+        var(--gold),
+        #d97706
+      );
+
+      color: #130c08;
+    }
+
+    .btn-secondary {
+      color: var(--text);
+
+      border: 1px solid var(--border);
+
+      background: rgba(255,255,255,0.025);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--border-hover);
+    }
+
+
+    /* =========================
+       INTRO
+    ========================== */
+
+    .intro-grid {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 28px;
+
+      margin-top: 38px;
+    }
+
+    .info-card {
+      background: var(--card-bg);
+
+      border: 1px solid var(--border);
+
+      padding: 32px;
+
+      border-radius: 18px;
+    }
+
+    .info-card h3 {
+      font-size: 1.5rem;
+
+      margin-bottom: 14px;
+    }
+
+    .info-card p {
+      font-size: 0.95rem;
+    }
+
+
+    /* =========================
+       SKILLS
+    ========================== */
+
+    .skills-grid {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 18px;
+
+      margin-top: 38px;
+    }
+
+    .skill {
+      background: var(--card-bg);
+
+      border: 1px solid var(--border);
+
+      padding: 26px;
+
+      border-radius: 16px;
+    }
+
+    .skill-icon {
+      font-size: 1.7rem;
+
+      margin-bottom: 12px;
+    }
+
+    .skill h3 {
+      font-size: 1.05rem;
+
+      margin-bottom: 8px;
+    }
+
+    .skill p {
+      font-size: 0.84rem;
+
+      line-height: 1.55;
+    }
+
+
+    /* =========================
+       PROCESS
+    ========================== */
+
+    .process-grid {
+      display: grid;
+
+      grid-template-columns: repeat(4, 1fr);
+
+      gap: 16px;
+
+      margin-top: 38px;
+    }
+
+    .process-card {
+      border-top: 2px solid var(--gold);
+
+      background: rgba(255,255,255,0.02);
+
+      padding: 24px;
+    }
+
+    .step {
+      color: var(--gold);
+
+      font-size: 0.72rem;
+
+      font-weight: 800;
+
+      letter-spacing: 0.12em;
+
+      margin-bottom: 10px;
+    }
+
+    .process-card h3 {
+      margin-bottom: 8px;
+
+      font-size: 1.18rem;
+    }
+
+    .process-card p {
+      font-size: 0.84rem;
+    }
+
+
+    /* =========================
+       DECEMBER COHORT
+    ========================== */
+
+    .cohort-box {
+      background:
+        linear-gradient(
+          135deg,
+          rgba(245,158,11,0.13),
+          rgba(28,18,14,0.90)
+        );
+
+      border: 1px solid var(--gold);
+
+      border-radius: 22px;
+
+      padding: 46px;
+    }
+
+    .cohort-box h2 {
+      max-width: 700px;
+    }
+
+    .cohort-lede {
+      max-width: 760px;
+
+      font-size: 1rem;
+
+      margin-bottom: 28px;
+    }
+
+    .cohort-list {
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 12px 28px;
+
+      list-style: none;
+
+      margin: 28px 0 34px;
+    }
+
+    .cohort-list li {
+      color: var(--text);
+
+      font-size: 0.9rem;
+    }
+
+    .cohort-list li::before {
+      content: "✓";
+
+      color: var(--gold-light);
+
+      font-weight: 800;
+
+      margin-right: 9px;
+    }
+
+    .parent-note {
+      margin-top: 14px;
+
+      font-size: 0.76rem;
+
+      color: var(--text-muted);
+    }
+
+
+    /* =========================
+       STUDENT ACCESS
+    ========================== */
+
+    .student-access {
+      text-align: center;
+    }
+
+    .student-access p {
+      max-width: 680px;
+
+      margin: 0 auto 30px;
+    }
+
+    .access-buttons {
+      display: grid;
+
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+
+      gap: 16px;
+
+      max-width: 760px;
+
+      margin: 0 auto;
+    }
+
+    .access-card {
+      display: block;
+
+      text-decoration: none;
+
+      background: var(--card-bg);
+
+      border: 1px solid var(--border);
+
+      border-radius: 16px;
+
+      padding: 28px;
+
+      text-align: left;
+
+      transition: 0.2s;
+    }
+
+    .access-card:hover {
+      transform: translateY(-3px);
+
+      border-color: var(--border-hover);
+    }
+
+    .access-card span {
+      display: block;
+
+      color: var(--gold);
+
+      font-size: 0.72rem;
+
+      text-transform: uppercase;
+
+      font-weight: 800;
+
+      letter-spacing: 0.1em;
+
+      margin-bottom: 8px;
+    }
+
+    .access-card strong {
+      color: var(--text);
+
+      font-family: 'Space Grotesk', sans-serif;
+
+      font-size: 1.15rem;
+    }
+
+
+    /* =========================
+       PROJECT PREVIEW
+    ========================== */
+
+    .project-preview-grid {
+      display: grid;
+
+      grid-template-columns: repeat(3, 1fr);
+
+      gap: 22px;
+
+      margin-top: 40px;
+    }
+
+    .project-preview-card {
+      background: var(--card-bg);
+
+      border: 1px solid var(--border);
+
+      border-radius: 18px;
+
+      padding: 26px;
+    }
+
+    .project-preview-card .icon {
+      font-size: 1.8rem;
+
+      margin-bottom: 14px;
+    }
+
+    .project-preview-card h3 {
+      font-size: 1.1rem;
+
+      margin-bottom: 9px;
+    }
+
+    .project-preview-card p {
+      font-size: 0.84rem;
+    }
+
+    .showcase-button {
+      margin-top: 34px;
+
+      text-align: center;
+    }
+
+
+    /* =========================
+       FINAL CTA
+    ========================== */
+
+    .final-cta {
+      text-align: center;
+
+      padding: 90px 0;
+    }
+
+    .final-cta p {
+      max-width: 650px;
+
+      margin: 0 auto 28px;
+    }
+
+    .final-buttons {
+      display: flex;
+
+      justify-content: center;
+
+      flex-wrap: wrap;
+
+      gap: 14px;
+    }
+
+
+    /* =========================
+       FOOTER
+    ========================== */
 
     .footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 8%;
+      padding: 38px 8%;
+
       text-align: center;
+
+      border-top: 1px solid var(--border);
+
       color: var(--text-muted);
-      font-size: 0.85rem;
+
+      font-size: 0.8rem;
     }
+
+
+    /* =========================
+       MOBILE
+    ========================== */
+
+    @media (max-width: 900px) {
+
+      .intro-grid,
+      .skills-grid,
+      .project-preview-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+    }
+
+    @media (max-width: 650px) {
+
+      .nav {
+        padding: 18px 6%;
+      }
+
+      .brand {
+        max-width: 220px;
+      }
+
+      .hero {
+        padding: 80px 0 65px;
+      }
+
+      .section {
+        padding: 65px 0;
+      }
+
+      .intro-grid,
+      .skills-grid,
+      .process-grid,
+      .project-preview-grid,
+      .access-buttons,
+      .cohort-list {
+        grid-template-columns: 1fr;
+      }
+
+      .cohort-box {
+        padding: 30px 24px;
+      }
+
+      .hero-buttons .btn,
+      .final-buttons .btn {
+        width: 100%;
+      }
+
+    }
+
   </style>
 </head>
+
+
 <body>
 
+
+  <!-- =========================
+       NAVIGATION
+  ========================== -->
+
   <nav class="nav">
-    <a href="index.html" class="brand">the brown girls <span>creative studio</span></a>
-    <a href="index.html" class="back-link">← Return to Main Site</a>
+
+    <a href="index.html" class="brand">
+      the brown girls <span>creative studio</span>
+    </a>
+
+    <a href="index.html" class="back-link">
+      ← Main Studio
+    </a>
+
   </nav>
 
-  <section class="header-section">
-    <span class="badge">Live Studio & Student Labs</span>
-    <h1>Applied AI & Enterprise Engines</h1>
-    <p class="subtitle">
-      Explore live platforms and analytics architectures built in our labs—serving production enterprise clients, district institutional modeling, and hands-on student workforce capstones.
-    </p>
+
+  <!-- =========================
+       HERO
+  ========================== -->
+
+  <header class="hero">
+
+    <div class="container">
+
+      <span class="hero-badge">
+        The AI Lab
+      </span>
+
+      <h1>
+        Build today.<br>
+        <span>Lead tomorrow.</span>
+      </h1>
+
+      <p class="hero-subtitle">
+        The AI Lab is the applied learning experience from
+        <strong style="color:#fff;">
+          The Brown Girls Creative Studio
+        </strong>
+        where students learn how to talk to AI, build with AI,
+        solve real problems, create digital projects, and think
+        like creators — not just users.
+      </p>
+
+      <div class="hero-buttons">
+
+        <!-- REPLACE # WITH YOUR DECEMBER WAITLIST LINK -->
+        <a href="#december"
+           class="btn btn-primary">
+          Join the December Cohort Waitlist →
+        </a>
+
+        <a href="#student-access"
+           class="btn btn-secondary">
+          Student Access
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <!-- =========================
+       WHAT IS THE AI LAB?
+  ========================== -->
+
+  <section class="section section-dark">
+
+    <div class="container">
+
+      <div class="eyebrow">
+        The Program
+      </div>
+
+      <h2>
+        What is The AI Lab?
+      </h2>
+
+      <div class="intro-grid">
+
+        <div class="info-card">
+
+          <div class="eyebrow">
+            The Studio
+          </div>
+
+          <h3>
+            The Brown Girls Creative Studio
+          </h3>
+
+          <p>
+            The Brown Girls Creative Studio builds data systems,
+            websites, dashboards, AI solutions, automation, and
+            digital growth infrastructure for businesses and
+            organizations.
+          </p>
+
+        </div>
+
+
+        <div class="info-card">
+
+          <div class="eyebrow">
+            The Lab
+          </div>
+
+          <h3>
+            Where students become builders.
+          </h3>
+
+          <p>
+            The AI Lab brings those same creative and technical
+            skills into student-centered learning experiences.
+            Students practice AI literacy, prompting, web creation,
+            teamwork, problem-solving, entrepreneurship, and
+            presentation skills through hands-on projects.
+          </p>
+
+        </div>
+
+      </div>
+
+    </div>
+
   </section>
 
-  <main class="gallery-grid">
 
-    <!-- 1. Early Childhood Learning Studio (Featured #1) -->
-    <div class="project-card" style="border-color: rgba(245, 158, 11, 0.45); box-shadow: 0 10px 30px rgba(245, 158, 11, 0.08);">
-      <div class="project-preview">
-        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80');"></div>
-        <div class="preview-overlay">
-          <div class="engine-icon">✏️</div>
-        </div>
+  <!-- =========================
+       WHAT STUDENTS LEARN
+  ========================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="eyebrow">
+        Real Skills
       </div>
-      <div class="project-body">
-        <div>
-          <span class="category-tag">Early Childhood AI & Literacy</span>
-          <h2 class="project-title">Kindergarten AI Learning Studio</h2>
-          <p class="project-desc">
-            Standards-aligned literacy & early math studio featuring Newton County High Frequency Vocabulary (Lists 1 & 2), browser speech-recognition testing, Science of Reading phonics scaffolding, ten-frame math, and real-time database tracking.
+
+      <h2>
+        What students learn.
+      </h2>
+
+      <p style="max-width:700px;">
+        The goal is simple: students spend their time thinking
+        like AI designers and creators — not fighting with code.
+      </p>
+
+
+      <div class="skills-grid">
+
+        <div class="skill">
+
+          <div class="skill-icon">💬</div>
+
+          <h3>
+            AI Literacy
+          </h3>
+
+          <p>
+            Understand what AI can do, how to use it responsibly,
+            and how to communicate with it effectively.
           </p>
-          <div class="tech-stack">
-            <span class="tech-pill">Web Speech API</span>
-            <span class="tech-pill">Newton County GSE</span>
-            <span class="tech-pill">Streamlit</span>
-            <span class="tech-pill">Supabase</span>
-          </div>
+
         </div>
-        <a href="https://kindergarten-ai-assistant.streamlit.app/" target="_blank" rel="noopener" class="btn-launch">
-          Launch Live Lab ↗
-        </a>
+
+
+        <div class="skill">
+
+          <div class="skill-icon">🧠</div>
+
+          <h3>
+            Prompt Engineering
+          </h3>
+
+          <p>
+            Learn how clearer instructions produce stronger,
+            more useful AI results.
+          </p>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-icon">💻</div>
+
+          <h3>
+            Digital Creation
+          </h3>
+
+          <p>
+            Turn ideas into websites, landing pages, prototypes,
+            and other digital experiences.
+          </p>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-icon">🎨</div>
+
+          <h3>
+            Creative Problem-Solving
+          </h3>
+
+          <p>
+            Explore ideas, audiences, branding, user experience,
+            and ways technology can solve real problems.
+          </p>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-icon">🤝</div>
+
+          <h3>
+            Team Collaboration
+          </h3>
+
+          <p>
+            Work together, divide responsibilities, communicate,
+            and turn a group idea into a finished concept.
+          </p>
+
+        </div>
+
+
+        <div class="skill">
+
+          <div class="skill-icon">🎤</div>
+
+          <h3>
+            Pitching & Communication
+          </h3>
+
+          <p>
+            Explain what was built, who it helps, why it matters,
+            and how the idea could grow.
+          </p>
+
+        </div>
+
       </div>
+
     </div>
 
-    <!-- 2. Creative Metrix -->
-    <div class="project-card">
-      <div class="project-preview">
-        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80');"></div>
-        <div class="preview-overlay">
-          <div class="engine-icon">📊</div>
-        </div>
+  </section>
+
+
+  <!-- =========================
+       HOW THE LAB WORKS
+  ========================== -->
+
+  <section class="section section-dark">
+
+    <div class="container">
+
+      <div class="eyebrow">
+        The Experience
       </div>
-      <div class="project-body">
-        <div>
-          <span class="category-tag">Growth BI & SaaS Integration</span>
-          <h2 class="project-title">Creative Metrix</h2>
-          <p class="project-desc">
-            An automated multi-touch attribution platform monitoring client pipeline health, sync telemetry across Google Ads & Meta, and conversion performance.
-          </p>
-          <div class="tech-stack">
-            <span class="tech-pill">Vercel Deployment</span>
-            <span class="tech-pill">REST APIs</span>
-            <span class="tech-pill">Next.js</span>
+
+      <h2>
+        How an AI Lab project comes to life.
+      </h2>
+
+
+      <div class="process-grid">
+
+        <div class="process-card">
+
+          <div class="step">
+            01
           </div>
+
+          <h3>
+            Imagine
+          </h3>
+
+          <p>
+            Choose an idea, audience, problem, or opportunity.
+          </p>
+
         </div>
-        <a href="https://v0-open-in-v0-gamma-nine-95.vercel.app/integrations" target="_blank" rel="noopener" class="btn-launch">
-          Launch Live Platform ↗
-        </a>
+
+
+        <div class="process-card">
+
+          <div class="step">
+            02
+          </div>
+
+          <h3>
+            Prompt
+          </h3>
+
+          <p>
+            Learn how to give AI clear instructions and improve
+            results through iteration.
+          </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+          <div class="step">
+            03
+          </div>
+
+          <h3>
+            Build
+          </h3>
+
+          <p>
+            Turn the idea into a real digital project,
+            website, prototype, or experience.
+          </p>
+
+        </div>
+
+
+        <div class="process-card">
+
+          <div class="step">
+            04
+          </div>
+
+          <h3>
+            Pitch
+          </h3>
+
+          <p>
+            Present the idea, explain the value, and show
+            what was created.
+          </p>
+
+        </div>
+
       </div>
+
     </div>
 
-    <!-- 3. AutoGuard Claims -->
-    <div class="project-card">
-      <div class="project-preview">
-        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=800&q=80');"></div>
-        <div class="preview-overlay">
-          <div class="engine-icon">🛡️</div>
+  </section>
+
+
+  <!-- =========================
+       DECEMBER COHORT
+  ========================== -->
+
+  <section class="section" id="december">
+
+    <div class="container">
+
+      <div class="cohort-box">
+
+        <div class="eyebrow">
+          Coming This December
         </div>
-      </div>
-      <div class="project-body">
-        <div>
-          <span class="category-tag">Operations & Claims Telemetry</span>
-          <h2 class="project-title">AutoGuard Claims Dashboard</h2>
-          <p class="project-desc">
-            Production claims processing console tracking vehicle rental allocations, insurer lifecycle turnarounds, and automated customer experience registries.
-          </p>
-          <div class="tech-stack">
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">Streamlit</span>
-            <span class="tech-pill">Pandas Dataframes</span>
-          </div>
-        </div>
-        <a href="https://autoguard-claims-dashboard-lyuc6v8avzfjjmt5kt4qn3.streamlit.app/" target="_blank" rel="noopener" class="btn-launch">
-          Launch Live Dashboard ↗
+
+        <h2>
+          December AI Lab Cohort
+        </h2>
+
+        <p class="cohort-lede">
+          Move beyond the one-day experience. The December AI Lab
+          gives students four weeks to take an idea further,
+          practice new AI skills, and develop a project they can
+          actually show.
+        </p>
+
+
+        <ul class="cohort-list">
+
+          <li>
+            4 guided AI Lab sessions
+          </li>
+
+          <li>
+            Hands-on project development
+          </li>
+
+          <li>
+            Prompt engineering practice
+          </li>
+
+          <li>
+            Website or prototype creation
+          </li>
+
+          <li>
+            Creative & technical challenges
+          </li>
+
+          <li>
+            Teamwork and presentation skills
+          </li>
+
+          <li>
+            Final project showcase
+          </li>
+
+          <li>
+            Portfolio-ready project experience
+          </li>
+
+        </ul>
+
+
+        <!--
+          IMPORTANT:
+          Replace YOUR-DECEMBER-WAITLIST-LINK
+          with your actual registration or waitlist URL.
+        -->
+
+        <a
+          href="YOUR-DECEMBER-WAITLIST-LINK"
+          class="btn btn-primary"
+          target="_blank"
+          rel="noopener">
+          Join the December Waitlist →
         </a>
+
+        <div class="parent-note">
+          Parent or guardian registration may be required for
+          participating students.
+        </div>
+
       </div>
+
     </div>
 
-    <!-- 4. KSU IR Engine -->
-    <div class="project-card">
-      <div class="project-preview">
-        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80');"></div>
-        <div class="preview-overlay">
-          <div class="engine-icon">🎓</div>
-        </div>
+  </section>
+
+
+  <!-- =========================
+       STUDENT ACCESS
+  ========================== -->
+
+  <section
+    class="section section-dark student-access"
+    id="student-access">
+
+    <div class="container">
+
+      <div class="eyebrow">
+        Career Day Students
       </div>
-      <div class="project-body">
-        <div>
-          <span class="category-tag">Higher Ed & District Analytics</span>
-          <h2 class="project-title">Coles Navigate360 IR Engine</h2>
-          <p class="project-desc">
-            Institutional research engine modeling student retention risk markers, yield progression forecasting, and automated advisor nudge triggers.
-          </p>
-          <div class="tech-stack">
-            <span class="tech-pill">Predictive Analytics</span>
-            <span class="tech-pill">Streamlit</span>
-            <span class="tech-pill">Plotly Express</span>
-          </div>
-        </div>
-        <a href="https://ksu-institutional-ir-engine-nsfzyeyxgrogvxuzssmxib.streamlit.app/" target="_blank" rel="noopener" class="btn-launch">
-          Launch Live Engine ↗
+
+      <h2>
+        You built it. Now go see it.
+      </h2>
+
+      <p>
+        Use the options below to view your class projects or
+        explore more work created through The AI Lab and
+        The Brown Girls Creative Studio.
+      </p>
+
+
+      <div class="access-buttons">
+
+        <!--
+          Replace YOUR-CLASS-PROJECT-LINK
+          with the actual page containing the student sites.
+        -->
+
+        <a
+          href="YOUR-CLASS-PROJECT-LINK"
+          class="access-card">
+
+          <span>
+            Student Access
+          </span>
+
+          <strong>
+            See My Class Project Site →
+          </strong>
+
         </a>
+
+
+        <a
+          href="#december"
+          class="access-card">
+
+          <span>
+            Keep Building
+          </span>
+
+          <strong>
+            Join the December AI Lab →
+          </strong>
+
+        </a>
+
       </div>
+
     </div>
 
-    <!-- 5. Omnimetrix MSP Engine -->
-    <div class="project-card">
-      <div class="project-preview">
-        <div class="preview-bg" style="background-image: url('https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80');"></div>
-        <div class="preview-overlay">
-          <div class="engine-icon">📋</div>
-        </div>
+  </section>
+
+
+  <!-- =========================
+       PAST LAB WORK
+  ========================== -->
+
+  <section class="section">
+
+    <div class="container">
+
+      <div class="eyebrow">
+        Built in the Studio
       </div>
-      <div class="project-body">
-        <div>
-          <span class="category-tag">IT Infrastructure & Automation</span>
-          <h2 class="project-title">Omnimetrix MSP Console</h2>
-          <p class="project-desc">
-            Enterprise Syncro MSP telemetry desk with SLA breach probability curves, automated RMM status alerts, and SOC 2 scope mapping.
-          </p>
-          <div class="tech-stack">
-            <span class="tech-pill">Syncro MSP</span>
-            <span class="tech-pill">Python</span>
-            <span class="tech-pill">Automated Alerts</span>
+
+      <h2>
+        Examples of past lab work.
+      </h2>
+
+      <p style="max-width:720px;">
+        The AI Lab connects student learning with the same
+        problem-solving, design, data, AI, and digital-building
+        mindset used throughout The Brown Girls Creative Studio.
+      </p>
+
+
+      <div class="project-preview-grid">
+
+
+        <div class="project-preview-card">
+
+          <div class="icon">
+            ✏️
           </div>
+
+          <h3>
+            Kindergarten AI Learning Studio
+          </h3>
+
+          <p>
+            AI-supported literacy and early math experiences
+            featuring speech recognition, phonics scaffolding,
+            and real-time learning data.
+          </p>
+
         </div>
-        <a href="https://omnimetrix-msp-engine-mbx2qgs8zkdv2vx5jkprkd.streamlit.app/" target="_blank" rel="noopener" class="btn-launch">
-          Launch Live Console ↗
-        </a>
+
+
+        <div class="project-preview-card">
+
+          <div class="icon">
+            📊
+          </div>
+
+          <h3>
+            Creative Metrix
+          </h3>
+
+          <p>
+            A live analytics and growth intelligence platform
+            connecting marketing, pipeline health, attribution,
+            and business performance.
+          </p>
+
+        </div>
+
+
+        <div class="project-preview-card">
+
+          <div class="icon">
+            🎓
+          </div>
+
+          <h3>
+            Applied Data & AI Engines
+          </h3>
+
+          <p>
+            Real-world dashboards, predictive models, automated
+            workflows, and AI-powered tools developed across
+            education, business, and workforce projects.
+          </p>
+
+        </div>
+
+
       </div>
+
+
+      <div class="showcase-button">
+
+        <a
+          href="lab-projects.html"
+          class="btn btn-secondary">
+
+          View All Lab Projects →
+        </a>
+
+      </div>
+
     </div>
 
-  </main>
+  </section>
+
+
+  <!-- =========================
+       FINAL CTA
+  ========================== -->
+
+  <section class="final-cta section-dark">
+
+    <div class="container">
+
+      <div class="eyebrow">
+        Your Next Step
+      </div>
+
+      <h2>
+        Keep creating.
+      </h2>
+
+      <p>
+        Explore student work, join the next AI Lab cohort,
+        or learn more about The Brown Girls Creative Studio.
+      </p>
+
+
+      <div class="final-buttons">
+
+        <a
+          href="YOUR-CLASS-PROJECT-LINK"
+          class="btn btn-primary">
+
+          View Class Projects
+        </a>
+
+
+        <a
+          href="#december"
+          class="btn btn-secondary">
+
+          December Cohort
+        </a>
+
+
+        <a
+          href="lab-projects.html"
+          class="btn btn-secondary">
+
+          Past Lab Work
+        </a>
+
+
+        <a
+          href="index.html#education"
+          class="btn btn-secondary">
+
+          Visit The Brown Girls Creative Studio
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- =========================
+       FOOTER
+  ========================== -->
 
   <footer class="footer">
-    <p>© The Brown Girls Creative Studio. All rights reserved.</p>
+
+    <p>
+      © The Brown Girls Creative Studio · The AI Lab
+    </p>
+
   </footer>
+
 
 </body>
 </html>
