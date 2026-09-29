@@ -5,13 +5,78 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Brown Girls Creative Studio — Data Architecture, AI Innovation, Workforce Impact</title>
 
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<!-- Custom Native Telemetry Engine: The Brown Girls Creative Studio -->
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  (function() {
+   const TELEMETRY_ENDPOINT = "https://qlgnstoesdzmkcmyaqyw.supabase.co/rest/v1/site_telemetry";
+    const API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg4MDI1NjcsImV4cCI6MjA3NDM3ODU2N30.rVwGf3G-B8_W-gM3k8b0uN0pZ4k9L9x0_jY1V5z4w9E";
+
+    const session_id = 'sess_' + Math.random().toString(36).substring(2, 9);
+    let maxScroll = 0;
+    const path = window.location.pathname;
+    const referrer = document.referrer || 'Direct';
+
+    function sendEvent(eventType, metadata = {}) {
+      const payload = {
+        session_id: session_id,
+        event_type: eventType,
+        page_path: path,
+        referrer: referrer,
+        metadata: metadata,
+        screen_width: window.innerWidth,
+        timestamp: new Date().toISOString()
+      };
+
+      // Native beacon prevents lost events when visitors close the page
+      if (navigator.sendBeacon) {
+        const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' });
+        navigator.sendBeacon(TELEMETRY_ENDPOINT + "?apikey=" + API_KEY, blob);
+      } else {
+        fetch(TELEMETRY_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'apikey': API_KEY, 'Prefer': 'return=minimal' },
+          body: JSON.stringify(payload)
+        }).catch(() => {});
+      }
+    }
+
+    // 1. Log Initial Visit
+    sendEvent('page_view');
+
+    // 2. Track Scroll Milestones (25%, 50%, 75%, 100%) to calculate exact drop-off
+    const milestones = new Set();
+    window.addEventListener('scroll', function() {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight <= 0) return;
+      const currentScroll = Math.round((window.scrollY / totalHeight) * 100);
+      if (currentScroll > maxScroll) maxScroll = currentScroll;
+
+      [25, 50, 75, 100].forEach(m => {
+        if (currentScroll >= m && !milestones.has(m)) {
+          milestones.add(m);
+          sendEvent('scroll_milestone', { depth: m });
+        }
+      });
+    }, { passive: true });
+
+    // 3. Track Button Clicks / Exit Links (Waitlist, AI Lab, Student Projects)
+    document.addEventListener('click', function(e) {
+      const link = e.target.closest('a, button');
+      if (link) {
+        sendEvent('cta_click', {
+          target_text: (link.innerText || '').trim().substring(0, 50),
+          target_url: link.href || ''
+        });
+      }
+    });
+
+    // 4. Log Exit / Drop-off Point
+    window.addEventListener('visibilitychange', function() {
+      if (document.visibilityState === 'hidden') {
+        sendEvent('session_exit', { max_scroll_depth: maxScroll });
+      }
+    });
+  })();
 </script>
 
 <!-- Supabase JS Library -->
