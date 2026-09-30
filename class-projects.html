@@ -3,162 +3,492 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NCSA Class Projects — The AI Lab</title>
+  <title>NCSA Student Project Showcase — The AI Lab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #140d0a;
-      --card-bg: rgba(31, 20, 15, 0.90);
+      --bg: #110b08;
+      --card-bg: rgba(28, 17, 13, 0.95);
       --gold: #f59e0b;
       --gold-light: #fbbf24;
       --text: #fdfbf7;
-      --text-muted: #b9ad9e;
-      --border: rgba(245, 158, 11, 0.20);
-      --border-hover: rgba(245, 158, 11, 0.60);
+      --text-muted: #a39585;
+      --border: rgba(245, 158, 11, 0.25);
+      --border-hover: rgba(245, 158, 11, 0.7);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      background: var(--bg);
+      background: radial-gradient(circle at 50% 0%, rgba(245, 158, 11, 0.12), transparent 45%), var(--bg);
       color: var(--text);
       font-family: 'Plus Jakarta Sans', sans-serif;
-      padding: 0 0 80px;
+      min-height: 100vh;
+      padding-bottom: 90px;
     }
     .nav {
       padding: 20px 8%;
       display: flex;
       justify-content: space-between;
+      align-items: center;
       border-bottom: 1px solid var(--border);
-      background: rgba(20, 13, 10, 0.95);
+      background: rgba(17, 11, 8, 0.92);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 40;
     }
-    .brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: #fff; text-decoration: none; }
+    .brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: #fff; text-decoration: none; font-size: 1.05rem; }
     .brand span { color: var(--gold); }
-    .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; }
-    .header { text-align: center; padding: 60px 20px 40px; }
+    .back-link { color: var(--text-muted); text-decoration: none; font-size: 0.88rem; font-weight: 600; }
+    .back-link:hover { color: var(--gold-light); }
+
+    .header { text-align: center; padding: 65px 20px 40px; }
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       color: var(--gold-light);
       background: rgba(245, 158, 11, 0.12);
       border: 1px solid var(--border);
-      padding: 6px 16px;
+      padding: 6px 18px;
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.76rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 16px;
+      letter-spacing: 0.14em;
+      margin-bottom: 18px;
     }
-    h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 5vw, 3.2rem); margin-bottom: 12px; }
+    h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
     h1 span { color: var(--gold); }
-    .subtitle { color: var(--text-muted); max-width: 620px; margin: 0 auto; font-size: 1rem; }
+    .subtitle { color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 1.02rem; line-height: 1.6; }
+
+    /* Project Cards Grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 22px;
-      max-width: 1100px;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 26px;
+      max-width: 1180px;
       margin: 40px auto 0;
-      padding: 0 20px;
+      padding: 0 24px;
     }
     .project-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 28px;
+      border-radius: 20px;
+      padding: 30px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: transform 0.2s, border-color 0.2s;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
     }
-    .project-card:hover { transform: translateY(-4px); border-color: var(--border-hover); }
-    .project-tag { color: var(--gold); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-bottom: 8px; }
-    .project-card h3 { font-family: 'Space Grotesk', sans-serif; font-size: 1.35rem; margin-bottom: 10px; color: #fff; }
-    .project-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.5; margin-bottom: 20px; }
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-hover);
+      box-shadow: 0 20px 44px rgba(245, 158, 11, 0.15);
+    }
+    .tag-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .vibe-tag {
+      font-size: 0.72rem;
+      font-weight: 800;
+      color: var(--gold-light);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(245, 158, 11, 0.12);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    .team-badge {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    .project-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 1.45rem;
+      color: #fff;
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .project-desc {
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin-bottom: 22px;
+    }
+    .feature-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 26px;
+    }
+    .feature-chip {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #ded7ce;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 4px 9px;
+      border-radius: 999px;
+    }
     .btn-launch {
       display: inline-flex;
       align-items: center;
       justify-content: center;
+      gap: 8px;
       background: linear-gradient(135deg, var(--gold), #d97706);
-      color: #130c08;
-      text-decoration: none;
+      color: #110b08;
       font-weight: 800;
-      font-size: 0.85rem;
-      padding: 12px 18px;
-      border-radius: 10px;
+      font-size: 0.88rem;
+      padding: 14px 20px;
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
       width: 100%;
+      transition: opacity 0.2s, transform 0.15s;
     }
+    .btn-launch:hover { opacity: 0.95; transform: scale(1.01); }
+
+    /* Live Interactive Prototype Modal */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      padding: 20px;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-container {
+      background: #170f0b;
+      border: 1px solid var(--gold);
+      border-radius: 24px;
+      max-width: 760px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 38px 32px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.8), 0 0 35px rgba(245, 158, 11, 0.2);
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 22px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      color: #fff;
+      font-size: 1.1rem;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-hero {
+      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+      padding-bottom: 24px;
+      margin-bottom: 24px;
+    }
+    .modal-hero h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 2rem;
+      color: #fff;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    .modal-hero p { color: var(--gold-light); font-size: 1rem; line-height: 1.5; }
+    .modal-section { margin-bottom: 22px; }
+    .modal-section h4 {
+      font-size: 0.76rem;
+      font-weight: 800;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+    .modal-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      border-radius: 12px;
+      padding: 16px 18px;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: #f1ede8;
+    }
+    .spec-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .spec-item {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 12px 14px;
+      border-radius: 10px;
+    }
+    .spec-item span { display: block; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
+    .spec-item strong { color: #fff; font-size: 0.88rem; }
   </style>
 </head>
 <body>
+
   <nav class="nav">
     <a href="index.html" class="brand">the brown girls <span>creative studio</span></a>
-    <a href="index.html" class="back-link">← AI Lab Hub</a>
+    <a href="index.html" class="back-link">← Return to Studio</a>
   </nav>
 
   <div class="header">
     <span class="badge">Newton County STEAM Academy</span>
     <h1>Student <span>Site Showcase</span></h1>
-    <p class="subtitle">Live website prototypes and AI concepts engineered by 8th-grade innovators during Career Day.</p>
+    <p class="subtitle">Live concept builds, AI prompt architectures, and digital platforms engineered by 8th-grade innovators during Career Day.</p>
   </div>
 
-  <!-- Team 1: Classy Cleaners -->
-    <div class="project-card">
-      <div>
-        <div class="project-tag">Luxe Commercial & Residential</div>
-        <h3>Classy Cleaners</h3>
-        <p>Premium booking portal tailored for busy parents and small businesses, complete with membership tiers, proof gallery, and verified reviews.</p>
-      </div>
-      <a href="ncsa/classy-cleaners.html" class="btn-launch">Launch Project Site →</a>
-    </div>
+  <div class="grid">
 
-    <!-- Team 2: GameZone -->
+    <!-- Card 1: Girls Against Stereotypes -->
     <div class="project-card">
       <div>
-        <div class="project-tag">Playful & Bold Community</div>
-        <h3>GameZone</h3>
-        <p>An interactive gaming and student creator hub featuring video blocks, active player reviews, and exclusive digital membership content.</p>
-      </div>
-      <a href="ncsa/gamezone.html" class="btn-launch">Launch Project Site →</a>
-    </div>
-
-    <!-- Team 3: Wrap It Up -->
-    <div class="project-card">
-      <div>
-        <div class="project-tag">Sporty Injury Mitigation</div>
-        <h3>Wrap It Up</h3>
-        <p>An athletic performance product line built to keep athletes on the field, featuring injury-prevention gear, FAQ breakdowns, and athlete testimonials.</p>
-      </div>
-      <a href="ncsa/wrap-it-up.html" class="btn-launch">Launch Project Site →</a>
-    </div>
-
-    <!-- Team 4: Boom Sports -->
-    <div class="project-card">
-      <div>
-        <div class="project-tag">Youth Athletic Coaching</div>
-        <h3>Boom Sports</h3>
-        <p>Fast-track skill training that helps kids pick up sports quickly through rapid video modules, personalized coaching, and daily workouts.</p>
-      </div>
-      <a href="ncsa/boom-sports.html" class="btn-launch">Launch Project Site →</a>
-    </div>
-
-    <!-- Team 5: Girls Against Stereotypes -->
-    <div class="project-card">
-      <div>
-        <div class="project-tag">Empowerment & Advocacy</div>
+        <div class="tag-row">
+          <span class="vibe-tag">Empowerment & Advocacy</span>
+          <span class="team-badge">Team of 4</span>
+        </div>
         <h3>Girls Against Stereotypes</h3>
-        <p>A mission-driven social community platform created by Gabby P., Emily V., Mia G., and Avery S. to share authentic stories and break societal barriers.</p>
+        <p class="project-desc">A safe space and digital storytelling collective built to unite women, dismantle stereotypes, and share authentic lived experiences.</p>
+        <div class="feature-list">
+          <span class="feature-chip">Story Engine</span>
+          <span class="feature-chip">Community Hub</span>
+          <span class="feature-chip">Advocacy Voice</span>
+        </div>
       </div>
-      <a href="ncsa/girls-against-stereotypes.html" class="btn-launch">Launch Project Site →</a>
+      <button class="btn-launch" onclick="openProject('stereotypes')">Explore App Prototype →</button>
     </div>
 
-    <!-- Team 6: Scholar Supplies -->
+    <!-- Card 2: Scholar Supplies -->
     <div class="project-card">
       <div>
-        <div class="project-tag">Accessible Education Tools</div>
+        <div class="tag-row">
+          <span class="vibe-tag">Equity & Community</span>
+          <span class="team-badge">Team of 4</span>
+        </div>
         <h3>Scholar Supplies</h3>
-        <p>An equity-first student store engineered by Brooklyn Y., Kaylee H., Kendall G., and Tracen H., providing essential classroom tools for just 40 cents.</p>
+        <p class="project-desc">A micro-commerce shop ensuring every student has classroom tools by offering notebooks, pens, and essentials for just 40 cents.</p>
+        <div class="feature-list">
+          <span class="feature-chip">40¢ Store</span>
+          <span class="feature-chip">Supply Locker</span>
+          <span class="feature-chip">Equal Access</span>
+        </div>
       </div>
-      <a href="ncsa/scholar-supplies.html" class="btn-launch">Launch Project Site →</a>
+      <button class="btn-launch" onclick="openProject('supplies')">Explore App Prototype →</button>
     </div>
+
+    <!-- Card 3: Wrap It Up -->
+    <div class="project-card">
+      <div>
+        <div class="tag-row">
+          <span class="vibe-tag">Sporty Injury Mitigation</span>
+          <span class="team-badge">Athlete Tech</span>
+        </div>
+        <h3>Wrap It Up</h3>
+        <p class="project-desc">Specialized athletic compression and protection line engineered to prevent sports injuries and keep players performing safely.</p>
+        <div class="feature-list">
+          <span class="feature-chip">Product Showcase</span>
+          <span class="feature-chip">Injury Prevention FAQ</span>
+          <span class="feature-chip">Testimonials</span>
+        </div>
+      </div>
+      <button class="btn-launch" onclick="openProject('wrapitup')">Explore App Prototype →</button>
+    </div>
+
+    <!-- Card 4: Classy Cleaners -->
+    <div class="project-card">
+      <div>
+        <div class="tag-row">
+          <span class="vibe-tag">Luxe Service Booking</span>
+          <span class="team-badge">Small Business</span>
+        </div>
+        <h3>Classy Cleaners</h3>
+        <p class="project-desc">High-end residential and commercial cleaning service platform with instant calendar booking, VIP memberships, and customer reviews.</p>
+        <div class="feature-list">
+          <span class="feature-chip">Booking Button</span>
+          <span class="feature-chip">Client Gallery</span>
+          <span class="feature-chip">Membership Tier</span>
+        </div>
+      </div>
+      <button class="btn-launch" onclick="openProject('cleaners')">Explore App Prototype →</button>
+    </div>
+
+    <!-- Card 5: Boom Sports -->
+    <div class="project-card">
+      <div>
+        <div class="tag-row">
+          <span class="vibe-tag">Youth Athletics & Training</span>
+          <span class="team-badge">Skill Coaching</span>
+        </div>
+        <h3>Boom Sports</h3>
+        <p class="project-desc">Accelerated youth sports academy designed to help kids learn any sport rapidly through bite-sized video drills and workout plans.</p>
+        <div class="feature-list">
+          <span class="feature-chip">Video Blocks</span>
+          <span class="feature-chip">Quick Drills</span>
+          <span class="feature-chip">Coaching Portal</span>
+        </div>
+      </div>
+      <button class="btn-launch" onclick="openProject('boomsports')">Explore App Prototype →</button>
+    </div>
+
+    <!-- Card 6: GameZone -->
+    <div class="project-card">
+      <div>
+        <div class="tag-row">
+          <span class="vibe-tag">Playful & Bold</span>
+          <span class="team-badge">Student Gamers</span>
+        </div>
+        <h3>GameZone</h3>
+        <p class="project-desc">Community-driven gamer network combining video streaming blocks, multiplayer tournaments, and subscriber perks.</p>
+        <div class="feature-list">
+          <span class="feature-chip">Video Stream</span>
+          <span class="feature-chip">Member Content</span>
+          <span class="feature-chip">Player Reviews</span>
+        </div>
+      </div>
+      <button class="btn-launch" onclick="openProject('gamezone')">Explore App Prototype →</button>
+    </div>
+
+  </div>
+
+  <!-- Interactive Project Preview Modal -->
+  <div class="modal-overlay" id="projectModal" onclick="closeModal(event)">
+    <div class="modal-container" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModal(null)">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    const projectData = {
+      stereotypes: {
+        title: "Girls Against Stereotypes",
+        tagline: "Uniting women in society to share experiences and break boundaries.",
+        founders: "Gabby P. (Leader), Emily V. (Cup Runner), Mia G. (Pitch Lead), Avery S. (Creative Director)",
+        audience: "Young Women, Students & Advocates",
+        vibe: "Empowering, Honest, Mission-Driven",
+        pitch: "Our AI site is called 'Girls Against Stereotypes'. It helps women in this society share their experiences as women and come together against stereotypes. This makes us special because it can have big impacts and change for all women. If you don't use this website, you're missing out on educating yourself on real and impacting experiences.",
+        features: ["Community Submission Engine", "Safe Story Gallery", "Impact & Resource Directory"]
+      },
+      supplies: {
+        title: "Scholar Supplies",
+        tagline: "Essential school supplies for students who can't afford them — everything for 40 cents.",
+        founders: "Brooklyn Y., Kaylee H., Kendall G., Tracen H.",
+        audience: "Students & Teachers",
+        vibe: "Accessible, Supportive, Impact-Oriented",
+        pitch: "Get your scholar supplies here! We sell supplies for students who can't afford them. Get your supplies here for just 40 cents!",
+        features: ["40-Cent Supply Locker", "Teacher Donation Portal", "Instant Student Request Hub"]
+      },
+      wrapitup: {
+        title: "Wrap It Up",
+        tagline: "Injury mitigation and protective gear engineered for athletes.",
+        founders: "NCSA Student Athletic Engineering Team",
+        audience: "Middle & High School Athletes, Coaches, Parents",
+        vibe: "Sporty, Performance-Driven, Protective",
+        pitch: "A promotional site for athletes that helps them mitigate injuries by buying protective gear. Features athlete testimonials, verified reviews, and an interactive injury prevention FAQ.",
+        features: ["Injury FAQ Section", "Compression Product Specs", "Player Testimonial Reel"]
+      },
+      cleaners: {
+        title: "Classy Cleaners",
+        tagline: "Luxe commercial and residential cleaning made seamless.",
+        founders: "NCSA Business & Operations Sprint Team",
+        audience: "Local Small Businesses, Busy Parents",
+        vibe: "Luxe, Reliable, Professional",
+        pitch: "Book appointments and promote services for small businesses and parents who value pristine spaces. Features recurring memberships, project galleries, direct booking buttons, and reviews.",
+        features: ["Instant Calendar Booking", "Before/After Gallery", "VIP Monthly Memberships"]
+      },
+      boomsports: {
+        title: "Boom Sports",
+        tagline: "Helping kids learn any sport quickly through video coaching.",
+        founders: "NCSA Youth Coaching Team",
+        audience: "Young Athletes, Beginners, Parents",
+        vibe: "Energetic, Fast-Paced, Encouraging",
+        pitch: "Site is called Boom Sports. It helps kids learn a sport and do it quick. It's fun. If you don't use it, you're missing out on good lessons. Includes video blocks, coaching, and workouts.",
+        features: ["Fast Video Drills", "Daily Workout Routines", "1-on-1 Virtual Coaching Calls"]
+      },
+      gamezone: {
+        title: "GameZone",
+        tagline: "Bold community network for student creators and gamers.",
+        founders: "NCSA Gaming Sprint Team",
+        audience: "Student Gamers, Streamers, Creators",
+        vibe: "Playful, Bold, Electric",
+        pitch: "Promotes services and builds a community for students and gamers. Features video streams, member-exclusive content, an interactive gallery, and community reviews.",
+        features: ["Video Stream Blocks", "Gamer Discord Integration", "Member Perk Unlocks"]
+      }
+    };
+
+    function openProject(id) {
+      const p = projectData[id];
+      if (!p) return;
+
+      const html = `
+        <div class="modal-hero">
+          <span class="vibe-tag">${p.vibe}</span>
+          <h2>${p.title}</h2>
+          <p>${p.tagline}</p>
+        </div>
+
+        <div class="modal-section">
+          <h4>Engineering & Creative Team</h4>
+          <div class="modal-box"><strong>${p.founders}</strong></div>
+        </div>
+
+        <div class="modal-section">
+          <h4>The 60-Second Shark Tank Pitch</h4>
+          <div class="modal-box">"${p.pitch}"</div>
+        </div>
+
+        <div class="modal-section">
+          <h4>Platform Specifications</h4>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <span>Target Audience</span>
+              <strong>${p.audience}</strong>
+            </div>
+            <div class="spec-item">
+              <span>Selected Features</span>
+              <strong>${p.features.join(', ')}</strong>
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('modalContent').innerHTML = html;
+      document.getElementById('projectModal').classList.add('active');
+    }
+
+    function closeModal(e) {
+      if (!e || e.target.id === 'projectModal' || e.target.classList.contains('modal-close')) {
+        document.getElementById('projectModal').classList.remove('active');
+      }
+    }
+  </script>
+
 </body>
 </html>
+
