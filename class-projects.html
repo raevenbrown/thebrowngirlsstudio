@@ -164,117 +164,95 @@
     }
     .btn-launch:hover { opacity: 0.95; transform: scale(1.01); }
 
-    /* Live Interactive Prototype Modal */
-    .modal-overlay {
+    /* Full-Screen Simulated Student Landing Page View */
+    .prototype-screen {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
+      background: #0f0a07;
       z-index: 100;
-      padding: 20px;
-    }
-    .modal-overlay.active { display: flex; }
-    .modal-container {
-      background: #170f0b;
-      border: 1px solid var(--gold);
-      border-radius: 24px;
-      max-width: 760px;
-      width: 100%;
-      max-height: 90vh;
       overflow-y: auto;
-      padding: 38px 32px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.8), 0 0 35px rgba(245, 158, 11, 0.2);
-      position: relative;
+      display: none;
+      padding-bottom: 80px;
     }
-    .modal-close {
-      position: absolute;
-      top: 20px;
-      right: 22px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border);
-      color: #fff;
-      font-size: 1.1rem;
-      border-radius: 50%;
-      width: 36px;
-      height: 36px;
-      cursor: pointer;
+    .prototype-screen.active { display: block; }
+    .prototype-bar {
+      position: sticky;
+      top: 0;
+      background: rgba(20, 13, 9, 0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding: 16px 8%;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
+      z-index: 10;
     }
-    .modal-hero {
-      border-bottom: 1px solid rgba(245, 158, 11, 0.2);
-      padding-bottom: 24px;
-      margin-bottom: 24px;
+    .btn-back-hub {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border);
+      color: var(--gold-light);
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
     }
-    .modal-hero h2 {
+    .btn-back-hub:hover { background: rgba(245, 158, 11, 0.15); }
+    .sim-content {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+    .sim-hero {
+      text-align: center;
+      padding: 50px 20px 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      margin-bottom: 30px;
+    }
+    .sim-hero h2 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2rem;
+      font-size: clamp(2rem, 4.5vw, 3rem);
+      margin-bottom: 12px;
       color: #fff;
-      margin-top: 10px;
-      margin-bottom: 10px;
     }
-    .modal-hero p { color: var(--gold-light); font-size: 1rem; line-height: 1.5; }
-    .modal-section { margin-bottom: 22px; }
-    .modal-section h4 {
-      font-size: 0.76rem;
-      font-weight: 800;
-      color: var(--gold);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin-bottom: 8px;
+    .sim-hero p {
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin: 0 auto 24px;
     }
-    .modal-box {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(245, 158, 11, 0.15);
-      border-radius: 12px;
-      padding: 16px 18px;
-      font-size: 0.92rem;
-      line-height: 1.6;
-      color: #f1ede8;
-    }
-    .spec-grid {
+    .sim-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 20px;
+      margin-bottom: 30px;
     }
-    .spec-item {
-      background: rgba(255,255,255,0.02);
-      border: 1px solid rgba(255,255,255,0.06);
-      padding: 12px 14px;
-      border-radius: 10px;
+    .sim-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(245, 158, 11, 0.15);
+      border-radius: 16px;
+      padding: 24px;
     }
-    .spec-item span { display: block; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
-    .spec-item strong { color: #fff; font-size: 0.88rem; }
-
-    /* Modal Live Launch Action Button */
-    .modal-action-bar {
-      margin-top: 28px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(245, 158, 11, 0.2);
+    .sim-card h4 {
+      color: var(--gold);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
     }
-    .btn-modal-visit {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      background: linear-gradient(135deg, var(--gold), #d97706);
-      color: #110b08;
-      font-weight: 800;
-      font-size: 1rem;
-      padding: 16px 24px;
-      border-radius: 12px;
-      text-decoration: none;
-      width: 100%;
-      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
-      transition: transform 0.2s, opacity 0.2s;
+    .sim-card p {
+      color: #f1ede8;
+      font-size: 0.95rem;
+      line-height: 1.6;
     }
-    .btn-modal-visit:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
+    .sim-cta {
+      text-align: center;
+      padding: 30px;
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(28, 17, 13, 0.8));
+      border: 1px solid var(--gold);
+      border-radius: 20px;
     }
   </style>
 </head>
@@ -308,7 +286,7 @@
           <span class="feature-chip">Advocacy Voice</span>
         </div>
       </div>
-      <button class="btn-launch" onclick="openProject('stereotypes')">Explore App Prototype →</button>
+      <button class="btn-launch" onclick="launchSite('stereotypes')">Launch Prototype Site →</button>
     </div>
 
     <!-- Card 2: Scholar Supplies -->
@@ -326,7 +304,7 @@
           <span class="feature-chip">Equal Access</span>
         </div>
       </div>
-      <button class="btn-launch" onclick="openProject('supplies')">Explore App Prototype →</button>
+      <button class="btn-launch" onclick="launchSite('supplies')">Launch Prototype Site →</button>
     </div>
 
     <!-- Card 3: Wrap It Up -->
@@ -344,7 +322,7 @@
           <span class="feature-chip">Testimonials</span>
         </div>
       </div>
-      <button class="btn-launch" onclick="openProject('wrapitup')">Explore App Prototype →</button>
+      <button class="btn-launch" onclick="launchSite('wrapitup')">Launch Prototype Site →</button>
     </div>
 
     <!-- Card 4: Classy Cleaners -->
@@ -362,7 +340,7 @@
           <span class="feature-chip">Membership Tier</span>
         </div>
       </div>
-      <button class="btn-launch" onclick="openProject('cleaners')">Explore App Prototype →</button>
+      <button class="btn-launch" onclick="launchSite('cleaners')">Launch Prototype Site →</button>
     </div>
 
     <!-- Card 5: Boom Sports -->
@@ -380,7 +358,7 @@
           <span class="feature-chip">Coaching Portal</span>
         </div>
       </div>
-      <button class="btn-launch" onclick="openProject('boomsports')">Explore App Prototype →</button>
+      <button class="btn-launch" onclick="launchSite('boomsports')">Launch Prototype Site →</button>
     </div>
 
     <!-- Card 6: GameZone -->
@@ -398,133 +376,148 @@
           <span class="feature-chip">Player Reviews</span>
         </div>
       </div>
-      <button class="btn-launch" onclick="openProject('gamezone')">Explore App Prototype →</button>
+      <button class="btn-launch" onclick="launchSite('gamezone')">Launch Prototype Site →</button>
     </div>
 
   </div>
 
-  <!-- Interactive Project Preview Modal -->
-  <div class="modal-overlay" id="projectModal" onclick="closeModal(event)">
-    <div class="modal-container" onclick="event.stopPropagation()">
-      <button class="modal-close" onclick="closeModal(null)">✕</button>
-      <div id="modalContent"></div>
+  <!-- Full-Screen Prototype View -->
+  <div class="prototype-screen" id="prototypeScreen">
+    <div class="prototype-bar">
+      <span style="font-family:'Space Grotesk',sans-serif;font-weight:700;color:#fff;">NCSA Student Build Preview</span>
+      <button class="btn-back-hub" onclick="closeSite()">← Back to All Projects</button>
     </div>
+    <div class="sim-content" id="simContent"></div>
   </div>
 
   <script>
-    const projectData = {
+    const sites = {
       stereotypes: {
         title: "Girls Against Stereotypes",
-        tagline: "Uniting women in society to share experiences and break boundaries.",
-        founders: "Gabby P. (Leader), Emily V. (Cup Runner), Mia G. (Pitch Lead), Avery S. (Creative Director)",
-        audience: "Young Women, Students & Advocates",
-        vibe: "Empowering, Honest, Mission-Driven",
-        pitch: "Our AI site is called 'Girls Against Stereotypes'. It helps women in this society share their experiences as women and come together against stereotypes. This makes us special because it can have big impacts and change for all women. If you don't use this website, you're missing out on educating yourself on real and impacting experiences.",
-        features: ["Community Submission Engine", "Safe Story Gallery", "Impact & Resource Directory"],
-        url: "ncsa/girls-against-stereotypes.html"
+        tagline: "Uniting women in society to share real experiences and break boundaries[cite: 30].",
+        badge: "Empowering · Honest · Mission-Driven",
+        founders: "Gabby P. (Leader), Emily V. (Cup Runner), Mia G. (Pitch Lead), Avery S. (Creative Director)[cite: 30]",
+        pitch: "Our AI site helps women in this society share their experiences as women and come together against stereotypes. This makes us special because it can have big impacts and change for all women[cite: 30].",
+        about: "This platform is dedicated to uplifting voices, breaking unfair labels, and providing an authentic space where young women can speak truth without judgment[cite: 30].",
+        feature1Title: "Story Submission Engine",
+        feature1Text: "Allows students and women to submit anonymous stories and personal breakthroughs safely[cite: 30].",
+        feature2Title: "Impact Directory",
+        feature2Text: "Curated resources, mentorship contacts, and community events centered on women's equity[cite: 30]."
       },
       supplies: {
         title: "Scholar Supplies",
-        tagline: "Essential school supplies for students who can't afford them — everything for 40 cents.",
-        founders: "Brooklyn Y., Kaylee H., Kendall G., Tracen H.",
-        audience: "Students & Teachers",
-        vibe: "Accessible, Supportive, Impact-Oriented",
-        pitch: "Get your scholar supplies here! We sell supplies for students who can't afford them. Get your supplies here for just 40 cents!",
-        features: ["40-Cent Supply Locker", "Teacher Donation Portal", "Instant Student Request Hub"],
-        url: "ncsa/scholar-supplies.html"
+        tagline: "Get your scholar supplies here! Everything for just 40 cents[cite: 31].",
+        badge: "Accessible · Supportive · Community-First",
+        founders: "Brooklyn Y., Kaylee H., Kendall G., Tracen H.[cite: 31]",
+        pitch: "We sell supplies for students who can't afford them. Get your notebooks, pencils, and school essentials right here for only 40 cents[cite: 31]!",
+        about: "No student should fall behind in class because they don't have paper or pens. Scholar Supplies keeps classroom lockers stocked at affordable prices[cite: 31].",
+        feature1Title: "40-Cent Supply Locker",
+        feature1Text: "Pencils, pens, spiral notebooks, and erasers available for 40 cents with zero questions asked[cite: 31].",
+        feature2Title: "Teacher Support Box",
+        feature2Text: "Allows community members and teachers to donate supplies directly into classroom kits[cite: 31]."
       },
       wrapitup: {
         title: "Wrap It Up",
-        tagline: "Injury mitigation and protective gear engineered for athletes.",
-        founders: "NCSA Student Athletic Engineering Team",
-        audience: "Middle & High School Athletes, Coaches, Parents",
-        vibe: "Sporty, Performance-Driven, Protective",
-        pitch: "A promotional site for athletes that helps them mitigate injuries by buying protective gear. Features athlete testimonials, verified reviews, and an interactive injury prevention FAQ.",
-        features: ["Injury FAQ Section", "Compression Product Specs", "Player Testimonial Reel"],
-        url: "ncsa/wrap-it-up.html"
+        tagline: "Injury mitigation and protective compression gear engineered for athletes[cite: 28].",
+        badge: "Sporty · Performance · Protection",
+        founders: "NCSA Student Athletic Engineering Team[cite: 28]",
+        pitch: "A promotional site for athletes that helps them mitigate injuries by buying protective gear. Features athlete testimonials, verified reviews, and an interactive injury prevention FAQ[cite: 28].",
+        about: "Built by student-athletes for student-athletes. Our mission is to keep players on the field, court, and track by providing premium joint, muscle, and ligament protection[cite: 28].",
+        feature1Title: "Compression Gear Specs",
+        feature1Text: "High-grade breathable wraps designed to stabilize ankles, wrists, and knees during competition[cite: 28].",
+        feature2Title: "Injury FAQ & Protocol",
+        feature2Text: "Step-by-step guides on when to ice, wrap, or rest to prevent season-ending strain[cite: 28]."
       },
       cleaners: {
         title: "Classy Cleaners",
-        tagline: "Luxe commercial and residential cleaning made seamless.",
-        founders: "NCSA Business & Operations Sprint Team",
-        audience: "Local Small Businesses, Busy Parents",
-        vibe: "Luxe, Reliable, Professional",
-        pitch: "Book appointments and promote services for small businesses and parents who value pristine spaces. Features recurring memberships, project galleries, direct booking buttons, and reviews.",
-        features: ["Instant Calendar Booking", "Before/After Gallery", "VIP Monthly Memberships"],
-        url: "ncsa/classy-cleaners.html"
+        tagline: "Luxe commercial and residential cleaning made seamless[cite: 26].",
+        badge: "Luxe · Reliable · Professional",
+        founders: "NCSA Business & Operations Sprint Team[cite: 26]",
+        pitch: "Book appointments and promote services for small businesses and parents who value pristine spaces. Features recurring memberships, project galleries, direct booking buttons, and reviews[cite: 26].",
+        about: "Classy Cleaners delivers elite sanitation and organization for office buildings, family homes, and local storefronts, giving busy owners peace of mind[cite: 26].",
+        feature1Title: "Instant Booking Engine",
+        feature1Text: "Select your service date, clean type, and square footage directly from a calendar view[cite: 26].",
+        feature2Title: "VIP Membership Plan",
+        feature2Text: "Bi-weekly scheduled cleanings with discounted commercial rates and priority support[cite: 26]."
       },
       boomsports: {
         title: "Boom Sports",
-        tagline: "Helping kids learn any sport quickly through video coaching.",
-        founders: "NCSA Youth Coaching Team",
-        audience: "Young Athletes, Beginners, Parents",
-        vibe: "Energetic, Fast-Paced, Encouraging",
-        pitch: "Site is called Boom Sports. It helps kids learn a sport and do it quick. It's fun. If you don't use it, you're missing out on good lessons. Includes video blocks, coaching, and workouts.",
-        features: ["Fast Video Drills", "Daily Workout Routines", "1-on-1 Virtual Coaching Calls"],
-        url: "ncsa/boom-sports.html"
+        tagline: "Helping kids learn any sport quickly through video coaching and fast drills[cite: 29].",
+        badge: "Energetic · Fast-Paced · Encouraging",
+        founders: "NCSA Youth Coaching Team[cite: 29]",
+        pitch: "Boom Sports helps kids learn a sport and do it quick. It's fun. If you don't use it, you're missing out on good lessons. Includes video blocks, coaching, and workouts[cite: 29].",
+        about: "Sports shouldn't be intimidating to start. Boom Sports breaks down basketball, football, soccer, and track mechanics into fun, 3-minute video lessons[cite: 29].",
+        feature1Title: "Quick Drill Video Modules",
+        feature1Text: "3-minute mobile drills focused on footwork, shooting form, and conditioning[cite: 29].",
+        feature2Title: "Daily Workout Tracker",
+        feature2Text: "Customizable daily routines designed to build stamina and speed at home[cite: 29]."
       },
       gamezone: {
         title: "GameZone",
-        tagline: "Bold community network for student creators and gamers.",
-        founders: "NCSA Gaming Sprint Team",
-        audience: "Student Gamers, Streamers, Creators",
-        vibe: "Playful, Bold, Electric",
-        pitch: "Promotes services and builds a community for students and gamers. Features video streams, member-exclusive content, an interactive gallery, and community reviews.",
-        features: ["Video Stream Blocks", "Gamer Discord Integration", "Member Perk Unlocks"],
-        url: "ncsa/gamezone.html"
+        tagline: "Bold community network for student creators, streamers, and gamers[cite: 27].",
+        badge: "Playful · Bold · Electric",
+        founders: "NCSA Gaming Sprint Team[cite: 27]",
+        pitch: "Promotes services and builds a community for students and gamers. Features video streams, member-exclusive content, an interactive gallery, and community reviews[cite: 27].",
+        about: "GameZone brings student gamers together to showcase clips, team up for tournaments, and share hardware tips in a positive creator-friendly space[cite: 27].",
+        feature1Title: "Video Stream Center",
+        feature1Text: "Curated gameplay blocks, top weekly highlights, and student tutorials[cite: 27].",
+        feature2Title: "Member Club Perks",
+        feature2Text: "Exclusive tournament brackets, gaming badge rewards, and private Discord channels[cite: 27]."
       }
     };
 
-    function openProject(id) {
-      const p = projectData[id];
-      if (!p) return;
+    function launchSite(id) {
+      const s = sites[id];
+      if (!s) return;
 
       const html = `
-        <div class="modal-hero">
-          <span class="vibe-tag">${p.vibe}</span>
-          <h2>${p.title}</h2>
-          <p>${p.tagline}</p>
-        </div>
-
-        <div class="modal-section">
-          <h4>Engineering & Creative Team</h4>
-          <div class="modal-box"><strong>${p.founders}</strong></div>
-        </div>
-
-        <div class="modal-section">
-          <h4>The 60-Second Shark Tank Pitch</h4>
-          <div class="modal-box">"${p.pitch}"</div>
-        </div>
-
-        <div class="modal-section">
-          <h4>Platform Specifications</h4>
-          <div class="spec-grid">
-            <div class="spec-item">
-              <span>Target Audience</span>
-              <strong>${p.audience}</strong>
-            </div>
-            <div class="spec-item">
-              <span>Selected Features</span>
-              <strong>${p.features.join(', ')}</strong>
-            </div>
+        <div class="sim-hero">
+          <span class="vibe-tag" style="margin-bottom:12px;display:inline-block;">${s.badge}</span>
+          <h2>${s.title}</h2>
+          <p>${s.tagline}</p>
+          <div style="font-size:0.85rem;color:var(--text-muted);">
+            Engineered by: <strong style="color:#fff;">${s.founders}</strong>
           </div>
         </div>
 
-        <div class="modal-action-bar">
-          <a href="${p.url}" class="btn-modal-visit">
-            Visit Live Student Website →
-          </a>
+        <div class="sim-grid">
+          <div class="sim-card">
+            <h4>About The Mission</h4>
+            <p>${s.about}</p>
+          </div>
+          <div class="sim-card">
+            <h4>The 60-Second Pitch</h4>
+            <p>"${s.pitch}"</p>
+          </div>
+        </div>
+
+        <div class="sim-grid">
+          <div class="sim-card">
+            <h4>Featured Architecture: 01</h4>
+            <strong style="color:#fff;display:block;margin-bottom:6px;">${s.feature1Title}</strong>
+            <p>${s.feature1Text}</p>
+          </div>
+          <div class="sim-card">
+            <h4>Featured Architecture: 02</h4>
+            <strong style="color:#fff;display:block;margin-bottom:6px;">${s.feature2Title}</strong>
+            <p>${s.feature2Text}</p>
+          </div>
+        </div>
+
+        <div class="sim-cta">
+          <h3 style="font-family:'Space Grotesk',sans-serif;color:#fff;margin-bottom:10px;">Prototype Status: Completed Pilot Sprint</h3>
+          <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:18px;">Built during Newton County STEAM Academy Career Day with The AI Lab[cite: 5, 8, 9].</p>
+          <button class="btn-back-hub" onclick="closeSite()">← Back to Project Hub</button>
         </div>
       `;
 
-      document.getElementById('modalContent').innerHTML = html;
-      document.getElementById('projectModal').classList.add('active');
+      document.getElementById('simContent').innerHTML = html;
+      document.getElementById('prototypeScreen').classList.add('active');
+      window.scrollTo(0, 0);
     }
 
-    function closeModal(e) {
-      if (!e || e.target.id === 'projectModal' || e.target.classList.contains('modal-close')) {
-        document.getElementById('projectModal').classList.remove('active');
-      }
+    function closeSite() {
+      document.getElementById('prototypeScreen').classList.remove('active');
     }
   </script>
 
