@@ -814,8 +814,31 @@
       window.scrollTo(0, 0);
     }
 
-    function closeLiveSite() {
+   function closeLiveSite() {
       document.getElementById('businessSiteScreen').classList.remove('active');
+    }
+
+    function addDemoMessage() {
+      const input = document.getElementById('demoChatInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      const stream = document.getElementById('demoChatStream');
+      const newMsg = document.createElement('div');
+      newMsg.style.cssText = 'display:flex; gap:14px; align-items:flex-start; animation: fadeIn 0.3s ease;';
+      newMsg.innerHTML = `
+        <div style="width:38px; height:38px; border-radius:50%; background:#f59e0b; color:#110b08; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">YOU</div>
+        <div>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+            <strong style="color:#fff; font-size:0.9rem;">Visitor (Demo Participant)</strong>
+            <span style="color:var(--text-muted); font-size:0.72rem;">Just now</span>
+          </div>
+          <p style="color:#f1ede8; font-size:0.88rem; line-height:1.5; margin:0;">${text}</p>
+        </div>
+      `;
+      stream.appendChild(newMsg);
+      input.value = '';
+      stream.scrollTop = stream.scrollHeight;
     }
   </script>
 
