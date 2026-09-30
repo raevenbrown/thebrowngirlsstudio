@@ -53,14 +53,10 @@
         var(--bg);
 
       color: var(--text);
-
       font-family: 'Plus Jakarta Sans', sans-serif;
-
       line-height: 1.6;
-
       overflow-x: hidden;
     }
-
 
     /* =========================
        NAVIGATION
@@ -68,19 +64,13 @@
 
     .nav {
       padding: 22px 7%;
-
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       gap: 20px;
-
       border-bottom: 1px solid var(--border);
-
       background: rgba(20, 13, 10, 0.92);
-
       backdrop-filter: blur(12px);
-
       position: sticky;
       top: 0;
       z-index: 50;
@@ -88,15 +78,10 @@
 
     .brand {
       font-family: 'Space Grotesk', sans-serif;
-
       font-weight: 700;
-
       color: var(--text);
-
       text-decoration: none;
-
       font-size: 1.05rem;
-
       letter-spacing: -0.02em;
     }
 
@@ -106,18 +91,14 @@
 
     .back-link {
       color: var(--text-muted);
-
       text-decoration: none;
-
       font-size: 0.86rem;
-
       font-weight: 500;
     }
 
     .back-link:hover {
       color: var(--gold-light);
     }
-
 
     /* =========================
        GENERAL
@@ -134,22 +115,16 @@
 
     .section-dark {
       background: rgba(255, 255, 255, 0.018);
-
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
 
     .eyebrow {
       color: var(--gold);
-
       text-transform: uppercase;
-
       font-size: 0.75rem;
-
       font-weight: 800;
-
       letter-spacing: 0.14em;
-
       margin-bottom: 12px;
     }
 
@@ -157,15 +132,12 @@
     h2,
     h3 {
       font-family: 'Space Grotesk', sans-serif;
-
       line-height: 1.08;
-
       letter-spacing: -0.03em;
     }
 
     h2 {
       font-size: clamp(2rem, 5vw, 3.2rem);
-
       margin-bottom: 18px;
     }
 
@@ -173,46 +145,32 @@
       color: var(--text-muted);
     }
 
-
     /* =========================
        HERO
     ========================== */
 
     .hero {
       padding: 110px 0 90px;
-
       text-align: center;
     }
 
     .hero-badge {
       display: inline-block;
-
       color: var(--gold-light);
-
       background: var(--gold-soft);
-
       border: 1px solid var(--border);
-
       padding: 8px 16px;
-
       border-radius: 999px;
-
       font-size: 0.75rem;
-
       font-weight: 800;
-
       text-transform: uppercase;
-
       letter-spacing: 0.14em;
-
       margin-bottom: 24px;
     }
 
     .hero h1 {
       font-size: clamp(3rem, 9vw, 6.5rem);
-
       max-width: 950px;
-
       margin: 0 auto;
     }
 
@@ -222,70 +180,84 @@
 
     .hero-subtitle {
       max-width: 760px;
-
       margin: 28px auto 0;
-
       font-size: clamp(1rem, 2vw, 1.22rem);
-
       line-height: 1.75;
     }
 
     .hero-buttons {
       margin-top: 36px;
-
       display: flex;
-
       justify-content: center;
-
       gap: 14px;
-
       flex-wrap: wrap;
     }
 
-<!-- Pilot Social Proof Metric Bar -->
-<div class="pilot-results-banner">
-  <h3>Tested & Proven at Newton County STEAM Academy</h3>
-  <div class="metrics-grid">
-    <div class="metric-card">
-      <h2>100+</h2>
-      <p>Students Trained Across 5 Live Sprints</p>
-    </div>
-    <div class="metric-card">
-      <h2>59%</h2>
-      <p>Demonstrated Demand for December After-School Cohort</p>
-    </div>
-    <div class="metric-card">
-      <h2>5 / 5</h2>
-      <p>Unanimous Positive Teacher Evaluations</p>
-    </div>
-    <div class="metric-card">
-      <h2>100%</h2>
-      <p>Teams Pitched a Working Digital App Concept</p>
-    </div>
-  </div>
-</div>
+    /* =========================
+       PILOT RESULTS BANNER
+    ========================== */
+
+    .pilot-results-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(29, 18, 14, 0.85));
+      border: 1px solid var(--gold);
+      border-radius: 20px;
+      padding: 38px 28px;
+      margin-top: 55px;
+      text-align: center;
+    }
+
+    .pilot-results-banner h3 {
+      font-size: 1.45rem;
+      color: var(--text);
+      margin-bottom: 26px;
+      letter-spacing: -0.02em;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .metric-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .metric-card h2 {
+      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      color: var(--gold-light);
+      margin-bottom: 8px;
+      line-height: 1;
+    }
+
+    .metric-card p {
+      font-size: 0.82rem;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
     /* =========================
        BUTTONS
     ========================== */
 
     .btn {
       display: inline-flex;
-
       align-items: center;
       justify-content: center;
-
       gap: 8px;
-
       padding: 14px 22px;
-
       border-radius: 10px;
-
       font-size: 0.9rem;
-
       font-weight: 800;
-
       text-decoration: none;
-
       transition:
         transform 0.2s,
         opacity 0.2s,
@@ -302,15 +274,12 @@
         var(--gold),
         #d97706
       );
-
       color: #130c08;
     }
 
     .btn-secondary {
       color: var(--text);
-
       border: 1px solid var(--border);
-
       background: rgba(255,255,255,0.025);
     }
 
@@ -318,34 +287,26 @@
       border-color: var(--border-hover);
     }
 
-
     /* =========================
        INTRO
     ========================== */
 
     .intro-grid {
       display: grid;
-
       grid-template-columns: 1fr 1fr;
-
       gap: 28px;
-
       margin-top: 38px;
     }
 
     .info-card {
       background: var(--card-bg);
-
       border: 1px solid var(--border);
-
       padding: 32px;
-
       border-radius: 18px;
     }
 
     .info-card h3 {
       font-size: 1.5rem;
-
       margin-bottom: 14px;
     }
 
@@ -353,49 +314,38 @@
       font-size: 0.95rem;
     }
 
-
     /* =========================
        SKILLS
     ========================== */
 
     .skills-grid {
       display: grid;
-
       grid-template-columns: repeat(3, 1fr);
-
       gap: 18px;
-
       margin-top: 38px;
     }
 
     .skill {
       background: var(--card-bg);
-
       border: 1px solid var(--border);
-
       padding: 26px;
-
       border-radius: 16px;
     }
 
     .skill-icon {
       font-size: 1.7rem;
-
       margin-bottom: 12px;
     }
 
     .skill h3 {
       font-size: 1.05rem;
-
       margin-bottom: 8px;
     }
 
     .skill p {
       font-size: 0.84rem;
-
       line-height: 1.55;
     }
-
 
     /* =========================
        PROCESS
@@ -403,44 +353,33 @@
 
     .process-grid {
       display: grid;
-
       grid-template-columns: repeat(4, 1fr);
-
       gap: 16px;
-
       margin-top: 38px;
     }
 
     .process-card {
       border-top: 2px solid var(--gold);
-
       background: rgba(255,255,255,0.02);
-
       padding: 24px;
     }
 
     .step {
       color: var(--gold);
-
       font-size: 0.72rem;
-
       font-weight: 800;
-
       letter-spacing: 0.12em;
-
       margin-bottom: 10px;
     }
 
     .process-card h3 {
       margin-bottom: 8px;
-
       font-size: 1.18rem;
     }
 
     .process-card p {
       font-size: 0.84rem;
     }
-
 
     /* =========================
        DECEMBER COHORT
@@ -453,11 +392,8 @@
           rgba(245,158,11,0.13),
           rgba(28,18,14,0.90)
         );
-
       border: 1px solid var(--gold);
-
       border-radius: 22px;
-
       padding: 46px;
     }
 
@@ -467,48 +403,35 @@
 
     .cohort-lede {
       max-width: 760px;
-
       font-size: 1rem;
-
       margin-bottom: 28px;
     }
 
     .cohort-list {
       display: grid;
-
       grid-template-columns: repeat(2, 1fr);
-
       gap: 12px 28px;
-
       list-style: none;
-
       margin: 28px 0 34px;
     }
 
     .cohort-list li {
       color: var(--text);
-
       font-size: 0.9rem;
     }
 
     .cohort-list li::before {
       content: "✓";
-
       color: var(--gold-light);
-
       font-weight: 800;
-
       margin-right: 9px;
     }
 
     .parent-note {
       margin-top: 14px;
-
       font-size: 0.76rem;
-
       color: var(--text-muted);
     }
-
 
     /* =========================
        STUDENT ACCESS
@@ -520,104 +443,74 @@
 
     .student-access p {
       max-width: 680px;
-
       margin: 0 auto 30px;
     }
 
     .access-buttons {
       display: grid;
-
       grid-template-columns: repeat(2, minmax(0, 1fr));
-
       gap: 16px;
-
       max-width: 760px;
-
       margin: 0 auto;
     }
 
     .access-card {
       display: block;
-
       text-decoration: none;
-
       background: var(--card-bg);
-
       border: 1px solid var(--border);
-
       border-radius: 16px;
-
       padding: 28px;
-
       text-align: left;
-
       transition: 0.2s;
     }
 
     .access-card:hover {
       transform: translateY(-3px);
-
       border-color: var(--border-hover);
     }
 
     .access-card span {
       display: block;
-
       color: var(--gold);
-
       font-size: 0.72rem;
-
       text-transform: uppercase;
-
       font-weight: 800;
-
       letter-spacing: 0.1em;
-
       margin-bottom: 8px;
     }
 
     .access-card strong {
       color: var(--text);
-
       font-family: 'Space Grotesk', sans-serif;
-
       font-size: 1.15rem;
     }
 
-
     /* =========================
-       PROJECT PREVIEW
+       PAST LAB WORK
     ========================== */
 
     .project-preview-grid {
       display: grid;
-
       grid-template-columns: repeat(3, 1fr);
-
       gap: 22px;
-
       margin-top: 40px;
     }
 
     .project-preview-card {
       background: var(--card-bg);
-
       border: 1px solid var(--border);
-
       border-radius: 18px;
-
       padding: 26px;
     }
 
     .project-preview-card .icon {
       font-size: 1.8rem;
-
       margin-bottom: 14px;
     }
 
     .project-preview-card h3 {
       font-size: 1.1rem;
-
       margin-bottom: 9px;
     }
 
@@ -627,10 +520,8 @@
 
     .showcase-button {
       margin-top: 34px;
-
       text-align: center;
     }
-
 
     /* =========================
        FINAL CTA
@@ -638,26 +529,20 @@
 
     .final-cta {
       text-align: center;
-
       padding: 90px 0;
     }
 
     .final-cta p {
       max-width: 650px;
-
       margin: 0 auto 28px;
     }
 
     .final-buttons {
       display: flex;
-
       justify-content: center;
-
       flex-wrap: wrap;
-
       gap: 14px;
     }
-
 
     /* =========================
        FOOTER
@@ -665,37 +550,30 @@
 
     .footer {
       padding: 38px 8%;
-
       text-align: center;
-
       border-top: 1px solid var(--border);
-
       color: var(--text-muted);
-
       font-size: 0.8rem;
     }
-
 
     /* =========================
        MOBILE
     ========================== */
 
     @media (max-width: 900px) {
-
       .intro-grid,
       .skills-grid,
-      .project-preview-grid {
+      .project-preview-grid,
+      .metrics-grid {
         grid-template-columns: 1fr 1fr;
       }
 
       .process-grid {
         grid-template-columns: 1fr 1fr;
       }
-
     }
 
     @media (max-width: 650px) {
-
       .nav {
         padding: 18px 6%;
       }
@@ -717,7 +595,8 @@
       .process-grid,
       .project-preview-grid,
       .access-buttons,
-      .cohort-list {
+      .cohort-list,
+      .metrics-grid {
         grid-template-columns: 1fr;
       }
 
@@ -729,22 +608,16 @@
       .final-buttons .btn {
         width: 100%;
       }
-
     }
-
   </style>
 </head>
 
-
 <body>
-
 
   <!-- =========================
        NAVIGATION
   ========================== -->
-
   <nav class="nav">
-
     <a href="index.html" class="brand">
       the brown girls <span>creative studio</span>
     </a>
@@ -752,18 +625,13 @@
     <a href="index.html" class="back-link">
       ← Main Studio
     </a>
-
   </nav>
-
 
   <!-- =========================
        HERO
   ========================== -->
-
   <header class="hero">
-
     <div class="container">
-
       <span class="hero-badge">
         The AI Lab
       </span>
@@ -784,34 +652,51 @@
       </p>
 
       <div class="hero-buttons">
-
-       <a href="https://forms.gle/EsHCzdzKTUwTjp7g8"
-   class="btn btn-primary"
-   target="_blank"
-   rel="noopener">
-  Join the December 2026 Waitlist →
-</a>
+        <a href="https://forms.gle/EsHCzdzKTUwTjp7g8"
+           class="btn btn-primary"
+           target="_blank"
+           rel="noopener">
+          Join the December 2026 Waitlist →
+        </a>
 
         <a href="#student-access"
            class="btn btn-secondary">
           Student Access
         </a>
+      </div>
 
+      <!-- Pilot Social Proof Metric Bar -->
+      <div class="pilot-results-banner">
+        <div class="eyebrow" style="margin-bottom: 6px;">Pilot Validation</div>
+        <h3>Tested & Proven at Newton County STEAM Academy</h3>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <h2>100+</h2>
+            <p>Students Trained Across 5 Live Sprints</p>
+          </div>
+          <div class="metric-card">
+            <h2>59%</h2>
+            <p>Demand for December After-School Cohort</p>
+          </div>
+          <div class="metric-card">
+            <h2>5 / 5</h2>
+            <p>Unanimous Positive Teacher Evaluations</p>
+          </div>
+          <div class="metric-card">
+            <h2>100%</h2>
+            <p>Teams Pitched a Working Digital App Concept</p>
+          </div>
+        </div>
       </div>
 
     </div>
-
   </header>
-
 
   <!-- =========================
        WHAT IS THE AI LAB?
   ========================== -->
-
   <section class="section section-dark">
-
     <div class="container">
-
       <div class="eyebrow">
         The Program
       </div>
@@ -821,9 +706,7 @@
       </h2>
 
       <div class="intro-grid">
-
         <div class="info-card">
-
           <div class="eyebrow">
             The Studio
           </div>
@@ -838,12 +721,9 @@
             digital growth infrastructure for businesses and
             organizations.
           </p>
-
         </div>
 
-
         <div class="info-card">
-
           <div class="eyebrow">
             The Lab
           </div>
@@ -859,24 +739,16 @@
             teamwork, problem-solving, entrepreneurship, and
             presentation skills through hands-on projects.
           </p>
-
         </div>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        WHAT STUDENTS LEARN
   ========================== -->
-
   <section class="section">
-
     <div class="container">
-
       <div class="eyebrow">
         Real Skills
       </div>
@@ -890,119 +762,69 @@
         like AI designers and creators — not fighting with code.
       </p>
 
-
       <div class="skills-grid">
-
         <div class="skill">
-
           <div class="skill-icon">💬</div>
-
-          <h3>
-            AI Literacy
-          </h3>
-
+          <h3>AI Literacy</h3>
           <p>
             Understand what AI can do, how to use it responsibly,
             and how to communicate with it effectively.
           </p>
-
         </div>
 
-
         <div class="skill">
-
           <div class="skill-icon">🧠</div>
-
-          <h3>
-            Prompt Engineering
-          </h3>
-
+          <h3>Prompt Engineering</h3>
           <p>
             Learn how clearer instructions produce stronger,
             more useful AI results.
           </p>
-
         </div>
 
-
         <div class="skill">
-
           <div class="skill-icon">💻</div>
-
-          <h3>
-            Digital Creation
-          </h3>
-
+          <h3>Digital Creation</h3>
           <p>
             Turn ideas into websites, landing pages, prototypes,
             and other digital experiences.
           </p>
-
         </div>
 
-
         <div class="skill">
-
           <div class="skill-icon">🎨</div>
-
-          <h3>
-            Creative Problem-Solving
-          </h3>
-
+          <h3>Creative Problem-Solving</h3>
           <p>
             Explore ideas, audiences, branding, user experience,
             and ways technology can solve real problems.
           </p>
-
         </div>
 
-
         <div class="skill">
-
           <div class="skill-icon">🤝</div>
-
-          <h3>
-            Team Collaboration
-          </h3>
-
+          <h3>Team Collaboration</h3>
           <p>
             Work together, divide responsibilities, communicate,
             and turn a group idea into a finished concept.
           </p>
-
         </div>
 
-
         <div class="skill">
-
           <div class="skill-icon">🎤</div>
-
-          <h3>
-            Pitching & Communication
-          </h3>
-
+          <h3>Pitching & Communication</h3>
           <p>
             Explain what was built, who it helps, why it matters,
             and how the idea could grow.
           </p>
-
         </div>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        HOW THE LAB WORKS
   ========================== -->
-
   <section class="section section-dark">
-
     <div class="container">
-
       <div class="eyebrow">
         The Experience
       </div>
@@ -1011,188 +833,100 @@
         How an AI Lab project comes to life.
       </h2>
 
-
       <div class="process-grid">
-
         <div class="process-card">
-
-          <div class="step">
-            01
-          </div>
-
-          <h3>
-            Imagine
-          </h3>
-
-          <p>
-            Choose an idea, audience, problem, or opportunity.
-          </p>
-
+          <div class="step">01</div>
+          <h3>Imagine</h3>
+          <p>Choose an idea, audience, problem, or opportunity.</p>
         </div>
 
-
         <div class="process-card">
-
-          <div class="step">
-            02
-          </div>
-
-          <h3>
-            Prompt
-          </h3>
-
+          <div class="step">02</div>
+          <h3>Prompt</h3>
           <p>
             Learn how to give AI clear instructions and improve
             results through iteration.
           </p>
-
         </div>
 
-
         <div class="process-card">
-
-          <div class="step">
-            03
-          </div>
-
-          <h3>
-            Build
-          </h3>
-
+          <div class="step">03</div>
+          <h3>Build</h3>
           <p>
             Turn the idea into a real digital project,
             website, prototype, or experience.
           </p>
-
         </div>
 
-
         <div class="process-card">
-
-          <div class="step">
-            04
-          </div>
-
-          <h3>
-            Pitch
-          </h3>
-
+          <div class="step">04</div>
+          <h3>Pitch</h3>
           <p>
             Present the idea, explain the value, and show
             what was created.
           </p>
-
         </div>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        DECEMBER COHORT
   ========================== -->
-
   <section class="section" id="december">
-
     <div class="container">
-
       <div class="cohort-box">
-
         <div class="eyebrow">
-  Coming December 2026
-</div>
+          Coming December 2026
+        </div>
 
-<h2>
-  December 2026 AI Lab Cohort
-</h2>
+        <h2>
+          December 2026 AI Lab Cohort
+        </h2>
+
         <p class="cohort-lede">
-  Move beyond the one-day experience. The December AI Lab
-  gives students four weeks to take an idea further,
-  practice new AI skills, and develop a project they can
-  actually show.
-  <br><br>
-  <strong style="color:#fff;">Exact dates:</strong> Coming soon<br>
-  <strong style="color:#fff;">Location:</strong> To be announced
-</p>
-
+          Move beyond the one-day experience. The December AI Lab
+          gives students four weeks to take an idea further,
+          practice new AI skills, and develop a project they can
+          actually show.
+          <br><br>
+          <strong style="color:#fff;">Exact dates:</strong> Coming soon<br>
+          <strong style="color:#fff;">Location:</strong> To be announced
+        </p>
 
         <ul class="cohort-list">
-
-          <li>
-            4 guided AI Lab sessions
-          </li>
-
-          <li>
-            Hands-on project development
-          </li>
-
-          <li>
-            Prompt engineering practice
-          </li>
-
-          <li>
-            Website or prototype creation
-          </li>
-
-          <li>
-            Creative & technical challenges
-          </li>
-
-          <li>
-            Teamwork and presentation skills
-          </li>
-
-          <li>
-            Final project showcase
-          </li>
-
-          <li>
-            Portfolio-ready project experience
-          </li>
-
+          <li>4 guided AI Lab sessions</li>
+          <li>Hands-on project development</li>
+          <li>Prompt engineering practice</li>
+          <li>Website or prototype creation</li>
+          <li>Creative & technical challenges</li>
+          <li>Teamwork and presentation skills</li>
+          <li>Final project showcase</li>
+          <li>Portfolio-ready project experience</li>
         </ul>
 
+        <a href="https://forms.gle/EsHCzdzKTUwTjp7g8"
+           class="btn btn-primary"
+           target="_blank"
+           rel="noopener">
+          Join the December 2026 Waitlist →
+        </a>
 
-        <!--
-          IMPORTANT:
-          Replace YOUR-DECEMBER-WAITLIST-LINK
-          with your actual registration or waitlist URL.
-        -->
-
-        <a
-  href="https://forms.gle/EsHCzdzKTUwTjp7g8"
-  class="btn btn-primary"
-  target="_blank"
-  rel="noopener">
-  Join the December 2026 Waitlist →
-</a>
         <div class="parent-note">
-  Joining the waitlist is free and does not commit your student to enrollment.
-  The December 2026 AI Lab Cohort will be a paid program. Program pricing,
-  exact dates, location, schedule, and enrollment options will be shared with
-  waitlist families before registration opens.
-</div>
-
+          Joining the waitlist is free and does not commit your student to enrollment.
+          The December 2026 AI Lab Cohort will be a paid program. Program pricing,
+          exact dates, location, schedule, and enrollment options will be shared with
+          waitlist families before registration opens.
+        </div>
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        STUDENT ACCESS
   ========================== -->
-
-  <section
-    class="section section-dark student-access"
-    id="student-access">
-
+  <section class="section section-dark student-access" id="student-access">
     <div class="container">
-
       <div class="eyebrow">
         Career Day Students
       </div>
@@ -1207,58 +941,25 @@
         The Brown Girls Creative Studio.
       </p>
 
-
       <div class="access-buttons">
-
-        <!--
-          Replace YOUR-CLASS-PROJECT-LINK
-          with the actual page containing the student sites.
-        -->
-
-        <a
-          href="class-projects.html"
-          class="access-card">
-
-          <span>
-            Student Access
-          </span>
-
-          <strong>
-            See My Class Project Site →
-          </strong>
-
+        <a href="class-projects.html" class="access-card">
+          <span>Student Access</span>
+          <strong>See My Class Project Site →</strong>
         </a>
 
-
-        <a
-          href="#december"
-          class="access-card">
-
-          <span>
-            Keep Building
-          </span>
-
-          <strong>
-            Join the December AI Lab →
-          </strong>
-
+        <a href="#december" class="access-card">
+          <span>Keep Building</span>
+          <strong>Join the December AI Lab →</strong>
         </a>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        PAST LAB WORK
   ========================== -->
-
   <section class="section">
-
     <div class="container">
-
       <div class="eyebrow">
         Built in the Studio
       </div>
@@ -1273,75 +974,41 @@
         mindset used throughout The Brown Girls Creative Studio.
       </p>
 
-
       <div class="project-preview-grid">
-
-
         <div class="project-preview-card">
-
-          <div class="icon">
-            📊
-          </div>
-
-          <h3>
-            Creative Metrix
-          </h3>
-
+          <div class="icon">📊</div>
+          <h3>Creative Metrix</h3>
           <p>
             A live analytics and growth intelligence platform
             connecting marketing, pipeline health, attribution,
             and business performance.
           </p>
-
         </div>
 
-
         <div class="project-preview-card">
-
-          <div class="icon">
-            🎓
-          </div>
-
-          <h3>
-            Applied Data & AI Engines
-          </h3>
-
+          <div class="icon">🎓</div>
+          <h3>Applied Data & AI Engines</h3>
           <p>
             Real-world dashboards, predictive models, automated
             workflows, and AI-powered tools developed across
             education, business, and workforce projects.
           </p>
-
         </div>
-
-
       </div>
-
 
       <div class="showcase-button">
-
-        <a
-          href="lab-projects.html"
-          class="btn btn-secondary">
-
+        <a href="lab-projects.html" class="btn btn-secondary">
           View All Lab Projects →
         </a>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        FINAL CTA
   ========================== -->
-
   <section class="final-cta section-dark">
-
     <div class="container">
-
       <div class="eyebrow">
         Your Next Step
       </div>
@@ -1355,59 +1022,32 @@
         or learn more about The Brown Girls Creative Studio.
       </p>
 
-
       <div class="final-buttons">
-
-        <a
-          href="YOUR-CLASS-PROJECT-LINK"
-          class="btn btn-primary">
-
+        <a href="class-projects.html" class="btn btn-primary">
           View Class Projects
         </a>
 
-
-        <a
-          href="#december"
-          class="btn btn-secondary">
-
+        <a href="#december" class="btn btn-secondary">
           December Cohort
         </a>
 
-
-        <a
-          href="lab-projects.html"
-          class="btn btn-secondary">
-
+        <a href="lab-projects.html" class="btn btn-secondary">
           Past Lab Work
         </a>
 
-
-        <a
-          href="index.html#education"
-          class="btn btn-secondary">
-
+        <a href="index.html#education" class="btn btn-secondary">
           Visit The Brown Girls Creative Studio
         </a>
-
       </div>
-
     </div>
-
   </section>
-
 
   <!-- =========================
        FOOTER
   ========================== -->
-
   <footer class="footer">
-
-    <p>
-      © The Brown Girls Creative Studio · The AI Lab
-    </p>
-
+    <p>© The Brown Girls Creative Studio · The AI Lab</p>
   </footer>
-
 
 </body>
 </html>
