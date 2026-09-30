@@ -146,7 +146,7 @@
     }
 
     /* =========================
-       HERO
+       HERO & PILOT PROOF
     ========================== */
 
     .hero {
@@ -154,22 +154,39 @@
       text-align: center;
     }
 
-    .hero-badge {
-      display: inline-block;
+    .hero-badge-live {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       color: var(--gold-light);
-      background: var(--gold-soft);
-      border: 1px solid var(--border);
-      padding: 8px 16px;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid var(--border-hover);
+      padding: 8px 18px;
       border-radius: 999px;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       margin-bottom: 24px;
     }
 
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+      animation: pulseGreen 1.8s infinite;
+    }
+
+    @keyframes pulseGreen {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+      70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
     .hero h1 {
-      font-size: clamp(3rem, 9vw, 6.5rem);
+      font-size: clamp(2.8rem, 8vw, 5.8rem);
       max-width: 950px;
       margin: 0 auto;
     }
@@ -181,7 +198,7 @@
     .hero-subtitle {
       max-width: 760px;
       margin: 28px auto 0;
-      font-size: clamp(1rem, 2vw, 1.22rem);
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
       line-height: 1.75;
     }
 
@@ -193,55 +210,110 @@
       flex-wrap: wrap;
     }
 
-    /* =========================
-       PILOT RESULTS BANNER
-    ========================== */
-
     .pilot-results-banner {
-      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(29, 18, 14, 0.85));
+      background: linear-gradient(145deg, rgba(35, 22, 16, 0.95), rgba(18, 11, 8, 0.98));
       border: 1px solid var(--gold);
-      border-radius: 20px;
-      padding: 38px 28px;
-      margin-top: 55px;
+      border-radius: 24px;
+      padding: 44px 32px 36px;
+      margin-top: 60px;
       text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(245, 158, 11, 0.12);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pilot-results-banner::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
     }
 
     .pilot-results-banner h3 {
-      font-size: 1.45rem;
-      color: var(--text);
-      margin-bottom: 26px;
-      letter-spacing: -0.02em;
+      font-size: clamp(1.4rem, 3vw, 1.85rem);
+      color: #fff;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .pilot-subtitle {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      max-width: 680px;
+      margin: 0 auto 32px;
     }
 
     .metrics-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 18px;
+      gap: 16px;
     }
 
     .metric-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 22px 14px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 16px;
+      padding: 24px 14px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .metric-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--gold-light);
+      background: rgba(245, 158, 11, 0.05);
     }
 
     .metric-card h2 {
-      font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+      font-size: clamp(2rem, 3.8vw, 3rem);
       color: var(--gold-light);
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       line-height: 1;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
     }
 
     .metric-card p {
-      font-size: 0.82rem;
-      color: var(--text);
-      font-weight: 500;
+      font-size: 0.84rem;
+      color: #fff;
+      font-weight: 600;
       line-height: 1.4;
+    }
+
+    .metric-sub {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .pilot-cta-bar {
+      margin-top: 30px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(245, 158, 11, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      text-align: left;
+    }
+
+    .pilot-cta-text strong {
+      display: block;
+      color: var(--gold-light);
+      font-size: 0.95rem;
+    }
+
+    .pilot-cta-text span {
+      color: var(--text-muted);
+      font-size: 0.82rem;
     }
 
     /* =========================
@@ -557,7 +629,7 @@
     }
 
     /* =========================
-       MOBILE
+       RESPONSIVE BREAKPOINTS
     ========================== */
 
     @media (max-width: 900px) {
@@ -600,12 +672,18 @@
         grid-template-columns: 1fr;
       }
 
+      .pilot-cta-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
       .cohort-box {
         padding: 30px 24px;
       }
 
       .hero-buttons .btn,
-      .final-buttons .btn {
+      .final-buttons .btn,
+      .pilot-cta-bar .btn {
         width: 100%;
       }
     }
@@ -628,27 +706,25 @@
   </nav>
 
   <!-- =========================
-       HERO
+       HERO & PILOT PROOF
   ========================== -->
   <header class="hero">
     <div class="container">
-      <span class="hero-badge">
-        The AI Lab
-      </span>
+      
+      <div class="hero-badge-live">
+        <span class="pulse-dot"></span>
+        December 2026 Cohort Registration Open
+      </div>
 
       <h1>
-        Build today.<br>
-        <span>Lead tomorrow.</span>
+        Don't Just Scroll Apps.<br>
+        <span>Learn How to Build Them.</span>
       </h1>
 
       <p class="hero-subtitle">
-        The AI Lab is the applied learning experience from
-        <strong style="color:#fff;">
-          The Brown Girls Creative Studio
-        </strong>
-        where students learn how to talk to AI, build with AI,
-        solve real problems, create digital projects, and think
-        like creators — not just users.
+        The AI Lab is an elite, hands-on 4-week Saturday studio from
+        <strong style="color:#fff;">The Brown Girls Creative Studio</strong>
+        where middle schoolers stop being passive consumers and start building working AI web apps, training computer models, and launching digital products[cite: 9].
       </p>
 
       <div class="hero-buttons">
@@ -656,36 +732,57 @@
            class="btn btn-primary"
            target="_blank"
            rel="noopener">
-          Join the December 2026 Waitlist →
+          Secure Your December Seat →
         </a>
 
-        <a href="#student-access"
+        <a href="#december"
            class="btn btn-secondary">
-          Student Access
+          Explore the 4-Week Syllabus
         </a>
       </div>
 
-      <!-- Pilot Social Proof Metric Bar -->
+      <!-- High-Conversion Social Proof Banner -->
       <div class="pilot-results-banner">
-        <div class="eyebrow" style="margin-bottom: 6px;">Pilot Validation</div>
+        <div class="eyebrow" style="margin-bottom: 6px;">Proven Classroom Impact</div>
         <h3>Tested & Proven at Newton County STEAM Academy</h3>
+        <p class="pilot-subtitle">
+          Validated across 5 consecutive live sprints with 8th-grade innovators[cite: 8].
+        </p>
+
         <div class="metrics-grid">
           <div class="metric-card">
             <h2>100+</h2>
-            <p>Students Trained Across 5 Live Sprints</p>
+            <p>Students Trained</p>
+            <span class="metric-sub">5 Live Sprint Sessions[cite: 8]</span>
           </div>
+
           <div class="metric-card">
             <h2>59%</h2>
-            <p>Demand for December After-School Cohort</p>
+            <p>Cohort Demand</p>
+            <span class="metric-sub">53 Students in Interest Pool[cite: 5]</span>
           </div>
+
           <div class="metric-card">
             <h2>5 / 5</h2>
-            <p>Unanimous Positive Teacher Evaluations</p>
+            <p>Teacher Approval</p>
+            <span class="metric-sub">100% Positive Evaluations[cite: 10]</span>
           </div>
+
           <div class="metric-card">
             <h2>100%</h2>
-            <p>Teams Pitched a Working Digital App Concept</p>
+            <p>Working Deliverables</p>
+            <span class="metric-sub">Every Team Pitched a Live App[cite: 7, 8]</span>
           </div>
+        </div>
+
+        <div class="pilot-cta-bar">
+          <div class="pilot-cta-text">
+            <strong>⚡ Limited Cohort Capacity: Only 20 Seats Available</strong>
+            <span>With 53 students already indicating demand from Career Day, seats are allocated first-come, first-served[cite: 5].</span>
+          </div>
+          <a href="https://forms.gle/EsHCzdzKTUwTjp7g8" class="btn btn-primary" target="_blank" rel="noopener">
+            Join Official Waitlist →
+          </a>
         </div>
       </div>
 
@@ -719,7 +816,7 @@
             The Brown Girls Creative Studio builds data systems,
             websites, dashboards, AI solutions, automation, and
             digital growth infrastructure for businesses and
-            organizations.
+            organizations[cite: 9].
           </p>
         </div>
 
@@ -737,7 +834,7 @@
             skills into student-centered learning experiences.
             Students practice AI literacy, prompting, web creation,
             teamwork, problem-solving, entrepreneurship, and
-            presentation skills through hands-on projects.
+            presentation skills through hands-on projects[cite: 6, 7, 8, 9, 13].
           </p>
         </div>
       </div>
@@ -804,7 +901,7 @@
           <h3>Team Collaboration</h3>
           <p>
             Work together, divide responsibilities, communicate,
-            and turn a group idea into a finished concept.
+            and turn a group idea into a finished concept[cite: 6].
           </p>
         </div>
 
@@ -813,7 +910,7 @@
           <h3>Pitching & Communication</h3>
           <p>
             Explain what was built, who it helps, why it matters,
-            and how the idea could grow.
+            and how the idea could grow[cite: 7].
           </p>
         </div>
       </div>
@@ -863,7 +960,7 @@
           <h3>Pitch</h3>
           <p>
             Present the idea, explain the value, and show
-            what was created.
+            what was created[cite: 7].
           </p>
         </div>
       </div>
@@ -900,7 +997,7 @@
           <li>Prompt engineering practice</li>
           <li>Website or prototype creation</li>
           <li>Creative & technical challenges</li>
-          <li>Teamwork and presentation skills</li>
+          <li>Teamwork and presentation skills[cite: 6, 7]</li>
           <li>Final project showcase</li>
           <li>Portfolio-ready project experience</li>
         </ul>
@@ -938,7 +1035,7 @@
       <p>
         Use the options below to view your class projects or
         explore more work created through The AI Lab and
-        The Brown Girls Creative Studio.
+        The Brown Girls Creative Studio[cite: 9].
       </p>
 
       <div class="access-buttons">
