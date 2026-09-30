@@ -249,6 +249,33 @@
     }
     .spec-item span { display: block; font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
     .spec-item strong { color: #fff; font-size: 0.88rem; }
+
+    /* Modal Live Launch Action Button */
+    .modal-action-bar {
+      margin-top: 28px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(245, 158, 11, 0.2);
+    }
+    .btn-modal-visit {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--gold), #d97706);
+      color: #110b08;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 16px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      width: 100%;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .btn-modal-visit:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
   </style>
 </head>
 <body>
@@ -274,7 +301,7 @@
           <span class="team-badge">Team of 4</span>
         </div>
         <h3>Girls Against Stereotypes</h3>
-        <p class="project-desc">A safe space and digital storytelling collective built to unite women, dismantle stereotypes, and share authentic lived experiences.</p>
+        <p class="project-desc">A safe space and digital storytelling collective built to unite women, dismantle stereotypes, and share authentic lived experiences[cite: 30].</p>
         <div class="feature-list">
           <span class="feature-chip">Story Engine</span>
           <span class="feature-chip">Community Hub</span>
@@ -292,7 +319,7 @@
           <span class="team-badge">Team of 4</span>
         </div>
         <h3>Scholar Supplies</h3>
-        <p class="project-desc">A micro-commerce shop ensuring every student has classroom tools by offering notebooks, pens, and essentials for just 40 cents.</p>
+        <p class="project-desc">A micro-commerce shop ensuring every student has classroom tools by offering notebooks, pens, and essentials for just 40 cents[cite: 31].</p>
         <div class="feature-list">
           <span class="feature-chip">40¢ Store</span>
           <span class="feature-chip">Supply Locker</span>
@@ -310,7 +337,7 @@
           <span class="team-badge">Athlete Tech</span>
         </div>
         <h3>Wrap It Up</h3>
-        <p class="project-desc">Specialized athletic compression and protection line engineered to prevent sports injuries and keep players performing safely.</p>
+        <p class="project-desc">Specialized athletic compression and protection line engineered to prevent sports injuries and keep players performing safely[cite: 28].</p>
         <div class="feature-list">
           <span class="feature-chip">Product Showcase</span>
           <span class="feature-chip">Injury Prevention FAQ</span>
@@ -328,7 +355,7 @@
           <span class="team-badge">Small Business</span>
         </div>
         <h3>Classy Cleaners</h3>
-        <p class="project-desc">High-end residential and commercial cleaning service platform with instant calendar booking, VIP memberships, and customer reviews.</p>
+        <p class="project-desc">High-end residential and commercial cleaning service platform with instant calendar booking, VIP memberships, and customer reviews[cite: 26].</p>
         <div class="feature-list">
           <span class="feature-chip">Booking Button</span>
           <span class="feature-chip">Client Gallery</span>
@@ -346,7 +373,7 @@
           <span class="team-badge">Skill Coaching</span>
         </div>
         <h3>Boom Sports</h3>
-        <p class="project-desc">Accelerated youth sports academy designed to help kids learn any sport rapidly through bite-sized video drills and workout plans.</p>
+        <p class="project-desc">Accelerated youth sports academy designed to help kids learn any sport rapidly through bite-sized video drills and workout plans[cite: 29].</p>
         <div class="feature-list">
           <span class="feature-chip">Video Blocks</span>
           <span class="feature-chip">Quick Drills</span>
@@ -364,7 +391,7 @@
           <span class="team-badge">Student Gamers</span>
         </div>
         <h3>GameZone</h3>
-        <p class="project-desc">Community-driven gamer network combining video streaming blocks, multiplayer tournaments, and subscriber perks.</p>
+        <p class="project-desc">Community-driven gamer network combining video streaming blocks, multiplayer tournaments, and subscriber perks[cite: 27].</p>
         <div class="feature-list">
           <span class="feature-chip">Video Stream</span>
           <span class="feature-chip">Member Content</span>
@@ -393,7 +420,8 @@
         audience: "Young Women, Students & Advocates",
         vibe: "Empowering, Honest, Mission-Driven",
         pitch: "Our AI site is called 'Girls Against Stereotypes'. It helps women in this society share their experiences as women and come together against stereotypes. This makes us special because it can have big impacts and change for all women. If you don't use this website, you're missing out on educating yourself on real and impacting experiences.",
-        features: ["Community Submission Engine", "Safe Story Gallery", "Impact & Resource Directory"]
+        features: ["Community Submission Engine", "Safe Story Gallery", "Impact & Resource Directory"],
+        url: "ncsa/girls-against-stereotypes.html"
       },
       supplies: {
         title: "Scholar Supplies",
@@ -402,7 +430,8 @@
         audience: "Students & Teachers",
         vibe: "Accessible, Supportive, Impact-Oriented",
         pitch: "Get your scholar supplies here! We sell supplies for students who can't afford them. Get your supplies here for just 40 cents!",
-        features: ["40-Cent Supply Locker", "Teacher Donation Portal", "Instant Student Request Hub"]
+        features: ["40-Cent Supply Locker", "Teacher Donation Portal", "Instant Student Request Hub"],
+        url: "ncsa/scholar-supplies.html"
       },
       wrapitup: {
         title: "Wrap It Up",
@@ -411,7 +440,8 @@
         audience: "Middle & High School Athletes, Coaches, Parents",
         vibe: "Sporty, Performance-Driven, Protective",
         pitch: "A promotional site for athletes that helps them mitigate injuries by buying protective gear. Features athlete testimonials, verified reviews, and an interactive injury prevention FAQ.",
-        features: ["Injury FAQ Section", "Compression Product Specs", "Player Testimonial Reel"]
+        features: ["Injury FAQ Section", "Compression Product Specs", "Player Testimonial Reel"],
+        url: "ncsa/wrap-it-up.html"
       },
       cleaners: {
         title: "Classy Cleaners",
@@ -420,7 +450,8 @@
         audience: "Local Small Businesses, Busy Parents",
         vibe: "Luxe, Reliable, Professional",
         pitch: "Book appointments and promote services for small businesses and parents who value pristine spaces. Features recurring memberships, project galleries, direct booking buttons, and reviews.",
-        features: ["Instant Calendar Booking", "Before/After Gallery", "VIP Monthly Memberships"]
+        features: ["Instant Calendar Booking", "Before/After Gallery", "VIP Monthly Memberships"],
+        url: "ncsa/classy-cleaners.html"
       },
       boomsports: {
         title: "Boom Sports",
@@ -429,7 +460,8 @@
         audience: "Young Athletes, Beginners, Parents",
         vibe: "Energetic, Fast-Paced, Encouraging",
         pitch: "Site is called Boom Sports. It helps kids learn a sport and do it quick. It's fun. If you don't use it, you're missing out on good lessons. Includes video blocks, coaching, and workouts.",
-        features: ["Fast Video Drills", "Daily Workout Routines", "1-on-1 Virtual Coaching Calls"]
+        features: ["Fast Video Drills", "Daily Workout Routines", "1-on-1 Virtual Coaching Calls"],
+        url: "ncsa/boom-sports.html"
       },
       gamezone: {
         title: "GameZone",
@@ -438,7 +470,8 @@
         audience: "Student Gamers, Streamers, Creators",
         vibe: "Playful, Bold, Electric",
         pitch: "Promotes services and builds a community for students and gamers. Features video streams, member-exclusive content, an interactive gallery, and community reviews.",
-        features: ["Video Stream Blocks", "Gamer Discord Integration", "Member Perk Unlocks"]
+        features: ["Video Stream Blocks", "Gamer Discord Integration", "Member Perk Unlocks"],
+        url: "ncsa/gamezone.html"
       }
     };
 
@@ -476,6 +509,12 @@
             </div>
           </div>
         </div>
+
+        <div class="modal-action-bar">
+          <a href="${p.url}" class="btn-modal-visit">
+            Visit Live Student Website →
+          </a>
+        </div>
       `;
 
       document.getElementById('modalContent').innerHTML = html;
@@ -491,4 +530,3 @@
 
 </body>
 </html>
-
