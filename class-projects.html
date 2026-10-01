@@ -478,6 +478,7 @@
         pitch: "Our AI site is called 'Girls Against Stereotypes'. It helps women in this society share their experiences as women and come together against stereotypes. This makes us special because it can have big impacts and change for all women. If you don't use this website, you're missing out on educating yourself on real and impacting experiences.",
         features: ["Community Chat Room", "Live Story Stream", "Impact & Resource Directory"],
         businessPageHtml: `
+          <!-- Demo Notice Strip -->
           <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid var(--gold); border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 28px;">
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="display:inline-block; width:10px; height:10px; background:#fbbf24; border-radius:50%; box-shadow:0 0 8px #fbbf24;"></span>
@@ -487,6 +488,7 @@
             <span style="background:rgba(255,255,255,0.06); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:6px; font-weight:700;">Simulated Environment</span>
           </div>
 
+          <!-- Hero Branding -->
           <div style="text-align:center; padding: 45px 20px 35px; background: linear-gradient(180deg, rgba(236,72,153,0.18), transparent 85%); border-radius: 24px; border: 1px solid rgba(236,72,153,0.3); margin-bottom: 30px;">
             <span style="background: rgba(236,72,153,0.22); color:#f472b6; padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">Community Advocacy Network</span>
             <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">Girls Against Stereotypes</h1>
@@ -498,6 +500,7 @@
             </div>
           </div>
 
+          <!-- Community Chatroom Mockup -->
           <div style="background: #140d0a; border: 1px solid rgba(236,72,153,0.3); border-radius: 22px; overflow: hidden; margin-bottom: 35px; box-shadow: 0 16px 40px rgba(0,0,0,0.5);">
             <div style="background: rgba(236,72,153,0.12); padding: 14px 22px; border-bottom: 1px solid rgba(236,72,153,0.25); display: flex; justify-content: space-between; align-items: center;">
               <div style="display:flex; align-items:center; gap:10px;">
@@ -508,7 +511,10 @@
               <span style="color:var(--text-muted); font-size:0.78rem;">Live Demo Feed</span>
             </div>
 
+            <!-- Chat Stream -->
             <div id="demoChatStream" style="padding: 24px; display: flex; flex-direction: column; gap: 18px; max-height: 380px; overflow-y: auto;">
+              
+              <!-- Message 1 -->
               <div style="display:flex; gap:14px; align-items:flex-start;">
                 <div style="width:38px; height:38px; border-radius:50%; background:#ec4899; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">GP</div>
                 <div>
@@ -518,14 +524,54 @@
                     <span style="color:var(--text-muted); font-size:0.72rem;">Today at 1:14 PM</span>
                   </div>
                   <p style="color:#f1ede8; font-size:0.88rem; line-height:1.5; margin:0;">Welcome to the room everyone! Remember: no idea is too ambitious here. If someone told you that robotics or coding isn't for you, post your proof right here.</p>
+                  <div style="display:inline-flex; gap:6px; margin-top:8px;">
+                    <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:999px; padding:2px 8px; font-size:0.75rem; color:#fbcfe8;">❤️️ 18</span>
+                    <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:999px; padding:2px 8px; font-size:0.75rem; color:#fbcfe8;">🔥 12</span>
+                  </div>
                 </div>
               </div>
+
+              <!-- Message 2 -->
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="width:38px; height:38px; border-radius:50%; background:#8b5cf6; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">MG</div>
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <strong style="color:#fff; font-size:0.9rem;">Mia G.</strong>
+                    <span style="background:rgba(139,92,246,0.25); color:#c4b5fd; font-size:0.68rem; font-weight:800; padding:1px 6px; border-radius:4px;">PITCH LEAD</span>
+                    <span style="color:var(--text-muted); font-size:0.72rem;">Today at 1:18 PM</span>
+                  </div>
+                  <p style="color:#f1ede8; font-size:0.88rem; line-height:1.5; margin:0;">"If you don't use this website, you're missing out on educating yourself on real and impacting experiences." That's straight from our pitch! What topic should we tackle on our next livestream?</p>
+                </div>
+              </div>
+
+              <!-- Message 3 -->
+              <div style="display:flex; gap:14px; align-items:flex-start;">
+                <div style="width:38px; height:38px; border-radius:50%; background:#10b981; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">AS</div>
+                <div>
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+                    <strong style="color:#fff; font-size:0.9rem;">Avery S.</strong>
+                    <span style="background:rgba(16,185,129,0.25); color:#6ee7b7; font-size:0.68rem; font-weight:800; padding:1px 6px; border-radius:4px;">CREATIVE DIR</span>
+                    <span style="color:var(--text-muted); font-size:0.72rem;">Today at 1:21 PM</span>
+                  </div>
+                  <p style="color:#f1ede8; font-size:0.88rem; line-height:1.5; margin:0;">Working on the typography moodboard right now. Bold pink & deep bronze to reflect confidence and real strength.</p>
+                </div>
+              </div>
+
             </div>
 
+            <!-- Demo Interactive Chat Input -->
             <div style="padding: 14px 20px; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.08); display:flex; gap:12px;">
               <input id="demoChatInput" type="text" placeholder="Type a demo encouragement message..." style="flex:1; background:rgba(0,0,0,0.4); border:1px solid rgba(236,72,153,0.3); border-radius:10px; padding:12px 16px; color:#fff; font-size:0.88rem; outline:none;" onkeypress="if(event.key==='Enter'){addDemoMessage();}">
               <button style="background:#ec4899; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:800; font-size:0.82rem; cursor:pointer;" onclick="addDemoMessage()">Send</button>
             </div>
+          </div>
+
+          <!-- Team Attribution Footer -->
+          <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(245,158,11,0.25); border-radius: 18px; padding: 26px; text-align:center;">
+            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Team Architecture</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:8px;">Engineered by Newton County STEAM Academy Innovators</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem; max-width:640px; margin:0 auto 16px;">Gabby P. (Leader) · Emily V. (Cup Runner) · Mia G. (Pitch Lead) · Avery S. (Creative Director)</p>
+            <span style="display:inline-block; font-size:0.75rem; color:#a39585; background:rgba(255,255,255,0.04); padding:4px 14px; border-radius:999px;">AI Lab Cohort Concept Simulation</span>
           </div>
         `
       },
@@ -539,6 +585,7 @@
         pitch: "Get your scholar supplies here! We sell supplies for students who can't afford them. Get your supplies here for just 40 cents!",
         features: ["40-Cent Supply Locker", "Teacher Donation Portal", "Instant Student Request Hub"],
         businessPageHtml: `
+          <!-- Demo Notice Strip -->
           <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid var(--gold); border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="display:inline-block; width:10px; height:10px; background:#fbbf24; border-radius:50%; box-shadow:0 0 8px #fbbf24;"></span>
@@ -550,27 +597,104 @@
             </div>
           </div>
 
+          <!-- Hero Branding -->
           <div style="text-align:center; padding: 45px 20px 35px; background: linear-gradient(180deg, rgba(245,158,11,0.18), transparent 85%); border-radius: 24px; border: 1px solid var(--border); margin-bottom: 30px;">
             <span style="background: rgba(245,158,11,0.22); color:var(--gold-light); padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">The 40¢ Locker Bodega</span>
             <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">Scholar Supplies</h1>
             <p style="color:#fdfbf7; font-size: 1.1rem; max-width: 660px; margin: 0 auto 20px; line-height: 1.6;">
               Lost your pen before 3rd period? Binder rings snapped? Don't stress or get sent to the office. Everything in our school locker is <strong>just 40 cents</strong> — no questions asked.
             </p>
+            <div style="display:flex; justify-content:center; gap:8px; flex-wrap:wrap; font-size:0.8rem; color:var(--text-muted);">
+              <span style="background:rgba(255,255,255,0.05); padding:4px 12px; border-radius:999px;">⚡ Instant Hallway Drop</span>
+              <span style="background:rgba(255,255,255,0.05); padding:4px 12px; border-radius:999px;">🔒 Confidential Pickup</span>
+              <span style="background:rgba(255,255,255,0.05); padding:4px 12px; border-radius:999px;">🪙 Exact 40¢ Change OK</span>
+            </div>
           </div>
 
+          <!-- Interactive Store Grid -->
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 35px;">
-            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:24px; text-align:center;">
-              <div style="font-size:2.6rem; margin-bottom:8px;">📓</div>
-              <h3 style="color:#fff; font-size:1.25rem; margin:6px 0;">College-Ruled Notebook</h3>
-              <div style="font-size:1.8rem; font-weight:800; color:var(--gold-light); margin:10px 0;">$0.40</div>
-              <button onclick="addToBackpack('College-Ruled Notebook')" style="width:100%; background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:12px; border-radius:10px; font-weight:800; cursor:pointer;">+ Toss in Backpack (40¢)</button>
+            
+            <!-- Item 1 -->
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; text-align:center;">
+              <div>
+                <div style="font-size:2.6rem; margin-bottom:8px;">📓</div>
+                <div style="font-size:0.72rem; color:var(--gold); font-weight:800; text-transform:uppercase;">Classroom Essential</div>
+                <h3 style="color:#fff; font-size:1.25rem; margin:6px 0;">College-Ruled Notebook</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">70 pages of clean lined paper. Fits in any binder, tear-proof cover.</p>
+              </div>
+              <div style="margin-top:16px;">
+                <div style="font-size:1.8rem; font-weight:800; color:var(--gold-light); margin-bottom:10px;">$0.40</div>
+                <button onclick="addToBackpack('College-Ruled Notebook')" style="width:100%; background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:12px; border-radius:10px; font-weight:800; font-size:0.85rem; cursor:pointer;">+ Toss in Backpack (40¢)</button>
+              </div>
             </div>
-            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:24px; text-align:center;">
-              <div style="font-size:2.6rem; margin-bottom:8px;">✏️</div>
-              <h3 style="color:#fff; font-size:1.25rem; margin:6px 0;">Pre-Sharpened Pencils (3x)</h3>
-              <div style="font-size:1.8rem; font-weight:800; color:var(--gold-light); margin:10px 0;">$0.40</div>
-              <button onclick="addToBackpack('Pre-Sharpened Pencils (3x)')" style="width:100%; background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:12px; border-radius:10px; font-weight:800; cursor:pointer;">+ Toss in Backpack (40¢)</button>
+
+            <!-- Item 2 -->
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; text-align:center;">
+              <div>
+                <div style="font-size:2.6rem; margin-bottom:8px;">✏️</div>
+                <div style="font-size:0.72rem; color:var(--gold); font-weight:800; text-transform:uppercase;">Test Day Prep</div>
+                <h3 style="color:#fff; font-size:1.25rem; margin:6px 0;">Pre-Sharpened Pencils (3x)</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Pre-sharpened #2 lead with fresh hi-polymer erasers for scantron exams.</p>
+              </div>
+              <div style="margin-top:16px;">
+                <div style="font-size:1.8rem; font-weight:800; color:var(--gold-light); margin-bottom:10px;">$0.40</div>
+                <button onclick="addToBackpack('Pre-Sharpened Pencils (3x)')" style="width:100%; background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:12px; border-radius:10px; font-weight:800; font-size:0.85rem; cursor:pointer;">+ Toss in Backpack (40¢)</button>
+              </div>
             </div>
+
+            <!-- Item 3 -->
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; text-align:center;">
+              <div>
+                <div style="font-size:2.6rem; margin-bottom:8px;">🖍️</div>
+                <div style="font-size:0.72rem; color:var(--gold); font-weight:800; text-transform:uppercase;">Study Highlights</div>
+                <h3 style="color:#fff; font-size:1.25rem; margin:6px 0;">Neon Chisel Highlighters</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Dual yellow/pink highlighter pair for notes, key terms, and study sheets.</p>
+              </div>
+              <div style="margin-top:16px;">
+                <div style="font-size:1.8rem; font-weight:800; color:var(--gold-light); margin-bottom:10px;">$0.40</div>
+                <button onclick="addToBackpack('Neon Chisel Highlighters')" style="width:100%; background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:12px; border-radius:10px; font-weight:800; font-size:0.85rem; cursor:pointer;">+ Toss in Backpack (40¢)</button>
+              </div>
+            </div>
+
+            <!-- Item 4 -->
+            <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; text-align:center;">
+              <div>
+                <div style="font-size:2.6rem; margin-bottom:8px;">📐</div>
+                <div style="font-size:0.72rem; color:var(--gold); font-weight:800; text-transform:uppercase;">Math & STEAM Kit</div>
+                <h3 style="color:#fff; font-size:1.25rem; margin:6px 0;">Shatterproof Math Ruler</h3>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Flexible 12-inch acrylic ruler with both inch and centimeter markings.</p>
+              </div>
+              <div style="margin-top:16px;">
+                <div style="font-size:1.8rem; font-weight:800; color:var(--gold-light); margin-bottom:10px;">$0.40</div>
+                <button onclick="addToBackpack('Shatterproof Math Ruler')" style="width:100%; background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:12px; border-radius:10px; font-weight:800; font-size:0.85rem; cursor:pointer;">+ Toss in Backpack (40¢)</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Checkout / Pickup Drop Reservation -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:20px; padding:30px; margin-bottom:30px;">
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:8px;">📍 Reserve Locker Pickup or Delivery</h3>
+            <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:20px;">Pick your hallway location so student runners can prepare your bag.</p>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; margin-bottom:20px;">
+              <label style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px; cursor:pointer; color:#fff; font-size:0.85rem;">
+                <input type="radio" name="pickupLocation" checked> 8th Grade Hallway Locker
+              </label>
+              <label style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px; cursor:pointer; color:#fff; font-size:0.85rem;">
+                <input type="radio" name="pickupLocation"> Homeroom Drop
+              </label>
+              <label style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:12px; display:flex; align-items:center; gap:8px; cursor:pointer; color:#fff; font-size:0.85rem;">
+                <input type="radio" name="pickupLocation"> STEAM Lab Front Desk
+              </label>
+            </div>
+            <button onclick="checkoutBackpack()" style="background:#10b981; color:#fff; border:none; padding:14px 26px; border-radius:10px; font-weight:800; font-size:0.9rem; cursor:pointer;">Confirm Demo 40¢ Locker Request →</button>
+          </div>
+
+          <!-- Team Attribution -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:24px; text-align:center;">
+            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Student Architecture</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:6px;">Engineered by Newton County STEAM Academy Innovators</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem;">Brooklyn Y. · Kaylee H. · Kendall G. · Tracen H.</p>
           </div>
         `
       },
@@ -584,6 +708,7 @@
         pitch: "A promotional site for athletes that helps them mitigate injuries by buying protective gear. Features athlete testimonials, verified reviews, and an interactive injury prevention FAQ.",
         features: ["Injury FAQ Section", "Compression Product Specs", "Player Testimonial Reel"],
         businessPageHtml: `
+          <!-- Demo Notice Strip -->
           <div style="background: rgba(37, 99, 235, 0.15); border: 1px solid #3b82f6; border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="display:inline-block; width:10px; height:10px; background:#60a5fa; border-radius:50%; box-shadow:0 0 8px #60a5fa;"></span>
@@ -593,12 +718,132 @@
             <span style="background:rgba(255,255,255,0.06); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:6px; font-weight:700;">Sports Prototype</span>
           </div>
 
+          <!-- Hero Branding -->
           <div style="text-align:center; padding: 45px 20px 35px; background: linear-gradient(180deg, rgba(37,99,235,0.2), transparent 85%); border-radius: 24px; border: 1px solid rgba(59,130,246,0.35); margin-bottom: 30px;">
             <span style="background: rgba(37,99,235,0.25); color:#93c5fd; padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">Next-Gen Athletic Armor</span>
             <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">Wrap It Up. Stay in the Game.</h1>
             <p style="color:#bfdbfe; font-size: 1.1rem; max-width: 660px; margin: 0 auto 24px; line-height: 1.6;">
               Tired of rolling your ankle on fast breaks or jamming fingers during tryouts? Our breathable compression line helps prevent season-ending sprains before they happen.
             </p>
+            <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
+              <button onclick="document.getElementById('gearCatalog').scrollIntoView({behavior:'smooth'})" style="background:#2563eb; color:#fff; font-weight:800; padding:12px 24px; border-radius:10px; border:none; cursor:pointer;">Explore Compression Line ↓</button>
+              <button onclick="document.getElementById('injuryFaq').scrollIntoView({behavior:'smooth'})" style="background:rgba(255,255,255,0.06); color:#fff; font-weight:700; padding:12px 22px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); cursor:pointer;">View Injury FAQ</button>
+            </div>
+          </div>
+
+          <!-- Interactive Injury Selector Filters -->
+          <div id="gearCatalog" style="margin-bottom: 35px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
+              <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.3rem;">Targeted Protection Gear</h3>
+              <span style="color:#93c5fd; font-size:0.8rem; font-weight:700;">Select Sport Focus:</span>
+            </div>
+            
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 20px;">
+              
+              <!-- Gear 1 -->
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(59,130,246,0.3); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-size:2.2rem;">👟</span>
+                    <span style="background:rgba(37,99,235,0.2); color:#60a5fa; font-size:0.7rem; font-weight:800; padding:3px 8px; border-radius:6px;">ANKLE ROLL SHIELD</span>
+                  </div>
+                  <h4 style="color:#fff; font-size:1.2rem; margin-bottom:6px;">Cross-Over Ankle Sleeve</h4>
+                  <p style="color:#cbd5e1; font-size:0.86rem; line-height:1.5;">Dual strapping locks lateral mobility to stop baseline rolls on indoor gym floors and turf.</p>
+                </div>
+                <div style="margin-top:16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <strong style="color:#fff; font-size:1.1rem;">$18.00</strong>
+                    <span style="color:#34d399; font-size:0.75rem; font-weight:700;">★ 4.9 (48 Reviews)</span>
+                  </div>
+                  <button onclick="alert('Demo: Added Ankle Sleeve to gear locker!')" style="width:100%; background:linear-gradient(135deg, #2563eb, #1d4ed8); color:#fff; border:none; padding:12px; border-radius:10px; font-weight:800; cursor:pointer;">Request Athlete Kit</button>
+                </div>
+              </div>
+
+              <!-- Gear 2 -->
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(59,130,246,0.3); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-size:2.2rem;">✋🏽</span>
+                    <span style="background:rgba(37,99,235,0.2); color:#60a5fa; font-size:0.7rem; font-weight:800; padding:3px 8px; border-radius:6px;">FINGER & WRIST</span>
+                  </div>
+                  <h4 style="color:#fff; font-size:1.2rem; margin-bottom:6px;">Impact Wrist & Jam Wrap</h4>
+                  <p style="color:#cbd5e1; font-size:0.86rem; line-height:1.5;">Elastic compression band stabilizes hyperextended wrists during football passes and rebounds.</p>
+                </div>
+                <div style="margin-top:16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <strong style="color:#fff; font-size:1.1rem;">$12.50</strong>
+                    <span style="color:#34d399; font-size:0.75rem; font-weight:700;">★ 5.0 (31 Reviews)</span>
+                  </div>
+                  <button onclick="alert('Demo: Added Wrist Wrap to gear locker!')" style="width:100%; background:linear-gradient(135deg, #2563eb, #1d4ed8); color:#fff; border:none; padding:12px; border-radius:10px; font-weight:800; cursor:pointer;">Request Athlete Kit</button>
+                </div>
+              </div>
+
+              <!-- Gear 3 -->
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(59,130,246,0.3); border-radius:18px; padding:24px; display:flex; flex-direction:column; justify-content:space-between;">
+                <div>
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <span style="font-size:2.2rem;">🦵🏽</span>
+                    <span style="background:rgba(37,99,235,0.2); color:#60a5fa; font-size:0.7rem; font-weight:800; padding:3px 8px; border-radius:6px;">KNEE & SHIN RELIEF</span>
+                  </div>
+                  <h4 style="color:#fff; font-size:1.2rem; margin-bottom:6px;">Active Kinetic Patella Wrap</h4>
+                  <p style="color:#cbd5e1; font-size:0.86rem; line-height:1.5;">Absorbs shock upon jump landing to relieve jumper's knee and shin splints during track season.</p>
+                </div>
+                <div style="margin-top:16px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <strong style="color:#fff; font-size:1.1rem;">$22.00</strong>
+                    <span style="color:#34d399; font-size:0.75rem; font-weight:700;">★ 4.8 (64 Reviews)</span>
+                  </div>
+                  <button onclick="alert('Demo: Added Patella Wrap to gear locker!')" style="width:100%; background:linear-gradient(135deg, #2563eb, #1d4ed8); color:#fff; border:none; padding:12px; border-radius:10px; font-weight:800; cursor:pointer;">Request Athlete Kit</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Interactive Athlete Reviews -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(59,130,246,0.2); border-radius:20px; padding:28px; margin-bottom:35px;">
+            <div style="color:#60a5fa; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Verified Middle School Reviews</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:18px;">What NCSA Players Are Saying</h3>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+              <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.06); padding:16px; border-radius:12px;">
+                <p style="color:#e2e8f0; font-size:0.86rem; line-height:1.5; margin-bottom:10px;">"I sprained my ankle during basketball tryouts last fall and was out for 3 weeks. Wearing the Cross-Over sleeve gives me confidence to cut hard without feeling it twist."</p>
+                <strong style="color:#93c5fd; font-size:0.8rem;">— 8th Grade Point Guard</strong>
+              </div>
+              <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.06); padding:16px; border-radius:12px;">
+                <p style="color:#e2e8f0; font-size:0.86rem; line-height:1.5; margin-bottom:10px;">"Our coach had us all read the Wrap It Up injury guide. The shin splint wrap helped me get through 100m sprint intervals without icing every night."</p>
+                <strong style="color:#93c5fd; font-size:0.8rem;">— Track & Field Sprinter</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive Injury FAQ Section -->
+          <div id="injuryFaq" style="background:rgba(37,99,235,0.06); border:1px solid rgba(59,130,246,0.3); border-radius:20px; padding:28px; margin-bottom:30px;">
+            <div style="color:#60a5fa; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Educational Resource Hub</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:16px;">Injury Mitigation FAQ</h3>
+            
+            <div style="display:flex; flex-direction:column; gap:12px;">
+              <details style="background:rgba(0,0,0,0.4); border:1px solid rgba(59,130,246,0.25); border-radius:10px; padding:14px; cursor:pointer;" open>
+                <summary style="color:#fff; font-weight:700; font-size:0.92rem; outline:none;">When should I wrap vs. when should I rest?</summary>
+                <p style="color:#cbd5e1; font-size:0.85rem; line-height:1.6; margin-top:10px;">Active compression is ideal for minor swelling, muscle fatigue, and stabilizing vulnerable ligaments during practices. If you hear a pop, cannot bear weight, or have severe discoloration, sit out immediately and see your trainer or physician.</p>
+              </details>
+
+              <details style="background:rgba(0,0,0,0.4); border:1px solid rgba(59,130,246,0.25); border-radius:10px; padding:14px; cursor:pointer;">
+                <summary style="color:#fff; font-weight:700; font-size:0.92rem; outline:none;">How does compression prevent sports injuries?</summary>
+                <p style="color:#cbd5e1; font-size:0.85rem; line-height:1.6; margin-top:10px;">Compression sleeves promote localized blood flow, reduce lactic acid buildup, and increase your joint's proprioception (your brain's awareness of your ankle or wrist angle), drastically cutting down awkward landings.</p>
+              </details>
+
+              <details style="background:rgba(0,0,0,0.4); border:1px solid rgba(59,130,246,0.25); border-radius:10px; padding:14px; cursor:pointer;">
+                <summary style="color:#fff; font-weight:700; font-size:0.92rem; outline:none;">Are these washable for middle school practices?</summary>
+                <p style="color:#cbd5e1; font-size:0.85rem; line-height:1.6; margin-top:10px;">Yes! All sleeves use antimicrobial, sweat-wicking synthetic blend fabrics that are machine washable on cold cycle without losing elasticity.</p>
+              </details>
+            </div>
+          </div>
+
+          <!-- Team Attribution -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:24px; text-align:center;">
+            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Student Architecture</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:6px;">Engineered by Newton County STEAM Academy Innovators</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem;">Athletic Tech Sprint Team · Career Day Pilot</p>
           </div>
         `
       },
@@ -612,6 +857,7 @@
         pitch: "Book appointments and promote services for small businesses and parents who value pristine spaces. Features recurring memberships, project galleries, direct booking buttons, and reviews.",
         features: ["Instant Calendar Booking", "Before/After Gallery", "VIP Monthly Memberships"],
         businessPageHtml: `
+          <!-- Demo Notice Strip -->
           <div style="background: rgba(245, 158, 11, 0.15); border: 1px solid var(--gold); border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="display:inline-block; width:10px; height:10px; background:#fbbf24; border-radius:50%; box-shadow:0 0 8px #fbbf24;"></span>
@@ -621,12 +867,135 @@
             <span style="background:rgba(255,255,255,0.06); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:6px; font-weight:700;">Luxe Service Prototype</span>
           </div>
 
+          <!-- Hero Branding -->
           <div style="text-align:center; padding: 48px 20px 38px; background: radial-gradient(circle at 50% 0%, rgba(245,158,11,0.2), transparent 75%), rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid rgba(245,158,11,0.35); margin-bottom: 30px;">
             <span style="background: rgba(245,158,11,0.22); color:var(--gold-light); padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">White-Glove Sanitization & Care</span>
             <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">Classy Cleaners</h1>
             <p style="color:#ded7ce; font-size: 1.12rem; max-width: 680px; margin: 0 auto 24px; line-height: 1.6;">
               Pristine spaces tailored for busy working parents and local storefronts. We handle the deep sanitization so you can focus on family and business.
             </p>
+            <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+              <button onclick="document.getElementById('bookingSection').scrollIntoView({behavior:'smooth'})" style="background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; font-weight:800; padding:13px 26px; border-radius:10px; border:none; cursor:pointer;">Book an Appointment ↓</button>
+              <button onclick="document.getElementById('membershipsSection').scrollIntoView({behavior:'smooth'})" style="background:rgba(255,255,255,0.06); color:#fff; font-weight:700; padding:13px 22px; border-radius:10px; border:1px solid rgba(255,255,255,0.15); cursor:pointer;">VIP Memberships</button>
+            </div>
+          </div>
+
+          <!-- Interactive Instant Booking Form -->
+          <div id="bookingSection" style="background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 20px; padding: 32px 26px; margin-bottom: 35px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:18px;">
+              <div>
+                <span style="color:var(--gold); font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em;">Direct Booking Engine</span>
+                <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.4rem; margin-top:4px;">Schedule Your Cleaning Visit</h3>
+              </div>
+              <span style="background:rgba(16,185,129,0.15); color:#34d399; font-size:0.75rem; font-weight:700; padding:4px 12px; border-radius:999px;">● Slots Available This Week</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:16px; margin-bottom:20px;">
+              <div>
+                <label style="display:block; color:var(--text-muted); font-size:0.78rem; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Service Type</label>
+                <select id="cleanTypeSelect" style="width:100%; background:#1c120c; border:1px solid var(--border); color:#fff; padding:12px; border-radius:10px; font-size:0.88rem; outline:none;">
+                  <option value="residential">Residential Home Deep Clean</option>
+                  <option value="commercial">Commercial Storefront & Office</option>
+                  <option value="movein">Move-In / Move-Out Turnover</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="display:block; color:var(--text-muted); font-size:0.78rem; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Space Size</label>
+                <select id="cleanSizeSelect" style="width:100%; background:#1c120c; border:1px solid var(--border); color:#fff; padding:12px; border-radius:10px; font-size:0.88rem; outline:none;">
+                  <option value="150">1 - 2 Bedrooms (Under 1,500 sq ft) — $150</option>
+                  <option value="220">3 - 4 Bedrooms (1,500 - 2,800 sq ft) — $220</option>
+                  <option value="310">Commercial Office Suite — $310</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="display:block; color:var(--text-muted); font-size:0.78rem; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Select Date</label>
+                <input type="date" value="2026-10-05" style="width:100%; background:#1c120c; border:1px solid var(--border); color:#fff; padding:11px; border-radius:10px; font-size:0.88rem; outline:none;">
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06);">
+              <div style="color:var(--text-muted); font-size:0.86rem;">
+                Estimated Quote: <strong id="quoteDisplay" style="color:var(--gold-light); font-size:1.25rem;">$150.00</strong>
+              </div>
+              <button onclick="alert('Demo Appointment Reserved!\n\nService: ' + document.getElementById('cleanTypeSelect').selectedOptions[0].text + '\nPrice: ' + document.getElementById('cleanSizeSelect').selectedOptions[0].text + '\n\nIn the full build, this hooks to automated email confirmations!')" style="background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:13px 28px; border-radius:10px; font-weight:800; font-size:0.9rem; cursor:pointer;">Confirm Booking Reservation →</button>
+            </div>
+          </div>
+
+          <!-- Proof Gallery: Before & After Showcase -->
+          <div style="margin-bottom: 35px;">
+            <div style="color:var(--gold); font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Transformation Gallery</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.35rem; margin-bottom:18px;">Pristine Proof of Work</h3>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px;">
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.2); border-radius:16px; padding:22px;">
+                <div style="font-size:2rem; margin-bottom:8px;">✨</div>
+                <h4 style="color:#fff; font-size:1.1rem; margin-bottom:6px;">High-Gloss Kitchen Sanitization</h4>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Oven interior degreasing, granite countertop sealing, and stainless steel polish for busy family homes.</p>
+              </div>
+
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.2); border-radius:16px; padding:22px;">
+                <div style="font-size:2rem; margin-bottom:8px;">🏢</div>
+                <h4 style="color:#fff; font-size:1.1rem; margin-bottom:6px;">Commercial Office & Storefront</h4>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Reception glass buffing, conference room sanitization, and high-traffic floor buffing for local businesses.</p>
+              </div>
+
+              <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(245,158,11,0.2); border-radius:16px; padding:22px;">
+                <div style="font-size:2rem; margin-bottom:8px;">🧸</div>
+                <h4 style="color:#fff; font-size:1.1rem; margin-bottom:6px;">Parent Peace-of-Mind Reset</h4>
+                <p style="color:var(--text-muted); font-size:0.85rem; line-height:1.5;">Playroom toy sanitizing, allergen HEPA vacuuming, and laundry room organization so weekends stay stress-free.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIP Recurring Memberships Tier -->
+          <div id="membershipsSection" style="background: linear-gradient(180deg, rgba(245,158,11,0.08), rgba(255,255,255,0.02)); border: 1px solid var(--gold); border-radius: 20px; padding: 30px; margin-bottom: 35px;">
+            <div style="text-align:center; max-width:540px; margin:0 auto 24px;">
+              <span style="color:var(--gold-light); font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em;">VIP Monthly Memberships</span>
+              <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.5rem; margin-top:4px;">Put Clean on Autopilot</h3>
+              <p style="color:var(--text-muted); font-size:0.88rem;">Save 20% with automated recurring service tailored for working parents and storefront owners.</p>
+            </div>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px;">
+              <div style="background:rgba(0,0,0,0.35); border:1px solid var(--border); border-radius:14px; padding:20px; text-align:center;">
+                <h4 style="color:#fff; font-size:1.1rem;">Bi-Weekly Refresh</h4>
+                <div style="font-size:1.6rem; font-weight:800; color:var(--gold-light); margin:8px 0;">$240 <span style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">/month</span></div>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:14px;">2 full cleans per month · Priority weekend slots · Free fridge clean</p>
+                <button onclick="alert('Enrolled in Bi-Weekly VIP Demo Membership!')" style="width:100%; background:rgba(245,158,11,0.2); border:1px solid var(--gold); color:#fff; padding:10px; border-radius:8px; font-weight:700; font-size:0.82rem; cursor:pointer;">Select Plan</button>
+              </div>
+
+              <div style="background:rgba(0,0,0,0.35); border:1px solid var(--border); border-radius:14px; padding:20px; text-align:center;">
+                <h4 style="color:#fff; font-size:1.1rem;">Weekly Executive</h4>
+                <div style="font-size:1.6rem; font-weight:800; color:var(--gold-light); margin:8px 0;">$420 <span style="font-size:0.8rem; font-weight:500; color:var(--text-muted);">/month</span></div>
+                <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:14px;">4 full cleans per month · Dedicated crew · Commercial storefront discount</p>
+                <button onclick="alert('Enrolled in Weekly Executive VIP Demo Membership!')" style="width:100%; background:linear-gradient(135deg,var(--gold),#d97706); color:#110b08; border:none; padding:10px; border-radius:8px; font-weight:800; font-size:0.82rem; cursor:pointer;">Select Plan</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Verified Client Reviews -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid var(--border); border-radius:20px; padding:26px; margin-bottom:30px;">
+            <div style="color:var(--gold); font-size:0.74rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Verified Client Reviews</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:16px;">What Our Clients Experience</h3>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px;">
+              <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.06); padding:16px; border-radius:12px;">
+                <p style="color:#e2e8f0; font-size:0.86rem; line-height:1.5; margin-bottom:8px;">"Between work and kids' sports schedules, weekends used to be spent scrubbing floors. Classy Cleaners gave us our Saturdays back."</p>
+                <strong style="color:var(--gold-light); font-size:0.8rem;">— Working Parent in Covington</strong>
+              </div>
+              <div style="background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.06); padding:16px; border-radius:12px;">
+                <p style="color:#e2e8f0; font-size:0.86rem; line-height:1.5; margin-bottom:8px;">"Our clients notice as soon as they walk in the lobby. Reliable, spotless, and professional every single week."</p>
+                <strong style="color:var(--gold-light); font-size:0.8rem;">— Small Business Owner</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Team Attribution -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:24px; text-align:center;">
+            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Student Architecture</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:6px;">Engineered by Newton County STEAM Academy Innovators</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem;">Business & Operations Sprint Team · Career Day Pilot</p>
           </div>
         `
       },
@@ -640,6 +1009,7 @@
         pitch: "Site is called Boom Sports. It helps kids learn a sport and do it quick. It's fun. If you don't use it, you're missing out on good lessons. Includes video blocks, coaching, and workouts.",
         features: ["Athlete Training Tips & Motivation", "Step-by-Step Video Drills", "Dynamic Sport Switcher", "Live Progress Logger"],
         businessPageHtml: `
+          <!-- Demo Notice Strip -->
           <div style="background: rgba(234, 88, 12, 0.15); border: 1px solid #ea580c; border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="display:inline-block; width:10px; height:10px; background:#fb923c; border-radius:50%; box-shadow:0 0 8px #fb923c;"></span>
@@ -649,6 +1019,7 @@
             <div id="boomXpBadge" style="background:#ea580c; color:#fff; font-size:0.78rem; padding:4px 12px; border-radius:999px; font-weight:800;">⚡ Total Reps Logged: <span id="statTotalReps">46</span></div>
           </div>
 
+          <!-- Hero Section with Sport Selector -->
           <div style="text-align:center; padding: 44px 20px 34px; background: radial-gradient(circle at 50% 0%, rgba(234,88,12,0.22), transparent 75%), rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid rgba(234,88,12,0.35); margin-bottom: 24px;">
             <span style="background: rgba(234,88,12,0.25); color:#fb923c; padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">Fast-Track Youth Academy</span>
             <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">Boom Sports</h1>
@@ -656,6 +1027,7 @@
               Stop watching 30-minute tutorials that teach you nothing. Learn real sports mechanics in <strong>3 minutes flat</strong> through structured video drills, instant visual cues, and home training.
             </p>
 
+            <!-- Sport Switcher Tabs -->
             <div style="display:flex; justify-content:center; gap:10px; flex-wrap:wrap;">
               <button onclick="switchSport('basketball')" id="tab-basketball" style="background:#ea580c; color:#fff; border:none; padding:10px 22px; border-radius:999px; font-weight:800; font-size:0.88rem; cursor:pointer;">🏀 Basketball</button>
               <button onclick="switchSport('football')" id="tab-football" style="background:rgba(255,255,255,0.06); color:#fff; border:1px solid rgba(255,255,255,0.12); padding:10px 22px; border-radius:999px; font-weight:800; font-size:0.88rem; cursor:pointer;">🏈 Football</button>
@@ -664,6 +1036,7 @@
             </div>
           </div>
 
+          <!-- Component 1: Athlete Motivation & Training Science Banner -->
           <div style="background: linear-gradient(135deg, rgba(234,88,12,0.18), rgba(28,17,13,0.95)); border: 1px solid rgba(234,88,12,0.4); border-radius: 18px; padding: 22px 26px; margin-bottom: 30px; display:flex; align-items:center; gap:18px;">
             <div id="sportFactIcon" style="font-size:2.6rem; flex-shrink:0;">🏀</div>
             <div>
@@ -674,7 +1047,10 @@
             </div>
           </div>
 
+          <!-- Component 2: Step-by-Step Video Coaching Protocol & Progress Logger -->
           <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 32px;">
+            
+            <!-- Step-by-Step Video Drill Guide -->
             <div style="background:#140c07; border:1px solid rgba(234,88,12,0.3); border-radius:20px; padding:26px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
@@ -684,6 +1060,7 @@
                 <h3 id="craftTitle" style="color:#fff; font-size:1.35rem; margin-bottom:8px; font-family:'Space Grotesk',sans-serif;">How to Perfect Your Shooting Form</h3>
                 <p id="craftSummary" style="color:var(--text-muted); font-size:0.86rem; margin-bottom:18px; line-height:1.5;">Master these 3 micro-mechanics before practicing full-court game speed:</p>
 
+                <!-- 3 Step Progression List -->
                 <div id="craftStepsList" style="display:flex; flex-direction:column; gap:12px;">
                   <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.25); border-radius:10px; padding:12px; display:flex; gap:12px; align-items:flex-start;">
                     <div style="background:#ea580c; color:#fff; font-weight:800; font-size:0.78rem; width:26px; height:26px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">01</div>
@@ -709,6 +1086,7 @@
                 </div>
               </div>
 
+              <!-- 3-Minute Video Drill Timer Box -->
               <div style="margin-top:22px; padding:16px; background:rgba(0,0,0,0.45); border:1px solid rgba(234,88,12,0.3); border-radius:12px; text-align:center;">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; padding:0 8px;">
                   <span id="drillSubtitleSport" style="color:var(--text-muted); font-size:0.75rem; text-transform:uppercase;">BASKETBALL TIMED DRILL</span>
@@ -719,6 +1097,7 @@
               </div>
             </div>
 
+            <!-- Component 3: Dynamic Athlete Progress & Mastery Tracker -->
             <div style="background:rgba(255,255,255,0.025); border:1px solid rgba(234,88,12,0.3); border-radius:20px; padding:26px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -727,6 +1106,7 @@
                 </div>
                 <p style="color:var(--text-muted); font-size:0.84rem; margin-bottom:16px;">Log your numbers to see real statistical growth and unlock higher skill tiers:</p>
 
+                <!-- Visual Goal Progress Meter -->
                 <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.25); border-radius:12px; padding:14px; margin-bottom:18px;">
                   <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:6px;">
                     <span style="color:#fed7aa; font-weight:700;">Weekly Goal: 100 Focused Reps</span>
@@ -737,6 +1117,7 @@
                   </div>
                 </div>
 
+                <!-- Structured Training Inputs -->
                 <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
                   <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
                     <div>
@@ -766,8 +1147,33 @@
 
                   <button onclick="logAthleteProgress()" style="background:linear-gradient(135deg,#ea580c,#c2410c); color:#fff; border:none; padding:12px; border-radius:8px; font-weight:800; font-size:0.88rem; cursor:pointer;">+ Record Training Session & Update Stats</button>
                 </div>
+
+                <!-- Session Log Feed -->
+                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Training Log Ledger</span>
+                    <span id="accuracyAvgDisplay" style="color:#34d399; font-size:0.75rem; font-weight:700;">Avg Accuracy: 84%</span>
+                  </div>
+                  <div id="sessionHistoryBox" style="display:flex; flex-direction:column; gap:8px; max-height:150px; overflow-y:auto;">
+                    <div style="background:rgba(0,0,0,0.35); padding:10px 12px; border-radius:8px; font-size:0.82rem; color:#ded7ce; display:flex; justify-content:space-between; align-items:center;">
+                      <div>
+                        <strong>🏀 Form Shots: 21 / 25 (84%)</strong>
+                        <div style="color:var(--text-muted); font-size:0.75rem; margin-top:2px;">Focus: Arc & Release · Good follow-through hold</div>
+                      </div>
+                      <span style="color:#fb923c; font-size:0.72rem; font-weight:700;">Earlier</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+
+          </div>
+
+          <!-- Team Attribution -->
+          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:24px; text-align:center;">
+            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Student Architecture</div>
+            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:6px;">Engineered by Newton County STEAM Academy Innovators</h3>
+            <p style="color:var(--text-muted); font-size:0.88rem;">Youth Coaching Sprint Team · Career Day Pilot</p>
           </div>
         `
       },
@@ -779,23 +1185,24 @@
         audience: "Student Gamers, Streamers & Creators",
         vibe: "Playful, Bold, Electric",
         pitch: "Promotes services and builds a community for students and gamers. Features video streams, member-exclusive content, an interactive gallery, and community reviews.",
-        features: ["Live Stream Simulator", "Tournament Bracket Arena", "Gamer Perk Unlocks", "Community Chat"],
+        features: ["Video Stream Blocks", "Gamer Discord Integration", "Member Perk Unlocks"],
         businessPageHtml: `
-          <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
-            <div style="display:flex; align-items:center; gap:10px;">
-              <span style="display:inline-block; width:10px; height:10px; background:#c084fc; border-radius:50%; box-shadow:0 0 10px #c084fc;"></span>
-              <strong style="color:#e9d5ff; font-size:0.88rem; text-transform:uppercase; letter-spacing:0.06em;">Interactive Concept Demo</strong>
-              <span style="color:var(--text-muted); font-size:0.82rem;">· Engineered by NCSA Student Gaming Sprint Team</span>
-            </div>
-            <span style="background:rgba(255,255,255,0.06); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:6px; font-weight:700;">Gaming Prototype</span>
+          <div style="text-align:center; padding: 60px 20px; background: linear-gradient(180deg, rgba(168,85,247,0.12), transparent 80%); border-radius: 24px; border: 1px solid rgba(168,85,247,0.3); margin-bottom: 35px;">
+            <span style="background: rgba(168,85,247,0.2); color:#c084fc; padding: 6px 16px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">Player & Streamer Network</span>
+            <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.4rem, 6vw, 4rem); color:#fff; margin: 18px 0 12px; letter-spacing:-0.03em;">GameZone</h1>
+            <p style="color:#e9d5ff; font-size: 1.15rem; max-width: 650px; margin: 0 auto 28px; line-height: 1.6;">The ultimate student gamer hub. Watch gameplay highlight reels, join school tournaments, and unlock member perks.</p>
+            <button style="background:#9333ea; color:#fff; font-weight:800; padding:14px 28px; border-radius:10px; border:none; cursor:pointer;" onclick="alert('Joined GameZone student community lobby!')">Enter The Arcade Lobby →</button>
           </div>
 
-          <div style="text-align:center; padding: 48px 20px 38px; background: radial-gradient(circle at 50% 0%, rgba(168,85,247,0.25), transparent 75%), rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid rgba(168,85,247,0.4); margin-bottom: 30px;">
-            <span style="background: rgba(168,85,247,0.22); color:#d8b4fe; padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">Next-Gen Student Esports</span>
-            <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">GameZone</h1>
-            <p style="color:#e9d5ff; font-size: 1.15rem; max-width: 680px; margin: 0 auto 24px; line-height: 1.6;">
-              The arena where student creators, clip editors, and competitive players unite. Watch live school tournaments, vote on brackets, and earn exclusive gamer clout.
-            </p>
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; margin-bottom:30px;">
+            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(168,85,247,0.2); border-radius:16px; padding:24px;">
+              <h3 style="color:#fff; margin-bottom:8px;">📺 Stream Highlight Reel</h3>
+              <p style="color:var(--text-muted); font-size:0.88rem;">Watch the top student clips, clutch plays, and speedrun records submitted this week.</p>
+            </div>
+            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(168,85,247,0.2); border-radius:16px; padding:24px;">
+              <h3 style="color:#fff; margin-bottom:8px;">🏆 Tournament Brackets</h3>
+              <p style="color:var(--text-muted); font-size:0.88rem;">Compete in weekend student brackets across Fortnite, Rocket League, and NBA 2K.</p>
+            </div>
           </div>
         `
       }
@@ -803,6 +1210,7 @@
 
     let activeKey = null;
 
+    // Open Step 2: Pitch & Paper Sheet Details
     function openPitchModal(key) {
       activeKey = key;
       const p = database[key];
@@ -856,6 +1264,7 @@
       }
     }
 
+    // Open Step 3: The Live Business Website Prototype
     function launchLiveBusinessSite() {
       if (!activeKey) return;
       const p = database[activeKey];
@@ -883,16 +1292,20 @@
 
       const stream = document.getElementById('demoChatStream');
       const newMsg = document.createElement('div');
-      newMsg.style.cssText = 'display:flex; gap:14px; align-items:flex-start;';
+      newMsg.style.cssText = 'display:flex; gap:14px; align-items:flex-start; animation: fadeIn 0.3s ease;';
       newMsg.innerHTML = `
         <div style="width:38px; height:38px; border-radius:50%; background:#f59e0b; color:#110b08; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">YOU</div>
         <div>
-          <strong style="color:#fff; font-size:0.9rem;">Visitor</strong>
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+            <strong style="color:#fff; font-size:0.9rem;">Visitor (Demo Participant)</strong>
+            <span style="color:var(--text-muted); font-size:0.72rem;">Just now</span>
+          </div>
           <p style="color:#f1ede8; font-size:0.88rem; line-height:1.5; margin:0;">${text}</p>
         </div>
       `;
       stream.appendChild(newMsg);
       input.value = '';
+      stream.scrollTop = stream.scrollHeight;
     }
 
     let backpackItems = [];
@@ -903,11 +1316,37 @@
       const counter = document.getElementById('backpackCounter');
       if (counter) {
         counter.innerHTML = `🎒 Backpack: ${backpackItems.length} Items ($${totalCost})`;
+        counter.style.transform = 'scale(1.08)';
+        setTimeout(() => { counter.style.transform = 'scale(1)'; }, 200);
       }
-      alert(`Added "${itemName}" to your backpack! Current total: $${totalCost}`);
+      alert(`Added "${itemName}" to your backpack! Current demo total: $${totalCost}`);
     }
 
-    /* Boom Sports Multi-Sport Logic */
+    function checkoutBackpack() {
+      if (backpackItems.length === 0) {
+        alert("Your backpack is currently empty! Click '+ Toss in Backpack' on any 40¢ supply first.");
+        return;
+      }
+      const totalCost = (backpackItems.length * 0.40).toFixed(2);
+      alert(`Demo Order Confirmed!\n\n${backpackItems.length} items reserved for locker pickup.\nTotal Due at Pickup: $${totalCost} (or two quarters with 10¢ change!).\n\nThis demonstrates Brooklyn, Kaylee, Kendall, and Tracen's working concept!`);
+      backpackItems = [];
+      const counter = document.getElementById('backpackCounter');
+      if (counter) {
+        counter.innerHTML = `🎒 Backpack: 0 Items ($0.00)`;
+      }
+    }
+
+    document.addEventListener('change', function(e) {
+      if (e.target && e.target.id === 'cleanSizeSelect') {
+        const val = e.target.value;
+        const display = document.getElementById('quoteDisplay');
+        if (display) {
+          display.textContent = `$${val}.00`;
+        }
+      }
+    });
+
+    /* Boom Sports Dynamic State & Hub */
     let activeSport = 'basketball';
     let cumulativeReps = 46;
     const weeklyGoalTarget = 100;
@@ -1069,7 +1508,7 @@
             if (display) display.textContent = `${mins}:${secs}`;
           } else {
             clearInterval(drillInterval);
-            alert(`🎉 Drill Complete! You completed 3 full minutes on ${activeSport.toUpperCase()}!`);
+            alert(`🎉 Drill Complete! You completed 3 full minutes of mechanics training on ${activeSport.toUpperCase()}!`);
             resetDrillTimer();
           }
         }, 1000);
@@ -1099,8 +1538,13 @@
     function logAthleteProgress() {
       const repsInput = document.getElementById('inputStatReps');
       const totalInput = document.getElementById('inputStatTotal');
+      const notesInput = document.getElementById('inputStatNotes');
+      const focusSelect = document.getElementById('selectMechFocus');
+
       const repsVal = parseInt(repsInput.value.trim(), 10);
       const totalVal = parseInt(totalInput.value.trim(), 10) || repsVal;
+      const notesVal = notesInput.value.trim();
+      const focusVal = focusSelect ? focusSelect.value : "Technique Drill";
 
       if (isNaN(repsVal) || repsVal <= 0) {
         alert("Please enter the number of reps you completed!");
@@ -1108,18 +1552,47 @@
       }
 
       cumulativeReps += repsVal;
+      const accuracyPct = Math.min(100, Math.round((repsVal / totalVal) * 100));
       const goalPct = Math.min(100, Math.round((cumulativeReps / weeklyGoalTarget) * 100));
 
       const repBadge = document.getElementById('statTotalReps');
       const goalFraction = document.getElementById('goalFractionDisplay');
       const progressBar = document.getElementById('goalProgressBar');
+      const tierBadge = document.getElementById('athleteTierBadge');
 
       if (repBadge) repBadge.textContent = cumulativeReps;
       if (goalFraction) goalFraction.textContent = `${cumulativeReps} / ${weeklyGoalTarget} (${goalPct}%)`;
       if (progressBar) progressBar.style.width = `${goalPct}%`;
 
-      alert(`Session Recorded! ${repsVal} reps added toward your weekly target.`);
+      if (tierBadge) {
+        if (cumulativeReps >= 100) {
+          tierBadge.textContent = "LEVEL 4: VARSITY PRO";
+          tierBadge.style.background = "#10b981";
+        } else if (cumulativeReps >= 60) {
+          tierBadge.textContent = "LEVEL 3: STARTER ELITE";
+          tierBadge.style.background = "#f59e0b";
+        }
+      }
+
+      const historyBox = document.getElementById('sessionHistoryBox');
+      if (historyBox) {
+        const s = athleteKnowledgeHub[activeSport];
+        const newEntry = document.createElement('div');
+        newEntry.style.cssText = "background:rgba(0,0,0,0.35); padding:10px 12px; border-radius:8px; font-size:0.82rem; color:#ded7ce; display:flex; justify-content:space-between; align-items:center;";
+        newEntry.innerHTML = `
+          <div>
+            <strong>${s.icon} ${activeSport.toUpperCase()}: ${repsVal} / ${totalVal} (${accuracyPct}%)</strong>
+            <div style="color:var(--text-muted); font-size:0.75rem; margin-top:2px;">Focus: ${focusVal} ${notesVal ? `· "${notesVal}"` : ''}</div>
+          </div>
+          <span style="color:#34d399; font-weight:700; font-size:0.75rem;">Just now</span>
+        `;
+        historyBox.prepend(newEntry);
+      }
+
+      alert(`Session Recorded!\n\n${repsVal} reps added.\nWeekly Progress: ${cumulativeReps} / ${weeklyGoalTarget} reps (${goalPct}% toward goal).`);
+
       repsInput.value = '';
+      notesInput.value = '';
     }
   </script>
 
