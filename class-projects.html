@@ -1097,44 +1097,75 @@
               </div>
             </div>
 
-            <!-- Component 3: Live Athlete Progress Logger -->
+            <!-- Component 3: Dynamic Athlete Progress & Mastery Tracker -->
             <div style="background:rgba(255,255,255,0.025); border:1px solid rgba(234,88,12,0.3); border-radius:20px; padding:26px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                  <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.3rem;">Daily Growth Logger</h3>
-                  <span style="color:#34d399; font-size:0.75rem; font-weight:800;">● LOGGING ACTIVE</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.3rem;">Athlete Skill Tracker</h3>
+                  <span id="athleteTierBadge" style="background:#ea580c; color:#fff; font-size:0.75rem; font-weight:800; padding:3px 10px; border-radius:999px;">LEVEL 2: RISING STAR</span>
                 </div>
-                <p style="color:var(--text-muted); font-size:0.86rem; margin-bottom:18px;">Track your daily repetition numbers so you can see your consistency grow over time:</p>
+                <p style="color:var(--text-muted); font-size:0.84rem; margin-bottom:16px;">Log your numbers to see real statistical growth and unlock higher skill tiers:</p>
 
-                <!-- Inputs -->
-                <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:18px;">
-                  <div>
-                    <label id="inputLabelReps" style="display:block; color:#fed7aa; font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Form Shots Swished (Out of 25 Reps)</label>
-                    <input id="inputStatReps" type="number" placeholder="e.g. 19" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:11px 14px; color:#fff; font-size:0.9rem; outline:none;">
+                <!-- Visual Goal Progress Meter -->
+                <div style="background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.25); border-radius:12px; padding:14px; margin-bottom:18px;">
+                  <div style="display:flex; justify-content:space-between; font-size:0.8rem; margin-bottom:6px;">
+                    <span style="color:#fed7aa; font-weight:700;">Weekly Goal: 100 Focused Reps</span>
+                    <strong id="goalFractionDisplay" style="color:#fb923c;">46 / 100 (46%)</strong>
+                  </div>
+                  <div style="width:100%; height:8px; background:rgba(255,255,255,0.08); border-radius:999px; overflow:hidden;">
+                    <div id="goalProgressBar" style="width:46%; height:100%; background:linear-gradient(90deg,#ea580c,#f59e0b); border-radius:999px; transition:width 0.4s ease;"></div>
+                  </div>
+                </div>
+
+                <!-- Structured Training Inputs -->
+                <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px;">
+                  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div>
+                      <label id="inputLabelReps" style="display:block; color:#fed7aa; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:4px;">Reps Made</label>
+                      <input id="inputStatReps" type="number" placeholder="e.g. 20" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:10px 12px; color:#fff; font-size:0.9rem; outline:none;">
+                    </div>
+                    <div>
+                      <label style="display:block; color:#fed7aa; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:4px;">Out of Total</label>
+                      <input id="inputStatTotal" type="number" placeholder="e.g. 25" value="25" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:10px 12px; color:#fff; font-size:0.9rem; outline:none;">
+                    </div>
                   </div>
 
                   <div>
-                    <label style="display:block; color:#fed7aa; font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Training Notes & Body Cues</label>
-                    <input id="inputStatNotes" type="text" placeholder="e.g. Higher arc today, stopped guide thumb from pushing" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:11px 14px; color:#fff; font-size:0.9rem; outline:none;">
+                    <label style="display:block; color:#fed7aa; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:4px;">Mechanical Focus Practiced</label>
+                    <select id="selectMechFocus" style="width:100%; background:#1a100a; border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:10px 12px; color:#fff; font-size:0.86rem; outline:none;">
+                      <option value="Arc & Release Mechanics">Arc & Release Mechanics (Shooting Pocket)</option>
+                      <option value="First-Touch Cushion">First-Touch Cushion & Ball Control</option>
+                      <option value="Footwork & Drop Steps">Footwork & Drop Steps (Plant Timing)</option>
+                      <option value="Drive Phase Acceleration">Drive Phase Acceleration (Low Body Angle)</option>
+                    </select>
                   </div>
 
-                  <button onclick="logAthleteProgress()" style="background:linear-gradient(135deg,#ea580c,#c2410c); color:#fff; border:none; padding:13px; border-radius:8px; font-weight:800; font-size:0.9rem; cursor:pointer;">+ Log Today's Practice Session</button>
+                  <div>
+                    <label style="display:block; color:#fed7aa; font-size:0.75rem; font-weight:700; text-transform:uppercase; margin-bottom:4px;">How Did Your Form Feel?</label>
+                    <input id="inputStatNotes" type="text" placeholder="e.g. Arc was higher, landed balanced with zero thumb flick" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:10px 12px; color:#fff; font-size:0.88rem; outline:none;">
+                  </div>
+
+                  <button onclick="logAthleteProgress()" style="background:linear-gradient(135deg,#ea580c,#c2410c); color:#fff; border:none; padding:12px; border-radius:8px; font-weight:800; font-size:0.88rem; cursor:pointer;">+ Record Training Session & Update Stats</button>
                 </div>
 
                 <!-- Session Log Feed -->
-                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px;">
-                  <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;">Recent Training Log History</div>
-                  <div id="sessionHistoryBox" style="display:flex; flex-direction:column; gap:8px; max-height:160px; overflow-y:auto;">
+                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:12px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                    <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Training Log Ledger</span>
+                    <span id="accuracyAvgDisplay" style="color:#34d399; font-size:0.75rem; font-weight:700;">Avg Accuracy: 84%</span>
+                  </div>
+                  <div id="sessionHistoryBox" style="display:flex; flex-direction:column; gap:8px; max-height:150px; overflow-y:auto;">
                     <div style="background:rgba(0,0,0,0.35); padding:10px 12px; border-radius:8px; font-size:0.82rem; color:#ded7ce; display:flex; justify-content:space-between; align-items:center;">
-                      <span>🏀 Baseline Form Shots: <strong>21 / 25</strong> (Good follow-through)</span>
-                      <span style="color:#fb923c; font-size:0.75rem;">Earlier Today</span>
+                      <div>
+                        <strong>🏀 Form Shots: 21 / 25 (84%)</strong>
+                        <div style="color:var(--text-muted); font-size:0.75rem; margin-top:2px;">Focus: Arc & Release · Good follow-through hold</div>
+                      </div>
+                      <span style="color:#fb923c; font-size:0.72rem; font-weight:700;">Earlier</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-          </div>
 
           <!-- Team Attribution -->
           <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:24px; text-align:center;">
