@@ -518,10 +518,6 @@
                     <span style="color:var(--text-muted); font-size:0.72rem;">Today at 1:14 PM</span>
                   </div>
                   <p style="color:#f1ede8; font-size:0.88rem; line-height:1.5; margin:0;">Welcome to the room everyone! Remember: no idea is too ambitious here. If someone told you that robotics or coding isn't for you, post your proof right here.</p>
-                  <div style="display:inline-flex; gap:6px; margin-top:8px;">
-                    <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:999px; padding:2px 8px; font-size:0.75rem; color:#fbcfe8;">❤️ 18</span>
-                    <span style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:999px; padding:2px 8px; font-size:0.75rem; color:#fbcfe8;">🔥 12</span>
-                  </div>
                 </div>
               </div>
             </div>
@@ -530,12 +526,6 @@
               <input id="demoChatInput" type="text" placeholder="Type a demo encouragement message..." style="flex:1; background:rgba(0,0,0,0.4); border:1px solid rgba(236,72,153,0.3); border-radius:10px; padding:12px 16px; color:#fff; font-size:0.88rem; outline:none;" onkeypress="if(event.key==='Enter'){addDemoMessage();}">
               <button style="background:#ec4899; color:#fff; border:none; padding:10px 18px; border-radius:10px; font-weight:800; font-size:0.82rem; cursor:pointer;" onclick="addDemoMessage()">Send</button>
             </div>
-          </div>
-
-          <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(245,158,11,0.25); border-radius: 18px; padding: 26px; text-align:center;">
-            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Team Architecture</div>
-            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:8px;">Engineered by Newton County STEAM Academy Innovators</h3>
-            <p style="color:var(--text-muted); font-size:0.88rem; max-width:640px; margin:0 auto 16px;">Gabby P. (Leader) · Emily V. (Cup Runner) · Mia G. (Pitch Lead) · Avery S. (Creative Director)</p>
           </div>
         `
       },
@@ -776,31 +766,8 @@
 
                   <button onclick="logAthleteProgress()" style="background:linear-gradient(135deg,#ea580c,#c2410c); color:#fff; border:none; padding:12px; border-radius:8px; font-weight:800; font-size:0.88rem; cursor:pointer;">+ Record Training Session & Update Stats</button>
                 </div>
-
-                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:12px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                    <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">Training Log Ledger</span>
-                    <span id="accuracyAvgDisplay" style="color:#34d399; font-size:0.75rem; font-weight:700;">Avg Accuracy: 84%</span>
-                  </div>
-                  <div id="sessionHistoryBox" style="display:flex; flex-direction:column; gap:8px; max-height:150px; overflow-y:auto;">
-                    <div style="background:rgba(0,0,0,0.35); padding:10px 12px; border-radius:8px; font-size:0.82rem; color:#ded7ce; display:flex; justify-content:space-between; align-items:center;">
-                      <div>
-                        <strong>🏀 Form Shots: 21 / 25 (84%)</strong>
-                        <div style="color:var(--text-muted); font-size:0.75rem; margin-top:2px;">Focus: Arc & Release · Good follow-through hold</div>
-                      </div>
-                      <span style="color:#fb923c; font-size:0.72rem; font-weight:700;">Earlier</span>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
-
-          </div>
-
-          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:24px; text-align:center;">
-            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Student Architecture</div>
-            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:6px;">Engineered by Newton County STEAM Academy Innovators</h3>
-            <p style="color:var(--text-muted); font-size:0.88rem;">Youth Coaching Sprint Team · Career Day Pilot</p>
           </div>
         `
       },
@@ -812,189 +779,23 @@
         audience: "Student Gamers, Streamers & Creators",
         vibe: "Playful, Bold, Electric",
         pitch: "Promotes services and builds a community for students and gamers. Features video streams, member-exclusive content, an interactive gallery, and community reviews.",
-        features: ["Game Hub Dashboard", "Live Stream Simulator", "Tournament Bracket Arena", "Community Chat Lounge"],
+        features: ["Live Stream Simulator", "Tournament Bracket Arena", "Gamer Perk Unlocks", "Community Chat"],
         businessPageHtml: `
           <div style="background: rgba(168, 85, 247, 0.15); border: 1px solid #a855f7; border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="display:inline-block; width:10px; height:10px; background:#c084fc; border-radius:50%; box-shadow:0 0 10px #c084fc;"></span>
               <strong style="color:#e9d5ff; font-size:0.88rem; text-transform:uppercase; letter-spacing:0.06em;">Interactive Concept Demo</strong>
-              <span style="color:var(--text-muted); font-size:0.82rem;">· Non-commercial prototype engineered by NCSA Student Gaming Sprint Team</span>
+              <span style="color:var(--text-muted); font-size:0.82rem;">· Engineered by NCSA Student Gaming Sprint Team</span>
             </div>
-            <div style="display:flex; gap:12px; align-items:center;">
-              <span style="background:rgba(255,255,255,0.06); color:#f59e0b; font-size:0.8rem; padding:4px 12px; border-radius:999px; font-weight:800;">🪙 12,450 XP Coins</span>
-              <span style="background:rgba(34,197,94,0.15); color:#4ade80; font-size:0.75rem; padding:4px 10px; border-radius:6px; font-weight:700;">● 342 Students Online</span>
-            </div>
+            <span style="background:rgba(255,255,255,0.06); color:#fff; font-size:0.75rem; padding:4px 10px; border-radius:6px; font-weight:700;">Gaming Prototype</span>
           </div>
 
-          <div style="display:grid; grid-template-columns: 2fr 1fr; gap:18px; margin-bottom: 30px;">
-            <div style="background: linear-gradient(135deg, rgba(168,85,247,0.35), rgba(15,10,25,0.9)), radial-gradient(circle at 80% 20%, rgba(236,72,153,0.3), transparent); border: 1px solid rgba(168,85,247,0.4); border-radius: 20px; padding: 34px 28px; display:flex; flex-direction:column; justify-content:space-between; min-height: 220px;">
-              <div>
-                <span style="background:rgba(168,85,247,0.25); color:#e9d5ff; font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; padding:4px 12px; border-radius:999px;">FEATURED TOURNAMENT ARENA</span>
-                <h2 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.4rem); color:#fff; margin: 12px 0 8px; letter-spacing:-0.02em;">Welcome to GameZone Hub</h2>
-                <p style="color:#d8b4fe; font-size: 0.95rem; max-width: 480px; line-height: 1.5; margin:0 0 18px;">Jump into school tournaments, watch clutch clips from NCSA players, and join community chat lobbies.</p>
-              </div>
-              <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                <button onclick="document.getElementById('allGamesGrid').scrollIntoView({behavior:'smooth'})" style="background:#a855f7; color:#fff; border:none; padding:10px 20px; border-radius:10px; font-weight:800; font-size:0.85rem; cursor:pointer;">Explore Games ↓</button>
-                <button onclick="document.getElementById('communityLounge').scrollIntoView({behavior:'smooth'})" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); color:#fff; padding:10px 18px; border-radius:10px; font-weight:700; font-size:0.85rem; cursor:pointer;">Join Student Chat</button>
-              </div>
-            </div>
-
-            <div style="background: rgba(255,255,255,0.03); border: 1px solid rgba(168,85,247,0.25); border-radius: 20px; padding: 22px; display:flex; flex-direction:column; justify-content:space-between;">
-              <div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                  <span style="color:#f59e0b; font-size:0.72rem; font-weight:800; text-transform:uppercase;">CLUTCH PLAY OF THE WEEK</span>
-                  <span style="color:#a855f7; font-size:1.3rem;">🔥</span>
-                </div>
-                <h4 style="color:#fff; font-size:1.05rem; margin-bottom:6px;">Rocket League OT Air Dribble</h4>
-                <p style="color:var(--text-muted); font-size:0.82rem; line-height:1.4;">Clip by <strong>@VortexGamer</strong> (8th Grade) · 1.2k views</p>
-              </div>
-              <button onclick="alert('Demo: Playing 30s highlight reel!')" style="background:rgba(168,85,247,0.2); border:1px solid #a855f7; color:#e9d5ff; padding:8px 14px; border-radius:8px; font-weight:700; font-size:0.8rem; cursor:pointer; width:100%;">▶ Watch 30s Replay</button>
-            </div>
-          </div>
-
-          <div id="allGamesGrid" style="margin-bottom: 35px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 16px;">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.35rem; margin:0;">All Games</h3>
-                <span style="color:var(--text-muted); font-size:0.82rem;">(6 Active Titles)</span>
-              </div>
-              <div style="display:flex; gap:8px;">
-                <button onclick="filterGameTag('all')" style="background:#a855f7; color:#fff; border:none; padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; cursor:pointer;">All</button>
-                <button onclick="filterGameTag('competitive')" style="background:rgba(255,255,255,0.05); color:var(--text-muted); border:1px solid rgba(255,255,255,0.1); padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; cursor:pointer;">Competitive</button>
-                <button onclick="filterGameTag('casual')" style="background:rgba(255,255,255,0.05); color:var(--text-muted); border:1px solid rgba(255,255,255,0.1); padding:4px 12px; border-radius:999px; font-size:0.75rem; font-weight:700; cursor:pointer;">Party & Co-Op</button>
-              </div>
-            </div>
-
-            <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px;">
-              <div class="game-tile" style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.25); border-radius:16px; padding:18px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-                <div>
-                  <div style="font-size:2.4rem; margin-bottom:8px;">🎯</div>
-                  <span style="background:rgba(239,68,68,0.2); color:#fca5a5; font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px;">BATTLE ROYALE</span>
-                  <h4 style="color:#fff; font-size:1.1rem; margin:6px 0 4px;">Fortnite Box Fights</h4>
-                  <p style="color:var(--text-muted); font-size:0.78rem; line-height:1.4;">1v1 & 2v2 Speed-Build Tournaments</p>
-                </div>
-                <button onclick="launchGameDemo('Fortnite Box Fights')" style="margin-top:14px; background:linear-gradient(135deg,#a855f7,#7e22ce); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; width:100%;">Enter Queue (18 Live)</button>
-              </div>
-
-              <div class="game-tile" style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.25); border-radius:16px; padding:18px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-                <div>
-                  <div style="font-size:2.4rem; margin-bottom:8px;">🚗</div>
-                  <span style="background:rgba(59,130,246,0.2); color:#93c5fd; font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px;">ESPORTS</span>
-                  <h4 style="color:#fff; font-size:1.1rem; margin:6px 0 4px;">Rocket League 2v2</h4>
-                  <p style="color:var(--text-muted); font-size:0.78rem; line-height:1.4;">Aerial Control & Overtime Playoff Hub</p>
-                </div>
-                <button onclick="launchGameDemo('Rocket League 2v2')" style="margin-top:14px; background:linear-gradient(135deg,#a855f7,#7e22ce); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; width:100%;">Enter Queue (24 Live)</button>
-              </div>
-
-              <div class="game-tile" style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.25); border-radius:16px; padding:18px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-                <div>
-                  <div style="font-size:2.4rem; margin-bottom:8px;">🏀</div>
-                  <span style="background:rgba(245,158,11,0.2); color:#fcd34d; font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px;">SPORTS</span>
-                  <h4 style="color:#fff; font-size:1.1rem; margin:6px 0 4px;">NBA 2K Blacktop</h4>
-                  <p style="color:var(--text-muted); font-size:0.78rem; line-height:1.4;">3v3 Streetball Shootouts</p>
-                </div>
-                <button onclick="launchGameDemo('NBA 2K Blacktop')" style="margin-top:14px; background:linear-gradient(135deg,#a855f7,#7e22ce); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; width:100%;">Enter Queue (12 Live)</button>
-              </div>
-
-              <div class="game-tile" style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.25); border-radius:16px; padding:18px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-                <div>
-                  <div style="font-size:2.4rem; margin-bottom:8px;">⚔️</div>
-                  <span style="background:rgba(168,85,247,0.2); color:#d8b4fe; font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px;">FIGHTING</span>
-                  <h4 style="color:#fff; font-size:1.1rem; margin:6px 0 4px;">Brawlhalla Arena</h4>
-                  <p style="color:var(--text-muted); font-size:0.78rem; line-height:1.4;">4-Player FFA & Ranked Duos</p>
-                </div>
-                <button onclick="launchGameDemo('Brawlhalla Arena')" style="margin-top:14px; background:linear-gradient(135deg,#a855f7,#7e22ce); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; width:100%;">Enter Queue (16 Live)</button>
-              </div>
-
-              <div class="game-tile" style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.25); border-radius:16px; padding:18px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-                <div>
-                  <div style="font-size:2.4rem; margin-bottom:8px;">🥊</div>
-                  <span style="background:rgba(236,72,153,0.2); color:#fbcfe8; font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px;">PLATFORMER</span>
-                  <h4 style="color:#fff; font-size:1.1rem; margin:6px 0 4px;">Super Smash Ult</h4>
-                  <p style="color:var(--text-muted); font-size:0.78rem; line-height:1.4;">Double Elimination School Bracket</p>
-                </div>
-                <button onclick="launchGameDemo('Super Smash Ult')" style="margin-top:14px; background:linear-gradient(135deg,#a855f7,#7e22ce); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; width:100%;">Enter Queue (20 Live)</button>
-              </div>
-
-              <div class="game-tile" style="background:rgba(255,255,255,0.03); border:1px solid rgba(168,85,247,0.25); border-radius:16px; padding:18px; display:flex; flex-direction:column; justify-content:space-between; transition:transform 0.2s;" onmouseover="this.style.transform='translateY(-4px)'" onmouseout="this.style.transform='translateY(0)'">
-                <div>
-                  <div style="font-size:2.4rem; margin-bottom:8px;">🧱</div>
-                  <span style="background:rgba(34,197,94,0.2); color:#86efac; font-size:0.68rem; font-weight:800; padding:2px 6px; border-radius:4px;">CREATIVE</span>
-                  <h4 style="color:#fff; font-size:1.1rem; margin:6px 0 4px;">Minecraft Build Battle</h4>
-                  <p style="color:var(--text-muted); font-size:0.78rem; line-height:1.4;">STEAM Academy Custom Redstone Server</p>
-                </div>
-                <button onclick="launchGameDemo('Minecraft Build Battle')" style="margin-top:14px; background:linear-gradient(135deg,#a855f7,#7e22ce); color:#fff; border:none; padding:8px 14px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer; width:100%;">Enter Queue (31 Live)</button>
-              </div>
-            </div>
-          </div>
-
-          <div id="communityLounge" style="display:grid; grid-template-columns: 2fr 1fr; gap:20px; margin-bottom:35px;">
-            <div style="background: rgba(255,255,255,0.025); border: 1px solid rgba(168,85,247,0.3); border-radius: 20px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between; height: 380px;">
-              <div style="background:rgba(168,85,247,0.14); padding:12px 18px; border-bottom:1px solid rgba(168,85,247,0.2); display:flex; justify-content:space-between; align-items:center;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span style="color:#c084fc; font-weight:800;">#</span>
-                  <strong style="color:#fff; font-size:0.88rem;">general-community-chat</strong>
-                  <span style="background:rgba(34,197,94,0.2); color:#4ade80; font-size:0.7rem; font-weight:700; padding:1px 6px; border-radius:4px;">● Active</span>
-                </div>
-                <span style="color:var(--text-muted); font-size:0.75rem;">Middle School Channel</span>
-              </div>
-
-              <div id="gzLoungeChatStream" style="padding:16px; display:flex; flex-direction:column; gap:10px; overflow-y:auto; flex:1;">
-                <div>
-                  <span style="color:#c084fc; font-weight:800; font-size:0.8rem;">PixelNinja:</span>
-                  <span style="color:#ded7ce; font-size:0.84rem; margin-left:6px;">Anyone setting up a 2v2 Rocket League lobby for 4:30?</span>
-                </div>
-                <div>
-                  <span style="color:#34d399; font-weight:800; font-size:0.8rem;">Aiden_STEAM:</span>
-                  <span style="color:#ded7ce; font-size:0.84rem; margin-left:6px;">Yeah I'm in! Make sure to lock your bracket predictions first.</span>
-                </div>
-                <div>
-                  <span style="color:#fbbf24; font-weight:800; font-size:0.8rem;">Marcus_T:</span>
-                  <span style="color:#ded7ce; font-size:0.84rem; margin-left:6px;">Clutch play submitted in the highlight queue 🔥</span>
-                </div>
-              </div>
-
-              <div style="padding:10px 14px; background:rgba(0,0,0,0.4); border-top:1px solid rgba(255,255,255,0.08); display:flex; gap:10px;">
-                <input id="gzLoungeInput" type="text" placeholder="Type a message in #general-community-chat..." style="flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(168,85,247,0.3); border-radius:8px; padding:9px 12px; color:#fff; font-size:0.84rem; outline:none;" onkeypress="if(event.key==='Enter'){sendLoungeMessage();}">
-                <button onclick="sendLoungeMessage()" style="background:#a855f7; color:#fff; border:none; padding:8px 16px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer;">Send</button>
-              </div>
-            </div>
-
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(168,85,247,0.25); border-radius: 20px; padding: 20px; display:flex; flex-direction:column; justify-content:space-between;">
-              <div>
-                <span style="color:#c084fc; font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em;">VOICE CHANNELS</span>
-                <h4 style="color:#fff; font-size:1.05rem; margin:6px 0 14px;">Active Squad Lobbies</h4>
-                
-                <div style="display:flex; flex-direction:column; gap:8px;">
-                  <div onclick="alert('Connected to Voice: Squad Alpha (3/4 Players)')" style="background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.06); padding:10px 12px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <span>🔊</span>
-                      <strong style="color:#fff; font-size:0.82rem;">Squad Alpha</strong>
-                    </div>
-                    <span style="color:#4ade80; font-size:0.75rem; font-weight:700;">3/4 Users</span>
-                  </div>
-
-                  <div onclick="alert('Connected to Voice: Casual Chill Room (5 Players)')" style="background:rgba(0,0,0,0.35); border:1px solid rgba(255,255,255,0.06); padding:10px 12px; border-radius:10px; display:flex; justify-content:space-between; align-items:center; cursor:pointer;">
-                    <div style="display:flex; align-items:center; gap:8px;">
-                      <span>🔊</span>
-                      <strong style="color:#fff; font-size:0.82rem;">Casual Chill Room</strong>
-                    </div>
-                    <span style="color:#4ade80; font-size:0.75rem; font-weight:700;">5 Users</span>
-                  </div>
-                </div>
-              </div>
-
-              <div style="margin-top:16px; padding-top:14px; border-top:1px solid rgba(255,255,255,0.06);">
-                <div style="font-size:0.75rem; color:#f59e0b; font-weight:800; margin-bottom:4px;">💎 DAILY GAMER REWARD</div>
-                <button onclick="alert('Claimed +250 XP Coins for your daily login!')" style="width:100%; background:linear-gradient(135deg,#f59e0b,#d97706); color:#110b08; border:none; padding:10px; border-radius:8px; font-weight:800; font-size:0.8rem; cursor:pointer;">Claim +250 Daily XP</button>
-              </div>
-            </div>
-          </div>
-
-          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(245,158,11,0.25); border-radius:18px; padding:24px; text-align:center;">
-            <div style="color:var(--gold); font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Original Student Architecture</div>
-            <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; margin-bottom:6px;">Engineered by Newton County STEAM Academy Innovators</h3>
-            <p style="color:var(--text-muted); font-size:0.88rem;">Student Gamer Sprint Team · Career Day Pilot</p>
+          <div style="text-align:center; padding: 48px 20px 38px; background: radial-gradient(circle at 50% 0%, rgba(168,85,247,0.25), transparent 75%), rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid rgba(168,85,247,0.4); margin-bottom: 30px;">
+            <span style="background: rgba(168,85,247,0.22); color:#d8b4fe; padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">Next-Gen Student Esports</span>
+            <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">GameZone</h1>
+            <p style="color:#e9d5ff; font-size: 1.15rem; max-width: 680px; margin: 0 auto 24px; line-height: 1.6;">
+              The arena where student creators, clip editors, and competitive players unite. Watch live school tournaments, vote on brackets, and earn exclusive gamer clout.
+            </p>
           </div>
         `
       }
@@ -1082,20 +883,16 @@
 
       const stream = document.getElementById('demoChatStream');
       const newMsg = document.createElement('div');
-      newMsg.style.cssText = 'display:flex; gap:14px; align-items:flex-start; animation: fadeIn 0.3s ease;';
+      newMsg.style.cssText = 'display:flex; gap:14px; align-items:flex-start;';
       newMsg.innerHTML = `
         <div style="width:38px; height:38px; border-radius:50%; background:#f59e0b; color:#110b08; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; flex-shrink:0;">YOU</div>
         <div>
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-            <strong style="color:#fff; font-size:0.9rem;">Visitor (Demo Participant)</strong>
-            <span style="color:var(--text-muted); font-size:0.72rem;">Just now</span>
-          </div>
+          <strong style="color:#fff; font-size:0.9rem;">Visitor</strong>
           <p style="color:#f1ede8; font-size:0.88rem; line-height:1.5; margin:0;">${text}</p>
         </div>
       `;
       stream.appendChild(newMsg);
       input.value = '';
-      stream.scrollTop = stream.scrollHeight;
     }
 
     let backpackItems = [];
@@ -1106,36 +903,11 @@
       const counter = document.getElementById('backpackCounter');
       if (counter) {
         counter.innerHTML = `🎒 Backpack: ${backpackItems.length} Items ($${totalCost})`;
-        counter.style.transform = 'scale(1.08)';
-        setTimeout(() => { counter.style.transform = 'scale(1)'; }, 200);
       }
-      alert(`Added "${itemName}" to your backpack! Current demo total: $${totalCost}`);
+      alert(`Added "${itemName}" to your backpack! Current total: $${totalCost}`);
     }
 
-    function checkoutBackpack() {
-      if (backpackItems.length === 0) {
-        alert("Your backpack is currently empty! Click '+ Toss in Backpack' on any 40¢ supply first.");
-        return;
-      }
-      const totalCost = (backpackItems.length * 0.40).toFixed(2);
-      alert(`Demo Order Confirmed!\n\n${backpackItems.length} items reserved for locker pickup.\nTotal Due at Pickup: $${totalCost} (or two quarters with 10¢ change!).\n\nThis demonstrates Brooklyn, Kaylee, Kendall, and Tracen's working concept!`);
-      backpackItems = [];
-      const counter = document.getElementById('backpackCounter');
-      if (counter) {
-        counter.innerHTML = `🎒 Backpack: 0 Items ($0.00)`;
-      }
-    }
-
-    document.addEventListener('change', function(e) {
-      if (e.target && e.target.id === 'cleanSizeSelect') {
-        const val = e.target.value;
-        const display = document.getElementById('quoteDisplay');
-        if (display) {
-          display.textContent = `$${val}.00`;
-        }
-      }
-    });
-
+    /* Boom Sports Multi-Sport Logic */
     let activeSport = 'basketball';
     let cumulativeReps = 46;
     const weeklyGoalTarget = 100;
@@ -1297,7 +1069,7 @@
             if (display) display.textContent = `${mins}:${secs}`;
           } else {
             clearInterval(drillInterval);
-            alert(`🎉 Drill Complete! You completed 3 full minutes of mechanics training on ${activeSport.toUpperCase()}!`);
+            alert(`🎉 Drill Complete! You completed 3 full minutes on ${activeSport.toUpperCase()}!`);
             resetDrillTimer();
           }
         }, 1000);
@@ -1327,13 +1099,8 @@
     function logAthleteProgress() {
       const repsInput = document.getElementById('inputStatReps');
       const totalInput = document.getElementById('inputStatTotal');
-      const notesInput = document.getElementById('inputStatNotes');
-      const focusSelect = document.getElementById('selectMechFocus');
-
       const repsVal = parseInt(repsInput.value.trim(), 10);
       const totalVal = parseInt(totalInput.value.trim(), 10) || repsVal;
-      const notesVal = notesInput.value.trim();
-      const focusVal = focusSelect ? focusSelect.value : "Technique Drill";
 
       if (isNaN(repsVal) || repsVal <= 0) {
         alert("Please enter the number of reps you completed!");
@@ -1341,73 +1108,18 @@
       }
 
       cumulativeReps += repsVal;
-      const accuracyPct = Math.min(100, Math.round((repsVal / totalVal) * 100));
       const goalPct = Math.min(100, Math.round((cumulativeReps / weeklyGoalTarget) * 100));
 
       const repBadge = document.getElementById('statTotalReps');
       const goalFraction = document.getElementById('goalFractionDisplay');
       const progressBar = document.getElementById('goalProgressBar');
-      const tierBadge = document.getElementById('athleteTierBadge');
 
       if (repBadge) repBadge.textContent = cumulativeReps;
       if (goalFraction) goalFraction.textContent = `${cumulativeReps} / ${weeklyGoalTarget} (${goalPct}%)`;
       if (progressBar) progressBar.style.width = `${goalPct}%`;
 
-      if (tierBadge) {
-        if (cumulativeReps >= 100) {
-          tierBadge.textContent = "LEVEL 4: VARSITY PRO";
-          tierBadge.style.background = "#10b981";
-        } else if (cumulativeReps >= 60) {
-          tierBadge.textContent = "LEVEL 3: STARTER ELITE";
-          tierBadge.style.background = "#f59e0b";
-        }
-      }
-
-      const historyBox = document.getElementById('sessionHistoryBox');
-      if (historyBox) {
-        const s = athleteKnowledgeHub[activeSport];
-        const newEntry = document.createElement('div');
-        newEntry.style.cssText = "background:rgba(0,0,0,0.35); padding:10px 12px; border-radius:8px; font-size:0.82rem; color:#ded7ce; display:flex; justify-content:space-between; align-items:center;";
-        newEntry.innerHTML = `
-          <div>
-            <strong>${s.icon} ${activeSport.toUpperCase()}: ${repsVal} / ${totalVal} (${accuracyPct}%)</strong>
-            <div style="color:var(--text-muted); font-size:0.75rem; margin-top:2px;">Focus: ${focusVal} ${notesVal ? `· "${notesVal}"` : ''}</div>
-          </div>
-          <span style="color:#34d399; font-weight:700; font-size:0.75rem;">Just now</span>
-        `;
-        historyBox.prepend(newEntry);
-      }
-
-      alert(`Session Recorded!\n\n${repsVal} reps added.\nWeekly Progress: ${cumulativeReps} / ${weeklyGoalTarget} reps (${goalPct}% toward goal).`);
-
+      alert(`Session Recorded! ${repsVal} reps added toward your weekly target.`);
       repsInput.value = '';
-      notesInput.value = '';
-    }
-
-    function sendLoungeMessage() {
-      const input = document.getElementById('gzLoungeInput');
-      const text = input ? input.value.trim() : '';
-      if (!text) return;
-
-      const chatBox = document.getElementById('gzLoungeChatStream');
-      if (chatBox) {
-        const msg = document.createElement('div');
-        msg.innerHTML = `
-          <span style="color:#f59e0b; font-weight:800; font-size:0.8rem;">You (Demo Gamer):</span>
-          <span style="color:#ded7ce; font-size:0.84rem; margin-left:6px;">${text}</span>
-        `;
-        chatBox.appendChild(msg);
-        chatBox.scrollTop = chatBox.scrollHeight;
-      }
-      input.value = '';
-    }
-
-    function launchGameDemo(gameName) {
-      alert(`Entered "${gameName}" matchmaking lobby!\n\nQueue status: 1 ready match found.\nConnecting you to NCSA server...`);
-    }
-
-    function filterGameTag(tag) {
-      alert(`Filtered game catalog by: ${tag.toUpperCase()}`);
     }
   </script>
 
