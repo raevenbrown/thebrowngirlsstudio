@@ -421,10 +421,10 @@
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
 
-            // Gmail Search Link Container
+            // Desktop Gmail Search Link Container
             const gmailContainer = document.getElementById('gmailLinkContainer');
             if(lead.email) {
-                const searchUrl = `https://mail.google.com/mail/u/3/#search/to%3A${encodeURIComponent(lead.email)}%20OR%20from%3A${encodeURIComponent(lead.email)}`;
+                const searchUrl = `https://mail.google.com/mail/u/0/#search/${encodeURIComponent(lead.email)}`;
                 gmailContainer.innerHTML = `<a href="${searchUrl}" target="_blank" class="inline-flex items-center text-rose-400 hover:text-rose-300 font-semibold underline mt-1"><i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5 inline"></i> View All Emails with ${lead.email}</a>`;
             } else {
                 gmailContainer.innerHTML = `<span class="text-slate-500 italic text-[11px]">No contact email set. Click edit to add email.</span>`;
