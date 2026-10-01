@@ -123,7 +123,7 @@
                 <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-dark-600">
                         <h2 class="font-bold text-base text-slate-100">Partnership & Pipeline Control Center</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Click any organization to open their dedicated profile tracker and log notes/emails.</p>
+                        <p class="text-xs text-slate-400 mt-0.5">Click any Organization name below to open their dedicated profile tracker.</p>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -375,14 +375,16 @@
                 if(item.stage === 'Lost') badgeColor = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-dark-700/30 transition cursor-pointer" onclick="openProfile(${item.id})">
+                    <tr class="hover:bg-dark-700/30 transition">
                         <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border ${badgeColor}">${item.stage}</span></td>
-                        <td class="py-4 px-6 font-bold text-slate-100 hover:text-rose-400 transition">${item.org}</td>
+                        <td class="py-4 px-6 font-bold text-slate-100">
+                            <span onclick="openProfile(${item.id})" class="cursor-pointer hover:text-rose-400 underline decoration-rose-500/50 underline-offset-4 transition">${item.org}</span>
+                        </td>
                         <td class="py-4 px-6 text-slate-300">${item.contact}</td>
                         <td class="py-4 px-6 text-slate-400 text-[11px]">${item.scope}</td>
                         <td class="py-4 px-6"><span class="text-[11px] text-slate-300 bg-dark-700 border border-dark-600 px-2.5 py-1 rounded-md">${item.status}</span></td>
                         <td class="py-4 px-6 text-slate-400 text-[11px]">${item.action}</td>
-                        <td class="py-4 px-6 text-right space-x-2" onclick="event.stopPropagation()">
+                        <td class="py-4 px-6 text-right space-x-2">
                             <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
                             <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
                         </td>
