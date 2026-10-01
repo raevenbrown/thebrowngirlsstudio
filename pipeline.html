@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Brown Girls Creative Studio | Pipeline Manager</title>
+    <title>The Brown Girls Creative Studio | Pipeline & Lead Profiles</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
@@ -47,7 +47,7 @@
         </div>
     </div>
 
-    <!-- Main Dashboard Container (Hidden until unlocked) -->
+    <!-- Main Dashboard Container -->
     <div id="mainDashboard" class="flex-1 flex min-h-screen hidden">
         <!-- Sidebar Navigation -->
         <aside class="w-64 bg-dark-800 border-r border-dark-600 flex flex-col justify-between hidden md:flex sticky top-0 h-screen z-20">
@@ -87,7 +87,7 @@
                 <div class="flex items-center space-x-3">
                     <span class="text-slate-400 text-sm">The Brown Girls Creative Studio</span>
                     <span class="text-dark-500">/</span>
-                    <span class="font-bold text-sm text-slate-200">Pipeline Manager</span>
+                    <span id="pageTitle" class="font-bold text-sm text-slate-200">Pipeline Manager</span>
                 </div>
                 <div class="flex items-center space-x-3">
                     <button onclick="exportCSV()" class="px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition flex items-center shadow-sm">
@@ -99,16 +99,16 @@
                 </div>
             </header>
 
-            <div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
-                <!-- KPI Metrics -->
+            <!-- View 1: Main Pipeline Table -->
+            <div id="pipelineView" class="p-8 space-y-8 max-w-7xl mx-auto w-full">
                 <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl shadow-sm">
                         <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Targets</p>
-                        <h3 id="stat-total" class="text-3xl font-bold text-slate-100 mt-2">8</h3>
+                        <h3 id="stat-total" class="text-3xl font-bold text-slate-100 mt-2">7</h3>
                     </div>
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl shadow-sm">
                         <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Prospecting / Leads</p>
-                        <h3 id="stat-prospect" class="text-3xl font-bold text-amber-400 mt-2">7</h3>
+                        <h3 id="stat-prospect" class="text-3xl font-bold text-amber-400 mt-2">6</h3>
                     </div>
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl shadow-sm">
                         <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Waiting on Invoice</p>
@@ -120,11 +120,10 @@
                     </div>
                 </div>
 
-                <!-- Table -->
                 <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-sm overflow-hidden">
                     <div class="p-6 border-b border-dark-600">
                         <h2 class="font-bold text-base text-slate-100">Partnership & Pipeline Control Center</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Manage school district contracts, career day school leads, and partner programs.</p>
+                        <p class="text-xs text-slate-400 mt-0.5">Click any organization to open their dedicated profile tracker and log notes/emails.</p>
                     </div>
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
@@ -144,10 +143,56 @@
                     </div>
                 </div>
             </div>
+
+            <!-- View 2: Individual Lead Profile Tracker -->
+            <div id="profileView" class="p-8 space-y-8 max-w-7xl mx-auto w-full hidden">
+                <button onclick="showPipelineView()" class="inline-flex items-center px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition shadow-sm">
+                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Pipeline
+                </button>
+
+                <div class="bg-dark-800 border border-dark-600 p-8 rounded-2xl shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                    <div>
+                        <div class="flex items-center space-x-3">
+                            <span id="profileBadge" class="px-3 py-1 rounded-lg text-xs font-semibold border"></span>
+                            <span id="profileStatusBadge" class="text-xs text-slate-400"></span>
+                        </div>
+                        <h1 id="profileOrg" class="text-2xl font-bold text-slate-100 mt-2"></h1>
+                        <p id="profileScope" class="text-sm text-slate-400 mt-1"></p>
+                    </div>
+                    <div class="bg-dark-700/50 border border-dark-600 p-4 rounded-xl space-y-1 text-xs">
+                        <p class="text-slate-400 uppercase font-bold tracking-wider text-[10px]">Primary Contact</p>
+                        <p id="profileContact" class="font-semibold text-slate-200 text-sm"></p>
+                        <p id="profileNextAction" class="text-rose-400 font-medium"></p>
+                    </div>
+                </div>
+
+                <!-- Activity Log & Notes Section -->
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                            <h3 class="font-bold text-sm text-slate-100">Conversation & Activity Timeline</h3>
+                            <button onclick="openNoteModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
+                                + Log Activity / Note
+                            </button>
+                        </div>
+                        <div id="activityTimeline" class="space-y-4">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Quick Details & Documents -->
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                        <h3 class="font-bold text-sm text-slate-100 border-b border-dark-600 pb-4">Attached Documents</h3>
+                        <div id="profileDocs" class="space-y-3 text-xs">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal for Add/Edit Lead -->
     <div id="leadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden p-6">
             <h3 id="modalTitle" class="font-bold text-slate-100 text-sm mb-4">Add New Target</h3>
@@ -175,6 +220,33 @@
         </div>
     </div>
 
+    <!-- Modal for Logging Activity / Note -->
+    <div id="noteModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Log Conversation / Note</h3>
+            <form onsubmit="saveNote(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Activity Type</label>
+                    <select id="noteType" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                        <option value="Email Sent">Email Sent</option>
+                        <option value="Email Received">Email Received</option>
+                        <option value="Phone Call">Phone Call</option>
+                        <option value="Meeting / Discussion">Meeting / Discussion</option>
+                        <option value="General Note">General Note</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Notes / Summary</label>
+                    <textarea id="noteText" required rows="4" placeholder="Enter conversation details..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeNoteModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Log</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
         function checkPassword(event) {
             event.preventDefault();
@@ -190,14 +262,101 @@
         }
 
         let pipelineData = [
-            { id: 1, stage: "Waiting on Invoice", org: "InspiHER Conference / Newton District", contact: "Dr. Jennifer Williams", scope: "2-day workshop (Dec 2-3, 2026) @ $750", status: "W-9 & CP575 Submitted", action: "Follow up on direct deposit & scheduling" },
-            { id: 2, stage: "Prospecting", org: "Newton County STEAM Academy", contact: "Principal Brandon Parham / Ms. Bunting", scope: "Career Day & After-School AI Lab Partnership", status: "In Discussion", action: "Review survey demand and schedule pilot cohort" },
-            { id: 3, stage: "Prospecting", org: "Porterdale Elementary School", contact: "Ms. Dwayaa Ward (770-784-2928)", scope: "Career Day (11/19/2026) - Entrepreneur Presentation", status: "Outreach Queued", action: "Submit volunteer / sign-up form" },
-            { id: 4, stage: "Prospecting", org: "Timber Ridge Elementary", contact: "School Coordinator", scope: "Career Day (11/20/2026) - Tech & Innovation", status: "Outreach Queued", action: "Submit sign-up form" },
-            { id: 5, stage: "Prospecting", org: "Pleasant Grove Elementary", contact: "School Coordinator", scope: "Career Day (10/28/2026) - Tech & Innovation", status: "Outreach Queued", action: "Submit sign-up form" },
-            { id: 6, stage: "Prospecting", org: "Peachtree Academy", contact: "School Coordinator", scope: "Career Fair - Employer & Organization Showcase", status: "Outreach Queued", action: "Submit employer sign-up form" },
-            { id: 7, stage: "Prospecting", org: "YES Program", contact: "Program Director", scope: "Turnkey after-school partnership & revenue share", status: "Outreach Queued", action: "Send partnership pitch email" }
+            { 
+                id: 1, 
+                stage: "Waiting on Invoice", 
+                org: "InspiHER Conference / Newton District", 
+                contact: "Dr. Jennifer Williams", 
+                scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
+                status: "W-9 & CP575 Submitted", 
+                action: "Follow up on direct deposit & scheduling",
+                docs: ["Form W-9.pdf", "IRS CP575.pdf"],
+                activities: [
+                    { date: "Oct 1, 2026", type: "Email Sent", text: "Submitted completed W-9 and CP575 confirmation notice for AP department." },
+                    { date: "Sep 28, 2026", type: "Meeting", text: "Confirmed InspiHER 2-day workshop for December 2-3, 2026." }
+                ]
+            },
+            { 
+                id: 2, 
+                stage: "Prospecting", 
+                org: "Newton County STEAM Academy", 
+                contact: "Principal Brandon Parham / Ms. Bunting", 
+                scope: "Career Day & After-School AI Lab Partnership", 
+                status: "In Discussion", 
+                action: "Review survey demand and schedule pilot cohort",
+                docs: ["NCSA Pilot Proposal.pdf"],
+                activities: [
+                    { date: "Sep 29, 2026", type: "General Note", text: "Reviewed lunch camera footage and coordinated with administration." }
+                ]
+            },
+            { 
+                id: 3, 
+                stage: "Prospecting", 
+                org: "Porterdale Elementary School", 
+                contact: "Ms. Dwayaa Ward (770-784-2928)", 
+                scope: "Career Day (11/19/2026) - Entrepreneur Presentation", 
+                status: "Outreach Queued", 
+                action: "Submit volunteer / sign-up form",
+                docs: ["Career_Day_Flyer.png"],
+                activities: [
+                    { date: "Oct 1, 2026", type: "General Note", text: "Captured flyer details for Nov 19 event (8:00 AM - 11:30 AM)." }
+                ]
+            },
+            { 
+                id: 4, 
+                stage: "Prospecting", 
+                org: "Timber Ridge Elementary", 
+                contact: "School Coordinator", 
+                scope: "Career Day (11/20/2026) - Tech & Innovation", 
+                status: "Outreach Queued", 
+                action: "Submit sign-up form",
+                docs: ["TRE_Flyer.png"],
+                activities: [
+                    { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Nov 20, 2026 (8:30 AM - 11:30 AM)." }
+                ]
+            },
+            { 
+                id: 5, 
+                stage: "Prospecting", 
+                org: "Pleasant Grove Elementary", 
+                contact: "School Coordinator", 
+                scope: "Career Day (10/28/2026) - Tech & Innovation", 
+                status: "Outreach Queued", 
+                action: "Submit sign-up form",
+                docs: ["PGE_Flyer.png"],
+                activities: [
+                    { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Oct 28, 2026 (8:30 AM - 11:30 AM)." }
+                ]
+            },
+            { 
+                id: 6, 
+                stage: "Prospecting", 
+                org: "Peachtree Academy", 
+                contact: "School Coordinator", 
+                scope: "Career Fair - Employer & Organization Showcase", 
+                status: "Outreach Queued", 
+                action: "Submit employer sign-up form",
+                docs: ["Peachtree_Flyer.png"],
+                activities: [
+                    { date: "Oct 1, 2026", type: "General Note", text: "Reviewed Covington Campus Career Fair flyer." }
+                ]
+            },
+            { 
+                id: 7, 
+                stage: "Prospecting", 
+                org: "YES Program", 
+                contact: "Program Director", 
+                scope: "Turnkey after-school partnership & revenue share", 
+                status: "Outreach Queued", 
+                action: "Send partnership pitch email",
+                docs: [],
+                activities: [
+                    { date: "Oct 1, 2026", type: "General Note", text: "Initial lead added for after-school revenue share model." }
+                ]
+            }
         ];
+
+        let currentProfileId = null;
 
         function renderTable() {
             const tbody = document.getElementById('pipeline-table-body');
@@ -216,20 +375,84 @@
                 if(item.stage === 'Lost') badgeColor = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
 
                 tbody.innerHTML += `
-                    <tr class="hover:bg-dark-700/30 transition">
+                    <tr class="hover:bg-dark-700/30 transition cursor-pointer" onclick="openProfile(${item.id})">
                         <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border ${badgeColor}">${item.stage}</span></td>
-                        <td class="py-4 px-6 font-bold text-slate-100">${item.org}</td>
+                        <td class="py-4 px-6 font-bold text-slate-100 hover:text-rose-400 transition">${item.org}</td>
                         <td class="py-4 px-6 text-slate-300">${item.contact}</td>
                         <td class="py-4 px-6 text-slate-400 text-[11px]">${item.scope}</td>
                         <td class="py-4 px-6"><span class="text-[11px] text-slate-300 bg-dark-700 border border-dark-600 px-2.5 py-1 rounded-md">${item.status}</span></td>
                         <td class="py-4 px-6 text-slate-400 text-[11px]">${item.action}</td>
-                        <td class="py-4 px-6 text-right space-x-2">
+                        <td class="py-4 px-6 text-right space-x-2" onclick="event.stopPropagation()">
                             <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
                             <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
                         </td>
                     </tr>`;
             });
             lucide.createIcons();
+        }
+
+        function openProfile(id) {
+            currentProfileId = id;
+            const lead = pipelineData.find(l => l.id === id);
+            if(!lead) return;
+
+            document.getElementById('pipelineView').classList.add('hidden');
+            document.getElementById('profileView').classList.remove('hidden');
+            document.getElementById('pageTitle').innerText = lead.org + " | Profile";
+
+            document.getElementById('profileOrg').innerText = lead.org;
+            document.getElementById('profileScope').innerText = lead.scope;
+            document.getElementById('profileContact').innerText = lead.contact;
+            document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
+            document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
+
+            let badge = document.getElementById('profileBadge');
+            badge.innerText = lead.stage;
+            badge.className = "px-3 py-1 rounded-lg text-xs font-semibold border ";
+            if(lead.stage === 'Contract Signed / Won') badge.className += "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+            else if(lead.stage === 'Waiting on Invoice') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
+            else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
+
+            // Render Activities
+            const timeline = document.getElementById('activityTimeline');
+            timeline.innerHTML = '';
+            if(lead.activities && lead.activities.length > 0) {
+                lead.activities.forEach(act => {
+                    timeline.innerHTML += `
+                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+                            <div class="flex justify-between items-center text-[11px] text-slate-400">
+                                <span class="font-bold text-rose-400">${act.type}</span>
+                                <span>${act.date}</span>
+                            </div>
+                            <p class="text-xs text-slate-200">${act.text}</p>
+                        </div>`;
+                });
+            } else {
+                timeline.innerHTML = `<p class="text-xs text-slate-500 italic">No activity logged yet.</p>`;
+            }
+
+            // Render Docs
+            const docsDiv = document.getElementById('profileDocs');
+            docsDiv.innerHTML = '';
+            if(lead.docs && lead.docs.length > 0) {
+                lead.docs.forEach(doc => {
+                    docsDiv.innerHTML += `
+                        <div class="flex items-center justify-between bg-dark-700/40 border border-dark-600 p-3 rounded-xl">
+                            <span class="text-slate-200 font-medium"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc}</span>
+                            <span class="text-[10px] text-emerald-400 font-semibold">Attached</span>
+                        </div>`;
+                });
+            } else {
+                docsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No documents attached.</p>`;
+            }
+            lucide.createIcons();
+        }
+
+        function showPipelineView() {
+            document.getElementById('profileView').classList.add('hidden');
+            document.getElementById('pipelineView').classList.remove('hidden');
+            document.getElementById('pageTitle').innerText = "Pipeline Manager";
+            renderTable();
         }
 
         function openModal(id = null) {
@@ -251,6 +474,28 @@
             }
         }
         function closeModal() { document.getElementById('leadModal').classList.add('hidden'); }
+
+        function openNoteModal() { document.getElementById('noteModal').classList.remove('hidden'); }
+        function closeNoteModal() { document.getElementById('noteModal').classList.add('hidden'); }
+
+        function saveNote(event) {
+            event.preventDefault();
+            const type = document.getElementById('noteType').value;
+            const text = document.getElementById('noteText').value;
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if(lead) {
+                if(!lead.activities) lead.activities = [];
+                lead.activities.unshift({
+                    date: "Oct 1, 2026",
+                    type: type,
+                    text: text
+                });
+                closeNoteModal();
+                document.getElementById('noteText').value = '';
+                openProfile(currentProfileId);
+            }
+        }
+
         function saveLead(event) {
             event.preventDefault();
             const id = document.getElementById('leadId').value;
@@ -261,13 +506,28 @@
                 contact: document.getElementById('leadContact').value,
                 scope: document.getElementById('leadScope').value,
                 status: document.getElementById('leadStatus').value,
-                action: document.getElementById('leadAction').value
+                action: document.getElementById('leadAction').value,
+                docs: [],
+                activities: [{ date: "Oct 1, 2026", type: "Created", text: "Lead added to pipeline." }]
             };
-            if(id) { pipelineData[pipelineData.findIndex(l => l.id === parseInt(id))] = data; }
-            else { pipelineData.push(data); }
-            closeModal(); renderTable();
+            if(id) { 
+                const idx = pipelineData.findIndex(l => l.id === parseInt(id));
+                data.docs = pipelineData[idx].docs;
+                data.activities = pipelineData[idx].activities;
+                pipelineData[idx] = data; 
+            } else { 
+                pipelineData.push(data); 
+            }
+            closeModal(); 
+            renderTable();
+            if(currentProfileId) openProfile(currentProfileId);
         }
-        function deleteLead(id) { pipelineData = pipelineData.filter(l => l.id !== id); renderTable(); }
+
+        function deleteLead(id) { 
+            pipelineData = pipelineData.filter(l => l.id !== id); 
+            renderTable(); 
+        }
+
         function exportCSV() {
             let csv = 'Stage,Organization,Contact,Scope,Status,Action\n';
             pipelineData.forEach(d => csv += `"${d.stage}","${d.org}","${d.contact}","${d.scope}","${d.status}","${d.action}"\n`);
