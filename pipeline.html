@@ -279,6 +279,7 @@
                 action: "Follow up on direct deposit & scheduling",
                 docs: ["Form W-9.pdf", "IRS CP575.pdf"],
                 activities: [
+                    { date: "Oct 1, 2026", type: "Email Received", text: "Jennifer: 'Thank you for following up. Yes, I'd love to have you for both days. Please send me your W9. I already have your invoice. Let's make a plan to talk first week of November.'" },
                     { date: "Oct 1, 2026", type: "Email Sent", text: "Submitted completed W-9 and CP575 confirmation notice for AP department." },
                     { date: "Sep 28, 2026", type: "Meeting", text: "Confirmed InspiHER 2-day workshop for December 2-3, 2026." }
                 ]
@@ -421,10 +422,10 @@
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
 
-            // Desktop Gmail Search Link Container
+            // Gmail Search Link Container (using exact mobile/web search pattern)
             const gmailContainer = document.getElementById('gmailLinkContainer');
             if(lead.email) {
-                const searchUrl = `https://mail.google.com/mail/u/0/#search/${encodeURIComponent(lead.email)}`;
+                const searchUrl = `https://mail.google.com/mail/u/3/#search/to%3A${encodeURIComponent(lead.email)}%20OR%20from%3A${encodeURIComponent(lead.email)}`;
                 gmailContainer.innerHTML = `<a href="${searchUrl}" target="_blank" class="inline-flex items-center text-rose-400 hover:text-rose-300 font-semibold underline mt-1"><i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5 inline"></i> View All Emails with ${lead.email}</a>`;
             } else {
                 gmailContainer.innerHTML = `<span class="text-slate-500 italic text-[11px]">No contact email set. Click edit to add email.</span>`;
@@ -555,7 +556,7 @@
         }
 
         function exportCSV() {
-            let csv = 'Stage,Organization,Contact,Scope,Status,Action\n';
+            let csv = 'Stage,Organization,Contact,Scope,Scope,Status,Action\n';
             pipelineData.forEach(d => csv += `"${d.stage}","${d.org}","${d.contact}","${d.scope}","${d.status}","${d.action}"\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'brown_girls_pipeline.csv'; a.click();
