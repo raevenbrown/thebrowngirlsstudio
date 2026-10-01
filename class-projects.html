@@ -1000,14 +1000,14 @@
         `
       },
 
-      boomsports: {
+    boomsports: {
         title: "Boom Sports",
         tagline: "Helping kids learn any sport quickly through video coaching, mechanical breakdowns, and fast drills.",
         founders: "NCSA Youth Coaching Team",
         audience: "Young Athletes, Beginners & Middle School Sports Programs",
         vibe: "Energetic, Fast-Paced, Encouraging",
         pitch: "Site is called Boom Sports. It helps kids learn a sport and do it quick. It's fun. If you don't use it, you're missing out on good lessons. Includes video blocks, coaching, and workouts.",
-        features: ["Fast Video Drills", "Interactive Mechanics Breakdown", "Sport-Specific Daily Workouts", "Virtual Coach Feedback"],
+        features: ["Fun Sport Facts", "Step-by-Step Craft Perfection", "Interactive Drill Timer", "Live Athlete Progress Logger"],
         businessPageHtml: `
           <!-- Demo Notice Strip -->
           <div style="background: rgba(234, 88, 12, 0.15); border: 1px solid #ea580c; border-radius: 14px; padding: 12px 20px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px;">
@@ -1016,15 +1016,15 @@
               <strong style="color:#fdba74; font-size:0.88rem; text-transform:uppercase; letter-spacing:0.06em;">Interactive Concept Demo</strong>
               <span style="color:var(--text-muted); font-size:0.82rem;">· Engineered by NCSA Youth Coaching Sprint Team</span>
             </div>
-            <div id="boomXpBadge" style="background:#ea580c; color:#fff; font-size:0.78rem; padding:4px 12px; border-radius:999px; font-weight:800;">⚡ Athlete XP: 150 pts</div>
+            <div id="boomXpBadge" style="background:#ea580c; color:#fff; font-size:0.78rem; padding:4px 12px; border-radius:999px; font-weight:800;">⚡ Total Reps Logged: <span id="statTotalReps">0</span></div>
           </div>
 
-          <!-- Hero Branding -->
-          <div style="text-align:center; padding: 48px 20px 38px; background: radial-gradient(circle at 50% 0%, rgba(234,88,12,0.22), transparent 75%), rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid rgba(234,88,12,0.35); margin-bottom: 30px;">
+          <!-- Hero Section with Sport Selector -->
+          <div style="text-align:center; padding: 44px 20px 34px; background: radial-gradient(circle at 50% 0%, rgba(234,88,12,0.22), transparent 75%), rgba(255,255,255,0.02); border-radius: 24px; border: 1px solid rgba(234,88,12,0.35); margin-bottom: 24px;">
             <span style="background: rgba(234,88,12,0.25); color:#fb923c; padding: 6px 18px; border-radius:999px; font-weight:800; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.12em;">Fast-Track Youth Academy</span>
             <h1 style="font-family:'Space Grotesk',sans-serif; font-size: clamp(2.3rem, 5.5vw, 3.8rem); color:#fff; margin: 16px 0 10px; letter-spacing:-0.03em;">Boom Sports</h1>
             <p style="color:#fed7aa; font-size: 1.15rem; max-width: 680px; margin: 0 auto 24px; line-height: 1.6;">
-              Stop watching 30-minute tutorials that teach you nothing. Learn real sports mechanics in <strong>3 minutes flat</strong> through structured video drills, instant visual cues, and home training.
+              Learn any sport quickly! Discover the secret science behind the game, master your mechanics step by step, and track your daily training growth.
             </p>
 
             <!-- Sport Switcher Tabs -->
@@ -1036,92 +1036,81 @@
             </div>
           </div>
 
-          <!-- Main Interactive Drill Station -->
-          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 35px;">
+          <!-- Component 1: Fun Fact Showcase Banner -->
+          <div style="background: linear-gradient(135deg, rgba(234,88,12,0.18), rgba(28,17,13,0.9)); border: 1px solid rgba(234,88,12,0.4); border-radius: 18px; padding: 20px 24px; margin-bottom: 30px; display:flex; align-items:center; gap:16px;">
+            <div id="factIcon" style="font-size:2.4rem; flex-shrink:0;">💡</div>
+            <div>
+              <div style="color:#fb923c; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:4px;">Did You Know? Quick Sport Fact</div>
+              <div id="factText" style="color:#fdfbf7; font-size:0.95rem; line-height:1.5;">
+                When basketball was invented in 1891 by Dr. James Naismith, players used real peach baskets with closed bottoms. Every single time a player scored, the referee had to climb a ladder to retrieve the ball!
+              </div>
+            </div>
+          </div>
+
+          <!-- Component 2: Perfecting the Craft & Step-by-Step Training -->
+          <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 32px;">
             
-            <!-- Video & Live Cue Station -->
-            <div style="background:#140c07; border:1px solid rgba(234,88,12,0.35); border-radius:20px; overflow:hidden; display:flex; flex-direction:column; justify-content:space-between;">
-              <div style="background:rgba(234,88,12,0.15); padding:14px 22px; border-bottom:1px solid rgba(234,88,12,0.25); display:flex; justify-content:space-between; align-items:center;">
-                <div style="display:flex; align-items:center; gap:8px;">
-                  <span id="videoSportTag" style="color:#fb923c; font-weight:800; font-size:0.75rem; text-transform:uppercase;">BASKETBALL MECHANICS</span>
-                </div>
-                <span style="background:#ea580c; color:#fff; font-size:0.7rem; font-weight:800; padding:2px 8px; border-radius:4px;">3-MIN DRILL</span>
-              </div>
-              
-              <div style="padding:32px 24px; text-align:center; background:radial-gradient(circle, rgba(234,88,12,0.14), transparent 75%);">
-                <div id="sportEmoji" style="font-size:3.5rem; margin-bottom:10px;">🏀</div>
-                <h3 id="drillTitle" style="color:#fff; font-size:1.35rem; margin-bottom:8px; font-family:'Space Grotesk',sans-serif;">Pure Shooting Arc & Pocket Dribble</h3>
-                <p id="drillSubtitle" style="color:var(--text-muted); font-size:0.88rem; max-width:380px; margin:0 auto 18px; line-height:1.5;">Elbow under ball, index-finger release point, and consistent landing base.</p>
-                
-                <div id="drillTimer" style="font-family:'Space Grotesk',sans-serif; font-size:2.4rem; font-weight:800; color:#fb923c; margin-bottom:16px;">03:00</div>
-                <button id="btnPlayDrill" onclick="toggleDrillTimer()" style="background:#ea580c; color:#fff; border:none; padding:13px 30px; border-radius:10px; font-weight:800; font-size:0.92rem; cursor:pointer; box-shadow:0 6px 18px rgba(234,88,12,0.35);">▶ Start 3-Min Drill Timer</button>
-              </div>
-
-              <!-- Active Drill Step Breakdown -->
-              <div id="drillStepsBox" style="background:rgba(0,0,0,0.4); padding:18px 22px; border-top:1px solid rgba(255,255,255,0.06);">
-                <div style="color:#fb923c; font-size:0.75rem; font-weight:800; text-transform:uppercase; margin-bottom:8px;">Execution Steps (During 3-Minute Block)</div>
-                <div id="drillStepsContent" style="color:#ded7ce; font-size:0.85rem; line-height:1.6;">
-                  <strong>Minute 1:</strong> 25 One-hand form shots right under the net.<br>
-                  <strong>Minute 2:</strong> Low pocket pound dribble directly into catch-and-shoot stance.<br>
-                  <strong>Minute 3:</strong> 10 Full-speed game-pace jumpers, holding your goose-neck follow-through.
-                </div>
-              </div>
-            </div>
-
-            <!-- Dynamic Sport-Specific Workout Checklist -->
-            <div style="background:rgba(255,255,255,0.025); border:1px solid rgba(234,88,12,0.25); border-radius:20px; padding:28px 24px; display:flex; flex-direction:column; justify-content:space-between;">
+            <!-- Step-by-Step Mechanics Guide -->
+            <div style="background:#140c07; border:1px solid rgba(234,88,12,0.3); border-radius:20px; padding:26px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                  <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.3rem;">Daily Driveway Workouts</h3>
-                  <span style="color:#fb923c; font-size:0.75rem; font-weight:800;">+50 XP EACH</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <span id="craftBadge" style="color:#fb923c; font-weight:800; font-size:0.75rem; text-transform:uppercase;">CRAFT MASTERY PROTOCOL</span>
+                  <span style="background:rgba(234,88,12,0.2); color:#fdba74; font-size:0.7rem; font-weight:800; padding:3px 8px; border-radius:4px;">3-STEP PROGRESSION</span>
                 </div>
-                <p id="workoutDesc" style="color:var(--text-muted); font-size:0.86rem; margin-bottom:18px;">
-                  Targeted basketball drills you can run on your driveway or blacktop in 15 minutes:
-                </p>
+                <h3 id="craftTitle" style="color:#fff; font-size:1.35rem; margin-bottom:8px; font-family:'Space Grotesk',sans-serif;">How to Perfect Your Shooting Form</h3>
+                <p id="craftSummary" style="color:var(--text-muted); font-size:0.86rem; margin-bottom:18px; line-height:1.5;">Follow this exact 3-step sequence before touching game speed:</p>
 
-                <div id="workoutContainer" style="display:flex; flex-direction:column; gap:12px;">
-                  <!-- Dynamic checklists will render here based on sport -->
+                <!-- Steps List -->
+                <div id="craftStepsList" style="display:flex; flex-direction:column; gap:12px;">
+                  <!-- Rendered dynamically -->
                 </div>
               </div>
 
-              <div style="margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-                <span style="color:var(--text-muted); font-size:0.82rem;">Streak: 🔥 3 Days Active</span>
-                <button onclick="saveWorkoutProgress()" style="background:rgba(234,88,12,0.2); border:1px solid #ea580c; color:#fed7aa; padding:9px 18px; border-radius:8px; font-size:0.82rem; font-weight:700; cursor:pointer;">Save Workout Progress</button>
+              <!-- 3-Minute Video Drill Timer Box -->
+              <div style="margin-top:22px; padding:16px; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.25); border-radius:12px; text-align:center;">
+                <div style="color:var(--text-muted); font-size:0.78rem; text-transform:uppercase; margin-bottom:4px;">Timed Drill Block</div>
+                <div id="drillTimer" style="font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:800; color:#fb923c; margin-bottom:10px;">03:00</div>
+                <button id="btnPlayDrill" onclick="toggleDrillTimer()" style="background:#ea580c; color:#fff; border:none; padding:10px 22px; border-radius:8px; font-weight:800; font-size:0.85rem; cursor:pointer;">▶ Start 3-Min Drill Timer</button>
               </div>
             </div>
 
-          </div>
-
-          <!-- Deep Mechanics Technical Breakdown -->
-          <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(234,88,12,0.25); border-radius:20px; padding:30px 26px; margin-bottom:35px;">
-            <div style="color:#fb923c; font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:6px;">Technical Coaching Breakdown</div>
-            <h3 id="mechanicsHeader" style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.4rem; margin-bottom:18px;">The 3 Pillars of Basketball Form</h3>
-
-            <div id="mechanicsGrid" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:18px;">
-              <!-- Dynamic 3 pillars render here -->
-            </div>
-          </div>
-
-          <!-- Interactive "Ask Coach" Tactical Engine -->
-          <div style="background:linear-gradient(180deg, rgba(234,88,12,0.09), rgba(0,0,0,0.3)); border:1px solid rgba(234,88,12,0.3); border-radius:20px; padding:28px 26px; margin-bottom:35px;">
-            <div style="display:flex; align-items:center; gap:12px; margin-bottom:14px;">
-              <span style="font-size:1.8rem;">🎯</span>
+            <!-- Component 3: Live Athlete Progress Logger -->
+            <div style="background:rgba(255,255,255,0.025); border:1px solid rgba(234,88,12,0.3); border-radius:20px; padding:26px; display:flex; flex-direction:column; justify-content:space-between;">
               <div>
-                <h4 style="color:#fff; font-size:1.15rem; margin:0;">Coach Troubleshooting: "Why Am I Missing?"</h4>
-                <p style="color:var(--text-muted); font-size:0.82rem; margin:0;">Tap common player struggles to get immediate drill adjustments from coaches:</p>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                  <h3 style="color:#fff; font-family:'Space Grotesk',sans-serif; font-size:1.3rem;">Daily Growth Logger</h3>
+                  <span style="color:#34d399; font-size:0.75rem; font-weight:800;">● SESSION ACTIVE</span>
+                </div>
+                <p style="color:var(--text-muted); font-size:0.86rem; margin-bottom:18px;">Log what you practiced today to build your athlete skill ledger:</p>
+
+                <!-- Inputs -->
+                <div style="display:flex; flex-direction:column; gap:14px; margin-bottom:18px;">
+                  <div>
+                    <label id="inputLabelReps" style="display:block; color:#fed7aa; font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Shots Made Out of 25 Form Reps</label>
+                    <input id="inputStatReps" type="number" placeholder="e.g. 18" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:10px 14px; color:#fff; font-size:0.9rem; outline:none;">
+                  </div>
+
+                  <div>
+                    <label style="display:block; color:#fed7aa; font-size:0.8rem; font-weight:700; text-transform:uppercase; margin-bottom:6px;">Training Notes & How It Felt</label>
+                    <input id="inputStatNotes" type="text" placeholder="e.g. Arc was higher, landed balanced" style="width:100%; background:rgba(0,0,0,0.4); border:1px solid rgba(234,88,12,0.3); border-radius:8px; padding:10px 14px; color:#fff; font-size:0.9rem; outline:none;">
+                  </div>
+
+                  <button onclick="logAthleteProgress()" style="background:linear-gradient(135deg,#ea580c,#c2410c); color:#fff; border:none; padding:12px; border-radius:8px; font-weight:800; font-size:0.88rem; cursor:pointer;">+ Log Today's Practice Session</button>
+                </div>
+
+                <!-- Session Log Feed -->
+                <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:14px;">
+                  <div style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase; margin-bottom:8px;">Recent Training Log History</div>
+                  <div id="sessionHistoryBox" style="display:flex; flex-direction:column; gap:8px; max-height:160px; overflow-y:auto;">
+                    <div style="background:rgba(0,0,0,0.3); padding:8px 12px; border-radius:6px; font-size:0.82rem; color:#ded7ce; display:flex; justify-content:space-between;">
+                      <span>🏀 Baseline Form Shots: <strong>21 / 25</strong></span>
+                      <span style="color:#fb923c;">Earlier Today</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div style="display:flex; flex-wrap:wrap; gap:10px; margin-bottom:16px;">
-              <button onclick="coachAnswer('airball')" style="background:rgba(255,255,255,0.05); border:1px solid rgba(234,88,12,0.3); color:#fff; padding:8px 16px; border-radius:8px; font-size:0.84rem; cursor:pointer;">❓ Missing short / hitting front rim</button>
-              <button onclick="coachAnswer('wobbly')" style="background:rgba(255,255,255,0.05); border:1px solid rgba(234,88,12,0.3); color:#fff; padding:8px 16px; border-radius:8px; font-size:0.84rem; cursor:pointer;">❓ Football passes wobbling in air</button>
-              <button onclick="coachAnswer('stiff')" style="background:rgba(255,255,255,0.05); border:1px solid rgba(234,88,12,0.3); color:#fff; padding:8px 16px; border-radius:8px; font-size:0.84rem; cursor:pointer;">❓ Heavy first touch in soccer</button>
-              <button onclick="coachAnswer('slowstart')" style="background:rgba(255,255,255,0.05); border:1px solid rgba(234,88,12,0.3); color:#fff; padding:8px 16px; border-radius:8px; font-size:0.84rem; cursor:pointer;">❓ Standing straight up out of sprint blocks</button>
-            </div>
-
-            <div id="coachAnswerBox" style="background:rgba(0,0,0,0.5); border-left:4px solid #ea580c; border-radius:8px; padding:14px 18px; color:#fed7aa; font-size:0.88rem; line-height:1.6;">
-              💡 <em>Select any struggle above to get instant mechanical coaching.</em>
-            </div>
           </div>
 
           <!-- Team Attribution -->
