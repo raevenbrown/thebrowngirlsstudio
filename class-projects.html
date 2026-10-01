@@ -325,8 +325,11 @@
       color: var(--gold);
       font-weight: 800;
     }
-    @media(max-width: 800px) {
-      .pathway-arrow { transform: rotate(90deg); margin: 4px 0; }
+   @media (min-width: 768px) {
+      .grid {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
     }
 
     /* Editorial Pull-Quotes */
