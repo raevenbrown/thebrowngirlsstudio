@@ -159,9 +159,14 @@
                         <h1 id="profileOrg" class="text-2xl font-bold text-slate-100 mt-2"></h1>
                         <p id="profileScope" class="text-sm text-slate-400 mt-1"></p>
                     </div>
-                    <div class="bg-dark-700/50 border border-dark-600 p-4 rounded-xl space-y-1 text-xs">
-                        <p class="text-slate-400 uppercase font-bold tracking-wider text-[10px]">Primary Contact</p>
-                        <p id="profileContact" class="font-semibold text-slate-200 text-sm"></p>
+                    <div class="bg-dark-700/50 border border-dark-600 p-4 rounded-xl space-y-2 text-xs">
+                        <div>
+                            <p class="text-slate-400 uppercase font-bold tracking-wider text-[10px]">Primary Contact</p>
+                            <p id="profileContact" class="font-semibold text-slate-200 text-sm"></p>
+                        </div>
+                        <div id="gmailLinkContainer">
+                            <!-- Gmail link rendered dynamically -->
+                        </div>
                         <p id="profileNextAction" class="text-rose-400 font-medium"></p>
                     </div>
                 </div>
@@ -212,6 +217,7 @@
                 <input type="text" id="leadScope" required placeholder="Goal / Scope" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <input type="text" id="leadStatus" required placeholder="Status (e.g. W-9 Submitted)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <input type="text" id="leadAction" required placeholder="Next Action / Follow-Up" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="url" id="leadGmail" placeholder="Gmail Thread URL (optional)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Target</button>
@@ -270,6 +276,7 @@
                 scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
                 status: "W-9 & CP575 Submitted", 
                 action: "Follow up on direct deposit & scheduling",
+                gmail: "https://mail.google.com/mail/u/3/#sent/QgrcJHsNQmKGCgpbJXrpsZPWMgQzzxKKZL?compose=Cllg...",
                 docs: ["Form W-9.pdf", "IRS CP575.pdf"],
                 activities: [
                     { date: "Oct 1, 2026", type: "Email Sent", text: "Submitted completed W-9 and CP575 confirmation notice for AP department." },
@@ -284,6 +291,7 @@
                 scope: "Career Day & After-School AI Lab Partnership", 
                 status: "In Discussion", 
                 action: "Review survey demand and schedule pilot cohort",
+                gmail: "",
                 docs: ["NCSA Pilot Proposal.pdf"],
                 activities: [
                     { date: "Sep 29, 2026", type: "General Note", text: "Reviewed lunch camera footage and coordinated with administration." }
@@ -297,6 +305,7 @@
                 scope: "Career Day (11/19/2026) - Entrepreneur Presentation", 
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
+                gmail: "",
                 docs: ["Career_Day_Flyer.png"],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Captured flyer details for Nov 19 event (8:00 AM - 11:30 AM)." }
@@ -310,6 +319,7 @@
                 scope: "Career Day (11/20/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
+                gmail: "",
                 docs: ["TRE_Flyer.png"],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Nov 20, 2026 (8:30 AM - 11:30 AM)." }
@@ -323,6 +333,7 @@
                 scope: "Career Day (10/28/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
+                gmail: "",
                 docs: ["PGE_Flyer.png"],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Oct 28, 2026 (8:30 AM - 11:30 AM)." }
@@ -336,6 +347,7 @@
                 scope: "Career Fair - Employer & Organization Showcase", 
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
+                gmail: "",
                 docs: ["Peachtree_Flyer.png"],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Reviewed Covington Campus Career Fair flyer." }
@@ -349,6 +361,7 @@
                 scope: "Turnkey after-school partnership & revenue share", 
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
+                gmail: "",
                 docs: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Initial lead added for after-school revenue share model." }
@@ -407,6 +420,14 @@
             document.getElementById('profileContact').innerText = lead.contact;
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
+
+            // Gmail Link Container
+            const gmailContainer = document.getElementById('gmailLinkContainer');
+            if(lead.gmail) {
+                gmailContainer.innerHTML = `<a href="${lead.gmail}" target="_blank" class="inline-flex items-center text-rose-400 hover:text-rose-300 font-semibold underline mt-1"><i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5 inline"></i> Open Gmail Thread</a>`;
+            } else {
+                gmailContainer.innerHTML = `<span class="text-slate-500 italic text-[11px]">No Gmail thread linked. Click edit to add URL.</span>`;
+            }
 
             let badge = document.getElementById('profileBadge');
             badge.innerText = lead.stage;
@@ -468,6 +489,7 @@
                 document.getElementById('leadScope').value = lead.scope;
                 document.getElementById('leadStatus').value = lead.status;
                 document.getElementById('leadAction').value = lead.action;
+                document.getElementById('leadGmail').value = lead.gmail || '';
                 document.getElementById('modalTitle').innerText = 'Edit Partnership Target';
             } else {
                 document.getElementById('leadForm').reset();
@@ -509,6 +531,7 @@
                 scope: document.getElementById('leadScope').value,
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
+                gmail: document.getElementById('leadGmail').value,
                 docs: [],
                 activities: [{ date: "Oct 1, 2026", type: "Created", text: "Lead added to pipeline." }]
             };
