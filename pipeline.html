@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
@@ -253,7 +253,7 @@
                             <div class="flex justify-between items-center">
                                 <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider"><i data-lucide="folder" class="w-3.5 h-3.5 inline mr-1.5 text-rose-500"></i> Financial & Tax Documents Folder (W-9 & CP575)</h4>
                                 <button onclick="openUploadModal('Financial & Tax Documents')" class="px-3 py-1 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
-                                    + Upload to Financial Folder
+                                    + Upload Financial File
                                 </button>
                             </div>
                             <div id="financialDocsList" class="space-y-2 text-xs">
@@ -284,7 +284,7 @@
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <div>
                                 <h3 class="font-bold text-sm text-slate-100" id="currentFolderTitle">Partnership Events & Folders</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Navigate folders, add subfolders, upload documents, rename, or reorder items.</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Navigate folders, add subfolders, upload files from your device, rename, or reorder items.</p>
                             </div>
                             <div class="space-x-2">
                                 <button onclick="openFolderModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
@@ -425,16 +425,20 @@
         </div>
     </div>
 
-    <!-- Modal for Uploading Document -->
+    <!-- Modal for Uploading File from Device -->
     <div id="uploadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Upload File</h3>
+            <h3 id="uploadModalTitle" class="font-bold text-slate-100 text-sm mb-4">Upload File from Device</h3>
             <form onsubmit="saveUpload(event)" class="space-y-4 text-xs">
-                <input type="text" id="uploadNameInput" required placeholder="File Name (e.g. Agenda.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="uploadUrlInput" required placeholder="File URL / Filename (e.g. filename.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Select File</label>
+                    <input type="file" id="deviceFileInput" required onchange="handleFileSelect(event)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-500">
+                </div>
+                <input type="text" id="uploadNameInput" required placeholder="Display Name (e.g. Workshop Agenda.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="hidden" id="uploadFileBase64">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload File</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload & Save</button>
                 </div>
             </form>
         </div>
@@ -645,7 +649,7 @@
         ];
 
         let currentProfileId = null;
-        let currentFolderPath = []; // Stack of folder indices or references
+        let currentFolderPath = []; 
         let currentEditingFolderRef = null;
 
         function switchTab(tabName) {
@@ -708,7 +712,7 @@
 
         function openProfile(id, updateHash = true) {
             currentProfileId = id;
-            currentFolderPath = []; // Reset to root folder
+            currentFolderPath = []; 
             if (updateHash) {
                 window.location.hash = "profile=" + id;
             }
@@ -762,12 +766,14 @@
             const finDocsDiv = document.getElementById('financialDocsList');
             finDocsDiv.innerHTML = '';
             if(lead.financialDocs && lead.financialDocs.length > 0) {
-                lead.financialDocs.forEach(doc => {
+                lead.financialDocs.forEach((doc, idx) => {
                     finDocsDiv.innerHTML += `
-                        <a href="${doc.url}" target="_blank" class="flex items-center justify-between bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-3 rounded-xl transition">
-                            <span class="text-slate-200 font-medium"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc.name}</span>
-                            <span class="text-[10px] text-rose-400 font-semibold underline">View / Download</span>
-                        </a>`;
+                        <div class="flex items-center justify-between bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-3 rounded-xl transition">
+                            <a href="${doc.url}" target="_blank" class="text-slate-200 font-medium underline flex items-center">
+                                <i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc.name}
+                            </a>
+                            <button onclick="deleteFinancialDoc(${idx})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                        </div>`;
                 });
             } else {
                 finDocsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No financial or tax documents uploaded yet.</p>`;
@@ -875,7 +881,7 @@
             }
 
             if ((!currentFolder.subfolders || currentFolder.subfolders.length === 0) && (!currentFolder.files || currentFolder.files.length === 0)) {
-                folderContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">This folder is empty. Create a subfolder or upload files above.</p>`;
+                folderContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">This folder is empty. Create a subfolder or upload files from your device above.</p>`;
             }
             lucide.createIcons();
         }
@@ -933,6 +939,16 @@
             }
         }
 
+        function deleteFinancialDoc(fIdx) {
+            if (confirm("Delete this financial document?")) {
+                const lead = pipelineData.find(l => l.id === currentProfileId);
+                if(lead && lead.financialDocs) {
+                    lead.financialDocs.splice(fIdx, 1);
+                    openProfile(currentProfileId, false);
+                }
+            }
+        }
+
         function showPipelineView() {
             window.location.hash = "";
             document.getElementById('profileView').classList.add('hidden');
@@ -983,8 +999,28 @@
         function openFolderModal() { document.getElementById('folderModal').classList.remove('hidden'); }
         function closeFolderModal() { document.getElementById('folderModal').classList.add('hidden'); }
 
-        function openUploadModal() { document.getElementById('uploadModal').classList.remove('hidden'); }
+        let uploadTargetMode = 'event'; // 'event' or 'financial'
+        function openUploadModal(mode = 'event') {
+            uploadTargetMode = mode;
+            document.getElementById('uploadModalTitle').innerText = mode === 'Financial & Tax Documents' ? 'Upload Financial Document' : 'Upload File from Device';
+            document.getElementById('deviceFileInput').value = '';
+            document.getElementById('uploadNameInput').value = '';
+            document.getElementById('uploadFileBase64').value = '';
+            document.getElementById('uploadModal').classList.remove('hidden');
+        }
         function closeUploadModal() { document.getElementById('uploadModal').classList.add('hidden'); }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('uploadNameInput').value = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('uploadFileBase64').value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
 
         function openRenameFolderModal(sIdx) {
             currentEditingFolderRef = sIdx;
@@ -1019,14 +1055,20 @@
         function saveUpload(event) {
             event.preventDefault();
             const name = document.getElementById('uploadNameInput').value;
-            const url = document.getElementById('uploadUrlInput').value;
-            const curr = getCurrentFolder();
-            if(!curr.files) curr.files = [];
-            curr.files.push({ name, url });
-            closeUploadModal();
-            document.getElementById('uploadNameInput').value = '';
-            document.getElementById('uploadUrlInput').value = '';
-            renderFolderExplorer();
+            const fileUrl = document.getElementById('uploadFileBase64').value || '#';
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if(lead) {
+                if(uploadTargetMode === 'Financial & Tax Documents') {
+                    if(!lead.financialDocs) lead.financialDocs = [];
+                    lead.financialDocs.push({ name, url: fileUrl });
+                } else {
+                    const curr = getCurrentFolder();
+                    if(!curr.files) curr.files = [];
+                    curr.files.push({ name, url: fileUrl });
+                }
+                closeUploadModal();
+                openProfile(currentProfileId, false);
+            }
         }
 
         function saveFinanceRecord(event) {
@@ -1159,7 +1201,7 @@
         }
 
         function exportCSV() {
-            let csv = 'Stage,Organization,Contact,Scope,Status,Action\n';
+            let csv = 'Stage,Organization,Contact,Scope,Scope,Status,Action\n';
             pipelineData.forEach(d => csv += `"${d.stage}","${d.org}","${d.contact}","${d.scope}","${d.status}","${d.action}"\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'brown_girls_pipeline.csv'; a.click();
@@ -1179,4 +1221,3 @@
     </script>
 </body>
 </html>
-
