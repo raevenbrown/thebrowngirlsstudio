@@ -156,9 +156,13 @@
 
             <!-- View 2: Individual Lead Profile Tracker -->
             <div id="profileView" class="p-8 space-y-8 max-w-7xl mx-auto w-full hidden">
-                <button onclick="showPipelineView()" class="inline-flex items-center px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition shadow-sm">
-                    <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Pipeline
-                </button>
+                <div class="flex justify-between items-center">
+                    <button onclick="showPipelineView()" class="inline-flex items-center px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition shadow-sm">
+                        <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Pipeline
+                    </button>
+                    <!-- Breadcrumb navigation for folder nesting -->
+                    <div id="folderBreadcrumb" class="hidden items-center space-x-2 text-xs text-slate-400"></div>
+                </div>
 
                 <div class="bg-dark-800 border border-dark-600 p-8 rounded-2xl shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
@@ -274,19 +278,24 @@
                     </div>
                 </div>
 
-                <!-- Tab 4: Partnership Events & Folders -->
+                <!-- Tab 4: Partnership Events & Folders (Deep Nested Explorer) -->
                 <div id="tabContent-events" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <div>
-                                <h3 class="font-bold text-sm text-slate-100">Partnership Events & Event Folders</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Create event folders (e.g. InspiHER Workshop 2026, Career Day) and store event-specific marketing materials.</p>
+                                <h3 class="font-bold text-sm text-slate-100" id="currentFolderTitle">Partnership Events & Folders</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Navigate folders, add subfolders, upload documents, rename, or reorder items.</p>
                             </div>
-                            <button onclick="openFolderModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
-                                + Create Event Folder
-                            </button>
+                            <div class="space-x-2">
+                                <button onclick="openFolderModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
+                                    + New Folder
+                                </button>
+                                <button onclick="openUploadModal('current')" class="px-3.5 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
+                                    + Upload File Here
+                                </button>
+                            </div>
                         </div>
-                        <div id="eventFoldersContainer" class="space-y-6">
+                        <div id="folderExplorerContainer" class="space-y-3">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
@@ -402,12 +411,12 @@
         </div>
     </div>
 
-    <!-- Modal for Creating Event Folder -->
+    <!-- Modal for Creating Nested Folder -->
     <div id="folderModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Create New Event Folder</h3>
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Create New Folder</h3>
             <form onsubmit="saveFolder(event)" class="space-y-4 text-xs">
-                <input type="text" id="folderNameInput" required placeholder="Event Name (e.g. InspiHER 2026 Workshop)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="folderNameInput" required placeholder="Folder Name (e.g. Event Subfolder)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeFolderModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Create Folder</button>
@@ -416,17 +425,30 @@
         </div>
     </div>
 
-    <!-- Modal for Uploading Document / Material -->
+    <!-- Modal for Uploading Document -->
     <div id="uploadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 id="uploadModalTitle" class="font-bold text-slate-100 text-sm mb-4">Upload Document</h3>
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Upload File</h3>
             <form onsubmit="saveUpload(event)" class="space-y-4 text-xs">
-                <input type="hidden" id="uploadFolderTarget">
-                <input type="text" id="uploadNameInput" required placeholder="File Name (e.g. Form W-9.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="uploadUrlInput" required placeholder="File URL / Filename (e.g. W9.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="uploadNameInput" required placeholder="File Name (e.g. Agenda.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="uploadUrlInput" required placeholder="File URL / Filename (e.g. filename.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Renaming Folder -->
+    <div id="renameFolderModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Rename Folder</h3>
+            <form onsubmit="saveRenameFolder(event)" class="space-y-4 text-xs">
+                <input type="text" id="renameFolderInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeRenameFolderModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save New Name</button>
                 </div>
             </form>
         </div>
@@ -478,9 +500,17 @@
                 auditRecords: [
                     { ref: "INV-2026-01", desc: "InspiHER 2-Day Workshop (Dec 2-3)", date: "Oct 1, 2026", amount: 750.00, status: "Pending", method: "Submitted to AP Dept (W-9 attached)" }
                 ],
-                eventFolders: [
-                    { name: "InspiHER 2026 Workshop", docs: [{ name: "Workshop_Agenda.pdf", url: "#" }] }
-                ],
+                rootFolder: {
+                    name: "Partnership Root",
+                    subfolders: [
+                        {
+                            name: "InspiHER 2026 Workshop",
+                            subfolders: [],
+                            files: [{ name: "Workshop_Agenda.pdf", url: "#" }]
+                        }
+                    ],
+                    files: []
+                },
                 financialDocs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
                     { name: "IRS CP575.pdf", url: "EIN .pdf" }
@@ -506,9 +536,13 @@
                 status: "In Discussion", 
                 action: "Review proposal and schedule pilot cohort",
                 auditRecords: [],
-                eventFolders: [
-                    { name: "NCSA Pilot Program", docs: [{ name: "NCSA Pilot Proposal.pdf", url: "#" }, { name: "Curriculum Proposal.pdf", url: "#" }] }
-                ],
+                rootFolder: {
+                    name: "Partnership Root",
+                    subfolders: [
+                        { name: "NCSA Pilot Program", subfolders: [], files: [{ name: "NCSA Pilot Proposal.pdf", url: "#" }, { name: "Curriculum Proposal.pdf", url: "#" }] }
+                    ],
+                    files: []
+                },
                 financialDocs: [],
                 contacts: [
                     { name: "Principal Brandon Parham", role: "Principal / Decision Maker", email: "parham.brandon@newton.k12.ga.us", phone: "School Main", location: "Newton County STEAM Academy", notes: "Flagship pilot school leadership." },
@@ -529,9 +563,13 @@
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
                 auditRecords: [],
-                eventFolders: [
-                    { name: "Career Day 2026", docs: [{ name: "Career_Day_Flyer.png", url: "#" }] }
-                ],
+                rootFolder: {
+                    name: "Partnership Root",
+                    subfolders: [
+                        { name: "Career Day 2026", subfolders: [], files: [{ name: "Career_Day_Flyer.png", url: "#" }] }
+                    ],
+                    files: []
+                },
                 financialDocs: [],
                 contacts: [
                     { name: "Ms. Dwayaa Ward", role: "School Contact / Coordinator", email: "ward.dwayaa@newton.k12.ga.us", phone: "770-784-2928", location: "Porterdale Elementary", notes: "Primary organizer for Career Day." }
@@ -549,7 +587,7 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 auditRecords: [],
-                eventFolders: [],
+                rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -565,7 +603,7 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 auditRecords: [],
-                eventFolders: [],
+                rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -581,7 +619,7 @@
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
                 auditRecords: [],
-                eventFolders: [],
+                rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -597,7 +635,7 @@
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
                 auditRecords: [],
-                eventFolders: [],
+                rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -607,6 +645,8 @@
         ];
 
         let currentProfileId = null;
+        let currentFolderPath = []; // Stack of folder indices or references
+        let currentEditingFolderRef = null;
 
         function switchTab(tabName) {
             ['info', 'revenue', 'comms', 'events'].forEach(t => {
@@ -653,8 +693,22 @@
             lucide.createIcons();
         }
 
+        function getCurrentFolder() {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (!lead) return null;
+            if (!lead.rootFolder) {
+                lead.rootFolder = { name: "Partnership Root", subfolders: [], files: [] };
+            }
+            let curr = lead.rootFolder;
+            for (let idx of currentFolderPath) {
+                curr = curr.subfolders[idx];
+            }
+            return curr;
+        }
+
         function openProfile(id, updateHash = true) {
             currentProfileId = id;
+            currentFolderPath = []; // Reset to root folder
             if (updateHash) {
                 window.location.hash = "profile=" + id;
             }
@@ -744,38 +798,7 @@
                 orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional contacts added to this company profile yet.</p>`;
             }
 
-            // Render Event Folders
-            const eventFoldersContainer = document.getElementById('eventFoldersContainer');
-            eventFoldersContainer.innerHTML = '';
-            if(lead.eventFolders && lead.eventFolders.length > 0) {
-                lead.eventFolders.forEach((folder, fIdx) => {
-                    let docsHtml = '';
-                    if(folder.docs && folder.docs.length > 0) {
-                        folder.docs.forEach(d => {
-                            docsHtml += `
-                                <a href="${d.url}" target="_blank" class="flex items-center justify-between bg-dark-700/30 hover:bg-dark-700 p-2.5 rounded-lg border border-dark-600 text-xs transition">
-                                    <span class="text-slate-200"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${d.name}</span>
-                                    <span class="text-[10px] text-rose-400 underline">View</span>
-                                </a>`;
-                        });
-                    } else {
-                        docsHtml = `<p class="text-[11px] text-slate-500 italic">Folder is empty.</p>`;
-                    }
-
-                    eventFoldersContainer.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-2xl space-y-4">
-                            <div class="flex justify-between items-center border-b border-dark-600 pb-3">
-                                <h4 class="font-bold text-sm text-slate-100"><i data-lucide="folder" class="w-4 h-4 inline mr-2 text-rose-500"></i>${folder.name}</h4>
-                                <button onclick="openUploadModal('${folder.name}')" class="px-2.5 py-1 rounded-lg bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-[11px] transition">
-                                    + Add Document
-                                </button>
-                            </div>
-                            <div class="space-y-2">${docsHtml}</div>
-                        </div>`;
-                });
-            } else {
-                eventFoldersContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No partnership event folders created yet. Click above to create one.</p>`;
-            }
+            renderFolderExplorer();
 
             // Render Activities
             const timeline = document.getElementById('activityTimeline');
@@ -795,6 +818,119 @@
                 timeline.innerHTML = `<p class="text-xs text-slate-500 italic">No activity logged yet.</p>`;
             }
             lucide.createIcons();
+        }
+
+        function renderFolderExplorer() {
+            const folderContainer = document.getElementById('folderExplorerContainer');
+            const breadcrumb = document.getElementById('folderBreadcrumb');
+            const currentFolder = getCurrentFolder();
+            if (!currentFolder) return;
+
+            // Render Breadcrumbs
+            breadcrumb.classList.remove('hidden');
+            breadcrumb.classList.add('flex');
+            let bcHtml = `<span onclick="navigateToFolder(-1)" class="cursor-pointer hover:text-rose-400 font-semibold">Root</span>`;
+            let tempPath = [];
+            currentFolderPath.forEach((idx, pIdx) => {
+                let targetFolder = leadFolderByPath(tempPath.concat(idx));
+                bcHtml += ` <span class="text-slate-600">/</span> <span onclick="navigateToFolder(${pIdx})" class="cursor-pointer hover:text-rose-400 font-semibold">${targetFolder.name}</span>`;
+                tempPath.push(idx);
+            });
+            breadcrumb.innerHTML = bcHtml;
+            document.getElementById('currentFolderTitle').innerText = currentFolderPath.length === 0 ? "Partnership Events & Folders" : currentFolder.name;
+
+            folderContainer.innerHTML = '';
+
+            // Render Subfolders
+            if (currentFolder.subfolders && currentFolder.subfolders.length > 0) {
+                currentFolder.subfolders.forEach((sub, sIdx) => {
+                    folderContainer.innerHTML += `
+                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
+                            <div onclick="enterSubfolder(${sIdx})" class="flex items-center space-x-3 cursor-pointer flex-1">
+                                <i data-lucide="folder" class="w-5 h-5 text-rose-500"></i>
+                                <span class="font-bold text-slate-100 text-sm">${sub.name}</span>
+                            </div>
+                            <div class="flex items-center space-x-2 text-xs">
+                                <button onclick="openRenameFolderModal(${sIdx})" class="px-2.5 py-1 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-300">Rename</button>
+                                <button onclick="moveFolder(${sIdx}, 'up')" class="p-1 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Up"><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="moveFolder(${sIdx}, 'down')" class="p-1 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Down"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="deleteSubfolder(${sIdx})" class="p-1 rounded bg-dark-600 hover:bg-rose-500/20 text-rose-400" title="Delete"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                            </div>
+                        </div>`;
+                });
+            }
+
+            // Render Files
+            if (currentFolder.files && currentFolder.files.length > 0) {
+                currentFolder.files.forEach((file, fIdx) => {
+                    folderContainer.innerHTML += `
+                        <div class="bg-dark-700/20 border border-dark-600 p-3 rounded-xl flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <i data-lucide="file-text" class="w-4 h-4 text-rose-400"></i>
+                                <a href="${file.url}" target="_blank" class="text-slate-200 text-xs font-medium underline hover:text-rose-400">${file.name}</a>
+                            </div>
+                            <button onclick="deleteFile(${fIdx})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                        </div>`;
+                });
+            }
+
+            if ((!currentFolder.subfolders || currentFolder.subfolders.length === 0) && (!currentFolder.files || currentFolder.files.length === 0)) {
+                folderContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">This folder is empty. Create a subfolder or upload files above.</p>`;
+            }
+            lucide.createIcons();
+        }
+
+        function leadFolderByPath(pathArr) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            let curr = lead.rootFolder;
+            for (let idx of pathArr) {
+                curr = curr.subfolders[idx];
+            }
+            return curr;
+        }
+
+        function enterSubfolder(sIdx) {
+            currentFolderPath.push(sIdx);
+            renderFolderExplorer();
+        }
+
+        function navigateToFolder(targetIdx) {
+            if (targetIdx === -1) {
+                currentFolderPath = [];
+            } else {
+                currentFolderPath = currentFolderPath.slice(0, targetIdx + 1);
+            }
+            renderFolderExplorer();
+        }
+
+        function moveFolder(sIdx, direction) {
+            const curr = getCurrentFolder();
+            if (direction === 'up' && sIdx > 0) {
+                let temp = curr.subfolders[sIdx];
+                curr.subfolders[sIdx] = curr.subfolders[sIdx - 1];
+                curr.subfolders[sIdx - 1] = temp;
+            } else if (direction === 'down' && sIdx < curr.subfolders.length - 1) {
+                let temp = curr.subfolders[sIdx];
+                curr.subfolders[sIdx] = curr.subfolders[sIdx + 1];
+                curr.subfolders[sIdx + 1] = temp;
+            }
+            renderFolderExplorer();
+        }
+
+        function deleteSubfolder(sIdx) {
+            if (confirm("Are you sure you want to delete this folder and its contents?")) {
+                const curr = getCurrentFolder();
+                curr.subfolders.splice(sIdx, 1);
+                renderFolderExplorer();
+            }
+        }
+
+        function deleteFile(fIdx) {
+            if (confirm("Delete this file?")) {
+                const curr = getCurrentFolder();
+                curr.files.splice(fIdx, 1);
+                renderFolderExplorer();
+            }
         }
 
         function showPipelineView() {
@@ -847,48 +983,50 @@
         function openFolderModal() { document.getElementById('folderModal').classList.remove('hidden'); }
         function closeFolderModal() { document.getElementById('folderModal').classList.add('hidden'); }
 
-        function openUploadModal(folderName) {
-            document.getElementById('uploadFolderTarget').value = folderName;
-            document.getElementById('uploadModalTitle').innerText = folderName === 'Financial & Tax Documents' ? 'Upload Financial Document' : 'Upload to ' + folderName;
-            document.getElementById('uploadModal').classList.remove('hidden');
-        }
+        function openUploadModal() { document.getElementById('uploadModal').classList.remove('hidden'); }
         function closeUploadModal() { document.getElementById('uploadModal').classList.add('hidden'); }
+
+        function openRenameFolderModal(sIdx) {
+            currentEditingFolderRef = sIdx;
+            const curr = getCurrentFolder();
+            document.getElementById('renameFolderInput').value = curr.subfolders[sIdx].name;
+            document.getElementById('renameFolderModal').classList.remove('hidden');
+        }
+        function closeRenameFolderModal() { document.getElementById('renameFolderModal').classList.add('hidden'); }
+
+        function saveRenameFolder(event) {
+            event.preventDefault();
+            const newName = document.getElementById('renameFolderInput').value;
+            const curr = getCurrentFolder();
+            if(currentEditingFolderRef !== null && curr.subfolders[currentEditingFolderRef]) {
+                curr.subfolders[currentEditingFolderRef].name = newName;
+            }
+            closeRenameFolderModal();
+            renderFolderExplorer();
+        }
 
         function saveFolder(event) {
             event.preventDefault();
             const name = document.getElementById('folderNameInput').value;
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if(lead) {
-                if(!lead.eventFolders) lead.eventFolders = [];
-                lead.eventFolders.push({ name, docs: [] });
-                closeFolderModal();
-                document.getElementById('folderNameInput').value = '';
-                openProfile(currentProfileId, false);
-            }
+            const curr = getCurrentFolder();
+            if(!curr.subfolders) curr.subfolders = [];
+            curr.subfolders.push({ name: name, subfolders: [], files: [] });
+            closeFolderModal();
+            document.getElementById('folderNameInput').value = '';
+            renderFolderExplorer();
         }
 
         function saveUpload(event) {
             event.preventDefault();
-            const folderTarget = document.getElementById('uploadFolderTarget').value;
             const name = document.getElementById('uploadNameInput').value;
             const url = document.getElementById('uploadUrlInput').value;
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if(lead) {
-                if(folderTarget === 'Financial & Tax Documents') {
-                    if(!lead.financialDocs) lead.financialDocs = [];
-                    lead.financialDocs.push({ name, url });
-                } else {
-                    const folder = lead.eventFolders.find(f => f.name === folderTarget);
-                    if(folder) {
-                        if(!folder.docs) folder.docs = [];
-                        folder.docs.push({ name, url });
-                    }
-                }
-                closeUploadModal();
-                document.getElementById('uploadNameInput').value = '';
-                document.getElementById('uploadUrlInput').value = '';
-                openProfile(currentProfileId, false);
-            }
+            const curr = getCurrentFolder();
+            if(!curr.files) curr.files = [];
+            curr.files.push({ name, url });
+            closeUploadModal();
+            document.getElementById('uploadNameInput').value = '';
+            document.getElementById('uploadUrlInput').value = '';
+            renderFolderExplorer();
         }
 
         function saveFinanceRecord(event) {
@@ -994,7 +1132,7 @@
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
                 auditRecords: [],
-                eventFolders: [],
+                rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
@@ -1002,7 +1140,7 @@
             if(id) { 
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
                 data.financialDocs = pipelineData[idx].financialDocs || [];
-                data.eventFolders = pipelineData[idx].eventFolders || [];
+                data.rootFolder = pipelineData[idx].rootFolder || { name: "Partnership Root", subfolders: [], files: [] };
                 data.contacts = pipelineData[idx].contacts || [];
                 data.auditRecords = pipelineData[idx].auditRecords || [];
                 data.activities = pipelineData[idx].activities;
