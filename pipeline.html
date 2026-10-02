@@ -272,7 +272,10 @@
                 scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
                 status: "W-9 & CP575 Submitted", 
                 action: "Follow up first week of November",
-                docs: ["Form W-9.pdf", "IRS CP575.pdf"],
+                docs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "IRS CP575.pdf", url: "EIN .pdf" }
+                ],
                 activities: [
                     { date: "Aug 31, 2026", type: "Email Received", text: "Jennifer Williams: 'I would like to learn more about your organization. When do you have time to jump on a Zoom for us to meet and discuss other possibilities?'" },
                     { date: "Sep 8, 2026", type: "Meeting", text: "Conducted Zoom discovery call and discussed studio capabilities and workshop possibilities." },
@@ -289,7 +292,10 @@
                 scope: "Career Day & After-School AI Lab Partnership", 
                 status: "In Discussion", 
                 action: "Review proposal and schedule pilot cohort",
-                docs: ["NCSA Pilot Proposal.pdf", "Brown Girls Creative Studio - Curriculum Proposal.pdf"],
+                docs: [
+                    { name: "NCSA Pilot Proposal.pdf", url: "#" },
+                    { name: "Curriculum Proposal.pdf", url: "#" }
+                ],
                 activities: [
                     { date: "Aug 24, 2026", type: "Email Sent", text: "Emailed Chantal Hendrix proposing after-school AI & STEM organization, 1-hour free pilot, and teacher professional development workshops." },
                     { date: "Sep 3, 2026", type: "Meeting", text: "Scheduled and aligned on NCSA Student Project Showcase and pilot tracking." },
@@ -304,7 +310,7 @@
                 scope: "Career Day (11/19/2026) - Entrepreneur Presentation", 
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
-                docs: ["Career_Day_Flyer.png"],
+                docs: [{ name: "Career_Day_Flyer.png", url: "#" }],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Captured flyer details for Nov 19 event (8:00 AM - 11:30 AM)." }
                 ]
@@ -317,7 +323,7 @@
                 scope: "Career Day (11/20/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
-                docs: ["TRE_Flyer.png"],
+                docs: [{ name: "TRE_Flyer.png", url: "#" }],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Nov 20, 2026 (8:30 AM - 11:30 AM)." }
                 ]
@@ -330,7 +336,7 @@
                 scope: "Career Day (10/28/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
-                docs: ["PGE_Flyer.png"],
+                docs: [{ name: "PGE_Flyer.png", url: "#" }],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Oct 28, 2026 (8:30 AM - 11:30 AM)." }
                 ]
@@ -343,7 +349,7 @@
                 scope: "Career Fair - Employer & Organization Showcase", 
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
-                docs: ["Peachtree_Flyer.png"],
+                docs: [{ name: "Peachtree_Flyer.png", url: "#" }],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Reviewed Covington Campus Career Fair flyer." }
                 ]
@@ -440,16 +446,16 @@
                 timeline.innerHTML = `<p class="text-xs text-slate-500 italic">No activity logged yet.</p>`;
             }
 
-            // Render Docs
+            // Render Docs as Clickable Links
             const docsDiv = document.getElementById('profileDocs');
             docsDiv.innerHTML = '';
             if(lead.docs && lead.docs.length > 0) {
                 lead.docs.forEach(doc => {
                     docsDiv.innerHTML += `
-                        <div class="flex items-center justify-between bg-dark-700/40 border border-dark-600 p-3 rounded-xl">
-                            <span class="text-slate-200 font-medium"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc}</span>
-                            <span class="text-[10px] text-emerald-400 font-semibold">Attached</span>
-                        </div>`;
+                        <a href="${doc.url}" target="_blank" class="flex items-center justify-between bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-3 rounded-xl transition">
+                            <span class="text-slate-200 font-medium"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc.name}</span>
+                            <span class="text-[10px] text-rose-400 font-semibold underline">View / Download</span>
+                        </a>`;
                 });
             } else {
                 docsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No documents attached.</p>`;
@@ -474,7 +480,7 @@
                 document.getElementById('leadContact').value = lead.contact;
                 document.getElementById('leadScope').value = lead.scope;
                 document.getElementById('leadStatus').value = lead.status;
-                document.ей = document.getElementById('leadAction').value = lead.action;
+                document.getElementById('leadAction').value = lead.action;
                 document.getElementById('modalTitle').innerText = 'Edit Partnership Target';
             } else {
                 document.getElementById('leadForm').reset();
