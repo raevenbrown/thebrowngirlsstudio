@@ -313,22 +313,39 @@
                     <button onclick="switchTab('calendar')" id="tabBtn-calendar" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center col-span-2 sm:col-span-1">Calendar & Events</button>
                 </div>
 
-                <!-- Tab 0: Tasks & Stage Progress -->
+                <!-- Tab 0: Tasks & Stage Progress (Interactive Stage & Retainer Controls) -->
                 <div id="tabContent-tasks" class="space-y-6">
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <div>
                                 <h3 class="font-bold text-sm text-slate-100">Client Task List & Stage Tracker</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Check off tasks, highlight current focus, and assign team members.</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Update stage, toggle retainer status, check off tasks, and assign team members.</p>
                             </div>
                             <button onclick="openClientTaskModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
                                 + Add Task
                             </button>
                         </div>
                         <div class="space-y-4">
-                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
-                                <h4 class="font-bold text-xs text-rose-400 uppercase tracking-wider">Current Pipeline Stage & Retainer Status</h4>
-                                <p id="clientTaskStageDisplay" class="text-sm font-semibold text-slate-100"></p>
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-3 text-xs">
+                                <h4 class="font-bold text-rose-400 uppercase tracking-wider">Current Pipeline Stage & Retainer Status</h4>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 items-center">
+                                    <div>
+                                        <label class="block text-slate-400 font-bold mb-1">Sales Funnel Stage</label>
+                                        <select id="inlineStageSelect" onchange="updateClientStage(this.value)" class="w-full rounded-xl bg-dark-800 border border-dark-600 p-2 text-slate-200 font-semibold">
+                                            <option value="Prospecting">Prospecting</option>
+                                            <option value="Follow-up Stage">Follow-up Stage</option>
+                                            <option value="Waiting on Invoice">Waiting on Invoice</option>
+                                            <option value="Contract Signed / Won">Contract Signed / Won</option>
+                                            <option value="Lost">Lost</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-center space-x-3 pt-4 sm:pt-0">
+                                        <label class="flex items-center space-x-2 cursor-pointer">
+                                            <input type="checkbox" id="inlineRetainerCheck" onchange="toggleClientRetainer(this.checked)" class="w-4 h-4 rounded bg-dark-800 border-dark-600 text-rose-600 focus:ring-rose-500">
+                                            <span class="font-bold text-slate-200">Set as Retainer Partner (Recurring)</span>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                             <div id="clientTaskListContainer" class="space-y-3 text-xs">
                                 <!-- Populated dynamically -->
@@ -526,6 +543,7 @@
                     <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Pipeline Stage</label>
                     <select id="leadStage" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                         <option value="Prospecting">Prospecting</option>
+                        <option value="Follow-up Stage">Follow-up Stage</option>
                         <option value="Waiting on Invoice">Waiting on Invoice</option>
                         <option value="Contract Signed / Won">Contract Signed / Won</option>
                         <option value="Lost">Lost</option>
@@ -988,7 +1006,7 @@
         let currentProfileId = null;
         let currentFolderPath = []; 
         let currentEditingFolderRef = null;
-        let currentActiveTab = 'tasks';
+        let currentActiveTab = 'info';
         let currentCalYear = 2026;
         let currentCalMonth = 9; // October (0-indexed)
 
@@ -1157,34 +1175,56 @@
             lucide.createIcons();
         }
 
+        function updateClientStage(newStage) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (lead) {
+                lead.stage = newStage;
+                savePipelineData();
+                document.getElementById('profileBadge').innerText = newStage;
+                renderClientTasks();
+            }
+        }
+
+        function toggleClientRetainer(isChecked) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (lead) {
+                lead.isRetainer = isChecked;
+                savePipelineData();
+                renderClientTasks();
+            }
+        }
+
         function renderClientTasks() {
             const container = document.getElementById('clientTaskListContainer');
             const stageDisplay = document.getElementById('clientTaskStageDisplay');
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (!lead || !container) return;
 
-            let retainerBadge = lead.isRetainer ? '<span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 ml-2">Retainer Partner</span>' : '';
-            stageDisplay.innerHTML = `<span class="px-2 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">${lead.stage}</span> • Status: ${lead.status} ${retainerBadge}`;
+            document.getElementById('inlineStageSelect').value = lead.stage;
+            document.getElementById('inlineRetainerCheck').checked = !!lead.isRetainer;
+
+            let retainerBadge = lead.isRetainer ? '<span class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-400 border border-purple-500/30 ml-2 font-bold">Retainer Partner</span>' : '';
+            stageDisplay.innerHTML = `<span class="px-2.5 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold">${lead.stage}</span> • Status: ${lead.status} ${retainerBadge}`;
 
             container.innerHTML = '';
             if (lead.clientTasks && lead.clientTasks.length > 0) {
                 lead.clientTasks.forEach((ct, cIdx) => {
-                    let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500' : 'border-dark-600 bg-dark-700/40';
+                    let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
                     let dateStr = ct.date ? `<span class="text-[11px] text-rose-400 font-semibold mr-2">[Due: ${ct.date}]</span>` : '';
                     let assigneeStr = ct.assignee ? `<span class="text-[11px] text-purple-400 font-semibold mr-2">[Assigned: ${ct.assignee}]</span>` : '';
 
                     container.innerHTML += `
-                        <div class="border ${highlightClass} p-3.5 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition">
+                        <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition">
                             <label class="flex items-center space-x-3 cursor-pointer flex-1">
                                 <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
                                 <div class="space-y-0.5">
-                                    <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task} ${ct.active ? '<span class="ml-2 px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase">Current Focus</span>' : ''}</span>
+                                    <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task} ${ct.active ? '<span class="ml-2 px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}</span>
                                     <div class="flex flex-wrap gap-1">${dateStr}${assigneeStr}</div>
                                 </div>
                             </label>
                             <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
-                                <button onclick="setClientTaskActive(${cIdx})" class="text-[10px] px-2 py-1 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Highlight as Current Task">Highlight</button>
-                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500" title="Highlight as Current Task">Highlight</button>
+                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </div>
                         </div>`;
                 });
@@ -1306,16 +1346,17 @@
             if(!container) return;
             container.innerHTML = '';
 
-            const stages = ["Prospecting", "Waiting on Invoice", "Contract Signed / Won", "Lost"];
+            const stages = ["Prospecting", "Follow-up Stage", "Waiting on Invoice", "Contract Signed / Won", "Lost"];
             const stageColors = {
                 "Prospecting": "border-amber-500/30 text-amber-400",
+                "Follow-up Stage": "border-rose-500/30 text-rose-400",
                 "Waiting on Invoice": "border-purple-500/30 text-purple-400",
                 "Contract Signed / Won": "border-emerald-500/30 text-emerald-400",
                 "Lost": "border-rose-500/30 text-rose-400"
             };
 
             document.getElementById('stat-total').innerText = pipelineData.length;
-            document.getElementById('stat-prospect').innerText = pipelineData.filter(d => d.stage === 'Prospecting').length;
+            document.getElementById('stat-prospect').innerText = pipelineData.filter(d => d.stage === 'Prospecting' || d.stage === 'Follow-up Stage').length;
             document.getElementById('stat-invoice').innerText = pipelineData.filter(d => d.stage === 'Waiting on Invoice').length;
             document.getElementById('stat-won').innerText = pipelineData.filter(d => d.stage === 'Contract Signed / Won').length;
 
@@ -1325,10 +1366,11 @@
                 
                 if (leadsInStage.length > 0) {
                     leadsInStage.forEach(item => {
+                        let retainerBadge = item.isRetainer ? '<span class="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400 text-[9px] font-bold">Retainer</span>' : '';
                         cardsHtml += `
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2 hover:border-rose-500/50 transition">
                                 <div class="flex justify-between items-start">
-                                    <h4 onclick="openProfile(${item.id}, 'tasks')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
+                                    <h4 onclick="openProfile(${item.id}, 'tasks')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org} ${retainerBadge}</h4>
                                     <div class="space-x-1">
                                         <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
                                         <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
@@ -1349,7 +1391,7 @@
                 container.innerHTML += `
                     <div class="bg-dark-800 border border-dark-600 rounded-2xl p-5 space-y-4">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-3">
-                            <h3 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h3>
+                            <h3 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage] || 'text-slate-300'}">${stage}</h3>
                             <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300 text-xs">${leadsInStage.length}</span>
                         </div>
                         <div class="space-y-3">${cardsHtml}</div>
