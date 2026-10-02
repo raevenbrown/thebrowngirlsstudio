@@ -492,7 +492,7 @@
             }
         }
 
-        let pipelineData = [
+        const defaultPipelineData = [
             { 
                 id: 1, 
                 stage: "Waiting on Invoice", 
@@ -659,8 +659,14 @@
             }
         ];
 
+        let pipelineData = JSON.parse(localStorage.getItem('bgcs_pipeline_data')) || defaultPipelineData;
+
+        function savePipelineData() {
+            localStorage.setItem('bgcs_pipeline_data', JSON.stringify(pipelineData));
+        }
+
         let currentProfileId = null;
-        let currentFolderPath = []; // [] means root, ['trash'] means inside the Trash Bin
+        let currentFolderPath = []; 
         let currentEditingFolderRef = null;
         let currentActiveTab = 'info';
 
@@ -753,7 +759,6 @@
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
 
-            // Calculate and Render Financial Metrics from Audit Records
             let total = 0, pending = 0, closed = 0;
             const auditTable = document.getElementById('auditTableBody');
             auditTable.innerHTML = '';
@@ -786,7 +791,6 @@
             document.getElementById('finPending').innerText = '$' + pending.toFixed(2);
             document.getElementById('finClosed').innerText = '$' + closed.toFixed(2);
 
-            // Render Financial & Tax Documents Folder
             const finDocsDiv = document.getElementById('financialDocsList');
             finDocsDiv.innerHTML = '';
             if(lead.financialDocs && lead.financialDocs.length > 0) {
@@ -810,7 +814,6 @@
             else if(lead.stage === 'Waiting on Invoice') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
             else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
 
-            // Render Org Chart / Contacts Tree
             const orgContainer = document.getElementById('orgChartContainer');
             orgContainer.innerHTML = '';
             if(lead.contacts && lead.contacts.length > 0) {
@@ -830,7 +833,6 @@
 
             renderFolderExplorer();
 
-            // Render Activities
             const timeline = document.getElementById('activityTimeline');
             timeline.innerHTML = '';
             if(lead.activities && lead.activities.length > 0) {
@@ -859,7 +861,6 @@
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (!currentFolder || !lead) return;
 
-            // Render Breadcrumbs
             breadcrumb.classList.remove('hidden');
             breadcrumb.classList.add('flex');
             let bcHtml = `<span onclick="navigateToFolder(-1)" class="cursor-pointer hover:text-rose-400 font-semibold">Root</span>`;
@@ -878,9 +879,7 @@
 
             folderContainer.innerHTML = '';
 
-            // If we are at root level, show regular folders + Trash Bin shortcut
             if (currentFolderPath.length === 0) {
-                // Render Trash Bin Entry at Root
                 folderContainer.innerHTML += `
                     <div class="bg-dark-700/20 border border-dark-600 p-4 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
                         <div onclick="enterTrashBin()" class="flex items-center space-x-3 cursor-pointer flex-1">
@@ -891,7 +890,6 @@
                     </div>`;
             }
 
-            // Render Subfolders
             if (currentFolder.subfolders && currentFolder.subfolders.length > 0) {
                 currentFolder.subfolders.forEach((sub, sIdx) => {
                     let isTrash = (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash');
@@ -916,7 +914,6 @@
                 });
             }
 
-            // Render Files
             if (currentFolder.files && currentFolder.files.length > 0) {
                 currentFolder.files.forEach((file, fIdx) => {
                     let isTrash = (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash');
@@ -983,6 +980,7 @@
                 curr.subfolders[sIdx] = curr.subfolders[sIdx + 1];
                 curr.subfolders[sIdx + 1] = temp;
             }
+            savePipelineData();
             renderFolderExplorer();
         }
 
@@ -992,6 +990,7 @@
             let sub = curr.subfolders.splice(sIdx, 1)[0];
             if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
             lead.trashFolder.subfolders.push(sub);
+            savePipelineData();
             renderFolderExplorer();
         }
 
@@ -1001,6 +1000,7 @@
             let file = curr.files.splice(fIdx, 1)[0];
             if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
             lead.trashFolder.files.push(file);
+            savePipelineData();
             renderFolderExplorer();
         }
 
@@ -1008,6 +1008,7 @@
             const lead = pipelineData.find(l => l.id === currentProfileId);
             let sub = lead.trashFolder.subfolders.splice(sIdx, 1)[0];
             lead.rootFolder.subfolders.push(sub);
+            savePipelineData();
             renderFolderExplorer();
         }
 
@@ -1015,6 +1016,7 @@
             const lead = pipelineData.find(l => l.id === currentProfileId);
             let file = lead.trashFolder.files.splice(fIdx, 1)[0];
             lead.rootFolder.files.push(file);
+            savePipelineData();
             renderFolderExplorer();
         }
 
@@ -1022,6 +1024,7 @@
             if (confirm("Are you sure you want to permanently delete this folder? This action cannot be undone.")) {
                 const lead = pipelineData.find(l => l.id === currentProfileId);
                 lead.trashFolder.subfolders.splice(sIdx, 1);
+                savePipelineData();
                 renderFolderExplorer();
             }
         }
@@ -1030,6 +1033,7 @@
             if (confirm("Permanently delete this file? This action cannot be undone.")) {
                 const lead = pipelineData.find(l => l.id === currentProfileId);
                 lead.trashFolder.files.splice(fIdx, 1);
+                savePipelineData();
                 renderFolderExplorer();
             }
         }
@@ -1041,6 +1045,7 @@
                     let doc = lead.financialDocs.splice(fIdx, 1)[0];
                     if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
                     lead.trashFolder.files.push(doc);
+                    savePipelineData();
                     openProfile(currentProfileId, currentActiveTab, false);
                 }
             }
@@ -1145,6 +1150,7 @@
                 curr.subfolders[currentEditingFolderRef].name = newName;
             }
             closeRenameFolderModal();
+            savePipelineData();
             renderFolderExplorer();
         }
 
@@ -1156,6 +1162,7 @@
             curr.subfolders.push({ name: name, subfolders: [], files: [] });
             closeFolderModal();
             document.getElementById('folderNameInput').value = '';
+            savePipelineData();
             renderFolderExplorer();
         }
 
@@ -1174,6 +1181,7 @@
                     curr.files.push({ name, url: fileUrl });
                 }
                 closeUploadModal();
+                savePipelineData();
                 openProfile(currentProfileId, currentActiveTab, false);
             }
         }
@@ -1202,6 +1210,7 @@
                 document.getElementById('auditDesc').value = '';
                 document.getElementById('auditAmount').value = '';
                 document.getElementById('auditMethod').value = '';
+                savePipelineData();
                 openProfile(currentProfileId, currentActiveTab, false);
             }
         }
@@ -1238,6 +1247,7 @@
                 document.getElementById('contactPhone').value = '';
                 document.getElementById('contactLocation').value = '';
                 document.getElementById('contactNotes').value = '';
+                savePipelineData();
                 openProfile(currentProfileId, currentActiveTab, false);
             }
         }
@@ -1265,6 +1275,7 @@
                 closeNoteModal();
                 document.getElementById('noteText').value = '';
                 document.getElementById('noteDate').value = '';
+                savePipelineData();
                 openProfile(currentProfileId, currentActiveTab, false);
             }
         }
@@ -1300,12 +1311,14 @@
                 pipelineData.push(data); 
             }
             closeModal(); 
+            savePipelineData();
             renderTable();
             if(currentProfileId) openProfile(currentProfileId, currentActiveTab, false);
         }
 
         function deleteLead(id) { 
             pipelineData = pipelineData.filter(l => l.id !== id); 
+            savePipelineData();
             renderTable(); 
         }
 
