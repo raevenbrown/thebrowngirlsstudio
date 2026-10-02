@@ -248,6 +248,10 @@
                     </select>
                 </div>
                 <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Activity Date</label>
+                    <input type="date" id="noteDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div>
                     <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Notes / Summary</label>
                     <textarea id="noteText" required rows="4" placeholder="Paste email snippet or notes..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
                 </div>
@@ -500,23 +504,38 @@
         }
         function closeModal() { document.getElementById('leadModal').classList.add('hidden'); }
 
-        function openNoteModal() { document.getElementById('noteModal').classList.remove('hidden'); }
+        function openNoteModal() { 
+            document.getElementById('noteModal').classList.remove('hidden');
+            // Default date picker to today
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('noteDate');
+            if(dateInput) dateInput.value = today;
+        }
         function closeNoteModal() { document.getElementById('noteModal').classList.add('hidden'); }
 
         function saveNote(event) {
             event.preventDefault();
             const type = document.getElementById('noteType').value;
+            const dateInput = document.getElementById('noteDate').value;
             const text = document.getElementById('noteText').value;
+            
+            let formattedDate = "Oct 2, 2026";
+            if (dateInput) {
+                const d = new Date(dateInput + 'T00:00:00');
+                formattedDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if(lead) {
                 if(!lead.activities) lead.activities = [];
                 lead.activities.unshift({
-                    date: "Oct 2, 2026",
+                    date: formattedDate,
                     type: type,
                     text: text
                 });
                 closeNoteModal();
                 document.getElementById('noteText').value = '';
+                document.getElementById('noteDate').value = '';
                 openProfile(currentProfileId);
             }
         }
