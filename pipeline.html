@@ -63,7 +63,7 @@
         <!-- Mobile Sidebar Drawer Overlay -->
         <div id="mobileSidebarOverlay" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm hidden md:hidden" onclick="toggleMobileSidebar()"></div>
 
-        <!-- Sidebar Navigation (Responsive Desktop & Mobile Drawer) -->
+        <!-- Sidebar Navigation -->
         <aside id="sidebarNav" class="w-64 bg-dark-800 border-r border-dark-600 flex flex-col justify-between fixed md:sticky top-0 h-screen z-50 -translate-x-full md:translate-x-0 transition-transform duration-300">
             <div>
                 <div class="p-6 border-b border-dark-600 flex items-center justify-between">
@@ -128,37 +128,74 @@
                 </div>
             </header>
 
-            <!-- Main Section 1: Goals & Strategy View -->
+            <!-- Main Section 1: Goals & Strategy View (Detailed 2026 Income Streams) -->
             <div id="mainView-goals" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
-                <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+                <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     <div class="border-b border-dark-600 pb-4">
-                        <h2 class="text-xl font-bold text-slate-100">Quarterly, Monthly & Yearly Growth Goals</h2>
-                        <p class="text-xs text-slate-400 mt-1">Strategic milestones and execution roadmap for The Brown Girls Creative Studio.</p>
+                        <h2 class="text-xl font-bold text-slate-100">Year 2026 Growth Goals & Income Streams</h2>
+                        <p class="text-xs text-slate-400 mt-1">Detailed comparison and tracking across our three core revenue channels.</p>
                     </div>
+
+                    <!-- Core Revenue Streams Breakdown -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+                        <!-- Stream 1: Career Days & School Workshops -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3">
-                            <h4 class="font-bold text-emerald-400 uppercase tracking-wider">Yearly Goals (2026)</h4>
-                            <ul class="space-y-2 text-slate-300 list-disc list-inside">
-                                <li>Secure 15 school & district partnership contracts.</li>
-                                <li>Scale agency revenue past $50K threshold.</li>
-                                <li>Launch regional AI Lab educational programs.</li>
-                            </ul>
+                            <div class="flex items-center justify-between border-b border-dark-600 pb-2">
+                                <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career Days (Locked In)</h4>
+                                <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold text-[10px]">Active</span>
+                            </div>
+                            <div class="space-y-2 text-slate-300">
+                                <p><strong>Newton County STEAM Academy:</strong> Completed 5 sessions, 100 students, 96% satisfaction rate. Asked to return. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(2)">View NCSA Profile</span></p>
+                                <p class="text-slate-400 italic">Next Step: Follow up with Ms. Bunting to convert into a recurring after-school program.</p>
+                                <hr class="border-dark-600 my-2">
+                                <p><strong>Porterdale Elementary:</strong> Nov 19, 2026 (8:00 AM - 11:30 AM). <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(3)">View Profile</span></p>
+                                <p><strong>Timber Ridge Elementary:</strong> Nov 20, 2026 (8:30 AM - 11:30 AM). <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(4)">View Profile</span></p>
+                                <p><strong>Pleasant Grove Elementary:</strong> Oct 28, 2026. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(5)">View Profile</span></p>
+                            </div>
                         </div>
+
+                        <!-- Stream 2: Paid After-School Partnerships -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3">
-                            <h4 class="font-bold text-purple-400 uppercase tracking-wider">Quarterly Goals (Q4)</h4>
-                            <ul class="space-y-2 text-slate-300 list-disc list-inside">
-                                <li>Finalize InspiHER 2-day workshop execution ($750).</li>
-                                <li>Complete Newton County STEAM Academy pilot proposals.</li>
-                                <li>Onboard 4 new elementary school career day programs.</li>
-                            </ul>
+                            <div class="flex items-center justify-between border-b border-dark-600 pb-2">
+                                <h4 class="font-bold text-purple-400 uppercase tracking-wider">2. After-School Programs</h4>
+                                <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-semibold text-[10px]">Revenue Share</span>
+                            </div>
+                            <div class="space-y-2 text-slate-300">
+                                <p><strong>YES Program:</strong> Pitching turnkey after-school partnership and revenue-share model. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(7)">View Profile</span></p>
+                                <p><strong>InspiHER Conference:</strong> 2-day workshop (Dec 2-3, 2026) @ $750 with Dr. Jennifer Williams. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(1)">View Profile</span></p>
+                                <p class="text-slate-400 italic">Strategy: Leverage career day results and parent surveys to establish paid after-school cohorts.</p>
+                            </div>
                         </div>
+
+                        <!-- Stream 3: Private Schools Outreach -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3">
-                            <h4 class="font-bold text-amber-400 uppercase tracking-wider">Monthly Goals (October)</h4>
-                            <ul class="space-y-2 text-slate-300 list-disc list-inside">
-                                <li>Submit W-9 and AP paperwork for district approvals.</li>
-                                <li>Execute outreach to Porterdale and Timber Ridge coordinators.</li>
-                                <li>Finalize workshop curriculum materials.</li>
-                            </ul>
+                            <div class="flex items-center justify-between border-b border-dark-600 pb-2">
+                                <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private Schools</h4>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold text-[10px]">Expansion</span>
+                            </div>
+                            <div class="space-y-2 text-slate-300">
+                                <p><strong>Peachtree Academy:</strong> Covington Campus Career Fair & Employer Showcase outreach. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(6)">View Profile</span></p>
+                                <p class="text-slate-400 italic">Strategy: Target regional private academies for premium-tier STEM and AI lab enrollment packages.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comparison & Yearly Milestones -->
+                    <div class="border-t border-dark-600 pt-6 space-y-4 text-xs">
+                        <h3 class="font-bold text-sm text-slate-100">Goal & Metric Comparison (2026 Target vs Actual)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="bg-dark-700/30 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">Partnership Contracts</p>
+                                <p class="text-lg font-bold text-slate-100 mt-1">7 Active / 15 Target</p>
+                            </div>
+                            <div class="bg-dark-700/30 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">Student Reach</p>
+                                <p class="text-lg font-bold text-emerald-400 mt-1">100+ Students (96% Rating)</p>
+                            </div>
+                            <div class="bg-dark-700/30 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">Revenue Target</p>
+                                <p class="text-lg font-bold text-purple-400 mt-1">$750 Confirmed (Q4 Goal: $5K)</p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -804,6 +841,7 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 auditRecords: [],
+                calendarEvents: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
@@ -908,7 +946,7 @@
                 const activeBtn = document.getElementById('nav-' + viewName);
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 
-                if (viewName === 'goals') document.getElementById('pageTitle').innerText = "Quarterly, Monthly & Yearly Goals";
+                if (viewName === 'goals') document.getElementById('pageTitle').innerText = "2026 Growth Goals & Income Streams";
                 if (viewName === 'agenda') document.getElementById('pageTitle').innerText = "Spirit Meeting Outline & Agenda";
                 if (viewName === 'prospects') {
                     document.getElementById('pageTitle').innerText = "Prospect To-Do Checklist";
@@ -916,7 +954,6 @@
                 }
                 window.location.hash = "view=" + viewName;
             }
-            // Close mobile sidebar if open
             const sidebar = document.getElementById('sidebarNav');
             const overlay = document.getElementById('mobileSidebarOverlay');
             if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
