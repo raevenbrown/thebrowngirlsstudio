@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
@@ -92,41 +92,41 @@ l<!DOCTYPE html>
         </aside>
 
         <!-- Main Content Area -->
-        <main class="flex-1 flex flex-col min-h-screen">
-            <header class="h-16 border-b border-dark-600 bg-dark-800/50 backdrop-blur-md px-8 flex items-center justify-between sticky top-0 z-10">
-                <div class="flex items-center space-x-3">
-                    <span class="text-slate-400 text-sm">The Brown Girls Creative Studio</span>
-                    <span class="text-dark-500">/</span>
-                    <span id="pageTitle" class="font-bold text-sm text-slate-200">Pipeline Manager</span>
+        <main class="flex-1 flex flex-col min-h-screen overflow-x-hidden">
+            <header class="h-auto md:h-16 py-4 md:py-0 border-b border-dark-600 bg-dark-800/50 backdrop-blur-md px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-4 sticky top-0 z-10">
+                <div class="flex items-center space-x-2 text-center md:text-left">
+                    <span class="text-slate-400 text-xs sm:text-sm hidden sm:inline">The Brown Girls Creative Studio</span>
+                    <span class="text-dark-500 hidden sm:inline">/</span>
+                    <span id="pageTitle" class="font-bold text-xs sm:text-sm text-slate-200">Pipeline Manager</span>
                 </div>
-                <div class="flex items-center space-x-3">
-                    <button onclick="exportCSV()" class="px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition flex items-center shadow-sm">
-                        <i data-lucide="download" class="w-3.5 h-3.5 mr-2"></i> Export CSV
+                <div class="flex items-center space-x-2 sm:space-x-3 w-full md:w-auto justify-end">
+                    <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition flex items-center shadow-sm">
+                        <i data-lucide="download" class="w-3.5 h-3.5 mr-1.5"></i> Export
                     </button>
-                    <button onclick="openModal()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
-                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-2"></i> Add New Target
+                    <button onclick="openModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
+                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Target
                     </button>
                 </div>
             </header>
 
             <!-- View 1: Main Pipeline Table -->
-            <div id="pipelineView" class="p-8 space-y-8 max-w-7xl mx-auto w-full">
-                <div class="grid grid-cols-1 sm:grid-cols-4 gap-6">
-                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl shadow-sm">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Targets</p>
-                        <h3 id="stat-total" class="text-3xl font-bold text-slate-100 mt-2">7</h3>
+            <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
+                    <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
+                        <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Targets</p>
+                        <h3 id="stat-total" class="text-2xl sm:text-3xl font-bold text-slate-100 mt-2">7</h3>
                     </div>
-                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl shadow-sm">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Prospecting / Leads</p>
-                        <h3 id="stat-prospect" class="text-3xl font-bold text-amber-400 mt-2">6</h3>
+                    <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
+                        <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Prospecting</p>
+                        <h3 id="stat-prospect" class="text-2xl sm:text-3xl font-bold text-amber-400 mt-2">6</h3>
                     </div>
-                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl shadow-sm">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Waiting on Invoice</p>
-                        <h3 id="stat-invoice" class="text-3xl font-bold text-purple-400 mt-2">1</h3>
+                    <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
+                        <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Invoice</p>
+                        <h3 id="stat-invoice" class="text-2xl sm:text-3xl font-bold text-purple-400 mt-2">1</h3>
                     </div>
-                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl shadow-sm">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Contracts Won</p>
-                        <h3 id="stat-won" class="text-3xl font-bold text-emerald-400 mt-2">0</h3>
+                    <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
+                        <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Won</p>
+                        <h3 id="stat-won" class="text-2xl sm:text-3xl font-bold text-emerald-400 mt-2">0</h3>
                     </div>
                 </div>
 
@@ -136,7 +136,7 @@ l<!DOCTYPE html>
                         <p class="text-xs text-slate-400 mt-0.5">Click any Organization name below to open their dedicated profile tracker.</p>
                     </div>
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse">
+                        <table class="w-full text-left border-collapse min-w-[700px]">
                             <thead>
                                 <tr class="bg-dark-700/50 border-b border-dark-600 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
                                     <th class="py-3.5 px-6">Stage</th>
@@ -155,8 +155,8 @@ l<!DOCTYPE html>
             </div>
 
             <!-- View 2: Individual Lead Profile Tracker -->
-            <div id="profileView" class="p-8 space-y-8 max-w-7xl mx-auto w-full hidden">
-                <div class="flex justify-between items-center">
+            <div id="profileView" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                     <button onclick="showPipelineView()" class="inline-flex items-center px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition shadow-sm">
                         <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Pipeline
                     </button>
@@ -164,16 +164,16 @@ l<!DOCTYPE html>
                     <div id="folderBreadcrumb" class="hidden items-center space-x-2 text-xs text-slate-400"></div>
                 </div>
 
-                <div class="bg-dark-800 border border-dark-600 p-8 rounded-2xl shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                     <div>
                         <div class="flex items-center space-x-3">
                             <span id="profileBadge" class="px-3 py-1 rounded-lg text-xs font-semibold border"></span>
                             <span id="profileStatusBadge" class="text-xs text-slate-400"></span>
                         </div>
-                        <h1 id="profileOrg" class="text-2xl font-bold text-slate-100 mt-2"></h1>
-                        <p id="profileScope" class="text-sm text-slate-400 mt-1"></p>
+                        <h1 id="profileOrg" class="text-xl sm:text-2xl font-bold text-slate-100 mt-2"></h1>
+                        <p id="profileScope" class="text-xs sm:text-sm text-slate-400 mt-1"></p>
                     </div>
-                    <div class="bg-dark-700/50 border border-dark-600 p-4 rounded-xl space-y-2 text-xs">
+                    <div class="bg-dark-700/50 border border-dark-600 p-4 rounded-xl space-y-2 text-xs w-full md:w-auto">
                         <div>
                             <p class="text-slate-400 uppercase font-bold tracking-wider text-[10px]">Primary Contact</p>
                             <p id="profileContact" class="font-semibold text-slate-200 text-sm"></p>
@@ -182,12 +182,12 @@ l<!DOCTYPE html>
                     </div>
                 </div>
 
-                <!-- Interactive Tab Navigation -->
-                <div class="flex space-x-2 border-b border-dark-600 pb-3">
-                    <button onclick="switchTab('info')" id="tabBtn-info" class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition">Company Info</button>
-                    <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Revenue & Audit Log</button>
-                    <button onclick="switchTab('comms')" id="tabBtn-comms" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Communication Log</button>
-                    <button onclick="switchTab('events')" id="tabBtn-events" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Partnership Events & Folders</button>
+                <!-- Interactive Tab Navigation (Grid on Mobile for Perfect Wrapping) -->
+                <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600 pb-3">
+                    <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center">Company Info</button>
+                    <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Revenue & Audit</button>
+                    <button onclick="switchTab('comms')" id="tabBtn-comms" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Communication Log</button>
+                    <button onclick="switchTab('events')" id="tabBtn-events" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Events & Folders</button>
                 </div>
 
                 <!-- Tab 1: Company Info -->
@@ -231,7 +231,7 @@ l<!DOCTYPE html>
 
                         <!-- Itemized Audit Table -->
                         <div class="overflow-x-auto border border-dark-600 rounded-xl">
-                            <table class="w-full text-left border-collapse text-xs">
+                            <table class="w-full text-left border-collapse text-xs min-w-[600px]">
                                 <thead>
                                     <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
                                         <th class="py-3 px-4">Invoice / Ref #</th>
@@ -281,12 +281,12 @@ l<!DOCTYPE html>
                 <!-- Tab 4: Partnership Events & Folders (Deep Nested Explorer) -->
                 <div id="tabContent-events" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
-                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-dark-600 pb-4">
                             <div>
                                 <h3 class="font-bold text-sm text-slate-100" id="currentFolderTitle">Partnership Events & Folders</h3>
                                 <p class="text-xs text-slate-400 mt-0.5">Navigate folders, add subfolders, upload files from your device, rename, or reorder items.</p>
                             </div>
-                            <div class="space-x-2">
+                            <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-end">
                                 <button onclick="openFolderModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
                                     + New Folder
                                 </button>
@@ -425,20 +425,20 @@ l<!DOCTYPE html>
         </div>
     </div>
 
-    <!-- Modal for Uploading File from Device -->
+    <!-- Modal for Uploading Document -->
     <div id="uploadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 id="uploadModalTitle" class="font-bold text-slate-100 text-sm mb-4">Upload File from Device</h3>
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Upload File</h3>
             <form onsubmit="saveUpload(event)" class="space-y-4 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Select File</label>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Select File from Device</label>
                     <input type="file" id="deviceFileInput" required onchange="handleFileSelect(event)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-500">
                 </div>
-                <input type="text" id="uploadNameInput" required placeholder="Display Name (e.g. Workshop Agenda.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="uploadNameInput" required placeholder="Display Name (e.g. Agenda.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <input type="hidden" id="uploadFileBase64">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload & Save</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload File</button>
                 </div>
             </form>
         </div>
@@ -655,10 +655,10 @@ l<!DOCTYPE html>
         function switchTab(tabName) {
             ['info', 'revenue', 'comms', 'events'].forEach(t => {
                 document.getElementById('tabContent-' + t).classList.add('hidden');
-                document.getElementById('tabBtn-' + t).className = "px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition";
+                document.getElementById('tabBtn-' + t).className = "px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center";
             });
             document.getElementById('tabContent-' + tabName).classList.remove('hidden');
-            document.getElementById('tabBtn-' + tabName).className = "px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition";
+            document.getElementById('tabBtn-' + tabName).className = "px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center";
             lucide.createIcons();
         }
 
@@ -851,16 +851,16 @@ l<!DOCTYPE html>
             if (currentFolder.subfolders && currentFolder.subfolders.length > 0) {
                 currentFolder.subfolders.forEach((sub, sIdx) => {
                     folderContainer.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
+                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition hover:border-rose-500/50">
                             <div onclick="enterSubfolder(${sIdx})" class="flex items-center space-x-3 cursor-pointer flex-1">
-                                <i data-lucide="folder" class="w-5 h-5 text-rose-500"></i>
-                                <span class="font-bold text-slate-100 text-sm">${sub.name}</span>
+                                <i data-lucide="folder" class="w-5 h-5 text-rose-500 shrink-0"></i>
+                                <span class="font-bold text-slate-100 text-sm break-all">${sub.name}</span>
                             </div>
-                            <div class="flex items-center space-x-2 text-xs">
+                            <div class="flex items-center space-x-2 text-xs w-full sm:w-auto justify-end">
                                 <button onclick="openRenameFolderModal(${sIdx})" class="px-2.5 py-1 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-300">Rename</button>
-                                <button onclick="moveFolder(${sIdx}, 'up')" class="p-1 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Up"><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
-                                <button onclick="moveFolder(${sIdx}, 'down')" class="p-1 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Down"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
-                                <button onclick="deleteSubfolder(${sIdx})" class="p-1 rounded bg-dark-600 hover:bg-rose-500/20 text-rose-400" title="Delete"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="moveFolder(${sIdx}, 'up')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Up"><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="moveFolder(${sIdx}, 'down')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Down"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="deleteSubfolder(${sIdx})" class="p-1.5 rounded bg-dark-600 hover:bg-rose-500/20 text-rose-400" title="Delete"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </div>
                         </div>`;
                 });
@@ -871,11 +871,11 @@ l<!DOCTYPE html>
                 currentFolder.files.forEach((file, fIdx) => {
                     folderContainer.innerHTML += `
                         <div class="bg-dark-700/20 border border-dark-600 p-3 rounded-xl flex items-center justify-between">
-                            <div class="flex items-center space-x-3">
-                                <i data-lucide="file-text" class="w-4 h-4 text-rose-400"></i>
-                                <a href="${file.url}" target="_blank" class="text-slate-200 text-xs font-medium underline hover:text-rose-400">${file.name}</a>
+                            <div class="flex items-center space-x-3 overflow-hidden">
+                                <i data-lucide="file-text" class="w-4 h-4 text-rose-400 shrink-0"></i>
+                                <a href="${file.url}" target="_blank" class="text-slate-200 text-xs font-medium underline hover:text-rose-400 truncate">${file.name}</a>
                             </div>
-                            <button onclick="deleteFile(${fIdx})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                            <button onclick="deleteFile(${fIdx})" class="text-slate-400 hover:text-rose-400 shrink-0 ml-2"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                         </div>`;
                 });
             }
@@ -999,7 +999,7 @@ l<!DOCTYPE html>
         function openFolderModal() { document.getElementById('folderModal').classList.remove('hidden'); }
         function closeFolderModal() { document.getElementById('folderModal').classList.add('hidden'); }
 
-        let uploadTargetMode = 'event'; // 'event' or 'financial'
+        let uploadTargetMode = 'event'; 
         function openUploadModal(mode = 'event') {
             uploadTargetMode = mode;
             document.getElementById('uploadModalTitle').innerText = mode === 'Financial & Tax Documents' ? 'Upload Financial Document' : 'Upload File from Device';
@@ -1201,7 +1201,7 @@ l<!DOCTYPE html>
         }
 
         function exportCSV() {
-            let csv = 'Stage,Organization,Contact,Scope,Scope,Status,Action\n';
+            let csv = 'Stage,Organization,Contact,Scope,Status,Action\n';
             pipelineData.forEach(d => csv += `"${d.stage}","${d.org}","${d.contact}","${d.scope}","${d.status}","${d.action}"\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'brown_girls_pipeline.csv'; a.click();
