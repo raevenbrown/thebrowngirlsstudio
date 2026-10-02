@@ -303,7 +303,7 @@
                     </div>
                 </div>
 
-                <!-- Interactive Tab Navigation (Tasks & Stage Progress First) -->
+                <!-- Interactive Tab Navigation -->
                 <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600 pb-3">
                     <button onclick="switchTab('tasks')" id="tabBtn-tasks" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center">Tasks & Stage Progress</button>
                     <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Company Info</button>
@@ -319,7 +319,7 @@
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <div>
                                 <h3 class="font-bold text-sm text-slate-100">Client Task List & Stage Tracker</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Check off tasks and track the current stage progress for this partner.</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Check off tasks, highlight current focus, and track stage progress.</p>
                             </div>
                             <button onclick="openClientTaskModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
                                 + Add Task
@@ -496,7 +496,7 @@
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
             <h3 class="font-bold text-slate-100 text-sm mb-4">Add Client Task</h3>
             <form onsubmit="saveClientTask(event)" class="space-y-4 text-xs">
-                <input type="text" id="clientTaskInput" required placeholder="Task Description (e.g. Follow up with Ms. Bunting)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="clientTaskInput" required placeholder="Task Description (e.g. Email Ms. Bunting to return)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeClientTaskModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Add Task</button>
@@ -735,11 +735,12 @@
             { 
                 id: 1, 
                 stage: "Waiting on Invoice", 
-                org: "InspiHER Conference / Newton District", 
+                org: "InspiHER Conference / Newton County District", 
                 contact: "Dr. Jennifer Williams", 
                 scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
                 status: "W-9 & CP575 Submitted", 
                 action: "Follow up first week of November",
+                isRetainer: true,
                 auditRecords: [
                     { ref: "INV-2026-01", desc: "InspiHER 2-Day Workshop (Dec 2-3)", date: "Oct 1, 2026", amount: 750.00, status: "Pending", method: "Submitted to AP Dept (W-9 attached)" }
                 ],
@@ -748,7 +749,7 @@
                 ],
                 clientTasks: [
                     { task: "Submit W-9 and CP575", done: true },
-                    { task: "Follow up first week of November", done: false }
+                    { task: "Follow up first week of November", done: false, active: true }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -761,11 +762,7 @@
                     ],
                     files: []
                 },
-                trashFolder: {
-                    name: "Trash Bin",
-                    subfolders: [],
-                    files: []
-                },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
                     { name: "EIN CP575.pdf", url: "EIN.pdf" }
@@ -789,12 +786,14 @@
                 contact: "Principal Brandon Parham / Chantal Hendrix", 
                 scope: "Career Day & After-School AI Lab Partnership", 
                 status: "Follow-Up Stage", 
-                action: "Follow up with Ms. Bunting to turn into a program",
+                action: "Email Ms. Bunting to set up a day to come back to the school",
+                isRetainer: true,
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Complete 5 career day sessions (Completed)", done: true },
-                    { task: "Follow up with Ms. Bunting to turn into a program", done: false }
+                    { task: "Complete 5 career day sessions (100 students, 96% rating)", done: true },
+                    { task: "Email Ms. Bunting to set up a day to come back to the school", done: false, active: true },
+                    { task: "Email the after-school director for Newton County District department", done: false, active: false }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -826,12 +825,13 @@
                 scope: "Career Day (11/19/2026) - Entrepreneur Presentation", 
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
+                isRetainer: false,
                 auditRecords: [],
                 calendarEvents: [
                     { title: "Career Day Presentation", start: "2026-11-19T08:00", end: "2026-11-19T11:30", location: "Porterdale Elementary", notes: "Entrepreneur presentation." }
                 ],
                 clientTasks: [
-                    { task: "Submit volunteer / sign-up form for Nov 19 event", done: false }
+                    { task: "Submit volunteer / sign-up form for Nov 19 event", done: false, active: true }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -860,10 +860,11 @@
                 scope: "Career Day (11/20/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
+                isRetainer: false,
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Submit Career Day sign-up for Nov 20 event", done: false }
+                    { task: "Submit Career Day sign-up for Nov 20 event", done: false, active: true }
                 ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -884,10 +885,11 @@
                 scope: "Career Day (10/28/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
+                isRetainer: false,
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Confirm Career Day attendance for Oct 28", done: false }
+                    { task: "Confirm Career Day attendance for Oct 28", done: false, active: true }
                 ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -908,6 +910,7 @@
                 scope: "Career Fair - Employer & Organization Showcase", 
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
+                isRetainer: false,
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -928,6 +931,7 @@
                 scope: "Turnkey after-school partnership & revenue share", 
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
+                isRetainer: true,
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -950,12 +954,23 @@
             { id: 4, task: "Submit Career Day sign-up for Timber Ridge Elementary", done: false }
         ];
 
+        let careerChecklist = JSON.parse(localStorage.getItem('bgcs_career_checklist')) || {
+            ncsa: true,
+            porterdale: false,
+            timberRidge: false,
+            pleasantGrove: false
+        };
+
         function savePipelineData() {
             localStorage.setItem('bgcs_pipeline_data', JSON.stringify(pipelineData));
         }
 
         function saveProspectTodos() {
             localStorage.setItem('bgcs_prospect_todos', JSON.stringify(prospectTodos));
+        }
+
+        function saveCareerChecklist() {
+            localStorage.setItem('bgcs_career_checklist', JSON.stringify(careerChecklist));
         }
 
         let currentProfileId = null;
@@ -1057,38 +1072,38 @@
                     <div class="space-y-3">
                         <div onclick="openProfile(2, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-amber-400 font-bold uppercase">Newton County STEAM Academy</span>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase">Newton County STEAM Academy (Retainer / Program Target)</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Newton County STEAM Academy</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Follow-up • 5 sessions completed</p>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Follow-up • Current Task: Email Ms. Bunting to set up return</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(3, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Porterdale Elementary School</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Porterdale Elementary School</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Nov 19, 2026</p>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Current Task: Submit volunteer form (Nov 19)</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(4, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Timber Ridge Elementary</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Timber Ridge Elementary</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Nov 20, 2026</p>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Current Task: Submit sign-up (Nov 20)</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(5, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Pleasant Grove Elementary</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Pleasant Grove Elementary</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Oct 28, 2026</p>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Current Task: Confirm attendance (Oct 28)</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'afterSchoolDetail') {
@@ -1097,20 +1112,20 @@
                     <div class="space-y-3">
                         <div onclick="openProfile(7, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-purple-400 font-bold uppercase">YES Program</span>
+                                <span class="text-[10px] text-purple-400 font-bold uppercase">YES Program (Retainer Target)</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">YES Program</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Revenue share model</p>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Current Task: Send partnership pitch</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(1, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-purple-400 font-bold uppercase">InspiHER Conference / Newton District</span>
+                                <span class="text-[10px] text-purple-400 font-bold uppercase">InspiHER Conference / Newton County District</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">InspiHER Conference / Newton District</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Waiting on Invoice • $750</p>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Waiting on Invoice ($750) • Current Task: Follow up November</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'privateSchoolsDetail') {
@@ -1121,9 +1136,9 @@
                             <div>
                                 <span class="text-[10px] text-emerald-400 font-bold uppercase">Peachtree Academy</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Peachtree Academy</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Career Fair</p>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Current Task: Submit employer sign-up form</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
                         </div>
                     </div>`;
             }
@@ -1136,18 +1151,23 @@
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (!lead || !container) return;
 
-            stageDisplay.innerHTML = `<span class="px-2 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">${lead.stage}</span> • Status: ${lead.status}`;
+            let retainerBadge = lead.isRetainer ? '<span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20 ml-2">Retainer Partner</span>' : '';
+            stageDisplay.innerHTML = `<span class="px-2 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">${lead.stage}</span> • Status: ${lead.status} ${retainerBadge}`;
 
             container.innerHTML = '';
             if (lead.clientTasks && lead.clientTasks.length > 0) {
                 lead.clientTasks.forEach((ct, cIdx) => {
+                    let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500' : 'border-dark-600 bg-dark-700/40';
                     container.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
+                        <div class="border ${highlightClass} p-3.5 rounded-xl flex items-center justify-between transition">
                             <label class="flex items-center space-x-3 cursor-pointer flex-1">
                                 <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                                <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task}</span>
+                                <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task} ${ct.active ? '<span class="ml-2 px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase">Current Focus</span>' : ''}</span>
                             </label>
-                            <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                            <div class="flex items-center space-x-2">
+                                <button onclick="setClientTaskActive(${cIdx})" class="text-[10px] px-2 py-1 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Highlight as Current Task">Highlight</button>
+                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                            </div>
                         </div>`;
                 });
             } else {
@@ -1165,10 +1185,24 @@
             }
         }
 
+        function setClientTaskActive(cIdx) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (lead && lead.clientTasks) {
+                lead.clientTasks.forEach((t, idx) => {
+                    t.active = (idx === cIdx);
+                });
+                savePipelineData();
+                renderClientTasks();
+            }
+        }
+
         function deleteClientTask(cIdx) {
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (lead && lead.clientTasks) {
-                lead.clientTasks.splice(cIdx, 1);
+                let removed = lead.clientTasks.splice(cIdx, 1)[0];
+                if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
+                if (!lead.trashFolder.files) lead.trashFolder.files = [];
+                lead.trashFolder.files.push({ name: "Task: " + removed.task, url: "#" });
                 savePipelineData();
                 renderClientTasks();
             }
@@ -1186,7 +1220,7 @@
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (lead) {
                 if (!lead.clientTasks) lead.clientTasks = [];
-                lead.clientTasks.push({ task, done: false });
+                lead.clientTasks.push({ task, done: false, active: false });
                 closeClientTaskModal();
                 document.getElementById('clientTaskInput').value = '';
                 savePipelineData();
