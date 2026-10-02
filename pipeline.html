@@ -178,6 +178,30 @@
                     </div>
                 </div>
 
+                <!-- Financial Tracking & Revenue Metrics Tab -->
+                <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
+                    <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                        <h3 class="font-bold text-sm text-slate-100">Company Financials & Revenue Tracking</h3>
+                        <button onclick="openFinanceModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
+                            Update Financials
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Value / Potential</p>
+                            <h4 id="finTotal" class="text-xl font-bold text-slate-100 mt-1">$0.00</h4>
+                        </div>
+                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                            <p class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Pending Revenue</p>
+                            <h4 id="finPending" class="text-xl font-bold text-purple-400 mt-1">$0.00</h4>
+                        </div>
+                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                            <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Closed / Paid</p>
+                            <h4 id="finClosed" class="text-xl font-bold text-emerald-400 mt-1">$0.00</h4>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Org Chart / Hierarchy Section -->
                 <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
                     <div class="flex justify-between items-center border-b border-dark-600 pb-4">
@@ -295,6 +319,31 @@
         </div>
     </div>
 
+    <!-- Modal for Updating Financials -->
+    <div id="financeModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Update Company Financials</h3>
+            <form onsubmit="saveFinance(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Total Contract Value ($)</label>
+                    <input type="number" step="0.01" id="finTotalInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Pending Revenue ($)</label>
+                    <input type="number" step="0.01" id="finPendingInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Closed / Paid Revenue ($)</label>
+                    <input type="number" step="0.01" id="finClosedInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeFinanceModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Financials</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Popup Card for Viewing Contact Details -->
     <div id="contactPopup" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 text-xs relative">
@@ -338,6 +387,7 @@
                 scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
                 status: "W-9 & CP575 Submitted", 
                 action: "Follow up first week of November",
+                finance: { total: 750.00, pending: 750.00, closed: 0.00 },
                 docs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
                     { name: "IRS CP575.pdf", url: "EIN .pdf" }
@@ -362,6 +412,7 @@
                 scope: "Career Day & After-School AI Lab Partnership", 
                 status: "In Discussion", 
                 action: "Review proposal and schedule pilot cohort",
+                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
                 docs: [
                     { name: "NCSA Pilot Proposal.pdf", url: "#" },
                     { name: "Curriculum Proposal.pdf", url: "#" }
@@ -384,6 +435,7 @@
                 scope: "Career Day (11/19/2026) - Entrepreneur Presentation", 
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
+                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
                 docs: [{ name: "Career_Day_Flyer.png", url: "#" }],
                 contacts: [
                     { name: "Ms. Dwayaa Ward", role: "School Contact / Coordinator", email: "ward.dwayaa@newton.k12.ga.us", phone: "770-784-2928", location: "Porterdale Elementary", notes: "Primary organizer for Career Day." }
@@ -400,6 +452,7 @@
                 scope: "Career Day (11/20/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
+                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
                 docs: [{ name: "TRE_Flyer.png", url: "#" }],
                 contacts: [],
                 activities: [
@@ -414,6 +467,7 @@
                 scope: "Career Day (10/28/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
+                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
                 docs: [{ name: "PGE_Flyer.png", url: "#" }],
                 contacts: [],
                 activities: [
@@ -428,6 +482,7 @@
                 scope: "Career Fair - Employer & Organization Showcase", 
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
+                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
                 docs: [{ name: "Peachtree_Flyer.png", url: "#" }],
                 contacts: [],
                 activities: [
@@ -442,6 +497,7 @@
                 scope: "Turnkey after-school partnership & revenue share", 
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
+                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
                 docs: [],
                 contacts: [],
                 activities: [
@@ -504,6 +560,12 @@
             document.getElementById('profileContact').innerText = lead.contact;
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
+
+            // Render Financial Metrics
+            const fin = lead.finance || { total: 0, pending: 0, closed: 0 };
+            document.getElementById('finTotal').innerText = '$' + fin.total.toFixed(2);
+            document.getElementById('finPending').innerText = '$' + fin.pending.toFixed(2);
+            document.getElementById('finClosed').innerText = '$' + fin.closed.toFixed(2);
 
             let badge = document.getElementById('profileBadge');
             badge.innerText = lead.stage;
@@ -604,6 +666,31 @@
         function openContactModal() { document.getElementById('contactModal').classList.remove('hidden'); }
         function closeContactModal() { document.getElementById('contactModal').classList.add('hidden'); }
 
+        function openFinanceModal() {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if(lead && lead.finance) {
+                document.getElementById('finTotalInput').value = lead.finance.total;
+                document.getElementById('finPendingInput').value = lead.finance.pending;
+                document.getElementById('finClosedInput').value = lead.finance.closed;
+            }
+            document.getElementById('financeModal').classList.remove('hidden');
+        }
+        function closeFinanceModal() { document.getElementById('financeModal').classList.add('hidden'); }
+
+        function saveFinance(event) {
+            event.preventDefault();
+            const total = parseFloat(document.getElementById('finTotalInput').value) || 0;
+            const pending = parseFloat(document.getElementById('finPendingInput').value) || 0;
+            const closed = parseFloat(document.getElementById('finClosedInput').value) || 0;
+
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if(lead) {
+                lead.finance = { total, pending, closed };
+                closeFinanceModal();
+                openProfile(currentProfileId, false);
+            }
+        }
+
         function showContactPopup(jsonStr) {
             const c = JSON.parse(decodeURIComponent(jsonStr));
             document.getElementById('popupName').innerText = c.name;
@@ -678,6 +765,7 @@
                 scope: document.getElementById('leadScope').value,
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
+                finance: { total: 0, pending: 0, closed: 0 },
                 docs: [],
                 contacts: [],
                 activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
@@ -686,6 +774,7 @@
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
                 data.docs = pipelineData[idx].docs;
                 data.contacts = pipelineData[idx].contacts || [];
+                data.finance = pipelineData[idx].finance || { total: 0, pending: 0, closed: 0 };
                 data.activities = pipelineData[idx].activities;
                 pipelineData[idx] = data; 
             } else { 
