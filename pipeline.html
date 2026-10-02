@@ -164,9 +164,6 @@
                             <p class="text-slate-400 uppercase font-bold tracking-wider text-[10px]">Primary Contact</p>
                             <p id="profileContact" class="font-semibold text-slate-200 text-sm"></p>
                         </div>
-                        <div id="gmailLinkContainer">
-                            <!-- Gmail link rendered dynamically -->
-                        </div>
                         <p id="profileNextAction" class="text-rose-400 font-medium"></p>
                     </div>
                 </div>
@@ -217,7 +214,6 @@
                 <input type="text" id="leadScope" required placeholder="Goal / Scope" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <input type="text" id="leadStatus" required placeholder="Status (e.g. W-9 Submitted)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <input type="text" id="leadAction" required placeholder="Next Action / Follow-Up" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="email" id="leadEmail" placeholder="Contact Email (e.g. williams.jennifer@newton.k12.ga.us)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Target</button>
@@ -234,8 +230,8 @@
                 <div>
                     <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Activity Type</label>
                     <select id="noteType" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                        <option value="Email Sent">Email Sent</option>
                         <option value="Email Received">Email Received</option>
+                        <option value="Email Sent">Email Sent</option>
                         <option value="Phone Call">Phone Call</option>
                         <option value="Meeting / Discussion">Meeting / Discussion</option>
                         <option value="General Note">General Note</option>
@@ -243,7 +239,7 @@
                 </div>
                 <div>
                     <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Notes / Summary</label>
-                    <textarea id="noteText" required rows="4" placeholder="Enter conversation details..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                    <textarea id="noteText" required rows="4" placeholder="Paste email snippet or notes..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeNoteModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
@@ -273,28 +269,30 @@
                 stage: "Waiting on Invoice", 
                 org: "InspiHER Conference / Newton District", 
                 contact: "Dr. Jennifer Williams", 
-                email: "williams.jennifer@newton.k12.ga.us",
                 scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
                 status: "W-9 & CP575 Submitted", 
-                action: "Follow up on direct deposit & scheduling",
+                action: "Follow up first week of November",
                 docs: ["Form W-9.pdf", "IRS CP575.pdf"],
                 activities: [
+                    { date: "Aug 31, 2026", type: "Email Received", text: "Jennifer Williams: 'I would like to learn more about your organization. When do you have time to jump on a Zoom for us to meet and discuss other possibilities?'" },
+                    { date: "Sep 8, 2026", type: "Meeting", text: "Conducted Zoom discovery call and discussed studio capabilities and workshop possibilities." },
+                    { date: "Sep 28, 2026", type: "Meeting", text: "Confirmed InspiHER 2-day workshop for December 2-3, 2026." },
                     { date: "Oct 1, 2026", type: "Email Received", text: "Jennifer: 'Thank you for following up. Yes, I'd love to have you for both days. Please send me your W9. I already have your invoice. Let's make a plan to talk first week of November.'" },
-                    { date: "Oct 1, 2026", type: "Email Sent", text: "Submitted completed W-9 and CP575 confirmation notice for AP department." },
-                    { date: "Sep 28, 2026", type: "Meeting", text: "Confirmed InspiHER 2-day workshop for December 2-3, 2026." }
+                    { date: "Oct 1, 2026", type: "Email Sent", text: "Submitted completed W-9 and CP575 confirmation notice for AP department." }
                 ]
             },
             { 
                 id: 2, 
                 stage: "Prospecting", 
                 org: "Newton County STEAM Academy", 
-                contact: "Principal Brandon Parham / Ms. Bunting", 
-                email: "",
+                contact: "Principal Brandon Parham / Chantal Hendrix", 
                 scope: "Career Day & After-School AI Lab Partnership", 
                 status: "In Discussion", 
-                action: "Review survey demand and schedule pilot cohort",
-                docs: ["NCSA Pilot Proposal.pdf"],
+                action: "Review proposal and schedule pilot cohort",
+                docs: ["NCSA Pilot Proposal.pdf", "Brown Girls Creative Studio - Curriculum Proposal.pdf"],
                 activities: [
+                    { date: "Aug 24, 2026", type: "Email Sent", text: "Emailed Chantal Hendrix proposing after-school AI & STEM organization, 1-hour free pilot, and teacher professional development workshops." },
+                    { date: "Sep 3, 2026", type: "Meeting", text: "Scheduled and aligned on NCSA Student Project Showcase and pilot tracking." },
                     { date: "Sep 29, 2026", type: "General Note", text: "Reviewed lunch camera footage and coordinated with administration." }
                 ]
             },
@@ -303,7 +301,6 @@
                 stage: "Prospecting", 
                 org: "Porterdale Elementary School", 
                 contact: "Ms. Dwayaa Ward (770-784-2928)", 
-                email: "ward.dwayaa@newton.k12.ga.us",
                 scope: "Career Day (11/19/2026) - Entrepreneur Presentation", 
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
@@ -317,7 +314,6 @@
                 stage: "Prospecting", 
                 org: "Timber Ridge Elementary", 
                 contact: "School Coordinator", 
-                email: "",
                 scope: "Career Day (11/20/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
@@ -331,7 +327,6 @@
                 stage: "Prospecting", 
                 org: "Pleasant Grove Elementary", 
                 contact: "School Coordinator", 
-                email: "",
                 scope: "Career Day (10/28/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
@@ -345,7 +340,6 @@
                 stage: "Prospecting", 
                 org: "Peachtree Academy", 
                 contact: "School Coordinator", 
-                email: "",
                 scope: "Career Fair - Employer & Organization Showcase", 
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
@@ -359,7 +353,6 @@
                 stage: "Prospecting", 
                 org: "YES Program", 
                 contact: "Program Director", 
-                email: "",
                 scope: "Turnkey after-school partnership & revenue share", 
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
@@ -422,15 +415,6 @@
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
 
-            // Gmail Search Link Container (using exact mobile/web search pattern)
-            const gmailContainer = document.getElementById('gmailLinkContainer');
-            if(lead.email) {
-                const searchUrl = `https://mail.google.com/mail/u/3/#search/to%3A${encodeURIComponent(lead.email)}%20OR%20from%3A${encodeURIComponent(lead.email)}`;
-                gmailContainer.innerHTML = `<a href="${searchUrl}" target="_blank" class="inline-flex items-center text-rose-400 hover:text-rose-300 font-semibold underline mt-1"><i data-lucide="mail" class="w-3.5 h-3.5 mr-1.5 inline"></i> View All Emails with ${lead.email}</a>`;
-            } else {
-                gmailContainer.innerHTML = `<span class="text-slate-500 italic text-[11px]">No contact email set. Click edit to add email.</span>`;
-            }
-
             let badge = document.getElementById('profileBadge');
             badge.innerText = lead.stage;
             badge.className = "px-3 py-1 rounded-lg text-xs font-semibold border ";
@@ -490,8 +474,7 @@
                 document.getElementById('leadContact').value = lead.contact;
                 document.getElementById('leadScope').value = lead.scope;
                 document.getElementById('leadStatus').value = lead.status;
-                document.getElementById('leadAction').value = lead.action;
-                document.getElementById('leadEmail').value = lead.email || '';
+                document.ей = document.getElementById('leadAction').value = lead.action;
                 document.getElementById('modalTitle').innerText = 'Edit Partnership Target';
             } else {
                 document.getElementById('leadForm').reset();
@@ -512,7 +495,7 @@
             if(lead) {
                 if(!lead.activities) lead.activities = [];
                 lead.activities.unshift({
-                    date: "Oct 1, 2026",
+                    date: "Oct 2, 2026",
                     type: type,
                     text: text
                 });
@@ -533,9 +516,8 @@
                 scope: document.getElementById('leadScope').value,
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
-                email: document.getElementById('leadEmail').value,
                 docs: [],
-                activities: [{ date: "Oct 1, 2026", type: "Created", text: "Lead added to pipeline." }]
+                activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
             };
             if(id) { 
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
@@ -556,11 +538,12 @@
         }
 
         function exportCSV() {
-            let csv = 'Stage,Organization,Contact,Scope,Scope,Status,Action\n';
+            let csv = 'Stage,Organization,Contact,Scope,Status,Action\n';
             pipelineData.forEach(d => csv += `"${d.stage}","${d.org}","${d.contact}","${d.scope}","${d.status}","${d.action}"\n`);
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'brown_girls_pipeline.csv'; a.click();
         }
+        renderTable();
     </script>
 </body>
 </html>
