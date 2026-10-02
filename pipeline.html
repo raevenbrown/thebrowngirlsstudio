@@ -243,6 +243,19 @@
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Financial & Tax Documents Folder -->
+                        <div class="border-t border-dark-600 pt-6 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider"><i data-lucide="folder" class="w-3.5 h-3.5 inline mr-1.5 text-rose-500"></i> Financial & Tax Documents Folder (W-9 & CP575)</h4>
+                                <button onclick="openUploadModal('Financial & Tax Documents')" class="px-3 py-1 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
+                                    + Upload to Financial Folder
+                                </button>
+                            </div>
+                            <div id="financialDocsList" class="space-y-2 text-xs">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -263,29 +276,18 @@
 
                 <!-- Tab 4: Partnership Events & Folders -->
                 <div id="tabContent-events" class="space-y-6 hidden">
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
-                            <div class="flex justify-between items-center border-b border-dark-600 pb-4">
-                                <h3 class="font-bold text-sm text-slate-100">Client Portal & Folders</h3>
-                                <button onclick="openFolderModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
-                                    + New Folder
-                                </button>
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                            <div>
+                                <h3 class="font-bold text-sm text-slate-100">Partnership Events & Event Folders</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Create event folders (e.g. InspiHER Workshop 2026, Career Day) and store event-specific marketing materials.</p>
                             </div>
-                            <div id="folderList" class="space-y-3">
-                                <!-- Populated dynamically -->
-                            </div>
+                            <button onclick="openFolderModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
+                                + Create Event Folder
+                            </button>
                         </div>
-
-                        <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
-                            <div class="flex justify-between items-center border-b border-dark-600 pb-4">
-                                <h3 class="font-bold text-sm text-slate-100">Event Marketing Materials & Documents</h3>
-                                <button onclick="openUploadModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
-                                    + Upload Material
-                                </button>
-                            </div>
-                            <div id="profileDocs" class="space-y-3 text-xs">
-                                <!-- Populated dynamically -->
-                            </div>
+                        <div id="eventFoldersContainer" class="space-y-6">
+                            <!-- Populated dynamically -->
                         </div>
                     </div>
                 </div>
@@ -400,12 +402,12 @@
         </div>
     </div>
 
-    <!-- Modal for Creating Client Folder -->
+    <!-- Modal for Creating Event Folder -->
     <div id="folderModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Create New Folder</h3>
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Create New Event Folder</h3>
             <form onsubmit="saveFolder(event)" class="space-y-4 text-xs">
-                <input type="text" id="folderNameInput" required placeholder="Folder Name (e.g. Invoices, Marketing Assets)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="folderNameInput" required placeholder="Event Name (e.g. InspiHER 2026 Workshop)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeFolderModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Create Folder</button>
@@ -417,10 +419,11 @@
     <!-- Modal for Uploading Document / Material -->
     <div id="uploadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Upload Event Material</h3>
+            <h3 id="uploadModalTitle" class="font-bold text-slate-100 text-sm mb-4">Upload Document</h3>
             <form onsubmit="saveUpload(event)" class="space-y-4 text-xs">
-                <input type="text" id="uploadNameInput" required placeholder="File Name (e.g. Workshop_Flyer.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="uploadUrlInput" required placeholder="File URL (e.g. filename.pdf or link)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="hidden" id="uploadFolderTarget">
+                <input type="text" id="uploadNameInput" required placeholder="File Name (e.g. Form W-9.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="uploadUrlInput" required placeholder="File URL / Filename (e.g. W9.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload File</button>
@@ -475,8 +478,10 @@
                 auditRecords: [
                     { ref: "INV-2026-01", desc: "InspiHER 2-Day Workshop (Dec 2-3)", date: "Oct 1, 2026", amount: 750.00, status: "Pending", method: "Submitted to AP Dept (W-9 attached)" }
                 ],
-                folders: ["Invoices & Tax Docs", "Event Marketing Assets"],
-                docs: [
+                eventFolders: [
+                    { name: "InspiHER 2026 Workshop", docs: [{ name: "Workshop_Agenda.pdf", url: "#" }] }
+                ],
+                financialDocs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
                     { name: "IRS CP575.pdf", url: "EIN .pdf" }
                 ],
@@ -501,11 +506,10 @@
                 status: "In Discussion", 
                 action: "Review proposal and schedule pilot cohort",
                 auditRecords: [],
-                folders: ["Proposals"],
-                docs: [
-                    { name: "NCSA Pilot Proposal.pdf", url: "#" },
-                    { name: "Curriculum Proposal.pdf", url: "#" }
+                eventFolders: [
+                    { name: "NCSA Pilot Program", docs: [{ name: "NCSA Pilot Proposal.pdf", url: "#" }, { name: "Curriculum Proposal.pdf", url: "#" }] }
                 ],
+                financialDocs: [],
                 contacts: [
                     { name: "Principal Brandon Parham", role: "Principal / Decision Maker", email: "parham.brandon@newton.k12.ga.us", phone: "School Main", location: "Newton County STEAM Academy", notes: "Flagship pilot school leadership." },
                     { name: "Chantal Hendrix, Ed.S.", role: "Digital Learning Coach", email: "hendrix.chantal@newton.k12.ga.us", phone: "770-787-1330 ext. 1306", location: "Covington, GA", notes: "Key instructional contact." }
@@ -525,8 +529,10 @@
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
                 auditRecords: [],
-                folders: ["Flyers"],
-                docs: [{ name: "Career_Day_Flyer.png", url: "#" }],
+                eventFolders: [
+                    { name: "Career Day 2026", docs: [{ name: "Career_Day_Flyer.png", url: "#" }] }
+                ],
+                financialDocs: [],
                 contacts: [
                     { name: "Ms. Dwayaa Ward", role: "School Contact / Coordinator", email: "ward.dwayaa@newton.k12.ga.us", phone: "770-784-2928", location: "Porterdale Elementary", notes: "Primary organizer for Career Day." }
                 ],
@@ -543,8 +549,8 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 auditRecords: [],
-                folders: [],
-                docs: [{ name: "TRE_Flyer.png", url: "#" }],
+                eventFolders: [],
+                financialDocs: [],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Nov 20, 2026 (8:30 AM - 11:30 AM)." }
@@ -559,8 +565,8 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 auditRecords: [],
-                folders: [],
-                docs: [{ name: "PGE_Flyer.png", url: "#" }],
+                eventFolders: [],
+                financialDocs: [],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Oct 28, 2026 (8:30 AM - 11:30 AM)." }
@@ -575,8 +581,8 @@
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
                 auditRecords: [],
-                folders: [],
-                docs: [{ name: "Peachtree_Flyer.png", url: "#" }],
+                eventFolders: [],
+                financialDocs: [],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Reviewed Covington Campus Career Fair flyer." }
@@ -591,8 +597,8 @@
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
                 auditRecords: [],
-                folders: [],
-                docs: [],
+                eventFolders: [],
+                financialDocs: [],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Initial lead added for after-school revenue share model." }
@@ -698,6 +704,21 @@
             document.getElementById('finPending').innerText = '$' + pending.toFixed(2);
             document.getElementById('finClosed').innerText = '$' + closed.toFixed(2);
 
+            // Render Financial & Tax Documents Folder
+            const finDocsDiv = document.getElementById('financialDocsList');
+            finDocsDiv.innerHTML = '';
+            if(lead.financialDocs && lead.financialDocs.length > 0) {
+                lead.financialDocs.forEach(doc => {
+                    finDocsDiv.innerHTML += `
+                        <a href="${doc.url}" target="_blank" class="flex items-center justify-between bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-3 rounded-xl transition">
+                            <span class="text-slate-200 font-medium"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc.name}</span>
+                            <span class="text-[10px] text-rose-400 font-semibold underline">View / Download</span>
+                        </a>`;
+                });
+            } else {
+                finDocsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No financial or tax documents uploaded yet.</p>`;
+            }
+
             let badge = document.getElementById('profileBadge');
             badge.innerText = lead.stage;
             badge.className = "px-3 py-1 rounded-lg text-xs font-semibold border ";
@@ -723,19 +744,37 @@
                 orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional contacts added to this company profile yet.</p>`;
             }
 
-            // Render Folders
-            const folderList = document.getElementById('folderList');
-            folderList.innerHTML = '';
-            if(lead.folders && lead.folders.length > 0) {
-                lead.folders.forEach(folder => {
-                    folderList.innerHTML += `
-                        <div class="flex items-center justify-between bg-dark-700/40 border border-dark-600 p-3 rounded-xl">
-                            <span class="text-slate-200 font-medium"><i data-lucide="folder" class="w-4 h-4 inline mr-2 text-rose-500"></i>${folder}</span>
-                            <span class="text-[10px] text-slate-400 font-semibold">Active Folder</span>
+            // Render Event Folders
+            const eventFoldersContainer = document.getElementById('eventFoldersContainer');
+            eventFoldersContainer.innerHTML = '';
+            if(lead.eventFolders && lead.eventFolders.length > 0) {
+                lead.eventFolders.forEach((folder, fIdx) => {
+                    let docsHtml = '';
+                    if(folder.docs && folder.docs.length > 0) {
+                        folder.docs.forEach(d => {
+                            docsHtml += `
+                                <a href="${d.url}" target="_blank" class="flex items-center justify-between bg-dark-700/30 hover:bg-dark-700 p-2.5 rounded-lg border border-dark-600 text-xs transition">
+                                    <span class="text-slate-200"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${d.name}</span>
+                                    <span class="text-[10px] text-rose-400 underline">View</span>
+                                </a>`;
+                        });
+                    } else {
+                        docsHtml = `<p class="text-[11px] text-slate-500 italic">Folder is empty.</p>`;
+                    }
+
+                    eventFoldersContainer.innerHTML += `
+                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-2xl space-y-4">
+                            <div class="flex justify-between items-center border-b border-dark-600 pb-3">
+                                <h4 class="font-bold text-sm text-slate-100"><i data-lucide="folder" class="w-4 h-4 inline mr-2 text-rose-500"></i>${folder.name}</h4>
+                                <button onclick="openUploadModal('${folder.name}')" class="px-2.5 py-1 rounded-lg bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-[11px] transition">
+                                    + Add Document
+                                </button>
+                            </div>
+                            <div class="space-y-2">${docsHtml}</div>
                         </div>`;
                 });
             } else {
-                folderList.innerHTML = `<p class="text-xs text-slate-500 italic">No custom folders created yet.</p>`;
+                eventFoldersContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No partnership event folders created yet. Click above to create one.</p>`;
             }
 
             // Render Activities
@@ -754,21 +793,6 @@
                 });
             } else {
                 timeline.innerHTML = `<p class="text-xs text-slate-500 italic">No activity logged yet.</p>`;
-            }
-
-            // Render Docs as Clickable Links
-            const docsDiv = document.getElementById('profileDocs');
-            docsDiv.innerHTML = '';
-            if(lead.docs && lead.docs.length > 0) {
-                lead.docs.forEach(doc => {
-                    docsDiv.innerHTML += `
-                        <a href="${doc.url}" target="_blank" class="flex items-center justify-between bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-3 rounded-xl transition">
-                            <span class="text-slate-200 font-medium"><i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc.name}</span>
-                            <span class="text-[10px] text-rose-400 font-semibold underline">View / Download</span>
-                        </a>`;
-                });
-            } else {
-                docsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No marketing materials uploaded yet.</p>`;
             }
             lucide.createIcons();
         }
@@ -823,7 +847,11 @@
         function openFolderModal() { document.getElementById('folderModal').classList.remove('hidden'); }
         function closeFolderModal() { document.getElementById('folderModal').classList.add('hidden'); }
 
-        function openUploadModal() { document.getElementById('uploadModal').classList.remove('hidden'); }
+        function openUploadModal(folderName) {
+            document.getElementById('uploadFolderTarget').value = folderName;
+            document.getElementById('uploadModalTitle').innerText = folderName === 'Financial & Tax Documents' ? 'Upload Financial Document' : 'Upload to ' + folderName;
+            document.getElementById('uploadModal').classList.remove('hidden');
+        }
         function closeUploadModal() { document.getElementById('uploadModal').classList.add('hidden'); }
 
         function saveFolder(event) {
@@ -831,8 +859,8 @@
             const name = document.getElementById('folderNameInput').value;
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if(lead) {
-                if(!lead.folders) lead.folders = [];
-                lead.folders.push(name);
+                if(!lead.eventFolders) lead.eventFolders = [];
+                lead.eventFolders.push({ name, docs: [] });
                 closeFolderModal();
                 document.getElementById('folderNameInput').value = '';
                 openProfile(currentProfileId, false);
@@ -841,12 +869,21 @@
 
         function saveUpload(event) {
             event.preventDefault();
+            const folderTarget = document.getElementById('uploadFolderTarget').value;
             const name = document.getElementById('uploadNameInput').value;
             const url = document.getElementById('uploadUrlInput').value;
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if(lead) {
-                if(!lead.docs) lead.docs = [];
-                lead.docs.push({ name, url });
+                if(folderTarget === 'Financial & Tax Documents') {
+                    if(!lead.financialDocs) lead.financialDocs = [];
+                    lead.financialDocs.push({ name, url });
+                } else {
+                    const folder = lead.eventFolders.find(f => f.name === folderTarget);
+                    if(folder) {
+                        if(!folder.docs) folder.docs = [];
+                        folder.docs.push({ name, url });
+                    }
+                }
                 closeUploadModal();
                 document.getElementById('uploadNameInput').value = '';
                 document.getElementById('uploadUrlInput').value = '';
@@ -957,15 +994,15 @@
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
                 auditRecords: [],
-                folders: [],
-                docs: [],
+                eventFolders: [],
+                financialDocs: [],
                 contacts: [],
                 activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
             };
             if(id) { 
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
-                data.docs = pipelineData[idx].docs;
-                data.folders = pipelineData[idx].folders || [];
+                data.financialDocs = pipelineData[idx].financialDocs || [];
+                data.eventFolders = pipelineData[idx].eventFolders || [];
                 data.contacts = pipelineData[idx].contacts || [];
                 data.auditRecords = pipelineData[idx].auditRecords || [];
                 data.activities = pipelineData[idx].activities;
@@ -1004,3 +1041,4 @@
     </script>
 </body>
 </html>
+
