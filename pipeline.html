@@ -178,46 +178,58 @@
                     </div>
                 </div>
 
-                <!-- Financial Tracking & Revenue Metrics Tab -->
-                <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
-                    <div class="flex justify-between items-center border-b border-dark-600 pb-4">
-                        <h3 class="font-bold text-sm text-slate-100">Company Financials & Revenue Tracking</h3>
-                        <button onclick="openFinanceModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
-                            Update Financials
-                        </button>
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Value / Potential</p>
-                            <h4 id="finTotal" class="text-xl font-bold text-slate-100 mt-1">$0.00</h4>
+                <!-- Interactive Tab Navigation -->
+                <div class="flex space-x-2 border-b border-dark-600 pb-3">
+                    <button onclick="switchTab('info')" id="tabBtn-info" class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition">Company Info</button>
+                    <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Revenue & Financials</button>
+                    <button onclick="switchTab('comms')" id="tabBtn-comms" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Communication Log</button>
+                    <button onclick="switchTab('events')" id="tabBtn-events" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Partnership Events & Folders</button>
+                </div>
+
+                <!-- Tab 1: Company Info -->
+                <div id="tabContent-info" class="space-y-6">
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                            <h3 class="font-bold text-sm text-slate-100">Company Hierarchy & Decision Makers</h3>
+                            <button onclick="openContactModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
+                                + Add Team Member
+                            </button>
                         </div>
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                            <p class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Pending Revenue</p>
-                            <h4 id="finPending" class="text-xl font-bold text-purple-400 mt-1">$0.00</h4>
-                        </div>
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                            <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Closed / Paid</p>
-                            <h4 id="finClosed" class="text-xl font-bold text-emerald-400 mt-1">$0.00</h4>
+                        <div id="orgChartContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Populated dynamically -->
                         </div>
                     </div>
                 </div>
 
-                <!-- Org Chart / Hierarchy Section -->
-                <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
-                    <div class="flex justify-between items-center border-b border-dark-600 pb-4">
-                        <h3 class="font-bold text-sm text-slate-100">Company Hierarchy & Decision Makers</h3>
-                        <button onclick="openContactModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
-                            + Add Team Member
-                        </button>
-                    </div>
-                    <div id="orgChartContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Populated dynamically -->
+                <!-- Tab 2: Revenue & Financials -->
+                <div id="tabContent-revenue" class="space-y-6 hidden">
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                            <h3 class="font-bold text-sm text-slate-100">Financial Metrics & Revenue Tracking</h3>
+                            <button onclick="openFinanceModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
+                                Update Financials
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Value / Potential</p>
+                                <h4 id="finTotal" class="text-xl font-bold text-slate-100 mt-1">$0.00</h4>
+                            </div>
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Pending Revenue</p>
+                                <h4 id="finPending" class="text-xl font-bold text-purple-400 mt-1">$0.00</h4>
+                            </div>
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Closed / Paid</p>
+                                <h4 id="finClosed" class="text-xl font-bold text-emerald-400 mt-1">$0.00</h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Activity Log & Notes Section -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    <div class="lg:col-span-2 bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                <!-- Tab 3: Communication Log -->
+                <div id="tabContent-comms" class="space-y-6 hidden">
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <h3 class="font-bold text-sm text-slate-100">Conversation & Activity Timeline</h3>
                             <button onclick="openNoteModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
@@ -228,12 +240,33 @@
                             <!-- Populated dynamically -->
                         </div>
                     </div>
+                </div>
 
-                    <!-- Quick Details & Documents -->
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
-                        <h3 class="font-bold text-sm text-slate-100 border-b border-dark-600 pb-4">Attached Documents</h3>
-                        <div id="profileDocs" class="space-y-3 text-xs">
-                            <!-- Populated dynamically -->
+                <!-- Tab 4: Partnership Events & Folders -->
+                <div id="tabContent-events" class="space-y-6 hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                            <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                                <h3 class="font-bold text-sm text-slate-100">Client Portal & Folders</h3>
+                                <button onclick="openFolderModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
+                                    + New Folder
+                                </button>
+                            </div>
+                            <div id="folderList" class="space-y-3">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+
+                        <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                            <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                                <h3 class="font-bold text-sm text-slate-100">Event Marketing Materials & Documents</h3>
+                                <button onclick="openUploadModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
+                                    + Upload Material
+                                </button>
+                            </div>
+                            <div id="profileDocs" class="space-y-3 text-xs">
+                                <!-- Populated dynamically -->
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -344,6 +377,35 @@
         </div>
     </div>
 
+    <!-- Modal for Creating Client Folder -->
+    <div id="folderModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Create New Folder</h3>
+            <form onsubmit="saveFolder(event)" class="space-y-4 text-xs">
+                <input type="text" id="folderNameInput" required placeholder="Folder Name (e.g. Invoices, Marketing Assets)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeFolderModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Create Folder</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Uploading Document / Material -->
+    <div id="uploadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Upload Event Material</h3>
+            <form onsubmit="saveUpload(event)" class="space-y-4 text-xs">
+                <input type="text" id="uploadNameInput" required placeholder="File Name (e.g. Workshop_Flyer.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="uploadUrlInput" required placeholder="File URL (e.g. filename.pdf or link)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload File</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Popup Card for Viewing Contact Details -->
     <div id="contactPopup" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 text-xs relative">
@@ -388,6 +450,7 @@
                 status: "W-9 & CP575 Submitted", 
                 action: "Follow up first week of November",
                 finance: { total: 750.00, pending: 750.00, closed: 0.00 },
+                folders: ["Invoices & Tax Docs", "Event Marketing Assets"],
                 docs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
                     { name: "IRS CP575.pdf", url: "EIN .pdf" }
@@ -413,6 +476,7 @@
                 status: "In Discussion", 
                 action: "Review proposal and schedule pilot cohort",
                 finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                folders: ["Proposals"],
                 docs: [
                     { name: "NCSA Pilot Proposal.pdf", url: "#" },
                     { name: "Curriculum Proposal.pdf", url: "#" }
@@ -436,6 +500,7 @@
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
                 finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                folders: ["Flyers"],
                 docs: [{ name: "Career_Day_Flyer.png", url: "#" }],
                 contacts: [
                     { name: "Ms. Dwayaa Ward", role: "School Contact / Coordinator", email: "ward.dwayaa@newton.k12.ga.us", phone: "770-784-2928", location: "Porterdale Elementary", notes: "Primary organizer for Career Day." }
@@ -453,6 +518,7 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                folders: [],
                 docs: [{ name: "TRE_Flyer.png", url: "#" }],
                 contacts: [],
                 activities: [
@@ -468,6 +534,7 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                folders: [],
                 docs: [{ name: "PGE_Flyer.png", url: "#" }],
                 contacts: [],
                 activities: [
@@ -483,6 +550,7 @@
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
                 finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                folders: [],
                 docs: [{ name: "Peachtree_Flyer.png", url: "#" }],
                 contacts: [],
                 activities: [
@@ -498,6 +566,7 @@
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
                 finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                folders: [],
                 docs: [],
                 contacts: [],
                 activities: [
@@ -507,6 +576,16 @@
         ];
 
         let currentProfileId = null;
+
+        function switchTab(tabName) {
+            ['info', 'revenue', 'comms', 'events'].forEach(t => {
+                document.getElementById('tabContent-' + t).classList.add('hidden');
+                document.getElementById('tabBtn-' + t).className = "px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition";
+            });
+            document.getElementById('tabContent-' + tabName).classList.remove('hidden');
+            document.getElementById('tabBtn-' + tabName).className = "px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition";
+            lucide.createIcons();
+        }
 
         function renderTable() {
             const tbody = document.getElementById('pipeline-table-body');
@@ -592,6 +671,21 @@
                 orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional contacts added to this company profile yet.</p>`;
             }
 
+            // Render Folders
+            const folderList = document.getElementById('folderList');
+            folderList.innerHTML = '';
+            if(lead.folders && lead.folders.length > 0) {
+                lead.folders.forEach(folder => {
+                    folderList.innerHTML += `
+                        <div class="flex items-center justify-between bg-dark-700/40 border border-dark-600 p-3 rounded-xl">
+                            <span class="text-slate-200 font-medium"><i data-lucide="folder" class="w-4 h-4 inline mr-2 text-rose-500"></i>${folder}</span>
+                            <span class="text-[10px] text-slate-400 font-semibold">Active Folder</span>
+                        </div>`;
+                });
+            } else {
+                folderList.innerHTML = `<p class="text-xs text-slate-500 italic">No custom folders created yet.</p>`;
+            }
+
             // Render Activities
             const timeline = document.getElementById('activityTimeline');
             timeline.innerHTML = '';
@@ -622,7 +716,7 @@
                         </a>`;
                 });
             } else {
-                docsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No documents attached.</p>`;
+                docsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No marketing materials uploaded yet.</p>`;
             }
             lucide.createIcons();
         }
@@ -676,6 +770,40 @@
             document.getElementById('financeModal').classList.remove('hidden');
         }
         function closeFinanceModal() { document.getElementById('financeModal').classList.add('hidden'); }
+
+        function openFolderModal() { document.getElementById('folderModal').classList.remove('hidden'); }
+        function closeFolderModal() { document.getElementById('folderModal').classList.add('hidden'); }
+
+        function openUploadModal() { document.getElementById('uploadModal').classList.remove('hidden'); }
+        function closeUploadModal() { document.getElementById('uploadModal').classList.add('hidden'); }
+
+        function saveFolder(event) {
+            event.preventDefault();
+            const name = document.getElementById('folderNameInput').value;
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if(lead) {
+                if(!lead.folders) lead.folders = [];
+                lead.folders.push(name);
+                closeFolderModal();
+                document.getElementById('folderNameInput').value = '';
+                openProfile(currentProfileId, false);
+            }
+        }
+
+        function saveUpload(event) {
+            event.preventDefault();
+            const name = document.getElementById('uploadNameInput').value;
+            const url = document.getElementById('uploadUrlInput').value;
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if(lead) {
+                if(!lead.docs) lead.docs = [];
+                lead.docs.push({ name, url });
+                closeUploadModal();
+                document.getElementById('uploadNameInput').value = '';
+                document.getElementById('uploadUrlInput').value = '';
+                openProfile(currentProfileId, false);
+            }
+        }
 
         function saveFinance(event) {
             event.preventDefault();
@@ -766,6 +894,7 @@
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
                 finance: { total: 0, pending: 0, closed: 0 },
+                folders: [],
                 docs: [],
                 contacts: [],
                 activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
@@ -773,6 +902,7 @@
             if(id) { 
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
                 data.docs = pipelineData[idx].docs;
+                data.folders = pipelineData[idx].folders || [];
                 data.contacts = pipelineData[idx].contacts || [];
                 data.finance = pipelineData[idx].finance || { total: 0, pending: 0, closed: 0 };
                 data.activities = pipelineData[idx].activities;
