@@ -182,7 +182,7 @@
                     </div>
                 </div>
 
-                <!-- Interactive Tab Navigation (Grid on Mobile for Perfect Wrapping) -->
+                <!-- Interactive Tab Navigation -->
                 <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600 pb-3">
                     <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center">Company Info</button>
                     <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Revenue & Audit</button>
@@ -651,14 +651,19 @@
         let currentProfileId = null;
         let currentFolderPath = []; 
         let currentEditingFolderRef = null;
+        let currentActiveTab = 'info';
 
-        function switchTab(tabName) {
+        function switchTab(tabName, updateHash = true) {
+            currentActiveTab = tabName;
+            if (updateHash && currentProfileId !== null) {
+                window.location.hash = `profile=${currentProfileId}&tab=${tabName}`;
+            }
             ['info', 'revenue', 'comms', 'events'].forEach(t => {
                 document.getElementById('tabContent-' + t).classList.add('hidden');
-                document.getElementById('tabBtn-' + t).className = "px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center";
+                document.getElementById('tabBtn-' + t).className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center";
             });
             document.getElementById('tabContent-' + tabName).classList.remove('hidden');
-            document.getElementById('tabBtn-' + tabName).className = "px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center";
+            document.getElementById('tabBtn-' + tabName).className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center";
             lucide.createIcons();
         }
 
@@ -710,11 +715,11 @@
             return curr;
         }
 
-        function openProfile(id, updateHash = true) {
+        function openProfile(id, tabToOpen = 'info', updateHash = true) {
             currentProfileId = id;
             currentFolderPath = []; 
             if (updateHash) {
-                window.location.hash = "profile=" + id;
+                window.location.hash = `profile=${id}&tab=${tabToOpen}`;
             }
             const lead = pipelineData.find(l => l.id === id);
             if(!lead) return;
@@ -823,6 +828,8 @@
             } else {
                 timeline.innerHTML = `<p class="text-xs text-slate-500 italic">No activity logged yet.</p>`;
             }
+
+            switchTab(tabToOpen, false);
             lucide.createIcons();
         }
 
@@ -944,7 +951,7 @@
                 const lead = pipelineData.find(l => l.id === currentProfileId);
                 if(lead && lead.financialDocs) {
                     lead.financialDocs.splice(fIdx, 1);
-                    openProfile(currentProfileId, false);
+                    openProfile(currentProfileId, currentActiveTab, false);
                 }
             }
         }
@@ -1067,7 +1074,7 @@
                     curr.files.push({ name, url: fileUrl });
                 }
                 closeUploadModal();
-                openProfile(currentProfileId, false);
+                openProfile(currentProfileId, currentActiveTab, false);
             }
         }
 
@@ -1095,7 +1102,7 @@
                 document.getElementById('auditDesc').value = '';
                 document.getElementById('auditAmount').value = '';
                 document.getElementById('auditMethod').value = '';
-                openProfile(currentProfileId, false);
+                openProfile(currentProfileId, currentActiveTab, false);
             }
         }
 
@@ -1131,7 +1138,7 @@
                 document.getElementById('contactPhone').value = '';
                 document.getElementById('contactLocation').value = '';
                 document.getElementById('contactNotes').value = '';
-                openProfile(currentProfileId, false);
+                openProfile(currentProfileId, currentActiveTab, false);
             }
         }
 
@@ -1158,7 +1165,7 @@
                 closeNoteModal();
                 document.getElementById('noteText').value = '';
                 document.getElementById('noteDate').value = '';
-                openProfile(currentProfileId, false);
+                openProfile(currentProfileId, currentActiveTab, false);
             }
         }
 
@@ -1192,7 +1199,7 @@
             }
             closeModal(); 
             renderTable();
-            if(currentProfileId) openProfile(currentProfileId, false);
+            if(currentProfileId) openProfile(currentProfileId, currentActiveTab, false);
         }
 
         function deleteLead(id) { 
@@ -1210,9 +1217,11 @@
         function initApp() {
             renderTable();
             if (window.location.hash.includes("profile=")) {
-                const profileId = parseInt(window.location.hash.split("profile=")[1]);
+                const hashParams = new URLSearchParams(window.location.hash.substring(1));
+                const profileId = parseInt(hashParams.get("profile"));
+                const tabName = hashParams.get("tab") || 'info';
                 if (profileId) {
-                    openProfile(profileId, false);
+                    openProfile(profileId, tabName, false);
                 }
             }
         }
