@@ -305,15 +305,40 @@
 
                 <!-- Interactive Tab Navigation -->
                 <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600 pb-3">
-                    <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center">Company Info</button>
+                    <button onclick="switchTab('tasks')" id="tabBtn-tasks" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center">Tasks & Stage Progress</button>
+                    <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Company Info</button>
                     <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Revenue & Audit</button>
                     <button onclick="switchTab('comms')" id="tabBtn-comms" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Communication Log</button>
                     <button onclick="switchTab('events')" id="tabBtn-events" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Events & Folders</button>
                     <button onclick="switchTab('calendar')" id="tabBtn-calendar" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center col-span-2 sm:col-span-1">Calendar & Events</button>
                 </div>
 
+                <!-- Tab 0: Tasks & Stage Progress -->
+                <div id="tabContent-tasks" class="space-y-6">
+                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                            <div>
+                                <h3 class="font-bold text-sm text-slate-100">Client Task List & Stage Tracker</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Check off tasks and track the current stage progress for this partner.</p>
+                            </div>
+                            <button onclick="openClientTaskModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
+                                + Add Task
+                            </button>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
+                                <h4 class="font-bold text-xs text-rose-400 uppercase tracking-wider">Current Pipeline Stage</h4>
+                                <p id="clientTaskStageDisplay" class="text-sm font-semibold text-slate-100"></p>
+                            </div>
+                            <div id="clientTaskListContainer" class="space-y-2 text-xs">
+                                <!-- Populated dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Tab 1: Company Info -->
-                <div id="tabContent-info" class="space-y-6">
+                <div id="tabContent-info" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <h3 class="font-bold text-sm text-slate-100">Company Hierarchy & Decision Makers</h3>
@@ -400,7 +425,7 @@
                     </div>
                 </div>
 
-                <!-- Tab 4: Partnership Events & Folders (Deep Nested Explorer with Back Navigation) -->
+                <!-- Tab 4: Partnership Events & Folders (Deep Nested Explorer) -->
                 <div id="tabContent-events" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-dark-600 pb-4">
@@ -464,6 +489,20 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Modal for Adding Client Task -->
+    <div id="clientTaskModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Add Client Task</h3>
+            <form onsubmit="saveClientTask(event)" class="space-y-4 text-xs">
+                <input type="text" id="clientTaskInput" required placeholder="Task Description (e.g. Follow up with Ms. Bunting)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeClientTaskModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Add Task</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Modal for Add/Edit Lead -->
@@ -707,6 +746,10 @@
                 calendarEvents: [
                     { title: "InspiHER 2-Day Workshop", start: "2026-12-02T09:00", end: "2026-12-03T15:00", location: "Newton District Venue", notes: "Key 2-day workshop engagement." }
                 ],
+                clientTasks: [
+                    { task: "Submit W-9 and CP575", done: true },
+                    { task: "Follow up first week of November", done: false }
+                ],
                 rootFolder: {
                     name: "Partnership Root",
                     subfolders: [
@@ -749,6 +792,10 @@
                 action: "Follow up with Ms. Bunting to turn into a program",
                 auditRecords: [],
                 calendarEvents: [],
+                clientTasks: [
+                    { task: "Complete 5 career day sessions (Completed)", done: true },
+                    { task: "Follow up with Ms. Bunting to turn into a program", done: false }
+                ],
                 rootFolder: {
                     name: "Partnership Root",
                     subfolders: [
@@ -783,6 +830,9 @@
                 calendarEvents: [
                     { title: "Career Day Presentation", start: "2026-11-19T08:00", end: "2026-11-19T11:30", location: "Porterdale Elementary", notes: "Entrepreneur presentation." }
                 ],
+                clientTasks: [
+                    { task: "Submit volunteer / sign-up form for Nov 19 event", done: false }
+                ],
                 rootFolder: {
                     name: "Partnership Root",
                     subfolders: [
@@ -812,6 +862,9 @@
                 action: "Submit sign-up form",
                 auditRecords: [],
                 calendarEvents: [],
+                clientTasks: [
+                    { task: "Submit Career Day sign-up for Nov 20 event", done: false }
+                ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [
@@ -833,6 +886,9 @@
                 action: "Submit sign-up form",
                 auditRecords: [],
                 calendarEvents: [],
+                clientTasks: [
+                    { task: "Confirm Career Day attendance for Oct 28", done: false }
+                ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [
@@ -853,6 +909,10 @@
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
                 auditRecords: [],
+                calendarEvents: [],
+                clientTasks: [
+                    { task: "Submit employer sign-up form for Career Fair", done: false }
+                ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [
@@ -873,6 +933,10 @@
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
                 auditRecords: [],
+                calendarEvents: [],
+                clientTasks: [
+                    { task: "Send partnership pitch email for after-school revenue share", done: false }
+                ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [
@@ -905,7 +969,7 @@
         let currentProfileId = null;
         let currentFolderPath = []; 
         let currentEditingFolderRef = null;
-        let currentActiveTab = 'info';
+        let currentActiveTab = 'tasks';
         let currentCalYear = 2026;
         let currentCalMonth = 9; // October (0-indexed)
 
@@ -969,7 +1033,7 @@
             if (updateHash && currentProfileId !== null) {
                 window.location.hash = `profile=${currentProfileId}&tab=${tabName}`;
             }
-            ['info', 'revenue', 'comms', 'events', 'calendar'].forEach(t => {
+            ['tasks', 'info', 'revenue', 'comms', 'events', 'calendar'].forEach(t => {
                 const el = document.getElementById('tabContent-' + t);
                 const btn = document.getElementById('tabBtn-' + t);
                 if (el) el.classList.add('hidden');
@@ -982,6 +1046,9 @@
             
             if (tabName === 'calendar') {
                 renderVisualCalendar();
+            }
+            if (tabName === 'tasks') {
+                renderClientTasks();
             }
             lucide.createIcons();
         }
@@ -996,79 +1063,143 @@
                 title.innerText = "1. Career Days (Locked In) - Companies";
                 content.innerHTML = `
                     <div class="space-y-3">
-                        <div onclick="openProfile(2)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
+                        <div onclick="openProfile(2, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Newton County STEAM Academy</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Follow up with Ms. Bunting to turn into a program</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Follow-up • 5 sessions, 100 students, 96% rating</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
                         </div>
 
-                        <div onclick="openProfile(3)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
+                        <div onclick="openProfile(3, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Porterdale Elementary School</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit volunteer / sign-up form (Nov 19)</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Contact: Ms. Dwayaa Ward</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
                         </div>
 
-                        <div onclick="openProfile(4)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
+                        <div onclick="openProfile(4, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Timber Ridge Elementary</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit Career Day sign-up (Nov 20)</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Prospecting</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
                         </div>
 
-                        <div onclick="openProfile(5)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
+                        <div onclick="openProfile(5, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Pleasant Grove Elementary</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Confirm Career Day attendance (Oct 28)</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Prospecting</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'afterSchoolDetail') {
                 title.innerText = "2. After-School Programs - Companies";
                 content.innerHTML = `
                     <div class="space-y-3">
-                        <div onclick="openProfile(7)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
+                        <div onclick="openProfile(7, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-purple-400 font-bold uppercase">YES Program</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Send partnership pitch email</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Revenue share model</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
                         </div>
 
-                        <div onclick="openProfile(1)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
+                        <div onclick="openProfile(1, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-purple-400 font-bold uppercase">InspiHER Conference / Newton County District</span>
+                                <span class="text-[10px] text-purple-400 font-bold uppercase">InspiHER Conference / Newton District</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Follow up first week of November</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Waiting on Invoice • $750</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'privateSchoolsDetail') {
                 title.innerText = "3. Private Schools - Companies";
                 content.innerHTML = `
                     <div class="space-y-3">
-                        <div onclick="openProfile(6)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
+                        <div onclick="openProfile(6, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-emerald-400 font-bold uppercase">Peachtree Academy</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit employer sign-up form</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Career Fair</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
                         </div>
                     </div>`;
             }
             lucide.createIcons();
+        }
+
+        function renderClientTasks() {
+            const container = document.getElementById('clientTaskListContainer');
+            const stageDisplay = document.getElementById('clientTaskStageDisplay');
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (!lead || !container) return;
+
+            stageDisplay.innerText = lead.stage + " — " + lead.status;
+
+            container.innerHTML = '';
+            if (lead.clientTasks && lead.clientTasks.length > 0) {
+                lead.clientTasks.forEach((ct, cIdx) => {
+                    container.innerHTML += `
+                        <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
+                            <label class="flex items-center space-x-3 cursor-pointer flex-1">
+                                <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task}</span>
+                            </label>
+                            <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                        </div>`;
+                });
+            } else {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No active tasks for this client.</p>`;
+            }
+            lucide.createIcons();
+        }
+
+        function toggleClientTask(cIdx) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (lead && lead.clientTasks) {
+                lead.clientTasks[cIdx].done = !lead.clientTasks[cIdx].done;
+                savePipelineData();
+                renderClientTasks();
+            }
+        }
+
+        function deleteClientTask(cIdx) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (lead && lead.clientTasks) {
+                lead.clientTasks.splice(cIdx, 1);
+                savePipelineData();
+                renderClientTasks();
+            }
+        }
+
+        function openClientTaskModal() {
+            document.getElementById('clientTaskModal').classList.remove('hidden');
+        }
+        function closeClientTaskModal() {
+            document.getElementById('clientTaskModal').classList.add('hidden');
+        }
+        function saveClientTask(event) {
+            event.preventDefault();
+            const task = document.getElementById('clientTaskInput').value;
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (lead) {
+                if (!lead.clientTasks) lead.clientTasks = [];
+                lead.clientTasks.push({ task, done: false });
+                closeClientTaskModal();
+                document.getElementById('clientTaskInput').value = '';
+                savePipelineData();
+                renderClientTasks();
+            }
         }
 
         function renderProspectTodos() {
@@ -1147,7 +1278,7 @@
                         cardsHtml += `
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2 hover:border-rose-500/50 transition">
                                 <div class="flex justify-between items-start">
-                                    <h4 onclick="openProfile(${item.id})" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
+                                    <h4 onclick="openProfile(${item.id}, 'tasks')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
                                     <div class="space-x-1">
                                         <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
                                         <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
@@ -1198,7 +1329,7 @@
             return curr;
         }
 
-        function openProfile(id, tabToOpen = 'info', updateHash = true) {
+        function openProfile(id, tabToOpen = 'tasks', updateHash = true) {
             currentProfileId = id;
             currentFolderPath = []; 
             if (updateHash) {
@@ -1295,6 +1426,7 @@
 
             renderFolderExplorer();
             renderClientCalendar();
+            renderClientTasks();
 
             const timeline = document.getElementById('activityTimeline');
             timeline.innerHTML = '';
@@ -1934,7 +2066,7 @@
             if (window.location.hash.includes("profile=")) {
                 const hashParams = new URLSearchParams(window.location.hash.substring(1));
                 const profileId = parseInt(hashParams.get("profile"));
-                const tabName = hashParams.get("tab") || 'info';
+                const tabName = hashParams.get("tab") || 'tasks';
                 if (profileId) {
                     openProfile(profileId, tabName, false);
                 }
