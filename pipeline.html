@@ -319,7 +319,7 @@
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <div>
                                 <h3 class="font-bold text-sm text-slate-100">Client Task List & Stage Tracker</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Check off tasks, highlight current focus, and track stage progress.</p>
+                                <p class="text-xs text-slate-400 mt-0.5">Check off tasks, highlight current focus, and assign team members.</p>
                             </div>
                             <button onclick="openClientTaskModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
                                 + Add Task
@@ -330,7 +330,7 @@
                                 <h4 class="font-bold text-xs text-rose-400 uppercase tracking-wider">Current Pipeline Stage & Retainer Status</h4>
                                 <p id="clientTaskStageDisplay" class="text-sm font-semibold text-slate-100"></p>
                             </div>
-                            <div id="clientTaskListContainer" class="space-y-2 text-xs">
+                            <div id="clientTaskListContainer" class="space-y-3 text-xs">
                                 <!-- Populated dynamically -->
                             </div>
                         </div>
@@ -491,12 +491,23 @@
         </main>
     </div>
 
-    <!-- Modal for Adding Client Task -->
+    <!-- Modal for Adding Client Task with Date & Assignee -->
     <div id="clientTaskModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
             <h3 class="font-bold text-slate-100 text-sm mb-4">Add Client Task</h3>
             <form onsubmit="saveClientTask(event)" class="space-y-4 text-xs">
-                <input type="text" id="clientTaskInput" required placeholder="Task Description (e.g. Email Ms. Bunting to return)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="clientTaskInput" required placeholder="Task Description (e.g. Email Ms. Bunting)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Due Date</label>
+                    <input type="date" id="clientTaskDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Assigned To</label>
+                    <select id="clientTaskAssignee" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                        <option value="Raeven Brown">Raeven Brown</option>
+                        <option value="Courtney White">Courtney White</option>
+                    </select>
+                </div>
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeClientTaskModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Add Task</button>
@@ -748,8 +759,9 @@
                     { title: "InspiHER 2-Day Workshop", start: "2026-12-02T09:00", end: "2026-12-03T15:00", location: "Newton District Venue", notes: "Key 2-day workshop engagement." }
                 ],
                 clientTasks: [
-                    { task: "Submit W-9 and CP575", done: true },
-                    { task: "Follow up first week of November", done: false, active: true }
+                    { task: "Submit W-9 and CP575", date: "Oct 1, 2026", assignee: "Raeven Brown", done: true, active: false },
+                    { task: "Follow up first week of November", date: "Nov 2, 2026", assignee: "Raeven Brown", done: false, active: true },
+                    { task: "Coordinate with Newton County District after-school department", date: "Nov 10, 2026", assignee: "Courtney White", done: false, active: false }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -781,7 +793,7 @@
             },
             { 
                 id: 2, 
-                stage: "Prospecting", 
+                stage: "Follow-up Stage", 
                 org: "Newton County STEAM Academy", 
                 contact: "Principal Brandon Parham / Chantal Hendrix", 
                 scope: "Career Day & After-School AI Lab Partnership", 
@@ -791,9 +803,9 @@
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Complete 5 career day sessions (100 students, 96% rating)", done: true },
-                    { task: "Email Ms. Bunting to set up a day to come back to the school", done: false, active: true },
-                    { task: "Email the after-school director for Newton County District department", done: false, active: false }
+                    { task: "Complete 5 career day sessions (100 students, 96% rating)", date: "Sep 29, 2026", assignee: "Raeven Brown", done: true, active: false },
+                    { task: "Email Ms. Bunting to set up a day to come back to the school", date: "Oct 5, 2026", assignee: "Courtney White", done: false, active: true },
+                    { task: "Email after-school director for Newton County District department", date: "Oct 12, 2026", assignee: "Raeven Brown", done: false, active: false }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -831,7 +843,7 @@
                     { title: "Career Day Presentation", start: "2026-11-19T08:00", end: "2026-11-19T11:30", location: "Porterdale Elementary", notes: "Entrepreneur presentation." }
                 ],
                 clientTasks: [
-                    { task: "Submit volunteer / sign-up form for Nov 19 event", done: false, active: true }
+                    { task: "Submit volunteer / sign-up form for Nov 19 event", date: "Oct 15, 2026", assignee: "Raeven Brown", done: false, active: true }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -864,7 +876,7 @@
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Submit Career Day sign-up for Nov 20 event", done: false, active: true }
+                    { task: "Submit Career Day sign-up for Nov 20 event", date: "Oct 16, 2026", assignee: "Courtney White", done: false, active: true }
                 ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -889,7 +901,7 @@
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Confirm Career Day attendance for Oct 28", done: false, active: true }
+                    { task: "Confirm Career Day attendance for Oct 28", date: "Oct 10, 2026", assignee: "Raeven Brown", done: false, active: true }
                 ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -976,7 +988,7 @@
         let currentProfileId = null;
         let currentFolderPath = []; 
         let currentEditingFolderRef = null;
-        let currentActiveTab = 'info';
+        let currentActiveTab = 'tasks';
         let currentCalYear = 2026;
         let currentCalMonth = 9; // October (0-indexed)
 
@@ -1122,7 +1134,7 @@
                         <div onclick="openProfile(1, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-purple-400 font-bold uppercase">InspiHER Conference / Newton County District</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">InspiHER Conference / Newton District</h4>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">InspiHER Conference / Newton County District</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Waiting on Invoice ($750) • Current Task: Follow up November</p>
                             </div>
                             <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile & Tasks</span>
@@ -1158,15 +1170,21 @@
             if (lead.clientTasks && lead.clientTasks.length > 0) {
                 lead.clientTasks.forEach((ct, cIdx) => {
                     let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500' : 'border-dark-600 bg-dark-700/40';
+                    let dateStr = ct.date ? `<span class="text-[11px] text-rose-400 font-semibold mr-2">[Due: ${ct.date}]</span>` : '';
+                    let assigneeStr = ct.assignee ? `<span class="text-[11px] text-purple-400 font-semibold mr-2">[Assigned: ${ct.assignee}]</span>` : '';
+
                     container.innerHTML += `
-                        <div class="border ${highlightClass} p-3.5 rounded-xl flex items-center justify-between transition">
+                        <div class="border ${highlightClass} p-3.5 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition">
                             <label class="flex items-center space-x-3 cursor-pointer flex-1">
                                 <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                                <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task} ${ct.active ? '<span class="ml-2 px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase">Current Focus</span>' : ''}</span>
+                                <div class="space-y-0.5">
+                                    <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task} ${ct.active ? '<span class="ml-2 px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase">Current Focus</span>' : ''}</span>
+                                    <div class="flex flex-wrap gap-1">${dateStr}${assigneeStr}</div>
+                                </div>
                             </label>
-                            <div class="flex items-center space-x-2">
+                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
                                 <button onclick="setClientTaskActive(${cIdx})" class="text-[10px] px-2 py-1 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Highlight as Current Task">Highlight</button>
-                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                             </div>
                         </div>`;
                 });
@@ -1197,18 +1215,22 @@
         }
 
         function deleteClientTask(cIdx) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if (lead && lead.clientTasks) {
-                let removed = lead.clientTasks.splice(cIdx, 1)[0];
-                if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
-                if (!lead.trashFolder.files) lead.trashFolder.files = [];
-                lead.trashFolder.files.push({ name: "Task: " + removed.task, url: "#" });
-                savePipelineData();
-                renderClientTasks();
+            if (confirm("Move this task to the Trash Bin?")) {
+                const lead = pipelineData.find(l => l.id === currentProfileId);
+                if (lead && lead.clientTasks) {
+                    let removed = lead.clientTasks.splice(cIdx, 1)[0];
+                    if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
+                    if (!lead.trashFolder.files) lead.trashFolder.files = [];
+                    lead.trashFolder.files.push({ name: "Task: " + removed.task, url: "#" });
+                    savePipelineData();
+                    renderClientTasks();
+                }
             }
         }
 
         function openClientTaskModal() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('clientTaskDate').value = today;
             document.getElementById('clientTaskModal').classList.remove('hidden');
         }
         function closeClientTaskModal() {
@@ -1217,10 +1239,12 @@
         function saveClientTask(event) {
             event.preventDefault();
             const task = document.getElementById('clientTaskInput').value;
+            const date = document.getElementById('clientTaskDate').value;
+            const assignee = document.getElementById('clientTaskAssignee').value;
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (lead) {
                 if (!lead.clientTasks) lead.clientTasks = [];
-                lead.clientTasks.push({ task, done: false, active: false });
+                lead.clientTasks.push({ task, date, assignee, done: false, active: false });
                 closeClientTaskModal();
                 document.getElementById('clientTaskInput').value = '';
                 savePipelineData();
