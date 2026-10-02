@@ -178,6 +178,19 @@
                     </div>
                 </div>
 
+                <!-- Org Chart / Hierarchy Section -->
+                <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
+                    <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                        <h3 class="font-bold text-sm text-slate-100">Company Hierarchy & Decision Makers</h3>
+                        <button onclick="openContactModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
+                            + Add Team Member
+                        </button>
+                    </div>
+                    <div id="orgChartContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
                 <!-- Activity Log & Notes Section -->
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                     <div class="lg:col-span-2 bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
@@ -263,6 +276,45 @@
         </div>
     </div>
 
+    <!-- Modal for Adding Team Member / Contact -->
+    <div id="contactModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Add Company Contact / Decision Maker</h3>
+            <form onsubmit="saveContact(event)" class="space-y-4 text-xs">
+                <input type="text" id="contactName" required placeholder="Full Name & Title (e.g. Dr. Jennifer Williams)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="contactRole" required placeholder="Role / Hierarchy (e.g. Director / Decision Maker)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="contactEmail" placeholder="Email Address" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="contactPhone" placeholder="Phone Number / Ext" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="contactLocation" placeholder="Location / Address" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <textarea id="contactNotes" rows="2" placeholder="Notes (e.g. Connected via Chantal Hendrix)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeContactModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Contact</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Popup Card for Viewing Contact Details -->
+    <div id="contactPopup" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 text-xs relative">
+            <div class="flex justify-between items-start border-b border-dark-600 pb-3">
+                <div>
+                    <span id="popupRole" class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold text-[10px] border border-rose-500/20"></span>
+                    <h3 id="popupName" class="font-bold text-slate-100 text-base mt-1"></h3>
+                </div>
+                <button onclick="closeContactPopup()" class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div class="space-y-2 text-slate-300">
+                <p><strong>Email:</strong> <span id="popupEmail" class="text-rose-400"></span></p>
+                <p><strong>Phone:</strong> <span id="popupPhone"></span></p>
+                <p><strong>Location:</strong> <span id="popupLocation"></span></p>
+                <p><strong>Relationship / Notes:</strong> <span id="popupNotes" class="italic text-slate-400"></span></p>
+            </div>
+            <button onclick="closeContactPopup()" class="w-full py-2 rounded-xl bg-dark-700 hover:bg-dark-600 font-semibold text-slate-200 border border-dark-600">Close</button>
+        </div>
+    </div>
+
     <script>
         function checkPassword(event) {
             event.preventDefault();
@@ -290,6 +342,10 @@
                     { name: "Form W-9.pdf", url: "W9.pdf" },
                     { name: "IRS CP575.pdf", url: "EIN .pdf" }
                 ],
+                contacts: [
+                    { name: "Dr. Jennifer Williams, Ed.D.", role: "Decision Maker / Director", email: "williams.jennifer@newton.k12.ga.us", phone: "770-784-4943 or x1233", location: "10245 Eagle Drive, Covington, GA 30014", notes: "Director of Instructional Technology & Media Services." },
+                    { name: "Chantal Hendrix, Ed.S.", role: "Bridge / Digital Learning Coach", email: "hendrix.chantal@newton.k12.ga.us", phone: "770-787-1330 ext. 1306", location: "10245 Eagle Dr, Covington, GA", notes: "Connected with Chantal first to reach Dr. Jennifer Williams." }
+                ],
                 activities: [
                     { date: "Aug 31, 2026", type: "Email Received", text: "Jennifer Williams: 'I would like to learn more about your organization. When do you have time to jump on a Zoom for us to meet and discuss other possibilities?'" },
                     { date: "Sep 8, 2026", type: "Meeting", text: "Conducted Zoom discovery call and discussed studio capabilities and workshop possibilities." },
@@ -310,6 +366,10 @@
                     { name: "NCSA Pilot Proposal.pdf", url: "#" },
                     { name: "Curriculum Proposal.pdf", url: "#" }
                 ],
+                contacts: [
+                    { name: "Principal Brandon Parham", role: "Principal / Decision Maker", email: "parham.brandon@newton.k12.ga.us", phone: "School Main", location: "Newton County STEAM Academy", notes: "Flagship pilot school leadership." },
+                    { name: "Chantal Hendrix, Ed.S.", role: "Digital Learning Coach", email: "hendrix.chantal@newton.k12.ga.us", phone: "770-787-1330 ext. 1306", location: "Covington, GA", notes: "Key instructional contact." }
+                ],
                 activities: [
                     { date: "Aug 24, 2026", type: "Email Sent", text: "Emailed Chantal Hendrix proposing after-school AI & STEM organization, 1-hour free pilot, and teacher professional development workshops." },
                     { date: "Sep 3, 2026", type: "Meeting", text: "Scheduled and aligned on NCSA Student Project Showcase and pilot tracking." },
@@ -325,6 +385,9 @@
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
                 docs: [{ name: "Career_Day_Flyer.png", url: "#" }],
+                contacts: [
+                    { name: "Ms. Dwayaa Ward", role: "School Contact / Coordinator", email: "ward.dwayaa@newton.k12.ga.us", phone: "770-784-2928", location: "Porterdale Elementary", notes: "Primary organizer for Career Day." }
+                ],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Captured flyer details for Nov 19 event (8:00 AM - 11:30 AM)." }
                 ]
@@ -338,6 +401,7 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 docs: [{ name: "TRE_Flyer.png", url: "#" }],
+                contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Nov 20, 2026 (8:30 AM - 11:30 AM)." }
                 ]
@@ -351,6 +415,7 @@
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
                 docs: [{ name: "PGE_Flyer.png", url: "#" }],
+                contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Oct 28, 2026 (8:30 AM - 11:30 AM)." }
                 ]
@@ -364,6 +429,7 @@
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
                 docs: [{ name: "Peachtree_Flyer.png", url: "#" }],
+                contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Reviewed Covington Campus Career Fair flyer." }
                 ]
@@ -377,6 +443,7 @@
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
                 docs: [],
+                contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Initial lead added for after-school revenue share model." }
                 ]
@@ -444,6 +511,24 @@
             if(lead.stage === 'Contract Signed / Won') badge.className += "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
             else if(lead.stage === 'Waiting on Invoice') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
             else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
+
+            // Render Org Chart / Contacts Tree
+            const orgContainer = document.getElementById('orgChartContainer');
+            orgContainer.innerHTML = '';
+            if(lead.contacts && lead.contacts.length > 0) {
+                lead.contacts.forEach((c, idx) => {
+                    orgContainer.innerHTML += `
+                        <div onclick="showContactPopup('${encodeURIComponent(JSON.stringify(c))}')" class="bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-4 rounded-xl cursor-pointer transition flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] font-semibold text-rose-400 uppercase tracking-wider">${c.role}</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">${c.name}</h4>
+                            </div>
+                            <span class="text-xs text-rose-400 underline">View Card</span>
+                        </div>`;
+                });
+            } else {
+                orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional contacts added to this company profile yet.</p>`;
+            }
 
             // Render Activities
             const timeline = document.getElementById('activityTimeline');
@@ -516,6 +601,45 @@
         }
         function closeNoteModal() { document.getElementById('noteModal').classList.add('hidden'); }
 
+        function openContactModal() { document.getElementById('contactModal').classList.remove('hidden'); }
+        function closeContactModal() { document.getElementById('contactModal').classList.add('hidden'); }
+
+        function showContactPopup(jsonStr) {
+            const c = JSON.parse(decodeURIComponent(jsonStr));
+            document.getElementById('popupName').innerText = c.name;
+            document.getElementById('popupRole').innerText = c.role;
+            document.getElementById('popupEmail').innerText = c.email || 'N/A';
+            document.getElementById('popupPhone').innerText = c.phone || 'N/A';
+            document.getElementById('popupLocation').innerText = c.location || 'N/A';
+            document.getElementById('popupNotes').innerText = c.notes || 'N/A';
+            document.getElementById('contactPopup').classList.remove('hidden');
+        }
+        function closeContactPopup() { document.getElementById('contactPopup').classList.add('hidden'); }
+
+        function saveContact(event) {
+            event.preventDefault();
+            const name = document.getElementById('contactName').value;
+            const role = document.getElementById('contactRole').value;
+            const email = document.getElementById('contactEmail').value;
+            const phone = document.getElementById('contactPhone').value;
+            const location = document.getElementById('contactLocation').value;
+            const notes = document.getElementById('contactNotes').value;
+
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if(lead) {
+                if(!lead.contacts) lead.contacts = [];
+                lead.contacts.push({ name, role, email, phone, location, notes });
+                closeContactModal();
+                document.getElementById('contactName').value = '';
+                document.getElementById('contactRole').value = '';
+                document.getElementById('contactEmail').value = '';
+                document.getElementById('contactPhone').value = '';
+                document.getElementById('contactLocation').value = '';
+                document.getElementById('contactNotes').value = '';
+                openProfile(currentProfileId, false);
+            }
+        }
+
         function saveNote(event) {
             event.preventDefault();
             const type = document.getElementById('noteType').value;
@@ -555,11 +679,13 @@
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
                 docs: [],
+                contacts: [],
                 activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
             };
             if(id) { 
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
                 data.docs = pipelineData[idx].docs;
+                data.contacts = pipelineData[idx].contacts || [];
                 data.activities = pipelineData[idx].activities;
                 pipelineData[idx] = data; 
             } else { 
