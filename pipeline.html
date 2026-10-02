@@ -24,16 +24,21 @@
             }
         }
     </script>
+    <!-- Instant Persistent Auth Check -->
+    <script>
+        if (localStorage.getItem('bgcs_auth') === 'true') {
+            document.documentElement.classList.add('is-authenticated');
+        }
+    </script>
+    <style>
+        .is-authenticated #passwordModal { display: none !important; }
+        .is-authenticated #mainDashboard { display: flex !important; }
+    </style>
 </head>
 <body class="bg-dark-900 text-slate-100 min-h-screen font-sans flex antialiased">
 
-    <!-- Password Gate Overlay (Starts hidden if already authenticated) -->
+    <!-- Password Gate Overlay -->
     <div id="passwordModal" class="fixed inset-0 z-50 bg-dark-900 flex items-center justify-center p-4">
-        <script>
-            if (localStorage.getItem('bgcs_auth') === 'true') {
-                document.getElementById('passwordModal').classList.add('hidden');
-            }
-        </script>
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center space-y-6">
             <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-600 to-purple-600 flex items-center justify-center font-bold text-white text-lg mx-auto shadow-lg">
                 BG
@@ -52,13 +57,8 @@
         </div>
     </div>
 
-    <!-- Main Dashboard Container (Starts visible if authenticated) -->
-    <div id="mainDashboard" class="flex-1 flex min-h-screen">
-        <script>
-            if (localStorage.getItem('bgcs_auth') !== 'true') {
-                document.getElementById('mainDashboard').classList.add('hidden');
-            }
-        </script>
+    <!-- Main Dashboard Container -->
+    <div id="mainDashboard" class="flex-1 flex min-h-screen hidden">
         <!-- Sidebar Navigation -->
         <aside class="w-64 bg-dark-800 border-r border-dark-600 flex flex-col justify-between hidden md:flex sticky top-0 h-screen z-20">
             <div>
@@ -259,13 +259,13 @@
         </div>
     </div>
 
-   <script>
+    <script>
         function checkPassword(event) {
             event.preventDefault();
             const pass = document.getElementById('passwordInput').value;
             if(pass === 'REDROSE014') {
-                document.getElementById('passwordModal').classList.add('hidden');
-                document.getElementById('mainDashboard').classList.remove('hidden');
+                localStorage.setItem('bgcs_auth', 'true');
+                document.documentElement.classList.add('is-authenticated');
                 lucide.createIcons();
                 renderTable();
             } else {
