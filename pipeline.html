@@ -303,7 +303,7 @@
                     </div>
                 </div>
 
-                <!-- Interactive Tab Navigation -->
+                <!-- Interactive Tab Navigation (Tasks & Stage Progress First) -->
                 <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600 pb-3">
                     <button onclick="switchTab('tasks')" id="tabBtn-tasks" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center">Tasks & Stage Progress</button>
                     <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Company Info</button>
@@ -327,7 +327,7 @@
                         </div>
                         <div class="space-y-4">
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
-                                <h4 class="font-bold text-xs text-rose-400 uppercase tracking-wider">Current Pipeline Stage</h4>
+                                <h4 class="font-bold text-xs text-rose-400 uppercase tracking-wider">Current Pipeline Stage & Retainer Status</h4>
                                 <p id="clientTaskStageDisplay" class="text-sm font-semibold text-slate-100"></p>
                             </div>
                             <div id="clientTaskListContainer" class="space-y-2 text-xs">
@@ -909,10 +909,6 @@
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
                 auditRecords: [],
-                calendarEvents: [],
-                clientTasks: [
-                    { task: "Submit employer sign-up form for Career Fair", done: false }
-                ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [
@@ -933,10 +929,6 @@
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
                 auditRecords: [],
-                calendarEvents: [],
-                clientTasks: [
-                    { task: "Send partnership pitch email for after-school revenue share", done: false }
-                ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [
@@ -969,7 +961,7 @@
         let currentProfileId = null;
         let currentFolderPath = []; 
         let currentEditingFolderRef = null;
-        let currentActiveTab = 'tasks';
+        let currentActiveTab = 'info';
         let currentCalYear = 2026;
         let currentCalMonth = 9; // October (0-indexed)
 
@@ -1033,7 +1025,7 @@
             if (updateHash && currentProfileId !== null) {
                 window.location.hash = `profile=${currentProfileId}&tab=${tabName}`;
             }
-            ['tasks', 'info', 'revenue', 'comms', 'events', 'calendar'].forEach(t => {
+            ['info', 'revenue', 'comms', 'events', 'calendar', 'tasks'].forEach(t => {
                 const el = document.getElementById('tabContent-' + t);
                 const btn = document.getElementById('tabBtn-' + t);
                 if (el) el.classList.add('hidden');
@@ -1066,37 +1058,37 @@
                         <div onclick="openProfile(2, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Newton County STEAM Academy</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Follow up with Ms. Bunting to turn into a program</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Follow-up • 5 sessions, 100 students, 96% rating</p>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Newton County STEAM Academy</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Follow-up • 5 sessions completed</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(3, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Porterdale Elementary School</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit volunteer / sign-up form (Nov 19)</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Contact: Ms. Dwayaa Ward</p>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Porterdale Elementary School</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Nov 19, 2026</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(4, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Timber Ridge Elementary</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit Career Day sign-up (Nov 20)</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting</p>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Timber Ridge Elementary</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Nov 20, 2026</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(5, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-amber-400 font-bold uppercase">Pleasant Grove Elementary</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Confirm Career Day attendance (Oct 28)</h4>
-                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting</p>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Pleasant Grove Elementary</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Oct 28, 2026</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'afterSchoolDetail') {
@@ -1106,19 +1098,19 @@
                         <div onclick="openProfile(7, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-purple-400 font-bold uppercase">YES Program</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Send partnership pitch email</h4>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">YES Program</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Revenue share model</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
                         </div>
 
                         <div onclick="openProfile(1, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-purple-400 font-bold uppercase">InspiHER Conference / Newton District</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Follow up first week of November</h4>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">InspiHER Conference / Newton District</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Waiting on Invoice • $750</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'privateSchoolsDetail') {
@@ -1128,10 +1120,10 @@
                         <div onclick="openProfile(6, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
                                 <span class="text-[10px] text-emerald-400 font-bold uppercase">Peachtree Academy</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit employer sign-up form</h4>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Peachtree Academy</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Career Fair</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Tasks & Stage</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Company Profile & Tasks</span>
                         </div>
                     </div>`;
             }
@@ -1144,7 +1136,7 @@
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (!lead || !container) return;
 
-            stageDisplay.innerText = lead.stage + " — " + lead.status;
+            stageDisplay.innerHTML = `<span class="px-2 py-1 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">${lead.stage}</span> • Status: ${lead.status}`;
 
             container.innerHTML = '';
             if (lead.clientTasks && lead.clientTasks.length > 0) {
