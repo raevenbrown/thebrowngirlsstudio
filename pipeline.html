@@ -168,7 +168,7 @@
                         </div>
                     </div>
 
-                    <!-- Expandable Detailed View Box -->
+                    <!-- Expandable Detailed View Box with Checklists -->
                     <div id="goalDetailBox" class="bg-dark-700/60 border border-dark-600 p-6 rounded-2xl space-y-4 hidden text-xs">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-3">
                             <h3 id="goalDetailTitle" class="font-bold text-sm text-slate-100">Category Details</h3>
@@ -893,12 +893,23 @@
             { id: 4, task: "Submit Career Day sign-up for Timber Ridge Elementary", done: false }
         ];
 
+        let careerChecklist = JSON.parse(localStorage.getItem('bgcs_career_checklist')) || {
+            ncsa: true,
+            porterdale: false,
+            timberRidge: false,
+            pleasantGrove: false
+        };
+
         function savePipelineData() {
             localStorage.setItem('bgcs_pipeline_data', JSON.stringify(pipelineData));
         }
 
         function saveProspectTodos() {
             localStorage.setItem('bgcs_prospect_todos', JSON.stringify(prospectTodos));
+        }
+
+        function saveCareerChecklist() {
+            localStorage.setItem('bgcs_career_checklist', JSON.stringify(careerChecklist));
         }
 
         let currentProfileId = null;
@@ -945,7 +956,10 @@
                 const activeBtn = document.getElementById('nav-' + viewName);
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 
-                if (viewName === 'goals') document.getElementById('pageTitle').innerText = "2026 Growth Goals & Income Streams";
+                if (viewName === 'goals') {
+                    document.getElementById('pageTitle').innerText = "2026 Growth Goals & Income Streams";
+                    renderGoalChecklists();
+                }
                 if (viewName === 'agenda') document.getElementById('pageTitle').innerText = "Spirit Meeting Outline & Agenda";
                 if (viewName === 'prospects') {
                     document.getElementById('pageTitle').innerText = "Prospect To-Do Checklist";
@@ -990,31 +1004,46 @@
             box.classList.remove('hidden');
 
             if (sectionKey === 'careerDaysDetail') {
-                title.innerText = "1. Career Days (Locked In) - Detailed Breakdown";
+                title.innerText = "1. Career Days (Locked In) - Detailed Status & Check-off Checklist";
                 content.innerHTML = `
-                    <div class="space-y-3">
-                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
-                            <h4 class="font-bold text-rose-400">Newton County STEAM Academy (Flagship Pilot)</h4>
-                            <p class="text-slate-300">• <strong>Performance:</strong> Completed 5 sessions reaching 100 students with a 96% satisfaction rating[span_1](start_span)[span_1](end_span).</p>
-                            <p class="text-slate-300">• <strong>Status:</strong> Asked to return[span_2](start_span)[span_2](end_span); actively following up with Ms. Bunting to convert into a recurring after-school enrichment program.</p>
-                            <button onclick="openProfile(2)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open NCSA Profile</button>
+                    <div class="space-y-4">
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-2">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" ${careerChecklist.ncsa ? 'checked' : ''} onchange="toggleCareerCheck('ncsa')" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <span class="font-bold text-rose-400 text-sm">Newton County STEAM Academy (Flagship Pilot)</span>
+                            </label>
+                            <p class="text-slate-300 pl-7">• Completed 5 sessions reaching 100 students with a 96% satisfaction rating[span_0](start_span)[span_0](end_span).</p>
+                            <p class="text-slate-300 pl-7">• Status: Asked to return[span_1](start_span)[span_1](end_span); actively following up with Ms. Bunting to convert into a recurring after-school enrichment program.</p>
+                            <div class="pl-7 pt-1"><button onclick="openProfile(2)" class="px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open NCSA Profile</button></div>
                         </div>
-                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
-                            <h4 class="font-bold text-rose-400">Porterdale Elementary School</h4>
-                            <p class="text-slate-300">• <strong>Date:</strong> Thursday, Nov 19, 2026 (8:00 AM - 11:30 AM)[span_3](start_span)[span_3](end_span).</p>
-                            <p class="text-slate-300">• <strong>Scope:</strong> Entrepreneur & Tech Presentation with Ms. Dwayaa Ward (770-784-2928)[span_4](start_span)[span_4](end_span).</p>
-                            <button onclick="openProfile(3)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Porterdale Profile</button>
+
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-2">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" ${careerChecklist.porterdale ? 'checked' : ''} onchange="toggleCareerCheck('porterdale')" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <span class="font-bold text-rose-400 text-sm">Porterdale Elementary School</span>
+                            </label>
+                            <p class="text-slate-300 pl-7">• Date: Thursday, Nov 19, 2026 (8:00 AM - 11:30 AM)[span_2](start_span)[span_2](end_span).</p>
+                            <p class="text-slate-300 pl-7">• Scope: Entrepreneur & Tech Presentation with Ms. Dwayaa Ward (770-784-2928)[span_3](start_span)[span_3](end_span).</p>
+                            <div class="pl-7 pt-1"><button onclick="openProfile(3)" class="px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Porterdale Profile</button></div>
                         </div>
-                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
-                            <h4 class="font-bold text-rose-400">Timber Ridge Elementary School</h4>
-                            <p class="text-slate-300">• <strong>Date:</strong> Friday, Nov 20, 2026 (8:30 AM - 11:30 AM)[span_5](start_span)[span_5](end_span).</p>
-                            <p class="text-slate-300">• <strong>Scope:</strong> Tech & Innovation Career Showcase.</p>
-                            <button onclick="openProfile(4)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Timber Ridge Profile</button>
+
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-2">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" ${careerChecklist.timberRidge ? 'checked' : ''} onchange="toggleCareerCheck('timberRidge')" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <span class="font-bold text-rose-400 text-sm">Timber Ridge Elementary School</span>
+                            </label>
+                            <p class="text-slate-300 pl-7">• Date: Friday, Nov 20, 2026 (8:30 AM - 11:30 AM)[span_4](start_span)[span_4](end_span).</p>
+                            <p class="text-slate-300 pl-7">• Scope: Tech & Innovation Career Showcase.</p>
+                            <div class="pl-7 pt-1"><button onclick="openProfile(4)" class="px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Timber Ridge Profile</button></div>
                         </div>
-                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
-                            <h4 class="font-bold text-rose-400">Pleasant Grove Elementary School</h4>
-                            <p class="text-slate-300">• <strong>Date:</strong> Wednesday, Oct 28, 2026 (8:30 AM - 11:30 AM)[span_6](start_span)[span_6](end_span).</p>
-                            <button onclick="openProfile(5)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Pleasant Grove Profile</button>
+
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-2">
+                            <label class="flex items-center space-x-3 cursor-pointer">
+                                <input type="checkbox" ${careerChecklist.pleasantGrove ? 'checked' : ''} onchange="toggleCareerCheck('pleasantGrove')" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <span class="font-bold text-rose-400 text-sm">Pleasant Grove Elementary School</span>
+                            </label>
+                            <p class="text-slate-300 pl-7">• Date: Wednesday, Oct 28, 2026 (8:30 AM - 11:30 AM)[span_5](start_span)[span_5](end_span).</p>
+                            <div class="pl-7 pt-1"><button onclick="openProfile(5)" class="px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Pleasant Grove Profile</button></div>
                         </div>
                     </div>`;
             } else if (sectionKey === 'afterSchoolDetail') {
@@ -1044,6 +1073,15 @@
                     </div>`;
             }
             lucide.createIcons();
+        }
+
+        function toggleCareerCheck(key) {
+            careerChecklist[key] = !careerChecklist[key];
+            saveCareerChecklist();
+        }
+
+        function renderGoalChecklists() {
+            // Can be used if rendered directly
         }
 
         function renderProspectTodos() {
