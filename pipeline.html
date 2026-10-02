@@ -128,7 +128,7 @@
                 </div>
             </header>
 
-            <!-- Main Section 1: Goals & Strategy View (Detailed 2026 Income Streams) -->
+            <!-- Main Section 1: Goals & Strategy View -->
             <div id="mainView-goals" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
@@ -138,7 +138,7 @@
                         </div>
                     </div>
 
-                    <!-- Core Revenue Streams Breakdown with Clickable Detail Toggle -->
+                    <!-- Core Revenue Streams Breakdown -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
                         <!-- Stream 1: Career Days & School Workshops -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
@@ -168,7 +168,7 @@
                         </div>
                     </div>
 
-                    <!-- Expandable Detailed View Box (Company Listings with Profile Links) -->
+                    <!-- Expandable Detailed View Box -->
                     <div id="goalDetailBox" class="bg-dark-700/60 border border-dark-600 p-6 rounded-2xl space-y-4 hidden text-xs">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-3">
                             <h3 id="goalDetailTitle" class="font-bold text-sm text-slate-100">Category Companies</h3>
@@ -242,7 +242,7 @@
                 </div>
             </div>
 
-            <!-- View 1: Main Pipeline Table / Mobile Cards -->
+            <!-- View 1: Main Pipeline Table / Sales Funnel Columns -->
             <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                     <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
@@ -263,32 +263,15 @@
                     </div>
                 </div>
 
-                <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-sm overflow-hidden">
-                    <div class="p-6 border-b border-dark-600">
-                        <h2 class="font-bold text-base text-slate-100">Partnership & Pipeline Control Center</h2>
-                        <p class="text-xs text-slate-400 mt-0.5">Click any Organization name below to open their dedicated profile tracker.</p>
+                <!-- Sales Funnel Stages Separated into Boxes -->
+                <div class="space-y-6">
+                    <div class="flex justify-between items-center border-b border-dark-600 pb-3">
+                        <h2 class="font-bold text-base text-slate-100">Sales Funnel Stage Breakdown</h2>
+                        <p class="text-xs text-slate-400">Manage targets across distinct pipeline phases</p>
                     </div>
-                    
-                    <!-- Desktop Table View -->
-                    <div class="overflow-x-auto hidden md:block">
-                        <table class="w-full text-left border-collapse min-w-[700px]">
-                            <thead>
-                                <tr class="bg-dark-700/50 border-b border-dark-600 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
-                                    <th class="py-3.5 px-6">Stage</th>
-                                    <th class="py-3.5 px-6">Organization / Partner</th>
-                                    <th class="py-3.5 px-6">Contact Person</th>
-                                    <th class="py-3.5 px-6">Goal / Scope</th>
-                                    <th class="py-3.5 px-6">Status</th>
-                                    <th class="py-3.5 px-6">Next Action</th>
-                                    <th class="py-3.5 px-6 text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="pipeline-table-body" class="divide-y divide-dark-600 text-xs"></tbody>
-                        </table>
+                    <div id="salesFunnelContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Populated dynamically -->
                     </div>
-
-                    <!-- Mobile Card View -->
-                    <div id="pipeline-card-container" class="block md:hidden divide-y divide-dark-600 text-xs"></div>
                 </div>
             </div>
 
@@ -390,7 +373,7 @@
                         <!-- Financial & Tax Documents Folder -->
                         <div class="border-t border-dark-600 pt-6 space-y-4">
                             <div class="flex justify-between items-center">
-                                <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider"><i data-lucide="folder" class="w-3.5 h-3.5 inline mr-1.5 text-rose-500"></i> Financial & Tax Documents Folder (W-9 & CP575)</h4>
+                                <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider"><i data-lucide="folder" class="w-3.5 h-3.5 inline mr-1.5 text-rose-500"></i> Financial & Tax Documents Folder (W-9 & EIN CP575)</h4>
                                 <button onclick="openUploadModal('Financial & Tax Documents')" class="px-3 py-1 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
                                     + Upload Financial File
                                 </button>
@@ -417,7 +400,7 @@
                     </div>
                 </div>
 
-                <!-- Tab 4: Partnership Events & Folders (Deep Nested Explorer) -->
+                <!-- Tab 4: Partnership Events & Folders (Deep Nested Explorer with Back Navigation) -->
                 <div id="tabContent-events" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-dark-600 pb-4">
@@ -742,7 +725,7 @@
                 },
                 financialDocs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
-                    { name: "IRS CP575.pdf", url: "EIN .pdf" }
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
                 ],
                 contacts: [
                     { name: "Dr. Jennifer Williams, Ed.D.", role: "Director of Instructional Technology & Media Services", email: "williams.jennifer@newton.k12.ga.us", phone: "770-784-4943 or x1233", location: "10245 Eagle Drive, Covington, GA 30014", notes: "Director of Instructional Technology & Media Services." },
@@ -762,8 +745,8 @@
                 org: "Newton County STEAM Academy", 
                 contact: "Principal Brandon Parham / Chantal Hendrix", 
                 scope: "Career Day & After-School AI Lab Partnership", 
-                status: "In Discussion", 
-                action: "Review proposal and schedule pilot cohort",
+                status: "Follow-Up Stage", 
+                action: "Follow up with Ms. Bunting to turn into a program",
                 auditRecords: [],
                 calendarEvents: [],
                 rootFolder: {
@@ -774,7 +757,10 @@
                     files: []
                 },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [],
+                financialDocs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ],
                 contacts: [
                     { name: "Principal Brandon Parham", role: "Principal / Decision Maker", email: "parham.brandon@newton.k12.ga.us", phone: "School Main", location: "Newton County STEAM Academy", notes: "Flagship pilot school leadership." },
                     { name: "Chantal Hendrix, Ed.S.", role: "Digital Learning Coach", email: "hendrix.chantal@newton.k12.ga.us", phone: "770-787-1330 ext. 1306", location: "Covington, GA", notes: "Key instructional contact." }
@@ -782,7 +768,7 @@
                 activities: [
                     { date: "Aug 24, 2026", type: "Email Sent", text: "Emailed Chantal Hendrix proposing after-school AI & STEM organization, 1-hour free pilot, and teacher professional development workshops." },
                     { date: "Sep 3, 2026", type: "Meeting", text: "Scheduled and aligned on NCSA Student Project Showcase and pilot tracking." },
-                    { date: "Sep 29, 2026", type: "General Note", text: "Reviewed lunch camera footage and coordinated with administration." }
+                    { date: "Sep 29, 2026", type: "General Note", text: "Completed 5 successful sessions reaching 100 students with a 96% satisfaction rate. Asked to return." }
                 ]
             },
             { 
@@ -805,7 +791,10 @@
                     files: []
                 },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [],
+                financialDocs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ],
                 contacts: [
                     { name: "Ms. Dwayaa Ward", role: "School Contact / Coordinator", email: "ward.dwayaa@newton.k12.ga.us", phone: "770-784-2928", location: "Porterdale Elementary", notes: "Primary organizer for Career Day." }
                 ],
@@ -825,7 +814,10 @@
                 calendarEvents: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [],
+                financialDocs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Nov 20, 2026 (8:30 AM - 11:30 AM)." }
@@ -843,7 +835,10 @@
                 calendarEvents: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [],
+                financialDocs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Scheduled for Oct 28, 2026 (8:30 AM - 11:30 AM)." }
@@ -860,7 +855,10 @@
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [],
+                financialDocs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Reviewed Covington Campus Career Fair flyer." }
@@ -877,7 +875,10 @@
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [],
+                financialDocs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ],
                 contacts: [],
                 activities: [
                     { date: "Oct 1, 2026", type: "General Note", text: "Initial lead added for after-school revenue share model." }
@@ -936,7 +937,7 @@
             if (viewName === 'pipeline') {
                 document.getElementById('pipelineView').classList.remove('hidden');
                 document.getElementById('pageTitle').innerText = "Pipeline Manager";
-                renderTable();
+                renderSalesFunnel();
                 if (updateHash) window.location.hash = "view=pipeline";
                 const activeBtn = document.getElementById('nav-pipeline');
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
@@ -997,38 +998,38 @@
                     <div class="space-y-3">
                         <div onclick="openProfile(2)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-amber-400 font-bold uppercase">Prospecting / Pilot Complete</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Newton County STEAM Academy</h4>
-                                <p class="text-xs text-slate-400 mt-1">5 sessions • 100 students • 96% rating</p>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase">Newton County STEAM Academy</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Follow up with Ms. Bunting to turn into a program</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Follow-up • 5 sessions, 100 students, 96% rating</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
                         </div>
 
                         <div onclick="openProfile(3)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-amber-400 font-bold uppercase">Nov 19, 2026 (8:00 AM)</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Porterdale Elementary School</h4>
-                                <p class="text-xs text-slate-400 mt-1">Contact: Ms. Dwayaa Ward (770-784-2928)</p>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase">Porterdale Elementary School</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit volunteer / sign-up form (Nov 19)</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Contact: Ms. Dwayaa Ward</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
                         </div>
 
                         <div onclick="openProfile(4)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-amber-400 font-bold uppercase">Nov 20, 2026 (8:30 AM)</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Timber Ridge Elementary</h4>
-                                <p class="text-xs text-slate-400 mt-1">Scope: Tech & Innovation Career Showcase</p>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase">Timber Ridge Elementary</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit Career Day sign-up (Nov 20)</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
                         </div>
 
                         <div onclick="openProfile(5)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-amber-400 font-bold uppercase">Oct 28, 2026 (8:30 AM)</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Pleasant Grove Elementary</h4>
-                                <p class="text-xs text-slate-400 mt-1">Scope: Career Day Presentation</p>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase">Pleasant Grove Elementary</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Confirm Career Day attendance (Oct 28)</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'afterSchoolDetail') {
@@ -1037,20 +1038,20 @@
                     <div class="space-y-3">
                         <div onclick="openProfile(7)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-purple-400 font-bold uppercase">Revenue Share Model</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">YES Program</h4>
-                                <p class="text-xs text-slate-400 mt-1">Turnkey after-school partnership</p>
+                                <span class="text-[10px] text-purple-400 font-bold uppercase">YES Program</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Send partnership pitch email</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Revenue share model</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
                         </div>
 
                         <div onclick="openProfile(1)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-purple-400 font-bold uppercase">Waiting on Invoice ($750)</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">InspiHER Conference / Newton District</h4>
-                                <p class="text-xs text-slate-400 mt-1">Dec 2-3, 2026 Workshop</p>
+                                <span class="text-[10px] text-purple-400 font-bold uppercase">InspiHER Conference / Newton County District</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Follow up first week of November</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Waiting on Invoice • $750</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
                         </div>
                     </div>`;
             } else if (sectionKey === 'privateSchoolsDetail') {
@@ -1059,11 +1060,11 @@
                     <div class="space-y-3">
                         <div onclick="openProfile(6)" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-emerald-400 font-bold uppercase">Outreach Queued</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Peachtree Academy</h4>
-                                <p class="text-xs text-slate-400 mt-1">Covington Campus Career Fair</p>
+                                <span class="text-[10px] text-emerald-400 font-bold uppercase">Peachtree Academy</span>
+                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">Task: Submit employer sign-up form</h4>
+                                <p class="text-xs text-slate-400 mt-1">Stage: Prospecting • Career Fair</p>
                             </div>
-                            <span class="text-xs text-rose-400 font-semibold underline">Open Profile & Tasks</span>
+                            <span class="text-xs text-rose-400 font-semibold underline">Open Client Profile</span>
                         </div>
                     </div>`;
             }
@@ -1119,61 +1120,58 @@
             renderProspectTodos();
         }
 
-        function renderTable() {
-            const tbody = document.getElementById('pipeline-table-body');
-            const cardContainer = document.getElementById('pipeline-card-container');
-            if(!tbody || !cardContainer) return;
-            tbody.innerHTML = '';
-            cardContainer.innerHTML = '';
-            
+        function renderSalesFunnel() {
+            const container = document.getElementById('salesFunnelContainer');
+            if(!container) return;
+            container.innerHTML = '';
+
+            const stages = ["Prospecting", "Waiting on Invoice", "Contract Signed / Won", "Lost"];
+            const stageColors = {
+                "Prospecting": "border-amber-500/30 text-amber-400",
+                "Waiting on Invoice": "border-purple-500/30 text-purple-400",
+                "Contract Signed / Won": "border-emerald-500/30 text-emerald-400",
+                "Lost": "border-rose-500/30 text-rose-400"
+            };
+
             document.getElementById('stat-total').innerText = pipelineData.length;
             document.getElementById('stat-prospect').innerText = pipelineData.filter(d => d.stage === 'Prospecting').length;
             document.getElementById('stat-invoice').innerText = pipelineData.filter(d => d.stage === 'Waiting on Invoice').length;
             document.getElementById('stat-won').innerText = pipelineData.filter(d => d.stage === 'Contract Signed / Won').length;
 
-            pipelineData.forEach(item => {
-                let badgeColor = 'bg-dark-700 text-slate-300 border-dark-600';
-                if(item.stage === 'Contract Signed / Won') badgeColor = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-                if(item.stage === 'Waiting on Invoice') badgeColor = 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-                if(item.stage === 'Prospecting') badgeColor = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-                if(item.stage === 'Lost') badgeColor = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
+            stages.forEach(stage => {
+                const leadsInStage = pipelineData.filter(d => d.stage === stage);
+                let cardsHtml = '';
+                
+                if (leadsInStage.length > 0) {
+                    leadsInStage.forEach(item => {
+                        cardsHtml += `
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2 hover:border-rose-500/50 transition">
+                                <div class="flex justify-between items-start">
+                                    <h4 onclick="openProfile(${item.id})" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
+                                    <div class="space-x-1">
+                                        <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
+                                        <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
+                                    </div>
+                                </div>
+                                <p class="text-slate-400 text-xs"><strong>Contact:</strong> ${item.contact}</p>
+                                <p class="text-slate-400 text-[11px]"><strong>Scope:</strong> ${item.scope}</p>
+                                <div class="flex justify-between items-center text-[10px] pt-1 text-slate-300 border-t border-dark-600">
+                                    <span>Status: ${item.status}</span>
+                                    <span class="text-rose-400 font-medium">Action: ${item.action}</span>
+                                </div>
+                            </div>`;
+                    });
+                } else {
+                    cardsHtml = `<p class="text-xs text-slate-500 italic py-4 text-center">No targets in this stage.</p>`;
+                }
 
-                // Desktop Table Row
-                tbody.innerHTML += `
-                    <tr class="hover:bg-dark-700/30 transition">
-                        <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border ${badgeColor}">${item.stage}</span></td>
-                        <td class="py-4 px-6 font-bold text-slate-100">
-                            <span onclick="openProfile(${item.id})" class="cursor-pointer hover:text-rose-400 underline decoration-rose-500/50 underline-offset-4 transition">${item.org}</span>
-                        </td>
-                        <td class="py-4 px-6 text-slate-300">${item.contact}</td>
-                        <td class="py-4 px-6 text-slate-400 text-[11px]">${item.scope}</td>
-                        <td class="py-4 px-6"><span class="text-[11px] text-slate-300 bg-dark-700 border border-dark-600 px-2.5 py-1 rounded-md">${item.status}</span></td>
-                        <td class="py-4 px-6 text-slate-400 text-[11px]">${item.action}</td>
-                        <td class="py-4 px-6 text-right space-x-2">
-                            <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
-                            <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
-                        </td>
-                    </tr>`;
-
-                // Mobile Card View
-                cardContainer.innerHTML += `
-                    <div class="p-4 space-y-3 hover:bg-dark-700/20 transition">
-                        <div class="flex justify-between items-start">
-                            <span class="px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${badgeColor}">${item.stage}</span>
-                            <div class="space-x-2">
-                                <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
-                                <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
-                            </div>
+                container.innerHTML += `
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-5 space-y-4">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-3">
+                            <h3 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h3>
+                            <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300 text-xs">${leadsInStage.length}</span>
                         </div>
-                        <div>
-                            <h4 onclick="openProfile(${item.id})" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
-                            <p class="text-slate-400 text-xs mt-0.5"><strong>Contact:</strong> ${item.contact}</p>
-                            <p class="text-slate-400 text-xs mt-0.5"><strong>Scope:</strong> ${item.scope}</p>
-                        </div>
-                        <div class="flex justify-between items-center text-[11px] pt-1 text-slate-300 border-t border-dark-700">
-                            <span>Status: ${item.status}</span>
-                            <span class="text-rose-400 font-medium">Action: ${item.action}</span>
-                        </div>
+                        <div class="space-y-3">${cardsHtml}</div>
                     </div>`;
             });
             lucide.createIcons();
@@ -1890,13 +1888,19 @@
                 calendarEvents: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [],
+                financialDocs: [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ],
                 contacts: [],
                 activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
             };
             if(id) { 
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
-                data.financialDocs = pipelineData[idx].financialDocs || [];
+                data.financialDocs = pipelineData[idx].financialDocs || [
+                    { name: "Form W-9.pdf", url: "W9.pdf" },
+                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
+                ];
                 data.rootFolder = pipelineData[idx].rootFolder || { name: "Partnership Root", subfolders: [], files: [] };
                 data.trashFolder = pipelineData[idx].trashFolder || { name: "Trash Bin", subfolders: [], files: [] };
                 data.calendarEvents = pipelineData[idx].calendarEvents || [];
