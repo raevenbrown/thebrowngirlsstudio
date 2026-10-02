@@ -271,7 +271,7 @@
                 localStorage.setItem('bgcs_auth', 'true');
                 document.documentElement.classList.add('is-authenticated');
                 lucide.createIcons();
-                renderTable();
+                initApp();
             } else {
                 document.getElementById('errorMsg').classList.remove('hidden');
             }
@@ -420,8 +420,11 @@
             lucide.createIcons();
         }
 
-        function openProfile(id) {
+        function openProfile(id, updateHash = true) {
             currentProfileId = id;
+            if (updateHash) {
+                window.location.hash = "profile=" + id;
+            }
             const lead = pipelineData.find(l => l.id === id);
             if(!lead) return;
 
@@ -478,6 +481,7 @@
         }
 
         function showPipelineView() {
+            window.location.hash = "";
             document.getElementById('profileView').classList.add('hidden');
             document.getElementById('pipelineView').classList.remove('hidden');
             document.getElementById('pageTitle').innerText = "Pipeline Manager";
@@ -506,7 +510,6 @@
 
         function openNoteModal() { 
             document.getElementById('noteModal').classList.remove('hidden');
-            // Default date picker to today
             const today = new Date().toISOString().split('T')[0];
             const dateInput = document.getElementById('noteDate');
             if(dateInput) dateInput.value = today;
@@ -536,7 +539,7 @@
                 closeNoteModal();
                 document.getElementById('noteText').value = '';
                 document.getElementById('noteDate').value = '';
-                openProfile(currentProfileId);
+                openProfile(currentProfileId, false);
             }
         }
 
@@ -564,7 +567,7 @@
             }
             closeModal(); 
             renderTable();
-            if(currentProfileId) openProfile(currentProfileId);
+            if(currentProfileId) openProfile(currentProfileId, false);
         }
 
         function deleteLead(id) { 
@@ -578,7 +581,18 @@
             const blob = new Blob([csv], { type: 'text/csv' });
             const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'brown_girls_pipeline.csv'; a.click();
         }
-        renderTable();
+
+        function initApp() {
+            renderTable();
+            if (window.location.hash.includes("profile=")) {
+                const profileId = parseInt(window.location.hash.split("profile=")[1]);
+                if (profileId) {
+                    openProfile(profileId, false);
+                }
+            }
+        }
+
+        initApp();
     </script>
 </body>
 </html>
