@@ -109,7 +109,7 @@
                 </div>
             </header>
 
-            <!-- View 1: Main Pipeline Table -->
+            <!-- View 1: Main Pipeline Table / Mobile Cards -->
             <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                     <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
@@ -135,7 +135,9 @@
                         <h2 class="font-bold text-base text-slate-100">Partnership & Pipeline Control Center</h2>
                         <p class="text-xs text-slate-400 mt-0.5">Click any Organization name below to open their dedicated profile tracker.</p>
                     </div>
-                    <div class="overflow-x-auto">
+                    
+                    <!-- Desktop Table View -->
+                    <div class="overflow-x-auto hidden md:block">
                         <table class="w-full text-left border-collapse min-w-[700px]">
                             <thead>
                                 <tr class="bg-dark-700/50 border-b border-dark-600 text-[11px] font-bold text-slate-400 uppercase tracking-wider">
@@ -151,6 +153,9 @@
                             <tbody id="pipeline-table-body" class="divide-y divide-dark-600 text-xs"></tbody>
                         </table>
                     </div>
+
+                    <!-- Mobile Card View -->
+                    <div id="pipeline-card-container" class="block md:hidden divide-y divide-dark-600 text-xs"></div>
                 </div>
             </div>
 
@@ -674,19 +679,27 @@
             currentActiveTab = tabName;
             if (updateHash && currentProfileId !== null) {
                 window.location.hash = `profile=${currentProfileId}&tab=${tabName}`;
+            } else if (updateHash && currentProfileId === null) {
+                window.location.hash = `view=pipeline`;
             }
             ['info', 'revenue', 'comms', 'events'].forEach(t => {
-                document.getElementById('tabContent-' + t).classList.add('hidden');
-                document.getElementById('tabBtn-' + t).className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center";
+                const el = document.getElementById('tabContent-' + t);
+                const btn = document.getElementById('tabBtn-' + t);
+                if (el) el.classList.add('hidden');
+                if (btn) btn.className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center";
             });
-            document.getElementById('tabContent-' + tabName).classList.remove('hidden');
-            document.getElementById('tabBtn-' + tabName).className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center";
+            const activeEl = document.getElementById('tabContent-' + tabName);
+            const activeBtn = document.getElementById('tabBtn-' + tabName);
+            if (activeEl) activeEl.classList.remove('hidden');
+            if (activeBtn) activeBtn.className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center";
             lucide.createIcons();
         }
 
         function renderTable() {
             const tbody = document.getElementById('pipeline-table-body');
+            const cardContainer = document.getElementById('pipeline-card-container');
             tbody.innerHTML = '';
+            cardContainer.innerHTML = '';
             
             document.getElementById('stat-total').innerText = pipelineData.length;
             document.getElementById('stat-prospect').innerText = pipelineData.filter(d => d.stage === 'Prospecting').length;
@@ -700,6 +713,7 @@
                 if(item.stage === 'Prospecting') badgeColor = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
                 if(item.stage === 'Lost') badgeColor = 'bg-rose-500/10 text-rose-400 border-rose-500/20';
 
+                // Desktop Table Row
                 tbody.innerHTML += `
                     <tr class="hover:bg-dark-700/30 transition">
                         <td class="py-4 px-6"><span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border ${badgeColor}">${item.stage}</span></td>
@@ -715,6 +729,27 @@
                             <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
                         </td>
                     </tr>`;
+
+                // Mobile Card View
+                cardContainer.innerHTML += `
+                    <div class="p-4 space-y-3 hover:bg-dark-700/20 transition">
+                        <div class="flex justify-between items-start">
+                            <span class="px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${badgeColor}">${item.stage}</span>
+                            <div class="space-x-2">
+                                <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
+                                <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 onclick="openProfile(${item.id})" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
+                            <p class="text-slate-400 text-xs mt-0.5"><strong>Contact:</strong> ${item.contact}</p>
+                            <p class="text-slate-400 text-xs mt-0.5"><strong>Scope:</strong> ${item.scope}</p>
+                        </div>
+                        <div class="flex justify-between items-center text-[11px] pt-1 text-slate-300 border-t border-dark-700">
+                            <span>Status: ${item.status}</span>
+                            <span class="text-rose-400 font-medium">Action: ${item.action}</span>
+                        </div>
+                    </div>`;
             });
             lucide.createIcons();
         }
@@ -1052,7 +1087,8 @@
         }
 
         function showPipelineView() {
-            window.location.hash = "";
+            window.location.hash = "view=pipeline";
+            currentProfileId = null;
             document.getElementById('profileView').classList.add('hidden');
             document.getElementById('pipelineView').classList.remove('hidden');
             document.getElementById('pageTitle').innerText = "Pipeline Manager";
@@ -1338,6 +1374,8 @@
                 if (profileId) {
                     openProfile(profileId, tabName, false);
                 }
+            } else {
+                showPipelineView();
             }
         }
 
