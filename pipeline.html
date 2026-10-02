@@ -82,16 +82,16 @@
                     <a href="index.html" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
                         <i data-lucide="layout-dashboard" class="w-4 h-4 mr-3"></i> Main Portal
                     </a>
-                    <a href="#pipeline" onclick="switchMainView('pipeline')" id="nav-pipeline" class="flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition">
+                    <a href="#view=pipeline" onclick="switchMainView('pipeline')" id="nav-pipeline" class="flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition">
                         <i data-lucide="target" class="w-4 h-4 mr-3 text-rose-500"></i> Pipeline & Partners
                     </a>
-                    <a href="#goals" onclick="switchMainView('goals')" id="nav-goals" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+                    <a href="#view=goals" onclick="switchMainView('goals')" id="nav-goals" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
                         <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Goals & Strategy
                     </a>
-                    <a href="#agenda" onclick="switchMainView('agenda')" id="nav-agenda" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+                    <a href="#view=agenda" onclick="switchMainView('agenda')" id="nav-agenda" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
                         <i data-lucide="calendar-check" class="w-4 h-4 mr-3 text-purple-400"></i> Spirit Meeting Outline
                     </a>
-                    <a href="#prospects" onclick="switchMainView('prospects')" id="nav-prospects" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+                    <a href="#view=prospects" onclick="switchMainView('prospects')" id="nav-prospects" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
                         <i data-lucide="check-square" class="w-4 h-4 mr-3 text-amber-400"></i> Prospect To-Do List
                     </a>
                 </nav>
@@ -128,55 +128,54 @@
                 </div>
             </header>
 
-            <!-- Main Section 1: Goals & Strategy View (Detailed 2026 Income Streams) -->
+            <!-- Main Section 1: Goals & Strategy View (Interactive Clickable Streams) -->
             <div id="mainView-goals" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
-                    <div class="border-b border-dark-600 pb-4">
-                        <h2 class="text-xl font-bold text-slate-100">Year 2026 Growth Goals & Income Streams</h2>
-                        <p class="text-xs text-slate-400 mt-1">Detailed comparison and tracking across our three core revenue channels.</p>
+                    <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-100">2026 Growth Goals & Income Streams</h2>
+                            <p class="text-xs text-slate-400 mt-1">Click any category below to expand full details and track metrics.</p>
+                        </div>
                     </div>
 
-                    <!-- Core Revenue Streams Breakdown -->
+                    <!-- Core Revenue Streams Breakdown with Clickable Detail Toggle -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
                         <!-- Stream 1: Career Days & School Workshops -->
-                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3">
+                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career Days (Locked In)</h4>
-                                <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold text-[10px]">Active</span>
+                                <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold text-[10px]">Click to Expand</span>
                             </div>
-                            <div class="space-y-2 text-slate-300">
-                                <p><strong>Newton County STEAM Academy:</strong> Completed 5 sessions, 100 students, 96% satisfaction rate. Asked to return. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(2)">View NCSA Profile</span></p>
-                                <p class="text-slate-400 italic">Next Step: Follow up with Ms. Bunting to convert into a recurring after-school program.</p>
-                                <hr class="border-dark-600 my-2">
-                                <p><strong>Porterdale Elementary:</strong> Nov 19, 2026 (8:00 AM - 11:30 AM). <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(3)">View Profile</span></p>
-                                <p><strong>Timber Ridge Elementary:</strong> Nov 20, 2026 (8:30 AM - 11:30 AM). <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(4)">View Profile</span></p>
-                                <p><strong>Pleasant Grove Elementary:</strong> Oct 28, 2026. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(5)">View Profile</span></p>
-                            </div>
+                            <p class="text-slate-300">Newton County STEAM Academy completed, Porterdale, Timber Ridge, & Pleasant Grove scheduled.</p>
                         </div>
 
                         <!-- Stream 2: Paid After-School Partnerships -->
-                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3">
+                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-purple-500 transition" onclick="toggleGoalDetail('afterSchoolDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-purple-400 uppercase tracking-wider">2. After-School Programs</h4>
-                                <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-semibold text-[10px]">Revenue Share</span>
+                                <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-semibold text-[10px]">Click to Expand</span>
                             </div>
-                            <div class="space-y-2 text-slate-300">
-                                <p><strong>YES Program:</strong> Pitching turnkey after-school partnership and revenue-share model. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(7)">View Profile</span></p>
-                                <p><strong>InspiHER Conference:</strong> 2-day workshop (Dec 2-3, 2026) @ $750 with Dr. Jennifer Williams. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(1)">View Profile</span></p>
-                                <p class="text-slate-400 italic">Strategy: Leverage career day results and parent surveys to establish paid after-school cohorts.</p>
-                            </div>
+                            <p class="text-slate-300">YES Program revenue-share pitch and InspiHER December conference paid workshops ($750).</p>
                         </div>
 
                         <!-- Stream 3: Private Schools Outreach -->
-                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3">
+                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-emerald-500 transition" onclick="toggleGoalDetail('privateSchoolsDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private Schools</h4>
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold text-[10px]">Expansion</span>
+                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold text-[10px]">Click to Expand</span>
                             </div>
-                            <div class="space-y-2 text-slate-300">
-                                <p><strong>Peachtree Academy:</strong> Covington Campus Career Fair & Employer Showcase outreach. <span class="text-rose-400 underline cursor-pointer" onclick="openProfile(6)">View Profile</span></p>
-                                <p class="text-slate-400 italic">Strategy: Target regional private academies for premium-tier STEM and AI lab enrollment packages.</p>
-                            </div>
+                            <p class="text-slate-300">Peachtree Academy career fair outreach and regional private academy STEM enrollment packages.</p>
+                        </div>
+                    </div>
+
+                    <!-- Expandable Detailed View Box -->
+                    <div id="goalDetailBox" class="bg-dark-700/60 border border-dark-600 p-6 rounded-2xl space-y-4 hidden text-xs">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-3">
+                            <h3 id="goalDetailTitle" class="font-bold text-sm text-slate-100">Category Details</h3>
+                            <button onclick="document.getElementById('goalDetailBox').classList.add('hidden')" class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
+                        </div>
+                        <div id="goalDetailContent" class="space-y-3 text-slate-300">
+                            <!-- Populated dynamically -->
                         </div>
                     </div>
 
@@ -921,7 +920,7 @@
             }
         }
 
-        function switchMainView(viewName) {
+        function switchMainView(viewName, updateHash = true) {
             ['pipeline', 'goals', 'agenda', 'prospects'].forEach(v => {
                 const el = document.getElementById('mainView-' + v);
                 if (el) el.classList.add('hidden');
@@ -938,7 +937,7 @@
                 document.getElementById('pipelineView').classList.remove('hidden');
                 document.getElementById('pageTitle').innerText = "Pipeline Manager";
                 renderTable();
-                window.location.hash = "view=pipeline";
+                if (updateHash) window.location.hash = "view=pipeline";
                 const activeBtn = document.getElementById('nav-pipeline');
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
             } else {
@@ -952,7 +951,7 @@
                     document.getElementById('pageTitle').innerText = "Prospect To-Do Checklist";
                     renderProspectTodos();
                 }
-                window.location.hash = "view=" + viewName;
+                if (updateHash) window.location.hash = "view=" + viewName;
             }
             const sidebar = document.getElementById('sidebarNav');
             const overlay = document.getElementById('mobileSidebarOverlay');
@@ -980,6 +979,69 @@
             
             if (tabName === 'calendar') {
                 renderVisualCalendar();
+            }
+            lucide.createIcons();
+        }
+
+        function toggleGoalDetail(sectionKey) {
+            const box = document.getElementById('goalDetailBox');
+            const title = document.getElementById('goalDetailTitle');
+            const content = document.getElementById('goalDetailContent');
+            box.classList.remove('hidden');
+
+            if (sectionKey === 'careerDaysDetail') {
+                title.innerText = "1. Career Days (Locked In) - Detailed Breakdown";
+                content.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
+                            <h4 class="font-bold text-rose-400">Newton County STEAM Academy (Flagship Pilot)</h4>
+                            <p class="text-slate-300">• <strong>Performance:</strong> Completed 5 sessions reaching 100 students with a 96% satisfaction rating[span_0](start_span)[span_0](end_span).</p>
+                            <p class="text-slate-300">• <strong>Status:</strong> Asked to return[span_1](start_span)[span_1](end_span); actively following up with Ms. Bunting to convert into a recurring after-school enrichment program.</p>
+                            <button onclick="openProfile(2)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open NCSA Profile</button>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
+                            <h4 class="font-bold text-rose-400">Porterdale Elementary School</h4>
+                            <p class="text-slate-300">• <strong>Date:</strong> Nov 19, 2026 (8:00 AM - 11:30 AM).</p>
+                            <p class="text-slate-300">• <strong>Scope:</strong> Entrepreneur & Tech Presentation with Ms. Dwayaa Ward.</p>
+                            <button onclick="openProfile(3)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Porterdale Profile</button>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
+                            <h4 class="font-bold text-rose-400">Timber Ridge Elementary School</h4>
+                            <p class="text-slate-300">• <strong>Date:</strong> Nov 20, 2026 (8:30 AM - 11:30 AM).</p>
+                            <p class="text-slate-300">• <strong>Scope:</strong> Tech & Innovation Career Showcase.</p>
+                            <button onclick="openProfile(4)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Timber Ridge Profile</button>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
+                            <h4 class="font-bold text-rose-400">Pleasant Grove Elementary School</h4>
+                            <p class="text-slate-300">• <strong>Date:</strong> Oct 28, 2026 (8:30 AM - 11:30 AM).</p>
+                            <button onclick="openProfile(5)" class="mt-2 px-3 py-1 bg-rose-600 text-white rounded-lg font-semibold text-[11px]">Open Pleasant Grove Profile</button>
+                        </div>
+                    </div>`;
+            } else if (sectionKey === 'afterSchoolDetail') {
+                title.innerText = "2. After-School Programs - Paid Partnerships";
+                content.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
+                            <h4 class="font-bold text-purple-400">YES Program</h4>
+                            <p class="text-slate-300">• <strong>Objective:</strong> Pitching turnkey after-school partnership and revenue-share model.</p>
+                            <button onclick="openProfile(7)" class="mt-2 px-3 py-1 bg-purple-600 text-white rounded-lg font-semibold text-[11px]">Open YES Program Profile</button>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
+                            <h4 class="font-bold text-purple-400">InspiHER Conference (Newton District)</h4>
+                            <p class="text-slate-300">• <strong>Date:</strong> Dec 2-3, 2026 @ $750 with Dr. Jennifer Williams.</p>
+                            <button onclick="openProfile(1)" class="mt-2 px-3 py-1 bg-purple-600 text-white rounded-lg font-semibold text-[11px]">Open InspiHER Profile</button>
+                        </div>
+                    </div>`;
+            } else if (sectionKey === 'privateSchoolsDetail') {
+                title.innerText = "3. Private Schools Outreach";
+                content.innerHTML = `
+                    <div class="space-y-3">
+                        <div class="bg-dark-800 p-4 rounded-xl border border-dark-600 space-y-1">
+                            <h4 class="font-bold text-emerald-400">Peachtree Academy</h4>
+                            <p class="text-slate-300">• <strong>Event:</strong> Covington Campus Career Fair & Employer Showcase.</p>
+                            <button onclick="openProfile(6)" class="mt-2 px-3 py-1 bg-emerald-600 text-white rounded-lg font-semibold text-[11px]">Open Peachtree Academy Profile</button>
+                        </div>
+                    </div>`;
             }
             lucide.createIcons();
         }
@@ -1851,9 +1913,9 @@
             } else if (window.location.hash.includes("view=")) {
                 const hashParams = new URLSearchParams(window.location.hash.substring(1));
                 const viewName = hashParams.get("view") || 'pipeline';
-                switchMainView(viewName);
+                switchMainView(viewName, false);
             } else {
-                switchMainView('pipeline');
+                switchMainView('pipeline', false);
             }
         }
 
