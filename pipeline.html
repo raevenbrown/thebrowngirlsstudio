@@ -515,6 +515,11 @@
                     ],
                     files: []
                 },
+                trashFolder: {
+                    name: "Trash Bin",
+                    subfolders: [],
+                    files: []
+                },
                 financialDocs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
                     { name: "IRS CP575.pdf", url: "EIN .pdf" }
@@ -547,6 +552,7 @@
                     ],
                     files: []
                 },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [
                     { name: "Principal Brandon Parham", role: "Principal / Decision Maker", email: "parham.brandon@newton.k12.ga.us", phone: "School Main", location: "Newton County STEAM Academy", notes: "Flagship pilot school leadership." },
@@ -574,6 +580,7 @@
                     ],
                     files: []
                 },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [
                     { name: "Ms. Dwayaa Ward", role: "School Contact / Coordinator", email: "ward.dwayaa@newton.k12.ga.us", phone: "770-784-2928", location: "Porterdale Elementary", notes: "Primary organizer for Career Day." }
@@ -592,6 +599,7 @@
                 action: "Submit sign-up form",
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -608,6 +616,7 @@
                 action: "Submit sign-up form",
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -624,6 +633,7 @@
                 action: "Submit employer sign-up form",
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -640,6 +650,7 @@
                 action: "Send partnership pitch email",
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [
@@ -649,7 +660,7 @@
         ];
 
         let currentProfileId = null;
-        let currentFolderPath = []; 
+        let currentFolderPath = []; // [] means root, ['trash'] means inside the Trash Bin
         let currentEditingFolderRef = null;
         let currentActiveTab = 'info';
 
@@ -708,6 +719,14 @@
             if (!lead.rootFolder) {
                 lead.rootFolder = { name: "Partnership Root", subfolders: [], files: [] };
             }
+            if (!lead.trashFolder) {
+                lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
+            }
+
+            if (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash') {
+                return lead.trashFolder;
+            }
+
             let curr = lead.rootFolder;
             for (let idx of currentFolderPath) {
                 curr = curr.subfolders[idx];
@@ -837,37 +856,61 @@
             const folderContainer = document.getElementById('folderExplorerContainer');
             const breadcrumb = document.getElementById('folderBreadcrumb');
             const currentFolder = getCurrentFolder();
-            if (!currentFolder) return;
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (!currentFolder || !lead) return;
 
             // Render Breadcrumbs
             breadcrumb.classList.remove('hidden');
             breadcrumb.classList.add('flex');
             let bcHtml = `<span onclick="navigateToFolder(-1)" class="cursor-pointer hover:text-rose-400 font-semibold">Root</span>`;
-            let tempPath = [];
-            currentFolderPath.forEach((idx, pIdx) => {
-                let targetFolder = leadFolderByPath(tempPath.concat(idx));
-                bcHtml += ` <span class="text-slate-600">/</span> <span onclick="navigateToFolder(${pIdx})" class="cursor-pointer hover:text-rose-400 font-semibold">${targetFolder.name}</span>`;
-                tempPath.push(idx);
-            });
+            if (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash') {
+                bcHtml += ` <span class="text-slate-600">/</span> <span class="font-semibold text-rose-400">Trash Bin</span>`;
+            } else {
+                let tempPath = [];
+                currentFolderPath.forEach((idx, pIdx) => {
+                    let targetFolder = leadFolderByPath(tempPath.concat(idx));
+                    bcHtml += ` <span class="text-slate-600">/</span> <span onclick="navigateToFolder(${pIdx})" class="cursor-pointer hover:text-rose-400 font-semibold">${targetFolder.name}</span>`;
+                    tempPath.push(idx);
+                });
+            }
             breadcrumb.innerHTML = bcHtml;
-            document.getElementById('currentFolderTitle').innerText = currentFolderPath.length === 0 ? "Partnership Events & Folders" : currentFolder.name;
+            document.getElementById('currentFolderTitle').innerText = (currentFolderPath.length === 0) ? "Partnership Events & Folders" : currentFolder.name;
 
             folderContainer.innerHTML = '';
+
+            // If we are at root level, show regular folders + Trash Bin shortcut
+            if (currentFolderPath.length === 0) {
+                // Render Trash Bin Entry at Root
+                folderContainer.innerHTML += `
+                    <div class="bg-dark-700/20 border border-dark-600 p-4 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
+                        <div onclick="enterTrashBin()" class="flex items-center space-x-3 cursor-pointer flex-1">
+                            <i data-lucide="trash-2" class="w-5 h-5 text-rose-400 shrink-0"></i>
+                            <span class="font-bold text-slate-300 text-sm">Trash Bin</span>
+                        </div>
+                        <span class="text-[10px] text-slate-400">Items: ${(lead.trashFolder && lead.trashFolder.subfolders ? lead.trashFolder.subfolders.length : 0) + (lead.trashFolder && lead.trashFolder.files ? lead.trashFolder.files.length : 0)}</span>
+                    </div>`;
+            }
 
             // Render Subfolders
             if (currentFolder.subfolders && currentFolder.subfolders.length > 0) {
                 currentFolder.subfolders.forEach((sub, sIdx) => {
+                    let isTrash = (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash');
                     folderContainer.innerHTML += `
                         <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition hover:border-rose-500/50">
-                            <div onclick="enterSubfolder(${sIdx})" class="flex items-center space-x-3 cursor-pointer flex-1">
+                            <div ${isTrash ? '' : `onclick="enterSubfolder(${sIdx})"`} class="flex items-center space-x-3 ${isTrash ? '' : 'cursor-pointer'} flex-1">
                                 <i data-lucide="folder" class="w-5 h-5 text-rose-500 shrink-0"></i>
-                                <span class="font-bold text-slate-100 text-sm break-all">${sub.name}</span>
+                                <span class="font-bold text-slate-100 text-sm break-all">${sub.name} ${isTrash ? '<span class="text-[10px] text-rose-400 font-normal">(In Trash)</span>' : ''}</span>
                             </div>
                             <div class="flex items-center space-x-2 text-xs w-full sm:w-auto justify-end">
-                                <button onclick="openRenameFolderModal(${sIdx})" class="px-2.5 py-1 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-300">Rename</button>
-                                <button onclick="moveFolder(${sIdx}, 'up')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Up"><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
-                                <button onclick="moveFolder(${sIdx}, 'down')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Down"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
-                                <button onclick="deleteSubfolder(${sIdx})" class="p-1.5 rounded bg-dark-600 hover:bg-rose-500/20 text-rose-400" title="Delete"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                ${isTrash ? `
+                                    <button onclick="restoreSubfolder(${sIdx})" class="px-2.5 py-1 rounded-lg bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30">Restore</button>
+                                    <button onclick="permanentDeleteSubfolder(${sIdx})" class="px-2.5 py-1 rounded-lg bg-rose-600/20 text-rose-400 hover:bg-rose-600/30">Delete Permanently</button>
+                                ` : `
+                                    <button onclick="openRenameFolderModal(${sIdx})" class="px-2.5 py-1 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-300">Rename</button>
+                                    <button onclick="moveFolder(${sIdx}, 'up')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Up"><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
+                                    <button onclick="moveFolder(${sIdx}, 'down')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Down"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
+                                    <button onclick="moveToTrashSubfolder(${sIdx})" class="p-1.5 rounded bg-dark-600 hover:bg-rose-500/20 text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                `}
                             </div>
                         </div>`;
                 });
@@ -876,19 +919,27 @@
             // Render Files
             if (currentFolder.files && currentFolder.files.length > 0) {
                 currentFolder.files.forEach((file, fIdx) => {
+                    let isTrash = (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash');
                     folderContainer.innerHTML += `
                         <div class="bg-dark-700/20 border border-dark-600 p-3 rounded-xl flex items-center justify-between">
                             <div class="flex items-center space-x-3 overflow-hidden">
                                 <i data-lucide="file-text" class="w-4 h-4 text-rose-400 shrink-0"></i>
                                 <a href="${file.url}" target="_blank" class="text-slate-200 text-xs font-medium underline hover:text-rose-400 truncate">${file.name}</a>
                             </div>
-                            <button onclick="deleteFile(${fIdx})" class="text-slate-400 hover:text-rose-400 shrink-0 ml-2"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                            <div class="flex items-center space-x-2 shrink-0 ml-2">
+                                ${isTrash ? `
+                                    <button onclick="restoreFile(${fIdx})" class="px-2 py-0.5 rounded bg-emerald-600/20 text-emerald-400 text-[10px]">Restore</button>
+                                    <button onclick="permanentDeleteFile(${fIdx})" class="px-2 py-0.5 rounded bg-rose-600/20 text-rose-400 text-[10px]">Delete Permanently</button>
+                                ` : `
+                                    <button onclick="moveToTrashFile(${fIdx})" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                `}
+                            </div>
                         </div>`;
                 });
             }
 
-            if ((!currentFolder.subfolders || currentFolder.subfolders.length === 0) && (!currentFolder.files || currentFolder.files.length === 0)) {
-                folderContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">This folder is empty. Create a subfolder or upload files from your device above.</p>`;
+            if ((!currentFolder.subfolders || currentFolder.subfolders.length === 0) && (!currentFolder.files || currentFolder.files.length === 0) && currentFolderPath.length !== 0) {
+                folderContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">This folder is empty.</p>`;
             }
             lucide.createIcons();
         }
@@ -904,6 +955,11 @@
 
         function enterSubfolder(sIdx) {
             currentFolderPath.push(sIdx);
+            renderFolderExplorer();
+        }
+
+        function enterTrashBin() {
+            currentFolderPath = ['trash'];
             renderFolderExplorer();
         }
 
@@ -930,27 +986,61 @@
             renderFolderExplorer();
         }
 
-        function deleteSubfolder(sIdx) {
-            if (confirm("Are you sure you want to delete this folder and its contents?")) {
-                const curr = getCurrentFolder();
-                curr.subfolders.splice(sIdx, 1);
+        function moveToTrashSubfolder(sIdx) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            const curr = getCurrentFolder();
+            let sub = curr.subfolders.splice(sIdx, 1)[0];
+            if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
+            lead.trashFolder.subfolders.push(sub);
+            renderFolderExplorer();
+        }
+
+        function moveToTrashFile(fIdx) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            const curr = getCurrentFolder();
+            let file = curr.files.splice(fIdx, 1)[0];
+            if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
+            lead.trashFolder.files.push(file);
+            renderFolderExplorer();
+        }
+
+        function restoreSubfolder(sIdx) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            let sub = lead.trashFolder.subfolders.splice(sIdx, 1)[0];
+            lead.rootFolder.subfolders.push(sub);
+            renderFolderExplorer();
+        }
+
+        function restoreFile(fIdx) {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            let file = lead.trashFolder.files.splice(fIdx, 1)[0];
+            lead.rootFolder.files.push(file);
+            renderFolderExplorer();
+        }
+
+        function permanentDeleteSubfolder(sIdx) {
+            if (confirm("Are you sure you want to permanently delete this folder? This action cannot be undone.")) {
+                const lead = pipelineData.find(l => l.id === currentProfileId);
+                lead.trashFolder.subfolders.splice(sIdx, 1);
                 renderFolderExplorer();
             }
         }
 
-        function deleteFile(fIdx) {
-            if (confirm("Delete this file?")) {
-                const curr = getCurrentFolder();
-                curr.files.splice(fIdx, 1);
+        function permanentDeleteFile(fIdx) {
+            if (confirm("Permanently delete this file? This action cannot be undone.")) {
+                const lead = pipelineData.find(l => l.id === currentProfileId);
+                lead.trashFolder.files.splice(fIdx, 1);
                 renderFolderExplorer();
             }
         }
 
         function deleteFinancialDoc(fIdx) {
-            if (confirm("Delete this financial document?")) {
+            if (confirm("Move this financial document to Trash?")) {
                 const lead = pipelineData.find(l => l.id === currentProfileId);
                 if(lead && lead.financialDocs) {
-                    lead.financialDocs.splice(fIdx, 1);
+                    let doc = lead.financialDocs.splice(fIdx, 1)[0];
+                    if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
+                    lead.trashFolder.files.push(doc);
                     openProfile(currentProfileId, currentActiveTab, false);
                 }
             }
@@ -1003,11 +1093,21 @@
         }
         function closeFinanceModal() { document.getElementById('financeModal').classList.add('hidden'); }
 
-        function openFolderModal() { document.getElementById('folderModal').classList.remove('hidden'); }
+        function openFolderModal() { 
+            if (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash') {
+                alert("Cannot create folders inside the Trash Bin.");
+                return;
+            }
+            document.getElementById('folderModal').classList.remove('hidden'); 
+        }
         function closeFolderModal() { document.getElementById('folderModal').classList.add('hidden'); }
 
         let uploadTargetMode = 'event'; 
         function openUploadModal(mode = 'event') {
+            if (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash') {
+                alert("Cannot upload files directly into the Trash Bin.");
+                return;
+            }
             uploadTargetMode = mode;
             document.getElementById('uploadModalTitle').innerText = mode === 'Financial & Tax Documents' ? 'Upload Financial Document' : 'Upload File from Device';
             document.getElementById('deviceFileInput').value = '';
@@ -1182,6 +1282,7 @@
                 action: document.getElementById('leadAction').value,
                 auditRecords: [],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
+                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
                 financialDocs: [],
                 contacts: [],
                 activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
@@ -1190,6 +1291,7 @@
                 const idx = pipelineData.findIndex(l => l.id === parseInt(id));
                 data.financialDocs = pipelineData[idx].financialDocs || [];
                 data.rootFolder = pipelineData[idx].rootFolder || { name: "Partnership Root", subfolders: [], files: [] };
+                data.trashFolder = pipelineData[idx].trashFolder || { name: "Trash Bin", subfolders: [], files: [] };
                 data.contacts = pipelineData[idx].contacts || [];
                 data.auditRecords = pipelineData[idx].auditRecords || [];
                 data.activities = pipelineData[idx].activities;
