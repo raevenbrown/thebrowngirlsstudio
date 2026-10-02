@@ -181,7 +181,7 @@
                 <!-- Interactive Tab Navigation -->
                 <div class="flex space-x-2 border-b border-dark-600 pb-3">
                     <button onclick="switchTab('info')" id="tabBtn-info" class="px-4 py-2 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition">Company Info</button>
-                    <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Revenue & Financials</button>
+                    <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Revenue & Audit Log</button>
                     <button onclick="switchTab('comms')" id="tabBtn-comms" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Communication Log</button>
                     <button onclick="switchTab('events')" id="tabBtn-events" class="px-4 py-2 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition">Partnership Events & Folders</button>
                 </div>
@@ -201,18 +201,18 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: Revenue & Financials -->
+                <!-- Tab 2: Revenue & Audit Log -->
                 <div id="tabContent-revenue" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
-                            <h3 class="font-bold text-sm text-slate-100">Financial Metrics & Revenue Tracking</h3>
-                            <button onclick="openFinanceModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
-                                Update Financials
+                            <h3 class="font-bold text-sm text-slate-100">Financial Paper Trail & Itemized Invoices</h3>
+                            <button onclick="openFinanceModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
+                                + Log Invoice / Payment
                             </button>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Value / Potential</p>
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Contract Value</p>
                                 <h4 id="finTotal" class="text-xl font-bold text-slate-100 mt-1">$0.00</h4>
                             </div>
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
@@ -223,6 +223,25 @@
                                 <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Closed / Paid</p>
                                 <h4 id="finClosed" class="text-xl font-bold text-emerald-400 mt-1">$0.00</h4>
                             </div>
+                        </div>
+
+                        <!-- Itemized Audit Table -->
+                        <div class="overflow-x-auto border border-dark-600 rounded-xl">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                        <th class="py-3 px-4">Invoice / Ref #</th>
+                                        <th class="py-3 px-4">Description / Scope</th>
+                                        <th class="py-3 px-4">Issue Date</th>
+                                        <th class="py-3 px-4">Amount</th>
+                                        <th class="py-3 px-4">Status</th>
+                                        <th class="py-3 px-4">Payment Method / Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditTableBody" class="divide-y divide-dark-600">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -352,26 +371,30 @@
         </div>
     </div>
 
-    <!-- Modal for Updating Financials -->
+    <!-- Modal for Logging Detailed Audit Invoice / Payment -->
     <div id="financeModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Update Company Financials</h3>
-            <form onsubmit="saveFinance(event)" class="space-y-4 text-xs">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4">Log Invoice / Payment Audit Record</h3>
+            <form onsubmit="saveFinanceRecord(event)" class="space-y-4 text-xs">
+                <input type="text" id="auditRef" required placeholder="Invoice / Ref # (e.g. INV-101 or PO-5542)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="text" id="auditDesc" required placeholder="Description / Scope (e.g. InspiHER 2-Day Workshop)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Total Contract Value ($)</label>
-                    <input type="number" step="0.01" id="finTotalInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Issue / Transaction Date</label>
+                    <input type="date" id="auditDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 </div>
+                <input type="number" step="0.01" id="auditAmount" required placeholder="Amount ($)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Pending Revenue ($)</label>
-                    <input type="number" step="0.01" id="finPendingInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Financial Status</label>
+                    <select id="auditStatus" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                        <option value="Pending">Pending (Waiting on AP)</option>
+                        <option value="Invoiced">Invoiced / Submitted</option>
+                        <option value="Paid">Closed / Paid in Full</option>
+                    </select>
                 </div>
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Closed / Paid Revenue ($)</label>
-                    <input type="number" step="0.01" id="finClosedInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                </div>
+                <input type="text" id="auditMethod" placeholder="Payment Method / Ref Note (e.g. Check #4021 or District ACH)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeFinanceModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Financials</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Audit Record</button>
                 </div>
             </form>
         </div>
@@ -449,7 +472,9 @@
                 scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
                 status: "W-9 & CP575 Submitted", 
                 action: "Follow up first week of November",
-                finance: { total: 750.00, pending: 750.00, closed: 0.00 },
+                auditRecords: [
+                    { ref: "INV-2026-01", desc: "InspiHER 2-Day Workshop (Dec 2-3)", date: "Oct 1, 2026", amount: 750.00, status: "Pending", method: "Submitted to AP Dept (W-9 attached)" }
+                ],
                 folders: ["Invoices & Tax Docs", "Event Marketing Assets"],
                 docs: [
                     { name: "Form W-9.pdf", url: "W9.pdf" },
@@ -475,7 +500,7 @@
                 scope: "Career Day & After-School AI Lab Partnership", 
                 status: "In Discussion", 
                 action: "Review proposal and schedule pilot cohort",
-                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                auditRecords: [],
                 folders: ["Proposals"],
                 docs: [
                     { name: "NCSA Pilot Proposal.pdf", url: "#" },
@@ -499,7 +524,7 @@
                 scope: "Career Day (11/19/2026) - Entrepreneur Presentation", 
                 status: "Outreach Queued", 
                 action: "Submit volunteer / sign-up form",
-                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                auditRecords: [],
                 folders: ["Flyers"],
                 docs: [{ name: "Career_Day_Flyer.png", url: "#" }],
                 contacts: [
@@ -517,7 +542,7 @@
                 scope: "Career Day (11/20/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
-                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                auditRecords: [],
                 folders: [],
                 docs: [{ name: "TRE_Flyer.png", url: "#" }],
                 contacts: [],
@@ -533,7 +558,7 @@
                 scope: "Career Day (10/28/2026) - Tech & Innovation", 
                 status: "Outreach Queued", 
                 action: "Submit sign-up form",
-                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                auditRecords: [],
                 folders: [],
                 docs: [{ name: "PGE_Flyer.png", url: "#" }],
                 contacts: [],
@@ -549,7 +574,7 @@
                 scope: "Career Fair - Employer & Organization Showcase", 
                 status: "Outreach Queued", 
                 action: "Submit employer sign-up form",
-                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                auditRecords: [],
                 folders: [],
                 docs: [{ name: "Peachtree_Flyer.png", url: "#" }],
                 contacts: [],
@@ -565,7 +590,7 @@
                 scope: "Turnkey after-school partnership & revenue share", 
                 status: "Outreach Queued", 
                 action: "Send partnership pitch email",
-                finance: { total: 0.00, pending: 0.00, closed: 0.00 },
+                auditRecords: [],
                 folders: [],
                 docs: [],
                 contacts: [],
@@ -640,11 +665,38 @@
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
 
-            // Render Financial Metrics
-            const fin = lead.finance || { total: 0, pending: 0, closed: 0 };
-            document.getElementById('finTotal').innerText = '$' + fin.total.toFixed(2);
-            document.getElementById('finPending').innerText = '$' + fin.pending.toFixed(2);
-            document.getElementById('finClosed').innerText = '$' + fin.closed.toFixed(2);
+            // Calculate and Render Financial Metrics from Audit Records
+            let total = 0, pending = 0, closed = 0;
+            const auditTable = document.getElementById('auditTableBody');
+            auditTable.innerHTML = '';
+
+            if (lead.auditRecords && lead.auditRecords.length > 0) {
+                lead.auditRecords.forEach(rec => {
+                    total += rec.amount;
+                    if (rec.status === 'Paid') closed += rec.amount;
+                    else pending += rec.amount;
+
+                    let statusBadge = 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+                    if (rec.status === 'Paid') statusBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                    if (rec.status === 'Pending') statusBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+
+                    auditTable.innerHTML += `
+                        <tr class="hover:bg-dark-700/30 transition">
+                            <td class="py-3 px-4 font-mono font-bold text-rose-400">${rec.ref}</td>
+                            <td class="py-3 px-4 text-slate-200">${rec.desc}</td>
+                            <td class="py-3 px-4 text-slate-400">${rec.date}</td>
+                            <td class="py-3 px-4 font-bold text-slate-100">$${rec.amount.toFixed(2)}</td>
+                            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${statusBadge}">${rec.status}</span></td>
+                            <td class="py-3 px-4 text-slate-400 italic">${rec.method || 'N/A'}</td>
+                        </tr>`;
+                });
+            } else {
+                auditTable.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-500 italic">No itemized invoices or audit records logged yet.</td></tr>`;
+            }
+
+            document.getElementById('finTotal').innerText = '$' + total.toFixed(2);
+            document.getElementById('finPending').innerText = '$' + pending.toFixed(2);
+            document.getElementById('finClosed').innerText = '$' + closed.toFixed(2);
 
             let badge = document.getElementById('profileBadge');
             badge.innerText = lead.stage;
@@ -761,12 +813,9 @@
         function closeContactModal() { document.getElementById('contactModal').classList.add('hidden'); }
 
         function openFinanceModal() {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if(lead && lead.finance) {
-                document.getElementById('finTotalInput').value = lead.finance.total;
-                document.getElementById('finPendingInput').value = lead.finance.pending;
-                document.getElementById('finClosedInput').value = lead.finance.closed;
-            }
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.getElementById('auditDate');
+            if(dateInput) dateInput.value = today;
             document.getElementById('financeModal').classList.remove('hidden');
         }
         function closeFinanceModal() { document.getElementById('financeModal').classList.add('hidden'); }
@@ -805,16 +854,30 @@
             }
         }
 
-        function saveFinance(event) {
+        function saveFinanceRecord(event) {
             event.preventDefault();
-            const total = parseFloat(document.getElementById('finTotalInput').value) || 0;
-            const pending = parseFloat(document.getElementById('finPendingInput').value) || 0;
-            const closed = parseFloat(document.getElementById('finClosedInput').value) || 0;
+            const ref = document.getElementById('auditRef').value;
+            const desc = document.getElementById('auditDesc').value;
+            const dateInput = document.getElementById('auditDate').value;
+            const amount = parseFloat(document.getElementById('auditAmount').value) || 0;
+            const status = document.getElementById('auditStatus').value;
+            const method = document.getElementById('auditMethod').value;
+
+            let formattedDate = "Oct 2, 2026";
+            if (dateInput) {
+                const d = new Date(dateInput + 'T00:00:00');
+                formattedDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
 
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if(lead) {
-                lead.finance = { total, pending, closed };
+                if(!lead.auditRecords) lead.auditRecords = [];
+                lead.auditRecords.push({ ref, desc, date: formattedDate, amount, status, method });
                 closeFinanceModal();
+                document.getElementById('auditRef').value = '';
+                document.getElementById('auditDesc').value = '';
+                document.getElementById('auditAmount').value = '';
+                document.getElementById('auditMethod').value = '';
                 openProfile(currentProfileId, false);
             }
         }
@@ -893,7 +956,7 @@
                 scope: document.getElementById('leadScope').value,
                 status: document.getElementById('leadStatus').value,
                 action: document.getElementById('leadAction').value,
-                finance: { total: 0, pending: 0, closed: 0 },
+                auditRecords: [],
                 folders: [],
                 docs: [],
                 contacts: [],
@@ -904,7 +967,7 @@
                 data.docs = pipelineData[idx].docs;
                 data.folders = pipelineData[idx].folders || [];
                 data.contacts = pipelineData[idx].contacts || [];
-                data.finance = pipelineData[idx].finance || { total: 0, pending: 0, closed: 0 };
+                data.auditRecords = pipelineData[idx].auditRecords || [];
                 data.activities = pipelineData[idx].activities;
                 pipelineData[idx] = data; 
             } else { 
