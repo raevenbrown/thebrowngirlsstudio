@@ -364,7 +364,7 @@
 
                 <!-- Tab 1: Company Info -->
                 <div id="tabContent-info" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-4">
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <h3 class="font-bold text-sm text-slate-100">Company Hierarchy & Decision Makers</h3>
                             <button onclick="openContactModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
@@ -519,43 +519,6 @@
         </main>
     </div>
 
-    <!-- Modal for Adding Financial Prospect Target -->
-    <div id="financialProspectModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6 space-y-4">
-            <h3 class="font-bold text-slate-100 text-sm">Add Financial Prospect Target</h3>
-            <form onsubmit="saveFinancialProspect(event)" class="space-y-3 text-xs">
-                <input type="text" id="fpOrg" required placeholder="Organization / School Name (e.g. Heritage Christian Academy)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Funnel Stage</label>
-                        <select id="fpStage" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
-                            <option value="Prospect">Prospect</option>
-                            <option value="Lead">Lead</option>
-                            <option value="Closed Won">Closed Won</option>
-                            <option value="Closed Lost">Closed Lost</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Target Class Goal</label>
-                        <input type="number" id="fpClasses" value="3" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                    </div>
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Price per Student / Class</label>
-                    <input type="number" step="0.01" id="fpPrice" value="125.00" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Donation / PTO Share (%)</label>
-                    <input type="number" step="1" id="fpDonation" value="10" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                </div>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeFinancialProspectModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Prospect</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Modal for Adding Client Task -->
     <div id="clientTaskModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6 space-y-4">
@@ -593,6 +556,43 @@
                 <div class="flex justify-end space-x-2 pt-2">
                     <button type="button" onclick="closeClientTaskModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Add Task</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Adding Financial Prospect Target -->
+    <div id="financialProspectModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6 space-y-4">
+            <h3 class="font-bold text-slate-100 text-sm">Add Financial Prospect Target</h3>
+            <form onsubmit="saveFinancialProspect(event)" class="space-y-3 text-xs">
+                <input type="text" id="fpOrg" required placeholder="Organization / School Name (e.g. Heritage Christian Academy)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Funnel Stage</label>
+                        <select id="fpStage" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                            <option value="Prospect">Prospect</option>
+                            <option value="Lead">Lead</option>
+                            <option value="Closed Won">Closed Won</option>
+                            <option value="Closed Lost">Closed Lost</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Target Class Goal</label>
+                        <input type="number" id="fpClasses" value="3" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Price per Student / Class</label>
+                    <input type="number" step="0.01" id="fpPrice" value="125.00" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Donation / PTO Share (%)</label>
+                    <input type="number" step="1" id="fpDonation" value="10" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeFinancialProspectModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Prospect</button>
                 </div>
             </form>
         </div>
@@ -828,29 +828,29 @@
         const defaultFinancialProspects = [
             { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
             { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 3, org: "Washington Street Community Center", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 4, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 5, org: "Strong Rock Christian School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 6, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 7, org: "George Walton Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 8, org: "Young Americans Christian School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 9, org: "Peachtree Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 10, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 11, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 12, org: "YES Program", stage: "Lead", classes: 3, price: 125.00, donation: 10 },
-            { id: 13, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 14, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 15, org: "Porterdale Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 16, org: "St. Mary's Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 17, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 18, org: "Covington Family YMCA", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 19, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 20, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 21, org: "Providence Christian Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 22, org: "Newton County Library System", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 23, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 24, org: "InspiHER Conference / Newton District", stage: "Closed Won", classes: 2, price: 125.00, donation: 10 },
-            { id: 25, org: "Newton County STEAM Academy", stage: "Closed Won", classes: 5, price: 125.00, donation: 10 }
+            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 13, org: "YES Program", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
+            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 2, price: 125.00, donation: 10 }
         ];
 
         let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects')) || defaultFinancialProspects;
@@ -909,20 +909,19 @@
             },
             { 
                 id: 2, 
-                stage: "Follow-up Stage", 
+                stage: "Prospecting", 
                 org: "Newton County STEAM Academy", 
                 contact: "Principal Brandon Parham / Chantal Hendrix", 
-                scope: "Career Day & After-School AI Lab Partnership", 
-                status: "Follow-Up Stage", 
-                action: "Email Ms. Bunting to set up a day to come back to the school",
+                scope: "Career Day (Free) & District After-School Pitch", 
+                status: "Prospecting", 
+                action: "Pitch district after-school department",
                 isRetainer: true,
-                auditRecords: [
-                    { ref: "PILOT-01", desc: "NCSA 5-Session Career Day Pilot", date: "Sep 29, 2026", amount: 0.00, status: "Paid", method: "Completed Free Pilot (100 Students)" }
-                ],
+                auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { title: "Complete 5 Career Day Sessions", desc: "Reached 100 students with 96% satisfaction rate", date: "Sep 29, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
-                    { title: "Email Ms. Bunting to return", desc: "Send follow up email to Ms. Bunting to set up a day to come back to the school as a recurring program", date: "Oct 5, 2026", assignee: "Courtney White", urgency: "High (Urgent)", done: false, active: true }
+                    { title: "Complete 5 Career Day Sessions", desc: "Free pilot sessions reaching 100 students (96% rating)", date: "Sep 29, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
+                    { title: "Email Ms. Bunting to return", desc: "Send follow up email to Ms. Bunting to set up return", date: "Oct 5, 2026", assignee: "Courtney White", urgency: "High (Urgent)", done: false, active: true },
+                    { title: "Email Newton County District After-School Director", desc: "Pitch district-wide after-school department for paid rollout across all schools", date: "Oct 10, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: false }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -941,9 +940,7 @@
                     { name: "Chantal Hendrix, Ed.S.", role: "Digital Learning Coach", email: "hendrix.chantal@newton.k12.ga.us", phone: "770-787-1330 ext. 1306", location: "Covington, GA", notes: "Key instructional contact." }
                 ],
                 activities: [
-                    { date: "Aug 24, 2026", type: "Email Sent", text: "Emailed Chantal Hendrix proposing after-school AI & STEM organization, 1-hour free pilot, and teacher professional development workshops." },
-                    { date: "Sep 3, 2026", type: "Meeting", text: "Scheduled and aligned on NCSA Student Project Showcase and pilot tracking." },
-                    { date: "Sep 29, 2026", type: "General Note", text: "Completed 5 successful sessions reaching 100 students with a 96% satisfaction rate. Asked to return." }
+                    { date: "Sep 29, 2026", type: "General Note", text: "Completed 5 successful free career day sessions reaching 100 students. Moving to district after-school pitching phase." }
                 ]
             }
         ];
@@ -1081,7 +1078,6 @@
                     items.forEach((item, idx) => {
                         let potentialTotal = item.classes * 20 * item.price;
                         let donationAmount = potentialTotal * (item.donation / 100);
-                        let netEarnings = potentialTotal - donationAmount;
 
                         cards += `
                             <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl space-y-2">
@@ -1096,7 +1092,7 @@
                                     <p class="text-purple-400">School Donation (${item.donation}%): $${donationAmount.toFixed(2)}</p>
                                 </div>
                                 <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
-                                    <select onchange="updateFinancialStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
+                                    <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
                                         <option value="Prospect" ${stage === 'Prospect' ? 'selected' : ''}>Prospect</option>
                                         <option value="Lead" ${stage === 'Lead' ? 'selected' : ''}>Lead</option>
                                         <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
@@ -1112,7 +1108,7 @@
                 container.innerHTML += `
                     <div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 space-y-3">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-2">
-                            <h4 class="font-bold text-xs uppercase tracking-wider ${stageColors[stage]}">${stage}</h4>
+                            <h4 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h4>
                             <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300 text-[10px]">${items.length}</span>
                         </div>
                         <div class="space-y-2.5 max-h-[500px] overflow-y-auto">${cards}</div>
