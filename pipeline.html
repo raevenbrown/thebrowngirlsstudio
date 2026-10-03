@@ -85,6 +85,9 @@
                     <a href="#view=pipeline" onclick="switchMainView('pipeline')" id="nav-pipeline" class="flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition">
                         <i data-lucide="target" class="w-4 h-4 mr-3 text-rose-500"></i> Pipeline & Partners
                     </a>
+                    <a href="#view=financial" onclick="switchMainView('financial')" id="nav-financial" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+                        <i data-lucide="dollar-sign" class="w-4 h-4 mr-3 text-purple-400"></i> Financial Dashboard ($7K)
+                    </a>
                     <a href="#view=goals" onclick="switchMainView('goals')" id="nav-goals" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
                         <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Goals & Strategy
                     </a>
@@ -128,6 +131,55 @@
                 </div>
             </header>
 
+            <!-- Main Section: Main Financial Dashboard ($7K Rule & Earnings Rollup) -->
+            <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
+                <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
+                    <div class="border-b border-dark-600 pb-4">
+                        <h2 class="text-xl font-bold text-slate-100">Financial Story & $7K Revenue Architecture</h2>
+                        <p class="text-xs text-slate-400 mt-1">High-level financial dashboard ensuring 3 consecutive months of $7K revenue before founder/stipend payouts.</p>
+                    </div>
+
+                    <!-- 3-Month Stability Notice -->
+                    <div class="bg-purple-500/10 border border-purple-500/30 p-4 rounded-xl text-xs space-y-1">
+                        <h4 class="font-bold text-purple-400 uppercase tracking-wider">Financial Stability Milestone ($7K Rule)</h4>
+                        <p class="text-slate-300">We must consistently hit <strong>$7,000 gross monthly revenue for 3 months straight</strong> before formal founder draws and recurring staff stipends are fully activated and distributed.</p>
+                    </div>
+
+                    <!-- All Clients Year-by-Year / Month-by-Month Earnings Table -->
+                    <div class="space-y-4">
+                        <h3 class="font-bold text-sm text-slate-100">Client Earnings Breakdown (Year-by-Year / Month-by-Month)</h3>
+                        <div class="overflow-x-auto border border-dark-600 rounded-xl">
+                            <table class="w-full text-left border-collapse text-xs min-w-[700px]">
+                                <thead>
+                                    <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                        <th class="py-3 px-4">Organization / Partner</th>
+                                        <th class="py-3 px-4">Stage / Retainer</th>
+                                        <th class="py-3 px-4">2026 YTD Revenue</th>
+                                        <th class="py-3 px-4">Recent Month Earnings</th>
+                                        <th class="py-3 px-4 text-right">Profile Link</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="mainFinancialTableBody" class="divide-y divide-dark-600 text-slate-300">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Allocation Architecture -->
+                    <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 text-xs">
+                        <h4 class="font-bold text-emerald-400 uppercase tracking-wider">The $7,000 Monthly Cash Allocation Architecture</h4>
+                        <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                            <li><strong>Tax Reserve (20% - $1,400/mo):</strong> Held in Fidelity SPAXX for quarterly estimated tax payments.</li>
+                            <li><strong>Facility HQ & Van Reserve (15% - $1,050/mo):</strong> Accumulating commercial deposit & shuttle van capital.</li>
+                            <li><strong>Host School Donations (~10% - $750/mo):</strong> 15% revenue share remitted back to school PTO funds.</li>
+                            <li><strong>Staff Stipend (6%-8% - $400-$600/mo):</strong> Paid to Courtney White via 1099-NEC.</li>
+                            <li><strong>Founder Salary (~40% - $2,800-$3,000/mo):</strong> Clean monthly owner's draw for Raeven Brown.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <!-- Main Section 1: Goals & Strategy View -->
             <div id="mainView-goals" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
@@ -138,7 +190,6 @@
                         </div>
                     </div>
 
-                    <!-- Core Revenue Streams Breakdown -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
@@ -165,7 +216,6 @@
                         </div>
                     </div>
 
-                    <!-- Expandable Detailed View Box -->
                     <div id="goalDetailBox" class="bg-dark-700/60 border border-dark-600 p-6 rounded-2xl space-y-4 hidden text-xs">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-3">
                             <h3 id="goalDetailTitle" class="font-bold text-sm text-slate-100">Category Companies</h3>
@@ -173,25 +223,6 @@
                         </div>
                         <div id="goalDetailContent" class="space-y-3 text-slate-300">
                             <!-- Populated dynamically -->
-                        </div>
-                    </div>
-
-                    <!-- Comparison & Yearly Milestones -->
-                    <div class="border-t border-dark-600 pt-6 space-y-4 text-xs">
-                        <h3 class="font-bold text-sm text-slate-100">Goal & Metric Comparison (2026 Target vs Actual)</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div class="bg-dark-700/30 border border-dark-600 p-4 rounded-xl">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">Partnership Contracts</p>
-                                <p class="text-lg font-bold text-slate-100 mt-1">7 Active / 15 Target</p>
-                            </div>
-                            <div class="bg-dark-700/30 border border-dark-600 p-4 rounded-xl">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">Student Reach</p>
-                                <p class="text-lg font-bold text-emerald-400 mt-1">100+ Students (96% Rating)</p>
-                            </div>
-                            <div class="bg-dark-700/30 border border-dark-600 p-4 rounded-xl">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">Revenue Target</p>
-                                <p class="text-lg font-bold text-purple-400 mt-1">$750 Confirmed (Q4 Goal: $5K)</p>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -208,14 +239,6 @@
                         <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
                             <h4 class="font-bold text-rose-400">1. Pipeline Review & Target Assessment (15 mins)</h4>
                             <p>Review active school districts (Newton County, InspiHER) and verify invoice payment statuses with accounts payable departments.</p>
-                        </div>
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
-                            <h4 class="font-bold text-rose-400">2. Curriculum & Workshop Readiness (15 mins)</h4>
-                            <p>Align on hands-on AI Lab deliverables, student take-home materials, and presentation timelines for upcoming November career days.</p>
-                        </div>
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
-                            <h4 class="font-bold text-rose-400">3. Action Item Accountability (15 mins)</h4>
-                            <p>Assign weekly prospect outreach tasks, follow-up calls, and digital folder audits across active partner accounts.</p>
                         </div>
                     </div>
                 </div>
@@ -260,7 +283,6 @@
                     </div>
                 </div>
 
-                <!-- Sales Funnel Stages Separated into Boxes -->
                 <div class="space-y-6">
                     <div class="flex justify-between items-center border-b border-dark-600 pb-3">
                         <h2 class="font-bold text-base text-slate-100">Sales Funnel Stage Breakdown</h2>
@@ -278,7 +300,6 @@
                     <button onclick="showPipelineView()" class="inline-flex items-center px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition shadow-sm">
                         <i data-lucide="arrow-left" class="w-4 h-4 mr-2"></i> Back to Pipeline
                     </button>
-                    <!-- Breadcrumb navigation for folder nesting -->
                     <div id="folderBreadcrumb" class="hidden items-center space-x-2 text-xs text-slate-400"></div>
                 </div>
 
@@ -366,119 +387,47 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: Revenue & Financial Dashboard Story -->
+                <!-- Tab 2: Revenue & Financial Dashboard -->
                 <div id="tabContent-revenue" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl space-y-8">
-                        <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
-                            <div>
-                                <h3 class="font-bold text-base text-slate-100">Financial Story & $7K Revenue Architecture</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">High-level financial dashboard ensuring 3 consecutive months of $7K revenue before founder/stipend payouts.</p>
-                            </div>
-                            <button onclick="openFinanceModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
+                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                            <h3 class="font-bold text-sm text-slate-100">Client Revenue Tracker (Year-by-Year / Month-by-Month)</h3>
+                            <button onclick="openFinanceModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
                                 + Log Invoice / Payment
                             </button>
                         </div>
-
-                        <!-- 3-Month Stability Notice -->
-                        <div class="bg-purple-500/10 border border-purple-500/30 p-4 rounded-xl text-xs space-y-1">
-                            <h4 class="font-bold text-purple-400 uppercase tracking-wider">Financial Stability Milestone ($7K Rule)</h4>
-                            <p class="text-slate-300">We must consistently hit <strong>$7,000 gross monthly revenue for 3 months straight</strong> before formal founder draws and recurring staff stipends are fully activated and distributed.</p>
-                        </div>
-
-                        <!-- 1. Salary & Bi-Weekly Strategy -->
-                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 text-xs">
-                            <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Monthly Salary vs. Bi-Weekly Operations</h4>
-                            <ul class="space-y-2 text-slate-300 list-disc list-inside">
-                                <li><strong>Founder Draw (Raeven):</strong> Monthly salary drawer (on the 1st or 5th, right after student tuition clears) keeps personal accounting clean and aligned with fixed costs.</li>
-                                <li><strong>Courtney White (1099 Contractor):</strong> $200–$400/month contract stipend. Can be paid $200 bi-weekly or a single $400 check on the last business day of the month. Kept strictly as 1099-NEC to avoid state unemployment taxes and payroll software fees.</li>
-                            </ul>
-                        </div>
-
-                        <!-- 2. The $7,000 Monthly Cash Allocation Architecture -->
-                        <div class="space-y-3 text-xs">
-                            <h4 class="font-bold text-emerald-400 uppercase tracking-wider">2. The $7,000 Monthly Cash Allocation Architecture</h4>
-                            <div class="overflow-x-auto border border-dark-600 rounded-xl">
-                                <table class="w-full text-left border-collapse min-w-[600px]">
-                                    <thead>
-                                        <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                            <th class="py-3 px-4">Allocation Bucket</th>
-                                            <th class="py-3 px-4">Percentage</th>
-                                            <th class="py-3 px-4">Monthly Amount</th>
-                                            <th class="py-3 px-4">Destination Account & Purpose</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-dark-600 text-slate-300">
-                                        <tr>
-                                            <td class="py-3 px-4 font-bold text-slate-100">Tax Reserve (IRS & GA)</td>
-                                            <td class="py-3 px-4">20%</td>
-                                            <td class="py-3 px-4 font-mono">$1,400 / mo</td>
-                                            <td class="py-3 px-4">Fidelity SPAXX (Covers SECA 15.3% + state income tax)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-3 px-4 font-bold text-slate-100">Facility HQ & Van Reserve</td>
-                                            <td class="py-3 px-4">15%</td>
-                                            <td class="py-3 px-4 font-mono">$1,050 / mo</td>
-                                            <td class="py-3 px-4">Fidelity SPAXX (Commercial deposit & transport vehicle fund)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-3 px-4 font-bold text-slate-100">Host School Donations</td>
-                                            <td class="py-3 px-4">~10%</td>
-                                            <td class="py-3 px-4 font-mono">$750 / mo</td>
-                                            <td class="py-3 px-4">Operating Checking (15% revenue share to school PTO funds)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-3 px-4 font-bold text-slate-100">Staff & Courtney Stipend</td>
-                                            <td class="py-3 px-4">6% - 8%</td>
-                                            <td class="py-3 px-4 font-mono">$400 - $600 / mo</td>
-                                            <td class="py-3 px-4">Operating Checking (Paid to Courtney via 1099 invoice)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-3 px-4 font-bold text-slate-100">Tools, Hotspots & Materials</td>
-                                            <td class="py-3 px-4">6%</td>
-                                            <td class="py-3 px-4 font-mono">$400 / mo</td>
-                                            <td class="py-3 px-4">Operating Checking (5G hotspot, software tokens, offline supplies)</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="py-3 px-4 font-bold text-slate-100">Founder Salary (Raeven)</td>
-                                            <td class="py-3 px-4">~40%</td>
-                                            <td class="py-3 px-4 font-mono">$2,800 - $3,000 / mo</td>
-                                            <td class="py-3 px-4">Personal Account (Clean monthly owner's draw)</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Contract Value</p>
+                                <h4 id="finTotal" class="text-xl font-bold text-slate-100 mt-1">$0.00</h4>
                             </div>
-                        </div>
-
-                        <!-- 3. Fidelity Account Structure -->
-                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 text-xs">
-                            <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Fidelity Account & "Two-Bucket" Structure</h4>
-                            <p class="text-slate-300">Using Fidelity Cash Management / Brokerage Account with SPAXX (Government Money Market Fund) sweeping uninvested cash at ~3.46%–3.49% APY:</p>
-                            <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
-                                <li><strong>Bucket A (Tax Escrow):</strong> $1,400/mo builds ~$16,800/yr for quarterly estimated tax payments.</li>
-                                <li><strong>Bucket B (HQ Building & Van Fund):</strong> $1,050/mo banks $12,600+/yr for commercial flex lease or shuttle van down payment without debt.</li>
-                            </ul>
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Pending Revenue</p>
+                                <h4 id="finPending" class="text-xl font-bold text-purple-400 mt-1">$0.00</h4>
+                            </div>
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
+                                <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Closed / Paid</p>
+                                <h4 id="finClosed" class="text-xl font-bold text-emerald-400 mt-1">$0.00</h4>
+                            </div>
                         </div>
 
                         <!-- Itemized Audit Table -->
-                        <div class="space-y-3 pt-4">
-                            <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider">Itemized Invoices & Audit Log</h4>
-                            <div class="overflow-x-auto border border-dark-600 rounded-xl">
-                                <table class="w-full text-left border-collapse text-xs min-w-[600px]">
-                                    <thead>
-                                        <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                            <th class="py-3 px-4">Invoice / Ref #</th>
-                                            <th class="py-3 px-4">Description / Scope</th>
-                                            <th class="py-3 px-4">Issue Date</th>
-                                            <th class="py-3 px-4">Amount</th>
-                                            <th class="py-3 px-4">Status</th>
-                                            <th class="py-3 px-4">Payment Method / Notes</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="auditTableBody" class="divide-y divide-dark-600">
-                                        <!-- Populated dynamically -->
-                                    </tbody>
-                                </table>
-                            </div>
+                        <div class="overflow-x-auto border border-dark-600 rounded-xl">
+                            <table class="w-full text-left border-collapse text-xs min-w-[600px]">
+                                <thead>
+                                    <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                        <th class="py-3 px-4">Invoice / Ref #</th>
+                                        <th class="py-3 px-4">Description / Scope</th>
+                                        <th class="py-3 px-4">Issue Date</th>
+                                        <th class="py-3 px-4">Amount</th>
+                                        <th class="py-3 px-4">Status</th>
+                                        <th class="py-3 px-4">Payment Method / Notes</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="auditTableBody" class="divide-y divide-dark-600">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
                         </div>
 
                         <!-- Financial & Tax Documents Folder -->
@@ -904,7 +853,9 @@
                 status: "Follow-Up Stage", 
                 action: "Email Ms. Bunting to set up a day to come back to the school",
                 isRetainer: true,
-                auditRecords: [],
+                auditRecords: [
+                    { ref: "PILOT-01", desc: "NCSA 5-Session Career Day Pilot", date: "Sep 29, 2026", amount: 0.00, status: "Paid", method: "Completed Free Pilot (100 Students)" }
+                ],
                 calendarEvents: [],
                 clientTasks: [
                     { title: "Complete 5 Career Day Sessions", desc: "Reached 100 students with 96% satisfaction rate", date: "Sep 29, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
@@ -1098,14 +1049,14 @@
         }
 
         function switchMainView(viewName, updateHash = true) {
-            ['pipeline', 'goals', 'agenda', 'prospects'].forEach(v => {
+            ['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
                 const el = document.getElementById('mainView-' + v);
                 if (el) el.classList.add('hidden');
             });
             document.getElementById('profileView').classList.add('hidden');
             document.getElementById('pipelineView').classList.add('hidden');
 
-            ['pipeline', 'goals', 'agenda', 'prospects'].forEach(v => {
+            ['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
                 const btn = document.getElementById('nav-' + v);
                 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
             });
@@ -1116,6 +1067,13 @@
                 renderSalesFunnel();
                 if (updateHash) window.location.hash = "view=pipeline";
                 const activeBtn = document.getElementById('nav-pipeline');
+                if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
+            } else if (viewName === 'financial') {
+                document.getElementById('mainView-financial').classList.remove('hidden');
+                document.getElementById('pageTitle').innerText = "Financial Dashboard & Revenue Rollup";
+                renderMainFinancialTable();
+                if (updateHash) window.location.hash = "view=financial";
+                const activeBtn = document.getElementById('nav-financial');
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
             } else {
                 document.getElementById('mainView-' + viewName).classList.remove('hidden');
@@ -1162,7 +1120,71 @@
             if (tabName === 'tasks') {
                 renderClientTasks();
             }
+            if (tabName === 'revenue') {
+                renderClientRevenue();
+            }
             lucide.createIcons();
+        }
+
+        function renderMainFinancialTable() {
+            const tbody = document.getElementById('mainFinancialTableBody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+
+            pipelineData.forEach(lead => {
+                let ytdTotal = 0;
+                if (lead.auditRecords) {
+                    lead.auditRecords.forEach(r => ytdTotal += r.amount);
+                }
+                let retainerLabel = lead.isRetainer ? '<span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-400 font-bold ml-1">Retainer</span>' : '<span class="text-slate-400">Standard</span>';
+                
+                tbody.innerHTML += `
+                    <tr class="hover:bg-dark-700/30 transition">
+                        <td class="py-3 px-4 font-bold text-slate-100">${lead.org}</td>
+                        <td class="py-3 px-4">${lead.stage} ${retainerLabel}</td>
+                        <td class="py-3 px-4 font-mono font-bold text-emerald-400">$${ytdTotal.toFixed(2)}</td>
+                        <td class="py-3 px-4 font-mono text-slate-300">$${ytdTotal > 0 ? ytdTotal.toFixed(2) : '0.00'} (Oct 2026)</td>
+                        <td class="py-3 px-4 text-right">
+                            <button onclick="openProfile(${lead.id}, 'revenue')" class="px-2.5 py-1 rounded bg-rose-600 text-white font-semibold text-[10px]">View Financials</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function renderClientRevenue() {
+            const lead = pipelineData.find(l => l.id === currentProfileId);
+            if (!lead) return;
+            let total = 0, pending = 0, closed = 0;
+            const auditTable = document.getElementById('auditTableBody');
+            auditTable.innerHTML = '';
+
+            if (lead.auditRecords && lead.auditRecords.length > 0) {
+                lead.auditRecords.forEach(rec => {
+                    total += rec.amount;
+                    if (rec.status === 'Paid') closed += rec.amount;
+                    else pending += rec.amount;
+
+                    let statusBadge = 'bg-purple-500/10 text-purple-400 border-purple-500/20';
+                    if (rec.status === 'Paid') statusBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
+                    if (rec.status === 'Pending') statusBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
+
+                    auditTable.innerHTML += `
+                        <tr class="hover:bg-dark-700/30 transition">
+                            <td class="py-3 px-4 font-mono font-bold text-rose-400">${rec.ref}</td>
+                            <td class="py-3 px-4 text-slate-200">${rec.desc}</td>
+                            <td class="py-3 px-4 text-slate-400">${rec.date}</td>
+                            <td class="py-3 px-4 font-bold text-slate-100">$${rec.amount.toFixed(2)}</td>
+                            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${statusBadge}">${rec.status}</span></td>
+                            <td class="py-3 px-4 text-slate-400 italic">${rec.method || 'N/A'}</td>
+                        </tr>`;
+                });
+            } else {
+                auditTable.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-500 italic">No itemized invoices or revenue records logged for this client yet.</td></tr>`;
+            }
+
+            document.getElementById('finTotal').innerText = '$' + total.toFixed(2);
+            document.getElementById('finPending').innerText = '$' + pending.toFixed(2);
+            document.getElementById('finClosed').innerText = '$' + closed.toFixed(2);
         }
 
         function toggleGoalDetail(sectionKey) {
@@ -1516,7 +1538,7 @@
             const lead = pipelineData.find(l => l.id === id);
             if(!lead) return;
 
-            ['pipeline', 'goals', 'agenda', 'prospects'].forEach(v => {
+            ['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
                 const el = document.getElementById('mainView-' + v);
                 if (el) el.classList.add('hidden');
             });
@@ -1529,54 +1551,6 @@
             document.getElementById('profileContact').innerText = lead.contact;
             document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
-
-            let total = 0, pending = 0, closed = 0;
-            const auditTable = document.getElementById('auditTableBody');
-            auditTable.innerHTML = '';
-
-            if (lead.auditRecords && lead.auditRecords.length > 0) {
-                lead.auditRecords.forEach(rec => {
-                    total += rec.amount;
-                    if (rec.status === 'Paid') closed += rec.amount;
-                    else pending += rec.amount;
-
-                    let statusBadge = 'bg-purple-500/10 text-purple-400 border-purple-500/20';
-                    if (rec.status === 'Paid') statusBadge = 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-                    if (rec.status === 'Pending') statusBadge = 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-
-                    auditTable.innerHTML += `
-                        <tr class="hover:bg-dark-700/30 transition">
-                            <td class="py-3 px-4 font-mono font-bold text-rose-400">${rec.ref}</td>
-                            <td class="py-3 px-4 text-slate-200">${rec.desc}</td>
-                            <td class="py-3 px-4 text-slate-400">${rec.date}</td>
-                            <td class="py-3 px-4 font-bold text-slate-100">$${rec.amount.toFixed(2)}</td>
-                            <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${statusBadge}">${rec.status}</span></td>
-                            <td class="py-3 px-4 text-slate-400 italic">${rec.method || 'N/A'}</td>
-                        </tr>`;
-                });
-            } else {
-                auditTable.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-500 italic">No itemized invoices or audit records logged yet.</td></tr>`;
-            }
-
-            document.getElementById('finTotal').innerText = '$' + total.toFixed(2);
-            document.getElementById('finPending').innerText = '$' + pending.toFixed(2);
-            document.getElementById('finClosed').innerText = '$' + closed.toFixed(2);
-
-            const finDocsDiv = document.getElementById('financialDocsList');
-            finDocsDiv.innerHTML = '';
-            if(lead.financialDocs && lead.financialDocs.length > 0) {
-                lead.financialDocs.forEach((doc, idx) => {
-                    finDocsDiv.innerHTML += `
-                        <div class="flex items-center justify-between bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-3 rounded-xl transition">
-                            <a href="${doc.url}" target="_blank" class="text-slate-200 font-medium underline flex items-center">
-                                <i data-lucide="file-text" class="w-3.5 h-3.5 inline mr-2 text-rose-500"></i>${doc.name}
-                            </a>
-                            <button onclick="deleteFinancialDoc(${idx})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                        </div>`;
-                });
-            } else {
-                finDocsDiv.innerHTML = `<p class="text-xs text-slate-500 italic">No financial or tax documents uploaded yet.</p>`;
-            }
 
             let badge = document.getElementById('profileBadge');
             badge.innerText = lead.stage;
@@ -1605,6 +1579,7 @@
             renderFolderExplorer();
             renderClientCalendar();
             renderClientTasks();
+            renderClientRevenue();
 
             const timeline = document.getElementById('activityTimeline');
             timeline.innerHTML = '';
@@ -1627,619 +1602,6 @@
             lucide.createIcons();
         }
 
-        function renderClientCalendar() {
-            const calContainer = document.getElementById('clientCalendarContainer');
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if (!lead || !calContainer) return;
-
-            calContainer.innerHTML = '';
-            if (lead.calendarEvents && lead.calendarEvents.length > 0) {
-                lead.calendarEvents.sort((a, b) => new Date(a.start) - new Date(b.start));
-
-                lead.calendarEvents.forEach((evt, eIdx) => {
-                    let dStart = new Date(evt.start);
-                    let dEnd = evt.end ? new Date(evt.end) : null;
-                    let startStr = dStart.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' });
-                    let endStr = dEnd ? dEnd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }) : '';
-                    
-                    calContainer.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex items-center justify-between">
-                            <div class="space-y-1">
-                                <div class="flex items-center space-x-2">
-                                    <i data-lucide="calendar" class="w-4 h-4 text-rose-500"></i>
-                                    <h4 class="font-bold text-slate-100 text-sm">${evt.title}</h4>
-                                </div>
-                                <p class="text-xs text-rose-400 font-medium">
-                                    Start: ${startStr} ${endStr ? '<br/>End: ' + endStr : ''} ${evt.location ? '• ' + evt.location : ''}
-                                </p>
-                                ${evt.notes ? `<p class="text-xs text-slate-300 italic">${evt.notes}</p>` : ''}
-                            </div>
-                            <button onclick="deleteCalendarEvent(${eIdx})" class="text-slate-400 hover:text-rose-400 p-2"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                        </div>`;
-                });
-            } else {
-                calContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No meetings or calendar events scheduled for this client yet.</p>`;
-            }
-            renderVisualCalendar();
-            lucide.createIcons();
-        }
-
-        function renderVisualCalendar() {
-            const grid = document.getElementById('calendarGrid');
-            const title = document.getElementById('calendarMonthTitle');
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if (!grid || !title || !lead) return;
-
-            const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            title.innerText = `${months[currentCalMonth]} ${currentCalYear}`;
-
-            grid.innerHTML = '';
-            const firstDay = new Date(currentCalYear, currentCalMonth, 1).getDay();
-            const daysInMonth = new Date(currentCalYear, currentCalMonth + 1, 0).getDate();
-
-            for (let i = 0; i < firstDay; i++) {
-                grid.innerHTML += `<div class="h-20 bg-dark-900/40 rounded-lg border border-dark-700/50 opacity-30"></div>`;
-            }
-
-            for (let day = 1; day <= daysInMonth; day++) {
-                let dateStr = `${currentCalYear}-${String(currentCalMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-                
-                let matchingEvents = [];
-                if (lead.calendarEvents) {
-                    matchingEvents = lead.calendarEvents.filter(evt => {
-                        let sDate = evt.start.split('T')[0];
-                        let eDate = evt.end ? evt.end.split('T')[0] : sDate;
-                        return dateStr >= sDate && dateStr <= eDate;
-                    });
-                }
-
-                let eventsHtml = '';
-                matchingEvents.forEach(evt => {
-                    eventsHtml += `<div class="bg-rose-600/20 text-rose-400 border border-rose-500/30 rounded px-1 py-0.5 text-[9px] truncate font-medium mt-0.5" title="${evt.title}">${evt.title}</div>`;
-                });
-
-                grid.innerHTML += `
-                    <div class="h-20 bg-dark-700/30 border border-dark-600 rounded-lg p-1.5 flex flex-col justify-between overflow-hidden">
-                        <span class="font-bold text-[11px] text-slate-300">${day}</span>
-                        <div class="overflow-y-auto space-y-0.5">${eventsHtml}</div>
-                    </div>`;
-            }
-        }
-
-        function changeCalendarMonth(dir) {
-            currentCalMonth += dir;
-            if (currentCalMonth > 11) {
-                currentCalMonth = 0;
-                currentCalYear++;
-            } else if (currentCalMonth < 0) {
-                currentCalMonth = 11;
-                currentCalYear--;
-            }
-            renderVisualCalendar();
-        }
-
-        function renderFolderExplorer() {
-            const folderContainer = document.getElementById('folderExplorerContainer');
-            const breadcrumb = document.getElementById('folderBreadcrumb');
-            const currentFolder = getCurrentFolder();
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if (!currentFolder || !lead) return;
-
-            breadcrumb.classList.remove('hidden');
-            breadcrumb.classList.add('flex');
-            let bcHtml = `<span onclick="navigateToFolder(-1)" class="cursor-pointer hover:text-rose-400 font-semibold">Root</span>`;
-            if (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash') {
-                bcHtml += ` <span class="text-slate-600">/</span> <span class="font-semibold text-rose-400">Trash Bin</span>`;
-            } else {
-                let tempPath = [];
-                currentFolderPath.forEach((idx, pIdx) => {
-                    let targetFolder = leadFolderByPath(tempPath.concat(idx));
-                    bcHtml += ` <span class="text-slate-600">/</span> <span onclick="navigateToFolder(${pIdx})" class="cursor-pointer hover:text-rose-400 font-semibold">${targetFolder.name}</span>`;
-                    tempPath.push(idx);
-                });
-            }
-            breadcrumb.innerHTML = bcHtml;
-            document.getElementById('currentFolderTitle').innerText = (currentFolderPath.length === 0) ? "Partnership Events & Folders" : currentFolder.name;
-
-            folderContainer.innerHTML = '';
-
-            if (currentFolderPath.length === 0) {
-                folderContainer.innerHTML += `
-                    <div class="bg-dark-700/20 border border-dark-600 p-4 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
-                        <div onclick="enterTrashBin()" class="flex items-center space-x-3 cursor-pointer flex-1">
-                            <i data-lucide="trash-2" class="w-5 h-5 text-rose-400 shrink-0"></i>
-                            <span class="font-bold text-slate-300 text-sm">Trash Bin</span>
-                        </div>
-                        <span class="text-[10px] text-slate-400">Items: ${(lead.trashFolder && lead.trashFolder.subfolders ? lead.trashFolder.subfolders.length : 0) + (lead.trashFolder && lead.trashFolder.files ? lead.trashFolder.files.length : 0)}</span>
-                    </div>`;
-            }
-
-            if (currentFolder.subfolders && currentFolder.subfolders.length > 0) {
-                currentFolder.subfolders.forEach((sub, sIdx) => {
-                    let isTrash = (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash');
-                    folderContainer.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition hover:border-rose-500/50">
-                            <div ${isTrash ? '' : `onclick="enterSubfolder(${sIdx})"`} class="flex items-center space-x-3 ${isTrash ? '' : 'cursor-pointer'} flex-1">
-                                <i data-lucide="folder" class="w-5 h-5 text-rose-500 shrink-0"></i>
-                                <span class="font-bold text-slate-100 text-sm break-all">${sub.name} ${isTrash ? '<span class="text-[10px] text-rose-400 font-normal">(In Trash)</span>' : ''}</span>
-                            </div>
-                            <div class="flex items-center space-x-2 text-xs w-full sm:w-auto justify-end">
-                                ${isTrash ? `
-                                    <button onclick="restoreSubfolder(${sIdx})" class="px-2.5 py-1 rounded-lg bg-emerald-600/20 text-emerald-400 hover:bg-emerald-600/30">Restore</button>
-                                    <button onclick="permanentDeleteSubfolder(${sIdx})" class="px-2.5 py-1 rounded-lg bg-rose-600/20 text-rose-400 hover:bg-rose-600/30">Delete Permanently</button>
-                                ` : `
-                                    <button onclick="openRenameFolderModal(${sIdx})" class="px-2.5 py-1 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-300">Rename</button>
-                                    <button onclick="moveFolder(${sIdx}, 'up')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Up"><i data-lucide="arrow-up" class="w-3.5 h-3.5"></i></button>
-                                    <button onclick="moveFolder(${sIdx}, 'down')" class="p-1.5 rounded bg-dark-600 hover:bg-dark-500 text-slate-300" title="Move Down"><i data-lucide="arrow-down" class="w-3.5 h-3.5"></i></button>
-                                    <button onclick="moveToTrashSubfolder(${sIdx})" class="p-1.5 rounded bg-dark-600 hover:bg-rose-500/20 text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                                `}
-                            </div>
-                        </div>`;
-                });
-            }
-
-            if (currentFolder.files && currentFolder.files.length > 0) {
-                currentFolder.files.forEach((file, fIdx) => {
-                    let isTrash = (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash');
-                    folderContainer.innerHTML += `
-                        <div class="bg-dark-700/20 border border-dark-600 p-3 rounded-xl flex items-center justify-between">
-                            <div class="flex items-center space-x-3 overflow-hidden">
-                                <i data-lucide="file-text" class="w-4 h-4 text-rose-400 shrink-0"></i>
-                                <a href="${file.url}" target="_blank" class="text-slate-200 text-xs font-medium underline hover:text-rose-400 truncate">${file.name}</a>
-                            </div>
-                            <div class="flex items-center space-x-2 shrink-0 ml-2">
-                                ${isTrash ? `
-                                    <button onclick="restoreFile(${fIdx})" class="px-2 py-0.5 rounded bg-emerald-600/20 text-emerald-400 text-[10px]">Restore</button>
-                                    <button onclick="permanentDeleteFile(${fIdx})" class="px-2 py-0.5 rounded bg-rose-600/20 text-rose-400 text-[10px]">Delete Permanently</button>
-                                ` : `
-                                    <button onclick="moveToTrashFile(${fIdx})" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                                `}
-                            </div>
-                        </div>`;
-                });
-            }
-
-            if ((!currentFolder.subfolders || currentFolder.subfolders.length === 0) && (!currentFolder.files || currentFolder.files.length === 0) && currentFolderPath.length !== 0) {
-                folderContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">This folder is empty.</p>`;
-            }
-            lucide.createIcons();
-        }
-
-        function leadFolderByPath(pathArr) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            let curr = lead.rootFolder;
-            for (let idx of pathArr) {
-                curr = curr.subfolders[idx];
-            }
-            return curr;
-        }
-
-        function enterSubfolder(sIdx) {
-            currentFolderPath.push(sIdx);
-            renderFolderExplorer();
-        }
-
-        function enterTrashBin() {
-            currentFolderPath = ['trash'];
-            renderFolderExplorer();
-        }
-
-        function navigateToFolder(targetIdx) {
-            if (targetIdx === -1) {
-                currentFolderPath = [];
-            } else {
-                currentFolderPath = currentFolderPath.slice(0, targetIdx + 1);
-            }
-            renderFolderExplorer();
-        }
-
-        function moveFolder(sIdx, direction) {
-            const curr = getCurrentFolder();
-            if (direction === 'up' && sIdx > 0) {
-                let temp = curr.subfolders[sIdx];
-                curr.subfolders[sIdx] = curr.subfolders[sIdx - 1];
-                curr.subfolders[sIdx - 1] = temp;
-            } else if (direction === 'down' && sIdx < curr.subfolders.length - 1) {
-                let temp = curr.subfolders[sIdx];
-                curr.subfolders[sIdx] = curr.subfolders[sIdx + 1];
-                curr.subfolders[sIdx + 1] = temp;
-            }
-            savePipelineData();
-            renderFolderExplorer();
-        }
-
-        function moveToTrashSubfolder(sIdx) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            const curr = getCurrentFolder();
-            let sub = curr.subfolders.splice(sIdx, 1)[0];
-            if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
-            lead.trashFolder.subfolders.push(sub);
-            savePipelineData();
-            renderFolderExplorer();
-        }
-
-        function moveToTrashFile(fIdx) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            const curr = getCurrentFolder();
-            let file = curr.files.splice(fIdx, 1)[0];
-            if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
-            lead.trashFolder.files.push(file);
-            savePipelineData();
-            renderFolderExplorer();
-        }
-
-        function restoreSubfolder(sIdx) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            let sub = lead.trashFolder.subfolders.splice(sIdx, 1)[0];
-            lead.rootFolder.subfolders.push(sub);
-            savePipelineData();
-            renderFolderExplorer();
-        }
-
-        function restoreFile(fIdx) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            let file = lead.trashFolder.files.splice(fIdx, 1)[0];
-            lead.rootFolder.files.push(file);
-            savePipelineData();
-            renderFolderExplorer();
-        }
-
-        function permanentDeleteSubfolder(sIdx) {
-            if (confirm("Are you sure you want to permanently delete this folder? This action cannot be undone.")) {
-                const lead = pipelineData.find(l => l.id === currentProfileId);
-                lead.trashFolder.subfolders.splice(sIdx, 1);
-                savePipelineData();
-                renderFolderExplorer();
-            }
-        }
-
-        function permanentDeleteFile(fIdx) {
-            if (confirm("Permanently delete this file? This action cannot be undone.")) {
-                const lead = pipelineData.find(l => l.id === currentProfileId);
-                lead.trashFolder.files.splice(fIdx, 1);
-                savePipelineData();
-                renderFolderExplorer();
-            }
-        }
-
-        function deleteFinancialDoc(fIdx) {
-            if (confirm("Move this financial document to Trash?")) {
-                const lead = pipelineData.find(l => l.id === currentProfileId);
-                if(lead && lead.financialDocs) {
-                    let doc = lead.financialDocs.splice(fIdx, 1)[0];
-                    if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
-                    lead.trashFolder.files.push(doc);
-                    savePipelineData();
-                    openProfile(currentProfileId, currentActiveTab, false);
-                }
-            }
-        }
-
-        function deleteCalendarEvent(eIdx) {
-            if (confirm("Delete this calendar event?")) {
-                const lead = pipelineData.find(l => l.id === currentProfileId);
-                if (lead && lead.calendarEvents) {
-                    lead.calendarEvents.splice(eIdx, 1);
-                    savePipelineData();
-                    renderClientCalendar();
-                }
-            }
-        }
-
-        function showPipelineView() {
-            switchMainView('pipeline');
-        }
-
-        function openModal(id = null) {
-            document.getElementById('leadModal').classList.remove('hidden');
-            if(id) {
-                const lead = pipelineData.find(l => l.id === id);
-                document.getElementById('leadId').value = lead.id;
-                document.getElementById('leadStage').value = lead.stage;
-                document.getElementById('leadOrg').value = lead.org;
-                document.getElementById('leadContact').value = lead.contact;
-                document.getElementById('leadScope').value = lead.scope;
-                document.getElementById('leadStatus').value = lead.status;
-                document.getElementById('leadAction').value = lead.action;
-                document.getElementById('modalTitle').innerText = 'Edit Partnership Target';
-            } else {
-                document.getElementById('leadForm').reset();
-                document.getElementById('leadId').value = '';
-                document.getElementById('modalTitle').innerText = 'Add New Target';
-            }
-        }
-        function closeModal() { document.getElementById('leadModal').classList.add('hidden'); }
-
-        function openNoteModal() { 
-            document.getElementById('noteModal').classList.remove('hidden');
-            const today = new Date().toISOString().split('T')[0];
-            const dateInput = document.getElementById('noteDate');
-            if(dateInput) dateInput.value = today;
-        }
-        function closeNoteModal() { document.getElementById('noteModal').classList.add('hidden'); }
-
-        function openContactModal() { document.getElementById('contactModal').classList.remove('hidden'); }
-        function closeContactModal() { document.getElementById('contactModal').classList.add('hidden'); }
-
-        function openFinanceModal() {
-            const today = new Date().toISOString().split('T')[0];
-            const dateInput = document.getElementById('auditDate');
-            if(dateInput) dateInput.value = today;
-            document.getElementById('financeModal').classList.remove('hidden');
-        }
-        function closeFinanceModal() { document.getElementById('financeModal').classList.add('hidden'); }
-
-        function openCalendarModal() {
-            const now = new Date();
-            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            let startStr = now.toISOString().slice(0, 16);
-            let endStr = new Date(now.getTime() + 60*60*1000).toISOString().slice(0, 16);
-            document.getElementById('calStartDateTime').value = startStr;
-            document.getElementById('calEndDateTime').value = endStr;
-            document.getElementById('calendarModal').classList.remove('hidden');
-        }
-        function closeCalendarModal() { document.getElementById('calendarModal').classList.add('hidden'); }
-
-        function openFolderModal() { 
-            if (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash') {
-                alert("Cannot create folders inside the Trash Bin.");
-                return;
-            }
-            document.getElementById('folderModal').classList.remove('hidden'); 
-        }
-        function closeFolderModal() { document.getElementById('folderModal').classList.add('hidden'); }
-
-        let uploadTargetMode = 'event'; 
-        function openUploadModal(mode = 'event') {
-            if (currentFolderPath.length === 1 && currentFolderPath[0] === 'trash') {
-                alert("Cannot upload files directly into the Trash Bin.");
-                return;
-            }
-            uploadTargetMode = mode;
-            document.getElementById('uploadModalTitle').innerText = mode === 'Financial & Tax Documents' ? 'Upload Financial Document' : 'Upload File from Device';
-            document.getElementById('deviceFileInput').value = '';
-            document.getElementById('uploadNameInput').value = '';
-            document.getElementById('uploadFileBase64').value = '';
-            document.getElementById('uploadModal').classList.remove('hidden');
-        }
-        function closeUploadModal() { document.getElementById('uploadModal').classList.add('hidden'); }
-
-        function handleFileSelect(event) {
-            const file = event.target.files[0];
-            if (file) {
-                document.getElementById('uploadNameInput').value = file.name;
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('uploadFileBase64').value = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function openRenameFolderModal(sIdx) {
-            currentEditingFolderRef = sIdx;
-            const curr = getCurrentFolder();
-            document.getElementById('renameFolderInput').value = curr.subfolders[sIdx].name;
-            document.getElementById('renameFolderModal').classList.remove('hidden');
-        }
-        function closeRenameFolderModal() { document.getElementById('renameFolderModal').classList.add('hidden'); }
-
-        function saveRenameFolder(event) {
-            event.preventDefault();
-            const newName = document.getElementById('renameFolderInput').value;
-            const curr = getCurrentFolder();
-            if(currentEditingFolderRef !== null && curr.subfolders[currentEditingFolderRef]) {
-                curr.subfolders[currentEditingFolderRef].name = newName;
-            }
-            closeRenameFolderModal();
-            savePipelineData();
-            renderFolderExplorer();
-        }
-
-        function saveFolder(event) {
-            event.preventDefault();
-            const name = document.getElementById('folderNameInput').value;
-            const curr = getCurrentFolder();
-            if(!curr.subfolders) curr.subfolders = [];
-            curr.subfolders.push({ name: name, subfolders: [], files: [] });
-            closeFolderModal();
-            document.getElementById('folderNameInput').value = '';
-            savePipelineData();
-            renderFolderExplorer();
-        }
-
-        function saveUpload(event) {
-            event.preventDefault();
-            const name = document.getElementById('uploadNameInput').value;
-            const fileUrl = document.getElementById('uploadFileBase64').value || '#';
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if(lead) {
-                if(uploadTargetMode === 'Financial & Tax Documents') {
-                    if(!lead.financialDocs) lead.financialDocs = [];
-                    lead.financialDocs.push({ name, url: fileUrl });
-                } else {
-                    const curr = getCurrentFolder();
-                    if(!curr.files) curr.files = [];
-                    curr.files.push({ name, url: fileUrl });
-                }
-                closeUploadModal();
-                savePipelineData();
-                openProfile(currentProfileId, currentActiveTab, false);
-            }
-        }
-
-        function saveFinanceRecord(event) {
-            event.preventDefault();
-            const ref = document.getElementById('auditRef').value;
-            const desc = document.getElementById('auditDesc').value;
-            const dateInput = document.getElementById('auditDate').value;
-            const amount = parseFloat(document.getElementById('auditAmount').value) || 0;
-            const status = document.getElementById('auditStatus').value;
-            const method = document.getElementById('auditMethod').value;
-
-            let formattedDate = "Oct 2, 2026";
-            if (dateInput) {
-                const d = new Date(dateInput + 'T00:00:00');
-                formattedDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            }
-
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if(lead) {
-                if(!lead.auditRecords) lead.auditRecords = [];
-                lead.auditRecords.push({ ref, desc, date: formattedDate, amount, status, method });
-                closeFinanceModal();
-                document.getElementById('auditRef').value = '';
-                document.getElementById('auditDesc').value = '';
-                document.getElementById('auditAmount').value = '';
-                document.getElementById('auditMethod').value = '';
-                savePipelineData();
-                openProfile(currentProfileId, currentActiveTab, false);
-            }
-        }
-
-        function saveCalendarEvent(event) {
-            event.preventDefault();
-            const title = document.getElementById('calTitle').value;
-            const start = document.getElementById('calStartDateTime').value;
-            const end = document.getElementById('calEndDateTime').value;
-            const location = document.getElementById('calLocation').value;
-            const notes = document.getElementById('calNotes').value;
-
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if (lead) {
-                if (!lead.calendarEvents) lead.calendarEvents = [];
-                lead.calendarEvents.push({ title, start, end, location, notes });
-                closeCalendarModal();
-                document.getElementById('calTitle').value = '';
-                document.getElementById('calLocation').value = '';
-                document.getElementById('calNotes').value = '';
-                savePipelineData();
-                renderClientCalendar();
-            }
-        }
-
-        function showContactPopup(jsonStr) {
-            const c = JSON.parse(decodeURIComponent(jsonStr));
-            document.getElementById('popupName').innerText = c.name;
-            document.getElementById('popupRole').innerText = c.role;
-            document.getElementById('popupEmail').innerText = c.email || 'N/A';
-            document.getElementById('popupPhone').innerText = c.phone || 'N/A';
-            document.getElementById('popupLocation').innerText = c.location || 'N/A';
-            document.getElementById('popupNotes').innerText = c.notes || 'N/A';
-            document.getElementById('contactPopup').classList.remove('hidden');
-        }
-        function closeContactPopup() { document.getElementById('contactPopup').classList.add('hidden'); }
-
-        function saveContact(event) {
-            event.preventDefault();
-            const name = document.getElementById('contactName').value;
-            const role = document.getElementById('contactRole').value;
-            const email = document.getElementById('contactEmail').value;
-            const phone = document.getElementById('contactPhone').value;
-            const location = document.getElementById('contactLocation').value;
-            const notes = document.getElementById('contactNotes').value;
-
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if(lead) {
-                if(!lead.contacts) lead.contacts = [];
-                lead.contacts.push({ name, role, email, phone, location, notes });
-                closeContactModal();
-                document.getElementById('contactName').value = '';
-                document.getElementById('contactRole').value = '';
-                document.getElementById('contactEmail').value = '';
-                document.getElementById('contactPhone').value = '';
-                document.getElementById('contactLocation').value = '';
-                document.getElementById('contactNotes').value = '';
-                savePipelineData();
-                openProfile(currentProfileId, currentActiveTab, false);
-            }
-        }
-
-        function saveNote(event) {
-            event.preventDefault();
-            const type = document.getElementById('noteType').value;
-            const dateInput = document.getElementById('noteDate').value;
-            const text = document.getElementById('noteText').value;
-            
-            let formattedDate = "Oct 2, 2026";
-            if (dateInput) {
-                const d = new Date(dateInput + 'T00:00:00');
-                formattedDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-            }
-
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if(lead) {
-                if(!lead.activities) lead.activities = [];
-                lead.activities.unshift({
-                    date: formattedDate,
-                    type: type,
-                    text: text
-                });
-                closeNoteModal();
-                document.getElementById('noteText').value = '';
-                document.getElementById('noteDate').value = '';
-                savePipelineData();
-                openProfile(currentProfileId, currentActiveTab, false);
-            }
-        }
-
-        function saveLead(event) {
-            event.preventDefault();
-            const id = document.getElementById('leadId').value;
-            const data = {
-                id: id ? parseInt(id) : Date.now(),
-                stage: document.getElementById('leadStage').value,
-                org: document.getElementById('leadOrg').value,
-                contact: document.getElementById('leadContact').value,
-                scope: document.getElementById('leadScope').value,
-                status: document.getElementById('leadStatus').value,
-                action: document.getElementById('leadAction').value,
-                auditRecords: [],
-                calendarEvents: [],
-                rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
-                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [
-                    { name: "Form W-9.pdf", url: "W9.pdf" },
-                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
-                ],
-                contacts: [],
-                activities: [{ date: "Oct 2, 2026", type: "Created", text: "Lead added to pipeline." }]
-            };
-            if(id) { 
-                const idx = pipelineData.findIndex(l => l.id === parseInt(id));
-                data.financialDocs = pipelineData[idx].financialDocs || [
-                    { name: "Form W-9.pdf", url: "W9.pdf" },
-                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
-                ];
-                data.rootFolder = pipelineData[idx].rootFolder || { name: "Partnership Root", subfolders: [], files: [] };
-                data.trashFolder = pipelineData[idx].trashFolder || { name: "Trash Bin", subfolders: [], files: [] };
-                data.calendarEvents = pipelineData[idx].calendarEvents || [];
-                data.contacts = pipelineData[idx].contacts || [];
-                data.auditRecords = pipelineData[idx].auditRecords || [];
-                data.activities = pipelineData[idx].activities;
-                pipelineData[idx] = data; 
-            } else { 
-                pipelineData.push(data); 
-            }
-            closeModal(); 
-            savePipelineData();
-            renderTable();
-            if(currentProfileId) openProfile(currentProfileId, currentActiveTab, false);
-        }
-
-        function deleteLead(id) { 
-            pipelineData = pipelineData.filter(l => l.id !== id); 
-            savePipelineData();
-            renderTable(); 
-        }
-
-        function exportCSV() {
-            let csv = 'Stage,Organization,Contact,Scope,Status,Action\n';
-            pipelineData.forEach(d => csv += `"${d.stage}","${d.org}","${d.contact}","${d.scope}","${d.status}","${d.action}"\n`);
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'brown_girls_pipeline.csv'; a.click();
-        }
-
         function initApp() {
             if (window.location.hash.includes("profile=")) {
                 const hashParams = new URLSearchParams(window.location.hash.substring(1));
@@ -2260,4 +1622,4 @@
         initApp();
     </script>
 </body>
-</html> 
+</html>
