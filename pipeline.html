@@ -140,7 +140,6 @@
 
                     <!-- Core Revenue Streams Breakdown -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
-                        <!-- Stream 1: Career Days & School Workshops -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career Days (Locked In)</h4>
@@ -149,7 +148,6 @@
                             <p class="text-slate-300">Newton County STEAM Academy, Porterdale Elementary, Timber Ridge Elementary, & Pleasant Grove.</p>
                         </div>
 
-                        <!-- Stream 2: Paid After-School Partnerships -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-purple-500 transition" onclick="toggleGoalDetail('afterSchoolDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-purple-400 uppercase tracking-wider">2. After-School Programs</h4>
@@ -158,7 +156,6 @@
                             <p class="text-slate-300">YES Program revenue-share pitch and InspiHER December conference paid workshops ($750).</p>
                         </div>
 
-                        <!-- Stream 3: Private Schools Outreach -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-emerald-500 transition" onclick="toggleGoalDetail('privateSchoolsDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private Schools</h4>
@@ -307,13 +304,13 @@
                 <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600 pb-3">
                     <button onclick="switchTab('tasks')" id="tabBtn-tasks" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center">Tasks & Stage Progress</button>
                     <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Company Info</button>
-                    <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Revenue & Audit</button>
+                    <button onclick="switchTab('revenue')" id="tabBtn-revenue" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Revenue & Financial Dashboard</button>
                     <button onclick="switchTab('comms')" id="tabBtn-comms" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Communication Log</button>
                     <button onclick="switchTab('events')" id="tabBtn-events" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Events & Folders</button>
                     <button onclick="switchTab('calendar')" id="tabBtn-calendar" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center col-span-2 sm:col-span-1">Calendar & Events</button>
                 </div>
 
-                <!-- Tab 0: Tasks & Stage Progress (Interactive Stage & Retainer Controls) -->
+                <!-- Tab 0: Tasks & Stage Progress -->
                 <div id="tabContent-tasks" class="space-y-6">
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
@@ -369,47 +366,119 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: Revenue & Audit Log -->
+                <!-- Tab 2: Revenue & Financial Dashboard Story -->
                 <div id="tabContent-revenue" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
-                        <div class="flex justify-between items-center border-b border-dark-600 pb-4">
-                            <h3 class="font-bold text-sm text-slate-100">Financial Paper Trail & Itemized Invoices</h3>
-                            <button onclick="openFinanceModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
+                    <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl space-y-8">
+                        <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-base text-slate-100">Financial Story & $7K Revenue Architecture</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">High-level financial dashboard ensuring 3 consecutive months of $7K revenue before founder/stipend payouts.</p>
+                            </div>
+                            <button onclick="openFinanceModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
                                 + Log Invoice / Payment
                             </button>
                         </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Total Contract Value</p>
-                                <h4 id="finTotal" class="text-xl font-bold text-slate-100 mt-1">$0.00</h4>
-                            </div>
-                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                                <p class="text-[10px] font-bold text-purple-400 uppercase tracking-wider">Pending Revenue</p>
-                                <h4 id="finPending" class="text-xl font-bold text-purple-400 mt-1">$0.00</h4>
-                            </div>
-                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                                <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Closed / Paid</p>
-                                <h4 id="finClosed" class="text-xl font-bold text-emerald-400 mt-1">$0.00</h4>
+
+                        <!-- 3-Month Stability Notice -->
+                        <div class="bg-purple-500/10 border border-purple-500/30 p-4 rounded-xl text-xs space-y-1">
+                            <h4 class="font-bold text-purple-400 uppercase tracking-wider">Financial Stability Milestone ($7K Rule)</h4>
+                            <p class="text-slate-300">We must consistently hit <strong>$7,000 gross monthly revenue for 3 months straight</strong> before formal founder draws and recurring staff stipends are fully activated and distributed.</p>
+                        </div>
+
+                        <!-- 1. Salary & Bi-Weekly Strategy -->
+                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 text-xs">
+                            <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Monthly Salary vs. Bi-Weekly Operations</h4>
+                            <ul class="space-y-2 text-slate-300 list-disc list-inside">
+                                <li><strong>Founder Draw (Raeven):</strong> Monthly salary drawer (on the 1st or 5th, right after student tuition clears) keeps personal accounting clean and aligned with fixed costs.</li>
+                                <li><strong>Courtney White (1099 Contractor):</strong> $200–$400/month contract stipend. Can be paid $200 bi-weekly or a single $400 check on the last business day of the month. Kept strictly as 1099-NEC to avoid state unemployment taxes and payroll software fees.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 2. The $7,000 Monthly Cash Allocation Architecture -->
+                        <div class="space-y-3 text-xs">
+                            <h4 class="font-bold text-emerald-400 uppercase tracking-wider">2. The $7,000 Monthly Cash Allocation Architecture</h4>
+                            <div class="overflow-x-auto border border-dark-600 rounded-xl">
+                                <table class="w-full text-left border-collapse min-w-[600px]">
+                                    <thead>
+                                        <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                            <th class="py-3 px-4">Allocation Bucket</th>
+                                            <th class="py-3 px-4">Percentage</th>
+                                            <th class="py-3 px-4">Monthly Amount</th>
+                                            <th class="py-3 px-4">Destination Account & Purpose</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-dark-600 text-slate-300">
+                                        <tr>
+                                            <td class="py-3 px-4 font-bold text-slate-100">Tax Reserve (IRS & GA)</td>
+                                            <td class="py-3 px-4">20%</td>
+                                            <td class="py-3 px-4 font-mono">$1,400 / mo</td>
+                                            <td class="py-3 px-4">Fidelity SPAXX (Covers SECA 15.3% + state income tax)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4 font-bold text-slate-100">Facility HQ & Van Reserve</td>
+                                            <td class="py-3 px-4">15%</td>
+                                            <td class="py-3 px-4 font-mono">$1,050 / mo</td>
+                                            <td class="py-3 px-4">Fidelity SPAXX (Commercial deposit & transport vehicle fund)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4 font-bold text-slate-100">Host School Donations</td>
+                                            <td class="py-3 px-4">~10%</td>
+                                            <td class="py-3 px-4 font-mono">$750 / mo</td>
+                                            <td class="py-3 px-4">Operating Checking (15% revenue share to school PTO funds)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4 font-bold text-slate-100">Staff & Courtney Stipend</td>
+                                            <td class="py-3 px-4">6% - 8%</td>
+                                            <td class="py-3 px-4 font-mono">$400 - $600 / mo</td>
+                                            <td class="py-3 px-4">Operating Checking (Paid to Courtney via 1099 invoice)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4 font-bold text-slate-100">Tools, Hotspots & Materials</td>
+                                            <td class="py-3 px-4">6%</td>
+                                            <td class="py-3 px-4 font-mono">$400 / mo</td>
+                                            <td class="py-3 px-4">Operating Checking (5G hotspot, software tokens, offline supplies)</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="py-3 px-4 font-bold text-slate-100">Founder Salary (Raeven)</td>
+                                            <td class="py-3 px-4">~40%</td>
+                                            <td class="py-3 px-4 font-mono">$2,800 - $3,000 / mo</td>
+                                            <td class="py-3 px-4">Personal Account (Clean monthly owner's draw)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
 
+                        <!-- 3. Fidelity Account Structure -->
+                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 text-xs">
+                            <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Fidelity Account & "Two-Bucket" Structure</h4>
+                            <p class="text-slate-300">Using Fidelity Cash Management / Brokerage Account with SPAXX (Government Money Market Fund) sweeping uninvested cash at ~3.46%–3.49% APY:</p>
+                            <ul class="space-y-1.5 text-slate-300 list-disc list-inside">
+                                <li><strong>Bucket A (Tax Escrow):</strong> $1,400/mo builds ~$16,800/yr for quarterly estimated tax payments.</li>
+                                <li><strong>Bucket B (HQ Building & Van Fund):</strong> $1,050/mo banks $12,600+/yr for commercial flex lease or shuttle van down payment without debt.</li>
+                            </ul>
+                        </div>
+
                         <!-- Itemized Audit Table -->
-                        <div class="overflow-x-auto border border-dark-600 rounded-xl">
-                            <table class="w-full text-left border-collapse text-xs min-w-[600px]">
-                                <thead>
-                                    <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                        <th class="py-3 px-4">Invoice / Ref #</th>
-                                        <th class="py-3 px-4">Description / Scope</th>
-                                        <th class="py-3 px-4">Issue Date</th>
-                                        <th class="py-3 px-4">Amount</th>
-                                        <th class="py-3 px-4">Status</th>
-                                        <th class="py-3 px-4">Payment Method / Notes</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="auditTableBody" class="divide-y divide-dark-600">
-                                    <!-- Populated dynamically -->
-                                </tbody>
-                            </table>
+                        <div class="space-y-3 pt-4">
+                            <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider">Itemized Invoices & Audit Log</h4>
+                            <div class="overflow-x-auto border border-dark-600 rounded-xl">
+                                <table class="w-full text-left border-collapse text-xs min-w-[600px]">
+                                    <thead>
+                                        <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                                            <th class="py-3 px-4">Invoice / Ref #</th>
+                                            <th class="py-3 px-4">Description / Scope</th>
+                                            <th class="py-3 px-4">Issue Date</th>
+                                            <th class="py-3 px-4">Amount</th>
+                                            <th class="py-3 px-4">Status</th>
+                                            <th class="py-3 px-4">Payment Method / Notes</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="auditTableBody" class="divide-y divide-dark-600">
+                                        <!-- Populated dynamically -->
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
 
                         <!-- Financial & Tax Documents Folder -->
@@ -429,7 +498,7 @@
 
                 <!-- Tab 3: Communication Log -->
                 <div id="tabContent-comms" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <h3 class="font-bold text-sm text-slate-100">Conversation & Activity Timeline</h3>
                             <button onclick="openNoteModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
@@ -444,7 +513,7 @@
 
                 <!-- Tab 4: Partnership Events & Folders (Deep Nested Explorer) -->
                 <div id="tabContent-events" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-dark-600 pb-4">
                             <div>
                                 <h3 class="font-bold text-sm text-slate-100" id="currentFolderTitle">Partnership Events & Folders</h3>
@@ -467,7 +536,7 @@
 
                 <!-- Tab 5: Calendar & Events Tracking -->
                 <div id="tabContent-calendar" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-6">
+                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-dark-600 pb-4">
                             <div>
                                 <h3 class="font-bold text-sm text-slate-100">Client Calendar & Event Schedule</h3>
@@ -508,19 +577,36 @@
         </main>
     </div>
 
-    <!-- Modal for Adding Client Task with Date & Assignee -->
+    <!-- Modal for Adding Client Task with Title, Description, Date, Assignee, Urgency Level -->
     <div id="clientTaskModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Add Client Task</h3>
-            <form onsubmit="saveClientTask(event)" class="space-y-4 text-xs">
-                <input type="text" id="clientTaskInput" required placeholder="Task Description (e.g. Email Ms. Bunting)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6 space-y-4">
+            <h3 class="font-bold text-slate-100 text-sm">Add Client Task</h3>
+            <form onsubmit="saveClientTask(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Due Date</label>
-                    <input type="date" id="clientTaskDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Task Title</label>
+                    <input type="text" id="clientTaskTitle" required placeholder="e.g. Email Ms. Bunting" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                </div>
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Description & Details</label>
+                    <textarea id="clientTaskDesc" rows="2" placeholder="Add specific task details..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Due Date</label>
+                        <input type="date" id="clientTaskDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Urgency Level</label>
+                        <select id="clientTaskUrgency" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                            <option value="High (Urgent)">High (Urgent)</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
                 </div>
                 <div>
                     <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Assigned To</label>
-                    <select id="clientTaskAssignee" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    <select id="clientTaskAssignee" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
                         <option value="Raeven Brown">Raeven Brown</option>
                         <option value="Courtney White">Courtney White</option>
                     </select>
@@ -777,9 +863,9 @@
                     { title: "InspiHER 2-Day Workshop", start: "2026-12-02T09:00", end: "2026-12-03T15:00", location: "Newton District Venue", notes: "Key 2-day workshop engagement." }
                 ],
                 clientTasks: [
-                    { task: "Submit W-9 and CP575", date: "Oct 1, 2026", assignee: "Raeven Brown", done: true, active: false },
-                    { task: "Follow up first week of November", date: "Nov 2, 2026", assignee: "Raeven Brown", done: false, active: true },
-                    { task: "Coordinate with Newton County District after-school department", date: "Nov 10, 2026", assignee: "Courtney White", done: false, active: false }
+                    { title: "Submit W-9 and CP575", desc: "Send tax docs to AP department", date: "Oct 1, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
+                    { title: "Follow up with Newton District", desc: "Follow up first week of November regarding payment schedule", date: "Nov 2, 2026", assignee: "Raeven Brown", urgency: "Medium", done: false, active: true },
+                    { title: "Coordinate with after-school department", desc: "Discuss additional district-wide department after-school collaboration", date: "Nov 10, 2026", assignee: "Courtney White", urgency: "Medium", done: false, active: false }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -821,9 +907,9 @@
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Complete 5 career day sessions (100 students, 96% rating)", date: "Sep 29, 2026", assignee: "Raeven Brown", done: true, active: false },
-                    { task: "Email Ms. Bunting to set up a day to come back to the school", date: "Oct 5, 2026", assignee: "Courtney White", done: false, active: true },
-                    { task: "Email after-school director for Newton County District department", date: "Oct 12, 2026", assignee: "Raeven Brown", done: false, active: false }
+                    { title: "Complete 5 Career Day Sessions", desc: "Reached 100 students with 96% satisfaction rate", date: "Sep 29, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
+                    { title: "Email Ms. Bunting to return", desc: "Send follow up email to Ms. Bunting to set up a day to come back to the school as a recurring program", date: "Oct 5, 2026", assignee: "Courtney White", urgency: "High (Urgent)", done: false, active: true },
+                    { title: "Email Newton County District after-school director", desc: "Connect with district after-school department for wider rollout", date: "Oct 12, 2026", assignee: "Raeven Brown", urgency: "Medium", done: false, active: false }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -861,7 +947,7 @@
                     { title: "Career Day Presentation", start: "2026-11-19T08:00", end: "2026-11-19T11:30", location: "Porterdale Elementary", notes: "Entrepreneur presentation." }
                 ],
                 clientTasks: [
-                    { task: "Submit volunteer / sign-up form for Nov 19 event", date: "Oct 15, 2026", assignee: "Raeven Brown", done: false, active: true }
+                    { title: "Submit volunteer sign-up form", desc: "Complete volunteer registration for Nov 19 event with Ms. Ward", date: "Oct 15, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }
                 ],
                 rootFolder: {
                     name: "Partnership Root",
@@ -894,7 +980,7 @@
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Submit Career Day sign-up for Nov 20 event", date: "Oct 16, 2026", assignee: "Courtney White", done: false, active: true }
+                    { title: "Submit Career Day sign-up", desc: "Complete registration for Nov 20 Tech & Innovation showcase", date: "Oct 16, 2026", assignee: "Courtney White", urgency: "High (Urgent)", done: false, active: true }
                 ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -919,7 +1005,7 @@
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
-                    { task: "Confirm Career Day attendance for Oct 28", date: "Oct 10, 2026", assignee: "Raeven Brown", done: false, active: true }
+                    { title: "Confirm Career Day attendance", desc: "Confirm presentation details for Oct 28 event", date: "Oct 10, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }
                 ],
                 rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
                 trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
@@ -984,23 +1070,12 @@
             { id: 4, task: "Submit Career Day sign-up for Timber Ridge Elementary", done: false }
         ];
 
-        let careerChecklist = JSON.parse(localStorage.getItem('bgcs_career_checklist')) || {
-            ncsa: true,
-            porterdale: false,
-            timberRidge: false,
-            pleasantGrove: false
-        };
-
         function savePipelineData() {
             localStorage.setItem('bgcs_pipeline_data', JSON.stringify(pipelineData));
         }
 
         function saveProspectTodos() {
             localStorage.setItem('bgcs_prospect_todos', JSON.stringify(prospectTodos));
-        }
-
-        function saveCareerChecklist() {
-            localStorage.setItem('bgcs_career_checklist', JSON.stringify(careerChecklist));
         }
 
         let currentProfileId = null;
@@ -1102,7 +1177,7 @@
                     <div class="space-y-3">
                         <div onclick="openProfile(2, 'tasks')" class="bg-dark-800 hover:bg-dark-700 p-4 rounded-xl border border-dark-600 cursor-pointer transition flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] text-amber-400 font-bold uppercase">Newton County STEAM Academy (Retainer / Program Target)</span>
+                                <span class="text-[10px] text-amber-400 font-bold uppercase">Newton County STEAM Academy (Retainer Target)</span>
                                 <h4 class="font-bold text-slate-100 text-sm mt-0.5">Newton County STEAM Academy</h4>
                                 <p class="text-xs text-slate-400 mt-1">Stage: Follow-up • Current Task: Email Ms. Bunting to set up return</p>
                             </div>
@@ -1203,27 +1278,34 @@
             document.getElementById('inlineStageSelect').value = lead.stage;
             document.getElementById('inlineRetainerCheck').checked = !!lead.isRetainer;
 
-            let retainerBadge = lead.isRetainer ? '<span class="px-2 py-0.5 rounded bg-purple-500/15 text-purple-400 border border-purple-500/30 ml-2 font-bold">Retainer Partner</span>' : '';
+            let retainerBadge = lead.isRetainer ? '<span class="px-2.5 py-1 rounded bg-purple-500/15 text-purple-400 border border-purple-500/30 font-bold ml-2">Retainer Partner</span>' : '';
             stageDisplay.innerHTML = `<span class="px-2.5 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold">${lead.stage}</span> • Status: ${lead.status} ${retainerBadge}`;
 
             container.innerHTML = '';
             if (lead.clientTasks && lead.clientTasks.length > 0) {
                 lead.clientTasks.forEach((ct, cIdx) => {
                     let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
-                    let dateStr = ct.date ? `<span class="text-[11px] text-rose-400 font-semibold mr-2">[Due: ${ct.date}]</span>` : '';
-                    let assigneeStr = ct.assignee ? `<span class="text-[11px] text-purple-400 font-semibold mr-2">[Assigned: ${ct.assignee}]</span>` : '';
+                    let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
 
                     container.innerHTML += `
-                        <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 transition">
-                            <label class="flex items-center space-x-3 cursor-pointer flex-1">
-                                <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                                <div class="space-y-0.5">
-                                    <span class="text-slate-200 font-medium ${ct.done ? 'line-through text-slate-500' : ''}">${ct.task} ${ct.active ? '<span class="ml-2 px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}</span>
-                                    <div class="flex flex-wrap gap-1">${dateStr}${assigneeStr}</div>
+                        <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
+                            <label class="flex items-start space-x-3 cursor-pointer flex-1">
+                                <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <div class="space-y-1">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
+                                        ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
+                                    </div>
+                                    ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
+                                    <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
+                                        ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
+                                        ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
+                                    </div>
                                 </div>
                             </label>
-                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
-                                <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500" title="Highlight as Current Task">Highlight</button>
+                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
+                                <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
                                 <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </div>
                         </div>`;
@@ -1261,7 +1343,7 @@
                     let removed = lead.clientTasks.splice(cIdx, 1)[0];
                     if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
                     if (!lead.trashFolder.files) lead.trashFolder.files = [];
-                    lead.trashFolder.files.push({ name: "Task: " + removed.task, url: "#" });
+                    lead.trashFolder.files.push({ name: "Task: " + (removed.title || removed.task), url: "#" });
                     savePipelineData();
                     renderClientTasks();
                 }
@@ -1271,6 +1353,8 @@
         function openClientTaskModal() {
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('clientTaskDate').value = today;
+            document.getElementById('clientTaskTitle').value = '';
+            document.getElementById('clientTaskDesc').value = '';
             document.getElementById('clientTaskModal').classList.remove('hidden');
         }
         function closeClientTaskModal() {
@@ -1278,15 +1362,17 @@
         }
         function saveClientTask(event) {
             event.preventDefault();
-            const task = document.getElementById('clientTaskInput').value;
+            const title = document.getElementById('clientTaskTitle').value;
+            const desc = document.getElementById('clientTaskDesc').value;
             const date = document.getElementById('clientTaskDate').value;
+            const urgency = document.getElementById('clientTaskUrgency').value;
             const assignee = document.getElementById('clientTaskAssignee').value;
+            
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (lead) {
                 if (!lead.clientTasks) lead.clientTasks = [];
-                lead.clientTasks.push({ task, date, assignee, done: false, active: false });
+                lead.clientTasks.push({ title, desc, date, urgency, assignee, done: false, active: false });
                 closeClientTaskModal();
-                document.getElementById('clientTaskInput').value = '';
                 savePipelineData();
                 renderClientTasks();
             }
