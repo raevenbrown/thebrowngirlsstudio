@@ -89,7 +89,7 @@
                         <i data-lucide="dollar-sign" class="w-4 h-4 mr-3 text-purple-400"></i> Financial Goal Tracker
                     </a>
                     <a href="#view=goals" onclick="switchMainView('goals')" id="nav-goals" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
-                        <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Goals & Strategy
+                        <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Target Audience (3 Categories)
                     </a>
                     <a href="#view=agenda" onclick="switchMainView('agenda')" id="nav-agenda" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
                         <i data-lucide="calendar-check" class="w-4 h-4 mr-3 text-purple-400"></i> Spirit Meeting Outline
@@ -125,8 +125,8 @@
                     <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition flex items-center shadow-sm">
                         <i data-lucide="download" class="w-3.5 h-3.5 mr-1.5"></i> Export
                     </button>
-                    <button onclick="openModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
-                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Target
+                    <button onclick="openFinancialProspectModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
+                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect
                     </button>
                 </div>
             </header>
@@ -135,8 +135,8 @@
             <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     
-                    <!-- Inspiring Q4 Goal Banner & Dynamic Progress Meter -->
-                    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-xl">
+                    <!-- Inspiring Q4 Goal Banner & Semi-Circular / Gauge Meter -->
+                    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl">
                         <div class="space-y-3 relative z-10 flex-1">
                             <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30">
                                 <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span>Q4 Mission & Revenue Milestone</span>
@@ -145,21 +145,22 @@
                             <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
                                 <strong>1 Closed Deal Per Month</strong> (October to December) — Total of 4 Deals: <span class="text-rose-400 font-semibold">1 InspiHER Event</span> + <span class="text-emerald-400 font-semibold">3 Partnerships</span> to hit the <span class="text-purple-400 font-bold">$7,000 monthly recurring revenue</span> target.
                             </p>
-                            
-                            <!-- Dynamic Meter Bar -->
-                            <div class="pt-2 space-y-1 max-w-lg">
-                                <div class="flex justify-between text-xs font-bold">
-                                    <span class="text-slate-300">Sales Funnel Progress (Closed Won Deals)</span>
-                                    <span id="meterPercentText" class="text-emerald-400">0 / 4 Deals (0%)</span>
-                                </div>
-                                <div class="w-full bg-dark-900/80 rounded-full h-3 border border-dark-600 overflow-hidden">
-                                    <div id="meterBarFill" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-3 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                        </div>
+
+                        <!-- Circular Gauge Meter UI Component -->
+                        <div class="flex flex-col items-center justify-center bg-dark-900/60 border border-dark-600 p-5 rounded-2xl shadow-inner shrink-0 w-44 space-y-2">
+                            <div class="relative w-24 h-24 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                    <path class="text-dark-700" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path id="meterCircleFill" class="text-emerald-400 transition-all duration-700" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                    <span id="meterDealCount" class="text-lg font-extrabold text-slate-100">0 / 4</span>
+                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Deals Won</span>
                                 </div>
                             </div>
+                            <span id="meterPercentLabel" class="text-[11px] font-bold text-emerald-400">0% of Q4 Goal</span>
                         </div>
-                        <button onclick="openFinancialProspectModal()" class="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition shrink-0 flex items-center">
-                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i> Add Prospect
-                        </button>
                     </div>
 
                     <!-- Pricing & Corrected Community Donation Banner -->
@@ -180,7 +181,12 @@
 
                     <!-- 4-Stage Financial Kanban Board -->
                     <div class="space-y-4">
-                        <h3 class="font-bold text-sm text-slate-100">Outreach Stage Tracker (Oct – Dec Target: 4 Total Closed Deals)</h3>
+                        <div class="flex justify-between items-center">
+                            <h3 class="font-bold text-sm text-slate-100">Outreach Stage Tracker (Oct – Dec Target: 4 Total Closed Deals)</h3>
+                            <button onclick="openFinancialProspectModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
+                                <i data-lucide="plus" class="w-3.5 h-3.5 mr-1"></i> Add Prospect
+                            </button>
+                        </div>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="financialKanbanContainer">
                             <!-- Populated dynamically -->
                         </div>
@@ -188,12 +194,12 @@
                 </div>
             </div>
 
-            <!-- Main Section 1: Goals & Strategy View -->
+            <!-- Main Section 1: Target Audience (The Main Three Categories) -->
             <div id="mainView-goals" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
                         <div>
-                            <h2 class="text-xl font-bold text-slate-100">2026 Growth Goals & Income Streams</h2>
+                            <h2 class="text-xl font-bold text-slate-100">Target Audience: The Main Three Categories</h2>
                             <p class="text-xs text-slate-400 mt-1">Click any category below to view company listings and navigate directly to their profile task lists.</p>
                         </div>
                     </div>
@@ -201,7 +207,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
-                                <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career Days (Locked In)</h4>
+                                <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career Days & School Workshops</h4>
                                 <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold text-[10px]">Click to View Companies</span>
                             </div>
                             <p class="text-slate-300">Newton County STEAM Academy, Porterdale Elementary, Timber Ridge Elementary, & Pleasant Grove.</p>
@@ -209,18 +215,18 @@
 
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-purple-500 transition" onclick="toggleGoalDetail('afterSchoolDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
-                                <h4 class="font-bold text-purple-400 uppercase tracking-wider">2. After-School Programs</h4>
+                                <h4 class="font-bold text-purple-400 uppercase tracking-wider">2. After-School Programs & Districts</h4>
                                 <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-semibold text-[10px]">Click to View Companies</span>
                             </div>
-                            <p class="text-slate-300">YES Program revenue-share pitch and InspiHER December conference paid workshops ($750).</p>
+                            <p class="text-slate-300">YES Program revenue-share pitch, Newton County District After-School Dept, and InspiHER December conference ($750).</p>
                         </div>
 
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-emerald-500 transition" onclick="toggleGoalDetail('privateSchoolsDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
-                                <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private Schools</h4>
+                                <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private Schools & Community Centers</h4>
                                 <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold text-[10px]">Click to View Companies</span>
                             </div>
-                            <p class="text-slate-300">Peachtree Academy career fair outreach and regional private academy STEM enrollment packages.</p>
+                            <p class="text-slate-300">Heritage Christian, Peachtree Academy, Strong Rock Christian, Washington Street Community Center, & YMCA.</p>
                         </div>
                     </div>
 
@@ -270,7 +276,7 @@
                 </div>
             </div>
 
-            <!-- View 1: Main Pipeline / Sales Funnel Columns (Synchronized with all 24+ prospects) -->
+            <!-- View 1: Main Pipeline / Sales Funnel Columns (Synchronized with all 25 prospects) -->
             <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                     <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
@@ -879,7 +885,7 @@
             if (viewName === 'pipeline') {
                 document.getElementById('pipelineView').classList.remove('hidden');
                 document.getElementById('pageTitle').innerText = "Pipeline Manager";
-                renderSalesFunnel();
+                renderFinancialKanban();
                 if (updateHash) window.location.hash = "view=pipeline";
                 const activeBtn = document.getElementById('nav-pipeline');
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
@@ -896,7 +902,7 @@
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 
                 if (viewName === 'goals') {
-                    document.getElementById('pageTitle').innerText = "2026 Growth Goals & Income Streams";
+                    document.getElementById('pageTitle').innerText = "Target Audience (3 Categories)";
                 }
                 if (viewName === 'agenda') document.getElementById('pageTitle').innerText = "Spirit Meeting Outline & Agenda";
                 if (viewName === 'prospects') {
@@ -942,68 +948,83 @@
         }
 
         function renderFinancialKanban() {
-            const container = document.getElementById('financialKanbanContainer');
-            if (!container) return;
-            container.innerHTML = '';
+            ['financialKanbanContainer', 'salesFunnelContainer'].forEach(containerId => {
+                const container = document.getElementById(containerId);
+                if (!container) return;
+                container.innerHTML = '';
 
-            const stages = ["Prospect", "Lead", "Closed Won", "Closed Lost"];
-            const stageColors = {
-                "Prospect": "border-amber-500/30 text-amber-400",
-                "Lead": "border-purple-500/30 text-purple-400",
-                "Closed Won": "border-emerald-500/30 text-emerald-400",
-                "Closed Lost": "border-rose-500/30 text-rose-400"
-            };
+                const stages = ["Prospect", "Lead", "Closed Won", "Closed Lost"];
+                const stageColors = {
+                    "Prospect": "border-amber-500/30 text-amber-400",
+                    "Lead": "border-purple-500/30 text-purple-400",
+                    "Closed Won": "border-emerald-500/30 text-emerald-400",
+                    "Closed Lost": "border-rose-500/30 text-rose-400"
+                };
 
-            let wonDealsCount = financialProspects.filter(p => p.stage === "Closed Won").length;
-            let percent = Math.min(100, Math.round((wonDealsCount / 4) * 100));
-            const fillBar = document.getElementById('meterBarFill');
-            const percentText = document.getElementById('meterPercentText');
-            if (fillBar) fillBar.style.width = percent + '%';
-            if (percentText) percentText.innerText = `${wonDealsCount} / 4 Deals (${percent}%)`;
+                let wonDealsCount = financialProspects.filter(p => p.stage === "Closed Won").length;
+                let percent = Math.min(100, Math.round((wonDealsCount / 4) * 100));
+                
+                const meterCircleFill = document.getElementById('meterCircleFill');
+                const meterDealCount = document.getElementById('meterDealCount');
+                const meterPercentLabel = document.getElementById('meterPercentLabel');
 
-            stages.forEach(stage => {
-                const items = financialProspects.filter(p => p.stage === stage);
-                let cards = '';
-                if (items.length > 0) {
-                    items.forEach((item, idx) => {
-                        let potentialTotal = item.classes * 20 * item.price;
-                        let donationAmount = potentialTotal * (item.donation / 100); // 10% = $250 per class
-
-                        cards += `
-                            <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl space-y-2">
-                                <div class="flex justify-between items-start">
-                                    <h4 onclick="openFinancialOrgProfile('${item.org}')" class="font-bold text-slate-100 text-xs cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
-                                    <button onclick="deleteFinancialProspect(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                                </div>
-                                <div class="text-[11px] text-slate-300 space-y-0.5">
-                                    <p>Classes: <strong>${item.classes}</strong> (20 kids/class)</p>
-                                    <p>Price/Kid: <strong>$${item.price.toFixed(2)}</strong></p>
-                                    <p class="text-emerald-400 font-bold">Target Revenue: $${potentialTotal.toFixed(2)}</p>
-                                    <p class="text-purple-400">Community Donation (${item.donation}%): $${donationAmount.toFixed(2)} ($12.50/kid)</p>
-                                </div>
-                                <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
-                                    <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
-                                        <option value="Prospect" ${stage === 'Prospect' ? 'selected' : ''}>Prospect</option>
-                                        <option value="Lead" ${stage === 'Lead' ? 'selected' : ''}>Lead</option>
-                                        <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
-                                        <option value="Closed Lost" ${stage === 'Closed Lost' ? 'selected' : ''}>Closed Lost</option>
-                                    </select>
-                                    <button onclick="openFinancialOrgProfile('${item.org}')" class="text-rose-400 font-semibold underline">View Profile</button>
-                                </div>
-                            </div>`;
-                    });
-                } else {
-                    cards = `<p class="text-xs text-slate-500 italic py-4 text-center">No targets in this stage.</p>`;
+                if (meterCircleFill) {
+                    let circumference = 2 * Math.PI * 15.9155;
+                    let strokeVal = (percent / 100) * circumference;
+                    meterCircleFill.style.strokeDasharray = `${strokeVal}, ${circumference}`;
                 }
+                if (meterDealCount) meterDealCount.innerText = `${wonDealsCount} / 4`;
+                if (meterPercentLabel) meterPercentLabel.innerText = `${percent}% of Q4 Goal`;
 
-                container.innerHTML += `
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 space-y-3">
-                        <div class="flex justify-between items-center border-b border-dark-600 pb-2">
-                            <h4 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h4>
-                            <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300 text-[10px]">${items.length}</span>
-                        </div>
-                        <div class="space-y-2.5 max-h-[500px] overflow-y-auto">${cards}</div>
-                    </div>`;
+                document.getElementById('stat-total').innerText = financialProspects.length;
+                document.getElementById('stat-prospect').innerText = financialProspects.filter(d => d.stage === 'Prospect').length;
+                document.getElementById('stat-invoice').innerText = financialProspects.filter(d => d.stage === 'Lead').length;
+                document.getElementById('stat-won').innerText = wonDealsCount;
+
+                stages.forEach(stage => {
+                    const items = financialProspects.filter(p => p.stage === stage);
+                    let cards = '';
+                    if (items.length > 0) {
+                        items.forEach((item, idx) => {
+                            let potentialTotal = item.classes * 20 * item.price;
+                            let donationAmount = potentialTotal * (item.donation / 100); // 10% = $250 per class ($12.50/kid)
+
+                            cards += `
+                                <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl space-y-2">
+                                    <div class="flex justify-between items-start">
+                                        <h4 onclick="openFinancialOrgProfile('${item.org}')" class="font-bold text-slate-100 text-xs cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
+                                        <button onclick="deleteFinancialProspect(${item.id})" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
+                                    </div>
+                                    <div class="text-[11px] text-slate-300 space-y-0.5">
+                                        <p>Classes: <strong>${item.classes}</strong> (20 kids/class)</p>
+                                        <p>Price/Kid: <strong>$${item.price.toFixed(2)}</strong></p>
+                                        <p class="text-emerald-400 font-bold">Target Revenue: $${potentialTotal.toFixed(2)}</p>
+                                        <p class="text-purple-400">Community Donation (${item.donation}%): $${donationAmount.toFixed(2)} ($12.50/kid)</p>
+                                    </div>
+                                    <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
+                                        <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
+                                            <option value="Prospect" ${stage === 'Prospect' ? 'selected' : ''}>Prospect</option>
+                                            <option value="Lead" ${stage === 'Lead' ? 'selected' : ''}>Lead</option>
+                                            <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
+                                            <option value="Closed Lost" ${stage === 'Closed Lost' ? 'selected' : ''}>Closed Lost</option>
+                                        </select>
+                                        <button onclick="openFinancialOrgProfile('${item.org}')" class="text-rose-400 font-semibold underline">View Profile</button>
+                                    </div>
+                                </div>`;
+                        });
+                    } else {
+                        cards = `<p class="text-xs text-slate-500 italic py-4 text-center">No targets in this stage.</p>`;
+                    }
+
+                    container.innerHTML += `
+                        <div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 space-y-3">
+                            <div class="flex justify-between items-center border-b border-dark-600 pb-2">
+                                <h4 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h4>
+                                <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300 text-[10px]">${items.length}</span>
+                            </div>
+                            <div class="space-y-2.5 max-h-[500px] overflow-y-auto">${cards}</div>
+                        </div>`;
+                });
             });
             lucide.createIcons();
         }
@@ -1179,70 +1200,6 @@
                 saveFinancialProspects();
                 renderClientTasks();
             }
-        }
-
-        function renderSalesFunnel() {
-            const container = document.getElementById('salesFunnelContainer');
-            if(!container) return;
-            container.innerHTML = '';
-
-            const stages = ["Prospect", "Lead", "Closed Won", "Closed Lost"];
-            const stageColors = {
-                "Prospect": "border-amber-500/30 text-amber-400",
-                "Lead": "border-purple-500/30 text-purple-400",
-                "Closed Won": "border-emerald-500/30 text-emerald-400",
-                "Closed Lost": "border-rose-500/30 text-rose-400"
-            };
-
-            let totalProspects = financialProspects.length;
-            let prospectCount = financialProspects.filter(d => d.stage === 'Prospect').length;
-            let leadCount = financialProspects.filter(d => d.stage === 'Lead').length;
-            let wonCount = financialProspects.filter(d => d.stage === 'Closed Won').length;
-
-            document.getElementById('stat-total').innerText = totalProspects;
-            document.getElementById('stat-prospect').innerText = prospectCount;
-            document.getElementById('stat-invoice').innerText = leadCount;
-            document.getElementById('stat-won').innerText = wonCount;
-
-            stages.forEach(stage => {
-                const items = financialProspects.filter(p => p.stage === stage);
-                let cardsHtml = '';
-                
-                if (items.length > 0) {
-                    items.forEach((item, idx) => {
-                        cardsHtml += `
-                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2 hover:border-rose-500/50 transition">
-                                <div class="flex justify-between items-start">
-                                    <h4 onclick="openProfile(${item.id}, 'tasks')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
-                                    <button onclick="deleteFinancialProspect(${item.id})" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
-                                </div>
-                                <p class="text-slate-400 text-xs"><strong>Classes:</strong> ${item.classes} (20 kids/class)</p>
-                                <p class="text-slate-400 text-[11px]"><strong>Target Revenue:</strong> $${(item.classes * 20 * item.price).toFixed(2)}</p>
-                                <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
-                                    <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
-                                        <option value="Prospect" ${stage === 'Prospect' ? 'selected' : ''}>Prospect</option>
-                                        <option value="Lead" ${stage === 'Lead' ? 'selected' : ''}>Lead</option>
-                                        <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
-                                        <option value="Closed Lost" ${stage === 'Closed Lost' ? 'selected' : ''}>Closed Lost</option>
-                                    </select>
-                                    <button onclick="openProfile(${item.id}, 'tasks')" class="text-rose-400 font-semibold underline">View Profile</button>
-                                </div>
-                            </div>`;
-                    });
-                } else {
-                    cardsHtml = `<p class="text-xs text-slate-500 italic py-4 text-center">No targets in this stage.</p>`;
-                }
-
-                container.innerHTML += `
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-5 space-y-4">
-                        <div class="flex justify-between items-center border-b border-dark-600 pb-3">
-                            <h3 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage] || 'text-slate-300'}">${stage}</h3>
-                            <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300 text-xs">${items.length}</span>
-                        </div>
-                        <div class="space-y-3 max-h-[500px] overflow-y-auto">${cardsHtml}</div>
-                    </div>`;
-            });
-            lucide.createIcons();
         }
 
         function getCurrentFolder() {
