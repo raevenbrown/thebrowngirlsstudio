@@ -171,8 +171,8 @@
                     <!-- Financial Header with Privacy Eye Toggle -->
                     <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                         <div>
-                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker & Team Payroll</h2>
-                            <p class="text-xs text-slate-400 mt-1">Scale targets from $7K to $10K monthly revenue with team payroll allocations.</p>
+                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker & Phased Scaling Dashboard</h2>
+                            <p class="text-xs text-slate-400 mt-1">Track progressive scaling from Phase 1 ($7K) to Phase 3 ($14K) with tax reserves and receipt uploads.</p>
                         </div>
                         <button onclick="togglePrivacyMode()" class="px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-200 border border-dark-600 transition flex items-center space-x-2">
                             <i data-lucide="eye" id="privacyIcon" class="w-4 h-4 text-rose-500"></i>
@@ -180,17 +180,18 @@
                         </button>
                     </div>
 
-                    <!-- Inspiring Q4 Goal Banner & Dynamic Circular Gauge Meter -->
+                    <!-- Inspiring Phased Scaling Banner & Dynamic Circular Gauge Meter -->
                     <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl">
                         <div class="space-y-3 relative z-10 flex-1">
                             <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30">
-                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span>Q4 Scaling Milestones</span>
+                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span id="currentPhaseBannerText">Phase 1 ($7k) — Initial Launch</span>
                             </div>
-                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">Lock in 4 Deals by December</h2>
-                            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-                                <strong>Tier 1 ($7K/mo):</strong> Base staff payroll.<br>
-                                <strong>Tier 2 ($8K/mo):</strong> Unlock custom company polos for Courtney & team!<br>
-                                <strong>Tier 3 ($10K/mo):</strong> Full team scaling: Pay Courtney assistant ($400/mo), AI Developer Teacher ($1,250/mo), and self ($5,000/mo) comfortably.
+                            <h2 id="phaseMilestoneTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">Phase 1: $7K Monthly Baseline</h2>
+                            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed space-y-1">
+                                <strong>Phase 1 ($7K):</strong> 1 Event ($750) + 3 Schools (1 Class each / $2,500).<br>
+                                <em>Schedule:</em> Monday & Wednesday | Tuesday & Thursday | 2-Hour Fridays.<br>
+                                <strong>Phase 2 ($10K):</strong> Adds Company Polos, Marketing Materials, EIN reinstatement, & AI Intern Search (College Career Days).<br>
+                                <strong>Phase 3 ($14K):</strong> Adds AI Developer (Paid intern at $300 bi-weekly), Courtney ($250 bi-weekly), Self Salary, & Tax Set-Asides.
                             </p>
                             <div id="dynamicRevenueSummary" class="text-xs font-bold text-emerald-400 pt-1">
                                 <!-- Dynamically updated based on Closed Won -->
@@ -209,28 +210,33 @@
                                     <span class="text-[9px] font-bold text-slate-400 uppercase">Deals Won</span>
                                 </div>
                             </div>
-                            <span id="meterPercentLabel" class="text-[11px] font-bold text-emerald-400">0% of Q4 Goal</span>
+                            <span id="meterPercentLabel" class="text-[11px] font-bold text-emerald-400">0% of Target</span>
                         </div>
                     </div>
 
-                    <!-- Team Payroll & Payout Breakdown Card (Updated AI Developer to $1250) -->
+                    <!-- Team Payroll & Payout Breakdown Card (Phase 3 Model) -->
                     <div class="bg-dark-700/40 border border-dark-600 p-6 rounded-2xl space-y-4">
-                        <h3 class="font-bold text-sm text-slate-100 flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2 text-rose-500"></i> Monthly Team Payroll Breakdown ($10K Scaling Model)</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                        <h3 class="font-bold text-sm text-slate-100 flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2 text-rose-500"></i> Phase 3 Team Payroll & Tax Reserves ($14K Scaling Model)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
                             <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">Raeven Brown (CEO & Lead Teacher)</p>
-                                <p class="text-lg font-bold text-slate-100 privacy-field">$5,000 / mo</p>
-                                <p class="text-[11px] text-slate-400">Curriculum design, teaching, and studio growth.</p>
-                            </div>
-                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer Teacher</p>
-                                <p class="text-lg font-bold text-purple-400 privacy-field">$1,250 / mo</p>
-                                <p class="text-[11px] text-slate-400">Technical lab instruction & developer training.</p>
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer (Paid Intern)</p>
+                                <p class="text-base font-bold text-purple-400 privacy-field">$300 bi-weekly</p>
+                                <p class="text-[10px] text-slate-400">Technical lab & system support.</p>
                             </div>
                             <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
                                 <p class="text-slate-400 uppercase font-bold text-[10px]">Courtney White (Assistant)</p>
-                                <p class="text-lg font-bold text-emerald-400 privacy-field">$400 / mo</p>
-                                <p class="text-[11px] text-slate-400">Class photos, papers, and operational support.</p>
+                                <p class="text-base font-bold text-emerald-400 privacy-field">$250 bi-weekly</p>
+                                <p class="text-[10px] text-slate-400">Operational & studio support.</p>
+                            </div>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer Teacher</p>
+                                <p class="text-base font-bold text-indigo-400 privacy-field">$1,250 / mo</p>
+                                <p class="text-[10px] text-slate-400">Curriculum & mentorship.</p>
+                            </div>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">Tax Set-Aside Reserve</p>
+                                <p class="text-base font-bold text-amber-400 privacy-field">Dedicated Pool</p>
+                                <p class="text-[10px] text-slate-400">Allocated for quarterly filing.</p>
                             </div>
                         </div>
                     </div>
@@ -238,7 +244,7 @@
                     <!-- 4-Stage Financial Kanban Board -->
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <h3 class="font-bold text-sm text-slate-100">Outreach Stage Tracker (Oct – Dec Target: 4 Total Closed Deals)</h3>
+                            <h3 class="font-bold text-sm text-slate-100">Outreach Stage Tracker (Phase 1–3 Execution)</h3>
                             <button onclick="openFinancialProspectModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
                                 <i data-lucide="plus" class="w-3.5 h-3.5 mr-1"></i> Add Prospect
                             </button>
@@ -456,22 +462,31 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: Revenue & Financial Dashboard -->
+                <!-- Tab 2: Revenue & Financial Dashboard (Includes Tax Receipts Upload Folder) -->
                 <div id="tabContent-revenue" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <div>
-                                <h3 class="font-bold text-sm text-slate-100">Prospect Ticket & Invoice Dashboard</h3>
-                                <p class="text-xs text-slate-400 mt-0.5">Manage this company's exact ticket details, pricing, class goals, and invoice status.</p>
+                                <h3 class="font-bold text-sm text-slate-100">Prospect Ticket & Tax Receipts Folder</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Manage ticket details and upload tax receipts (Amazon, printing, etc.) from your computer.</p>
                             </div>
-                            <button onclick="openFinanceModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
-                                + Log Invoice / Payment
+                            <button onclick="openUploadModal('Tax Receipts')" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
+                                <i data-lucide="upload" class="w-3.5 h-3.5 mr-1.5"></i> Upload Tax Receipt
                             </button>
                         </div>
 
                         <!-- Embedded Prospect Ticket Card -->
                         <div id="profileEmbeddedTicketCard" class="bg-dark-700/50 border border-dark-600 p-6 rounded-2xl space-y-4">
                             <!-- Populated dynamically -->
+                        </div>
+
+                        <!-- Tax Receipts Upload Section -->
+                        <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-2xl space-y-3">
+                            <h4 class="font-bold text-xs text-slate-200 uppercase tracking-wider flex items-center"><i data-lucide="folder-open" class="w-4 h-4 mr-2 text-rose-500"></i> Tax Receipts Folder (Amazon & Printing)</h4>
+                            <p class="text-[11px] text-slate-400">Upload and store tax receipts here for easy end-of-year tax filing.</p>
+                            <div id="taxReceiptsList" class="space-y-2 text-xs pt-1">
+                                <!-- Populated dynamically -->
+                            </div>
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4">
@@ -487,25 +502,6 @@
                                 <p class="text-[10px] font-bold text-emerald-400 uppercase tracking-wider">Closed / Paid</p>
                                 <h4 id="finClosed" class="text-xl font-bold text-emerald-400 mt-1">$0.00</h4>
                             </div>
-                        </div>
-
-                        <!-- Itemized Audit Table -->
-                        <div class="overflow-x-auto border border-dark-600 rounded-xl">
-                            <table class="w-full text-left border-collapse text-xs min-w-[600px]">
-                                <thead>
-                                    <tr class="bg-dark-700/50 border-b border-dark-600 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
-                                        <th class="py-3 px-4">Invoice / Ref #</th>
-                                        <th class="py-3 px-4">Description / Scope</th>
-                                        <th class="py-3 px-4">Issue Date</th>
-                                        <th class="py-3 px-4">Amount</th>
-                                        <th class="py-3 px-4">Status</th>
-                                        <th class="py-3 px-4">Payment Method / Notes</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="auditTableBody" class="divide-y divide-dark-600">
-                                    <!-- Populated dynamically -->
-                                </tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
@@ -668,6 +664,25 @@
                 <div class="flex justify-end space-x-2 pt-3 border-t border-dark-600">
                     <button type="button" onclick="closeCommsModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Activity & Update Stage</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Uploading Tax Receipts -->
+    <div id="uploadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
+            <h3 class="font-bold text-slate-100 text-sm mb-4" id="uploadModalTitle">Upload Tax Receipt</h3>
+            <form onsubmit="saveUploadFile(event)" class="space-y-4 text-xs">
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Select File from Computer</label>
+                    <input type="file" id="deviceFileInput" required onchange="handleFileSelect(event)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-500">
+                </div>
+                <input type="text" id="uploadNameInput" required placeholder="Receipt Name (e.g. Amazon_Supplies.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                <input type="hidden" id="uploadFileBase64">
+                <div class="flex justify-end space-x-2 pt-2">
+                    <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload Receipt</button>
                 </div>
             </form>
         </div>
@@ -860,7 +875,7 @@
                         <input type="date" id="ptDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-400 uppercase tracking-wider uppercase tracking-wider mb-1">Urgency</label>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Urgency</label>
                         <select id="ptUrgency" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
                             <option value="High (Urgent)">High (Urgent)</option>
                             <option value="Medium">Medium</option>
@@ -903,31 +918,31 @@
         }
 
         const defaultFinancialProspects = [
-            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] }
+            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] }
         ];
 
         let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects'));
@@ -1081,12 +1096,85 @@
             }
             if (tabName === 'revenue') {
                 renderEmbeddedProspectTicket();
+                renderTaxReceiptsList();
                 renderClientRevenue();
             }
             if (tabName === 'comms') {
                 renderClientComms();
             }
             lucide.createIcons();
+        }
+
+        // Tax Receipts Upload & Management Functions
+        let activeUploadTarget = 'Tax Receipts';
+        function openUploadModal(targetName) {
+            activeUploadTarget = targetName;
+            document.getElementById('uploadModalTitle').innerText = targetName === 'Tax Receipts' ? 'Upload Tax Receipt (Amazon/Printing)' : 'Upload File';
+            document.getElementById('uploadNameInput').value = '';
+            document.getElementById('deviceFileInput').value = '';
+            document.getElementById('uploadModal').classList.remove('hidden');
+        }
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.add('hidden');
+        }
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                document.getElementById('uploadNameInput').value = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('uploadFileBase64').value = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+        function saveUploadFile(event) {
+            event.preventDefault();
+            const name = document.getElementById('uploadNameInput').value;
+            const url = document.getElementById('uploadFileBase64').value || '#';
+
+            let lead = financialProspects.find(l => l.id === currentProfileId);
+            if (lead) {
+                if (!lead.taxReceipts) lead.taxReceipts = [];
+                lead.taxReceipts.push({ name, url, date: new Date().toISOString().split('T')[0] });
+                saveFinancialProspects();
+                closeUploadModal();
+                renderTaxReceiptsList();
+            }
+        }
+        function renderTaxReceiptsList() {
+            const container = document.getElementById('taxReceiptsList');
+            if (!container) return;
+            const lead = financialProspects.find(l => l.id === currentProfileId);
+            if (!lead || !lead.taxReceipts || lead.taxReceipts.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic py-2">No tax receipts uploaded yet for this client/category.</p>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            lead.taxReceipts.forEach((rc, rIdx) => {
+                container.innerHTML += `
+                    <div class="bg-dark-800/80 p-3 rounded-xl border border-dark-600 flex items-center justify-between">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="file-text" class="w-4 h-4 text-rose-500"></i>
+                            <span class="font-medium text-slate-200">${rc.name}</span>
+                            <span class="text-[10px] text-slate-400">(${rc.date})</span>
+                        </div>
+                        <div class="space-x-2">
+                            <a href="${rc.url}" target="_blank" download="${rc.name}" class="text-xs text-rose-400 font-semibold underline">Download</a>
+                            <button onclick="deleteTaxReceipt(${rIdx})" class="text-slate-400 hover:text-rose-400 text-xs">Delete</button>
+                        </div>
+                    </div>`;
+            });
+            lucide.createIcons();
+        }
+        function deleteTaxReceipt(rIdx) {
+            let lead = financialProspects.find(l => l.id === currentProfileId);
+            if (lead && lead.taxReceipts) {
+                lead.taxReceipts.splice(rIdx, 1);
+                saveFinancialProspects();
+                renderTaxReceiptsList();
+            }
         }
 
         // Master Prospect To-Do Checklist Rollup with Last Reached Out Details
@@ -1207,6 +1295,20 @@
                     }
                 });
 
+                // Update Phase Banner dynamically based on revenue or won deals
+                const currentPhaseText = document.getElementById('currentPhaseBannerText');
+                const phaseTitle = document.getElementById('phaseMilestoneTitle');
+                if (totalWonRevenue >= 14000) {
+                    if (currentPhaseText) currentPhaseText.innerText = "Phase 3 ($14k) — Full Scaling & Developer";
+                    if (phaseTitle) phaseTitle.innerText = "Phase 3: $14K Monthly Target Reached";
+                } else if (totalWonRevenue >= 10000) {
+                    if (currentPhaseText) currentPhaseText.innerText = "Phase 2 ($10k) — Polos & Team Growth";
+                    if (phaseTitle) phaseTitle.innerText = "Phase 2: $10K Monthly Target Reached";
+                } else {
+                    if (currentPhaseText) currentPhaseText.innerText = "Phase 1 ($7k) — Initial Launch";
+                    if (phaseTitle) phaseTitle.innerText = "Phase 1: $7K Monthly Baseline";
+                }
+
                 const meterCircleFill = document.getElementById('meterCircleFill');
                 const meterDealCount = document.getElementById('meterDealCount');
                 const meterPercentLabel = document.getElementById('meterPercentLabel');
@@ -1218,9 +1320,9 @@
                     meterCircleFill.style.strokeDasharray = `${strokeVal}, ${circumference}`;
                 }
                 if (meterDealCount) meterDealCount.innerText = `${wonDealsCount} / 4`;
-                if (meterPercentLabel) meterPercentLabel.innerText = `${percent}% of Q4 Goal`;
+                if (meterPercentLabel) meterPercentLabel.innerText = `${percent}% of Target`;
                 if (dynamicRevenueSummary) {
-                    dynamicRevenueSummary.innerHTML = `Closed Won Revenue Secured: <span class="text-white font-mono privacy-field">$${totalWonRevenue.toFixed(2)}</span> / $10,000 Scaling Target`;
+                    dynamicRevenueSummary.innerHTML = `Closed Won Revenue Secured: <span class="text-white font-mono privacy-field">$${totalWonRevenue.toFixed(2)}</span> / $14,000 Scaling Target`;
                 }
 
                 document.getElementById('stat-total').innerText = financialProspects.length;
@@ -1406,7 +1508,7 @@
             const price = parseFloat(document.getElementById('fpPrice').value) || 125.00;
             const donation = parseFloat(document.getElementById('fpDonation').value) || 10;
 
-            financialProspects.push({ id: Date.now(), org, stage, classes, price, donation, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: `Contact ${org} and follow up next week if no response.`, date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] });
+            financialProspects.push({ id: Date.now(), org, stage, classes, price, donation, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: `Contact ${org} and follow up next week if no response.`, date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] });
             closeFinancialProspectModal();
             saveFinancialProspects();
             renderFinancialKanban();
@@ -1682,6 +1784,7 @@
             orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional contacts added to this company profile yet.</p>`;
 
             renderEmbeddedProspectTicket();
+            renderTaxReceiptsList();
             renderClientCalendar();
             renderClientTasks();
             renderClientRevenue();
