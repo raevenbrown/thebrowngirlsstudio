@@ -79,9 +79,6 @@
                     <button onclick="toggleMobileSidebar()" class="md:hidden text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-5 h-5"></i></button>
                 </div>
                 <nav class="p-4 space-y-1.5 text-xs font-medium">
-                    <a href="index.html" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
-                        <i data-lucide="layout-dashboard" class="w-4 h-4 mr-3"></i> Main Portal
-                    </a>
                     <a href="#view=pipeline" onclick="switchMainView('pipeline')" id="nav-pipeline" class="flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition">
                         <i data-lucide="target" class="w-4 h-4 mr-3 text-rose-500"></i> Pipeline & Prospects
                     </a>
@@ -100,9 +97,9 @@
                 </nav>
             </div>
             
-            <!-- Bottom Left User & Mute Popup Toggle -->
+            <!-- Bottom Left User Profile & Popup Menu (Main Portal & Mute) -->
             <div class="p-4 border-t border-dark-600 flex items-center justify-between relative">
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleMutePopup()">
+                <div class="flex items-center space-x-3 cursor-pointer flex-1" onclick="toggleMutePopup()">
                     <div class="w-8 h-8 rounded-full bg-rose-600/20 text-rose-500 font-bold flex items-center justify-center text-xs">
                         RB
                     </div>
@@ -111,13 +108,14 @@
                         <p class="text-[10px] text-slate-400">CEO & Lead Developer</p>
                     </div>
                 </div>
-                <button onclick="toggleMutePopup()" class="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-dark-700"><i data-lucide="volume-2" id="muteIcon" class="w-4 h-4"></i></button>
+                <button onclick="toggleMutePopup()" class="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-dark-700"><i data-lucide="more-vertical" class="w-4 h-4"></i></button>
 
-                <!-- Mute / Sound Settings Popup Menu -->
-                <div id="mutePopup" class="absolute bottom-16 left-4 bg-dark-700 border border-dark-600 rounded-xl shadow-2xl p-3 space-y-2 hidden z-50 w-48 text-xs">
-                    <p class="font-bold text-slate-300 border-b border-dark-600 pb-1.5">Audio & Notifications</p>
-                    <button onclick="setAudioState('unmuted')" class="w-full text-left px-2 py-1.5 rounded hover:bg-dark-600 text-emerald-400 font-medium flex items-center"><i data-lucide="volume-2" class="w-3.5 h-3.5 mr-2"></i> Unmute Sounds</button>
-                    <button onclick="setAudioState('muted')" class="w-full text-left px-2 py-1.5 rounded hover:bg-dark-600 text-rose-400 font-medium flex items-center"><i data-lucide="volume-x" class="w-3.5 h-3.5 mr-2"></i> Mute All Sounds</button>
+                <!-- Popup Menu with Main Portal & Audio Mute Settings -->
+                <div id="mutePopup" class="absolute bottom-16 left-4 bg-dark-700 border border-dark-600 rounded-xl shadow-2xl p-2.5 space-y-1.5 hidden z-50 w-48 text-xs">
+                    <a href="index.html" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-200 font-medium flex items-center"><i data-lucide="layout-dashboard" class="w-3.5 h-3.5 mr-2 text-rose-500"></i> Main Portal</a>
+                    <div class="border-t border-dark-600 my-1"></div>
+                    <button onclick="setAudioState('unmuted')" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-emerald-400 font-medium flex items-center"><i data-lucide="volume-2" class="w-3.5 h-3.5 mr-2"></i> Unmute Sounds</button>
+                    <button onclick="setAudioState('muted')" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-rose-400 font-medium flex items-center"><i data-lucide="volume-x" class="w-3.5 h-3.5 mr-2"></i> Mute All Sounds</button>
                 </div>
             </div>
         </aside>
@@ -134,14 +132,11 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-3">
-                    <a href="index.html" class="px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-200 border border-dark-600 transition flex items-center shadow-sm">
-                        <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 mr-1.5 text-rose-500"></i> Main Portal
-                    </a>
                     <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition flex items-center shadow-sm">
                         <i data-lucide="download" class="w-3.5 h-3.5 mr-1.5"></i> Export
                     </button>
-                    <button onclick="openModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
-                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Target
+                    <button onclick="openFinancialProspectModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
+                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect
                     </button>
                 </div>
             </header>
@@ -150,7 +145,7 @@
             <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     
-                    <!-- Inspiring Q4 Goal Banner & Semi-Circular / Gauge Meter -->
+                    <!-- Inspiring Q4 Goal Banner & Dynamic Circular Gauge Meter -->
                     <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl">
                         <div class="space-y-3 relative z-10 flex-1">
                             <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30">
@@ -160,6 +155,9 @@
                             <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
                                 <strong>1 Closed Deal Per Month</strong> (October to December) — Total of 4 Deals: <span class="text-rose-400 font-semibold">1 InspiHER Event</span> + <span class="text-emerald-400 font-semibold">3 Partnerships</span> to hit the <span class="text-purple-400 font-bold">$7,000 monthly recurring revenue</span> target.
                             </p>
+                            <div id="dynamicRevenueSummary" class="text-xs font-bold text-emerald-400 pt-1">
+                                <!-- Dynamically updated based on Closed Won -->
+                            </div>
                         </div>
 
                         <!-- Circular Gauge Meter UI Component -->
@@ -998,12 +996,19 @@
                     "Closed Lost": "border-rose-500/30 text-rose-400"
                 };
 
-                let wonDealsCount = financialProspects.filter(p => p.stage === "Closed Won").length;
+                let wonDeals = financialProspects.filter(p => p.stage === "Closed Won");
+                let wonDealsCount = wonDeals.length;
                 let percent = Math.min(100, Math.round((wonDealsCount / 4) * 100));
                 
+                let totalWonRevenue = 0;
+                wonDeals.forEach(d => {
+                    totalWonRevenue += (d.classes * 20 * d.price);
+                });
+
                 const meterCircleFill = document.getElementById('meterCircleFill');
                 const meterDealCount = document.getElementById('meterDealCount');
                 const meterPercentLabel = document.getElementById('meterPercentLabel');
+                const dynamicRevenueSummary = document.getElementById('dynamicRevenueSummary');
 
                 if (meterCircleFill) {
                     let circumference = 2 * Math.PI * 15.9155;
@@ -1012,6 +1017,9 @@
                 }
                 if (meterDealCount) meterDealCount.innerText = `${wonDealsCount} / 4`;
                 if (meterPercentLabel) meterPercentLabel.innerText = `${percent}% of Q4 Goal`;
+                if (dynamicRevenueSummary) {
+                    dynamicRevenueSummary.innerHTML = `Closed Won Revenue Secured: <span class="text-white font-mono">$${totalWonRevenue.toFixed(2)}</span> / $7,000 Target`;
+                }
 
                 document.getElementById('stat-total').innerText = financialProspects.length;
                 document.getElementById('stat-prospect').innerText = financialProspects.filter(d => d.stage === 'Prospect').length;
