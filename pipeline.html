@@ -334,7 +334,7 @@
                 <div class="space-y-6">
                     <div class="flex justify-between items-center border-b border-dark-600 pb-3">
                         <h2 class="font-bold text-base text-slate-100">Sales Funnel Stage Breakdown (All Prospects)</h2>
-                        <p class="text-xs text-slate-400">Click any prospect card to open their ticket and profile</p>
+                        <p class="text-xs text-slate-400">Click any prospect card to edit or open their full profile</p>
                     </div>
                     <div id="salesFunnelContainer" class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <!-- Populated dynamically -->
@@ -579,6 +579,62 @@
         </main>
     </div>
 
+    <!-- Modal for Detailed Prospect Ticket Editor -->
+    <div id="quickProspectModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden p-6 space-y-4 relative">
+            <div class="flex justify-between items-start border-b border-dark-600 pb-3">
+                <div>
+                    <span id="qpStageBadge" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase"></span>
+                    <h3 id="qpModalHeaderTitle" class="font-bold text-slate-100 text-base mt-1">Edit Prospect Ticket</h3>
+                </div>
+                <button onclick="closeQuickProspectModal()" class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            
+            <form onsubmit="saveQuickProspectTicket(event)" class="space-y-3 text-xs">
+                <input type="hidden" id="qpProspectId">
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Organization / School Name</label>
+                    <input type="text" id="qpOrgInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Funnel Stage</label>
+                        <select id="qpStageSelect" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                            <option value="Prospect">Prospect</option>
+                            <option value="Lead">Lead</option>
+                            <option value="Closed Won">Closed Won</option>
+                            <option value="Closed Lost">Closed Lost</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Target Class Count</label>
+                        <input type="number" id="qpClassesInput" required min="1" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Price per Kid ($)</label>
+                        <input type="number" step="0.01" id="qpPriceInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Community Donation (%)</label>
+                        <input type="number" step="1" id="qpDonationInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-dark-600 flex justify-between items-center">
+                    <button type="button" onclick="openFullProfileFromModal()" class="text-rose-400 font-semibold underline text-xs">Open Full Company Profile & Tasks</button>
+                    <div class="space-x-2">
+                        <button type="button" onclick="closeQuickProspectModal()" class="px-3 py-2 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold">Save Changes</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Modal for Logging Interactive Communication / Activity -->
     <div id="commsModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden p-6 space-y-4">
@@ -692,27 +748,6 @@
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Add Task</button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Modal for Quick-View Prospect Ticket (Clicking any prospect/lead/won card) -->
-    <div id="quickProspectModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6 space-y-4 relative">
-            <div class="flex justify-between items-start border-b border-dark-600 pb-3">
-                <div>
-                    <span id="qpStageBadge" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase"></span>
-                    <h3 id="qpOrgTitle" class="font-bold text-slate-100 text-base mt-1"></h3>
-                </div>
-                <button onclick="closeQuickProspectModal()" class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
-            </div>
-            <div class="space-y-3 text-xs text-slate-300">
-                <p><strong>Scope:</strong> <span id="qpScope"></span></p>
-                <div class="bg-dark-700/40 border border-dark-600 p-3 rounded-xl space-y-2">
-                    <p class="font-bold text-rose-400">Quick Actions & Navigation</p>
-                    <button id="qpOpenFullProfileBtn" class="w-full py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow transition text-center">Open Full Company Profile</button>
-                </div>
-            </div>
-            <button onclick="closeQuickProspectModal()" class="w-full py-2 rounded-xl bg-dark-700 hover:bg-dark-600 font-semibold text-slate-200 border border-dark-600">Close</button>
         </div>
     </div>
 
@@ -1139,7 +1174,7 @@
                                             <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
                                             <option value="Closed Lost" ${stage === 'Closed Lost' ? 'selected' : ''}>Closed Lost</option>
                                         </select>
-                                        <button onclick="openProfile(${item.id}, 'tasks')" class="text-rose-400 font-semibold underline">View Profile</button>
+                                        <button onclick="openQuickProspectModal(${item.id})" class="text-rose-400 font-semibold underline">Edit Ticket</button>
                                     </div>
                                 </div>`;
                         });
@@ -1164,7 +1199,13 @@
             let item = financialProspects.find(p => p.id === id);
             if (!item) return;
 
-            document.getElementById('qpOrgTitle').innerText = item.org;
+            document.getElementById('qpProspectId').value = item.id;
+            document.getElementById('qpOrgInput').value = item.org;
+            document.getElementById('qpStageSelect').value = item.stage;
+            document.getElementById('qpClassesInput').value = item.classes;
+            document.getElementById('qpPriceInput').value = item.price;
+            document.getElementById('qpDonationInput').value = item.donation;
+
             let badge = document.getElementById('qpStageBadge');
             badge.innerText = item.stage;
             badge.className = "px-2.5 py-0.5 rounded text-[10px] font-bold uppercase border ";
@@ -1172,19 +1213,39 @@
             else if(item.stage === 'Lead') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
             else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
 
-            let rev = item.org.includes('InspiHER') ? 750.00 : (item.classes * 20 * item.price);
-            document.getElementById('qpScope').innerText = `${item.org.includes('InspiHER') ? '2-Day Leadership Workshop' : item.classes + ' Class (20 Kids)'} — Target Revenue: $${rev.toFixed(2)}`;
-            
-            document.getElementById('qpOpenFullProfileBtn').onclick = function() {
-                closeQuickProspectModal();
-                openProfile(item.id, 'tasks');
-            };
-
             document.getElementById('quickProspectModal').classList.remove('hidden');
         }
 
         function closeQuickProspectModal() {
             document.getElementById('quickProspectModal').classList.add('hidden');
+        }
+
+        function saveQuickProspectTicket(event) {
+            event.preventDefault();
+            const id = parseInt(document.getElementById('qpProspectId').value);
+            const org = document.getElementById('qpOrgInput').value;
+            const stage = document.getElementById('qpStageSelect').value;
+            const classes = parseInt(document.getElementById('qpClassesInput').value) || 1;
+            const price = parseFloat(document.getElementById('qpPriceInput').value) || 125.00;
+            const donation = parseFloat(document.getElementById('qpDonationInput').value) || 10;
+
+            let item = financialProspects.find(p => p.id === id);
+            if (item) {
+                item.org = org;
+                item.stage = stage;
+                item.classes = classes;
+                item.price = price;
+                item.donation = donation;
+                saveFinancialProspects();
+                closeQuickProspectModal();
+                renderFinancialKanban();
+            }
+        }
+
+        function openFullProfileFromModal() {
+            const id = parseInt(document.getElementById('qpProspectId').value);
+            closeQuickProspectModal();
+            openProfile(id, 'tasks');
         }
 
         function updateFinancialProspectStage(id, newStage) {
@@ -1351,86 +1412,6 @@
                 closeClientTaskModal();
                 renderClientTasks();
             }
-        }
-
-        function openCommsModal() {
-            document.getElementById('commsDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('commsPerson').value = '';
-            document.getElementById('commsTitle').value = '';
-            document.getElementById('commsPhone').value = '';
-            document.getElementById('commsEmail').value = '';
-            document.getElementById('commsMessage').value = '';
-            document.getElementById('commsFollowUp').checked = false;
-            let lead = financialProspects.find(l => l.id === currentProfileId);
-            if (lead) {
-                document.getElementById('commsNewStage').value = lead.stage;
-            }
-            document.getElementById('commsModal').classList.remove('hidden');
-        }
-        function closeCommsModal() {
-            document.getElementById('commsModal').classList.add('hidden');
-        }
-
-        function saveCommsActivity(event) {
-            event.preventDefault();
-            const type = document.getElementById('commsType').value;
-            const date = document.getElementById('commsDate').value;
-            const person = document.getElementById('commsPerson').value;
-            const title = document.getElementById('commsTitle').value;
-            const phone = document.getElementById('commsPhone').value;
-            const email = document.getElementById('commsEmail').value;
-            const message = document.getElementById('commsMessage').value;
-            const newStage = document.getElementById('commsNewStage').value;
-            const followUpDone = document.getElementById('commsFollowUp').checked;
-
-            let lead = financialProspects.find(l => l.id === currentProfileId);
-            if (lead) {
-                lead.stage = newStage;
-                if (!lead.activities) lead.activities = [];
-                lead.activities.unshift({
-                    type,
-                    date,
-                    person,
-                    title,
-                    phone,
-                    email,
-                    message,
-                    followUpDone
-                });
-                saveFinancialProspects();
-                closeCommsModal();
-                openProfile(currentProfileId, 'comms', false);
-            }
-        }
-
-        function renderClientComms() {
-            const timeline = document.getElementById('activityTimeline');
-            if (!timeline) return;
-            const lead = financialProspects.find(l => l.id === currentProfileId);
-            if (!lead || !lead.activities || lead.activities.length === 0) {
-                timeline.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No communication logs recorded yet.</p>`;
-                return;
-            }
-
-            timeline.innerHTML = '';
-            lead.activities.forEach(act => {
-                let badgeColor = act.type === 'Email' ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' : (act.type === 'Call' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border-rose-500/30');
-                timeline.innerHTML += `
-                    <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="px-2.5 py-0.5 rounded font-bold border ${badgeColor}">${act.type} Interaction</span>
-                            <span class="text-slate-400">${act.date}</span>
-                        </div>
-                        <div class="text-xs space-y-1 text-slate-300">
-                            <p><strong>Spoken To:</strong> ${act.person} (${act.title || 'N/A'})</p>
-                            ${act.phone ? `<p><strong>Phone:</strong> ${act.phone}</p>` : ''}
-                            ${act.email ? `<p><strong>Email:</strong> ${act.email}</p>` : ''}
-                            <p class="pt-1"><strong>Message:</strong> ${act.message}</p>
-                            <p class="pt-1 text-[11px] text-rose-400 font-medium">Follow-up Completed: ${act.followUpDone ? 'Yes' : 'No'}</p>
-                        </div>
-                    </div>`;
-            });
-            lucide.createIcons();
         }
 
         function getCurrentFolder() {
