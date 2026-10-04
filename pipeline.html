@@ -982,6 +982,24 @@
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
         }
 
+        // Ensure every prospect has initial task and activity array
+        financialProspects.forEach(fp => {
+            if (!fp.clientTasks) fp.clientTasks = [];
+            if (fp.clientTasks.length === 0) {
+                fp.clientTasks.push({
+                    title: "Reach out to prospect this week",
+                    desc: `Contact ${fp.org} and follow up next week if no response.`,
+                    date: "2026-10-09",
+                    assignee: "Raeven Brown",
+                    urgency: "High (Urgent)",
+                    done: false,
+                    active: true
+                });
+            }
+            if (!fp.activities) fp.activities = [];
+        });
+        saveFinancialProspects();
+
         function saveFinancialProspects() {
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
         }
