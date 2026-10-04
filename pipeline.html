@@ -982,7 +982,7 @@
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
         }
 
-        // Ensure every prospect has initial task and activity array
+        // Ensure tasks and activities arrays are intact
         financialProspects.forEach(fp => {
             if (!fp.clientTasks) fp.clientTasks = [];
             if (fp.clientTasks.length === 0) {
@@ -997,6 +997,7 @@
                 });
             }
             if (!fp.activities) fp.activities = [];
+            if (!fp.taxReceipts) fp.taxReceipts = [];
         });
         saveFinancialProspects();
 
@@ -1381,7 +1382,7 @@
                     }
                 });
 
-                // Calculate individual percentages and progress for the 3 distinct meters
+                // Calculate individual percentages for the 3 distinct meters
                 let p1RevTarget = 7000;
                 let p2RevTarget = 10000;
                 let p3RevTarget = 14000;
@@ -1410,7 +1411,7 @@
                 if (m3Fill) m3Fill.style.strokeDasharray = `${(p3Percent / 100) * circ}, ${circ}`;
                 if (m3Count) m3Count.innerText = `$${totalWonRevenue.toLocaleString()} / $14K`;
 
-                // Update Dynamic Banner text based on active revenue tier
+                // Update Banner text based on active revenue tier
                 const currentPhaseText = document.getElementById('currentPhaseBannerText');
                 const phaseTitle = document.getElementById('phaseMilestoneTitle');
                 
