@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Brown Girls Creative Studio | Target Audience & Impact</title>
-    <script src="https://cdn.tailwindcss.com"></p>
+    <title>The Brown Girls Creative Studio | Pipeline & Lead Profiles</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
@@ -99,13 +99,25 @@
                     </a>
                 </nav>
             </div>
-            <div class="p-4 border-t border-dark-600 flex items-center space-x-3">
-                <div class="w-8 h-8 rounded-full bg-rose-600/20 text-rose-500 font-bold flex items-center justify-center text-xs">
-                    RB
+            
+            <!-- Bottom Left User & Mute Popup Toggle -->
+            <div class="p-4 border-t border-dark-600 flex items-center justify-between relative">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="toggleMutePopup()">
+                    <div class="w-8 h-8 rounded-full bg-rose-600/20 text-rose-500 font-bold flex items-center justify-center text-xs">
+                        RB
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold text-slate-200">Raeven Brown</p>
+                        <p class="text-[10px] text-slate-400">CEO & Lead Developer</p>
+                    </div>
                 </div>
-                <div>
-                    <p class="text-xs font-bold text-slate-200">Raeven Brown</p>
-                    <p class="text-[10px] text-slate-400">CEO & Lead Developer</p>
+                <button onclick="toggleMutePopup()" class="text-slate-400 hover:text-slate-200 p-1 rounded-lg hover:bg-dark-700"><i data-lucide="volume-2" id="muteIcon" class="w-4 h-4"></i></button>
+
+                <!-- Mute / Sound Settings Popup Menu -->
+                <div id="mutePopup" class="absolute bottom-16 left-4 bg-dark-700 border border-dark-600 rounded-xl shadow-2xl p-3 space-y-2 hidden z-50 w-48 text-xs">
+                    <p class="font-bold text-slate-300 border-b border-dark-600 pb-1.5">Audio & Notifications</p>
+                    <button onclick="setAudioState('unmuted')" class="w-full text-left px-2 py-1.5 rounded hover:bg-dark-600 text-emerald-400 font-medium flex items-center"><i data-lucide="volume-2" class="w-3.5 h-3.5 mr-2"></i> Unmute Sounds</button>
+                    <button onclick="setAudioState('muted')" class="w-full text-left px-2 py-1.5 rounded hover:bg-dark-600 text-rose-400 font-medium flex items-center"><i data-lucide="volume-x" class="w-3.5 h-3.5 mr-2"></i> Mute All Sounds</button>
                 </div>
             </div>
         </aside>
@@ -122,11 +134,14 @@
                     </div>
                 </div>
                 <div class="flex items-center space-x-2 sm:space-x-3">
+                    <a href="index.html" class="px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-200 border border-dark-600 transition flex items-center shadow-sm">
+                        <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 mr-1.5 text-rose-500"></i> Main Portal
+                    </a>
                     <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition flex items-center shadow-sm">
                         <i data-lucide="download" class="w-3.5 h-3.5 mr-1.5"></i> Export
                     </button>
-                    <button onclick="openFinancialProspectModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
-                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect
+                    <button onclick="openModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
+                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Target
                     </button>
                 </div>
             </header>
@@ -204,9 +219,7 @@
                         </div>
                     </div>
 
-                    <!-- 3 Strategic Categories with Mission Explanations -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
-                        <!-- Category 1: Career Days & School Workshops -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career Days & School Workshops</h4>
@@ -215,7 +228,6 @@
                             <p class="text-slate-300"><strong>Why this helps:</strong> Sparks early curiosity and introduces AI and creative tools directly to students, inspiring them to build their own tech and creative ventures.</p>
                         </div>
 
-                        <!-- Category 2: After-School Programs & Districts -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-purple-500 transition" onclick="toggleGoalDetail('afterSchoolDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-purple-400 uppercase tracking-wider">2. After-School Programs & Districts</h4>
@@ -224,7 +236,6 @@
                             <p class="text-slate-300"><strong>Why this helps:</strong> Establishes recurring weekly mentorship where kids learn hands-on AI prompt engineering, web prototyping, and digital business creation.</p>
                         </div>
 
-                        <!-- Category 3: Private Schools & Community Centers -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-emerald-500 transition" onclick="toggleGoalDetail('privateSchoolsDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private Schools & Community Centers</h4>
@@ -871,6 +882,28 @@
                 sidebar.classList.add('-translate-x-full');
                 overlay.classList.add('hidden');
             }
+        }
+
+        function toggleMutePopup() {
+            const popup = document.getElementById('mutePopup');
+            if (popup.classList.contains('hidden')) {
+                popup.classList.remove('hidden');
+            } else {
+                popup.classList.add('hidden');
+            }
+        }
+
+        function setAudioState(state) {
+            const icon = document.getElementById('muteIcon');
+            if (state === 'muted') {
+                icon.setAttribute('data-lucide', 'volume-x');
+                alert("All notification sounds muted.");
+            } else {
+                icon.setAttribute('data-lucide', 'volume-2');
+                alert("Sound notifications enabled.");
+            }
+            toggleMutePopup();
+            lucide.createIcons();
         }
 
         function switchMainView(viewName, updateHash = true) {
