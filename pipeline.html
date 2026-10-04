@@ -153,7 +153,7 @@
                             </div>
                             <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">Lock in 4 Deals by December</h2>
                             <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-                                <strong>1 Closed Deal Per Month</strong> (October to December) — Total of 4 Deals: <span class="text-rose-400 font-semibold">1 InspiHER Event</span> + <span class="text-emerald-400 font-semibold">3 Partnerships</span> to hit the <span class="text-purple-400 font-bold">$7,000 monthly recurring revenue</span> target.
+                                <strong>1 Closed Deal Per Month</strong> (October to December) — Total of 4 Deals: <span class="text-rose-400 font-semibold">1 InspiHER Event ($750)</span> + <span class="text-emerald-400 font-semibold">3 Partnerships (1 Class / $2,500)</span> to hit the <span class="text-purple-400 font-bold">$7,000 monthly recurring revenue</span> target.
                             </p>
                             <div id="dynamicRevenueSummary" class="text-xs font-bold text-emerald-400 pt-1">
                                 <!-- Dynamically updated based on Closed Won -->
@@ -184,7 +184,7 @@
                         </div>
                         <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
                             <p class="text-slate-400 font-bold uppercase text-[10px]">Target Class Size</p>
-                            <p class="text-base font-bold text-slate-100 mt-1">20 Students / Class ($2,500/class)</p>
+                            <p class="text-base font-bold text-slate-100 mt-1">1 Class (2x/wk) / 20 Kids ($2,500)</p>
                         </div>
                         <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
                             <p class="text-slate-400 font-bold uppercase text-[10px]">Community Donation (10%)</p>
@@ -615,7 +615,7 @@
                     </div>
                     <div>
                         <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Target Class Goal</label>
-                        <input type="number" id="fpClasses" value="3" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                        <input type="number" id="fpClasses" value="1" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                     </div>
                 </div>
                 <div>
@@ -819,31 +819,31 @@
         }
 
         const defaultFinancialProspects = [
-            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 13, org: "YES Program", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 3, price: 125.00, donation: 10 },
-            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 2, price: 125.00, donation: 10 }
+            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
+            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0 }
         ];
 
         let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects')) || defaultFinancialProspects;
@@ -1002,7 +1002,11 @@
                 
                 let totalWonRevenue = 0;
                 wonDeals.forEach(d => {
-                    totalWonRevenue += (d.classes * 20 * d.price);
+                    if (d.org.includes('InspiHER')) {
+                        totalWonRevenue += 750.00;
+                    } else {
+                        totalWonRevenue += (d.classes * 20 * d.price);
+                    }
                 });
 
                 const meterCircleFill = document.getElementById('meterCircleFill');
@@ -1031,8 +1035,8 @@
                     let cards = '';
                     if (items.length > 0) {
                         items.forEach((item, idx) => {
-                            let potentialTotal = item.classes * 20 * item.price;
-                            let donationAmount = potentialTotal * (item.donation / 100);
+                            let potentialTotal = item.org.includes('InspiHER') ? 750.00 : (item.classes * 20 * item.price);
+                            let donationAmount = item.org.includes('InspiHER') ? 0.00 : (potentialTotal * (item.donation / 100));
 
                             cards += `
                                 <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl space-y-2">
@@ -1041,10 +1045,9 @@
                                         <button onclick="deleteFinancialProspect(${item.id})" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                                     </div>
                                     <div class="text-[11px] text-slate-300 space-y-0.5">
-                                        <p>Classes: <strong>${item.classes}</strong> (20 kids/class)</p>
-                                        <p>Price/Kid: <strong>$${item.price.toFixed(2)}</strong></p>
+                                        ${item.org.includes('InspiHER') ? `<p>Event: <strong>2-Day Leadership Workshop</strong></p>` : `<p>Classes: <strong>${item.classes}</strong> (2x/wk, 20 kids)</p><p>Price/Kid: <strong>$${item.price.toFixed(2)}</strong></p>`}
                                         <p class="text-emerald-400 font-bold">Target Revenue: $${potentialTotal.toFixed(2)}</p>
-                                        <p class="text-purple-400">Community Donation (${item.donation}%): $${donationAmount.toFixed(2)} ($12.50/kid)</p>
+                                        ${!item.org.includes('InspiHER') ? `<p class="text-purple-400">Community Donation (${item.donation}%): $${donationAmount.toFixed(2)} ($12.50/kid)</p>` : ''}
                                     </div>
                                     <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
                                         <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
@@ -1108,7 +1111,7 @@
             event.preventDefault();
             const org = document.getElementById('fpOrg').value;
             const stage = document.getElementById('fpStage').value;
-            const classes = parseInt(document.getElementById('fpClasses').value) || 3;
+            const classes = parseInt(document.getElementById('fpClasses').value) || 1;
             const price = parseFloat(document.getElementById('fpPrice').value) || 125.00;
             const donation = parseFloat(document.getElementById('fpDonation').value) || 10;
 
@@ -1286,7 +1289,7 @@
             document.getElementById('pageTitle').innerText = lead.org + " | Profile";
 
             document.getElementById('profileOrg').innerText = lead.org;
-            document.getElementById('profileScope').innerText = `${lead.classes} Classes (${lead.classes * 20} Students) @ $${lead.price}/kid`;
+            document.getElementById('profileScope').innerText = lead.org.includes('InspiHER') ? '2-Day Leadership Workshop ($750)' : `${lead.classes} Class (2x/wk, ${lead.classes * 20} Students) @ $${lead.price}/kid`;
             document.getElementById('profileContact').innerText = "School Coordinator / Director";
             document.getElementById('profileNextAction').innerText = "Next Action: Outreach & Follow-up";
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.stage;
@@ -1316,8 +1319,8 @@
         function renderClientRevenue() {
             const lead = financialProspects.find(l => l.id === currentProfileId);
             if (!lead) return;
-            let total = lead.stage === 'Closed Won' ? lead.classes * 20 * lead.price : 0;
-            let pending = lead.stage === 'Lead' ? lead.classes * 20 * lead.price : 0;
+            let total = lead.stage === 'Closed Won' ? (lead.org.includes('InspiHER') ? 750.00 : lead.classes * 20 * lead.price) : 0;
+            let pending = lead.stage === 'Lead' ? (lead.org.includes('InspiHER') ? 750.00 : lead.classes * 20 * lead.price) : 0;
             let closed = lead.stage === 'Closed Won' ? total : 0;
 
             const auditTable = document.getElementById('auditTableBody');
@@ -1326,7 +1329,7 @@
                 auditTable.innerHTML += `
                     <tr class="hover:bg-dark-700/30 transition">
                         <td class="py-3 px-4 font-mono font-bold text-rose-400">INV-2026-${lead.id}</td>
-                        <td class="py-3 px-4 text-slate-200">${lead.org} (${lead.classes} Classes)</td>
+                        <td class="py-3 px-4 text-slate-200">${lead.org}</td>
                         <td class="py-3 px-4 text-slate-400">Oct 2, 2026</td>
                         <td class="py-3 px-4 font-bold text-slate-100">$${total.toFixed(2)}</td>
                         <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-semibold border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Paid</span></td>
