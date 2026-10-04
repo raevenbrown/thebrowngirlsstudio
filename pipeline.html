@@ -57,6 +57,27 @@
         </div>
     </div>
 
+    <!-- Financial Goal Tracker Password Prompt Modal -->
+    <div id="financialAuthModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center space-y-6">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-purple-600 to-indigo-600 flex items-center justify-center font-bold text-white text-lg mx-auto shadow-lg">
+                <i data-lucide="lock" class="w-6 h-6"></i>
+            </div>
+            <div>
+                <h2 class="text-lg font-bold text-slate-100">Financial Goal Tracker Security</h2>
+                <p class="text-xs text-slate-400 mt-1">Enter password (<strong>THEBOSS</strong>) to unlock the financial dashboard on this device.</p>
+            </div>
+            <form onsubmit="checkFinancialPassword(event)" class="space-y-4">
+                <input type="password" id="finPasswordInput" required placeholder="Enter password..." class="w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm text-slate-200 text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <p id="finErrorMsg" class="text-xs text-rose-500 hidden">Incorrect password. Access denied.</p>
+                <div class="flex space-x-2">
+                    <button type="button" onclick="switchMainView('pipeline')" class="flex-1 py-3 rounded-xl border border-dark-600 text-slate-300 text-xs font-semibold">Cancel</button>
+                    <button type="submit" class="flex-1 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow-lg shadow-purple-600/20 transition">Unlock</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Main Dashboard Container -->
     <div id="mainDashboard" class="flex-1 flex min-h-screen hidden">
         
@@ -279,6 +300,9 @@
                             <h2 class="text-xl font-bold text-slate-100">Prospect Target Checklist (Master Task Rollup)</h2>
                             <p class="text-xs text-slate-400 mt-1">All tasks created inside each prospect ticket are automatically displayed and linked here.</p>
                         </div>
+                        <button onclick="openProspectTaskModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
+                            <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect Task
+                        </button>
                     </div>
                     <div id="prospectTodoList" class="space-y-3 text-xs">
                         <!-- Populated dynamically -->
@@ -471,13 +495,16 @@
                     </div>
                 </div>
 
-                <!-- Tab 3: Communication Log -->
+                <!-- Tab 3: Communication Log (Fully Interactive) -->
                 <div id="tabContent-comms" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
-                            <h3 class="font-bold text-sm text-slate-100">Conversation & Activity Timeline</h3>
-                            <button onclick="openNoteModal()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
-                                + Log Activity / Note
+                            <div>
+                                <h3 class="font-bold text-sm text-slate-100">Conversation & Activity Timeline</h3>
+                                <p class="text-xs text-slate-400 mt-0.5">Log calls, emails, in-person meetings, and track follow-ups.</p>
+                            </div>
+                            <button onclick="openCommsModal()" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
+                                <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Log Activity / Note
                             </button>
                         </div>
                         <div id="activityTimeline" class="space-y-4">
@@ -550,6 +577,80 @@
                 </div>
             </div>
         </main>
+    </div>
+
+    <!-- Modal for Logging Interactive Communication / Activity -->
+    <div id="commsModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden p-6 space-y-4">
+            <h3 class="font-bold text-slate-100 text-sm">Log Communication & Activity</h3>
+            <form onsubmit="saveCommsActivity(event)" class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Interaction Type</label>
+                        <select id="commsType" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                            <option value="Email">Email</option>
+                            <option value="Call">Call</option>
+                            <option value="In-Person">In-Person</option>
+                            <option value="Video">Video</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Date</label>
+                        <input type="date" id="commsDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Person Spoken To</label>
+                        <input type="text" id="commsPerson" required placeholder="e.g. Principal Brandon" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Title</label>
+                        <input type="text" id="commsTitle" placeholder="e.g. Principal / Director" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Phone Number</label>
+                        <input type="text" id="commsPhone" placeholder="770-000-0000" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Email Address</label>
+                        <input type="email" id="commsEmail" placeholder="contact@school.edu" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Message / Notes</label>
+                    <textarea id="commsMessage" rows="3" required placeholder="What was discussed..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 pt-1">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Update Funnel Stage</label>
+                        <select id="commsNewStage" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                            <option value="Prospect">Prospect</option>
+                            <option value="Lead">Lead</option>
+                            <option value="Closed Won">Closed Won</option>
+                            <option value="Closed Lost">Closed Lost</option>
+                        </select>
+                    </div>
+                    <div class="flex items-center pt-5">
+                        <label class="flex items-center space-x-2 cursor-pointer">
+                            <input type="checkbox" id="commsFollowUp" class="w-4 h-4 rounded bg-dark-700 border-dark-600 text-rose-600 focus:ring-rose-500">
+                            <span class="font-bold text-slate-200 text-xs">Follow-up Completed</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="flex justify-end space-x-2 pt-3 border-t border-dark-600">
+                    <button type="button" onclick="closeCommsModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Activity & Update Stage</button>
+                </div>
+            </form>
+        </div>
     </div>
 
     <!-- Modal for Adding Client Task -->
@@ -631,173 +732,44 @@
         </div>
     </div>
 
-    <!-- Modal for Logging Activity / Note -->
-    <div id="noteModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Log Conversation / Note</h3>
-            <form onsubmit="saveNote(event)" class="space-y-4 text-xs">
+    <!-- Modal for Adding Prospect Task from Master List -->
+    <div id="prospectTaskModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6 space-y-4">
+            <h3 class="font-bold text-slate-100 text-sm">Add Prospect / Client Task</h3>
+            <form onsubmit="saveProspectTaskFromMaster(event)" class="space-y-3 text-xs">
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Activity Type</label>
-                    <select id="noteType" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                        <option value="Email Received">Email Received</option>
-                        <option value="Email Sent">Email Sent</option>
-                        <option value="Phone Call">Phone Call</option>
-                        <option value="Meeting / Discussion">Meeting / Discussion</option>
-                        <option value="General Note">General Note</option>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Select Prospect / School</label>
+                    <select id="ptOrgSelect" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                        <!-- Populated dynamically -->
                     </select>
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Activity Date</label>
-                    <input type="date" id="noteDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Task Title</label>
+                    <input type="text" id="ptTitle" required placeholder="e.g. Follow up on proposal" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 </div>
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Notes / Summary</label>
-                    <textarea id="noteText" required rows="4" placeholder="Paste email snippet or notes..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Description</label>
+                    <textarea id="ptDesc" rows="2" placeholder="Task details..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Due Date</label>
+                        <input type="date" id="ptDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+                    </div>
+                    <div>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Urgency</label>
+                        <select id="ptUrgency" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+                            <option value="High (Urgent)">High (Urgent)</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeNoteModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Log</button>
+                    <button type="button" onclick="closeProspectTaskModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Add Task</button>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <!-- Modal for Adding Team Member / Contact -->
-    <div id="contactModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Add Company Contact / Decision Maker</h3>
-            <form onsubmit="saveContact(event)" class="space-y-4 text-xs">
-                <input type="text" id="contactName" required placeholder="Full Name & Title (e.g. Dr. Jennifer Williams)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="contactRole" required placeholder="Role / Hierarchy (e.g. Director / Decision Maker)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="contactEmail" placeholder="Email Address" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="contactPhone" placeholder="Phone Number / Ext" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="contactLocation" placeholder="Location / Address" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <textarea id="contactNotes" rows="2" placeholder="Notes (e.g. Connected via Chantal Hendrix)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeContactModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Contact</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for Logging Detailed Audit Invoice / Payment -->
-    <div id="financeModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Log Invoice / Payment Audit Record</h3>
-            <form onsubmit="saveFinanceRecord(event)" class="space-y-4 text-xs">
-                <input type="text" id="auditRef" required placeholder="Invoice / Ref # (e.g. INV-101 or PO-5542)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="auditDesc" required placeholder="Description / Scope (e.g. InspiHER 2-Day Workshop)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Issue / Transaction Date</label>
-                    <input type="date" id="auditDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                </div>
-                <input type="number" step="0.01" id="auditAmount" required placeholder="Amount ($)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Financial Status</label>
-                    <select id="auditStatus" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                        <option value="Pending">Pending (Waiting on AP)</option>
-                        <option value="Invoiced">Invoiced / Submitted</option>
-                        <option value="Paid">Closed / Paid in Full</option>
-                    </select>
-                </div>
-                <input type="text" id="auditMethod" placeholder="Payment Method / Ref Note (e.g. Check #4021 or District ACH)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeFinanceModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Audit Record</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for Scheduling Client Meeting / Event with Start & End Date -->
-    <div id="calendarModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Schedule Client Meeting / Event</h3>
-            <form onsubmit="saveCalendarEvent(event)" class="space-y-4 text-xs">
-                <input type="text" id="calTitle" required placeholder="Event / Meeting Title (e.g. InspiHER Workshop)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Start Date & Time</label>
-                    <input type="datetime-local" id="calStartDateTime" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                </div>
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">End Date & Time</label>
-                    <input type="datetime-local" id="calEndDateTime" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                </div>
-                <input type="text" id="calLocation" placeholder="Location / Link (e.g. Zoom or School Auditorium)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <textarea id="calNotes" rows="2" placeholder="Agenda or notes..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeCalendarModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Event</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for Creating Nested Folder -->
-    <div id="folderModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Create New Folder</h3>
-            <form onsubmit="saveFolder(event)" class="space-y-4 text-xs">
-                <input type="text" id="folderNameInput" required placeholder="Folder Name (e.g. Event Subfolder)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeFolderModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Create Folder</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for Uploading Document -->
-    <div id="uploadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Upload File</h3>
-            <form onsubmit="saveUpload(event)" class="space-y-4 text-xs">
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Select File from Device</label>
-                    <input type="file" id="deviceFileInput" required onchange="handleFileSelect(event)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white hover:file:bg-rose-500">
-                </div>
-                <input type="text" id="uploadNameInput" required placeholder="Display Name (e.g. Agenda.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="hidden" id="uploadFileBase64">
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Upload File</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for Renaming Folder -->
-    <div id="renameFolderModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Rename Folder</h3>
-            <form onsubmit="saveRenameFolder(event)" class="space-y-4 text-xs">
-                <input type="text" id="renameFolderInput" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeRenameFolderModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save New Name</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Popup Card for Viewing Contact Details -->
-    <div id="contactPopup" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 text-xs relative">
-            <div class="flex justify-between items-start border-b border-dark-600 pb-3">
-                <div>
-                    <span id="popupRole" class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold text-[10px] border border-rose-500/20"></span>
-                    <h3 id="popupName" class="font-bold text-slate-100 text-base mt-1"></h3>
-                </div>
-                <button onclick="closeContactPopup()" class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
-            </div>
-            <div class="space-y-2 text-slate-300">
-                <p><strong>Email:</strong> <span id="popupEmail" class="text-rose-400"></span></p>
-                <p><strong>Phone:</strong> <span id="popupPhone"></span></p>
-                <p><strong>Location:</strong> <span id="popupLocation"></span></p>
-                <p><strong>Relationship / Notes:</strong> <span id="popupNotes" class="italic text-slate-400"></span></p>
-            </div>
-            <button onclick="closeContactPopup()" class="w-full py-2 rounded-xl bg-dark-700 hover:bg-dark-600 font-semibold text-slate-200 border border-dark-600">Close</button>
         </div>
     </div>
 
@@ -815,49 +787,50 @@
             }
         }
 
+        function checkFinancialPassword(event) {
+            event.preventDefault();
+            const pass = document.getElementById('finPasswordInput').value;
+            if(pass === 'THEBOSS') {
+                localStorage.setItem('bgcs_fin_auth', 'true');
+                document.getElementById('financialAuthModal').classList.add('hidden');
+                switchMainView('financial', false);
+            } else {
+                document.getElementById('finErrorMsg').classList.remove('hidden');
+            }
+        }
+
         const defaultFinancialProspects = [
-            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10 },
-            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0 }
+            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
+            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0, activities: [], clientTasks: [] }
         ];
 
         let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects')) || defaultFinancialProspects;
 
         function saveFinancialProspects() {
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
-        }
-
-        let prospectTodos = JSON.parse(localStorage.getItem('bgcs_prospect_todos')) || [
-            { id: 1, task: "Follow up with InspiHER AP department (First week of November)", done: false },
-            { id: 2, task: "Review proposal and schedule pilot cohort with NCSA", done: false },
-            { id: 3, task: "Submit volunteer / sign-up form for Porterdale Elementary", done: true },
-            { id: 4, task: "Submit Career Day sign-up for Timber Ridge Elementary", done: false }
-        ];
-
-        function saveProspectTodos() {
-            localStorage.setItem('bgcs_prospect_todos', JSON.stringify(prospectTodos));
         }
 
         let currentProfileId = null;
@@ -902,6 +875,11 @@
         }
 
         function switchMainView(viewName, updateHash = true) {
+            if (viewName === 'financial' && localStorage.getItem('bgcs_fin_auth') !== 'true') {
+                document.getElementById('financialAuthModal').classList.remove('hidden');
+                return;
+            }
+
             ['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
                 const el = document.getElementById('mainView-' + v);
                 if (el) el.classList.add('hidden');
@@ -928,6 +906,13 @@
                 if (updateHash) window.location.hash = "view=financial";
                 const activeBtn = document.getElementById('nav-financial');
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
+            } else if (viewName === 'prospects') {
+                document.getElementById('mainView-prospects').classList.remove('hidden');
+                document.getElementById('pageTitle').innerText = "Prospect To-Do Checklist";
+                renderProspectTodosMaster();
+                if (updateHash) window.location.hash = "view=prospects";
+                const activeBtn = document.getElementById('nav-prospects');
+                if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
             } else {
                 document.getElementById('mainView-' + viewName).classList.remove('hidden');
                 const activeBtn = document.getElementById('nav-' + viewName);
@@ -937,10 +922,6 @@
                     document.getElementById('pageTitle').innerText = "Target Audience (3 Categories)";
                 }
                 if (viewName === 'agenda') document.getElementById('pageTitle').innerText = "Spirit Meeting Outline & Agenda";
-                if (viewName === 'prospects') {
-                    document.getElementById('pageTitle').innerText = "Prospect To-Do Checklist";
-                    renderProspectTodos();
-                }
                 if (updateHash) window.location.hash = "view=" + viewName;
             }
             const sidebar = document.getElementById('sidebarNav');
@@ -976,7 +957,91 @@
             if (tabName === 'revenue') {
                 renderClientRevenue();
             }
+            if (tabName === 'comms') {
+                renderClientComms();
+            }
             lucide.createIcons();
+        }
+
+        // Master Prospect To-Do Checklist Rollup
+        function renderProspectTodosMaster() {
+            const container = document.getElementById('prospectTodoList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            let totalTasks = 0;
+            financialProspects.forEach(fp => {
+                if (fp.clientTasks && fp.clientTasks.length > 0) {
+                    fp.clientTasks.forEach((ct, tIdx) => {
+                        totalTasks++;
+                        let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                        container.innerHTML += `
+                            <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
+                                <label class="flex items-center space-x-3 cursor-pointer flex-1">
+                                    <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleMasterTask(${fp.id}, ${tIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                    <div class="space-y-0.5">
+                                        <div class="flex items-center space-x-2">
+                                            <span class="text-xs font-bold text-rose-400">[${fp.org}]</span>
+                                            <span class="text-slate-200 font-medium text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
+                                            <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
+                                        </div>
+                                        ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
+                                        <p class="text-[11px] text-slate-400">Due: <span class="text-rose-400 font-semibold">${ct.date || 'TBD'}</span> • Assigned: <span class="text-purple-400">${ct.assignee || 'Raeven Brown'}</span></p>
+                                    </div>
+                                </label>
+                                <button onclick="openProfile(${fp.id}, 'tasks')" class="text-xs text-rose-400 font-semibold underline shrink-0 ml-4">Open Ticket</button>
+                            </div>`;
+                    });
+                }
+            });
+
+            if (totalTasks === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic py-6 text-center">No tasks currently added to any prospect tickets.</p>`;
+            }
+            lucide.createIcons();
+        }
+
+        function toggleMasterTask(prospectId, taskIdx) {
+            let fp = financialProspects.find(p => p.id === prospectId);
+            if (fp && fp.clientTasks && fp.clientTasks[taskIdx]) {
+                fp.clientTasks[taskIdx].done = !fp.clientTasks[taskIdx].done;
+                saveFinancialProspects();
+                renderProspectTodosMaster();
+            }
+        }
+
+        function openProspectTaskModal() {
+            const select = document.getElementById('ptOrgSelect');
+            select.innerHTML = '';
+            financialProspects.forEach(fp => {
+                select.innerHTML += `<option value="${fp.id}">${fp.org}</option>`;
+            });
+            document.getElementById('ptDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('ptTitle').value = '';
+            document.getElementById('ptDesc').value = '';
+            document.getElementById('prospectTaskModal').classList.remove('hidden');
+        }
+
+        function closeProspectTaskModal() {
+            document.getElementById('prospectTaskModal').classList.add('hidden');
+        }
+
+        function saveProspectTaskFromMaster(event) {
+            event.preventDefault();
+            const fpId = parseInt(document.getElementById('ptOrgSelect').value);
+            const title = document.getElementById('ptTitle').value;
+            const desc = document.getElementById('ptDesc').value;
+            const date = document.getElementById('ptDate').value;
+            const urgency = document.getElementById('ptUrgency').value;
+
+            let fp = financialProspects.find(p => p.id === fpId);
+            if (fp) {
+                if (!fp.clientTasks) fp.clientTasks = [];
+                fp.clientTasks.push({ title, desc, date, urgency, assignee: "Raeven Brown", done: false, active: false });
+                saveFinancialProspects();
+                closeProspectTaskModal();
+                renderProspectTodosMaster();
+            }
         }
 
         function renderFinancialKanban() {
@@ -1112,7 +1177,7 @@
             const price = parseFloat(document.getElementById('fpPrice').value) || 125.00;
             const donation = parseFloat(document.getElementById('fpDonation').value) || 10;
 
-            financialProspects.push({ id: Date.now(), org, stage, classes, price, donation });
+            financialProspects.push({ id: Date.now(), org, stage, classes, price, donation, activities: [], clientTasks: [] });
             closeFinancialProspectModal();
             saveFinancialProspects();
             renderFinancialKanban();
@@ -1151,40 +1216,40 @@
             let retainerBadge = lead.isRetainer ? '<span class="px-2.5 py-1 rounded bg-purple-500/15 text-purple-400 border border-purple-500/30 font-bold ml-2">Retainer Partner</span>' : '';
             stageDisplay.innerHTML = `<span class="px-2.5 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold">${lead.stage}</span> • Target Classes: ${lead.classes} ${retainerBadge}`;
 
-            if (!lead.clientTasks) {
-                lead.clientTasks = [
-                    { title: "Initial Partnership Outreach", desc: `Contact ${lead.org} leadership regarding after-school STEM program`, date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }
-                ];
-            }
+            if (!lead.clientTasks) lead.clientTasks = [];
 
             container.innerHTML = '';
-            lead.clientTasks.forEach((ct, cIdx) => {
-                let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
-                let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
+            if (lead.clientTasks.length > 0) {
+                lead.clientTasks.forEach((ct, cIdx) => {
+                    let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
+                    let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
 
-                container.innerHTML += `
-                    <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
-                        <label class="flex items-start space-x-3 cursor-pointer flex-1">
-                            <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                            <div class="space-y-1">
-                                <div class="flex items-center space-x-2">
-                                    <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
-                                    ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
+                    container.innerHTML += `
+                        <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
+                            <label class="flex items-start space-x-3 cursor-pointer flex-1">
+                                <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <div class="space-y-1">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
+                                        ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
+                                    </div>
+                                    ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
+                                    <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
+                                        ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
+                                        ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
+                                    </div>
                                 </div>
-                                ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
-                                <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
-                                    ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
-                                    ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
-                                </div>
+                            </label>
+                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
+                                <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
+                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </div>
-                        </label>
-                        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
-                            <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
-                            <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                        </div>
-                    </div>`;
-            });
+                        </div>`;
+                });
+            } else {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No tasks added to this company profile yet.</p>`;
+            }
             lucide.createIcons();
         }
 
@@ -1241,10 +1306,90 @@
             if (lead) {
                 if (!lead.clientTasks) lead.clientTasks = [];
                 lead.clientTasks.push({ title, desc, date, urgency, assignee, done: false, active: false });
-                closeClientTaskModal();
                 saveFinancialProspects();
+                closeClientTaskModal();
                 renderClientTasks();
             }
+        }
+
+        function openCommsModal() {
+            document.getElementById('commsDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('commsPerson').value = '';
+            document.getElementById('commsTitle').value = '';
+            document.getElementById('commsPhone').value = '';
+            document.getElementById('commsEmail').value = '';
+            document.getElementById('commsMessage').value = '';
+            document.getElementById('commsFollowUp').checked = false;
+            let lead = financialProspects.find(l => l.id === currentProfileId);
+            if (lead) {
+                document.getElementById('commsNewStage').value = lead.stage;
+            }
+            document.getElementById('commsModal').classList.remove('hidden');
+        }
+        function closeCommsModal() {
+            document.getElementById('commsModal'].classList.add('hidden');
+        }
+
+        function saveCommsActivity(event) {
+            event.preventDefault();
+            const type = document.getElementById('commsType').value;
+            const date = document.getElementById('commsDate').value;
+            const person = document.getElementById('commsPerson').value;
+            const title = document.getElementById('commsTitle').value;
+            const phone = document.getElementById('commsPhone').value;
+            const email = document.getElementById('commsEmail').value;
+            const message = document.getElementById('commsMessage').value;
+            const newStage = document.getElementById('commsNewStage').value;
+            const followUpDone = document.getElementById('commsFollowUp').checked;
+
+            let lead = financialProspects.find(l => l.id === currentProfileId);
+            if (lead) {
+                lead.stage = newStage;
+                if (!lead.activities) lead.activities = [];
+                lead.activities.unshift({
+                    type,
+                    date,
+                    person,
+                    title,
+                    phone,
+                    email,
+                    message,
+                    followUpDone
+                });
+                saveFinancialProspects();
+                closeCommsModal();
+                openProfile(currentProfileId, 'comms', false);
+            }
+        }
+
+        function renderClientComms() {
+            const timeline = document.getElementById('activityTimeline');
+            if (!timeline) return;
+            const lead = financialProspects.find(l => l.id === currentProfileId);
+            if (!lead || !lead.activities || lead.activities.length === 0) {
+                timeline.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No communication logs recorded yet.</p>`;
+                return;
+            }
+
+            timeline.innerHTML = '';
+            lead.activities.forEach(act => {
+                let badgeColor = act.type === 'Email' ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' : (act.type === 'Call' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border-rose-500/30');
+                timeline.innerHTML += `
+                    <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="px-2.5 py-0.5 rounded font-bold border ${badgeColor}">${act.type} Interaction</span>
+                            <span class="text-slate-400">${act.date}</span>
+                        </div>
+                        <div class="text-xs space-y-1 text-slate-300">
+                            <p><strong>Spoken To:</strong> ${act.person} (${act.title || 'N/A'})</p>
+                            ${act.phone ? `<p><strong>Phone:</strong> ${act.phone}</p>` : ''}
+                            ${act.email ? `<p><strong>Email:</strong> ${act.email}</p>` : ''}
+                            <p class="pt-1"><strong>Message:</strong> ${act.message}</p>
+                            <p class="pt-1 text-[11px] text-rose-400 font-medium">Follow-up Completed: ${act.followUpDone ? 'Yes' : 'No'}</p>
+                        </div>
+                    </div>`;
+            });
+            lucide.createIcons();
         }
 
         function getCurrentFolder() {
@@ -1305,9 +1450,7 @@
             renderClientCalendar();
             renderClientTasks();
             renderClientRevenue();
-
-            const timeline = document.getElementById('activityTimeline');
-            timeline.innerHTML = `<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1"><div class="flex justify-between items-center text-[11px] text-slate-400"><span class="font-bold text-rose-400">Created</span><span>Oct 3, 2026</span></div><p class="text-xs text-slate-200">Prospect added to financial tracker.</p></div>`;
+            renderClientComms();
 
             switchTab(tabToOpen, false);
             lucide.createIcons();
