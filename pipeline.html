@@ -434,7 +434,7 @@
                     </div>
                 </div>
 
-                <!-- Tab 2: Prospect Ticket & Invoices (Displays the interactive ticket for this specific company) -->
+                <!-- Tab 2: Revenue & Financial Dashboard -->
                 <div id="tabContent-revenue" class="space-y-6 hidden">
                     <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
@@ -717,7 +717,7 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Target Class Count</label>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Target Class Goal</label>
                         <input type="number" id="qpClassesInput" required min="1" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
                     </div>
                 </div>
@@ -864,7 +864,7 @@
             { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
             { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
             { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
-            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Submit volunteer form", desc: "Complete registration for Nov 19 event with Ms. Ward", date: "2026-10-15", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
+            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [{ type: "Email", date: "2026-10-02", person: "Ms. Bunting", title: "Coordinator", phone: "770-784-2928", email: "bunting@newton.k12.ga.us", message: "Initial outreach sent for return visit.", followUpDone: false }], clientTasks: [{ title: "Submit volunteer form", desc: "Complete registration for Nov 19 event with Ms. Ward", date: "2026-10-15", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
             { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
             { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
             { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
@@ -873,14 +873,27 @@
             { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
             { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
             { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [] },
-            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0, activities: [], clientTasks: [{ title: "Follow up with AP department", desc: "Follow up first week of November regarding payment schedule", date: "2026-11-02", assignee: "Raeven Brown", urgency: "Medium", done: false, active: true }] }
+            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0, activities: [{ type: "Call", date: "2026-10-01", person: "Dr. Jennifer Williams", title: "Director of Instructional Technology", phone: "770-784-4943", email: "williams.jennifer@newton.k12.ga.us", message: "Confirmed 2-day workshop for Dec 2-3.", followUpDone: true }], clientTasks: [{ title: "Follow up with AP department", desc: "Follow up first week of November regarding payment schedule", date: "2026-11-02", assignee: "Raeven Brown", urgency: "Medium", done: false, active: true }] }
         ];
 
         let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects')) || defaultFinancialProspects;
 
-        function saveFinancialProspects() {
-            localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
-        }
+        // Ensure every prospect has initial outreach step task if empty
+        financialProspects.forEach(fp => {
+            if (!fp.clientTasks) fp.clientTasks = [];
+            if (fp.clientTasks.length === 0) {
+                fp.clientTasks.push({
+                    title: "Reach out to prospect this week",
+                    desc: `Contact ${fp.org} via email/phone and follow up next week if no response.`,
+                    date: "2026-10-09",
+                    assignee: "Raeven Brown",
+                    urgency: "High (Urgent)",
+                    done: false,
+                    active: true
+                });
+            }
+        });
+        saveFinancialProspects();
 
         let currentProfileId = null;
         let currentFolderPath = []; 
@@ -1013,7 +1026,7 @@
             lucide.createIcons();
         }
 
-        // Master Prospect To-Do Checklist Rollup
+        // Master Prospect To-Do Checklist Rollup with Last Reached Out Details
         function renderProspectTodosMaster() {
             const container = document.getElementById('prospectTodoList');
             if (!container) return;
@@ -1025,6 +1038,15 @@
                     fp.clientTasks.forEach((ct, tIdx) => {
                         totalTasks++;
                         let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                        
+                        let lastContactHTML = '';
+                        if (fp.activities && fp.activities.length > 0) {
+                            let lastAct = fp.activities[0];
+                            lastContactHTML = `<p class="text-[11px] text-emerald-400 mt-1 font-medium"><i data-lucide="message-square" class="w-3 h-3 inline mr-1"></i>Last Contact: ${lastAct.type} with ${lastAct.person} (${lastAct.title || 'Staff'}) on ${lastAct.date} — Follow-up: ${lastAct.followUpDone ? 'Done' : 'Pending'}</p>`;
+                        } else {
+                            lastContactHTML = `<p class="text-[11px] text-amber-400 mt-1 font-medium"><i data-lucide="alert-circle" class="w-3 h-3 inline mr-1"></i>Action Required: Reach out this week, follow up next week.</p>`;
+                        }
+
                         container.innerHTML += `
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
                                 <label class="flex items-center space-x-3 cursor-pointer flex-1">
@@ -1036,6 +1058,7 @@
                                             <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
                                         </div>
                                         ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
+                                        ${lastContactHTML}
                                         <p class="text-[11px] text-slate-400">Due: <span class="text-rose-400 font-semibold">${ct.date || 'TBD'}</span> • Assigned: <span class="text-purple-400">${ct.assignee || 'Raeven Brown'}</span></p>
                                     </div>
                                 </label>
@@ -1239,7 +1262,7 @@
         function openFullProfileFromModal() {
             const id = parseInt(document.getElementById('qpProspectId').value);
             closeQuickProspectModal();
-            openProfile(id, 'revenue'); // Opens directly to the Prospect Ticket & Invoices tab
+            openProfile(id, 'revenue');
         }
 
         function updateFinancialProspectStage(id, newStage) {
@@ -1273,7 +1296,7 @@
             const price = parseFloat(document.getElementById('fpPrice').value) || 125.00;
             const donation = parseFloat(document.getElementById('fpDonation').value) || 10;
 
-            financialProspects.push({ id: Date.now(), org, stage, classes, price, donation, activities: [], clientTasks: [] });
+            financialProspects.push({ id: Date.now(), org, stage, classes, price, donation, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: `Contact ${org} and follow up next week if no response.`, date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] });
             closeFinancialProspectModal();
             saveFinancialProspects();
             renderFinancialKanban();
@@ -1314,40 +1337,40 @@
                 stageDisplay.innerHTML = `<span class="px-2.5 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold">${lead.stage}</span> • Target Classes: ${lead.classes} ${retainerBadge}`;
             }
 
-            if (!lead.clientTasks) {
-                lead.clientTasks = [
-                    { title: "Initial Partnership Outreach", desc: `Contact ${lead.org} leadership regarding after-school STEM program`, date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }
-                ];
-            }
+            if (!lead.clientTasks) lead.clientTasks = [];
 
             container.innerHTML = '';
-            lead.clientTasks.forEach((ct, cIdx) => {
-                let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
-                let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
+            if (lead.clientTasks.length > 0) {
+                lead.clientTasks.forEach((ct, cIdx) => {
+                    let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
+                    let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
 
-                container.innerHTML += `
-                    <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
-                        <label class="flex items-start space-x-3 cursor-pointer flex-1">
-                            <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                            <div class="space-y-1">
-                                <div class="flex items-center space-x-2">
-                                    <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
-                                    ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
+                    container.innerHTML += `
+                        <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
+                            <label class="flex items-start space-x-3 cursor-pointer flex-1">
+                                <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                                <div class="space-y-1">
+                                    <div class="flex items-center space-x-2">
+                                        <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
+                                        ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
+                                    </div>
+                                    ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
+                                    <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
+                                        ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
+                                        ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
+                                    </div>
                                 </div>
-                                ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
-                                <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
-                                    ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
-                                    ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
-                                </div>
+                            </label>
+                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
+                                <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
+                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
                             </div>
-                        </label>
-                        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
-                            <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
-                            <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                        </div>
-                    </div>`;
-            });
+                        </div>`;
+                });
+            } else {
+                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No tasks added to this company profile yet.</p>`;
+            }
             lucide.createIcons();
         }
 
@@ -1410,6 +1433,86 @@
             }
         }
 
+        function openCommsModal() {
+            document.getElementById('commsDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('commsPerson').value = '';
+            document.getElementById('commsTitle').value = '';
+            document.getElementById('commsPhone').value = '';
+            document.getElementById('commsEmail').value = '';
+            document.getElementById('commsMessage').value = '';
+            document.getElementById('commsFollowUp').checked = false;
+            let lead = financialProspects.find(l => l.id === currentProfileId);
+            if (lead) {
+                document.getElementById('commsNewStage').value = lead.stage;
+            }
+            document.getElementById('commsModal').classList.remove('hidden');
+        }
+        function closeCommsModal() {
+            document.getElementById('commsModal').classList.add('hidden');
+        }
+
+        function saveCommsActivity(event) {
+            event.preventDefault();
+            const type = document.getElementById('commsType').value;
+            const date = document.getElementById('commsDate').value;
+            const person = document.getElementById('commsPerson').value;
+            const title = document.getElementById('commsTitle').value;
+            const phone = document.getElementById('commsPhone').value;
+            const email = document.getElementById('commsEmail').value;
+            const message = document.getElementById('commsMessage').value;
+            const newStage = document.getElementById('commsNewStage').value;
+            const followUpDone = document.getElementById('commsFollowUp').checked;
+
+            let lead = financialProspects.find(l => l.id === currentProfileId);
+            if (lead) {
+                lead.stage = newStage;
+                if (!lead.activities) lead.activities = [];
+                lead.activities.unshift({
+                    type,
+                    date,
+                    person,
+                    title,
+                    phone,
+                    email,
+                    message,
+                    followUpDone
+                });
+                saveFinancialProspects();
+                closeCommsModal();
+                openProfile(currentProfileId, 'comms', false);
+            }
+        }
+
+        function renderClientComms() {
+            const timeline = document.getElementById('activityTimeline');
+            if (!timeline) return;
+            const lead = financialProspects.find(l => l.id === currentProfileId);
+            if (!lead || !lead.activities || lead.activities.length === 0) {
+                timeline.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No communication logs recorded yet.</p>`;
+                return;
+            }
+
+            timeline.innerHTML = '';
+            lead.activities.forEach(act => {
+                let badgeColor = act.type === 'Email' ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' : (act.type === 'Call' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border-rose-500/30');
+                timeline.innerHTML += `
+                    <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="px-2.5 py-0.5 rounded font-bold border ${badgeColor}">${act.type} Interaction</span>
+                            <span class="text-slate-400">${act.date}</span>
+                        </div>
+                        <div class="text-xs space-y-1 text-slate-300">
+                            <p><strong>Spoken To:</strong> ${act.person} (${act.title || 'N/A'})</p>
+                            ${act.phone ? `<p><strong>Phone:</strong> ${act.phone}</p>` : ''}
+                            ${act.email ? `<p><strong>Email:</strong> ${act.email}</p>` : ''}
+                            <p class="pt-1"><strong>Message:</strong> ${act.message}</p>
+                            <p class="pt-1 text-[11px] text-rose-400 font-medium">Follow-up Completed: ${act.followUpDone ? 'Yes' : 'No'}</p>
+                        </div>
+                    </div>`;
+            });
+            lucide.createIcons();
+        }
+
         function getCurrentFolder() {
             const lead = financialProspects.find(l => l.id === currentProfileId);
             if (!lead) return null;
@@ -1451,7 +1554,7 @@
             document.getElementById('profileOrg').innerText = lead.org;
             document.getElementById('profileScope').innerText = lead.org.includes('InspiHER') ? '2-Day Leadership Workshop ($750)' : `${lead.classes} Class (2x/wk, ${lead.classes * 20} Students) @ $${lead.price}/kid`;
             document.getElementById('profileContact').innerText = "School Coordinator / Director";
-            document.getElementById('profileNextAction').innerText = "Next Action: Outreach & Follow-up";
+            document.getElementById('profileNextAction').innerText = "Next Action: Reach out this week, follow up next week";
             document.getElementById('profileStatusBadge').innerText = "Status: " + lead.stage;
 
             let badge = document.getElementById('profileBadge');
@@ -1483,6 +1586,12 @@
             let potentialTotal = lead.org.includes('InspiHER') ? 750.00 : (lead.classes * 20 * lead.price);
             let donationAmount = lead.org.includes('InspiHER') ? 0.00 : (potentialTotal * (lead.donation / 100));
 
+            let lastContactInfo = "No contact logged yet this week.";
+            if (lead.activities && lead.activities.length > 0) {
+                let la = lead.activities[0];
+                lastContactInfo = `${la.type} with ${la.person} (${la.title || 'Staff'}) on ${la.date} — Follow-up: ${la.followUpDone ? 'Done' : 'Pending'}`;
+            }
+
             container.innerHTML = `
                 <div class="space-y-3">
                     <div class="flex justify-between items-center border-b border-dark-600 pb-2">
@@ -1505,6 +1614,10 @@
                         <div>
                             <p class="text-slate-400 uppercase font-bold text-[10px]">Target Revenue / Donation</p>
                             <p class="font-bold text-emerald-400 mt-0.5">$${potentialTotal.toFixed(2)} <span class="text-purple-400 font-normal">(PTO: $${donationAmount.toFixed(2)})</span></p>
+                        </div>
+                        <div class="sm:col-span-2 bg-dark-800/80 p-3 rounded-xl border border-dark-600">
+                            <p class="text-slate-400 uppercase font-bold text-[10px]">Outreach & Follow-Up Status (This Week)</p>
+                            <p class="font-medium text-emerald-400 text-xs mt-1">${lastContactInfo}</p>
                         </div>
                     </div>
                     <div class="pt-2 flex justify-end">
@@ -1571,4 +1684,3 @@
     </script>
 </body>
 </html>
- 
