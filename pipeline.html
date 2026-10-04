@@ -259,20 +259,20 @@
                 </div>
             </div>
 
-            <!-- View 1: Main Pipeline Table / Sales Funnel Columns (Prospect List) -->
+            <!-- View 1: Main Pipeline Table / Sales Funnel Columns (Prospect List synchronized with Financial Prospects) -->
             <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
                     <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
                         <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Targets</p>
-                        <h3 id="stat-total" class="text-2xl sm:text-3xl font-bold text-slate-100 mt-2">7</h3>
+                        <h3 id="stat-total" class="text-2xl sm:text-3xl font-bold text-slate-100 mt-2">0</h3>
                     </div>
                     <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
                         <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Prospecting</p>
-                        <h3 id="stat-prospect" class="text-2xl sm:text-3xl font-bold text-amber-400 mt-2">6</h3>
+                        <h3 id="stat-prospect" class="text-2xl sm:text-3xl font-bold text-amber-400 mt-2">0</h3>
                     </div>
                     <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
-                        <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Invoice</p>
-                        <h3 id="stat-invoice" class="text-2xl sm:text-3xl font-bold text-purple-400 mt-2">1</h3>
+                        <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Lead</p>
+                        <h3 id="stat-invoice" class="text-2xl sm:text-3xl font-bold text-purple-400 mt-2">0</h3>
                     </div>
                     <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
                         <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Won</p>
@@ -283,9 +283,9 @@
                 <div class="space-y-6">
                     <div class="flex justify-between items-center border-b border-dark-600 pb-3">
                         <h2 class="font-bold text-base text-slate-100">Sales Funnel Stage Breakdown (Prospect List)</h2>
-                        <p class="text-xs text-slate-400">Manage targets across distinct pipeline phases</p>
+                        <p class="text-xs text-slate-400">Synchronized directly with Financial Goal Tracker</p>
                     </div>
-                    <div id="salesFunnelContainer" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div id="salesFunnelContainer" class="grid grid-cols-1 md:grid-cols-4 gap-4">
                         <!-- Populated dynamically -->
                     </div>
                 </div>
@@ -347,11 +347,10 @@
                                     <div>
                                         <label class="block text-slate-400 font-bold mb-1">Sales Funnel Stage</label>
                                         <select id="inlineStageSelect" onchange="updateClientStage(this.value)" class="w-full rounded-xl bg-dark-800 border border-dark-600 p-2 text-slate-200 font-semibold">
-                                            <option value="Prospecting">Prospecting</option>
-                                            <option value="Follow-up Stage">Follow-up Stage</option>
-                                            <option value="Waiting on Invoice">Waiting on Invoice</option>
-                                            <option value="Contract Signed / Won">Contract Signed / Won</option>
-                                            <option value="Lost">Lost</option>
+                                            <option value="Prospect">Prospect</option>
+                                            <option value="Lead">Lead</option>
+                                            <option value="Closed Won">Closed Won</option>
+                                            <option value="Closed Lost">Closed Lost</option>
                                         </select>
                                     </div>
                                     <div class="flex items-center space-x-3 pt-4 sm:pt-0">
@@ -605,49 +604,6 @@
         </div>
     </div>
 
-    <!-- Modal for Add/Edit Lead -->
-    <div id="leadModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden p-6">
-            <h3 id="modalTitle" class="font-bold text-slate-100 text-sm mb-4">Add New Target</h3>
-            <form id="leadForm" onsubmit="saveLead(event)" class="space-y-4 text-xs">
-                <input type="hidden" id="leadId">
-                <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Pipeline Stage</label>
-                    <select id="leadStage" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                        <option value="Prospecting">Prospecting</option>
-                        <option value="Follow-up Stage">Follow-up Stage</option>
-                        <option value="Waiting on Invoice">Waiting on Invoice</option>
-                        <option value="Contract Signed / Won">Contract Signed / Won</option>
-                        <option value="Lost">Lost</option>
-                    </select>
-                </div>
-                <input type="text" id="leadOrg" required placeholder="Organization / School Name" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="leadContact" required placeholder="Contact Person" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="leadScope" required placeholder="Goal / Scope" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="leadStatus" required placeholder="Status (e.g. W-9 Submitted)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <input type="text" id="leadAction" required placeholder="Next Action / Follow-Up" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Target</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal for Adding Prospect To-Do Item -->
-    <div id="todoModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
-            <h3 class="font-bold text-slate-100 text-sm mb-4">Add Prospecting Task</h3>
-            <form onsubmit="saveTodoItem(event)" class="space-y-4 text-xs">
-                <input type="text" id="todoTaskInput" required placeholder="Task (e.g. Follow up with Porterdale Elementary)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
-                <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="closeTodoModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-                    <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Add Task</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <!-- Modal for Logging Activity / Note -->
     <div id="noteModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6">
@@ -866,103 +822,43 @@
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
         }
 
-        const defaultPipelineData = [
-            { 
-                id: 1, 
-                stage: "Waiting on Invoice", 
-                org: "InspiHER Conference / Newton County District", 
-                contact: "Dr. Jennifer Williams", 
-                scope: "2-day workshop (Dec 2-3, 2026) @ $750", 
-                status: "W-9 & CP575 Submitted", 
-                action: "Follow up first week of November",
-                isRetainer: true,
-                auditRecords: [
-                    { ref: "INV-2026-01", desc: "InspiHER 2-Day Workshop (Dec 2-3)", date: "Oct 1, 2026", amount: 750.00, status: "Pending", method: "Submitted to AP Dept (W-9 attached)" }
-                ],
-                calendarEvents: [
-                    { title: "InspiHER 2-Day Workshop", start: "2026-12-02T09:00", end: "2026-12-03T15:00", location: "Newton District Venue", notes: "Key 2-day workshop engagement." }
-                ],
-                clientTasks: [
-                    { title: "Submit W-9 and CP575", desc: "Send tax docs to AP department", date: "Oct 1, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
-                    { title: "Follow up with Newton District", desc: "Follow up first week of November regarding payment schedule", date: "Nov 2, 2026", assignee: "Raeven Brown", urgency: "Medium", done: false, active: true }
-                ],
-                rootFolder: {
-                    name: "Partnership Root",
-                    subfolders: [
-                        {
-                            name: "InspiHER 2026 Workshop",
-                            subfolders: [],
-                            files: [{ name: "Workshop_Agenda.pdf", url: "#" }]
-                        }
-                    ],
-                    files: []
-                },
-                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [
-                    { name: "Form W-9.pdf", url: "W9.pdf" },
-                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
-                ],
-                contacts: [
-                    { name: "Dr. Jennifer Williams, Ed.D.", role: "Director of Instructional Technology & Media Services", email: "williams.jennifer@newton.k12.ga.us", phone: "770-784-4943 or x1233", location: "10245 Eagle Drive, Covington, GA 30014", notes: "Director of Instructional Technology & Media Services." },
-                    { name: "Chantal Hendrix, Ed.S.", role: "Digital Learning Coach", email: "hendrix.chantal@newton.k12.ga.us", phone: "770-787-1330 ext. 1306", location: "10245 Eagle Dr, Covington, GA", notes: "Connected with Chantal first to reach Dr. Jennifer Williams." }
-                ],
-                activities: [
-                    { date: "Aug 31, 2026", type: "Email Received", text: "Jennifer Williams: 'I would like to learn more about your organization. When do you have time to jump on a Zoom for us to meet and discuss other possibilities?'" },
-                    { date: "Sep 8, 2026", type: "Meeting", text: "Conducted Zoom discovery call and discussed studio capabilities and workshop possibilities." },
-                    { date: "Sep 28, 2026", type: "Meeting", text: "Confirmed InspiHER 2-day workshop for December 2-3, 2026." },
-                    { date: "Oct 1, 2026", type: "Email Received", text: "Jennifer: 'Thank you for following up. Yes, I'd love to have you for both days. Please send me your W9. I already have your invoice. Let's make a plan to talk first week of November.'" },
-                    { date: "Oct 1, 2026", type: "Email Sent", text: "Submitted completed W-9 and CP575 confirmation notice for AP department." }
-                ]
-            },
-            { 
-                id: 2, 
-                stage: "Prospecting", 
-                org: "Newton County STEAM Academy", 
-                contact: "Principal Brandon Parham / Chantal Hendrix", 
-                scope: "Career Day (Free) & District After-School Pitch", 
-                status: "Prospecting", 
-                action: "Pitch district after-school department",
-                isRetainer: true,
-                auditRecords: [],
-                calendarEvents: [],
-                clientTasks: [
-                    { title: "Complete 5 Career Day Sessions", desc: "Free pilot sessions reaching 100 students (96% rating)", date: "Sep 29, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
-                    { title: "Email Ms. Bunting to return", desc: "Send follow up email to Ms. Bunting to set up a day to come back to the school as a recurring program", date: "Oct 5, 2026", assignee: "Courtney White", urgency: "High (Urgent)", done: false, active: true },
-                    { title: "Email Newton County District After-School Director", desc: "Pitch district-wide after-school department for paid rollout across all schools", date: "Oct 10, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: false }
-                ],
-                rootFolder: {
-                    name: "Partnership Root",
-                    subfolders: [
-                        { name: "NCSA Pilot Program", subfolders: [], files: [{ name: "NCSA Pilot Proposal.pdf", url: "#" }, { name: "Curriculum Proposal.pdf", url: "#" }] }
-                    ],
-                    files: []
-                },
-                trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                financialDocs: [
-                    { name: "Form W-9.pdf", url: "W9.pdf" },
-                    { name: "EIN CP575.pdf", url: "EIN.pdf" }
-                ],
-                contacts: [
-                    { name: "Principal Brandon Parham", role: "Principal / Decision Maker", email: "parham.brandon@newton.k12.ga.us", phone: "School Main", location: "Newton County STEAM Academy", notes: "Flagship pilot school leadership." },
-                    { name: "Chantal Hendrix, Ed.S.", role: "Digital Learning Coach", email: "hendrix.chantal@newton.k12.ga.us", phone: "770-787-1330 ext. 1306", location: "Covington, GA", notes: "Key instructional contact." }
-                ],
-                activities: [
-                    { date: "Sep 29, 2026", type: "General Note", text: "Completed 5 successful free career day sessions reaching 100 students. Moving to district after-school pitching phase." }
-                ]
-            }
-        ];
+        // Unify Pipeline Data with Financial Prospects so both lists stay 100% in sync
+        function getUnifiedPipelineData() {
+            return financialProspects.map((fp, idx) => {
+                let stageMapping = "Prospecting";
+                if (fp.stage === "Lead") stageMapping = "Waiting on Invoice";
+                if (fp.stage === "Closed Won") stageMapping = "Contract Signed / Won";
+                if (fp.stage === "Closed Lost") stageMapping = "Lost";
 
-        let pipelineData = JSON.parse(localStorage.getItem('bgcs_pipeline_data')) || defaultPipelineData;
+                return {
+                    id: fp.id || (100 + idx),
+                    stage: stageMapping,
+                    org: fp.org,
+                    contact: "School Coordinator / Director",
+                    scope: `${fp.classes} Classes (${fp.classes * 20} Students) @ $${fp.price}/kid`,
+                    status: fp.stage,
+                    action: "Outreach & Follow-up",
+                    isRetainer: true,
+                    auditRecords: fp.stage === "Closed Won" ? [{ ref: "INV-2026-" + idx, desc: fp.org, date: "Oct 2, 2026", amount: fp.classes * 20 * fp.price, status: "Paid", method: "ACH" }] : [],
+                    calendarEvents: [],
+                    clientTasks: [{ title: "Initial Partnership Outreach", desc: "Contact organization leadership regarding after-school STEM program", date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }],
+                    rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
+                    trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
+                    financialDocs: [{ name: "Form W-9.pdf", url: "W9.pdf" }, { name: "EIN CP575.pdf", url: "EIN.pdf" }],
+                    contacts: [],
+                    activities: [{ date: "Oct 3, 2026", type: "Created", text: "Prospect synchronized from Financial Goal Tracker." }]
+                };
+            });
+        }
+
+        let pipelineData = getUnifiedPipelineData();
+
         let prospectTodos = JSON.parse(localStorage.getItem('bgcs_prospect_todos')) || [
             { id: 1, task: "Follow up with InspiHER AP department (First week of November)", done: false },
             { id: 2, task: "Review proposal and schedule pilot cohort with NCSA", done: false },
             { id: 3, task: "Submit volunteer / sign-up form for Porterdale Elementary", done: true },
             { id: 4, task: "Submit Career Day sign-up for Timber Ridge Elementary", done: false }
         ];
-
-        function savePipelineData() {
-            localStorage.setItem('bgcs_pipeline_data', JSON.stringify(pipelineData));
-        }
 
         function saveProspectTodos() {
             localStorage.setItem('bgcs_prospect_todos', JSON.stringify(prospectTodos));
@@ -1003,6 +899,7 @@
             if (viewName === 'pipeline') {
                 document.getElementById('pipelineView').classList.remove('hidden');
                 document.getElementById('pageTitle').innerText = "Pipeline Manager";
+                pipelineData = getUnifiedPipelineData();
                 renderSalesFunnel();
                 if (updateHash) window.location.hash = "view=pipeline";
                 const activeBtn = document.getElementById('nav-pipeline');
@@ -1126,31 +1023,10 @@
         }
 
         function openFinancialOrgProfile(orgName) {
+            pipelineData = getUnifiedPipelineData();
             let matched = pipelineData.find(l => l.org.toLowerCase().includes(orgName.toLowerCase()));
             if (matched) {
                 openProfile(matched.id, 'tasks');
-            } else {
-                let newId = Date.now();
-                pipelineData.push({
-                    id: newId,
-                    stage: "Prospecting",
-                    org: orgName,
-                    contact: "School Coordinator",
-                    scope: "After-School / Career Enrichment",
-                    status: "Outreach Queued",
-                    action: "Initial Contact",
-                    isRetainer: true,
-                    auditRecords: [],
-                    calendarEvents: [],
-                    clientTasks: [{ title: "Initial Outreach", desc: "Reach out for partnership pitch", date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }],
-                    rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
-                    trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                    financialDocs: [{ name: "Form W-9.pdf", url: "W9.pdf" }, { name: "EIN CP575.pdf", url: "EIN.pdf" }],
-                    contacts: [],
-                    activities: [{ date: "Oct 3, 2026", type: "Created", text: "Added from financial goal tracker." }]
-                });
-                savePipelineData();
-                openProfile(newId, 'tasks');
             }
         }
 
@@ -1159,6 +1035,7 @@
             if (p) {
                 p.stage = newStage;
                 saveFinancialProspects();
+                pipelineData = getUnifiedPipelineData();
                 renderFinancialKanban();
             }
         }
@@ -1167,6 +1044,7 @@
             if (confirm("Move this prospect to the Trash Bin?")) {
                 financialProspects = financialProspects.filter(item => item.id !== id);
                 saveFinancialProspects();
+                pipelineData = getUnifiedPipelineData();
                 renderFinancialKanban();
             }
         }
@@ -1188,6 +1066,7 @@
             financialProspects.push({ id: Date.now(), org, stage, classes, price, donation });
             closeFinancialProspectModal();
             saveFinancialProspects();
+            pipelineData = getUnifiedPipelineData();
             renderFinancialKanban();
         }
 
@@ -1195,6 +1074,15 @@
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (lead) {
                 lead.stage = newStage;
+                // Sync back to financialProspects stage if matched
+                let fp = financialProspects.find(p => p.org.toLowerCase().includes(lead.org.toLowerCase()));
+                if (fp) {
+                    if (newStage === "Contract Signed / Won") fp.stage = "Closed Won";
+                    else if (newStage === "Waiting on Invoice") fp.stage = "Lead";
+                    else if (newStage === "Lost") fp.stage = "Closed Lost";
+                    else fp.stage = "Prospect";
+                    saveFinancialProspects();
+                }
                 savePipelineData();
                 document.getElementById('profileBadge').innerText = newStage;
                 renderClientTasks();
@@ -1319,73 +1207,29 @@
             }
         }
 
-        function renderProspectTodos() {
-            const container = document.getElementById('prospectTodoList');
-            if (!container) return;
-            container.innerHTML = '';
-            if (prospectTodos.length > 0) {
-                prospectTodos.forEach((todo, tIdx) => {
-                    container.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
-                            <label class="flex items-center space-x-3 cursor-pointer flex-1">
-                                <input type="checkbox" ${todo.done ? 'checked' : ''} onchange="toggleTodo(${tIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                                <span class="text-slate-200 font-medium ${todo.done ? 'line-through text-slate-500' : ''}">${todo.task}</span>
-                            </label>
-                            <button onclick="deleteTodo(${tIdx})" class="text-slate-400 hover:text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                        </div>`;
-                });
-            } else {
-                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No prospect tasks added yet.</p>`;
-            }
-            lucide.createIcons();
-        }
-
-        function toggleTodo(tIdx) {
-            prospectTodos[tIdx].done = !prospectTodos[tIdx].done;
-            saveProspectTodos();
-            renderProspectTodos();
-        }
-
-        function deleteTodo(tIdx) {
-            prospectTodos.splice(tIdx, 1);
-            saveProspectTodos();
-            renderProspectTodos();
-        }
-
-        function openTodoModal() {
-            document.getElementById('todoModal').classList.remove('hidden');
-        }
-        function closeTodoModal() {
-            document.getElementById('todoModal').classList.add('hidden');
-        }
-        function saveTodoItem(event) {
-            event.preventDefault();
-            const task = document.getElementById('todoTaskInput').value;
-            prospectTodos.push({ id: Date.now(), task, done: false });
-            closeTodoModal();
-            document.getElementById('todoTaskInput').value = '';
-            saveProspectTodos();
-            renderProspectTodos();
-        }
-
         function renderSalesFunnel() {
             const container = document.getElementById('salesFunnelContainer');
             if(!container) return;
             container.innerHTML = '';
 
-            const stages = ["Prospecting", "Follow-up Stage", "Waiting on Invoice", "Contract Signed / Won", "Lost"];
+            pipelineData = getUnifiedPipelineData();
+            const stages = ["Prospect", "Lead", "Closed Won", "Closed Lost"];
             const stageColors = {
-                "Prospecting": "border-amber-500/30 text-amber-400",
-                "Follow-up Stage": "border-rose-500/30 text-rose-400",
-                "Waiting on Invoice": "border-purple-500/30 text-purple-400",
-                "Contract Signed / Won": "border-emerald-500/30 text-emerald-400",
-                "Lost": "border-rose-500/30 text-rose-400"
+                "Prospect": "border-amber-500/30 text-amber-400",
+                "Lead": "border-purple-500/30 text-purple-400",
+                "Closed Won": "border-emerald-500/30 text-emerald-400",
+                "Closed Lost": "border-rose-500/30 text-rose-400"
             };
 
-            document.getElementById('stat-total').innerText = pipelineData.length;
-            document.getElementById('stat-prospect').innerText = pipelineData.filter(d => d.stage === 'Prospecting' || d.stage === 'Follow-up Stage').length;
-            document.getElementById('stat-invoice').innerText = pipelineData.filter(d => d.stage === 'Waiting on Invoice').length;
-            document.getElementById('stat-won').innerText = pipelineData.filter(d => d.stage === 'Contract Signed / Won').length;
+            let totalProspects = pipelineData.length;
+            let prospectCount = pipelineData.filter(d => d.stage === 'Prospect').length;
+            let leadCount = pipelineData.filter(d => d.stage === 'Lead').length;
+            let wonCount = pipelineData.filter(d => d.stage === 'Closed Won').length;
+
+            document.getElementById('stat-total').innerText = totalProspects;
+            document.getElementById('stat-prospect').innerText = prospectCount;
+            document.getElementById('stat-invoice').innerText = leadCount;
+            document.getElementById('stat-won').innerText = wonCount;
 
             stages.forEach(stage => {
                 const leadsInStage = pipelineData.filter(d => d.stage === stage);
@@ -1393,21 +1237,24 @@
                 
                 if (leadsInStage.length > 0) {
                     leadsInStage.forEach(item => {
-                        let retainerBadge = item.isRetainer ? '<span class="px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-400 text-[9px] font-bold">Retainer</span>' : '';
                         cardsHtml += `
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2 hover:border-rose-500/50 transition">
                                 <div class="flex justify-between items-start">
-                                    <h4 onclick="openProfile(${item.id}, 'tasks')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org} ${retainerBadge}</h4>
+                                    <h4 onclick="openProfile(${item.id}, 'tasks')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
                                     <div class="space-x-1">
-                                        <button onclick="openModal(${item.id})" class="text-slate-400 hover:text-slate-200"><i data-lucide="edit-2" class="w-3.5 h-3.5 inline"></i></button>
-                                        <button onclick="deleteLead(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
+                                        <button onclick="deleteFinancialProspectByName('${item.org}')" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
                                     </div>
                                 </div>
                                 <p class="text-slate-400 text-xs"><strong>Contact:</strong> ${item.contact}</p>
                                 <p class="text-slate-400 text-[11px]"><strong>Scope:</strong> ${item.scope}</p>
-                                <div class="flex justify-between items-center text-[10px] pt-1 text-slate-300 border-t border-dark-600">
-                                    <span>Status: ${item.status}</span>
-                                    <span class="text-rose-400 font-medium">Action: ${item.action}</span>
+                                <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
+                                    <select onchange="updatePipelineItemStage('${item.org}', this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
+                                        <option value="Prospect" ${stage === 'Prospect' ? 'selected' : ''}>Prospect</option>
+                                        <option value="Lead" ${stage === 'Lead' ? 'selected' : ''}>Lead</option>
+                                        <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
+                                        <option value="Closed Lost" ${stage === 'Closed Lost' ? 'selected' : ''}>Closed Lost</option>
+                                    </select>
+                                    <button onclick="openProfile(${item.id}, 'tasks')" class="text-rose-400 font-semibold underline">View Profile</button>
                                 </div>
                             </div>`;
                     });
@@ -1421,13 +1268,33 @@
                             <h3 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage] || 'text-slate-300'}">${stage}</h3>
                             <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300 text-xs">${leadsInStage.length}</span>
                         </div>
-                        <div class="space-y-3">${cardsHtml}</div>
+                        <div class="space-y-3 max-h-[500px] overflow-y-auto">${cardsHtml}</div>
                     </div>`;
             });
             lucide.createIcons();
         }
 
+        function updatePipelineItemStage(orgName, newStage) {
+            let fp = financialProspects.find(p => p.org.toLowerCase() === orgName.toLowerCase());
+            if (fp) {
+                fp.stage = newStage;
+                saveFinancialProspects();
+                pipelineData = getUnifiedPipelineData();
+                renderSalesFunnel();
+            }
+        }
+
+        function deleteFinancialProspectByName(orgName) {
+            if (confirm("Move this prospect to the Trash Bin?")) {
+                financialProspects = financialProspects.filter(item => item.org.toLowerCase() !== orgName.toLowerCase());
+                saveFinancialProspects();
+                pipelineData = getUnifiedPipelineData();
+                renderSalesFunnel();
+            }
+        }
+
         function getCurrentFolder() {
+            pipelineData = getUnifiedPipelineData();
             const lead = pipelineData.find(l => l.id === currentProfileId);
             if (!lead) return null;
             if (!lead.rootFolder) {
@@ -1454,6 +1321,7 @@
             if (updateHash) {
                 window.location.hash = `profile=${id}&tab=${tabToOpen}`;
             }
+            pipelineData = getUnifiedPipelineData();
             const lead = pipelineData.find(l => l.id === id);
             if(!lead) return;
 
@@ -1503,7 +1371,7 @@
             const timeline = document.getElementById('activityTimeline');
             timeline.innerHTML = '';
             if(lead.activities && lead.activities.length > 0) {
-                lead.activities.forEach(act => {
+                lead.activities.exitForEach ? lead.activities.forEach(act => {
                     timeline.innerHTML += `
                         <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
                             <div class="flex justify-between items-center text-[11px] text-slate-400">
@@ -1512,7 +1380,7 @@
                             </div>
                             <p class="text-xs text-slate-200">${act.text}</p>
                         </div>`;
-                });
+                }) : null;
             } else {
                 timeline.innerHTML = `<p class="text-xs text-slate-500 italic">No activity logged yet.</p>`;
             }
@@ -1542,4 +1410,3 @@
     </script>
 </body>
 </html>
-
