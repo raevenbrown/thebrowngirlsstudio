@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Brown Girls Creative Studio | Pipeline & Lead Profiles</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>The Brown Girls Creative Studio | Target Audience & Impact</title>
+    <script src="https://cdn.tailwindcss.com"></p>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script>
         tailwind.config = {
@@ -200,33 +200,37 @@
                     <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
                         <div>
                             <h2 class="text-xl font-bold text-slate-100">Target Audience: The Main Three Categories</h2>
-                            <p class="text-xs text-slate-400 mt-1">Click any category below to view company listings and navigate directly to their profile task lists.</p>
+                            <p class="text-xs text-slate-400 mt-1">Click any category below to explore why these audiences are crucial for our AI Lab mission and student empowerment.</p>
                         </div>
                     </div>
 
+                    <!-- 3 Strategic Categories with Mission Explanations -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
+                        <!-- Category 1: Career Days & School Workshops -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career Days & School Workshops</h4>
                                 <span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 font-semibold text-[10px]">Click to View Companies</span>
                             </div>
-                            <p class="text-slate-300">Newton County STEAM Academy, Porterdale Elementary, Timber Ridge Elementary, & Pleasant Grove.</p>
+                            <p class="text-slate-300"><strong>Why this helps:</strong> Sparks early curiosity and introduces AI and creative tools directly to students, inspiring them to build their own tech and creative ventures.</p>
                         </div>
 
+                        <!-- Category 2: After-School Programs & Districts -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-purple-500 transition" onclick="toggleGoalDetail('afterSchoolDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-purple-400 uppercase tracking-wider">2. After-School Programs & Districts</h4>
                                 <span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 font-semibold text-[10px]">Click to View Companies</span>
                             </div>
-                            <p class="text-slate-300">YES Program revenue-share pitch, Newton County District After-School Dept, and InspiHER December conference ($750).</p>
+                            <p class="text-slate-300"><strong>Why this helps:</strong> Establishes recurring weekly mentorship where kids learn hands-on AI prompt engineering, web prototyping, and digital business creation.</p>
                         </div>
 
+                        <!-- Category 3: Private Schools & Community Centers -->
                         <div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3 cursor-pointer hover:border-emerald-500 transition" onclick="toggleGoalDetail('privateSchoolsDetail')">
                             <div class="flex items-center justify-between border-b border-dark-600 pb-2">
                                 <h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private Schools & Community Centers</h4>
                                 <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-semibold text-[10px]">Click to View Companies</span>
                             </div>
-                            <p class="text-slate-300">Heritage Christian, Peachtree Academy, Strong Rock Christian, Washington Street Community Center, & YMCA.</p>
+                            <p class="text-slate-300"><strong>Why this helps:</strong> Expands community access, ensuring diverse groups of students master cutting-edge creative tech and launch independent ventures.</p>
                         </div>
                     </div>
 
@@ -987,7 +991,7 @@
                     if (items.length > 0) {
                         items.forEach((item, idx) => {
                             let potentialTotal = item.classes * 20 * item.price;
-                            let donationAmount = potentialTotal * (item.donation / 100); // 10% = $250 per class ($12.50/kid)
+                            let donationAmount = potentialTotal * (item.donation / 100);
 
                             cards += `
                                 <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl space-y-2">
