@@ -171,8 +171,8 @@
                     <!-- Financial Header with Privacy Eye Toggle -->
                     <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                         <div>
-                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker & Phased Scaling Dashboard</h2>
-                            <p class="text-xs text-slate-400 mt-1">Track progressive scaling from Phase 1 ($7K) to Phase 3 ($14K) with tax reserves and receipt uploads.</p>
+                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker & 3-Phase Scaling Meters</h2>
+                            <p class="text-xs text-slate-400 mt-1">Track progressive scaling across Phase 1 ($7K), Phase 2 ($10K), and Phase 3 ($14K).</p>
                         </div>
                         <button onclick="togglePrivacyMode()" class="px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-200 border border-dark-600 transition flex items-center space-x-2">
                             <i data-lucide="eye" id="privacyIcon" class="w-4 h-4 text-rose-500"></i>
@@ -180,39 +180,54 @@
                         </button>
                     </div>
 
-                    <!-- Inspiring Phased Scaling Banner & Dynamic Circular Gauge Meter -->
-                    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl">
-                        <div class="space-y-3 relative z-10 flex-1">
-                            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30">
-                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span id="currentPhaseBannerText">Phase 1 ($7K) — Initial Launch</span>
-                            </div>
-                            <h2 id="phaseMilestoneTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">Phase 1: $7K Monthly Baseline</h2>
-                            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed space-y-1">
-                                <strong>Phase 1 ($7K):</strong> 1 Event ($750) + 3 Schools (1 Class each / $2,500).<br>
-                                <em>Schedule:</em> Monday & Wednesday | Tuesday & Thursday | 2-Hour Fridays.<br>
-                                <strong>Phase 2 ($10K):</strong> Company Polos, Marketing Materials, EIN reinstatement, & AI Intern Search (College Career Days).<br>
-                                <strong>Phase 3 ($14K):</strong> AI Developer ($300 bi-weekly), Courtney ($250 bi-weekly), Self Salary, & Tax Reserves.
-                            </p>
-                            <div id="dynamicRevenueSummary" class="text-xs font-bold text-emerald-400 pt-1">
-                                <!-- Dynamically updated based on Closed Won -->
-                            </div>
-                        </div>
-
-                        <!-- Circular Gauge Meter UI Component with Explicit Phase Badge Above -->
-                        <div class="flex flex-col items-center justify-center bg-dark-900/60 border border-dark-600 p-5 rounded-2xl shadow-inner shrink-0 w-48 space-y-2">
-                            <span id="meterPhaseBadge" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-rose-500/20 text-rose-400 border border-rose-500/30">Phase 1 ($7K)</span>
+                    <!-- Three Distinct Progress Meters for Phase 1, Phase 2, and Phase 3 -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        
+                        <!-- Meter 1: Phase 1 ($7K Baseline) -->
+                        <div class="bg-dark-700/40 border border-amber-500/30 p-5 rounded-2xl flex flex-col items-center text-center space-y-3">
+                            <span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold border border-amber-500/30">Phase 1 ($7K Baseline)</span>
                             <div class="relative w-24 h-24 flex items-center justify-center">
                                 <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                                    <path class="text-dark-700" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
-                                    <path id="meterCircleFill" class="text-emerald-400 transition-all duration-700" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path class="text-dark-600" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path id="meter1Fill" class="text-amber-400 transition-all duration-700" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
                                 </svg>
                                 <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                                    <span id="meterDealCount" class="text-lg font-extrabold text-slate-100">0 / 4</span>
-                                    <span class="text-[9px] font-bold text-slate-400 uppercase">Deals Won</span>
+                                    <span id="meter1Count" class="text-base font-extrabold text-slate-100">$0 / $7K</span>
                                 </div>
                             </div>
-                            <span id="meterPercentLabel" class="text-[11px] font-bold text-emerald-400">0% of Target</span>
+                            <p class="text-[11px] text-slate-300 leading-tight">1 Event ($750) + 3 Schools (1 Class each / $2,500).<br><em>Schedule:</em> Mon/Wed | Tue/Thu | 2-hr Fri.</p>
                         </div>
+
+                        <!-- Meter 2: Phase 2 ($10K Growth) -->
+                        <div class="bg-dark-700/40 border border-purple-500/30 p-5 rounded-2xl flex flex-col items-center text-center space-y-3">
+                            <span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold border border-purple-500/30">Phase 2 ($10K Growth)</span>
+                            <div class="relative w-24 h-24 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                    <path class="text-dark-600" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path id="meter2Fill" class="text-purple-400 transition-all duration-700" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                    <span id="meter2Count" class="text-base font-extrabold text-slate-100">$0 / $10K</span>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-300 leading-tight">Unlocks Company Polos, Marketing Materials, EIN reinstatement, & AI Intern Search (College Career Days).</p>
+                        </div>
+
+                        <!-- Meter 3: Phase 3 ($14K Full Scale) -->
+                        <div class="bg-dark-700/40 border border-emerald-500/30 p-5 rounded-2xl flex flex-col items-center text-center space-y-3">
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold border border-emerald-500/30">Phase 3 ($14K Full Scale)</span>
+                            <div class="relative w-24 h-24 flex items-center justify-center">
+                                <svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                    <path class="text-dark-600" stroke-width="3.5" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                    <path id="meter3Fill" class="text-emerald-400 transition-all duration-700" stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"></path>
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center text-center">
+                                    <span id="meter3Count" class="text-base font-extrabold text-slate-100">$0 / $14K</span>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-slate-300 leading-tight">AI Developer ($300 bi-wk), Courtney ($250 bi-wk), Self Salary, & Tax Reserves.</p>
+                        </div>
+
                     </div>
 
                     <!-- Team Payroll & Tax Reserves Card with Individual Amount Toggles -->
@@ -1338,7 +1353,6 @@
 
                 let wonDeals = financialProspects.filter(p => p.stage === "Closed Won");
                 let wonDealsCount = wonDeals.length;
-                let percent = Math.min(100, Math.round((wonDealsCount / 4) * 100));
                 
                 let totalWonRevenue = 0;
                 wonDeals.forEach(d => {
@@ -1349,37 +1363,51 @@
                     }
                 });
 
-                // Update Phase Banner and Meter Badge dynamically based on actual revenue
+                // Calculate individual percentages and progress for the 3 distinct meters
+                let p1RevTarget = 7000;
+                let p2RevTarget = 10000;
+                let p3RevTarget = 14000;
+
+                let p1Percent = Math.min(100, Math.round((totalWonRevenue / p1RevTarget) * 100));
+                let p2Percent = Math.min(100, Math.round((totalWonRevenue / p2RevTarget) * 100));
+                let p3Percent = Math.min(100, Math.round((totalWonRevenue / p3RevTarget) * 100));
+
+                let circ = 2 * Math.PI * 15.9155;
+
+                // Update Meter 1
+                const m1Fill = document.getElementById('meter1Fill');
+                const m1Count = document.getElementById('meter1Count');
+                if (m1Fill) m1Fill.style.strokeDasharray = `${(p1Percent / 100) * circ}, ${circ}`;
+                if (m1Count) m1Count.innerText = `$${totalWonRevenue.toLocaleString()} / $7K`;
+
+                // Update Meter 2
+                const m2Fill = document.getElementById('meter2Fill');
+                const m2Count = document.getElementById('meter2Count');
+                if (m2Fill) m2Fill.style.strokeDasharray = `${(p2Percent / 100) * circ}, ${circ}`;
+                if (m2Count) m2Count.innerText = `$${totalWonRevenue.toLocaleString()} / $10K`;
+
+                // Update Meter 3
+                const m3Fill = document.getElementById('meter3Fill');
+                const m3Count = document.getElementById('meter3Count');
+                if (m3Fill) m3Fill.style.strokeDasharray = `${(p3Percent / 100) * circ}, ${circ}`;
+                if (m3Count) m3Count.innerText = `$${totalWonRevenue.toLocaleString()} / $14K`;
+
+                // Update Dynamic Banner text based on active revenue tier
                 const currentPhaseText = document.getElementById('currentPhaseBannerText');
                 const phaseTitle = document.getElementById('phaseMilestoneTitle');
-                const meterPhaseBadge = document.getElementById('meterPhaseBadge');
                 
-                if (totalWonRevenue >= 10000 || wonDealsCount >= 3) {
+                if (totalWonRevenue >= 14000) {
                     if (currentPhaseText) currentPhaseText.innerText = "Phase 3 ($14K) — Full Scaling & Developer";
                     if (phaseTitle) phaseTitle.innerText = "Phase 3: Full Team Payroll & Tax Reserves ($14K)";
-                    if (meterPhaseBadge) meterPhaseBadge.innerText = "Phase 3 ($14K)";
-                } else if (totalWonRevenue >= 7000 || wonDealsCount >= 2) {
+                } else if (totalWonRevenue >= 10000) {
                     if (currentPhaseText) currentPhaseText.innerText = "Phase 2 ($10K) — Polos & Team Growth";
                     if (phaseTitle) phaseTitle.innerText = "Phase 2: Polos, Marketing & EIN ($10K)";
-                    if (meterPhaseBadge) meterPhaseBadge.innerText = "Phase 2 ($10K)";
                 } else {
                     if (currentPhaseText) currentPhaseText.innerText = "Phase 1 ($7K) — Initial Launch";
                     if (phaseTitle) phaseTitle.innerText = "Phase 1: $7K Monthly Baseline";
-                    if (meterPhaseBadge) meterPhaseBadge.innerText = "Phase 1 ($7K)";
                 }
 
-                const meterCircleFill = document.getElementById('meterCircleFill');
-                const meterDealCount = document.getElementById('meterDealCount');
-                const meterPercentLabel = document.getElementById('meterPercentLabel');
                 const dynamicRevenueSummary = document.getElementById('dynamicRevenueSummary');
-
-                if (meterCircleFill) {
-                    let circumference = 2 * Math.PI * 15.9155;
-                    let strokeVal = (percent / 100) * circumference;
-                    meterCircleFill.style.strokeDasharray = `${strokeVal}, ${circumference}`;
-                }
-                if (meterDealCount) meterDealCount.innerText = `${wonDealsCount} / 4`;
-                if (meterPercentLabel) meterPercentLabel.innerText = `${percent}% of Target`;
                 if (dynamicRevenueSummary) {
                     dynamicRevenueSummary.innerHTML = `Closed Won Revenue Secured: <span class="text-white font-mono privacy-field">$${totalWonRevenue.toFixed(2)}</span> / $14,000 Scaling Target`;
                 }
