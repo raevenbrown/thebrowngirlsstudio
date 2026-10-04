@@ -783,7 +783,7 @@
                 lucide.createIcons();
                 initApp();
             } else {
-                document.getElementById('errorMsg').classList.add('hidden');
+                document.getElementById('errorMsg').classList.remove('hidden');
             }
         }
 
@@ -1216,40 +1216,40 @@
             let retainerBadge = lead.isRetainer ? '<span class="px-2.5 py-1 rounded bg-purple-500/15 text-purple-400 border border-purple-500/30 font-bold ml-2">Retainer Partner</span>' : '';
             stageDisplay.innerHTML = `<span class="px-2.5 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold">${lead.stage}</span> • Target Classes: ${lead.classes} ${retainerBadge}`;
 
-            if (!lead.clientTasks) lead.clientTasks = [];
+            if (!lead.clientTasks) {
+                lead.clientTasks = [
+                    { title: "Initial Partnership Outreach", desc: `Contact ${lead.org} leadership regarding after-school STEM program`, date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }
+                ];
+            }
 
             container.innerHTML = '';
-            if (lead.clientTasks.length > 0) {
-                lead.clientTasks.forEach((ct, cIdx) => {
-                    let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
-                    let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
+            lead.clientTasks.forEach((ct, cIdx) => {
+                let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
+                let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
 
-                    container.innerHTML += `
-                        <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
-                            <label class="flex items-start space-x-3 cursor-pointer flex-1">
-                                <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                                <div class="space-y-1">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
-                                        ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
-                                    </div>
-                                    ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
-                                    <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
-                                        ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
-                                        ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
-                                    </div>
+                container.innerHTML += `
+                    <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
+                        <label class="flex items-start space-x-3 cursor-pointer flex-1">
+                            <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                            <div class="space-y-1">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
+                                    ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
                                 </div>
-                            </label>
-                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
-                                <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
-                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
+                                <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
+                                    ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
+                                    ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
+                                </div>
                             </div>
-                        </div>`;
-                });
-            } else {
-                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No tasks added to this company profile yet.</p>`;
-            }
+                        </label>
+                        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
+                            <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
+                            <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>`;
+            });
             lucide.createIcons();
         }
 
@@ -1327,7 +1327,7 @@
             document.getElementById('commsModal').classList.remove('hidden');
         }
         function closeCommsModal() {
-            document.getElementById('commsModal'].classList.add('hidden');
+            document.getElementById('commsModal').classList.add('hidden');
         }
 
         function saveCommsActivity(event) {
@@ -1512,4 +1512,3 @@
     </script>
 </body>
 </html>
- 
