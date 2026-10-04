@@ -982,7 +982,7 @@
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
         }
 
-        // Ensure tasks and activities arrays are intact
+        // Ensure tasks and activities arrays are intact and ensure each has the default weekly outreach task
         financialProspects.forEach(fp => {
             if (!fp.clientTasks) fp.clientTasks = [];
             if (fp.clientTasks.length === 0) {
@@ -1856,7 +1856,8 @@
             return curr;
         }
 
-        function openProfile(id, tabToOpen = 'tasks', updateHash = true) {
+        // Fixed openProfile function with correct view container switching & tab selection
+        function openProfile(id, tabToOpen = 'revenue', updateHash = true) {
             currentProfileId = id;
             currentFolderPath = []; 
             if (updateHash) {
@@ -1865,11 +1866,12 @@
             const lead = financialProspects.find(l => l.id === id);
             if(!lead) return;
 
+            // Hide main views and pipeline view, reveal profile view
             ['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
                 const el = document.getElementById('mainView-' + v);
                 if (el) el.classList.add('hidden');
             });
-            document.getElementById('profileView').classList.add('hidden');
+            document.getElementById('pipelineView').classList.add('hidden');
             document.getElementById('profileView').classList.remove('hidden');
             document.getElementById('pageTitle').innerText = lead.org + " | Profile";
 
@@ -1996,7 +1998,7 @@
             if (window.location.hash.includes("profile=")) {
                 const hashParams = new URLSearchParams(window.location.hash.substring(1));
                 const profileId = parseInt(hashParams.get("profile"));
-                const tabName = hashParams.get("tab") || 'tasks';
+                const tabName = hashParams.get("tab") || 'revenue';
                 if (profileId) {
                     openProfile(profileId, tabName, false);
                 }
