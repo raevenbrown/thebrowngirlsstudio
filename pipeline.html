@@ -215,28 +215,43 @@
                         </div>
                     </div>
 
-                    <!-- Team Payroll & Tax Reserves Card -->
+                    <!-- Team Payroll & Tax Reserves Card with Individual Amount Toggles -->
                     <div class="bg-dark-700/40 border border-dark-600 p-6 rounded-2xl space-y-4">
-                        <h3 class="font-bold text-sm text-slate-100 flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2 text-rose-500"></i> Phase 3 Team Payroll & Tax Reserves ($14K Scaling Model)</h3>
+                        <div class="flex justify-between items-center border-b border-dark-600 pb-3">
+                            <h3 class="font-bold text-sm text-slate-100 flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2 text-rose-500"></i> Phase 3 Team Payroll & Tax Reserves ($14K Scaling Model)</h3>
+                            <button onclick="toggleAllPayrollAmounts()" class="px-2.5 py-1 rounded-lg bg-dark-700 hover:bg-dark-600 text-[11px] text-rose-400 border border-dark-600 font-semibold">Toggle All Amounts</button>
+                        </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer (Paid Intern)</p>
-                                <p class="text-base font-bold text-purple-400 privacy-field">$300 bi-weekly</p>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer (Paid Intern)</p>
+                                    <button onclick="toggleSinglePayroll('payDev')" class="text-[10px] text-rose-400 underline">Show/Hide</button>
+                                </div>
+                                <p class="text-base font-bold text-purple-400 payroll-toggle-item" id="payDev" data-val="$300 bi-weekly">$300 bi-weekly</p>
                                 <p class="text-[10px] text-slate-400">Technical lab & system support.</p>
                             </div>
-                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">Courtney White (Assistant)</p>
-                                <p class="text-base font-bold text-emerald-400 privacy-field">$250 bi-weekly</p>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <p class="text-slate-400 uppercase font-bold text-[10px]">Courtney White (Assistant)</p>
+                                    <button onclick="toggleSinglePayroll('payCourtney')" class="text-[10px] text-rose-400 underline">Show/Hide</button>
+                                </div>
+                                <p class="text-base font-bold text-emerald-400 payroll-toggle-item" id="payCourtney" data-val="$250 bi-weekly">$250 bi-weekly</p>
                                 <p class="text-[10px] text-slate-400">Operational & studio support.</p>
                             </div>
-                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer Teacher</p>
-                                <p class="text-base font-bold text-indigo-400 privacy-field">$1,250 / mo</p>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer Teacher</p>
+                                    <button onclick="toggleSinglePayroll('payTeacher')" class="text-[10px] text-rose-400 underline">Show/Hide</button>
+                                </div>
+                                <p class="text-base font-bold text-indigo-400 payroll-toggle-item" id="payTeacher" data-val="$1,250 / mo">$1,250 / mo</p>
                                 <p class="text-[10px] text-slate-400">Curriculum & mentorship.</p>
                             </div>
-                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
-                                <p class="text-slate-400 uppercase font-bold text-[10px]">Tax Set-Aside Reserve</p>
-                                <p class="text-base font-bold text-amber-400 privacy-field">Dedicated Pool</p>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <p class="text-slate-400 uppercase font-bold text-[10px]">Tax Set-Aside Reserve</p>
+                                    <button onclick="toggleSinglePayroll('payTax')" class="text-[10px] text-rose-400 underline">Show/Hide</button>
+                                </div>
+                                <p class="text-base font-bold text-amber-400 payroll-toggle-item" id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
                                 <p class="text-[10px] text-slate-400">Allocated for quarterly filing.</p>
                             </div>
                         </div>
@@ -919,31 +934,31 @@
         }
 
         const defaultFinancialProspects = [
-            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] },
-            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }] }
+            { id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
+            { id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price: 750.00, donation: 0, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] }
         ];
 
         let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects'));
@@ -1013,6 +1028,39 @@
                 fields.forEach(f => f.classList.remove('privacy-mask'));
             }
             lucide.createIcons();
+        }
+
+        // Individual Payroll Toggle Functions
+        let payrollToggles = { payDev: true, payCourtney: true, payTeacher: true, payTax: true };
+        function toggleSinglePayroll(id) {
+            payrollToggles[id] = !payrollToggles[id];
+            const el = document.getElementById(id);
+            if (el) {
+                if (payrollToggles[id]) {
+                    el.innerText = el.getAttribute('data-val');
+                    el.classList.remove('privacy-mask');
+                } else {
+                    el.innerText = "••••••••";
+                    el.classList.add('privacy-mask');
+                }
+            }
+        }
+        function toggleAllPayrollAmounts() {
+            const allTrue = Object.values(payrollToggles).every(v => v);
+            const newState = !allTrue;
+            Object.keys(payrollToggles).forEach(k => {
+                payrollToggles[k] = newState;
+                const el = document.getElementById(k);
+                if (el) {
+                    if (newState) {
+                        el.innerText = el.getAttribute('data-val');
+                        el.classList.remove('privacy-mask');
+                    } else {
+                        el.innerText = "••••••••";
+                        el.classList.add('privacy-mask');
+                    }
+                }
+            });
         }
 
         function switchMainView(viewName, updateHash = true) {
@@ -1768,7 +1816,7 @@
                 const el = document.getElementById('mainView-' + v);
                 if (el) el.classList.add('hidden');
             });
-            document.getElementById('pipelineView').classList.add('hidden');
+            document.getElementById('profileView').classList.add('hidden');
             document.getElementById('profileView').classList.remove('hidden');
             document.getElementById('pageTitle').innerText = lead.org + " | Profile";
 
