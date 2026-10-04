@@ -134,13 +134,20 @@
             <!-- Main Section: Financial Goal Tracker Dashboard -->
             <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
-                    <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
-                        <div>
-                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker</h2>
-                            <p class="text-xs text-slate-400 mt-1">Goal: Secure 1 closed deal per month from October to December (Total of 4 deals by December: 1 InspiHER event + 3 partnerships) to hit the $7K monthly revenue milestone.</p>
+                    
+                    <!-- Inspiring Q4 Goal Banner -->
+                    <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-xl">
+                        <div class="space-y-2 relative z-10">
+                            <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30">
+                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span>Q4 Mission & Revenue Milestone</span>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">Lock in 4 Deals by December</h2>
+                            <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                                <strong>1 Closed Deal Per Month</strong> (October to December) — Total of 4 Deals: <span class="text-rose-400 font-semibold">1 InspiHER Event</span> + <span class="text-emerald-400 font-semibold">3 Partnerships</span> to hit the <span class="text-purple-400 font-bold">$7,000 monthly recurring revenue</span> target.
+                            </p>
                         </div>
-                        <button onclick="openFinancialProspectModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
-                            <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect
+                        <button onclick="openFinancialProspectModal()" class="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition shrink-0 flex items-center">
+                            <i data-lucide="plus" class="w-4 h-4 mr-2"></i> Add Prospect
                         </button>
                     </div>
 
@@ -909,12 +916,12 @@
             },
             { 
                 id: 2, 
-                stage: "Follow-up Stage", 
+                stage: "Prospecting", 
                 org: "Newton County STEAM Academy", 
                 contact: "Principal Brandon Parham / Chantal Hendrix", 
                 scope: "Career Day (Free) & District After-School Pitch", 
-                status: "Follow-Up Stage", 
-                action: "Email Ms. Bunting to set up a day to come back to the school",
+                status: "Prospecting", 
+                action: "Pitch district after-school department",
                 isRetainer: true,
                 auditRecords: [],
                 calendarEvents: [],
@@ -1123,7 +1130,6 @@
             if (matched) {
                 openProfile(matched.id, 'tasks');
             } else {
-                // Create a temporary profile on the fly if not in pipelineData yet
                 let newId = Date.now();
                 pipelineData.push({
                     id: newId,
