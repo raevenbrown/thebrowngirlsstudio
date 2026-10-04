@@ -198,7 +198,7 @@
                             </div>
                         </div>
 
-                        <!-- Circular Gauge Meter UI Component -->
+                        <!-- Circular Gauge Meter UI Component with Explicit Phase Badge Above -->
                         <div class="flex flex-col items-center justify-center bg-dark-900/60 border border-dark-600 p-5 rounded-2xl shadow-inner shrink-0 w-48 space-y-2">
                             <span id="meterPhaseBadge" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-rose-500/20 text-rose-400 border border-rose-500/30">Phase 1 ($7K)</span>
                             <div class="relative w-24 h-24 flex items-center justify-center">
@@ -1030,29 +1030,17 @@
             lucide.createIcons();
         }
 
-        // Individual Payroll Toggle Functions
-        let payrollToggles = { payDev: true, payCourtney: true, payTeacher: true, payTax: true };
-        function toggleSinglePayroll(id) {
-            payrollToggles[id] = !payrollToggles[id];
-            const el = document.getElementById(id);
-            if (el) {
-                if (payrollToggles[id]) {
-                    el.innerText = el.getAttribute('data-val');
-                    el.classList.remove('privacy-mask');
-                } else {
-                    el.innerText = "••••••••";
-                    el.classList.add('privacy-mask');
-                }
-            }
+        // Individual Payroll Toggle Functions with Persistent Storage
+        let payrollToggles = JSON.parse(localStorage.getItem('bgcs_payroll_toggles')) || { payDev: true, payCourtney: true, payTeacher: true, payTax: true };
+        function savePayrollToggles() {
+            localStorage.setItem('bgcs_payroll_toggles', JSON.stringify(payrollToggles));
         }
-        function toggleAllPayrollAmounts() {
-            const allTrue = Object.values(payrollToggles).every(v => v);
-            const newState = !allTrue;
+
+        function applyPayrollToggleState() {
             Object.keys(payrollToggles).forEach(k => {
-                payrollToggles[k] = newState;
                 const el = document.getElementById(k);
                 if (el) {
-                    if (newState) {
+                    if (payrollToggles[k]) {
                         el.innerText = el.getAttribute('data-val');
                         el.classList.remove('privacy-mask');
                     } else {
@@ -1061,6 +1049,22 @@
                     }
                 }
             });
+        }
+
+        function toggleSinglePayroll(id) {
+            payrollToggles[id] = !payrollToggles[id];
+            savePayrollToggles();
+            applyPayrollToggleState();
+        }
+
+        function toggleAllPayrollAmounts() {
+            const allTrue = Object.values(payrollToggles).every(v => v);
+            const newState = !allTrue;
+            Object.keys(payrollToggles).forEach(k => {
+                payrollToggles[k] = newState;
+            });
+            savePayrollToggles();
+            applyPayrollToggleState();
         }
 
         function switchMainView(viewName, updateHash = true) {
@@ -1092,6 +1096,7 @@
                 document.getElementById('mainView-financial').classList.remove('hidden');
                 document.getElementById('pageTitle').innerText = "Financial Goal Tracker";
                 renderFinancialKanban();
+                applyPayrollToggleState();
                 if (updateHash) window.location.hash = "view=financial";
                 const activeBtn = document.getElementById('nav-financial');
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
@@ -1344,18 +1349,18 @@
                     }
                 });
 
-                // Update Phase Banner and Meter Badge dynamically based on revenue or won deals
+                // Update Phase Banner and Meter Badge dynamically based on actual revenue
                 const currentPhaseText = document.getElementById('currentPhaseBannerText');
                 const phaseTitle = document.getElementById('phaseMilestoneTitle');
                 const meterPhaseBadge = document.getElementById('meterPhaseBadge');
                 
-                if (totalWonRevenue >= 14000) {
+                if (totalWonRevenue >= 10000 || wonDealsCount >= 3) {
                     if (currentPhaseText) currentPhaseText.innerText = "Phase 3 ($14K) — Full Scaling & Developer";
-                    if (phaseTitle) phaseTitle.innerText = "Phase 3: $14K Monthly Target Reached";
+                    if (phaseTitle) phaseTitle.innerText = "Phase 3: Full Team Payroll & Tax Reserves ($14K)";
                     if (meterPhaseBadge) meterPhaseBadge.innerText = "Phase 3 ($14K)";
-                } else if (totalWonRevenue >= 10000) {
+                } else if (totalWonRevenue >= 7000 || wonDealsCount >= 2) {
                     if (currentPhaseText) currentPhaseText.innerText = "Phase 2 ($10K) — Polos & Team Growth";
-                    if (phaseTitle) phaseTitle.innerText = "Phase 2: $10K Monthly Target Reached";
+                    if (phaseTitle) phaseTitle.innerText = "Phase 2: Polos, Marketing & EIN ($10K)";
                     if (meterPhaseBadge) meterPhaseBadge.innerText = "Phase 2 ($10K)";
                 } else {
                     if (currentPhaseText) currentPhaseText.innerText = "Phase 1 ($7K) — Initial Launch";
@@ -1431,6 +1436,7 @@
             if (privacyModeActive) {
                 document.querySelectorAll('.privacy-field').forEach(f => f.classList.add('privacy-mask'));
             }
+            applyPayrollToggleState();
             lucide.createIcons();
         }
 
