@@ -125,8 +125,8 @@
                     <button onclick="exportCSV()" class="px-3 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-300 border border-dark-600 transition flex items-center shadow-sm">
                         <i data-lucide="download" class="w-3.5 h-3.5 mr-1.5"></i> Export
                     </button>
-                    <button onclick="openFinancialProspectModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
-                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect
+                    <button onclick="openModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20 transition flex items-center">
+                        <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Target
                     </button>
                 </div>
             </header>
@@ -135,9 +135,9 @@
             <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     
-                    <!-- Inspiring Q4 Goal Banner -->
+                    <!-- Inspiring Q4 Goal Banner & Dynamic Progress Meter -->
                     <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 shadow-xl">
-                        <div class="space-y-2 relative z-10">
+                        <div class="space-y-3 relative z-10 flex-1">
                             <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30">
                                 <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span>Q4 Mission & Revenue Milestone</span>
                             </div>
@@ -145,13 +145,24 @@
                             <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
                                 <strong>1 Closed Deal Per Month</strong> (October to December) — Total of 4 Deals: <span class="text-rose-400 font-semibold">1 InspiHER Event</span> + <span class="text-emerald-400 font-semibold">3 Partnerships</span> to hit the <span class="text-purple-400 font-bold">$7,000 monthly recurring revenue</span> target.
                             </p>
+                            
+                            <!-- Dynamic Meter Bar -->
+                            <div class="pt-2 space-y-1 max-w-lg">
+                                <div class="flex justify-between text-xs font-bold">
+                                    <span class="text-slate-300">Sales Funnel Progress (Closed Won Deals)</span>
+                                    <span id="meterPercentText" class="text-emerald-400">0 / 4 Deals (0%)</span>
+                                </div>
+                                <div class="w-full bg-dark-900/80 rounded-full h-3 border border-dark-600 overflow-hidden">
+                                    <div id="meterBarFill" class="bg-gradient-to-r from-emerald-500 to-teal-400 h-3 rounded-full transition-all duration-500" style="width: 0%;"></div>
+                                </div>
+                            </div>
                         </div>
                         <button onclick="openFinancialProspectModal()" class="px-5 py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition shrink-0 flex items-center">
                             <i data-lucide="plus" class="w-4 h-4 mr-2"></i> Add Prospect
                         </button>
                     </div>
 
-                    <!-- Pricing & Donation Model Banner -->
+                    <!-- Pricing & Corrected Community Donation Banner -->
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
                         <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
                             <p class="text-slate-400 font-bold uppercase text-[10px]">Pricing Model</p>
@@ -162,8 +173,8 @@
                             <p class="text-base font-bold text-slate-100 mt-1">20 Students / Class ($2,500/class)</p>
                         </div>
                         <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                            <p class="text-slate-400 font-bold uppercase text-[10px]">Donation / Revenue Share</p>
-                            <p class="text-base font-bold text-purple-400 mt-1">~10% ($18.75/kid to school PTO)</p>
+                            <p class="text-slate-400 font-bold uppercase text-[10px]">Community Donation (10%)</p>
+                            <p class="text-base font-bold text-purple-400 mt-1">$250 / class ($12.50/kid back to community)</p>
                         </div>
                     </div>
 
@@ -822,31 +833,6 @@
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
         }
 
-        function getUnifiedPipelineData() {
-            return financialProspects.map((fp, idx) => {
-                return {
-                    id: fp.id || (100 + idx),
-                    stage: fp.stage,
-                    org: fp.org,
-                    contact: "School Coordinator / Director",
-                    scope: `${fp.classes} Classes (${fp.classes * 20} Students) @ $${fp.price}/kid`,
-                    status: fp.stage,
-                    action: "Outreach & Follow-up",
-                    isRetainer: true,
-                    auditRecords: fp.stage === "Closed Won" ? [{ ref: "INV-2026-" + idx, desc: fp.org, date: "Oct 2, 2026", amount: fp.classes * 20 * fp.price, status: "Paid", method: "ACH" }] : [],
-                    calendarEvents: [],
-                    clientTasks: [{ title: "Initial Partnership Outreach", desc: "Contact organization leadership regarding after-school STEM program", date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }],
-                    rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
-                    trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
-                    financialDocs: [{ name: "Form W-9.pdf", url: "W9.pdf" }, { name: "EIN CP575.pdf", url: "EIN.pdf" }],
-                    contacts: [],
-                    activities: [{ date: "Oct 3, 2026", type: "Created", text: "Prospect synchronized from Financial Goal Tracker." }]
-                };
-            });
-        }
-
-        let pipelineData = getUnifiedPipelineData();
-
         let prospectTodos = JSON.parse(localStorage.getItem('bgcs_prospect_todos')) || [
             { id: 1, task: "Follow up with InspiHER AP department (First week of November)", done: false },
             { id: 2, task: "Review proposal and schedule pilot cohort with NCSA", done: false },
@@ -968,13 +954,20 @@
                 "Closed Lost": "border-rose-500/30 text-rose-400"
             };
 
+            let wonDealsCount = financialProspects.filter(p => p.stage === "Closed Won").length;
+            let percent = Math.min(100, Math.round((wonDealsCount / 4) * 100));
+            const fillBar = document.getElementById('meterBarFill');
+            const percentText = document.getElementById('meterPercentText');
+            if (fillBar) fillBar.style.width = percent + '%';
+            if (percentText) percentText.innerText = `${wonDealsCount} / 4 Deals (${percent}%)`;
+
             stages.forEach(stage => {
                 const items = financialProspects.filter(p => p.stage === stage);
                 let cards = '';
                 if (items.length > 0) {
                     items.forEach((item, idx) => {
                         let potentialTotal = item.classes * 20 * item.price;
-                        let donationAmount = potentialTotal * (item.donation / 100);
+                        let donationAmount = potentialTotal * (item.donation / 100); // 10% = $250 per class
 
                         cards += `
                             <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl space-y-2">
@@ -986,7 +979,7 @@
                                     <p>Classes: <strong>${item.classes}</strong> (20 kids/class)</p>
                                     <p>Price/Kid: <strong>$${item.price.toFixed(2)}</strong></p>
                                     <p class="text-emerald-400 font-bold">Target Revenue: $${potentialTotal.toFixed(2)}</p>
-                                    <p class="text-purple-400">School Donation (${item.donation}%): $${donationAmount.toFixed(2)}</p>
+                                    <p class="text-purple-400">Community Donation (${item.donation}%): $${donationAmount.toFixed(2)} ($12.50/kid)</p>
                                 </div>
                                 <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
                                     <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
@@ -1016,8 +1009,7 @@
         }
 
         function openFinancialOrgProfile(orgName) {
-            pipelineData = getUnifiedPipelineData();
-            let matched = pipelineData.find(l => l.org.toLowerCase().includes(orgName.toLowerCase()));
+            let matched = financialProspects.find(p => p.org.toLowerCase() === orgName.toLowerCase());
             if (matched) {
                 openProfile(matched.id, 'tasks');
             }
@@ -1028,7 +1020,6 @@
             if (p) {
                 p.stage = newStage;
                 saveFinancialProspects();
-                pipelineData = getUnifiedPipelineData();
                 renderFinancialKanban();
             }
         }
@@ -1037,7 +1028,6 @@
             if (confirm("Move this prospect to the Trash Bin?")) {
                 financialProspects = financialProspects.filter(item => item.id !== id);
                 saveFinancialProspects();
-                pipelineData = getUnifiedPipelineData();
                 renderFinancialKanban();
             }
         }
@@ -1059,30 +1049,26 @@
             financialProspects.push({ id: Date.now(), org, stage, classes, price, donation });
             closeFinancialProspectModal();
             saveFinancialProspects();
-            pipelineData = getUnifiedPipelineData();
             renderFinancialKanban();
         }
 
         function updateClientStage(newStage) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if (lead) {
-                lead.stage = newStage;
-                let fp = financialProspects.find(p => p.org.toLowerCase().includes(lead.org.toLowerCase()));
+            if (currentProfileId) {
+                let fp = financialProspects.find(p => p.id === currentProfileId);
                 if (fp) {
                     fp.stage = newStage;
                     saveFinancialProspects();
                 }
-                savePipelineData();
                 document.getElementById('profileBadge').innerText = newStage;
                 renderClientTasks();
             }
         }
 
         function toggleClientRetainer(isChecked) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
-            if (lead) {
-                lead.isRetainer = isChecked;
-                savePipelineData();
+            let fp = financialProspects.find(p => p.id === currentProfileId);
+            if (fp) {
+                fp.isRetainer = isChecked;
+                saveFinancialProspects();
                 renderClientTasks();
             }
         }
@@ -1090,79 +1076,78 @@
         function renderClientTasks() {
             const container = document.getElementById('clientTaskListContainer');
             const stageDisplay = document.getElementById('clientTaskStageDisplay');
-            const lead = pipelineData.find(l => l.id === currentProfileId);
+            const lead = financialProspects.find(l => l.id === currentProfileId);
             if (!lead || !container) return;
 
             document.getElementById('inlineStageSelect').value = lead.stage;
             document.getElementById('inlineRetainerCheck').checked = !!lead.isRetainer;
 
             let retainerBadge = lead.isRetainer ? '<span class="px-2.5 py-1 rounded bg-purple-500/15 text-purple-400 border border-purple-500/30 font-bold ml-2">Retainer Partner</span>' : '';
-            stageDisplay.innerHTML = `<span class="px-2.5 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold">${lead.stage}</span> • Status: ${lead.status} ${retainerBadge}`;
+            stageDisplay.innerHTML = `<span class="px-2.5 py-1 rounded bg-rose-500/15 text-rose-400 border border-rose-500/30 font-bold">${lead.stage}</span> • Target Classes: ${lead.classes} ${retainerBadge}`;
+
+            if (!lead.clientTasks) {
+                lead.clientTasks = [
+                    { title: "Initial Partnership Outreach", desc: `Contact ${lead.org} leadership regarding after-school STEM program`, date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }
+                ];
+            }
 
             container.innerHTML = '';
-            if (lead.clientTasks && lead.clientTasks.length > 0) {
-                lead.clientTasks.forEach((ct, cIdx) => {
-                    let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
-                    let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
+            lead.clientTasks.forEach((ct, cIdx) => {
+                let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
+                let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
 
-                    container.innerHTML += `
-                        <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
-                            <label class="flex items-start space-x-3 cursor-pointer flex-1">
-                                <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                                <div class="space-y-1">
-                                    <div class="flex items-center space-x-2">
-                                        <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
-                                        ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
-                                    </div>
-                                    ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
-                                    <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
-                                        ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
-                                        ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
-                                    </div>
+                container.innerHTML += `
+                    <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 transition">
+                        <label class="flex items-start space-x-3 cursor-pointer flex-1">
+                            <input type="checkbox" ${ct.done ? 'checked' : ''} onchange="toggleClientTask(${cIdx})" class="w-4 h-4 mt-0.5 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
+                            <div class="space-y-1">
+                                <div class="flex items-center space-x-2">
+                                    <span class="text-slate-100 font-bold text-sm ${ct.done ? 'line-through text-slate-500' : ''}">${ct.title || ct.task}</span>
+                                    ${ct.active ? '<span class="px-1.5 py-0.5 rounded bg-rose-500 text-white text-[9px] font-bold uppercase animate-pulse">Current Focus</span>' : ''}
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold border ${urgencyColor}">${ct.urgency || 'Medium'}</span>
                                 </div>
-                            </label>
-                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
-                                <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
-                                <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                ${ct.desc ? `<p class="text-xs text-slate-300">${ct.desc}</p>` : ''}
+                                <div class="flex flex-wrap gap-3 text-[11px] text-slate-400 pt-1">
+                                    ${ct.date ? `<span class="text-rose-400 font-semibold"><i data-lucide="calendar" class="w-3 h-3 inline mr-1"></i>Due: ${ct.date}</span>` : ''}
+                                    ${ct.assignee ? `<span class="text-purple-400 font-semibold"><i data-lucide="user" class="w-3 h-3 inline mr-1"></i>Assigned: ${ct.assignee}</span>` : ''}
+                                </div>
                             </div>
-                        </div>`;
-                });
-            } else {
-                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No active tasks for this client.</p>`;
-            }
+                        </label>
+                        <div class="flex items-center space-x-2 w-full sm:w-auto justify-end shrink-0">
+                            <button onclick="setClientTaskActive(${cIdx})" class="text-[11px] px-2.5 py-1.5 rounded-lg bg-dark-600 hover:bg-dark-500 text-slate-200 font-medium border border-dark-500">Highlight</button>
+                            <button onclick="deleteClientTask(${cIdx})" class="text-slate-400 hover:text-rose-400 p-1.5 rounded-lg hover:bg-dark-600" title="Move to Trash"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                        </div>
+                    </div>`;
+            });
             lucide.createIcons();
         }
 
         function toggleClientTask(cIdx) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
+            let lead = financialProspects.find(l => l.id === currentProfileId);
             if (lead && lead.clientTasks) {
                 lead.clientTasks[cIdx].done = !lead.clientTasks[cIdx].done;
-                savePipelineData();
+                saveFinancialProspects();
                 renderClientTasks();
             }
         }
 
         function setClientTaskActive(cIdx) {
-            const lead = pipelineData.find(l => l.id === currentProfileId);
+            let lead = financialProspects.find(l => l.id === currentProfileId);
             if (lead && lead.clientTasks) {
                 lead.clientTasks.forEach((t, idx) => {
                     t.active = (idx === cIdx);
                 });
-                savePipelineData();
+                saveFinancialProspects();
                 renderClientTasks();
             }
         }
 
         function deleteClientTask(cIdx) {
             if (confirm("Move this task to the Trash Bin?")) {
-                const lead = pipelineData.find(l => l.id === currentProfileId);
+                let lead = financialProspects.find(l => l.id === currentProfileId);
                 if (lead && lead.clientTasks) {
-                    let removed = lead.clientTasks.splice(cIdx, 1)[0];
-                    if (!lead.trashFolder) lead.trashFolder = { name: "Trash Bin", subfolders: [], files: [] };
-                    if (!lead.trashFolder.files) lead.trashFolder.files = [];
-                    lead.trashFolder.files.push({ name: "Task: " + (removed.title || removed.task), url: "#" });
-                    savePipelineData();
+                    lead.clientTasks.splice(cIdx, 1);
+                    saveFinancialProspects();
                     renderClientTasks();
                 }
             }
@@ -1186,63 +1171,14 @@
             const urgency = document.getElementById('clientTaskUrgency').value;
             const assignee = document.getElementById('clientTaskAssignee').value;
             
-            const lead = pipelineData.find(l => l.id === currentProfileId);
+            let lead = financialProspects.find(l => l.id === currentProfileId);
             if (lead) {
                 if (!lead.clientTasks) lead.clientTasks = [];
                 lead.clientTasks.push({ title, desc, date, urgency, assignee, done: false, active: false });
                 closeClientTaskModal();
-                savePipelineData();
+                saveFinancialProspects();
                 renderClientTasks();
             }
-        }
-
-        function renderProspectTodos() {
-            const container = document.getElementById('prospectTodoList');
-            if (!container) return;
-            container.innerHTML = '';
-            if (prospectTodos.length > 0) {
-                prospectTodos.forEach((todo, tIdx) => {
-                    container.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl flex items-center justify-between transition hover:border-rose-500/50">
-                            <label class="flex items-center space-x-3 cursor-pointer flex-1">
-                                <input type="checkbox" ${todo.done ? 'checked' : ''} onchange="toggleTodo(${tIdx})" class="w-4 h-4 rounded bg-dark-600 border-dark-500 text-rose-600 focus:ring-rose-500">
-                                <span class="text-slate-200 font-medium ${todo.done ? 'line-through text-slate-500' : ''}">${todo.task}</span>
-                            </label>
-                            <button onclick="deleteTodo(${tIdx})" class="text-slate-400 hover:text-rose-400 p-1"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
-                        </div>`;
-                });
-            } else {
-                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No prospect tasks added yet.</p>`;
-            }
-            lucide.createIcons();
-        }
-
-        function toggleTodo(tIdx) {
-            prospectTodos[tIdx].done = !prospectTodos[tIdx].done;
-            saveProspectTodos();
-            renderProspectTodos();
-        }
-
-        function deleteTodo(tIdx) {
-            prospectTodos.splice(tIdx, 1);
-            saveProspectTodos();
-            renderProspectTodos();
-        }
-
-        function openTodoModal() {
-            document.getElementById('todoModal').classList.remove('hidden');
-        }
-        function closeTodoModal() {
-            document.getElementById('todoModal').classList.add('hidden');
-        }
-        function saveTodoItem(event) {
-            event.preventDefault();
-            const task = document.getElementById('todoTaskInput').value;
-            prospectTodos.push({ id: Date.now(), task, done: false });
-            closeTodoModal();
-            document.getElementById('todoTaskInput').value = '';
-            saveProspectTodos();
-            renderProspectTodos();
         }
 
         function renderSalesFunnel() {
@@ -1274,21 +1210,14 @@
                 
                 if (items.length > 0) {
                     items.forEach((item, idx) => {
-                        let potentialTotal = item.classes * 20 * item.price;
-                        let donationAmount = potentialTotal * (item.donation / 100);
-
                         cardsHtml += `
                             <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2 hover:border-rose-500/50 transition">
                                 <div class="flex justify-between items-start">
-                                    <h4 onclick="openFinancialOrgProfile('${item.org}')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
+                                    <h4 onclick="openProfile(${item.id}, 'tasks')" class="font-bold text-slate-100 text-sm cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
                                     <button onclick="deleteFinancialProspect(${item.id})" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5 inline"></i></button>
                                 </div>
-                                <div class="text-[11px] text-slate-300 space-y-0.5">
-                                    <p>Classes: <strong>${item.classes}</strong> (20 kids/class)</p>
-                                    <p>Price/Kid: <strong>$${item.price.toFixed(2)}</strong></p>
-                                    <p class="text-emerald-400 font-bold">Target Revenue: $${potentialTotal.toFixed(2)}</p>
-                                    <p class="text-purple-400">School Donation (${item.donation}%): $${donationAmount.toFixed(2)}</p>
-                                </div>
+                                <p class="text-slate-400 text-xs"><strong>Classes:</strong> ${item.classes} (20 kids/class)</p>
+                                <p class="text-slate-400 text-[11px]"><strong>Target Revenue:</strong> $${(item.classes * 20 * item.price).toFixed(2)}</p>
                                 <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
                                     <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
                                         <option value="Prospect" ${stage === 'Prospect' ? 'selected' : ''}>Prospect</option>
@@ -1296,7 +1225,7 @@
                                         <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
                                         <option value="Closed Lost" ${stage === 'Closed Lost' ? 'selected' : ''}>Closed Lost</option>
                                     </select>
-                                    <button onclick="openFinancialOrgProfile('${item.org}')" class="text-rose-400 font-semibold underline">View Profile</button>
+                                    <button onclick="openProfile(${item.id}, 'tasks')" class="text-rose-400 font-semibold underline">View Profile</button>
                                 </div>
                             </div>`;
                     });
@@ -1317,8 +1246,7 @@
         }
 
         function getCurrentFolder() {
-            pipelineData = getUnifiedPipelineData();
-            const lead = pipelineData.find(l => l.id === currentProfileId);
+            const lead = financialProspects.find(l => l.id === currentProfileId);
             if (!lead) return null;
             if (!lead.rootFolder) {
                 lead.rootFolder = { name: "Partnership Root", subfolders: [], files: [] };
@@ -1344,8 +1272,7 @@
             if (updateHash) {
                 window.location.hash = `profile=${id}&tab=${tabToOpen}`;
             }
-            pipelineData = getUnifiedPipelineData();
-            const lead = pipelineData.find(l => l.id === id);
+            const lead = financialProspects.find(l => l.id === id);
             if(!lead) return;
 
             ['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
@@ -1357,10 +1284,10 @@
             document.getElementById('pageTitle').innerText = lead.org + " | Profile";
 
             document.getElementById('profileOrg').innerText = lead.org;
-            document.getElementById('profileScope').innerText = lead.scope;
-            document.getElementById('profileContact').innerText = lead.contact;
-            document.getElementById('profileNextAction').innerText = "Next Action: " + lead.action;
-            document.getElementById('profileStatusBadge').innerText = "Status: " + lead.status;
+            document.getElementById('profileScope').innerText = `${lead.classes} Classes (${lead.classes * 20} Students) @ $${lead.price}/kid`;
+            document.getElementById('profileContact').innerText = "School Coordinator / Director";
+            document.getElementById('profileNextAction').innerText = "Next Action: Outreach & Follow-up";
+            document.getElementById('profileStatusBadge').innerText = "Status: " + lead.stage;
 
             let badge = document.getElementById('profileBadge');
             badge.innerText = lead.stage;
@@ -1370,21 +1297,7 @@
             else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
 
             const orgContainer = document.getElementById('orgChartContainer');
-            orgContainer.innerHTML = '';
-            if(lead.contacts && lead.contacts.length > 0) {
-                lead.contacts.forEach((c, idx) => {
-                    orgContainer.innerHTML += `
-                        <div onclick="showContactPopup('${encodeURIComponent(JSON.stringify(c))}')" class="bg-dark-700/40 hover:bg-dark-700 border border-dark-600 p-4 rounded-xl cursor-pointer transition flex items-center justify-between">
-                            <div>
-                                <span class="text-[10px] font-semibold text-rose-400 uppercase tracking-wider">${c.role}</span>
-                                <h4 class="font-bold text-slate-100 text-sm mt-0.5">${c.name}</h4>
-                            </div>
-                            <span class="text-xs text-rose-400 underline">View Card</span>
-                        </div>`;
-                });
-            } else {
-                orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional contacts added to this company profile yet.</p>`;
-            }
+            orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional contacts added to this company profile yet.</p>`;
 
             renderFolderExplorer();
             renderClientCalendar();
@@ -1392,24 +1305,45 @@
             renderClientRevenue();
 
             const timeline = document.getElementById('activityTimeline');
-            timeline.innerHTML = '';
-            if(lead.activities && lead.activities.length > 0) {
-                lead.activities.forEach(act => {
-                    timeline.innerHTML += `
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
-                            <div class="flex justify-between items-center text-[11px] text-slate-400">
-                                <span class="font-bold text-rose-400">${act.type}</span>
-                                <span>${act.date}</span>
-                            </div>
-                            <p class="text-xs text-slate-200">${act.text}</p>
-                        </div>`;
-                });
-            } else {
-                timeline.innerHTML = `<p class="text-xs text-slate-500 italic">No activity logged yet.</p>`;
-            }
+            timeline.innerHTML = `<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1"><div class="flex justify-between items-center text-[11px] text-slate-400"><span class="font-bold text-rose-400">Created</span><span>Oct 3, 2026</span></div><p class="text-xs text-slate-200">Prospect added to financial tracker.</p></div>`;
 
             switchTab(tabToOpen, false);
             lucide.createIcons();
+        }
+
+        function renderClientRevenue() {
+            const lead = financialProspects.find(l => l.id === currentProfileId);
+            if (!lead) return;
+            let total = lead.stage === 'Closed Won' ? lead.classes * 20 * lead.price : 0;
+            let pending = lead.stage === 'Lead' ? lead.classes * 20 * lead.price : 0;
+            let closed = lead.stage === 'Closed Won' ? total : 0;
+
+            const auditTable = document.getElementById('auditTableBody');
+            auditTable.innerHTML = '';
+            if (lead.stage === 'Closed Won') {
+                auditTable.innerHTML += `
+                    <tr class="hover:bg-dark-700/30 transition">
+                        <td class="py-3 px-4 font-mono font-bold text-rose-400">INV-2026-${lead.id}</td>
+                        <td class="py-3 px-4 text-slate-200">${lead.org} (${lead.classes} Classes)</td>
+                        <td class="py-3 px-4 text-slate-400">Oct 2, 2026</td>
+                        <td class="py-3 px-4 font-bold text-slate-100">$${total.toFixed(2)}</td>
+                        <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-semibold border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Paid</span></td>
+                        <td class="py-3 px-4 text-slate-400 italic">ACH / District Check</td>
+                    </tr>`;
+            } else {
+                auditTable.innerHTML = `<tr><td colspan="6" class="py-4 text-center text-slate-500 italic">No paid invoices logged yet (Prospect / Lead stage).</td></tr>`;
+            }
+
+            document.getElementById('finTotal').innerText = '$' + total.toFixed(2);
+            document.getElementById('finPending').innerText = '$' + pending.toFixed(2);
+            document.getElementById('finClosed').innerText = '$' + closed.toFixed(2);
+        }
+
+        function renderClientCalendar() {
+            const calContainer = document.getElementById('clientCalendarContainer');
+            if (calContainer) {
+                calContainer.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No meetings or calendar events scheduled for this client yet.</p>`;
+            }
         }
 
         function initApp() {
