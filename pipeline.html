@@ -588,14 +588,14 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Date</label>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Date Spoken</label>
                         <input type="date" id="commsDate" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3">
                     <div>
-                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Person Spoken To</label>
+                        <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Person Name</label>
                         <input type="text" id="commsPerson" required placeholder="e.g. Principal Brandon" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
                     </div>
                     <div>
@@ -616,8 +616,13 @@
                 </div>
 
                 <div>
-                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Message / Notes</label>
-                    <textarea id="commsMessage" rows="3" required placeholder="What was discussed..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Message Exchange Summary</label>
+                    <textarea id="commsMessage" rows="3" required placeholder="Summary of what was discussed..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+                </div>
+
+                <div>
+                    <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Next Steps</label>
+                    <input type="text" id="commsNextSteps" required placeholder="e.g. Follow up next week regarding proposal" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 pt-1">
@@ -1431,6 +1436,7 @@
             document.getElementById('commsPhone').value = '';
             document.getElementById('commsEmail').value = '';
             document.getElementById('commsMessage').value = '';
+            document.getElementById('commsNextSteps').value = '';
             document.getElementById('commsFollowUp').checked = false;
             let lead = financialProspects.find(l => l.id === currentProfileId);
             if (lead) {
@@ -1451,6 +1457,7 @@
             const phone = document.getElementById('commsPhone').value;
             const email = document.getElementById('commsEmail').value;
             const message = document.getElementById('commsMessage').value;
+            const nextSteps = document.getElementById('commsNextSteps').value;
             const newStage = document.getElementById('commsNewStage').value;
             const followUpDone = document.getElementById('commsFollowUp').checked;
 
@@ -1466,6 +1473,7 @@
                     phone,
                     email,
                     message,
+                    nextSteps,
                     followUpDone
                 });
                 saveFinancialProspects();
@@ -1493,11 +1501,12 @@
                             <span class="text-slate-400">${act.date}</span>
                         </div>
                         <div class="text-xs space-y-1 text-slate-300">
-                            <p><strong>Spoken To:</strong> ${act.person} (${act.title || 'N/A'})</p>
+                            <p><strong>Person Name:</strong> ${act.person} (${act.title || 'N/A'})</p>
                             ${act.phone ? `<p><strong>Phone:</strong> ${act.phone}</p>` : ''}
                             ${act.email ? `<p><strong>Email:</strong> ${act.email}</p>` : ''}
-                            <p class="pt-1"><strong>Message:</strong> ${act.message}</p>
-                            <p class="pt-1 text-[11px] text-rose-400 font-medium">Follow-up Completed: ${act.followUpDone ? 'Yes' : 'No'}</p>
+                            <p class="pt-1"><strong>Message Exchange Summary:</strong> ${act.message}</p>
+                            ${act.nextSteps ? `<p class="pt-1 text-rose-400 font-semibold"><strong>Next Steps:</strong> ${act.nextSteps}</p>` : ''}
+                            <p class="pt-1 text-[11px] text-slate-400 font-medium">Follow-up Completed: ${act.followUpDone ? 'Yes' : 'Pending'}</p>
                         </div>
                     </div>`;
             });
@@ -1580,7 +1589,7 @@
             let lastContactInfo = "No contact logged yet this week.";
             if (lead.activities && lead.activities.length > 0) {
                 let la = lead.activities[0];
-                lastContactInfo = `${la.type} with ${la.person} (${la.title || 'Staff'}) on ${la.date} — Follow-up: ${la.followUpDone ? 'Done' : 'Pending'}`;
+                lastContactInfo = `${la.type} with ${la.person} (${la.title || 'Staff'}) on ${la.date} — Summary: ${la.message} — Next Steps: ${la.nextSteps || 'None'}`;
             }
 
             container.innerHTML = `
@@ -1606,9 +1615,9 @@
                             <p class="text-slate-400 uppercase font-bold text-[10px]">Target Revenue / Donation</p>
                             <p class="font-bold text-emerald-400 mt-0.5">$${potentialTotal.toFixed(2)} <span class="text-purple-400 font-normal">(PTO: $${donationAmount.toFixed(2)})</span></p>
                         </div>
-                        <div class="sm:col-span-2 bg-dark-800/80 p-3 rounded-xl border border-dark-600">
-                            <p class="text-slate-400 uppercase font-bold text-[10px]">Outreach & Follow-Up Status (This Week)</p>
-                            <p class="font-medium text-emerald-400 text-xs mt-1">${lastContactInfo}</p>
+                        <div class="sm:col-span-2 bg-dark-800/80 p-3 rounded-xl border border-dark-600 space-y-1">
+                            <p class="text-slate-400 uppercase font-bold text-[10px]">Latest Communication & Next Steps</p>
+                            <p class="font-medium text-emerald-400 text-xs">${lastContactInfo}</p>
                         </div>
                     </div>
                     <div class="pt-2 flex justify-end">
