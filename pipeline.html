@@ -160,7 +160,7 @@
                         </div>
                     </div>
 
-                    <!-- 4-Stage Financial Kanban Board (Prospect -> Lead -> Closed Won -> Closed Lost) -->
+                    <!-- 4-Stage Financial Kanban Board -->
                     <div class="space-y-4">
                         <h3 class="font-bold text-sm text-slate-100">Outreach Stage Tracker (Oct – Dec Target: 4 Total Closed Deals)</h3>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="financialKanbanContainer">
@@ -364,7 +364,7 @@
 
                 <!-- Tab 1: Company Info -->
                 <div id="tabContent-info" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-4">
+                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <h3 class="font-bold text-sm text-slate-100">Company Hierarchy & Decision Makers</h3>
                             <button onclick="openContactModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
@@ -909,18 +909,18 @@
             },
             { 
                 id: 2, 
-                stage: "Prospecting", 
+                stage: "Follow-up Stage", 
                 org: "Newton County STEAM Academy", 
                 contact: "Principal Brandon Parham / Chantal Hendrix", 
                 scope: "Career Day (Free) & District After-School Pitch", 
-                status: "Prospecting", 
-                action: "Pitch district after-school department",
+                status: "Follow-Up Stage", 
+                action: "Email Ms. Bunting to set up a day to come back to the school",
                 isRetainer: true,
                 auditRecords: [],
                 calendarEvents: [],
                 clientTasks: [
                     { title: "Complete 5 Career Day Sessions", desc: "Free pilot sessions reaching 100 students (96% rating)", date: "Sep 29, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: true, active: false },
-                    { title: "Email Ms. Bunting to return", desc: "Send follow up email to Ms. Bunting to set up return", date: "Oct 5, 2026", assignee: "Courtney White", urgency: "High (Urgent)", done: false, active: true },
+                    { title: "Email Ms. Bunting to return", desc: "Send follow up email to Ms. Bunting to set up a day to come back to the school as a recurring program", date: "Oct 5, 2026", assignee: "Courtney White", urgency: "High (Urgent)", done: false, active: true },
                     { title: "Email Newton County District After-School Director", desc: "Pitch district-wide after-school department for paid rollout across all schools", date: "Oct 10, 2026", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: false }
                 ],
                 rootFolder: {
@@ -1082,7 +1082,7 @@
                         cards += `
                             <div class="bg-dark-700/40 border border-dark-600 p-3.5 rounded-xl space-y-2">
                                 <div class="flex justify-between items-start">
-                                    <h4 class="font-bold text-slate-100 text-xs">${item.org}</h4>
+                                    <h4 onclick="openFinancialOrgProfile('${item.org}')" class="font-bold text-slate-100 text-xs cursor-pointer hover:text-rose-400 underline">${item.org}</h4>
                                     <button onclick="deleteFinancialProspect(${item.id})" class="text-slate-400 hover:text-rose-400"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                                 </div>
                                 <div class="text-[11px] text-slate-300 space-y-0.5">
@@ -1098,6 +1098,7 @@
                                         <option value="Closed Won" ${stage === 'Closed Won' ? 'selected' : ''}>Closed Won</option>
                                         <option value="Closed Lost" ${stage === 'Closed Lost' ? 'selected' : ''}>Closed Lost</option>
                                     </select>
+                                    <button onclick="openFinancialOrgProfile('${item.org}')" class="text-rose-400 font-semibold underline">View Profile</button>
                                 </div>
                             </div>`;
                     });
@@ -1117,6 +1118,36 @@
             lucide.createIcons();
         }
 
+        function openFinancialOrgProfile(orgName) {
+            let matched = pipelineData.find(l => l.org.toLowerCase().includes(orgName.toLowerCase()));
+            if (matched) {
+                openProfile(matched.id, 'tasks');
+            } else {
+                // Create a temporary profile on the fly if not in pipelineData yet
+                let newId = Date.now();
+                pipelineData.push({
+                    id: newId,
+                    stage: "Prospecting",
+                    org: orgName,
+                    contact: "School Coordinator",
+                    scope: "After-School / Career Enrichment",
+                    status: "Outreach Queued",
+                    action: "Initial Contact",
+                    isRetainer: true,
+                    auditRecords: [],
+                    calendarEvents: [],
+                    clientTasks: [{ title: "Initial Outreach", desc: "Reach out for partnership pitch", date: "2026-10-05", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }],
+                    rootFolder: { name: "Partnership Root", subfolders: [], files: [] },
+                    trashFolder: { name: "Trash Bin", subfolders: [], files: [] },
+                    financialDocs: [{ name: "Form W-9.pdf", url: "W9.pdf" }, { name: "EIN CP575.pdf", url: "EIN.pdf" }],
+                    contacts: [],
+                    activities: [{ date: "Oct 3, 2026", type: "Created", text: "Added from financial goal tracker." }]
+                });
+                savePipelineData();
+                openProfile(newId, 'tasks');
+            }
+        }
+
         function updateFinancialProspectStage(id, newStage) {
             const p = financialProspects.find(item => item.id === id);
             if (p) {
@@ -1127,7 +1158,7 @@
         }
 
         function deleteFinancialProspect(id) {
-            if (confirm("Remove this prospect from the financial tracker?")) {
+            if (confirm("Move this prospect to the Trash Bin?")) {
                 financialProspects = financialProspects.filter(item => item.id !== id);
                 saveFinancialProspects();
                 renderFinancialKanban();
