@@ -86,7 +86,7 @@
                         <i data-lucide="target" class="w-4 h-4 mr-3 text-rose-500"></i> Pipeline & Partners
                     </a>
                     <a href="#view=financial" onclick="switchMainView('financial')" id="nav-financial" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
-                        <i data-lucide="dollar-sign" class="w-4 h-4 mr-3 text-purple-400"></i> Financial Goal Tracker ($7K)
+                        <i data-lucide="dollar-sign" class="w-4 h-4 mr-3 text-purple-400"></i> Financial Goal Tracker
                     </a>
                     <a href="#view=goals" onclick="switchMainView('goals')" id="nav-goals" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
                         <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Goals & Strategy
@@ -131,13 +131,13 @@
                 </div>
             </header>
 
-            <!-- Main Section: Financial Goal Tracker Dashboard ($7K Rule & 31 Prospects Kanban) -->
+            <!-- Main Section: Financial Goal Tracker Dashboard -->
             <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
                         <div>
-                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker & 31 Prospect Pipeline</h2>
-                            <p class="text-xs text-slate-400 mt-1">Goal: Land 3 classes before December to hit the $7K monthly revenue milestone.</p>
+                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker</h2>
+                            <p class="text-xs text-slate-400 mt-1">Goal: Secure 1 closed deal per month from October to December (Total of 4 deals by December: 1 InspiHER event + 3 partnerships) to hit the $7K monthly revenue milestone.</p>
                         </div>
                         <button onclick="openFinancialProspectModal()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
                             <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect
@@ -162,7 +162,7 @@
 
                     <!-- 4-Stage Financial Kanban Board (Prospect -> Lead -> Closed Won -> Closed Lost) -->
                     <div class="space-y-4">
-                        <h3 class="font-bold text-sm text-slate-100">October 5th Outreach Stage Tracker (31 Prospects)</h3>
+                        <h3 class="font-bold text-sm text-slate-100">Outreach Stage Tracker (Oct – Dec Target: 4 Total Closed Deals)</h3>
                         <div class="grid grid-cols-1 md:grid-cols-4 gap-4" id="financialKanbanContainer">
                             <!-- Populated dynamically -->
                         </div>
@@ -364,7 +364,7 @@
 
                 <!-- Tab 1: Company Info -->
                 <div id="tabContent-info" class="space-y-6 hidden">
-                    <div class="bg-dark-800 border border-dark-600 rounded-2xl p-6 space-y-4">
+                    <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-4">
                         <div class="flex justify-between items-center border-b border-dark-600 pb-4">
                             <h3 class="font-bold text-sm text-slate-100">Company Hierarchy & Decision Makers</h3>
                             <button onclick="openContactModal()" class="px-3 py-1.5 rounded-xl bg-dark-700 hover:bg-dark-600 text-rose-400 border border-dark-600 font-semibold text-xs transition">
@@ -1002,7 +1002,7 @@
                 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
             } else if (viewName === 'financial') {
                 document.getElementById('mainView-financial').classList.remove('hidden');
-                document.getElementById('pageTitle').innerText = "Financial Goal Tracker & 31 Prospects";
+                document.getElementById('pageTitle').innerText = "Financial Goal Tracker";
                 renderFinancialKanban();
                 if (updateHash) window.location.hash = "view=financial";
                 const activeBtn = document.getElementById('nav-financial');
