@@ -33,6 +33,8 @@
     <style>
         .is-authenticated #passwordModal { display: none !important; }
         .is-authenticated #mainDashboard { display: flex !important; }
+        .privacy-mask { filter: blur(6px); transition: filter 0.3s ease; user-select: none; }
+        .privacy-mask:hover { filter: blur(0px); }
     </style>
 </head>
 <body class="bg-dark-900 text-slate-100 min-h-screen font-sans flex antialiased">
@@ -166,15 +168,29 @@
             <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-8">
                     
+                    <!-- Financial Header with Privacy Eye Toggle -->
+                    <div class="flex justify-between items-center border-b border-dark-600 pb-4">
+                        <div>
+                            <h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker & Team Payroll</h2>
+                            <p class="text-xs text-slate-400 mt-1">Scale targets from $7K to $10K monthly revenue with team payroll allocations.</p>
+                        </div>
+                        <button onclick="togglePrivacyMode()" class="px-3.5 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-200 border border-dark-600 transition flex items-center space-x-2">
+                            <i data-lucide="eye" id="privacyIcon" class="w-4 h-4 text-rose-500"></i>
+                            <span id="privacyLabel">Privacy Mode: Off</span>
+                        </button>
+                    </div>
+
                     <!-- Inspiring Q4 Goal Banner & Dynamic Circular Gauge Meter -->
                     <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-rose-900/40 via-purple-900/40 to-dark-700 border border-rose-500/30 p-6 sm:p-8 flex flex-col md:flex-row justify-between items-center gap-6 shadow-xl">
                         <div class="space-y-3 relative z-10 flex-1">
                             <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold border border-rose-500/30">
-                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span>Q4 Mission & Revenue Milestone</span>
+                                <i data-lucide="zap" class="w-3.5 h-3.5"></i> <span>Q4 Scaling Milestones</span>
                             </div>
                             <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 tracking-tight">Lock in 4 Deals by December</h2>
                             <p class="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
-                                <strong>1 Closed Deal Per Month</strong> (October to December) — Total of 4 Deals: <span class="text-rose-400 font-semibold">1 InspiHER Event ($750)</span> + <span class="text-emerald-400 font-semibold">3 Partnerships (1 Class / $2,500)</span> to hit the <span class="text-purple-400 font-bold">$7,000 monthly recurring revenue</span> target.
+                                <strong>Tier 1 ($7K/mo):</strong> Base staff payroll.<br>
+                                <strong>Tier 2 ($8K/mo):</strong> Unlock custom company polos for Courtney & team!<br>
+                                <strong>Tier 3 ($10K/mo):</strong> Full team scaling: Pay Courtney assistant ($200–$400/mo), AI Developer Teacher, and self comfortably.
                             </p>
                             <div id="dynamicRevenueSummary" class="text-xs font-bold text-emerald-400 pt-1">
                                 <!-- Dynamically updated based on Closed Won -->
@@ -197,19 +213,25 @@
                         </div>
                     </div>
 
-                    <!-- Pricing & Corrected Community Donation Banner -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                            <p class="text-slate-400 font-bold uppercase text-[10px]">Pricing Model</p>
-                            <p class="text-base font-bold text-emerald-400 mt-1">$125 / student per class</p>
-                        </div>
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                            <p class="text-slate-400 font-bold uppercase text-[10px]">Target Class Size</p>
-                            <p class="text-base font-bold text-slate-100 mt-1">1 Class (2x/wk) / 20 Kids ($2,500)</p>
-                        </div>
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl">
-                            <p class="text-slate-400 font-bold uppercase text-[10px]">Community Donation (10%)</p>
-                            <p class="text-base font-bold text-purple-400 mt-1">$250 / class ($12.50/kid back to community)</p>
+                    <!-- Team Payroll & Payout Breakdown Card -->
+                    <div class="bg-dark-700/40 border border-dark-600 p-6 rounded-2xl space-y-4">
+                        <h3 class="font-bold text-sm text-slate-100 flex items-center"><i data-lucide="users" class="w-4 h-4 mr-2 text-rose-500"></i> Monthly Team Payroll Breakdown ($10K Scaling Model)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">Raeven Brown (CEO & Lead Teacher)</p>
+                                <p class="text-lg font-bold text-slate-100 privacy-field">$5,000 / mo</p>
+                                <p class="text-[11px] text-slate-400">Curriculum design, teaching, and studio growth.</p>
+                            </div>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer Teacher</p>
+                                <p class="text-lg font-bold text-purple-400 privacy-field">$2,500 / mo</p>
+                                <p class="text-[11px] text-slate-400">Technical lab instruction & developer training.</p>
+                            </div>
+                            <div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600 space-y-1">
+                                <p class="text-slate-400 uppercase font-bold text-[10px]">Courtney White (Assistant)</p>
+                                <p class="text-lg font-bold text-emerald-400 privacy-field">$400 / mo</p>
+                                <p class="text-[11px] text-slate-400">Class photos, papers, and operational support.</p>
+                            </div>
                         </div>
                     </div>
 
@@ -738,7 +760,7 @@
                     </div>
                 </div>
 
-                <!-- Added Detailed Communication & Next Steps Inputs inside Ticket Modal -->
+                <!-- Detailed Communication & Next Steps Inputs inside Ticket Modal -->
                 <div class="border-t border-dark-600 pt-3 space-y-3">
                     <p class="font-bold text-rose-400 uppercase tracking-wider text-[10px]">Latest Outreach & Next Steps</p>
                     <div class="grid grid-cols-2 gap-2">
@@ -959,6 +981,24 @@
             lucide.createIcons();
         }
 
+        let privacyModeActive = false;
+        function togglePrivacyMode() {
+            privacyModeActive = !privacyModeActive;
+            const label = document.getElementById('privacyLabel');
+            const icon = document.getElementById('privacyIcon');
+            const fields = document.querySelectorAll('.privacy-field');
+            if (privacyModeActive) {
+                if (label) label.innerText = "Privacy Mode: On";
+                if (icon) icon.setAttribute('data-lucide', 'eye-off');
+                fields.forEach(f => f.classList.add('privacy-mask'));
+            } else {
+                if (label) label.innerText = "Privacy Mode: Off";
+                if (icon) icon.setAttribute('data-lucide', 'eye');
+                fields.forEach(f => f.classList.remove('privacy-mask'));
+            }
+            lucide.createIcons();
+        }
+
         function switchMainView(viewName, updateHash = true) {
             if (viewName === 'financial' && localStorage.getItem('bgcs_fin_auth') !== 'true') {
                 document.getElementById('financialAuthModal').classList.remove('hidden');
@@ -1065,7 +1105,7 @@
                         let lastContactHTML = '';
                         if (fp.activities && fp.activities.length > 0) {
                             let lastAct = fp.activities[0];
-                            lastContactHTML = `<p class="text-[11px] text-emerald-400 mt-1 font-medium"><i data-lucide="message-square" class="w-3 h-3 inline mr-1"></i>Last Contact: ${lastAct.type} with ${lastAct.person} (${lastAct.title || 'Staff'}) on ${lastAct.date} — Follow-up: ${lastAct.followUpDone ? 'Done' : 'Pending'}</p>`;
+                            lastContactHTML = `<p class="text-[11px] text-emerald-400 mt-1 font-medium"><i data-lucide="message-square" class="w-3 h-3 inline mr-1"></i>Last Contact: ${lastAct.type} with ${lastAct.person} (${lastAct.title || 'Staff'}) on ${lastAct.date} — Summary: ${lastAct.message} — Next Steps: ${lastAct.nextSteps || 'None'}</p>`;
                         } else {
                             lastContactHTML = `<p class="text-[11px] text-amber-400 mt-1 font-medium"><i data-lucide="alert-circle" class="w-3 h-3 inline mr-1"></i>Action Required: Reach out this week, follow up next week.</p>`;
                         }
@@ -1180,7 +1220,7 @@
                 if (meterDealCount) meterDealCount.innerText = `${wonDealsCount} / 4`;
                 if (meterPercentLabel) meterPercentLabel.innerText = `${percent}% of Q4 Goal`;
                 if (dynamicRevenueSummary) {
-                    dynamicRevenueSummary.innerHTML = `Closed Won Revenue Secured: <span class="text-white font-mono">$${totalWonRevenue.toFixed(2)}</span> / $7,000 Target`;
+                    dynamicRevenueSummary.innerHTML = `Closed Won Revenue Secured: <span class="text-white font-mono privacy-field">$${totalWonRevenue.toFixed(2)}</span> / $10,000 Scaling Target`;
                 }
 
                 document.getElementById('stat-total').innerText = financialProspects.length;
@@ -1203,9 +1243,9 @@
                                         <button onclick="deleteFinancialProspect(${item.id})" class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button>
                                     </div>
                                     <div class="text-[11px] text-slate-300 space-y-0.5" onclick="openQuickProspectModal(${item.id})" style="cursor:pointer;">
-                                        ${item.org.includes('InspiHER') ? `<p>Event: <strong>2-Day Leadership Workshop</strong></p>` : `<p>Classes: <strong>${item.classes}</strong> (2x/wk, 20 kids)</p><p>Price/Kid: <strong>$${item.price.toFixed(2)}</strong></p>`}
-                                        <p class="text-emerald-400 font-bold">Target Revenue: $${potentialTotal.toFixed(2)}</p>
-                                        ${!item.org.includes('InspiHER') ? `<p class="text-purple-400">Community Donation (${item.donation}%): $${donationAmount.toFixed(2)} ($12.50/kid)</p>` : ''}
+                                        ${item.org.includes('InspiHER') ? `<p>Event: <strong>2-Day Leadership Workshop</strong></p>` : `<p>Classes: <strong>${item.classes}</strong> (2x/wk, 20 kids)</p><p>Price/Kid: <strong class="privacy-field">$${item.price.toFixed(2)}</strong></p>`}
+                                        <p class="text-emerald-400 font-bold">Target Revenue: <span class="privacy-field">$${potentialTotal.toFixed(2)}</span></p>
+                                        ${!item.org.includes('InspiHER') ? `<p class="text-purple-400">Community Donation (${item.donation}%): <span class="privacy-field">$${donationAmount.toFixed(2)}</span> ($12.50/kid)</p>` : ''}
                                     </div>
                                     <div class="pt-2 border-t border-dark-600 flex justify-between items-center text-[10px]">
                                         <select onchange="updateFinancialProspectStage(${item.id}, this.value)" class="bg-dark-800 text-slate-200 border border-dark-600 rounded p-1 font-semibold">
@@ -1232,6 +1272,9 @@
                         </div>`;
                 });
             });
+            if (privacyModeActive) {
+                document.querySelectorAll('.privacy-field').forEach(f => f.classList.add('privacy-mask'));
+            }
             lucide.createIcons();
         }
 
@@ -1301,7 +1344,6 @@
 
                 if (person || message) {
                     if (!item.activities) item.activities = [];
-                    // Update or insert latest activity
                     if (item.activities.length > 0) {
                         item.activities[0].person = person;
                         item.activities[0].title = title;
@@ -1685,7 +1727,7 @@
                         </div>
                         <div>
                             <p class="text-slate-400 uppercase font-bold text-[10px]">Target Revenue / Donation</p>
-                            <p class="font-bold text-emerald-400 mt-0.5">$${potentialTotal.toFixed(2)} <span class="text-purple-400 font-normal">(PTO: $${donationAmount.toFixed(2)})</span></p>
+                            <p class="font-bold text-emerald-400 mt-0.5 privacy-field">$${potentialTotal.toFixed(2)} <span class="text-purple-400 font-normal privacy-field">(PTO: $${donationAmount.toFixed(2)})</span></p>
                         </div>
                         <div class="sm:col-span-2 bg-dark-800/80 p-3 rounded-xl border border-dark-600 space-y-1">
                             <p class="text-slate-400 uppercase font-bold text-[10px]">Latest Communication & Next Steps</p>
@@ -1696,6 +1738,9 @@
                         <button onclick="openQuickProspectModal(${lead.id})" class="px-3.5 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">Edit This Ticket</button>
                     </div>
                 </div>`;
+            if (privacyModeActive) {
+                container.querySelectorAll('.privacy-field').forEach(f => f.classList.add('privacy-mask'));
+            }
         }
 
         function renderClientRevenue() {
@@ -1714,7 +1759,7 @@
                             <td class="py-3 px-4 font-mono font-bold text-rose-400">INV-2026-${lead.id}</td>
                             <td class="py-3 px-4 text-slate-200">${lead.org}</td>
                             <td class="py-3 px-4 text-slate-400">Oct 2, 2026</td>
-                            <td class="py-3 px-4 font-bold text-slate-100">$${total.toFixed(2)}</td>
+                            <td class="py-3 px-4 font-bold text-slate-100 privacy-field">$${total.toFixed(2)}</td>
                             <td class="py-3 px-4"><span class="px-2 py-0.5 rounded text-[10px] font-semibold border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">Paid</span></td>
                             <td class="py-3 px-4 text-slate-400 italic">ACH / District Check</td>
                         </tr>`;
@@ -1726,6 +1771,9 @@
             if (document.getElementById('finTotal')) document.getElementById('finTotal').innerText = '$' + total.toFixed(2);
             if (document.getElementById('finPending')) document.getElementById('finPending').innerText = '$' + pending.toFixed(2);
             if (document.getElementById('finClosed')) document.getElementById('finClosed').innerText = '$' + closed.toFixed(2);
+            if (privacyModeActive) {
+                document.querySelectorAll('.privacy-field').forEach(f => f.classList.add('privacy-mask'));
+            }
         }
 
         function renderClientCalendar() {
