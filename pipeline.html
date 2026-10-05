@@ -335,7 +335,7 @@
                 </div>
             </div>
 
-            <!-- Main Section 2: Spirit Meeting Outline & Agenda View (Upgraded with Meeting Notes & Editing) -->
+            <!-- Main Section 2: Spirit Meeting Outline & Agenda View (Dynamic Meeting Notes) -->
             <div id="mainView-agenda" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
                 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
                     <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
@@ -348,16 +348,8 @@
                         </button>
                     </div>
 
-                    <div class="space-y-4 text-xs text-slate-300">
-                        <div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-2">
-                            <h4 class="font-bold text-rose-400">1. Pipeline Review & Target Assessment (15 mins)</h4>
-                            <p>Review active school districts (Newton County, InspiHER) and verify invoice payment statuses with accounts payable departments.</p>
-                        </div>
-                    </div>
-
                     <!-- Dynamic Meeting Notes Container -->
-                    <div class="space-y-3 pt-4 border-t border-dark-600">
-                        <h3 class="font-bold text-sm text-slate-100">Saved Meeting Notes & Discussion Summaries</h3>
+                    <div class="space-y-3">
                         <div id="meetingNotesList" class="space-y-3">
                             <!-- Populated dynamically -->
                         </div>
@@ -639,7 +631,7 @@
     <div id="meetingNoteModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
         <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full overflow-hidden p-6 space-y-4">
             <h3 id="meetingModalTitle" class="font-bold text-slate-100 text-sm">Add Spirit Meeting Notes</h3>
-            <form onsave="event.preventDefault()" onsubmit="saveMeetingNote(event)" class="space-y-3 text-xs">
+            <form onsubmit="saveMeetingNote(event)" class="space-y-3 text-xs">
                 <input type="hidden" id="editingMeetingNoteId">
                 <div>
                     <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Meeting Date / Day</label>
@@ -984,7 +976,7 @@
                 document.getElementById('financialAuthModal').classList.add('hidden');
                 switchMainView('financial', false);
             } else {
-                document.getElementById('finErrorMsg').classList.remove('hidden');
+                document.getElementById('finErrorMsg').classList.add('hidden');
             }
         }
 
@@ -1022,7 +1014,6 @@
             localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
         }
 
-        // Ensure tasks and activities arrays are intact and ensure each has the default weekly outreach task
         financialProspects.forEach(fp => {
             if (!fp.clientTasks) fp.clientTasks = [];
             if (fp.clientTasks.length === 0) {
@@ -1050,7 +1041,7 @@
         let currentEditingFolderRef = null;
         let currentActiveTab = 'info';
         let currentCalYear = 2026;
-        let currentCalMonth = 9; // October (0-indexed)
+        let currentCalMonth = 9;
 
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('sidebarNav');
@@ -1104,7 +1095,6 @@
             lucide.createIcons();
         }
 
-        // Individual Payroll Toggle Functions with Persistent Storage
         let payrollToggles = JSON.parse(localStorage.getItem('bgcs_payroll_toggles')) || { payDev: true, payCourtney: true, payTeacher: true, payTax: true };
         function savePayrollToggles() {
             localStorage.setItem('bgcs_payroll_toggles', JSON.stringify(payrollToggles));
