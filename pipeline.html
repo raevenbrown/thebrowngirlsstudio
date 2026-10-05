@@ -914,7 +914,7 @@
                     <input type="number" step="1" id="fpDonation" value="10" required class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
                 </div>
                 <div class="flex justify-end space-x-2 pt-2">
-                    <button type="button" onclick="openFinancialProspectModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+                    <button type="button" onclick="closeFinancialProspectModal()" class="px-3 py-1.5 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
                     <button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white font-semibold">Save Prospect</button>
                 </div>
             </form>
@@ -1142,9 +1142,7 @@
         }
 
         // Spirit Meeting Notes Storage & Functions
-        let spiritMeetingNotes = JSON.parse(localStorage.getItem('bgcs_spirit_meeting_notes')) || [
-            { id: 1, date: "2026-10-02", title: "Pipeline Review & Target Assessment", notes: "Reviewed active school districts (Newton County, InspiHER) and verified invoice payment statuses with accounts payable departments." }
-        ];
+        let spiritMeetingNotes = JSON.parse(localStorage.getItem('bgcs_spirit_meeting_notes')) || [];
 
         function saveSpiritMeetingNotes() {
             localStorage.setItem('bgcs_spirit_meeting_notes', JSON.stringify(spiritMeetingNotes));
@@ -1156,7 +1154,7 @@
             container.innerHTML = '';
 
             if (spiritMeetingNotes.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No meeting notes recorded yet.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-500 italic py-4 text-center">No meeting notes recorded yet. Click "+ Add Meeting Notes" above to create one.</p>`;
                 return;
             }
 
