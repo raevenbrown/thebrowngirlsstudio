@@ -141,7 +141,7 @@ Goal Tracker
 items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700
 transition">
 <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Target
-Audience (3 Categories)
+Audience
 </a>
 <a href="#view=agenda" onclick="switchMainView('agenda')" id="nav-agenda"
 class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200
@@ -465,6 +465,52 @@ class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"><
 </div>
 </div>
 
+</div>
+
+<div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+<div class="border-b border-dark-600 pb-4">
+<h2 class="text-xl font-bold text-slate-100">Services & Program Schedule</h2>
+<p class="text-xs text-slate-400 mt-1">Weekly session options and cohort availability for partner schools.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+<p class="font-bold text-rose-400 uppercase tracking-wider text-[11px]">Mon & Wed Session</p>
+<p class="text-slate-300 leading-relaxed">1-hour daily session focused on foundational AI development, prompt engineering, and project building.</p>
+</div>
+<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+<p class="font-bold text-rose-400 uppercase tracking-wider text-[11px]">Tue & Thu Session</p>
+<p class="text-slate-300 leading-relaxed">1-hour daily session dedicated to intermediate coding, data workflows, and student-led entrepreneurship apps.</p>
+</div>
+<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+<p class="font-bold text-rose-400 uppercase tracking-wider text-[11px]">Friday Deep-Dive Session</p>
+<p class="text-slate-300 leading-relaxed">2-hour intensive session focused on rapid prototyping, STEM integration, and final project showcases.</p>
+</div>
+<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+<p class="font-bold text-rose-400 uppercase tracking-wider text-[11px]">Exclusive Availability Cap</p>
+<p class="text-slate-300 leading-relaxed">Strictly limited to 3 partner schools total for this cohort cycle to ensure high-touch implementation and individualized attention.</p>
+</div>
+</div>
+</div>
+
+<div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-6">
+<div class="border-b border-dark-600 pb-4">
+<h2 class="text-xl font-bold text-slate-100">Target Audience & Program Value Messaging</h2>
+<p class="text-xs text-slate-400 mt-1">Core offer, institutional value, and how capacity and selection are tracked.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+<p class="font-bold text-purple-400 uppercase tracking-wider text-[11px]">Core Service Offered</p>
+<p class="text-slate-300 leading-relaxed">Teaching students applied AI development—equipping them to build custom tools for academic tutoring, entrepreneurship ventures, data science, and advanced STEM projects.</p>
+</div>
+<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+<p class="font-bold text-purple-400 uppercase tracking-wider text-[11px]">Institutional Value</p>
+<p class="text-slate-300 leading-relaxed">Instantly upgrades the school's after-school offerings with turnkey tech education, boosting student engagement, modern technical literacy, and future-readiness without adding workload to core faculty.</p>
+</div>
+<div class="bg-dark-700/40 border border-dark-600 p-4 rounded-xl space-y-1">
+<p class="font-bold text-purple-400 uppercase tracking-wider text-[11px]">Capacity & Selection Criteria</p>
+<p class="text-slate-300 leading-relaxed">Tracks school-funded vs. parent-funded models, student headcount limits, and mandatory agreement to the 6-month contract lock-in.</p>
+</div>
+</div>
 </div>
 </div>
 <!-- Main Section 2: Spirit Meeting Outline & Agenda View (Dynamic Meeting Notes) -->
@@ -1746,7 +1792,7 @@ document.getElementById('mainView-' + viewName).classList.remove('hidden');
 const activeBtn = document.getElementById('nav-' + viewName);
 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 if (viewName === 'goals') {
-document.getElementById('pageTitle').innerText = "Target Audience (3 Categories)";
+document.getElementById('pageTitle').innerText = "Target Audience";
 }
 if (updateHash) window.location.hash = "view=" + viewName;
 }
