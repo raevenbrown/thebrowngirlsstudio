@@ -81,8 +81,7 @@ items-center justify-center font-bold text-white text-lg mx-auto shadow-lg">
 to unlock the financial dashboard on this device.</p>
 </div>
 <form onsubmit="checkFinancialPassword(event)" class="space-y-4">
-<input type="password" id="finPasswordInput" required placeholder="Enter
-password..." class="w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm
+<input type="password" id="finPasswordInput" required placeholder="Enter password..." class="w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm
 text-slate-200 text-center tracking-widest focus:outline-none focus:ring-2
 focus:ring-purple-500">
 
@@ -905,15 +904,13 @@ bg-dark-700 border border-dark-600 p-2 text-slate-200">
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Title /
 Focus</label>
-<input type="text" id="meetingTitleInput" required placeholder="e.g. Weekly
-Strategy Review" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2
+<input type="text" id="meetingTitleInput" required placeholder="e.g. Weekly Strategy Review" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2
 text-slate-200">
 </div>
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">What
 We Went Over / Notes</label>
-<textarea id="meetingNotesText" rows="4" required placeholder="Summary of
-agenda items and discussion points..." class="w-full rounded-xl bg-dark-700 border
+<textarea id="meetingNotesText" rows="4" required placeholder="Summary of agenda items and discussion points..." class="w-full rounded-xl bg-dark-700 border
 border-dark-600 p-2.5 text-slate-200"></textarea>
 </div>
 <div class="flex justify-end space-x-2 pt-2">
@@ -956,8 +953,7 @@ bg-dark-700 border border-dark-600 p-2 text-slate-200">
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider
 mb-1">Person Name</label>
-<input type="text" id="commsPerson" required placeholder="e.g. Principal
-Brandon" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
+<input type="text" id="commsPerson" required placeholder="e.g. Principal Brandon" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
 </div>
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider
@@ -984,15 +980,13 @@ class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200">
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider
 mb-1">Message Exchange Summary</label>
-<textarea id="commsMessage" rows="3" required placeholder="Summary of what
-was discussed..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5
+<textarea id="commsMessage" rows="3" required placeholder="Summary of what was discussed..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5
 text-slate-200"></textarea>
 </div>
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Next
 Steps</label>
-<input type="text" id="commsNextSteps" required placeholder="e.g. Follow up next
-week regarding proposal" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5
+<input type="text" id="commsNextSteps" required placeholder="e.g. Follow up next week regarding proposal" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5
 text-slate-200">
 </div>
 <div class="grid grid-cols-2 gap-3 pt-1">
@@ -1041,8 +1035,7 @@ class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200 f
 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white
 hover:file:bg-rose-500">
 </div>
-<input type="text" id="uploadNameInput" required placeholder="Receipt Name (e.g.
-Amazon_Supplies.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5
+<input type="text" id="uploadNameInput" required placeholder="Receipt Name (e.g. Amazon_Supplies.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5
 text-slate-200">
 <input type="hidden" id="uploadFileBase64">
 <div class="flex justify-end space-x-2 pt-2">
@@ -1065,8 +1058,7 @@ overflow-hidden p-6 space-y-4">
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Task
 Title</label>
-<input type="text" id="clientTaskTitle" required placeholder="e.g. Email Ms.
-Bunting" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+<input type="text" id="clientTaskTitle" required placeholder="e.g. Email Ms. Bunting" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
 </div>
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider
@@ -1246,17 +1238,20 @@ border-dark-600 p-2 text-slate-200">
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider
 mb-1">Message Exchange Summary</label>
-<textarea id="qpMessageInput" rows="2" placeholder="Summary of
-discussion..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2
+<textarea id="qpMessageInput" rows="2" placeholder="Summary of discussion..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2
 text-slate-200"></textarea>
 </div>
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider
 mb-1">Next Steps</label>
-<input type="text" id="qpNextStepsInput" placeholder="e.g. Follow up next week
-regarding proposal" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2
+<input type="text" id="qpNextStepsInput" placeholder="e.g. Follow up next week regarding proposal" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2
 text-slate-200">
 </div>
+</div>
+<!-- Personal School Notes (separate from phone call notes) -->
+<div class="border-t border-dark-600 pt-3 space-y-3">
+<p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">My Personal Notes About This School</p>
+<textarea id="qpPersonalNotes" rows="5" placeholder="Private notes: gatekeepers, best times to call, gym or lab space, who the real decision maker is, ideas, reminders..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
 </div>
 <div class="pt-3 border-t border-dark-600 flex justify-between items-center">
 <button type="button" onclick="openFullProfileFromModal()" class="text-rose-400
@@ -1278,8 +1273,7 @@ hidden flex items-center justify-center p-4">
 overflow-hidden p-6 space-y-4">
 <h3 class="font-bold text-slate-100 text-sm">Add Financial Prospect Target</h3>
 <form onsubmit="saveFinancialProspect(event)" class="space-y-3 text-xs">
-<input type="text" id="fpOrg" required placeholder="Organization / School Name (e.g.
-Heritage Christian Academy)" class="w-full rounded-xl bg-dark-700 border border-dark-600
+<input type="text" id="fpOrg" required placeholder="Organization / School Name (e.g. Heritage Christian Academy)" class="w-full rounded-xl bg-dark-700 border border-dark-600
 p-2.5 text-slate-200">
 <div class="grid grid-cols-2 gap-2">
 
@@ -2173,6 +2167,7 @@ document.getElementById('qpScheduleSelect').value = item.schedule || '';
 document.getElementById('qpCapacityInput').value = item.capacity || '';
 document.getElementById('qpPaymentSelect').value = item.paymentSource || '';
 document.getElementById('qpContractSelect').value = item.contractCommitment || '';
+document.getElementById('qpPersonalNotes').value = item.personalNotes || '';
 if (item.activities && item.activities.length > 0) {
 let act = item.activities[0];
 document.getElementById('qpPersonInput').value = act.person || '';
@@ -2228,6 +2223,7 @@ item.schedule = document.getElementById('qpScheduleSelect').value;
 item.capacity = parseInt(document.getElementById('qpCapacityInput').value) || 0;
 item.paymentSource = document.getElementById('qpPaymentSelect').value;
 item.contractCommitment = document.getElementById('qpContractSelect').value;
+item.personalNotes = document.getElementById('qpPersonalNotes').value;
 if (person || message) {
 if (!item.activities) item.activities = [];
 if (item.activities.length > 0) {
@@ -2662,6 +2658,10 @@ privacy-field">(PTO: $${donationAmount.toFixed(2)})</span></p>
 <div>
 <p class="text-slate-400 uppercase font-bold text-[10px]">6-Month Contract Lock-In</p>
 <p class="font-semibold text-slate-200 mt-0.5">${lead.contractCommitment || '—'}</p>
+</div>
+<div class="sm:col-span-2 bg-dark-800/80 p-3 rounded-xl border border-dark-600 space-y-1">
+<p class="text-slate-400 uppercase font-bold text-[10px]">My Personal Notes</p>
+<p class="font-medium text-slate-200 text-xs whitespace-pre-wrap">${(lead.personalNotes || 'No personal notes yet.').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</p>
 </div>
 <div class="sm:col-span-2 bg-dark-800/80 p-3 rounded-xl border
 border-dark-600 space-y-1">
