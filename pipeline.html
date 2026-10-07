@@ -24,15 +24,32 @@ dark: {
 }
 }
 </script>
+<!-- ===== CLOUD SYNC SETTINGS (paste your Firebase config here) =====
+     Leave the PASTE_ values alone to keep using local-only mode on each device. -->
+<script>
+window.BGCS_FIREBASE_CONFIG = {
+  apiKey: "PASTE_YOUR_API_KEY",
+  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT_ID.firebasestorage.app",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+</script>
 <!-- Instant Persistent Auth Check -->
 <script>
-if (localStorage.getItem('bgcs_auth') === 'true') {
+(function () {
+var c = window.BGCS_FIREBASE_CONFIG;
+var cloud = !!(c && c.apiKey && c.projectId && !/^PASTE/i.test(c.apiKey));
+if (!cloud && localStorage.getItem('bgcs_auth') === 'true') {
 document.documentElement.classList.add('is-authenticated');
 }
+})();
 </script>
 <style>
 .is-authenticated #passwordModal { display: none !important; }
 .is-authenticated #mainDashboard { display: flex !important; }
+@media (min-width: 768px) { #sidebarNav.sidebar-collapsed { display: none; } }
 .privacy-mask { filter: blur(6px); transition: filter 0.3s ease; user-select: none; }
 .privacy-mask:hover { filter: blur(0px); }
 </style>
@@ -50,11 +67,12 @@ BG
 </div>
 <div>
 <h2 class="text-lg font-bold text-slate-100">Restricted Access</h2>
-<p class="text-xs text-slate-400 mt-1">Enter your password to access The Brown
+<p id="loginHint" class="text-xs text-slate-400 mt-1">Enter your password to access The Brown
 Girls Creative Studio pipeline.</p>
 </div>
 <form onsubmit="checkPassword(event)" class="space-y-4">
-<input type="password" id="passwordInput" required placeholder="Enter password..."
+<input type="email" id="emailInput" autocomplete="username" placeholder="Email" class="hidden w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm text-slate-200 text-center focus:outline-none focus:ring-2 focus:ring-rose-500">
+<input type="password" autocomplete="current-password" id="passwordInput" required placeholder="Enter password..."
 class="w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm text-slate-200
 text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-rose-500">
 <p id="errorMsg" class="text-xs text-rose-500 hidden">Incorrect password. Please try
@@ -67,7 +85,7 @@ Unlock Dashboard
 </div>
 </div>
 <!-- Financial Goal Tracker Password Prompt Modal -->
-<div id="financialAuthModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden
+<div id="financialAuthModal" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm hidden
 flex items-center justify-center p-4">
 <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full
 p-8 text-center space-y-6">
@@ -77,8 +95,7 @@ items-center justify-center font-bold text-white text-lg mx-auto shadow-lg">
 </div>
 <div>
 <h2 class="text-lg font-bold text-slate-100">Financial Goal Tracker Security</h2>
-<p class="text-xs text-slate-400 mt-1">Enter password (<strong>THEBOSS</strong>)
-to unlock the financial dashboard on this device.</p>
+<p class="text-xs text-slate-400 mt-1">Enter your password to unlock the financial dashboard on this device.</p>
 </div>
 <form onsubmit="checkFinancialPassword(event)" class="space-y-4">
 <input type="password" id="finPasswordInput" required placeholder="Enter password..." class="w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm
@@ -117,10 +134,10 @@ BG
 <h1 class="font-bold text-sm tracking-wide text-slate-100">Creative
 Studio</h1>
 <p class="text-xs text-slate-400">Backend Operations</p>
+<p id="syncStatus" class="text-[10px] text-slate-500 mt-0.5"></p>
 </div>
 </div>
-<button onclick="toggleMobileSidebar()" class="md:hidden text-slate-400
-hover:text-slate-200"><i data-lucide="x" class="w-5 h-5"></i></button>
+<button onclick="toggleMobileSidebar()" aria-label="Close sidebar" class="p-2 rounded-xl bg-dark-700 text-slate-300 border border-dark-600 hover:text-white text-lg leading-none w-9 h-9 flex items-center justify-center">&#10005;</button>
 </div>
 <nav class="p-4 space-y-1.5 text-xs font-medium">
 <a href="#view=pipeline" onclick="switchMainView('pipeline')" id="nav-pipeline"
@@ -185,6 +202,8 @@ data-lucide="volume-2" class="w-3.5 h-3.5 mr-2"></i> Unmute Sounds</button>
 <button onclick="setAudioState('muted')" class="w-full text-left px-2.5 py-2
 rounded-lg hover:bg-dark-600 text-rose-400 font-medium flex items-center"><i
 data-lucide="volume-x" class="w-3.5 h-3.5 mr-2"></i> Mute All Sounds</button>
+<div class="border-t border-dark-600 my-1"></div>
+<button onclick="signOutApp()" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-200 font-medium flex items-center">&#10162; Sign Out of This Device</button>
 </div>
 </div>
 </aside>
@@ -193,9 +212,7 @@ data-lucide="volume-x" class="w-3.5 h-3.5 mr-2"></i> Mute All Sounds</button>
 <header class="h-auto md:h-16 py-4 md:py-0 border-b border-dark-600 bg-dark-800/50
 backdrop-blur-md px-4 sm:px-8 flex items-center justify-between gap-4 sticky top-0 z-10">
 <div class="flex items-center space-x-3">
-<button onclick="toggleMobileSidebar()" class="md:hidden p-2 rounded-xl
-bg-dark-700 text-slate-300 border border-dark-600"><i data-lucide="menu" class="w-5
-h-5"></i></button>
+<button onclick="toggleMobileSidebar()" aria-label="Open or close sidebar" class="p-2 rounded-xl bg-dark-700 text-slate-300 border border-dark-600 hover:text-white text-lg leading-none w-10 h-10 flex items-center justify-center">&#9776;</button>
 <div class="flex items-center space-x-2 text-center md:text-left">
 <span class="text-slate-400 text-xs sm:text-sm hidden sm:inline">The Brown
 Girls Creative Studio</span>
@@ -1358,12 +1375,13 @@ text-slate-200">
 <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">My Personal Notes About This School</p>
 <textarea id="qpPersonalNotes" rows="5" placeholder="Private notes: gatekeepers, best times to call, gym or lab space, who the real decision maker is, ideas, reminders..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
 </div>
+<p id="qpAutoSaveNote" class="text-[10px] text-emerald-400 font-semibold">Changes save automatically as you type</p>
 <div class="pt-3 border-t border-dark-600 flex justify-between items-center">
 <button type="button" onclick="openFullProfileFromModal()" class="text-rose-400
 font-semibold underline text-xs">Open Full Company Profile & Tasks</button>
 <div class="space-x-2">
 <button type="button" onclick="closeQuickProspectModal()" class="px-3 py-2
-rounded-xl border border-dark-600 text-slate-300">Cancel</button>
+rounded-xl border border-dark-600 text-slate-300">Close</button>
 <button type="submit" class="px-4 py-2 rounded-xl bg-rose-600
 hover:bg-rose-500 text-white font-semibold">Save Changes</button>
 </div>
@@ -1515,9 +1533,235 @@ font-semibold">Add Task</button>
 </div>
 </div>
 <script>
+if (typeof lucide === 'undefined') { window.lucide = { createIcons: function () {} }; }
+
+/* ===================== CLOUD SYNC (Firebase) ===================== */
+var BGCS_CLOUD = { enabled: false, ready: false, user: null, auth: null, db: null, ref: null, m: null, unsub: null, pushTimer: null, applyRetry: null };
+
+function bgcsCloudConfigured() {
+const c = window.BGCS_FIREBASE_CONFIG;
+return !!(c && c.apiKey && c.projectId && !/^PASTE/i.test(c.apiKey));
+}
+function setSyncStatus(txt) {
+const el = document.getElementById('syncStatus');
+if (el) el.innerText = txt;
+}
+function syncTimeStr() {
+return new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+}
+function getLocalStamp() {
+try { return parseInt(localStorage.getItem('bgcs_local_updated')) || 0; } catch (e) { return 0; }
+}
+function setLocalStamp(n) {
+try { localStorage.setItem('bgcs_local_updated', String(n)); } catch (e) {}
+}
+function hasUserEdits() {
+return JSON.stringify(financialProspects) !== DEFAULTS_JSON || (spiritMeetingNotes && spiritMeetingNotes.length > 0);
+}
+function decideSync(cloudExists, cloudStamp, localStamp, localEdited) {
+if (!cloudExists) return 'push';
+const cloudEdited = cloudStamp > 0;
+if (!cloudEdited && localEdited) return 'push';
+if (cloudEdited && !localEdited) return 'apply';
+if (!cloudEdited && !localEdited) return 'none';
+if (localStamp > 0 && localStamp > cloudStamp) return 'push';
+if (localStamp > 0 && cloudStamp > localStamp) return 'apply';
+if (localStamp > 0 && cloudStamp === localStamp) return 'none';
+return 'ask';
+}
+function markLocalChange() {
+setLocalStamp(Date.now());
+if (BGCS_CLOUD.ready) scheduleCloudPush();
+}
+function scheduleCloudPush() {
+clearTimeout(BGCS_CLOUD.pushTimer);
+setSyncStatus('Syncing...');
+BGCS_CLOUD.pushTimer = setTimeout(pushToCloud, 800);
+}
+async function pushToCloud() {
+if (!BGCS_CLOUD.ready) return;
+const safe = JSON.parse(JSON.stringify(financialProspects));
+safe.forEach(function (p) {
+p.taxReceipts = (p.taxReceipts || []).map(function (r) { return { name: r.name, date: r.date, url: '' }; });
+});
+const payload = {
+updatedAt: getLocalStamp(),
+prospectsJson: JSON.stringify(safe),
+notesJson: JSON.stringify(spiritMeetingNotes || []),
+device: (navigator.userAgent || '').slice(0, 80)
+};
+if (payload.prospectsJson.length + payload.notesJson.length > 900000) {
+setSyncStatus('Too large to sync');
+alert('Your data is too large to sync to the cloud. Please remove very long pasted text or old items.');
+return;
+}
+try {
+await BGCS_CLOUD.m.fsMod.setDoc(BGCS_CLOUD.ref, payload);
+setSyncStatus('Synced ' + syncTimeStr());
+} catch (e) {
+console.error(e);
+setSyncStatus('Sync failed, will retry');
+clearTimeout(BGCS_CLOUD.pushTimer);
+BGCS_CLOUD.pushTimer = setTimeout(pushToCloud, 15000);
+}
+}
+function refreshAllViews() {
+renderFinancialKanban();
+renderSpiritMeetingNotes();
+const pv = document.getElementById('prospectTodoList');
+const pvWrap = document.getElementById('mainView-prospects');
+if (pv && pvWrap && !pvWrap.classList.contains('hidden')) renderProspectTodosMaster();
+const profileEl = document.getElementById('profileView');
+if (profileEl && !profileEl.classList.contains('hidden') && currentProfileId !== null) {
+if (!financialProspects.find(function (l) { return l.id === currentProfileId; })) {
+switchMainView('pipeline');
+} else {
+renderEmbeddedProspectTicket();
+renderTaxReceiptsList();
+renderClientTasks();
+renderClientRevenue();
+renderClientComms();
+}
+}
+}
+function applyCloudData(data) {
+const modal = document.getElementById('quickProspectModal');
+if (modal && !modal.classList.contains('hidden')) {
+clearTimeout(BGCS_CLOUD.applyRetry);
+BGCS_CLOUD.applyRetry = setTimeout(function () { applyCloudData(data); }, 1500);
+return;
+}
+let incoming;
+try { incoming = JSON.parse(data.prospectsJson || '[]'); } catch (e) { return; }
+try {
+const backup = JSON.parse(JSON.stringify(financialProspects));
+backup.forEach(function (p) { p.taxReceipts = (p.taxReceipts || []).map(function (r) { return { name: r.name, date: r.date }; }); });
+localStorage.setItem('bgcs_backup_before_cloud', JSON.stringify({ at: Date.now(), prospects: backup, notes: spiritMeetingNotes }));
+} catch (e) {}
+const oldById = {};
+financialProspects.forEach(function (p) { oldById[p.id] = p; });
+incoming.forEach(function (p) {
+const old = oldById[p.id];
+p.taxReceipts = (p.taxReceipts || []).map(function (r) {
+const m = old && (old.taxReceipts || []).find(function (x) { return x.name === r.name && x.date === r.date && x.url && x.url.indexOf('data:') === 0; });
+return m ? { name: r.name, date: r.date, url: m.url } : r;
+});
+});
+financialProspects = incoming;
+try { localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects)); } catch (e) {}
+try {
+spiritMeetingNotes = JSON.parse(data.notesJson || '[]');
+localStorage.setItem('bgcs_spirit_meeting_notes', JSON.stringify(spiritMeetingNotes));
+} catch (e) {}
+setLocalStamp(data.updatedAt || 0);
+refreshAllViews();
+setSyncStatus('Synced ' + syncTimeStr());
+}
+async function startCloudSync() {
+const fs = BGCS_CLOUD.m.fsMod;
+BGCS_CLOUD.ref = fs.doc(BGCS_CLOUD.db, 'bgcsData', 'main');
+setSyncStatus('Connecting...');
+try {
+const snap = await fs.getDoc(BGCS_CLOUD.ref);
+const cloud = snap.exists() ? snap.data() : null;
+let action = decideSync(!!cloud, cloud ? (cloud.updatedAt || 0) : 0, getLocalStamp(), hasUserEdits());
+if (action === 'ask') {
+const useCloud = confirm("This device has saved information from before cloud sync, and your cloud account already has information too.\n\nOK = use the CLOUD information on this device (this device's copy is backed up first)\nCancel = upload THIS device's information to the cloud instead");
+action = useCloud ? 'apply' : 'push';
+if (action === 'push') setLocalStamp(Date.now());
+}
+if (action === 'push') {
+if (!getLocalStamp() && hasUserEdits()) setLocalStamp(Date.now());
+BGCS_CLOUD.ready = true;
+await pushToCloud();
+} else if (action === 'apply') {
+applyCloudData(cloud);
+} else {
+setSyncStatus('Synced ' + syncTimeStr());
+}
+BGCS_CLOUD.ready = true;
+if (BGCS_CLOUD.unsub) BGCS_CLOUD.unsub();
+BGCS_CLOUD.unsub = fs.onSnapshot(BGCS_CLOUD.ref, function (s) {
+if (!s.exists() || (s.metadata && s.metadata.hasPendingWrites)) return;
+const d = s.data();
+if ((d.updatedAt || 0) > getLocalStamp()) applyCloudData(d);
+}, function () { setSyncStatus('Sync paused'); });
+} catch (e) {
+console.error(e);
+setSyncStatus('Cloud sync error: ' + (e.code || e.message));
+}
+}
+async function loadFirebaseModules() {
+const base = 'https://www.gstatic.com/firebasejs/10.12.2/';
+const mods = await Promise.all([import(base + 'firebase-app.js'), import(base + 'firebase-auth.js'), import(base + 'firebase-firestore.js')]);
+return { appMod: mods[0], authMod: mods[1], fsMod: mods[2] };
+}
+async function initCloud() {
+if (!bgcsCloudConfigured()) return;
+BGCS_CLOUD.enabled = true;
+const em = document.getElementById('emailInput');
+if (em) { em.classList.remove('hidden'); em.required = true; }
+const hint = document.getElementById('loginHint');
+if (hint) hint.innerText = 'Sign in with your email and password to open The Brown Girls Creative Studio pipeline.';
+setSyncStatus('Connecting...');
+try {
+const m = await loadFirebaseModules();
+BGCS_CLOUD.m = m;
+const app = m.appMod.initializeApp(window.BGCS_FIREBASE_CONFIG);
+BGCS_CLOUD.auth = m.authMod.getAuth(app);
+BGCS_CLOUD.db = m.fsMod.getFirestore(app);
+m.authMod.onAuthStateChanged(BGCS_CLOUD.auth, function (user) {
+BGCS_CLOUD.user = user;
+if (user) {
+document.documentElement.classList.add('is-authenticated');
+lucide.createIcons();
+startCloudSync();
+} else {
+document.documentElement.classList.remove('is-authenticated');
+BGCS_CLOUD.ready = false;
+if (BGCS_CLOUD.unsub) { BGCS_CLOUD.unsub(); BGCS_CLOUD.unsub = null; }
+setSyncStatus('');
+}
+});
+} catch (e) {
+console.error(e);
+const err = document.getElementById('errorMsg');
+if (err) { err.innerText = 'Could not reach the sign-in service. Check your internet connection and refresh.'; err.classList.remove('hidden'); }
+}
+}
+async function cloudSignIn() {
+const email = document.getElementById('emailInput').value.trim();
+const pass = document.getElementById('passwordInput').value;
+const err = document.getElementById('errorMsg');
+if (!BGCS_CLOUD.auth) {
+err.innerText = 'Still connecting. Please wait a moment and try again.';
+err.classList.remove('hidden');
+return;
+}
+try {
+await BGCS_CLOUD.m.authMod.signInWithEmailAndPassword(BGCS_CLOUD.auth, email, pass);
+err.classList.add('hidden');
+document.getElementById('passwordInput').value = '';
+} catch (e) {
+err.innerText = 'Incorrect email or password. Please try again.';
+err.classList.remove('hidden');
+}
+}
+async function signOutApp() {
+if (BGCS_CLOUD.enabled && BGCS_CLOUD.auth) {
+try { await BGCS_CLOUD.m.authMod.signOut(BGCS_CLOUD.auth); } catch (e) {}
+} else {
+localStorage.removeItem('bgcs_auth');
+document.documentElement.classList.remove('is-authenticated');
+}
+localStorage.removeItem('bgcs_fin_auth');
+location.reload();
+}
+/* ================================================================= */
 
 function checkPassword(event) {
 event.preventDefault();
+if (BGCS_CLOUD.enabled) { cloudSignIn(); return; }
 const pass = document.getElementById('passwordInput').value;
 if(pass === 'REDROSE014') {
 localStorage.setItem('bgcs_auth', 'true');
@@ -1536,7 +1780,7 @@ localStorage.setItem('bgcs_fin_auth', 'true');
 document.getElementById('financialAuthModal').classList.add('hidden');
 switchMainView('financial', false);
 } else {
-document.getElementById('finErrorMsg').classList.add('hidden');
+document.getElementById('finErrorMsg').classList.remove('hidden');
 }
 }
 const defaultFinancialProspects = [
@@ -1633,6 +1877,7 @@ donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this
 "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
 "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] }
 ];
+var DEFAULTS_JSON = JSON.stringify(defaultFinancialProspects);
 let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects'));
 if (!financialProspects || financialProspects.length === 0) {
 financialProspects = defaultFinancialProspects;
@@ -1654,10 +1899,22 @@ active: true
 if (!fp.activities) fp.activities = [];
 if (!fp.taxReceipts) fp.taxReceipts = [];
 });
-saveFinancialProspects();
-function saveFinancialProspects() {
-localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
+saveFinancialProspects(true);
+function saveFinancialProspects(skipStamp) {
+saveFinancialProspectsLocal();
+if (!skipStamp) markLocalChange();
 }
+function saveFinancialProspectsLocal() {
+try {
+localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
+} catch (e) {
+if (!window.__storageWarned) {
+window.__storageWarned = true;
+alert("Your latest changes could not be saved because browser storage is full or blocked. Remove large uploaded receipts or files, then try again.");
+}
+}
+}
+try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
 let currentProfileId = null;
 let currentFolderPath = [];
 let currentEditingFolderRef = null;
@@ -1668,6 +1925,11 @@ let currentCalMonth = 9;
 function toggleMobileSidebar() {
 const sidebar = document.getElementById('sidebarNav');
 const overlay = document.getElementById('mobileSidebarOverlay');
+if (window.innerWidth >= 768) {
+sidebar.classList.toggle('sidebar-collapsed');
+try { localStorage.setItem('bgcs_sidebar_collapsed', sidebar.classList.contains('sidebar-collapsed') ? '1' : '0'); } catch (e) {}
+return;
+}
 if (sidebar.classList.contains('-translate-x-full')) {
 sidebar.classList.remove('-translate-x-full');
 overlay.classList.remove('hidden');
@@ -1676,6 +1938,13 @@ sidebar.classList.add('-translate-x-full');
 overlay.classList.add('hidden');
 }
 }
+(function restoreSidebarState() {
+try {
+if (localStorage.getItem('bgcs_sidebar_collapsed') === '1' && window.innerWidth >= 768) {
+document.getElementById('sidebarNav').classList.add('sidebar-collapsed');
+}
+} catch (e) {}
+})();
 function toggleMutePopup() {
 const popup = document.getElementById('mutePopup');
 if (popup.classList.contains('hidden')) {
@@ -1753,6 +2022,7 @@ let spiritMeetingNotes = JSON.parse(localStorage.getItem('bgcs_spirit_meeting_no
 [];
 function saveSpiritMeetingNotes() {
 localStorage.setItem('bgcs_spirit_meeting_notes', JSON.stringify(spiritMeetingNotes));
+markLocalChange();
 }
 function renderSpiritMeetingNotes() {
 const container = document.getElementById('meetingNotesList');
@@ -1842,8 +2112,14 @@ renderSpiritMeetingNotes();
 }
 }
 function switchMainView(viewName, updateHash = true) {
+if (viewName !== 'financial') document.getElementById('financialAuthModal').classList.add('hidden');
 if (viewName === 'financial' && localStorage.getItem('bgcs_fin_auth') !== 'true') {
 document.getElementById('financialAuthModal').classList.remove('hidden');
+const sbEl = document.getElementById('sidebarNav');
+if (window.innerWidth < 768 && sbEl && !sbEl.classList.contains('-translate-x-full')) {
+sbEl.classList.add('-translate-x-full');
+document.getElementById('mobileSidebarOverlay').classList.add('hidden');
+}
 return;
 }
 ['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
@@ -1949,6 +2225,13 @@ document.getElementById('uploadModal').classList.add('hidden');
 }
 function handleFileSelect(event) {
 const file = event.target.files[0];
+if (file && file.size > 1500000) {
+alert('That file is over 1.5 MB, which is too large to store in the browser. Please upload a smaller file or compress it.');
+event.target.value = '';
+document.getElementById('uploadNameInput').value = '';
+document.getElementById('uploadFileBase64').value = '';
+return;
+}
 if (file) {
 document.getElementById('uploadNameInput').value = file.name;
 const reader = new FileReader();
@@ -1992,8 +2275,8 @@ items-center justify-between">
 <span class="text-[10px] text-slate-400">(${rc.date})</span>
 </div>
 <div class="space-x-2">
-<a href="${rc.url}" target="_blank" download="${rc.name}" class="text-xs
-text-rose-400 font-semibold underline">Download</a>
+${(rc.url && rc.url.indexOf('data:') === 0) ? `<a href="${rc.url}" target="_blank" download="${rc.name}" class="text-xs
+text-rose-400 font-semibold underline">Download</a>` : '<span class="text-[10px] text-slate-500 italic">File is on the device that uploaded it</span>'}
 <button onclick="deleteTaxReceipt(${rIdx})" class="text-slate-400
 hover:text-rose-400 text-xs">Delete</button>
 </div>
@@ -2317,9 +2600,10 @@ document.getElementById('quickProspectModal').classList.remove('hidden');
 }
 function closeQuickProspectModal() {
 document.getElementById('quickProspectModal').classList.add('hidden');
+renderFinancialKanban();
 }
-function saveQuickProspectTicket(event) {
-event.preventDefault();
+function saveQuickProspectTicket(event, silent) {
+if (event && event.preventDefault) event.preventDefault();
 const id = parseInt(document.getElementById('qpProspectId').value);
 const org = document.getElementById('qpOrgInput').value;
 const stage = document.getElementById('qpStageSelect').value;
@@ -2383,13 +2667,18 @@ followUpDone: false
 }
 }
 saveFinancialProspects();
+if (!silent) {
 closeQuickProspectModal();
 renderFinancialKanban();
 }
 }
+}
 
 function openFullProfileFromModal() {
+const form = document.querySelector('#quickProspectModal form');
+if (form && !form.reportValidity()) return;
 const id = parseInt(document.getElementById('qpProspectId').value);
+saveQuickProspectTicket(null, true);
 closeQuickProspectModal();
 openProfile(id, 'revenue');
 }
@@ -3027,6 +3316,26 @@ switchMainView(viewName, false);
 switchMainView('pipeline', false);
 }
 }
+let ticketAutoSaveTimer = null;
+(function bindTicketAutoSave() {
+const modal = document.getElementById('quickProspectModal');
+if (!modal) return;
+const handler = function () {
+clearTimeout(ticketAutoSaveTimer);
+ticketAutoSaveTimer = setTimeout(function () {
+if (modal.classList.contains('hidden')) return;
+if (!document.getElementById('qpOrgInput').value.trim()) return;
+saveQuickProspectTicket(null, true);
+const note = document.getElementById('qpAutoSaveNote');
+if (note) note.innerText = 'All changes saved';
+}, 600);
+};
+modal.addEventListener('input', handler);
+modal.addEventListener('change', handler);
+})();
+
+initCloud();
+
 initApp();
 
 </script>
