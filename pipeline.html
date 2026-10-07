@@ -1248,6 +1248,50 @@ mb-1">Next Steps</label>
 text-slate-200">
 </div>
 </div>
+<!-- Welcome Email Tracker -->
+<div class="border-t border-dark-600 pt-3 space-y-3">
+<p class="font-bold text-emerald-400 uppercase tracking-wider text-[10px]">Welcome Email Tracker</p>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Email Subject</label>
+<input type="text" id="qpEmailSubject" placeholder="e.g. STEM After-School Partnership: AI Development Program" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Date Sent</label>
+<input type="date" id="qpEmailSentDate" style="min-width:0;-webkit-appearance:none;" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Email Status</label>
+<select id="qpEmailStatus" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold">
+<option value="">Not sent yet</option>
+<option value="Sent">Sent</option>
+<option value="Opened">Opened</option>
+<option value="Replied - Interested">Replied - Interested</option>
+<option value="Replied - Not Interested">Replied - Not Interested</option>
+<option value="No Response">No Response</option>
+<option value="Bounced / Wrong Email">Bounced / Wrong Email</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Welcome Email (paste what you sent)</label>
+<textarea id="qpEmailBody" rows="6" placeholder="Paste the full welcome email here..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+</div>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Did It Work? Their Response</label>
+<textarea id="qpEmailResult" rows="3" placeholder="Replies, call-backs, questions they asked, or 'no reply yet'..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Next Step</label>
+<input type="text" id="qpEmailNextStep" placeholder="e.g. Call Friday if no reply" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Follow-Up Date</label>
+<input type="date" id="qpEmailFollowUp" style="min-width:0;-webkit-appearance:none;" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+</div>
+</div>
 <!-- Personal School Notes (separate from phone call notes) -->
 <div class="border-t border-dark-600 pt-3 space-y-3">
 <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">My Personal Notes About This School</p>
@@ -2168,6 +2212,13 @@ document.getElementById('qpCapacityInput').value = item.capacity || '';
 document.getElementById('qpPaymentSelect').value = item.paymentSource || '';
 document.getElementById('qpContractSelect').value = item.contractCommitment || '';
 document.getElementById('qpPersonalNotes').value = item.personalNotes || '';
+document.getElementById('qpEmailSubject').value = item.emailSubject || '';
+document.getElementById('qpEmailSentDate').value = item.emailSentDate || '';
+document.getElementById('qpEmailStatus').value = item.emailStatus || '';
+document.getElementById('qpEmailBody').value = item.emailBody || '';
+document.getElementById('qpEmailResult').value = item.emailResult || '';
+document.getElementById('qpEmailNextStep').value = item.emailNextStep || '';
+document.getElementById('qpEmailFollowUp').value = item.emailFollowUp || '';
 if (item.activities && item.activities.length > 0) {
 let act = item.activities[0];
 document.getElementById('qpPersonInput').value = act.person || '';
@@ -2224,6 +2275,13 @@ item.capacity = parseInt(document.getElementById('qpCapacityInput').value) || 0;
 item.paymentSource = document.getElementById('qpPaymentSelect').value;
 item.contractCommitment = document.getElementById('qpContractSelect').value;
 item.personalNotes = document.getElementById('qpPersonalNotes').value;
+item.emailSubject = document.getElementById('qpEmailSubject').value;
+item.emailSentDate = document.getElementById('qpEmailSentDate').value;
+item.emailStatus = document.getElementById('qpEmailStatus').value;
+item.emailBody = document.getElementById('qpEmailBody').value;
+item.emailResult = document.getElementById('qpEmailResult').value;
+item.emailNextStep = document.getElementById('qpEmailNextStep').value;
+item.emailFollowUp = document.getElementById('qpEmailFollowUp').value;
 if (person || message) {
 if (!item.activities) item.activities = [];
 if (item.activities.length > 0) {
@@ -2585,6 +2643,9 @@ switchTab(tabToOpen, false);
 window.scrollTo({ top: 0, behavior: 'smooth' });
 lucide.createIcons();
 }
+function escHtml(str) {
+return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
 function renderEmbeddedProspectTicket() {
 const container = document.getElementById('profileEmbeddedTicketCard');
 if (!container) return;
@@ -2658,6 +2719,40 @@ privacy-field">(PTO: $${donationAmount.toFixed(2)})</span></p>
 <div>
 <p class="text-slate-400 uppercase font-bold text-[10px]">6-Month Contract Lock-In</p>
 <p class="font-semibold text-slate-200 mt-0.5">${lead.contractCommitment || '—'}</p>
+</div>
+<div class="sm:col-span-2 bg-dark-800/80 p-4 rounded-xl border border-emerald-500/30 space-y-3">
+<div class="flex justify-between items-center">
+<p class="text-emerald-400 uppercase font-bold text-[10px] tracking-wider">Welcome Email</p>
+<span class="px-2 py-0.5 rounded text-[10px] font-bold border ${lead.emailStatus ? (lead.emailStatus === 'Replied - Interested' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : (lead.emailStatus.startsWith('Replied') || lead.emailStatus === 'Opened' || lead.emailStatus === 'Sent' ? 'bg-purple-500/10 text-purple-400 border-purple-500/20' : 'bg-rose-500/10 text-rose-400 border-rose-500/20')) : 'bg-amber-500/10 text-amber-400 border-amber-500/20'}">${lead.emailStatus || 'Not sent yet'}</span>
+</div>
+<div>
+<p class="text-slate-400 uppercase font-bold text-[10px]">Subject</p>
+<p class="font-semibold text-slate-100 text-sm mt-0.5 break-words">${lead.emailSubject ? escHtml(lead.emailSubject) : '<span class="text-slate-500 italic font-normal">No subject saved yet</span>'}</p>
+</div>
+<div>
+<p class="text-slate-400 uppercase font-bold text-[10px]">Body</p>
+<div class="mt-1 bg-dark-900/60 border border-dark-600 rounded-lg p-3 max-h-72 overflow-y-auto">
+<p class="text-xs text-slate-300 whitespace-pre-wrap break-words leading-relaxed">${lead.emailBody ? escHtml(lead.emailBody) : '<span class="text-slate-500 italic">No email saved yet. Click Edit This Ticket and paste it into the Welcome Email Tracker.</span>'}</p>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-dark-600">
+<div>
+<p class="text-slate-400 uppercase font-bold text-[10px]">Date Sent</p>
+<p class="font-semibold text-slate-200 mt-0.5">${lead.emailSentDate || '—'}</p>
+</div>
+<div>
+<p class="text-slate-400 uppercase font-bold text-[10px]">Follow-Up Date</p>
+<p class="font-semibold text-slate-200 mt-0.5">${lead.emailFollowUp || '—'}</p>
+</div>
+<div class="sm:col-span-2">
+<p class="text-slate-400 uppercase font-bold text-[10px]">Their Response (Did It Work?)</p>
+<p class="text-xs text-slate-300 mt-0.5 whitespace-pre-wrap break-words">${lead.emailResult ? escHtml(lead.emailResult) : '—'}</p>
+</div>
+<div class="sm:col-span-2">
+<p class="text-slate-400 uppercase font-bold text-[10px]">Next Step</p>
+<p class="text-xs text-rose-400 font-semibold mt-0.5 break-words">${lead.emailNextStep ? escHtml(lead.emailNextStep) : '—'}</p>
+</div>
+</div>
 </div>
 <div class="sm:col-span-2 bg-dark-800/80 p-3 rounded-xl border border-dark-600 space-y-1">
 <p class="text-slate-400 uppercase font-bold text-[10px]">My Personal Notes</p>
