@@ -97,6 +97,7 @@ items-center justify-center font-bold text-white text-lg mx-auto shadow-lg">
 <h2 class="text-lg font-bold text-slate-100">Financial Goal Tracker Security</h2>
 <p class="text-xs text-slate-400 mt-1">Enter your password to unlock the financial dashboard on this device.</p>
 </div>
+<button type="button" id="finBioBtn" onclick="finBiometric()" class="hidden w-full py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold text-xs shadow-lg shadow-purple-600/20 transition">Unlock with Face ID / Passcode</button>
 <form onsubmit="checkFinancialPassword(event)" class="space-y-4">
 <input type="password" id="finPasswordInput" required placeholder="Enter password..." class="w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm
 text-slate-200 text-center tracking-widest focus:outline-none focus:ring-2
@@ -171,6 +172,9 @@ hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="check-square" class="w-4 h-4 mr-3 text-amber-400"></i>
 Prospect To-Do List
 </a>
+<a href="#view=activity" onclick="switchMainView('activity')" id="nav-activity" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="history" class="w-4 h-4 mr-3 text-sky-400"></i> Activity Log
+</a>
 </nav>
 </div>
 <!-- Bottom Left User Profile & Popup Menu -->
@@ -202,6 +206,9 @@ data-lucide="volume-2" class="w-3.5 h-3.5 mr-2"></i> Unmute Sounds</button>
 <button onclick="setAudioState('muted')" class="w-full text-left px-2.5 py-2
 rounded-lg hover:bg-dark-600 text-rose-400 font-medium flex items-center"><i
 data-lucide="volume-x" class="w-3.5 h-3.5 mr-2"></i> Mute All Sounds</button>
+<div class="border-t border-dark-600 my-1"></div>
+<button onclick="setupQuickUnlock(); toggleMutePopup();" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-200 font-medium flex items-center">Set Up Face ID / Passcode</button>
+<button onclick="removeQuickUnlock(); toggleMutePopup();" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-400 font-medium flex items-center">Turn Off Face ID Here</button>
 <div class="border-t border-dark-600 my-1"></div>
 <button onclick="signOutApp()" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-200 font-medium flex items-center">&#10162; Sign Out of This Device</button>
 </div>
@@ -529,6 +536,21 @@ class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"><
 </div>
 </div>
 </div>
+<!-- Main Section: Activity Log (every change, everyone) -->
+<div id="mainView-activity" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
+<div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+<div class="border-b border-dark-600 pb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
+<div>
+<h2 class="text-xl font-bold text-slate-100">Activity Log</h2>
+<p class="text-xs text-slate-400 mt-1">Every edit to every ticket and profile, who made it, and who went in and out. Shared on every device.</p>
+</div>
+<select id="actFeedPerson" onchange="renderActivityFeed()" class="rounded-xl bg-dark-700 border border-dark-600 p-2 text-xs text-slate-200 font-semibold">
+<option value="">Everyone</option>
+</select>
+</div>
+<div id="activityFeedList" class="space-y-2"></div>
+</div>
+</div>
 <!-- Main Section 2: Spirit Meeting Outline & Agenda View (Dynamic Meeting Notes) -->
 <div id="mainView-agenda" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full
 hidden">
@@ -674,6 +696,7 @@ text-center">Prospect Ticket & Invoices</button>
 <button onclick="switchTab('comms')" id="tabBtn-comms" class="px-3 sm:px-4
 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition
 text-center">Communication Log</button>
+<button onclick="switchTab('activity')" id="tabBtn-activity" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Activity Log</button>
 <button onclick="switchTab('events')" id="tabBtn-events" class="px-3 sm:px-4
 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition
 text-center">Events & Folders</button>
@@ -804,6 +827,21 @@ mt-1">$0.00</h4>
 </div>
 </div>
 </div>
+<!-- Tab: Activity Log -->
+<div id="tabContent-activity" class="space-y-6 hidden">
+<div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-4">
+<div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 border-b border-dark-600 pb-4">
+<div>
+<h3 class="font-bold text-sm text-slate-100">Activity Log</h3>
+<p class="text-xs text-slate-400 mt-0.5">Every change made to this company, and who made it or went in and out.</p>
+</div>
+<select id="actTabPerson" onchange="renderActivityTab()" class="rounded-xl bg-dark-700 border border-dark-600 p-2 text-xs text-slate-200 font-semibold">
+<option value="">Everyone</option>
+</select>
+</div>
+<div id="activityTabList" class="space-y-2"></div>
+</div>
+</div>
 <!-- Tab 3: Communication Log -->
 <div id="tabContent-comms" class="space-y-6 hidden">
 <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
@@ -902,6 +940,52 @@ tracking-wider">Scheduled Events & Milestones</h4>
 </div>
 </div>
 </main>
+</div>
+
+<!-- Who is making these changes / save or discard -->
+<div id="whoModal" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+<div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4">
+<div>
+<h3 id="whoTitle" class="font-bold text-slate-100 text-sm">Who is making these changes?</h3>
+<p id="whoMessage" class="text-xs text-slate-400 mt-1"></p>
+</div>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider text-[10px] mb-1">Who is in this account?</label>
+<select id="whoSelect" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-3 text-sm text-slate-100 font-semibold"></select>
+</div>
+<div id="whoButtons" class="space-y-2"></div>
+<details class="text-xs">
+<summary class="cursor-pointer text-slate-400 underline">Add another person</summary>
+<div class="flex space-x-2 mt-2">
+<input type="text" id="whoNewName" placeholder="Name..." class="flex-1 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
+<button type="button" onclick="addWhoPerson()" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-rose-400 text-xs font-semibold">Add</button>
+</div>
+</details>
+</div>
+</div>
+
+<!-- Face ID / device passcode lock screen -->
+<div id="lockModal" class="fixed inset-0 z-[65] bg-dark-900 hidden flex items-center justify-center p-4">
+<div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full p-8 text-center space-y-5">
+<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-600 to-purple-600 flex items-center justify-center font-bold text-white text-lg mx-auto shadow-lg">BG</div>
+<div>
+<h2 class="text-lg font-bold text-slate-100">Welcome back</h2>
+<p class="text-xs text-slate-400 mt-1">Use Face ID or your device passcode to open the pipeline.</p>
+</div>
+<p id="lockMsg" class="text-xs text-rose-400 hidden"></p>
+<button type="button" onclick="lockUnlockWithBio()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-lg shadow-rose-600/20 transition">Unlock with Face ID / Passcode</button>
+<button type="button" onclick="lockUsePassword()" class="text-xs text-slate-400 underline">Use my password instead</button>
+</div>
+</div>
+
+<!-- Offer to set up Face ID / passcode -->
+<div id="quOfferModal" class="fixed inset-0 z-[66] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+<div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 text-center">
+<h3 class="font-bold text-slate-100 text-sm">Make signing in easier?</h3>
+<p class="text-xs text-slate-400">Use Face ID or your device passcode on this device instead of typing your password.</p>
+<button type="button" onclick="quOfferAccept()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">Set Up Face ID / Passcode</button>
+<button type="button" onclick="quOfferDecline()" class="w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 text-xs font-semibold">Not Now</button>
+</div>
 </div>
 <!-- Modal for Adding / Editing Spirit Meeting Notes -->
 <div id="meetingNoteModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden
@@ -1133,10 +1217,10 @@ uppercase"></span>
 <h3 id="qpModalHeaderTitle" class="font-bold text-slate-100 text-base mt-1">Edit
 Prospect Ticket</h3>
 </div>
-<button onclick="closeQuickProspectModal()" class="text-slate-400
+<button onclick="requestCloseTicket()" class="text-slate-400
 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
 </div>
-<form onsubmit="saveQuickProspectTicket(event)" class="space-y-3 text-xs">
+<form onsubmit="submitTicketForm(event)" class="space-y-3 text-xs">
 <input type="hidden" id="qpProspectId">
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider
@@ -1375,12 +1459,12 @@ text-slate-200">
 <p class="font-bold text-purple-400 uppercase tracking-wider text-[10px]">My Personal Notes About This School</p>
 <textarea id="qpPersonalNotes" rows="5" placeholder="Private notes: gatekeepers, best times to call, gym or lab space, who the real decision maker is, ideas, reminders..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
 </div>
-<p id="qpAutoSaveNote" class="text-[10px] text-emerald-400 font-semibold">Changes save automatically as you type</p>
+<p id="qpAutoSaveNote" class="text-[10px] text-emerald-400 font-semibold">Changes are saved when you click Save Changes</p>
 <div class="pt-3 border-t border-dark-600 flex justify-between items-center">
 <button type="button" onclick="openFullProfileFromModal()" class="text-rose-400
 font-semibold underline text-xs">Open Full Company Profile & Tasks</button>
 <div class="space-x-2">
-<button type="button" onclick="closeQuickProspectModal()" class="px-3 py-2
+<button type="button" onclick="requestCloseTicket()" class="px-3 py-2
 rounded-xl border border-dark-600 text-slate-300">Close</button>
 <button type="submit" class="px-4 py-2 rounded-xl bg-rose-600
 hover:bg-rose-500 text-white font-semibold">Save Changes</button>
@@ -1536,7 +1620,7 @@ font-semibold">Add Task</button>
 if (typeof lucide === 'undefined') { window.lucide = { createIcons: function () {} }; }
 
 /* ===================== CLOUD SYNC (Firebase) ===================== */
-var BGCS_CLOUD = { enabled: false, ready: false, user: null, auth: null, db: null, ref: null, m: null, unsub: null, pushTimer: null, applyRetry: null };
+var BGCS_CLOUD = { enabled: false, ready: false, user: null, auth: null, db: null, ref: null, m: null, unsub: null, unsubAct: null, pushTimer: null, applyRetry: null };
 
 function bgcsCloudConfigured() {
 const c = window.BGCS_FIREBASE_CONFIG;
@@ -1588,6 +1672,7 @@ const payload = {
 updatedAt: getLocalStamp(),
 prospectsJson: JSON.stringify(safe),
 notesJson: JSON.stringify(spiritMeetingNotes || []),
+peopleJson: JSON.stringify(bgcsPeople),
 device: (navigator.userAgent || '').slice(0, 80)
 };
 if (payload.prospectsJson.length + payload.notesJson.length > 900000) {
@@ -1606,6 +1691,7 @@ BGCS_CLOUD.pushTimer = setTimeout(pushToCloud, 15000);
 }
 }
 function refreshAllViews() {
+refreshActivityViews();
 renderFinancialKanban();
 renderSpiritMeetingNotes();
 const pv = document.getElementById('prospectTodoList');
@@ -1614,7 +1700,8 @@ if (pv && pvWrap && !pvWrap.classList.contains('hidden')) renderProspectTodosMas
 const profileEl = document.getElementById('profileView');
 if (profileEl && !profileEl.classList.contains('hidden') && currentProfileId !== null) {
 if (!financialProspects.find(function (l) { return l.id === currentProfileId; })) {
-switchMainView('pipeline');
+window.__bypassLeave = true;
+try { switchMainView('pipeline'); } finally { window.__bypassLeave = false; }
 } else {
 renderEmbeddedProspectTicket();
 renderTaxReceiptsList();
@@ -1653,6 +1740,7 @@ try {
 spiritMeetingNotes = JSON.parse(data.notesJson || '[]');
 localStorage.setItem('bgcs_spirit_meeting_notes', JSON.stringify(spiritMeetingNotes));
 } catch (e) {}
+try { if (data.peopleJson) { bgcsPeople = JSON.parse(data.peopleJson); savePeopleLocal(); } } catch (e) {}
 setLocalStamp(data.updatedAt || 0);
 refreshAllViews();
 setSyncStatus('Synced ' + syncTimeStr());
@@ -1686,6 +1774,9 @@ if (!s.exists() || (s.metadata && s.metadata.hasPendingWrites)) return;
 const d = s.data();
 if ((d.updatedAt || 0) > getLocalStamp()) applyCloudData(d);
 }, function () { setSyncStatus('Sync paused'); });
+if (BGCS_CLOUD.unsubAct) BGCS_CLOUD.unsubAct();
+BGCS_CLOUD.unsubAct = fs.onSnapshot(fs.query(fs.collection(BGCS_CLOUD.db, 'bgcsActivity'), fs.orderBy('at', 'desc'), fs.limit(1000)), function (snap) { mergeCloudActivity(snap); }, function () {});
+pushUnsyncedActivity();
 } catch (e) {
 console.error(e);
 setSyncStatus('Cloud sync error: ' + (e.code || e.message));
@@ -1715,11 +1806,14 @@ BGCS_CLOUD.user = user;
 if (user) {
 document.documentElement.classList.add('is-authenticated');
 lucide.createIcons();
+if (quCredId() && !quUnlockedRecently()) showLockScreen();
+if (window.__justLoggedIn) { window.__justLoggedIn = false; markUnlocked(); offerQuickUnlock(); }
 startCloudSync();
 } else {
 document.documentElement.classList.remove('is-authenticated');
 BGCS_CLOUD.ready = false;
 if (BGCS_CLOUD.unsub) { BGCS_CLOUD.unsub(); BGCS_CLOUD.unsub = null; }
+if (BGCS_CLOUD.unsubAct) { BGCS_CLOUD.unsubAct(); BGCS_CLOUD.unsubAct = null; }
 setSyncStatus('');
 }
 });
@@ -1741,6 +1835,7 @@ return;
 try {
 await BGCS_CLOUD.m.authMod.signInWithEmailAndPassword(BGCS_CLOUD.auth, email, pass);
 err.classList.add('hidden');
+window.__justLoggedIn = true;
 document.getElementById('passwordInput').value = '';
 } catch (e) {
 err.innerText = 'Incorrect email or password. Please try again.';
@@ -1755,8 +1850,467 @@ localStorage.removeItem('bgcs_auth');
 document.documentElement.classList.remove('is-authenticated');
 }
 localStorage.removeItem('bgcs_fin_auth');
+try { sessionStorage.removeItem('bgcs_unlocked_at'); sessionStorage.removeItem('bgcs_fin_until'); } catch (e) {}
 location.reload();
 }
+/* ================================================================= */
+
+/* ===================== ACTIVITY LOG, WHO'S IN THE ACCOUNT ===================== */
+var CURRENT_ACTOR = '';
+var ticketBefore = null;
+var ticketProspectId = null;
+var ticketFormBaseline = null;
+var whoResolve = null;
+var activityLog = [];
+try { activityLog = JSON.parse(localStorage.getItem('bgcs_activity_log') || '[]'); } catch (e) { activityLog = []; }
+var bgcsPeople = ['Raeven Brown', 'Courtney White'];
+try { const sp = JSON.parse(localStorage.getItem('bgcs_people') || 'null'); if (sp && sp.length) bgcsPeople = sp; } catch (e) {}
+
+function savePeopleLocal() { try { localStorage.setItem('bgcs_people', JSON.stringify(bgcsPeople)); } catch (e) {} }
+function saveActivityLocal() { try { localStorage.setItem('bgcs_activity_log', JSON.stringify(activityLog)); } catch (e) {} }
+
+function logActivity(prospectId, type, text, orgOverride) {
+const pid = (prospectId === undefined || prospectId === null) ? null : prospectId;
+const p = pid !== null ? financialProspects.find(function (x) { return x.id === pid; }) : null;
+const entry = {
+id: Date.now() + '-' + Math.random().toString(36).slice(2, 7),
+at: new Date().toISOString(),
+who: CURRENT_ACTOR || 'Unknown',
+pid: pid,
+org: orgOverride || (p ? p.org : ''),
+type: type,
+text: String(text).slice(0, 400),
+s: false
+};
+activityLog.unshift(entry);
+if (activityLog.length > 1500) activityLog.length = 1500;
+saveActivityLocal();
+pushActivity(entry);
+refreshActivityViews();
+}
+
+/* ---- who is making this change (drop-down) ---- */
+var WHO_BTN = {
+primary: 'w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-lg shadow-rose-600/20 transition',
+danger: 'w-full py-3 rounded-xl border border-rose-500/50 text-rose-400 font-semibold text-xs hover:bg-rose-500/10 transition',
+neutral: 'w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 font-semibold text-xs hover:bg-dark-700 transition'
+};
+function fillWhoSelect(selectName) {
+const sel = document.getElementById('whoSelect');
+const last = localStorage.getItem('bgcs_last_actor');
+sel.innerHTML = bgcsPeople.map(function (n) { return '<option value="' + escHtml(n) + '">' + escHtml(n) + '</option>'; }).join('');
+const want = selectName || last;
+if (want && bgcsPeople.indexOf(want) >= 0) sel.value = want;
+}
+function showWhoDialog(opts) {
+return new Promise(function (resolve) {
+if (whoResolve) { const old = whoResolve; whoResolve = null; old({ who: '', choice: 'cancel' }); }
+whoResolve = resolve;
+document.getElementById('whoTitle').innerText = opts.title;
+document.getElementById('whoMessage').innerText = opts.message || '';
+fillWhoSelect();
+const wrap = document.getElementById('whoButtons');
+wrap.innerHTML = '';
+opts.buttons.forEach(function (b) {
+const btn = document.createElement('button');
+btn.type = 'button';
+btn.className = WHO_BTN[b.kind || 'neutral'];
+btn.innerText = b.label;
+btn.onclick = function () { finishWho(b.value); };
+wrap.appendChild(btn);
+});
+document.getElementById('whoModal').classList.remove('hidden');
+});
+}
+function finishWho(choice) {
+const who = document.getElementById('whoSelect').value;
+document.getElementById('whoModal').classList.add('hidden');
+const r = whoResolve; whoResolve = null;
+if (choice !== 'stay' && choice !== 'cancel' && who) {
+CURRENT_ACTOR = who;
+localStorage.setItem('bgcs_last_actor', who);
+localStorage.setItem('bgcs_last_actor_at', String(Date.now()));
+}
+if (r) r({ who: who, choice: choice });
+}
+function addWhoPerson() {
+const inp = document.getElementById('whoNewName');
+const name = (inp.value || '').trim();
+if (!name) return;
+if (bgcsPeople.indexOf(name) < 0) {
+bgcsPeople.push(name);
+savePeopleLocal();
+markLocalChange();
+}
+inp.value = '';
+fillWhoSelect(name);
+}
+function askWho(quick) {
+return new Promise(function (resolve, reject) {
+if (quick) {
+const last = localStorage.getItem('bgcs_last_actor');
+const at = parseInt(localStorage.getItem('bgcs_last_actor_at')) || 0;
+if (last && Date.now() - at < 30 * 60 * 1000) {
+CURRENT_ACTOR = last;
+localStorage.setItem('bgcs_last_actor_at', String(Date.now()));
+resolve(last);
+return;
+}
+}
+showWhoDialog({
+title: 'Who is making this change?',
+message: 'Pick who is in the account so the activity log records it.',
+buttons: [{ label: 'Continue', value: 'ok', kind: 'primary' }, { label: 'Cancel', value: 'cancel', kind: 'neutral' }]
+}).then(function (r) {
+if (r.choice === 'ok') resolve(r.who); else reject(new Error('cancelled'));
+});
+});
+}
+function bgcsGuarded(quick, coreFn, argList) {
+const args = Array.prototype.slice.call(argList);
+if (args[0] && typeof args[0].preventDefault === 'function') {
+args[0].preventDefault();
+args[0] = { preventDefault: function () {} };
+}
+askWho(quick).then(function () {
+coreFn.apply(null, args);
+}).catch(function () {
+try { refreshAllViews(); } catch (e) {}
+});
+}
+
+/* ---- wrapped actions (each asks who first) ---- */
+function saveClientTask() { bgcsGuarded(false, saveClientTaskCore, arguments); }
+function saveCommsActivity() { bgcsGuarded(false, saveCommsActivityCore, arguments); }
+function saveProspectTaskFromMaster() { bgcsGuarded(false, saveProspectTaskFromMasterCore, arguments); }
+function saveFinancialProspect() { bgcsGuarded(false, saveFinancialProspectCore, arguments); }
+function saveUploadFile() { bgcsGuarded(false, saveUploadFileCore, arguments); }
+function saveMeetingNote() { bgcsGuarded(false, saveMeetingNoteCore, arguments); }
+function toggleClientTask() { bgcsGuarded(true, toggleClientTaskCore, arguments); }
+function toggleMasterTask() { bgcsGuarded(true, toggleMasterTaskCore, arguments); }
+function deleteClientTask() { bgcsGuarded(true, deleteClientTaskCore, arguments); }
+function updateClientStage() { bgcsGuarded(true, updateClientStageCore, arguments); }
+function updateFinancialProspectStage() { bgcsGuarded(true, updateFinancialProspectStageCore, arguments); }
+function toggleClientRetainer() { bgcsGuarded(true, toggleClientRetainerCore, arguments); }
+function deleteFinancialProspect() { bgcsGuarded(true, deleteFinancialProspectCore, arguments); }
+function deleteTaxReceipt() { bgcsGuarded(true, deleteTaxReceiptCore, arguments); }
+function deleteMeetingNote() { bgcsGuarded(true, deleteMeetingNoteCore, arguments); }
+
+
+/* ---- ticket: unsaved changes, save / discard, who ---- */
+var TICKET_SHORT_FIELDS = [
+['org', 'Organization name', 'name'], ['stage', 'Funnel stage', 'stage'], ['classes', 'Target class goal', 'ticket'], ['price', 'Price per kid', 'ticket'],
+['donation', 'Community donation %', 'ticket'], ['address', 'Address', 'contact'], ['phone', 'Phone number', 'contact'], ['email', 'Email address', 'contact'],
+['schedule', 'Program schedule', 'ticket'], ['capacity', 'Student capacity', 'ticket'], ['paymentSource', 'Payment source', 'ticket'], ['contractCommitment', '6-month contract lock-in', 'ticket'],
+['emailSubject', 'Phase 1 email subject', 'email'], ['emailSentDate', 'Phase 1 date sent', 'email'], ['emailStatus', 'Phase 1 email status', 'email'], ['emailNextStep', 'Phase 1 next step', 'email'], ['emailFollowUp', 'Phase 1 follow-up date', 'email'],
+['callDate', 'Phase 2 call date', 'call'], ['callOutcome', 'Phase 2 call outcome', 'call'],
+['fuSubject', 'Phase 3 email subject', 'email'], ['fuDate', 'Phase 3 date sent', 'email'], ['fuStatus', 'Phase 3 email status', 'email']
+];
+var TICKET_LONG_FIELDS = [
+['personalNotes', 'Personal notes', 'note'], ['emailBody', 'Phase 1 welcome email', 'email'], ['emailResult', 'Phase 1 response', 'email'],
+['callNotes', 'Phase 2 call notes', 'call'], ['fuBody', 'Phase 3 follow-up email', 'email'], ['fuResult', 'Phase 3 response', 'email']
+];
+var OUTREACH_SHORT = [['person', 'Contact person', 'contact'], ['title', 'Contact title', 'contact'], ['date', 'Date spoken', 'comms'], ['nextSteps', 'Next steps', 'comms']];
+var OUTREACH_LONG = [['message', 'Call / message summary', 'comms']];
+function actShort(v) { v = String(v); return v.length > 60 ? v.slice(0, 57) + '...' : v; }
+function diffProspect(before, after) {
+const out = [];
+function blank(v) { return v === undefined || v === null || v === '' || v === 0; }
+function cmp(b, a, label, type, long) {
+const bb = blank(b) ? '' : String(b);
+const aa = blank(a) ? '' : String(a);
+if (bb === aa) return;
+if (!bb) out.push({ type: type, text: label + (long ? ' added' : ' added: ' + actShort(aa)) });
+else if (!aa) out.push({ type: type, text: label + ' removed' });
+else out.push({ type: type, text: long ? label + ' updated' : label + ' changed from "' + actShort(bb) + '" to "' + actShort(aa) + '"' });
+}
+TICKET_SHORT_FIELDS.forEach(function (f) { cmp(before[f[0]], after[f[0]], f[1], f[2], false); });
+TICKET_LONG_FIELDS.forEach(function (f) { cmp(before[f[0]], after[f[0]], f[1], f[2], true); });
+const bo = (before.activities && before.activities[0]) || {};
+const ao = (after.activities && after.activities[0]) || {};
+OUTREACH_SHORT.forEach(function (f) { cmp(bo[f[0]], ao[f[0]], f[1], f[2], false); });
+OUTREACH_LONG.forEach(function (f) { cmp(bo[f[0]], ao[f[0]], f[1], f[2], true); });
+return out;
+}
+function readTicketForm() {
+const o = {};
+document.querySelectorAll('#quickProspectModal input, #quickProspectModal select, #quickProspectModal textarea').forEach(function (el) { if (el.id) o[el.id] = el.value; });
+return o;
+}
+function ticketFormDirty() {
+return ticketFormBaseline !== null && JSON.stringify(readTicketForm()) !== ticketFormBaseline;
+}
+function ticketCurrent() {
+return financialProspects.find(function (p) { return p.id === ticketProspectId; });
+}
+function recordTicketChanges() {
+const cur = ticketCurrent();
+if (!cur || !ticketBefore) return 0;
+const d = diffProspect(ticketBefore, cur);
+d.forEach(function (x) { logActivity(cur.id, x.type, x.text); });
+ticketBefore = JSON.parse(JSON.stringify(cur));
+return d.length;
+}
+function submitTicketForm(event) {
+if (event && event.preventDefault) event.preventDefault();
+if (!document.getElementById('qpOrgInput').value.trim()) return;
+showWhoDialog({
+title: 'Save changes',
+message: 'Pick who is making these changes. They will be saved and recorded in the activity log.',
+buttons: [{ label: 'Save Changes', value: 'save', kind: 'primary' }, { label: 'Keep Editing', value: 'stay', kind: 'neutral' }]
+}).then(function (r) {
+if (r.choice !== 'save') return;
+saveQuickProspectTicket(null, true);
+recordTicketChanges();
+closeQuickProspectModal();
+ticketFormBaseline = null;
+});
+}
+function requestCloseTicket(done) {
+const changed = ticketFormDirty();
+showWhoDialog({
+title: 'Leaving this ticket',
+message: changed ? 'You have unsaved changes. Save them before you leave?' : 'No changes were made to this ticket. Pick who was in it.',
+buttons: changed
+? [{ label: 'Save Changes & Leave', value: 'save', kind: 'primary' }, { label: 'Discard Changes & Leave', value: 'discard', kind: 'danger' }, { label: 'Keep Editing', value: 'stay', kind: 'neutral' }]
+: [{ label: 'Leave', value: 'leave', kind: 'primary' }, { label: 'Keep Editing', value: 'stay', kind: 'neutral' }]
+}).then(function (r) {
+if (r.choice === 'stay' || r.choice === 'cancel') return;
+if (r.choice === 'save') {
+const form = document.querySelector('#quickProspectModal form');
+if (form && !form.reportValidity()) return;
+saveQuickProspectTicket(null, true);
+recordTicketChanges();
+} else if (r.choice === 'discard') {
+logActivity(ticketProspectId, 'visit', 'Left the ticket and discarded unsaved changes');
+} else {
+logActivity(ticketProspectId, 'visit', 'Viewed ticket (no changes)');
+}
+ticketFormBaseline = null;
+closeQuickProspectModal();
+if (typeof done === 'function') done();
+});
+}
+window.addEventListener('beforeunload', function (e) {
+const m = document.getElementById('quickProspectModal');
+if (m && !m.classList.contains('hidden') && ticketFormDirty()) { e.preventDefault(); e.returnValue = ''; }
+});
+
+/* ---- leaving a company profile ---- */
+function profileIsOpen() {
+const pv = document.getElementById('profileView');
+return !!(pv && !pv.classList.contains('hidden') && currentProfileId !== null);
+}
+function requestLeaveProfile(proceed) {
+if (window.__profileVisitLogged === currentProfileId) { proceed(); return; }
+showWhoDialog({
+title: 'Leaving this profile',
+message: 'Changes you make on this page save as you go. Pick who was in this profile.',
+buttons: [{ label: 'Leave', value: 'leave', kind: 'primary' }, { label: 'Stay', value: 'stay', kind: 'neutral' }]
+}).then(function (r) {
+if (r.choice !== 'leave') return;
+logActivity(currentProfileId, 'visit', 'Viewed profile');
+window.__profileVisitLogged = currentProfileId;
+proceed();
+});
+}
+
+/* ---- activity screens ---- */
+var ACT_LABELS = { created: 'Added', deleted: 'Deleted', stage: 'Stage', name: 'Name', contact: 'Contact', note: 'Note', email: 'Email', call: 'Call', task: 'Task', comms: 'Communication', file: 'File', meeting: 'Meeting', ticket: 'Ticket', visit: 'Visit' };
+function fmtActTime(iso) {
+try { return new Date(iso).toLocaleString([], { month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' }); } catch (e) { return iso; }
+}
+function actRowHtml(e, showOrg) {
+const tones = ['emerald', 'purple', 'sky', 'amber', 'rose'];
+const idx = bgcsPeople.indexOf(e.who);
+const tone = idx >= 0 ? tones[idx % tones.length] : 'amber';
+let orgHtml = '';
+if (showOrg && e.org) {
+if (e.pid !== null && e.pid !== undefined && financialProspects.some(function (p) { return p.id === e.pid; })) {
+orgHtml = '<a href="javascript:void(0)" onclick="openProfile(' + e.pid + ', \'activity\')" class="text-rose-400 font-semibold underline">' + escHtml(e.org) + '</a>';
+} else {
+orgHtml = '<span class="text-rose-400 font-semibold">' + escHtml(e.org) + '</span>';
+}
+}
+return '<div class="bg-dark-700/40 border border-dark-600 rounded-xl p-3 space-y-1">' +
+'<div class="flex flex-wrap items-center gap-2 text-[11px]">' +
+'<span class="px-2 py-0.5 rounded font-bold border ' + toneClasses[tone] + '">' + escHtml(e.who || 'Unknown') + '</span>' +
+'<span class="px-2 py-0.5 rounded border border-dark-600 text-slate-300 uppercase tracking-wider text-[10px]">' + (ACT_LABELS[e.type] || 'Update') + '</span>' +
+'<span class="text-slate-400">' + fmtActTime(e.at) + '</span>' + orgHtml + '</div>' +
+'<p class="text-xs text-slate-200 break-words">' + escHtml(e.text) + '</p></div>';
+}
+function fillPersonFilter(selId) {
+const sel = document.getElementById(selId);
+if (!sel) return '';
+const keep = sel.value;
+const names = bgcsPeople.slice();
+activityLog.forEach(function (e) { if (e.who && names.indexOf(e.who) < 0) names.push(e.who); });
+sel.innerHTML = '<option value="">Everyone</option>' + names.map(function (n) { return '<option value="' + escHtml(n) + '">' + escHtml(n) + '</option>'; }).join('');
+sel.value = names.indexOf(keep) >= 0 ? keep : '';
+return sel.value;
+}
+function renderActivityTab() {
+const box = document.getElementById('activityTabList');
+if (!box) return;
+const who = fillPersonFilter('actTabPerson');
+const rows = activityLog.filter(function (e) { return e.pid === currentProfileId && (!who || e.who === who); });
+box.innerHTML = rows.length ? rows.slice(0, 300).map(function (e) { return actRowHtml(e, false); }).join('') : '<p class="text-xs text-slate-500 italic py-4 text-center">No activity recorded for this company yet.</p>';
+}
+function renderActivityFeed() {
+const box = document.getElementById('activityFeedList');
+if (!box) return;
+const who = fillPersonFilter('actFeedPerson');
+const rows = activityLog.filter(function (e) { return !who || e.who === who; });
+box.innerHTML = rows.length ? rows.slice(0, 300).map(function (e) { return actRowHtml(e, true); }).join('') : '<p class="text-xs text-slate-500 italic py-6 text-center">No activity recorded yet. Changes you save will show up here.</p>';
+}
+function refreshActivityViews() {
+const tab = document.getElementById('tabContent-activity');
+if (tab && !tab.classList.contains('hidden')) renderActivityTab();
+const feed = document.getElementById('mainView-activity');
+if (feed && !feed.classList.contains('hidden')) renderActivityFeed();
+}
+async function pushActivity(entry) {
+if (!BGCS_CLOUD.ready || !BGCS_CLOUD.m) return;
+try {
+const fs = BGCS_CLOUD.m.fsMod;
+await fs.setDoc(fs.doc(BGCS_CLOUD.db, 'bgcsActivity', entry.id), { id: entry.id, at: entry.at, who: entry.who, pid: entry.pid, org: entry.org || '', type: entry.type, text: entry.text });
+entry.s = true;
+saveActivityLocal();
+} catch (e) { console.error(e); }
+}
+function pushUnsyncedActivity() {
+activityLog.filter(function (e) { return !e.s; }).forEach(pushActivity);
+}
+function mergeCloudActivity(snap) {
+let changed = false;
+const have = {};
+activityLog.forEach(function (e) { have[e.id] = e; });
+snap.forEach(function (d) {
+const e = d.data();
+if (!e || !e.id) return;
+if (!have[e.id]) { e.s = true; activityLog.push(e); have[e.id] = e; changed = true; }
+else if (!have[e.id].s) { have[e.id].s = true; changed = true; }
+});
+if (changed) {
+activityLog.sort(function (a, b) { return a.at < b.at ? 1 : (a.at > b.at ? -1 : 0); });
+if (activityLog.length > 1500) activityLog.length = 1500;
+saveActivityLocal();
+refreshActivityViews();
+}
+pushUnsyncedActivity();
+}
+
+/* ===================== FACE ID / DEVICE PASSCODE UNLOCK ===================== */
+function quHasSupport() { return !!(window.PublicKeyCredential && navigator.credentials && navigator.credentials.create); }
+function quCredId() { try { return localStorage.getItem('bgcs_quick_cred') || ''; } catch (e) { return ''; } }
+function quB64(buf) {
+const b = new Uint8Array(buf); let s = '';
+for (let i = 0; i < b.length; i++) s += String.fromCharCode(b[i]);
+return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+function quFromB64(str) {
+str = str.replace(/-/g, '+').replace(/_/g, '/');
+while (str.length % 4) str += '=';
+const bin = atob(str); const out = new Uint8Array(bin.length);
+for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+return out;
+}
+async function setupQuickUnlock() {
+if (!quHasSupport()) { alert('This browser does not support Face ID or passcode unlock.'); return false; }
+try {
+const cred = await navigator.credentials.create({ publicKey: {
+challenge: crypto.getRandomValues(new Uint8Array(32)),
+rp: { name: 'Brown Girls Creative Studio', id: location.hostname },
+user: { id: crypto.getRandomValues(new Uint8Array(16)), name: 'owner', displayName: 'Owner' },
+pubKeyCredParams: [{ type: 'public-key', alg: -7 }, { type: 'public-key', alg: -257 }],
+authenticatorSelection: { authenticatorAttachment: 'platform', userVerification: 'required', residentKey: 'preferred' },
+timeout: 60000, attestation: 'none'
+} });
+localStorage.setItem('bgcs_quick_cred', quB64(cred.rawId));
+markUnlocked();
+alert('Face ID / passcode unlock is on for this device.');
+return true;
+} catch (e) {
+console.error(e);
+alert('Face ID / passcode setup was cancelled or is not available here.');
+return false;
+}
+}
+async function verifyQuickUnlock() {
+const id = quCredId();
+if (!id) return false;
+const a = await navigator.credentials.get({ publicKey: {
+challenge: crypto.getRandomValues(new Uint8Array(32)),
+rpId: location.hostname,
+allowCredentials: [{ type: 'public-key', id: quFromB64(id), transports: ['internal'] }],
+userVerification: 'required', timeout: 60000
+} });
+return !!a;
+}
+function removeQuickUnlock() {
+try { localStorage.removeItem('bgcs_quick_cred'); } catch (e) {}
+alert('Face ID / passcode unlock is turned off on this device.');
+}
+function quUnlockedRecently() {
+try { return Date.now() - (parseInt(sessionStorage.getItem('bgcs_unlocked_at')) || 0) < 15 * 60 * 1000; } catch (e) { return false; }
+}
+function markUnlocked() { try { sessionStorage.setItem('bgcs_unlocked_at', String(Date.now())); } catch (e) {} }
+function showLockScreen() {
+if (!quCredId()) return;
+const m = document.getElementById('lockModal');
+if (m) m.classList.remove('hidden');
+}
+async function lockUnlockWithBio() {
+const msg = document.getElementById('lockMsg');
+try {
+if (await verifyQuickUnlock()) {
+markUnlocked();
+document.getElementById('lockModal').classList.add('hidden');
+msg.classList.add('hidden');
+}
+} catch (e) {
+msg.innerText = 'That did not work. Try again, or use your password.';
+msg.classList.remove('hidden');
+}
+}
+function lockUsePassword() {
+document.getElementById('lockModal').classList.add('hidden');
+try { sessionStorage.removeItem('bgcs_unlocked_at'); } catch (e) {}
+signOutApp();
+}
+function offerQuickUnlock() {
+if (!quHasSupport() || quCredId() || localStorage.getItem('bgcs_quick_declined') === '1') return;
+setTimeout(function () { const m = document.getElementById('quOfferModal'); if (m) m.classList.remove('hidden'); }, 600);
+}
+async function quOfferAccept() {
+const ok = await setupQuickUnlock();
+if (ok) document.getElementById('quOfferModal').classList.add('hidden');
+}
+function quOfferDecline() {
+localStorage.setItem('bgcs_quick_declined', '1');
+document.getElementById('quOfferModal').classList.add('hidden');
+}
+function finUnlockedNow() {
+try { return (parseInt(sessionStorage.getItem('bgcs_fin_until')) || 0) > Date.now(); } catch (e) { return false; }
+}
+function finUnlockNow() {
+try { sessionStorage.setItem('bgcs_fin_until', String(Date.now() + 10 * 60 * 1000)); } catch (e) {}
+document.getElementById('financialAuthModal').classList.add('hidden');
+switchMainView('financial', false);
+}
+async function finBiometric() {
+try { if (await verifyQuickUnlock()) finUnlockNow(); } catch (e) {
+const err = document.getElementById('finErrorMsg');
+if (err) { err.innerText = 'Face ID did not work. Try again or use your password.'; err.classList.remove('hidden'); }
+}
+}
+document.addEventListener('visibilitychange', function () {
+if (document.hidden) { window.__hiddenAt = Date.now(); return; }
+if (window.__hiddenAt && Date.now() - window.__hiddenAt > 5 * 60 * 1000 && quCredId() && document.documentElement.classList.contains('is-authenticated')) {
+try { sessionStorage.removeItem('bgcs_unlocked_at'); sessionStorage.removeItem('bgcs_fin_until'); } catch (e) {}
+showLockScreen();
+}
+});
 /* ================================================================= */
 
 function checkPassword(event) {
@@ -1765,6 +2319,8 @@ if (BGCS_CLOUD.enabled) { cloudSignIn(); return; }
 const pass = document.getElementById('passwordInput').value;
 if(pass === 'REDROSE014') {
 localStorage.setItem('bgcs_auth', 'true');
+markUnlocked();
+offerQuickUnlock();
 document.documentElement.classList.add('is-authenticated');
 lucide.createIcons();
 initApp();
@@ -1772,15 +2328,29 @@ initApp();
 document.getElementById('errorMsg').classList.remove('hidden');
 }
 }
-function checkFinancialPassword(event) {
+async function checkFinancialPassword(event) {
 event.preventDefault();
 const pass = document.getElementById('finPasswordInput').value;
-if(pass === 'THEBOSS') {
-localStorage.setItem('bgcs_fin_auth', 'true');
-document.getElementById('financialAuthModal').classList.add('hidden');
-switchMainView('financial', false);
+const err = document.getElementById('finErrorMsg');
+if (BGCS_CLOUD.enabled && BGCS_CLOUD.user && BGCS_CLOUD.user.email) {
+try {
+await BGCS_CLOUD.m.authMod.signInWithEmailAndPassword(BGCS_CLOUD.auth, BGCS_CLOUD.user.email, pass);
+err.classList.add('hidden');
+document.getElementById('finPasswordInput').value = '';
+finUnlockNow();
+} catch (e) {
+err.innerText = 'Incorrect password. Access denied.';
+err.classList.remove('hidden');
+}
+return;
+}
+if (pass === 'THEBOSS') {
+err.classList.add('hidden');
+document.getElementById('finPasswordInput').value = '';
+finUnlockNow();
 } else {
-document.getElementById('finErrorMsg').classList.remove('hidden');
+err.innerText = 'Incorrect password. Access denied.';
+err.classList.remove('hidden');
 }
 }
 const defaultFinancialProspects = [
@@ -2075,7 +2645,7 @@ document.getElementById('meetingNoteModal').classList.remove('hidden');
 function closeMeetingNoteModal() {
 document.getElementById('meetingNoteModal').classList.add('hidden');
 }
-function saveMeetingNote(event) {
+function saveMeetingNoteCore(event) {
 event.preventDefault();
 const id = document.getElementById('editingMeetingNoteId').value;
 const date = document.getElementById('meetingDateInput').value;
@@ -2097,6 +2667,7 @@ notes
 
 });
 }
+logActivity(null, 'meeting', (id ? 'Meeting note updated: ' : 'Meeting note added: ') + title);
 saveSpiritMeetingNotes();
 closeMeetingNoteModal();
 renderSpiritMeetingNotes();
@@ -2104,17 +2675,28 @@ renderSpiritMeetingNotes();
 function editMeetingNote(id) {
 openMeetingNoteModal(id);
 }
-function deleteMeetingNote(id) {
+function deleteMeetingNoteCore(id) {
 if (confirm("Delete this meeting note?")) {
+const _mn = spiritMeetingNotes.find(n => n.id === id);
 spiritMeetingNotes = spiritMeetingNotes.filter(n => n.id !== id);
+if (_mn) logActivity(null, 'meeting', 'Meeting note deleted: ' + _mn.title);
 saveSpiritMeetingNotes();
 renderSpiritMeetingNotes();
 }
 }
 function switchMainView(viewName, updateHash = true) {
+if (profileIsOpen() && !window.__bypassLeave) {
+requestLeaveProfile(function () {
+window.__bypassLeave = true;
+try { switchMainView(viewName, updateHash); } finally { window.__bypassLeave = false; }
+});
+return;
+}
 if (viewName !== 'financial') document.getElementById('financialAuthModal').classList.add('hidden');
-if (viewName === 'financial' && localStorage.getItem('bgcs_fin_auth') !== 'true') {
+if (viewName === 'financial' && !finUnlockedNow()) {
 document.getElementById('financialAuthModal').classList.remove('hidden');
+const fb = document.getElementById('finBioBtn');
+if (fb) fb.classList.toggle('hidden', !quCredId());
 const sbEl = document.getElementById('sidebarNav');
 if (window.innerWidth < 768 && sbEl && !sbEl.classList.contains('-translate-x-full')) {
 sbEl.classList.add('-translate-x-full');
@@ -2122,13 +2704,13 @@ document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -2169,6 +2751,10 @@ if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl
 if (viewName === 'goals') {
 document.getElementById('pageTitle').innerText = "Target Audience";
 }
+if (viewName === 'activity') {
+document.getElementById('pageTitle').innerText = "Activity Log";
+renderActivityFeed();
+}
 if (updateHash) window.location.hash = "view=" + viewName;
 }
 const sidebar = document.getElementById('sidebarNav');
@@ -2184,7 +2770,7 @@ currentActiveTab = tabName;
 if (updateHash && currentProfileId !== null) {
 window.location.hash = `profile=${currentProfileId}&tab=${tabName}`;
 }
-['info', 'revenue', 'comms', 'events', 'calendar', 'tasks'].forEach(t => {
+['info', 'revenue', 'comms', 'events', 'calendar', 'tasks', 'activity'].forEach(t => {
 const el = document.getElementById('tabContent-' + t);
 const btn = document.getElementById('tabBtn-' + t);
 if (el) el.classList.add('hidden');
@@ -2199,6 +2785,9 @@ renderVisualCalendar();
 }
 if (tabName === 'tasks') {
 renderClientTasks();
+}
+if (tabName === 'activity') {
+renderActivityTab();
 }
 if (tabName === 'revenue') {
 renderEmbeddedProspectTicket();
@@ -2241,7 +2830,7 @@ document.getElementById('uploadFileBase64').value = e.target.result;
 reader.readAsDataURL(file);
 }
 }
-function saveUploadFile(event) {
+function saveUploadFileCore(event) {
 event.preventDefault();
 const name = document.getElementById('uploadNameInput').value;
 const url = document.getElementById('uploadFileBase64').value || '#';
@@ -2249,6 +2838,7 @@ let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead) {
 if (!lead.taxReceipts) lead.taxReceipts = [];
 lead.taxReceipts.push({ name, url, date: new Date().toISOString().split('T')[0] });
+logActivity(lead.id, 'file', 'File uploaded: ' + name);
 saveFinancialProspects();
 closeUploadModal();
 renderTaxReceiptsList();
@@ -2284,10 +2874,12 @@ hover:text-rose-400 text-xs">Delete</button>
 });
 lucide.createIcons();
 }
-function deleteTaxReceipt(rIdx) {
+function deleteTaxReceiptCore(rIdx) {
 let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead && lead.taxReceipts) {
+const _rc = lead.taxReceipts[rIdx];
 lead.taxReceipts.splice(rIdx, 1);
+if (_rc) logActivity(lead.id, 'file', 'File deleted: ' + _rc.name);
 saveFinancialProspects();
 renderTaxReceiptsList();
 }
@@ -2351,10 +2943,11 @@ tasks currently added to any prospect tickets.</p>`;
 }
 lucide.createIcons();
 }
-function toggleMasterTask(prospectId, taskIdx) {
+function toggleMasterTaskCore(prospectId, taskIdx) {
 let fp = financialProspects.find(p => p.id === prospectId);
 if (fp && fp.clientTasks && fp.clientTasks[taskIdx]) {
 fp.clientTasks[taskIdx].done = !fp.clientTasks[taskIdx].done;
+logActivity(fp.id, 'task', 'Task ' + (fp.clientTasks[taskIdx].done ? 'completed' : 'reopened') + ': ' + (fp.clientTasks[taskIdx].title || fp.clientTasks[taskIdx].task));
 saveFinancialProspects();
 renderProspectTodosMaster();
 }
@@ -2373,7 +2966,7 @@ document.getElementById('prospectTaskModal').classList.remove('hidden');
 function closeProspectTaskModal() {
 document.getElementById('prospectTaskModal').classList.add('hidden');
 }
-function saveProspectTaskFromMaster(event) {
+function saveProspectTaskFromMasterCore(event) {
 event.preventDefault();
 const fpId = parseInt(document.getElementById('ptOrgSelect').value);
 const title = document.getElementById('ptTitle').value;
@@ -2383,8 +2976,8 @@ const urgency = document.getElementById('ptUrgency').value;
 let fp = financialProspects.find(p => p.id === fpId);
 if (fp) {
 if (!fp.clientTasks) fp.clientTasks = [];
-fp.clientTasks.push({ title, desc, date, urgency, assignee: "Raeven Brown", done:
-false, active: false });
+fp.clientTasks.push({ title, desc, date, urgency, assignee: "Raeven Brown", done: false, active: false });
+logActivity(fp.id, 'task', 'Task added: ' + title + (date ? ', due ' + date : ''));
 saveFinancialProspects();
 closeProspectTaskModal();
 
@@ -2545,6 +3138,8 @@ function openQuickProspectModal(id) {
 let item = financialProspects.find(p => p.id === id);
 if (!item) return;
 document.getElementById('qpProspectId').value = item.id;
+ticketBefore = JSON.parse(JSON.stringify(item));
+ticketProspectId = item.id;
 
 document.getElementById('qpOrgInput').value = item.org;
 document.getElementById('qpStageSelect').value = item.stage;
@@ -2597,6 +3192,7 @@ if(item.stage === 'Closed Won') badge.className += "bg-emerald-500/10 text-emera
 else if(item.stage === 'Lead') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
 else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
 document.getElementById('quickProspectModal').classList.remove('hidden');
+ticketFormBaseline = JSON.stringify(readTicketForm());
 }
 function closeQuickProspectModal() {
 document.getElementById('quickProspectModal').classList.add('hidden');
@@ -2675,24 +3271,23 @@ renderFinancialKanban();
 }
 
 function openFullProfileFromModal() {
-const form = document.querySelector('#quickProspectModal form');
-if (form && !form.reportValidity()) return;
 const id = parseInt(document.getElementById('qpProspectId').value);
-saveQuickProspectTicket(null, true);
-closeQuickProspectModal();
-openProfile(id, 'revenue');
+requestCloseTicket(function () { openProfile(id, 'revenue'); });
 }
-function updateFinancialProspectStage(id, newStage) {
+function updateFinancialProspectStageCore(id, newStage) {
 const p = financialProspects.find(item => item.id === id);
 if (p) {
+if (p.stage !== newStage) logActivity(p.id, 'stage', 'Funnel stage changed from ' + p.stage + ' to ' + newStage);
 p.stage = newStage;
 saveFinancialProspects();
 renderFinancialKanban();
 }
 }
-function deleteFinancialProspect(id) {
+function deleteFinancialProspectCore(id) {
 if (confirm("Move this prospect to the Trash Bin?")) {
+const _del = financialProspects.find(item => item.id === id);
 financialProspects = financialProspects.filter(item => item.id !== id);
+if (_del) logActivity(id, 'deleted', 'Prospect deleted: ' + _del.org, _del.org);
 saveFinancialProspects();
 renderFinancialKanban();
 }
@@ -2703,7 +3298,7 @@ document.getElementById('financialProspectModal').classList.remove('hidden');
 function closeFinancialProspectModal() {
 document.getElementById('financialProspectModal').classList.add('hidden');
 }
-function saveFinancialProspect(event) {
+function saveFinancialProspectCore(event) {
 event.preventDefault();
 const org = document.getElementById('fpOrg').value;
 const stage = document.getElementById('fpStage').value;
@@ -2721,15 +3316,17 @@ contractCommitment: document.getElementById('fpContract').value,
 activities:
 [], clientTasks: [{ title: "Reach out to prospect this week", desc: `Contact ${org} and follow up
 next week if no response.`, date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] });
+{ const _added = financialProspects[financialProspects.length - 1]; logActivity(_added.id, "created", "Prospect added: " + org + " (" + stage + ")"); }
 closeFinancialProspectModal();
 saveFinancialProspects();
 
 renderFinancialKanban();
 }
-function updateClientStage(newStage) {
+function updateClientStageCore(newStage) {
 if (currentProfileId) {
 let fp = financialProspects.find(p => p.id === currentProfileId);
 if (fp) {
+if (fp.stage !== newStage) logActivity(fp.id, 'stage', 'Funnel stage changed from ' + fp.stage + ' to ' + newStage);
 fp.stage = newStage;
 saveFinancialProspects();
 }
@@ -2737,10 +3334,11 @@ document.getElementById('profileBadge').innerText = newStage;
 renderClientTasks();
 }
 }
-function toggleClientRetainer(isChecked) {
+function toggleClientRetainerCore(isChecked) {
 let fp = financialProspects.find(l => l.id === currentProfileId);
 if (fp) {
 fp.isRetainer = isChecked;
+logActivity(fp.id, 'ticket', 'Retainer partner turned ' + (isChecked ? 'on' : 'off'));
 saveFinancialProspects();
 renderClientTasks();
 }
@@ -2805,10 +3403,11 @@ tasks added to this company profile yet.</p>`;
 }
 lucide.createIcons();
 }
-function toggleClientTask(cIdx) {
+function toggleClientTaskCore(cIdx) {
 let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead && lead.clientTasks) {
 lead.clientTasks[cIdx].done = !lead.clientTasks[cIdx].done;
+logActivity(lead.id, 'task', 'Task ' + (lead.clientTasks[cIdx].done ? 'completed' : 'reopened') + ': ' + (lead.clientTasks[cIdx].title || lead.clientTasks[cIdx].task));
 saveFinancialProspects();
 renderClientTasks();
 }
@@ -2823,11 +3422,13 @@ saveFinancialProspects();
 renderClientTasks();
 }
 }
-function deleteClientTask(cIdx) {
+function deleteClientTaskCore(cIdx) {
 if (confirm("Move this task to the Trash Bin?")) {
 let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead && lead.clientTasks) {
+const _t = lead.clientTasks[cIdx];
 lead.clientTasks.splice(cIdx, 1);
+if (_t) logActivity(lead.id, 'task', 'Task deleted: ' + (_t.title || _t.task));
 saveFinancialProspects();
 renderClientTasks();
 }
@@ -2844,7 +3445,7 @@ document.getElementById('clientTaskModal').classList.remove('hidden');
 function closeClientTaskModal() {
 document.getElementById('clientTaskModal').classList.add('hidden');
 }
-function saveClientTask(event) {
+function saveClientTaskCore(event) {
 event.preventDefault();
 const title = document.getElementById('clientTaskTitle').value;
 const desc = document.getElementById('clientTaskDesc').value;
@@ -2854,8 +3455,8 @@ const assignee = document.getElementById('clientTaskAssignee').value;
 let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead) {
 if (!lead.clientTasks) lead.clientTasks = [];
-lead.clientTasks.push({ title, desc, date, urgency, assignee, done: false, active: false
-});
+lead.clientTasks.push({ title, desc, date, urgency, assignee, done: false, active: false });
+logActivity(lead.id, 'task', 'Task added: ' + title + (assignee ? ' (assigned to ' + assignee + ')' : '') + (date ? ', due ' + date : ''));
 saveFinancialProspects();
 closeClientTaskModal();
 renderClientTasks();
@@ -2879,7 +3480,7 @@ document.getElementById('commsModal').classList.remove('hidden');
 function closeCommsModal() {
 document.getElementById('commsModal').classList.add('hidden');
 }
-function saveCommsActivity(event) {
+function saveCommsActivityCore(event) {
 event.preventDefault();
 
 const type = document.getElementById('commsType').value;
@@ -2894,6 +3495,7 @@ const newStage = document.getElementById('commsNewStage').value;
 const followUpDone = document.getElementById('commsFollowUp').checked;
 let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead) {
+if (lead.stage !== newStage) logActivity(lead.id, 'stage', 'Funnel stage changed from ' + lead.stage + ' to ' + newStage);
 lead.stage = newStage;
 if (!lead.activities) lead.activities = [];
 lead.activities.unshift({
@@ -2907,6 +3509,7 @@ message,
 nextSteps,
 followUpDone
 });
+logActivity(lead.id, 'comms', type + ' logged with ' + person + (title ? ' (' + title + ')' : '') + (nextSteps ? '. Next steps: ' + nextSteps : ''));
 saveFinancialProspects();
 closeCommsModal();
 openProfile(currentProfileId, 'comms', false);
@@ -2967,6 +3570,7 @@ curr = curr.subfolders[idx];
 return curr;
 }
 function openProfile(id, tabToOpen = 'revenue', updateHash = true) {
+{ const _pv = document.getElementById('profileView'); if (!_pv || _pv.classList.contains('hidden') || currentProfileId !== id) window.__profileVisitLogged = null; }
 currentProfileId = id;
 currentFolderPath = [];
 if (updateHash) {
@@ -2975,7 +3579,7 @@ window.location.hash = `profile=${id}&tab=${tabToOpen}`;
 const lead = financialProspects.find(l => l.id === id);
 if(!lead) return;
 // Hide all views explicitly
-['pipeline', 'goals', 'agenda', 'prospects', 'financial'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
@@ -3026,7 +3630,8 @@ const toneClasses = {
 emerald: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20',
 purple: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
 rose: 'bg-rose-500/10 text-rose-400 border-rose-500/20',
-amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+amber: 'bg-amber-500/10 text-amber-400 border-amber-500/20',
+sky: 'bg-sky-500/10 text-sky-400 border-sky-500/20'
 };
 function statusTone(s) {
 if (!s) return 'amber';
@@ -3316,25 +3921,11 @@ switchMainView(viewName, false);
 switchMainView('pipeline', false);
 }
 }
-let ticketAutoSaveTimer = null;
-(function bindTicketAutoSave() {
-const modal = document.getElementById('quickProspectModal');
-if (!modal) return;
-const handler = function () {
-clearTimeout(ticketAutoSaveTimer);
-ticketAutoSaveTimer = setTimeout(function () {
-if (modal.classList.contains('hidden')) return;
-if (!document.getElementById('qpOrgInput').value.trim()) return;
-saveQuickProspectTicket(null, true);
-const note = document.getElementById('qpAutoSaveNote');
-if (note) note.innerText = 'All changes saved';
-}, 600);
-};
-modal.addEventListener('input', handler);
-modal.addEventListener('change', handler);
-})();
+
 
 initCloud();
+if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') === 'true' && !quUnlockedRecently()) showLockScreen();
+
 
 initApp();
 
