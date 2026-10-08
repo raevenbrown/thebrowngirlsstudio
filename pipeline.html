@@ -242,6 +242,9 @@ transition flex items-center">
 </button>
 </div>
 </header>
+<div class="px-4 sm:px-8 pt-3 flex justify-end max-w-7xl mx-auto w-full">
+<button id="syncPill" onclick="forceSync()" title="Tap to sync now" class="px-2.5 py-1 rounded-lg border text-[10px] font-semibold border-dark-600 text-slate-400" style="display:none"></button>
+</div>
 <!-- Main Section: Financial Goal Tracker Dashboard -->
 <div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full
 hidden">
@@ -1629,6 +1632,15 @@ return !!(c && c.apiKey && c.projectId && !/^PASTE/i.test(c.apiKey));
 function setSyncStatus(txt) {
 const el = document.getElementById('syncStatus');
 if (el) el.innerText = txt;
+const pill = document.getElementById('syncPill');
+if (pill) {
+let tone = 'amber';
+if (/^Synced/.test(txt)) tone = 'emerald';
+else if (/fail|error|paused|local only|too large/i.test(txt)) tone = 'rose';
+pill.className = 'px-2.5 py-1 rounded-lg border text-[10px] font-semibold ' + toneClasses[tone];
+pill.innerText = (tone === 'emerald' ? '\u2601 ' : '') + txt;
+pill.style.display = txt ? '' : 'none';
+}
 }
 function syncTimeStr() {
 return new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
@@ -1854,6 +1866,35 @@ try { sessionStorage.removeItem('bgcs_unlocked_at'); sessionStorage.removeItem('
 location.reload();
 }
 /* ================================================================= */
+
+
+async function forceSync(silent) {
+if (!BGCS_CLOUD.enabled) {
+if (!silent) alert('Cloud sync is not turned on in this copy of the site, so this device only saves to itself and will not match your other devices. Finish the Firebase setup and paste your config into the file.');
+return;
+}
+if (!BGCS_CLOUD.ready) {
+if (!silent) alert('Still connecting or not signed in. Please wait a moment and try again.');
+return;
+}
+try {
+setSyncStatus('Syncing...');
+const fs = BGCS_CLOUD.m.fsMod;
+const snap = await fs.getDoc(BGCS_CLOUD.ref);
+const cloud = snap.exists() ? snap.data() : null;
+const cs = cloud ? (cloud.updatedAt || 0) : 0;
+const ls = getLocalStamp();
+if (cloud && cs > ls) applyCloudData(cloud);
+else if (!cloud || ls > cs) await pushToCloud();
+pushUnsyncedActivity();
+setSyncStatus('Synced ' + syncTimeStr());
+} catch (e) {
+console.error(e);
+setSyncStatus('Sync failed, tap to retry');
+}
+}
+document.addEventListener('visibilitychange', function () { if (!document.hidden) forceSync(true); });
+window.addEventListener('online', function () { forceSync(true); });
 
 /* ===================== ACTIVITY LOG, WHO'S IN THE ACCOUNT ===================== */
 var CURRENT_ACTOR = '';
@@ -3923,7 +3964,10 @@ switchMainView('pipeline', false);
 }
 
 
+
 initCloud();
+if (!bgcsCloudConfigured()) setSyncStatus('Local only: not syncing');
+
 if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') === 'true' && !quUnlockedRecently()) showLockScreen();
 
 
