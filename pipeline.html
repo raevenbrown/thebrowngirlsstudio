@@ -1242,8 +1242,8 @@ overflow-hidden p-6 space-y-4 relative max-h-[90vh] overflow-y-auto">
 <div>
 <span id="qpStageBadge" class="px-2.5 py-0.5 rounded text-[10px] font-bold
 uppercase"></span>
-<h3 id="qpModalHeaderTitle" class="font-bold text-slate-100 text-base mt-1">Edit
-Prospect Ticket</h3>
+<h3 id="qpModalHeaderTitle" class="font-bold text-slate-100 text-base mt-1">Edit Prospect Ticket</h3>
+<p class="text-[11px] text-amber-400 mt-1">Scroll to the bottom and tap Save Changes. Nothing reaches your other devices until you do.</p>
 </div>
 <button onclick="requestCloseTicket()" class="text-slate-400
 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"></i></button>
@@ -1759,6 +1759,11 @@ a: byId(s.activity).map(function (e) { return { id: e.id, at: e.at, who: e.who, 
 d: { p: (s.deleted && s.deleted.p) || {}, n: (s.deleted && s.deleted.n) || {} }
 });
 }
+function ghProtect(merged, local, id) {
+const lp = local.prospects.find(function (p) { return p.id === id; });
+if (!lp) return merged;
+return Object.assign({}, merged, { prospects: merged.prospects.map(function (p) { return p.id === id ? lp : p; }) });
+}
 function ghApplyMerged(m) {
 const old = {};
 financialProspects.forEach(function (p) { old[p.id] = p; });
@@ -1836,8 +1841,6 @@ BGCS_GH.timer = setTimeout(ghSync, ms === undefined ? 1500 : ms);
 function ghSyncNow() { if (!BGCS_GH.ready) return; clearTimeout(BGCS_GH.timer); ghSync(); }
 async function ghSync() {
 if (!BGCS_GH.ready) return;
-const modal = document.getElementById('quickProspectModal');
-if (modal && !modal.classList.contains('hidden')) { scheduleGhSync(3000); return; }
 if (BGCS_GH.busy) { BGCS_GH.again = true; return; }
 BGCS_GH.busy = true;
 setSyncStatus('Syncing...');
@@ -1847,7 +1850,10 @@ for (let attempt = 0; attempt < 4 && !done; attempt++) {
 const remote = await ghGet();
 const local = ghLocalState();
 const merged = ghMerge(local, remote.data);
-if (ghCanon(merged) !== ghCanon(local)) ghApplyMerged(merged);
+const modalEl = document.getElementById('quickProspectModal');
+const protectId = (modalEl && !modalEl.classList.contains('hidden')) ? ticketProspectId : null;
+const toApply = protectId === null ? merged : ghProtect(merged, local, protectId);
+if (ghCanon(toApply) !== ghCanon(local)) ghApplyMerged(toApply);
 const needPush = !remote.exists || ghCanon(merged) !== ghCanon(remote.data);
 if (!needPush) { done = true; break; }
 merged.updatedAt = Date.now();
