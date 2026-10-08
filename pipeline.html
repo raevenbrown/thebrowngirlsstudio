@@ -207,6 +207,7 @@ data-lucide="volume-2" class="w-3.5 h-3.5 mr-2"></i> Unmute Sounds</button>
 rounded-lg hover:bg-dark-600 text-rose-400 font-medium flex items-center"><i
 data-lucide="volume-x" class="w-3.5 h-3.5 mr-2"></i> Mute All Sounds</button>
 <div class="border-t border-dark-600 my-1"></div>
+<button onclick="openGhModal(); toggleMutePopup();" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-200 font-medium flex items-center">Connect GitHub Sync</button>
 <button onclick="setupQuickUnlock(); toggleMutePopup();" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-200 font-medium flex items-center">Set Up Face ID / Passcode</button>
 <button onclick="removeQuickUnlock(); toggleMutePopup();" class="w-full text-left px-2.5 py-2 rounded-lg hover:bg-dark-600 text-slate-400 font-medium flex items-center">Turn Off Face ID Here</button>
 <div class="border-t border-dark-600 my-1"></div>
@@ -990,6 +991,30 @@ tracking-wider">Scheduled Events & Milestones</h4>
 <button type="button" onclick="quOfferDecline()" class="w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 text-xs font-semibold">Not Now</button>
 </div>
 </div>
+
+<!-- Connect GitHub Sync -->
+<div id="ghModal" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+<div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 max-h-[90vh] overflow-y-auto">
+<div>
+<h3 class="font-bold text-slate-100 text-sm">Connect GitHub Sync</h3>
+<p class="text-xs text-slate-400 mt-1">Saves your pipeline to a private GitHub repository so every device shows the same information. Do this once on each device.</p>
+</div>
+<p id="ghStatusLine" class="text-xs text-emerald-400 font-semibold hidden"></p>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider text-[10px] mb-1">Private repository</label>
+<input type="text" id="ghRepoInput" autocomplete="off" autocapitalize="none" placeholder="yourname/bgcs-data" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
+</div>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider text-[10px] mb-1">Access token</label>
+<input type="password" id="ghTokenInput" autocomplete="off" placeholder="github_pat_..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
+<p class="text-[10px] text-slate-500 mt-1">Stored only on this device. Use a token limited to that one repository with Contents set to Read and write.</p>
+</div>
+<p id="ghMsg" class="text-xs text-rose-400 hidden"></p>
+<button type="button" onclick="ghConnect()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-lg shadow-rose-600/20 transition">Connect This Device</button>
+<button type="button" id="ghDisconnectBtn" onclick="ghDisconnect()" class="hidden w-full py-2.5 rounded-xl border border-rose-500/50 text-rose-400 text-xs font-semibold">Disconnect This Device</button>
+<button type="button" onclick="closeGhModal()" class="w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 text-xs font-semibold">Close</button>
+</div>
+</div>
 <!-- Modal for Adding / Editing Spirit Meeting Notes -->
 <div id="meetingNoteModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden
 flex items-center justify-center p-4">
@@ -1622,6 +1647,308 @@ font-semibold">Add Task</button>
 <script>
 if (typeof lucide === 'undefined') { window.lucide = { createIcons: function () {} }; }
 
+/* ===================== GITHUB SYNC (private repository) ===================== */
+var BGCS_GH = { enabled: false, ready: false, repo: '', token: '', busy: false, again: false, timer: null, etag: null, poll: null };
+var bgcsDeleted = { p: {}, n: {} };
+try { const dd = JSON.parse(localStorage.getItem('bgcs_deleted') || 'null'); if (dd && dd.p && dd.n) bgcsDeleted = dd; } catch (e) {}
+var __lastJson = {};
+var __lastNotes = null;
+
+function saveDeletedLocal() { try { localStorage.setItem('bgcs_deleted', JSON.stringify(bgcsDeleted)); } catch (e) {} }
+function stripU(o) { const c = Object.assign({}, o); delete c._u; return JSON.stringify(c); }
+function initProspectHashes() {
+__lastJson = {};
+financialProspects.forEach(function (p) { __lastJson[p.id] = stripU(p); });
+}
+function initNoteHashes() {
+__lastNotes = {};
+(spiritMeetingNotes || []).forEach(function (n) { __lastNotes[n.id] = stripU(n); });
+}
+function stampChangedProspects() {
+const now = Date.now(); const seen = {};
+financialProspects.forEach(function (p) {
+seen[p.id] = 1;
+const j = stripU(p);
+if (__lastJson[p.id] !== j) { p._u = now; __lastJson[p.id] = stripU(p); }
+});
+Object.keys(__lastJson).forEach(function (id) {
+if (!seen[id]) { bgcsDeleted.p[id] = now; delete __lastJson[id]; }
+});
+saveDeletedLocal();
+}
+function stampNotes() {
+if (__lastNotes === null) __lastNotes = {};
+const now = Date.now(); const seen = {};
+(spiritMeetingNotes || []).forEach(function (n) {
+seen[n.id] = 1;
+const j = stripU(n);
+if (__lastNotes[n.id] !== j) { n._u = now; __lastNotes[n.id] = stripU(n); }
+});
+Object.keys(__lastNotes).forEach(function (id) {
+if (!seen[id]) { bgcsDeleted.n[id] = now; delete __lastNotes[id]; }
+});
+saveDeletedLocal();
+}
+
+/* ---- merge helpers ---- */
+function stableStringify(v) {
+if (v === null || typeof v !== 'object') return JSON.stringify(v);
+if (Array.isArray(v)) return '[' + v.map(stableStringify).join(',') + ']';
+return '{' + Object.keys(v).sort().filter(function (k) { return v[k] !== undefined; }).map(function (k) { return JSON.stringify(k) + ':' + stableStringify(v[k]); }).join(',') + '}';
+}
+function ghTombMax(a, b) {
+const o = Object.assign({}, a || {});
+Object.keys(b || {}).forEach(function (k) { if (!o[k] || b[k] > o[k]) o[k] = b[k]; });
+const cutoff = Date.now() - 90 * 86400000;
+Object.keys(o).forEach(function (k) { if (o[k] < cutoff) delete o[k]; });
+return o;
+}
+function ghMergeById(localList, remoteList, tombs) {
+const lmap = {}; const rmap = {}; const order = [];
+localList.forEach(function (x) { lmap[x.id] = x; order.push(String(x.id)); });
+remoteList.forEach(function (x) { rmap[x.id] = x; if (!(x.id in lmap)) order.push(String(x.id)); });
+const out = [];
+order.forEach(function (id) {
+const l = lmap[id]; const r = rmap[id];
+const pick = (l && r) ? (((l._u || 0) >= (r._u || 0)) ? l : r) : (l || r);
+const tomb = tombs[id];
+if (tomb && (pick._u || 0) <= tomb) return;
+out.push(pick);
+});
+return out;
+}
+function ghMergeActivity(la, ra) {
+const map = {};
+ra.forEach(function (e) { map[e.id] = e; });
+la.forEach(function (e) { map[e.id] = e; });
+const arr = Object.keys(map).map(function (k) { return map[k]; });
+arr.sort(function (a, b) { return a.at < b.at ? 1 : (a.at > b.at ? -1 : 0); });
+return arr.slice(0, 1500);
+}
+function ghLocalState() {
+const ps = JSON.parse(JSON.stringify(financialProspects));
+ps.forEach(function (p) { p.taxReceipts = (p.taxReceipts || []).map(function (r) { return { name: r.name, date: r.date, url: '' }; }); });
+return {
+v: 1, updatedAt: 0,
+prospects: ps,
+notes: JSON.parse(JSON.stringify(spiritMeetingNotes || [])),
+people: bgcsPeople.slice(),
+activity: activityLog.map(function (e) { const c = Object.assign({}, e); delete c.s; return c; }),
+deleted: JSON.parse(JSON.stringify(bgcsDeleted))
+};
+}
+function ghMerge(local, remote) {
+if (!remote) return local;
+const rd = remote.deleted || {};
+const dp = ghTombMax(local.deleted.p, rd.p);
+const dn = ghTombMax(local.deleted.n, rd.n);
+return {
+v: 1, updatedAt: 0,
+prospects: ghMergeById(local.prospects, remote.prospects || [], dp),
+notes: ghMergeById(local.notes, remote.notes || [], dn),
+people: Array.from(new Set(local.people.concat(remote.people || []))),
+activity: ghMergeActivity(local.activity, remote.activity || []),
+deleted: { p: dp, n: dn }
+};
+}
+function ghCanon(s) {
+function byId(a) { return (a || []).slice().sort(function (x, y) { return String(x.id) < String(y.id) ? -1 : 1; }); }
+return stableStringify({
+p: byId(s.prospects), n: byId(s.notes), pe: (s.people || []).slice().sort(),
+a: byId(s.activity).map(function (e) { return { id: e.id, at: e.at, who: e.who, pid: e.pid, org: e.org || '', type: e.type, text: e.text }; }),
+d: { p: (s.deleted && s.deleted.p) || {}, n: (s.deleted && s.deleted.n) || {} }
+});
+}
+function ghApplyMerged(m) {
+const old = {};
+financialProspects.forEach(function (p) { old[p.id] = p; });
+m.prospects.forEach(function (p) {
+const o = old[p.id];
+p.taxReceipts = (p.taxReceipts || []).map(function (r) {
+const f = o && (o.taxReceipts || []).find(function (x) { return x.name === r.name && x.date === r.date && x.url && x.url.indexOf('data:') === 0; });
+return f ? { name: r.name, date: r.date, url: f.url } : r;
+});
+});
+financialProspects = m.prospects;
+spiritMeetingNotes = m.notes;
+if (m.people && m.people.length) bgcsPeople = m.people;
+bgcsDeleted = m.deleted;
+activityLog = m.activity.map(function (e) { return Object.assign({}, e, { s: false }); });
+saveFinancialProspectsLocal();
+try { localStorage.setItem('bgcs_spirit_meeting_notes', JSON.stringify(spiritMeetingNotes)); } catch (e) {}
+savePeopleLocal(); saveDeletedLocal(); saveActivityLocal();
+initProspectHashes(); initNoteHashes();
+try { refreshAllViews(); } catch (e) { console.error(e); }
+}
+
+/* ---- GitHub API ---- */
+function ghUrl(path) { return 'https://api.github.com/repos/' + BGCS_GH.repo + '/contents/' + (path || 'data.json'); }
+function ghHeaders() { return { 'Authorization': 'Bearer ' + BGCS_GH.token, 'Accept': 'application/vnd.github+json' }; }
+function ghB64Enc(str) {
+const bytes = new TextEncoder().encode(str); let bin = '';
+for (let i = 0; i < bytes.length; i += 32768) bin += String.fromCharCode.apply(null, bytes.subarray(i, i + 32768));
+return btoa(bin);
+}
+function ghB64Dec(b64) {
+const bin = atob(b64.replace(/\s/g, '')); const bytes = new Uint8Array(bin.length);
+for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+return new TextDecoder().decode(bytes);
+}
+function ghErr(r, msg) { const e = new Error(msg || ('GitHub error ' + r.status)); e.status = r.status; return e; }
+function ghErrText(e) {
+if (e && e.status === 401) return 'GitHub token rejected, reconnect';
+if (e && e.status === 403) return 'GitHub blocked the request, tap to retry';
+if (e && e.status === 404) return 'Repository not found, reconnect';
+return 'Sync failed, tap to retry';
+}
+async function ghGet() {
+const r = await fetch(ghUrl(), { headers: ghHeaders(), cache: 'no-store' });
+if (r.status === 404) return { exists: false, sha: null, data: null };
+if (!r.ok) throw ghErr(r);
+BGCS_GH.etag = r.headers.get('etag');
+const j = await r.json();
+let txt;
+if (j.content && j.encoding === 'base64') {
+txt = ghB64Dec(j.content);
+} else {
+const br = await fetch('https://api.github.com/repos/' + BGCS_GH.repo + '/git/blobs/' + j.sha, { headers: ghHeaders(), cache: 'no-store' });
+if (!br.ok) throw ghErr(br);
+txt = ghB64Dec((await br.json()).content);
+}
+let data;
+try { data = JSON.parse(txt); } catch (e) { throw new Error('The saved file on GitHub could not be read'); }
+return { exists: true, sha: j.sha, data: data };
+}
+async function ghPut(state, sha) {
+const body = { message: 'Pipeline sync ' + new Date().toISOString(), content: ghB64Enc(JSON.stringify(state)) };
+if (sha) body.sha = sha;
+const r = await fetch(ghUrl(), { method: 'PUT', headers: Object.assign({ 'Content-Type': 'application/json' }, ghHeaders()), body: JSON.stringify(body) });
+if (r.ok) return { ok: true };
+if (r.status === 409 || r.status === 422) return { ok: false, status: r.status };
+throw ghErr(r);
+}
+function scheduleGhSync(ms) {
+if (!BGCS_GH.ready) return;
+clearTimeout(BGCS_GH.timer);
+setSyncStatus('Syncing...');
+BGCS_GH.timer = setTimeout(ghSync, ms === undefined ? 1500 : ms);
+}
+function ghSyncNow() { if (!BGCS_GH.ready) return; clearTimeout(BGCS_GH.timer); ghSync(); }
+async function ghSync() {
+if (!BGCS_GH.ready) return;
+const modal = document.getElementById('quickProspectModal');
+if (modal && !modal.classList.contains('hidden')) { scheduleGhSync(3000); return; }
+if (BGCS_GH.busy) { BGCS_GH.again = true; return; }
+BGCS_GH.busy = true;
+setSyncStatus('Syncing...');
+try {
+let done = false;
+for (let attempt = 0; attempt < 4 && !done; attempt++) {
+const remote = await ghGet();
+const local = ghLocalState();
+const merged = ghMerge(local, remote.data);
+if (ghCanon(merged) !== ghCanon(local)) ghApplyMerged(merged);
+const needPush = !remote.exists || ghCanon(merged) !== ghCanon(remote.data);
+if (!needPush) { done = true; break; }
+merged.updatedAt = Date.now();
+const res = await ghPut(merged, remote.sha);
+if (res.ok) { done = true; BGCS_GH.etag = null; }
+}
+if (!done) throw new Error('Could not save after several tries');
+activityLog.forEach(function (e) { e.s = true; });
+saveActivityLocal();
+setSyncStatus('Synced ' + syncTimeStr());
+} catch (e) {
+console.error(e);
+setSyncStatus(ghErrText(e));
+} finally {
+BGCS_GH.busy = false;
+if (BGCS_GH.again) { BGCS_GH.again = false; scheduleGhSync(500); }
+}
+}
+async function ghPoll() {
+if (!BGCS_GH.ready || BGCS_GH.busy || document.hidden) return;
+if (!BGCS_GH.etag) { ghSync(); return; }
+try {
+const r = await fetch(ghUrl(), { headers: Object.assign({ 'If-None-Match': BGCS_GH.etag }, ghHeaders()), cache: 'no-store' });
+if (r.status === 304) return;
+if (r.ok) ghSync();
+} catch (e) {}
+}
+function ghPrepareFirstStamps() {
+if (localStorage.getItem('bgcs_gh_stamped') === '1') return;
+const defMap = {};
+try { JSON.parse(DEFAULTS_JSON).forEach(function (d) { defMap[d.id] = stripU(d); }); } catch (e) {}
+const now = Date.now();
+financialProspects.forEach(function (p) { if (!p._u && stripU(p) !== defMap[p.id]) p._u = now; });
+(spiritMeetingNotes || []).forEach(function (n) { if (!n._u) n._u = now; });
+saveFinancialProspectsLocal();
+try { localStorage.setItem('bgcs_spirit_meeting_notes', JSON.stringify(spiritMeetingNotes)); } catch (e) {}
+localStorage.setItem('bgcs_gh_stamped', '1');
+}
+function ghStart() {
+BGCS_GH.enabled = true;
+BGCS_GH.ready = true;
+ghPrepareFirstStamps();
+initProspectHashes(); initNoteHashes();
+clearInterval(BGCS_GH.poll);
+BGCS_GH.poll = setInterval(ghPoll, 30000);
+scheduleGhSync(100);
+}
+function ghInit() {
+if (bgcsCloudConfigured()) return;
+try {
+const c = JSON.parse(localStorage.getItem('bgcs_gh') || 'null');
+if (c && c.repo && c.token) { BGCS_GH.repo = c.repo; BGCS_GH.token = c.token; ghStart(); }
+} catch (e) {}
+}
+function openGhModal() {
+const connected = BGCS_GH.enabled && BGCS_GH.repo;
+document.getElementById('ghRepoInput').value = BGCS_GH.repo || '';
+document.getElementById('ghTokenInput').value = '';
+document.getElementById('ghMsg').classList.add('hidden');
+const line = document.getElementById('ghStatusLine');
+line.innerText = connected ? 'This device is connected to ' + BGCS_GH.repo : '';
+line.classList.toggle('hidden', !connected);
+document.getElementById('ghDisconnectBtn').classList.toggle('hidden', !connected);
+document.getElementById('ghModal').classList.remove('hidden');
+}
+function closeGhModal() { document.getElementById('ghModal').classList.add('hidden'); }
+function ghShowMsg(txt) { const m = document.getElementById('ghMsg'); m.innerText = txt; m.classList.remove('hidden'); }
+async function ghConnect() {
+let repo = document.getElementById('ghRepoInput').value.trim().replace(/^https?:\/\/github\.com\//i, '').replace(/\.git$/i, '').replace(/\/+$/, '');
+const token = document.getElementById('ghTokenInput').value.trim();
+if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { ghShowMsg('Enter the repository as yourname/reponame.'); return; }
+if (!token) { ghShowMsg('Paste your access token.'); return; }
+ghShowMsg('Checking...');
+try {
+const r = await fetch('https://api.github.com/repos/' + repo, { headers: { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' }, cache: 'no-store' });
+if (r.status === 401) { ghShowMsg('GitHub did not accept that token. Check that you copied all of it.'); return; }
+if (r.status === 404) { ghShowMsg('Repository not found, or the token does not have access to it.'); return; }
+if (!r.ok) { ghShowMsg('GitHub returned an error (' + r.status + '). Try again.'); return; }
+const j = await r.json();
+if (!j.private) { ghShowMsg('That repository is PUBLIC, which means anyone could read your data. Make it private first (repository Settings, then Danger Zone, then Change visibility).'); return; }
+if (j.permissions && j.permissions.push === false) { ghShowMsg('That token can read but not write. Set Contents to Read and write.'); return; }
+localStorage.setItem('bgcs_gh', JSON.stringify({ repo: repo, token: token }));
+BGCS_GH.repo = repo; BGCS_GH.token = token;
+document.getElementById('ghTokenInput').value = '';
+document.getElementById('ghMsg').classList.add('hidden');
+closeGhModal();
+ghStart();
+} catch (e) {
+ghShowMsg('Could not reach GitHub. Check your internet connection.');
+}
+}
+function ghDisconnect() {
+if (!confirm('Disconnect this device from GitHub? Your information stays on this device, but it will stop syncing.')) return;
+localStorage.removeItem('bgcs_gh');
+BGCS_GH.enabled = false; BGCS_GH.ready = false; BGCS_GH.repo = ''; BGCS_GH.token = '';
+clearInterval(BGCS_GH.poll); clearTimeout(BGCS_GH.timer);
+closeGhModal();
+setSyncStatus('Local only: tap to connect GitHub');
+}
+/* ================================================================= */
+
 /* ===================== CLOUD SYNC (Firebase) ===================== */
 var BGCS_CLOUD = { enabled: false, ready: false, user: null, auth: null, db: null, ref: null, m: null, unsub: null, unsubAct: null, pushTimer: null, applyRetry: null };
 
@@ -1668,6 +1995,7 @@ return 'ask';
 function markLocalChange() {
 setLocalStamp(Date.now());
 if (BGCS_CLOUD.ready) scheduleCloudPush();
+if (BGCS_GH.ready) scheduleGhSync();
 }
 function scheduleCloudPush() {
 clearTimeout(BGCS_CLOUD.pushTimer);
@@ -1870,7 +2198,8 @@ location.reload();
 
 async function forceSync(silent) {
 if (!BGCS_CLOUD.enabled) {
-if (!silent) alert('Cloud sync is not turned on in this copy of the site, so this device only saves to itself and will not match your other devices. Finish the Firebase setup and paste your config into the file.');
+if (BGCS_GH.enabled) { ghSyncNow(); return; }
+if (!silent) openGhModal();
 return;
 }
 if (!BGCS_CLOUD.ready) {
@@ -2211,6 +2540,7 @@ const feed = document.getElementById('mainView-activity');
 if (feed && !feed.classList.contains('hidden')) renderActivityFeed();
 }
 async function pushActivity(entry) {
+if (BGCS_GH.ready) { scheduleGhSync(); return; }
 if (!BGCS_CLOUD.ready || !BGCS_CLOUD.m) return;
 try {
 const fs = BGCS_CLOUD.m.fsMod;
@@ -2511,7 +2841,9 @@ if (!fp.activities) fp.activities = [];
 if (!fp.taxReceipts) fp.taxReceipts = [];
 });
 saveFinancialProspects(true);
+initProspectHashes();
 function saveFinancialProspects(skipStamp) {
+if (!skipStamp) stampChangedProspects();
 saveFinancialProspectsLocal();
 if (!skipStamp) markLocalChange();
 }
@@ -2632,6 +2964,7 @@ applyPayrollToggleState();
 let spiritMeetingNotes = JSON.parse(localStorage.getItem('bgcs_spirit_meeting_notes')) ||
 [];
 function saveSpiritMeetingNotes() {
+stampNotes();
 localStorage.setItem('bgcs_spirit_meeting_notes', JSON.stringify(spiritMeetingNotes));
 markLocalChange();
 }
@@ -3965,8 +4298,12 @@ switchMainView('pipeline', false);
 
 
 
+
 initCloud();
-if (!bgcsCloudConfigured()) setSyncStatus('Local only: not syncing');
+initNoteHashes();
+ghInit();
+if (!bgcsCloudConfigured() && !BGCS_GH.enabled) setSyncStatus('Local only: tap to connect GitHub');
+
 
 if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') === 'true' && !quUnlockedRecently()) showLockScreen();
 
@@ -3975,4 +4312,4 @@ initApp();
 
 </script>
 </body>
-</html> 
+</html>
