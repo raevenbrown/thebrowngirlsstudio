@@ -733,14 +733,16 @@ Pipeline Stage & Retainer Status</h4>
 <div>
 <label class="block text-slate-400 font-bold mb-1">Sales Funnel
 Stage</label>
-<select id="inlineStageSelect"
-onchange="updateClientStage(this.value)" class="w-full rounded-xl bg-dark-800 border
-border-dark-600 p-2 text-slate-200 font-semibold">
-<option value="Prospect">Prospect</option>
-<option value="Lead">Lead</option>
-<option value="Closed Won">Closed Won</option>
-<option value="Closed Lost">Closed Lost</option>
+<select id="inlineStageSelect" onchange="updateClientStage(this.value)" class="w-full rounded-xl bg-dark-800 border border-dark-600 p-2 text-slate-200 font-semibold">
+    <option value="first_touch">First Touch (Drafts / Sent)</option>
+    <option value="lead">Lead (Active / Waiting on Invoice)</option>
+    <option value="closed_won">Closed Won (Signed & Paid)</option>
+    <option value="closed_lost">Closed Lost (No Response / Declined)</option>
 </select>
+</div>
+<div id="lostReasonContainer" class="mt-3 hidden">
+    <label class="block text-slate-400 font-bold mb-1 text-xs">Reason for Closing Lost</label>
+    <input type="text" id="closedLostReasonInput" placeholder="e.g., No response after 30 days, Price too high" class="w-full rounded-xl bg-dark-800 border border-dark-600 p-2 text-slate-200 text-xs">
 </div>
 <div class="flex items-center space-x-3 pt-4 sm:pt-0">
 <label class="flex items-center space-x-2 cursor-pointer">
