@@ -2,7 +2,7 @@
 <html lang="en" class="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>The Brown Girls Creative Studio | Pipeline & Lead Profiles</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -49,9 +49,19 @@ document.documentElement.classList.add('is-authenticated');
 <style>
 .is-authenticated #passwordModal { display: none !important; }
 .is-authenticated #mainDashboard { display: flex !important; }
-@media (min-width: 768px) { #sidebarNav.sidebar-collapsed { display: none; } }
+@media (min-width: 1024px) { #sidebarNav.sidebar-collapsed { display: none; } }
 .privacy-mask { filter: blur(6px); transition: filter 0.3s ease; user-select: none; }
 .privacy-mask:hover { filter: blur(0px); }
+html { -webkit-text-size-adjust: 100%; }
+body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); touch-action: manipulation; }
+main > header { padding-top: max(1rem, env(safe-area-inset-top)); }
+#sidebarNav { height: 100vh; height: 100dvh; padding-bottom: env(safe-area-inset-bottom); overflow-y: auto; }
+main { min-width: 0; }
+.fixed.inset-0 > div { max-height: calc(100dvh - 1rem); overflow-y: auto; overscroll-behavior: contain; }
+#financialKanbanContainer, #salesFunnelContainer { scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
+#financialKanbanContainer > *, #salesFunnelContainer > * { scroll-snap-align: start; flex-shrink: 0; }
+@media (hover: none) and (pointer: coarse) { input, select, textarea { font-size: 16px !important; } }
+@media (min-width: 1536px) { .max-w-7xl { max-width: 90rem; } }
 </style>
 </head>
 <body class="bg-dark-900 text-slate-100 min-h-screen font-sans flex antialiased">
@@ -119,10 +129,10 @@ transition">Unlock</button>
 <div id="mainDashboard" class="flex-1 flex min-h-screen hidden">
 <!-- Mobile Sidebar Drawer Overlay -->
 <div id="mobileSidebarOverlay" class="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm
-hidden md:hidden" onclick="toggleMobileSidebar()"></div>
+hidden lg:hidden" onclick="toggleMobileSidebar()"></div>
 <!-- Sidebar Navigation -->
 <aside id="sidebarNav" class="w-64 bg-dark-800 border-r border-dark-600 flex flex-col
-justify-between fixed md:sticky top-0 h-screen z-50 -translate-x-full md:translate-x-0
+justify-between fixed lg:sticky top-0 h-screen z-50 -translate-x-full lg:translate-x-0
 transition-transform duration-300">
 <div>
 <div class="p-6 border-b border-dark-600 flex items-center justify-between">
@@ -174,6 +184,12 @@ Prospect To-Do List
 </a>
 <a href="#view=activity" onclick="switchMainView('activity')" id="nav-activity" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="history" class="w-4 h-4 mr-3 text-sky-400"></i> Activity Log
+</a>
+<a href="#view=dashboard" onclick="switchMainView('dashboard')" id="nav-dashboard" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="bar-chart-3" class="w-4 h-4 mr-3 text-emerald-400"></i> Dashboard
+</a>
+<a href="#view=ailab" onclick="switchMainView('ailab')" id="nav-ailab" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="rocket" class="w-4 h-4 mr-3 text-amber-400"></i> AI Lab Sites
 </a>
 </nav>
 </div>
@@ -553,6 +569,37 @@ class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"><
 </select>
 </div>
 <div id="activityFeedList" class="space-y-2"></div>
+</div>
+</div>
+<!-- Main Section: Dashboard -->
+<div id="mainView-dashboard" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
+<div class="flex flex-wrap items-center justify-between gap-3">
+<div><h2 class="text-xl font-bold text-slate-100">Dashboard</h2><p class="text-xs text-slate-400 mt-1">Everything the studio is collecting, in one place.</p></div>
+<div class="flex items-center gap-2">
+<select id="dashRange" onchange="renderDashVisits()" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-xs text-slate-200"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="0">All time</option></select>
+<button onclick="renderDashboard(true)" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300">Refresh</button>
+</div></div>
+<div id="dashPipeline" class="space-y-4"></div>
+<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6 space-y-4"><h3 class="text-sm font-bold text-slate-100">Website Visitors <span class="text-xs text-slate-500 font-normal">all 4 public pages</span></h3><div id="dashVisitors"></div></div>
+</div>
+<!-- Main Section: AI Lab Sites (group submissions -> front site) -->
+<div id="mainView-ailab" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
+<div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-5">
+<div class="border-b border-dark-600 pb-4">
+<h2 class="text-xl font-bold text-slate-100">AI Lab Sites</h2>
+<p class="text-xs text-slate-400 mt-1">Each group submits their site here. Approve a submission to add it to the front site.</p>
+</div>
+<div class="grid sm:grid-cols-2 gap-3">
+<button type="button" onclick="openSiteForm()" class="py-4 rounded-2xl bg-gradient-to-b from-amber-300 to-amber-600 text-dark-900 font-extrabold text-sm shadow-lg">Submit Your Group's Site</button>
+<a id="aiLabBackLink" href="labs.html" class="py-4 rounded-2xl border-2 border-amber-400 text-amber-300 font-extrabold text-sm text-center">Back to the AI Lab Page</a>
+</div>
+<div class="flex items-center justify-between pt-2">
+<h3 class="text-sm font-bold text-slate-200">Ticket Portal <span id="siteCount" class="text-xs text-slate-500 font-normal"></span></h3>
+<select id="siteFilter" onchange="renderSiteSubmissions()" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-xs text-slate-200">
+<option value="all">All</option><option value="new">Waiting for review</option><option value="front">On the front site</option>
+</select>
+</div>
+<div id="siteList" class="space-y-3"></div>
 </div>
 </div>
 <!-- Main Section 2: Spirit Meeting Outline & Agenda View (Dynamic Meeting Notes) -->
@@ -1438,6 +1485,10 @@ text-slate-200">
 <option value="Bounced / Wrong Email">Bounced / Wrong Email</option>
 </select>
 </div>
+<div>
+<label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Date They Replied</label>
+<input type="date" id="qpEmailReplyDate" style="min-width:0;-webkit-appearance:none;" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
 </div>
 <div>
 <label class="block font-bold text-slate-400 uppercase tracking-wider mb-1">Welcome Email (paste what you sent)</label>
@@ -1580,6 +1631,7 @@ mb-1">Donation / PTO Share (%)</label>
 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
 </div>
 <input type="text" id="fpAddress" placeholder="Physical Address (Street, City, State, ZIP)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+<input type="text" id="fpPerson" placeholder="Main contact person (first and last name)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
 <div class="grid grid-cols-2 gap-2">
 <input type="tel" id="fpPhone" placeholder="Phone (770-000-0000)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
 <input type="email" id="fpEmail" placeholder="Email Address" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
@@ -1681,6 +1733,379 @@ font-semibold">Add Task</button>
 </form>
 </div>
 </div>
+<!-- AI Lab Site Submission popup -->
+<div id="siteModal" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+<div class="bg-dark-800 border border-dark-600 rounded-t-3xl sm:rounded-2xl shadow-2xl w-full max-w-2xl max-h-[92vh] overflow-y-auto p-5 sm:p-7 space-y-4 text-xs">
+<div class="flex items-start justify-between">
+<div><h3 class="font-bold text-slate-100 text-base">Site Submission</h3>
+<p class="text-slate-400 mt-1">Use your two sheets: Build Your Website Menu and Your 60-Second Pitch.</p></div>
+<button type="button" onclick="closeSiteForm()" class="text-slate-300 bg-dark-700 border border-dark-600 rounded-xl w-9 h-9 text-lg leading-none shrink-0">&#10005;</button>
+</div>
+<div id="siteFormBox" class="space-y-4">
+<div class="space-y-2">
+<p class="font-bold text-amber-300 uppercase tracking-wider text-[11px]">Your Group</p>
+<input id="sxGroup" type="text" placeholder="Group name" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+<input id="sxMembers" type="text" placeholder="Group members (first names)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+<input id="sxSchool" type="text" placeholder="School / class period" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<div class="space-y-2">
+<p class="font-bold text-amber-300 uppercase tracking-wider text-[11px]">Build Your Website Menu &middot; pick up to 2 each</p>
+<div id="sxCats" class="space-y-2"></div>
+<input id="sxOwn" type="text" placeholder="Our own idea (optional)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<div class="space-y-2">
+<p class="font-bold text-amber-300 uppercase tracking-wider text-[11px]">Your 60-Second Pitch</p>
+<input id="sxP1" type="text" placeholder="1. Our AI site is called..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+<div class="grid grid-cols-2 gap-2">
+<input id="sxP2a" type="text" placeholder="2. It helps (who)..." class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+<input id="sxP2b" type="text" placeholder="...do (what)" class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<textarea id="sxP3" rows="2" placeholder="3. What makes it special is..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
+<input id="sxP4" type="text" placeholder="4. If you don't use it, you're missing out on..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<div class="space-y-2">
+<p class="font-bold text-amber-300 uppercase tracking-wider text-[11px]">Your Site</p>
+<input id="sxLink" type="url" placeholder="Link to your site (https://)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
+</div>
+<p id="sxErr" class="text-rose-500 hidden"></p>
+<button type="button" onclick="submitSiteForm()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-lg shadow-rose-600/20 transition">Send to the Studio</button>
+</div>
+<div id="siteDone" class="hidden text-center py-8 space-y-3">
+<div class="text-4xl">&#127881;</div>
+<p class="text-base font-bold text-slate-100">Submitted!</p>
+<p class="text-slate-400">The site is in the ticket portal waiting for review.</p>
+<button type="button" onclick="closeSiteForm()" class="px-6 py-2.5 rounded-xl bg-rose-600 text-white font-semibold">Done</button>
+</div>
+</div>
+</div>
+<script>
+/* ===================== AI LAB SITES ===================== */
+var AI_LAB_URL = 'labs.html';
+var SITE_MENU = [
+['Website Goal', ['Share information','Sell a product','Promote a service','Build a community','Collect leads','Book appointments']],
+['Target Audience', ['Students','Parents','Athletes','Gamers','Small businesses','Creatives']],
+['Vibe / Feel', ['Bold','Luxe','Sporty','Playful','Futuristic','Minimal']],
+['Main Offer', ['Coaching','Classes','Products','Events','Membership','Content']],
+['Must-Have Sections', ['Hero banner','About section','Features','Testimonials','Gallery','Contact form']],
+['Bonus Extra', ['FAQ section','Countdown timer','Booking button','Video block','Reviews','Freebie download']]
+];
+var bgcsSites = [];
+try { bgcsSites = JSON.parse(localStorage.getItem('bgcs_site_submissions') || '[]'); } catch (e) { bgcsSites = []; }
+bgcsSites.forEach(function (s) { if (!s._u) s._u = Date.parse(s.submittedAt) || Date.now(); });
+function saveSitesLocal() { try { localStorage.setItem('bgcs_site_submissions', JSON.stringify(bgcsSites)); } catch (e) {} }
+function saveSites() { saveSitesLocal(); if (typeof scheduleGhSync === 'function') scheduleGhSync(800); }
+function sxEl(id) { return document.getElementById(id); }
+function sxErr(m) { var e = sxEl('sxErr'); e.textContent = m; e.classList.toggle('hidden', !m); }
+function buildSiteCats() {
+var box = sxEl('sxCats'); if (!box || box.children.length) return;
+box.innerHTML = SITE_MENU.map(function (c, i) {
+return '<div class="sx-cat bg-dark-700/60 border border-dark-600 rounded-xl p-3" data-i="' + i + '"><p class="font-bold text-slate-100 mb-1.5">' + (i + 1) + '. ' + c[0] + '</p><div class="grid grid-cols-2 gap-1.5">' +
+c[1].map(function (o) { return '<label class="flex items-center gap-2 text-slate-300"><input type="checkbox" value="' + o + '" class="w-4 h-4 accent-amber-500">' + o + '</label>'; }).join('') + '</div></div>';
+}).join('');
+box.addEventListener('change', function (e) {
+var cat = e.target.closest('.sx-cat'); if (!cat) return;
+if (cat.querySelectorAll('input:checked').length > 2) { e.target.checked = false; sxErr('Pick up to 2 items in each category.'); } else sxErr('');
+});
+}
+function openSiteForm() {
+buildSiteCats();
+sxEl('siteFormBox').classList.remove('hidden'); sxEl('siteDone').classList.add('hidden');
+var m = sxEl('siteModal'); m.classList.remove('hidden'); m.classList.add('flex');
+}
+function closeSiteForm() {
+var m = sxEl('siteModal'); m.classList.add('hidden'); m.classList.remove('flex');
+if (!sxEl('siteDone').classList.contains('hidden')) {
+document.querySelectorAll('#siteModal input[type=text],#siteModal input[type=url],#siteModal textarea').forEach(function (i) { i.value = ''; });
+document.querySelectorAll('#sxCats input').forEach(function (i) { i.checked = false; });
+}
+}
+function submitSiteForm() {
+var need = ['sxGroup','sxMembers','sxP1','sxP2a','sxP2b','sxP3','sxP4'];
+for (var k = 0; k < need.length; k++) { if (!sxEl(need[k]).value.trim()) { sxErr('Please fill in your group info and every pitch line.'); sxEl(need[k]).focus(); return; } }
+var menu = {};
+document.querySelectorAll('#sxCats .sx-cat').forEach(function (c) {
+menu[SITE_MENU[c.dataset.i][0]] = Array.prototype.map.call(c.querySelectorAll('input:checked'), function (i) { return i.value; });
+});
+var v = function (id) { return sxEl(id).value.trim(); };
+bgcsSites.push({ id: 'sub_' + Date.now(), submittedAt: new Date().toISOString(), _u: Date.now(), onFront: false, removed: false,
+group: v('sxGroup'), members: v('sxMembers'), school: v('sxSchool'), menu: menu, ownIdea: v('sxOwn'),
+pitch: { siteName: v('sxP1'), helps: v('sxP2a'), doing: v('sxP2b'), special: v('sxP3'), missingOut: v('sxP4') }, siteLink: v('sxLink') });
+saveSites(); sxErr('');
+sxEl('siteFormBox').classList.add('hidden'); sxEl('siteDone').classList.remove('hidden');
+renderSiteSubmissions();
+}
+function siteUpdate(id, fn) {
+var s = bgcsSites.find(function (x) { return x.id === id; }); if (!s) return;
+fn(s); s._u = Date.now(); saveSites(); renderSiteSubmissions();
+}
+function siteToggleFront(id) { siteUpdate(id, function (s) { s.onFront = !s.onFront; }); }
+function siteRemove(id) { if (confirm('Remove this submission?')) siteUpdate(id, function (s) { s.removed = true; s.onFront = false; }); }
+function renderSiteSubmissions() {
+var list = sxEl('siteList'); if (!list) return;
+var back = sxEl('aiLabBackLink'); if (back) back.href = AI_LAB_URL;
+var f = sxEl('siteFilter').value;
+var all = bgcsSites.filter(function (s) { return !s.removed; }).sort(function (a, b) { return String(b.submittedAt) < String(a.submittedAt) ? -1 : 1; });
+var items = all.filter(function (s) { return f === 'all' || (f === 'front' ? s.onFront : !s.onFront); });
+sxEl('siteCount').textContent = '(' + all.length + ' total, ' + all.filter(function (s) { return s.onFront; }).length + ' on front site)';
+if (!items.length) { list.innerHTML = '<p class="text-xs text-slate-500 italic py-6 text-center">No submissions here yet.</p>'; return; }
+var e = escHtml;
+list.innerHTML = items.map(function (s) {
+var p = s.pitch || {};
+var picks = Object.keys(s.menu || {}).filter(function (k) { return s.menu[k].length; }).map(function (k) {
+return '<span class="text-slate-500">' + e(k) + ':</span> ' + e(s.menu[k].join(', '));
+}).join(' &middot; ');
+var link = s.siteLink ? '<a href="' + e(s.siteLink) + '" target="_blank" rel="noopener" class="text-rose-400 underline break-all">' + e(s.siteLink) + '</a>' : '<span class="text-slate-500">No link yet</span>';
+return '<div class="bg-dark-700/50 border border-dark-600 rounded-2xl p-4 space-y-2 text-xs">' +
+'<div class="flex items-start justify-between gap-3"><div><p class="font-bold text-slate-100 text-sm">' + e(p.siteName) + '</p><p class="text-slate-400">' + e(s.group) + ' &middot; ' + e(s.members) + (s.school ? ' &middot; ' + e(s.school) : '') + '</p></div>' +
+'<span class="shrink-0 px-2 py-1 rounded-full font-bold uppercase tracking-wider text-[10px] ' + (s.onFront ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/30' : 'bg-amber-500/10 text-amber-300 border border-amber-500/30') + '">' + (s.onFront ? 'On Front Site' : 'Needs Review') + '</span></div>' +
+'<p class="text-slate-300 leading-relaxed">It helps <b>' + e(p.helps) + '</b> do <b>' + e(p.doing) + '</b>. Special: ' + e(p.special) + ' Missing out on: ' + e(p.missingOut) + '</p>' +
+(picks ? '<p class="text-slate-300 leading-relaxed">' + picks + '</p>' : '') +
+(s.ownIdea ? '<p class="text-slate-300"><span class="text-slate-500">Own idea:</span> ' + e(s.ownIdea) + '</p>' : '') +
+'<p>' + link + '</p>' +
+'<div class="flex gap-2 pt-1"><button onclick="siteToggleFront(\'' + s.id + '\')" class="flex-1 py-2 rounded-xl font-semibold ' + (s.onFront ? 'border border-dark-500 text-slate-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white') + '">' + (s.onFront ? 'Take Off Front Site' : 'Add to Front Site') + '</button>' +
+'<button onclick="siteRemove(\'' + s.id + '\')" class="px-4 py-2 rounded-xl border border-rose-500/50 text-rose-400 font-semibold">Remove</button></div></div>';
+}).join('');
+}
+</script>
+<!-- Duplicate prospect popup -->
+<div id="dupModal" class="fixed inset-0 z-[90] bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+<div class="bg-dark-800 border border-amber-500/40 rounded-2xl shadow-2xl max-w-md w-full p-6 space-y-4 text-xs">
+<h3 class="font-bold text-amber-300 text-base">Possible duplicate</h3>
+<p id="dupMsg" class="text-slate-300"></p>
+<div id="dupInfo" class="bg-dark-700/60 border border-dark-600 rounded-xl p-3 space-y-0.5 text-slate-300"></div>
+<p class="text-slate-500">This can't be saved as a separate file. Change the name or info, or merge it into the existing file. Merging fills in blank fields and combines notes, tasks, emails and receipts.</p>
+<button type="button" id="dupMerge" class="w-full py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-dark-900 font-bold">Merge Into Existing File</button>
+<button type="button" id="dupChange" class="w-full py-3 rounded-xl border border-dark-600 text-slate-200 font-semibold">Change What I Entered</button>
+</div>
+</div>
+<script>
+/* ===================== DUPLICATE CHECK + STAGE CLOCKS ===================== */
+function dupNorm(s) { return String(s || '').toLowerCase().replace(/&/g, ' and ').replace(/[^a-z0-9 ]/g, ' ').replace(/\b(the|inc|llc|co|corp|company|of|and)\b/g, ' ').replace(/\s+/g, ''); }
+function dupDigits(s) { return String(s || '').replace(/\D/g, ''); }
+function dupEmail(s) { return String(s || '').trim().toLowerCase(); }
+function dupPerson(s) { var t = String(s || '').toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(function (w) { return w && ['mr', 'mrs', 'ms', 'miss', 'mx', 'dr', 'coach', 'principal'].indexOf(w) < 0; }); return t.length >= 2 ? t.sort().join(' ') : ''; }
+function findDupProspect(org, email, phone, excludeId, person) {
+var n = dupNorm(org), e = dupEmail(email), ph = dupDigits(phone), pn = dupPerson(person);
+for (var i = 0; i < financialProspects.length; i++) {
+var p = financialProspects[i]; if (p.id === excludeId) continue;
+if (n && dupNorm(p.org) === n) return { p: p, reason: 'the same company name' };
+if (e && dupEmail(p.email) === e) return { p: p, reason: 'the same email address' };
+if (ph.length >= 7 && dupDigits(p.phone) === ph) return { p: p, reason: 'the same phone number' };
+if (pn && (p.activities || []).some(function (a) { return dupPerson(a.person) === pn; })) return { p: p, reason: 'the same contact person (' + String(person).trim() + ')' };
+}
+return null;
+}
+function dupPrompt(d) {
+return new Promise(function (res) {
+var m = document.getElementById('dupModal');
+document.getElementById('dupMsg').textContent = 'This matches an existing file by ' + d.reason + '.';
+var p = d.p, e = escHtml;
+document.getElementById('dupInfo').innerHTML = '<p class="font-bold text-slate-100 text-sm">' + e(p.org) + '</p><p>Stage: ' + e(p.stage) + '</p>' + (p.email ? '<p>Email: ' + e(p.email) + '</p>' : '') + (p.phone ? '<p>Phone: ' + e(p.phone) + '</p>' : '');
+function done(c) { m.classList.add('hidden'); m.classList.remove('flex'); res(c); }
+document.getElementById('dupMerge').onclick = function () { done('merge'); };
+document.getElementById('dupChange').onclick = function () { done('change'); };
+m.classList.remove('hidden'); m.classList.add('flex');
+});
+}
+function mergeProspects(keep, from) {
+var blank = function (v) { return v === undefined || v === null || v === '' || (Array.isArray(v) && !v.length); };
+Object.keys(from).forEach(function (k) {
+if (k === 'id' || k === '_u' || k === 'org' || k === 'stageSince' || k === 'stageSinceStage') return;
+var a = keep[k], b = from[k];
+if (Array.isArray(b)) {
+var base = Array.isArray(a) ? a : [];
+keep[k] = base.concat(b.filter(function (x) { return !base.some(function (y) { return JSON.stringify(y) === JSON.stringify(x); }); }));
+} else if (k === 'personalNotes') {
+if (blank(a)) keep[k] = b; else if (!blank(b) && String(a).indexOf(b) < 0) keep[k] = a + '\n\n--- Merged from duplicate ---\n' + b;
+} else if (k === 'stage') {
+var ia = STAGES.indexOf(a), ib = STAGES.indexOf(b);
+if (b !== 'Closed Lost' && a !== 'Closed Lost' && a !== 'Closed Won' && ib > ia) keep.stage = b;
+} else if (blank(a) && !blank(b)) keep[k] = b;
+});
+}
+function ticketFindDup() {
+if (!ticketCurrent() || !ticketBefore) return null;
+var g = function (id) { return document.getElementById(id).value; };
+var org = g('qpOrgInput'), em = g('qpEmailInput'), ph = g('qpPhoneInput'), pe = g('qpPersonInput');
+var bp = ((ticketBefore.activities || [])[0] || {}).person;
+if (dupNorm(org) === dupNorm(ticketBefore.org) && dupEmail(em) === dupEmail(ticketBefore.email) && dupDigits(ph) === dupDigits(ticketBefore.phone) && dupPerson(pe) === dupPerson(bp)) return null;
+return findDupProspect(org, em, ph, ticketProspectId, pe);
+}
+function ticketMergeInto(d, done) {
+showWhoDialog({ title: 'Merge into ' + d.p.org, message: 'Pick who is merging these files. This ticket will be combined into the existing file and removed.', buttons: [{ label: 'Merge Files', value: 'save', kind: 'primary' }, { label: 'Keep Editing', value: 'stay', kind: 'neutral' }] }).then(function (r) {
+if (r.choice !== 'save') return;
+saveQuickProspectTicket(null, true);
+var from = ticketCurrent(); if (!from) return;
+mergeProspects(d.p, from);
+logActivity(d.p.id, 'ticket', 'Merged duplicate file "' + from.org + '" into this ticket');
+logActivity(from.id, 'deleted', 'Merged into ' + d.p.org, from.org);
+financialProspects = financialProspects.filter(function (x) { return x.id !== from.id; });
+ticketFormBaseline = null;
+saveFinancialProspects();
+closeQuickProspectModal();
+if (typeof done === 'function') done();
+});
+}
+/* ---- email sent: days with no response, and how long replies take ---- */
+function okDate(s) { return !!s && !isNaN(Date.parse(s)); }
+function hasReplied(p) { return okDate(p.emailReplyDate) || !!p.respondedAt || /^Replied/.test(p.emailStatus || ''); }
+function refreshStageClocks() {
+var changed = false, now = new Date().toISOString();
+financialProspects.forEach(function (p) {
+if (p.stageSinceStage !== p.stage || !p.stageSince) {
+var old = p.stageSinceStage, d = null;
+if (old === undefined && typeof activityLog !== 'undefined') {
+var hit = activityLog.find(function (e) { return e.pid === p.id && ((e.type === 'stage' && String(e.text).slice(-(p.stage.length + 4)) === ' to ' + p.stage) || (e.type === 'created' && String(e.text).indexOf('(' + p.stage + ')') > -1)); });
+if (hit) d = hit.at;
+}
+if (old === 'First Touch Sent' && (p.stage === 'Lead' || p.stage === 'Closed Won') && !p.respondedAt) { p.respondedAt = now; p.sentFallback = p.stageSince; }
+if (old !== undefined && p.stage === 'First Touch Sent' && !p.emailSentDate) { var t = new Date(); p.emailSentDate = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2); }
+p.stageSince = d || now; p.stageSinceStage = p.stage; changed = true;
+}
+if (p.stage === 'First Touch Sent' && /^Replied/.test(p.emailStatus || '') && !p.respondedAt) { p.respondedAt = now; p.sentFallback = p.stageSince; changed = true; }
+});
+if (changed) saveFinancialProspects();
+}
+function responseDays(p) {
+var r = okDate(p.emailReplyDate) ? Date.parse(p.emailReplyDate) : (okDate(p.respondedAt) ? Date.parse(p.respondedAt) : null);
+if (r === null) return null;
+var s = okDate(p.emailSentDate) ? Date.parse(p.emailSentDate) : (okDate(p.sentFallback) ? Date.parse(p.sentFallback) : null);
+if (s === null) return null;
+return Math.max(0, Math.floor((r - s) / 86400000));
+}
+function stageDayInfo(p) {
+if (p.stage !== 'First Touch Sent' || hasReplied(p)) return null;
+var base = okDate(p.emailSentDate) ? Date.parse(p.emailSentDate) : Date.parse(p.stageSince);
+if (isNaN(base)) return null;
+var n = Math.max(0, Math.floor((Date.now() - base) / 86400000));
+return { n: n, tier: n >= 15 ? 15 : n >= 10 ? 10 : n >= 5 ? 5 : n >= 3 ? 3 : 0 };
+}
+function stageDayBadge(p) {
+var i = stageDayInfo(p);
+if (i) {
+var col = i.tier === 15 ? 'bg-red-500/20 text-red-300 border-red-500/40 animate-pulse' : i.tier === 10 ? 'bg-rose-500/15 text-rose-400 border-rose-500/30' : i.tier === 5 ? 'bg-orange-500/15 text-orange-400 border-orange-500/30' : i.tier === 3 ? 'bg-amber-500/15 text-amber-300 border-amber-500/30' : 'bg-dark-600 text-slate-300 border-dark-500';
+return '<span class="inline-block px-2 py-0.5 rounded border text-[10px] font-bold ' + col + '">' + i.n + ' day' + (i.n === 1 ? '' : 's') + ' no response' + (i.tier ? ' &middot; ' + i.tier + (i.tier === 15 ? '+' : '') + ' day flag' : '') + '</span>';
+}
+var rd = responseDays(p);
+if (rd !== null) return '<span class="inline-block px-2 py-0.5 rounded border text-[10px] font-bold bg-emerald-500/15 text-emerald-300 border-emerald-500/30">Replied in ' + rd + ' day' + (rd === 1 ? '' : 's') + '</span>';
+return '';
+}
+function stageTierSummary(items, stage) {
+var out = '';
+if (stage === 'First Touch Sent') {
+var c = { 3: 0, 5: 0, 10: 0, 15: 0 };
+items.forEach(function (p) { var i = stageDayInfo(p); if (i && i.tier) c[i.tier]++; });
+out += '<span class="block text-amber-300/80 mt-0.5">No response: Day 3: ' + c[3] + ' &middot; Day 5: ' + c[5] + ' &middot; Day 10: ' + c[10] + ' &middot; Day 15+: ' + c[15] + '</span>';
+}
+if (stage === 'First Touch Sent' || stage === 'Lead') {
+var ds = []; financialProspects.forEach(function (p) { var d = responseDays(p); if (d !== null) ds.push(d); });
+if (ds.length) out += '<span class="block text-emerald-300/80">Avg reply time: ' + (ds.reduce(function (a, b) { return a + b; }, 0) / ds.length).toFixed(1) + ' days (' + ds.length + ' replied)</span>';
+}
+return out;
+}
+</script>
+<script>
+/* ===================== DASHBOARD ===================== */
+var DASH_VISITS = null;
+function dashPot(p) { return String(p.org).indexOf('InspiHER') > -1 ? 750 : ((p.classes || 0) * 20 * (p.price || 0)); }
+function dashMoney(n) { return '$' + Math.round(n).toLocaleString(); }
+function dashCard(l, v, s) { return '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4"><p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">' + l + '</p><p class="text-2xl font-extrabold text-slate-100 mt-1">' + v + '</p>' + (s ? '<p class="text-[11px] text-slate-400 mt-0.5">' + s + '</p>' : '') + '</div>'; }
+function dashBars(rows, color) {
+if (!rows.length) return '<p class="text-xs text-slate-500 italic">No data yet.</p>';
+var max = Math.max.apply(null, rows.map(function (r) { return r[1]; }).concat([1]));
+return '<div class="space-y-1.5">' + rows.map(function (r) { return '<div class="flex items-center gap-2 text-[11px]"><span class="w-28 shrink-0 text-slate-400 truncate">' + escHtml(r[0]) + '</span><div class="flex-1 h-3 bg-dark-700 rounded"><div class="h-3 rounded ' + color + '" style="width:' + Math.round(r[1] / max * 100) + '%"></div></div><span class="w-12 text-right text-slate-200 font-semibold">' + r[1] + '</span></div>'; }).join('') + '</div>';
+}
+function dashBox(t, inner) { return '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4"><p class="text-xs font-bold text-slate-200 mb-3">' + t + '</p>' + inner + '</div>'; }
+function fmtSecs(s) { s = Math.round(s || 0); return Math.floor(s / 60) + 'm ' + ('0' + (s % 60)).slice(-2) + 's'; }
+function renderDashboardPipeline() {
+var el = document.getElementById('dashPipeline'); if (!el) return;
+var P = financialProspects, closed = ['Closed Won', 'Closed Lost'];
+var open = P.filter(function (p) { return closed.indexOf(p.stage) < 0; });
+var won = P.filter(function (p) { return p.stage === 'Closed Won'; });
+var waiting = P.filter(function (p) { return stageDayInfo(p); });
+var flagged = waiting.filter(function (p) { return stageDayInfo(p).tier >= 5; }).length;
+var ds = []; P.forEach(function (p) { var d = responseDays(p); if (d !== null) ds.push(d); });
+var avg = ds.length ? (ds.reduce(function (a, b) { return a + b; }, 0) / ds.length).toFixed(1) + ' days' : 'n/a';
+var sites = bgcsSites.filter(function (s) { return !s.removed; });
+var week = Date.now() - 7 * 864e5, acts = activityLog.filter(function (a) { return Date.parse(a.at) > week; });
+var who = {}; acts.forEach(function (a) { who[a.who] = (who[a.who] || 0) + 1; });
+var tiers = { 3: 0, 5: 0, 10: 0, 15: 0 }; waiting.forEach(function (p) { var t = stageDayInfo(p).tier; if (t) tiers[t]++; });
+el.innerHTML = '<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">' +
+dashCard('Prospects', P.length, open.length + ' open') +
+dashCard('Open pipeline value', dashMoney(open.reduce(function (a, p) { return a + dashPot(p); }, 0)), 'target revenue') +
+dashCard('Closed won', dashMoney(won.reduce(function (a, p) { return a + dashPot(p); }, 0)), won.length + ' deals') +
+dashCard('Avg reply time', avg, ds.length + ' replied') +
+dashCard('Waiting on a reply', waiting.length, flagged + ' at 5+ days') +
+dashCard('AI Lab sites', sites.length, sites.filter(function (s) { return s.onFront; }).length + ' on front site') +
+dashCard('Activity, 7 days', acts.length, 'logged actions') +
+dashCard('Needs review', sites.filter(function (s) { return !s.onFront; }).length, 'AI Lab submissions') + '</div>' +
+'<div class="grid md:grid-cols-3 gap-3">' +
+dashBox('Prospects by stage', dashBars(STAGES.map(function (s) { return [s, P.filter(function (p) { return p.stage === s; }).length]; }), 'bg-rose-500')) +
+dashBox('Email sent, no response', dashBars([['Day 3', tiers[3]], ['Day 5', tiers[5]], ['Day 10', tiers[10]], ['Day 15+', tiers[15]]], 'bg-amber-500')) +
+dashBox('Team activity, 7 days', dashBars(Object.keys(who).map(function (k) { return [k, who[k]]; }).sort(function (a, b) { return b[1] - a[1]; }), 'bg-emerald-500')) + '</div>';
+}
+var SB_URL = "https://qlgnstoesdzmkcmyaqyw.supabase.co", SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ";
+function sbSave(j) { try { sessionStorage.setItem('bgcs_sb_at', j.access_token); sessionStorage.setItem('bgcs_sb_exp', String(Date.now() + (j.expires_in - 60) * 1000)); localStorage.setItem('bgcs_sb_rt', j.refresh_token); } catch (e) {} }
+async function sbToken() {
+var at = sessionStorage.getItem('bgcs_sb_at'), exp = +sessionStorage.getItem('bgcs_sb_exp') || 0;
+if (at && Date.now() < exp) return at;
+var rt = localStorage.getItem('bgcs_sb_rt'); if (!rt) return null;
+try { var r = await fetch(SB_URL + '/auth/v1/token?grant_type=refresh_token', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ refresh_token: rt }) }); if (!r.ok) return null; var j = await r.json(); sbSave(j); return j.access_token; } catch (e) { return null; }
+}
+async function sbLogin() {
+var em = document.getElementById('sbEmail').value.trim(), pw = document.getElementById('sbPass').value, er = document.getElementById('sbErr');
+try {
+var r = await fetch(SB_URL + '/auth/v1/token?grant_type=password', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ email: em, password: pw }) });
+if (!r.ok) { er.textContent = 'Wrong email or password.'; return; }
+sbSave(await r.json()); renderDashboard(true);
+} catch (e) { er.textContent = 'Could not reach Supabase. Check your connection.'; }
+}
+function sbLoginForm(msg) {
+return '<div class="text-xs text-slate-300 space-y-2"><p class="font-semibold text-amber-300">' + escHtml(msg) + '</p><div class="grid sm:grid-cols-2 gap-2"><input id="sbEmail" type="email" placeholder="Your Supabase owner email" class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"><input id="sbPass" type="password" placeholder="Password" class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></div><p id="sbErr" class="text-rose-500"></p><button onclick="sbLogin()" class="px-4 py-2.5 rounded-xl bg-rose-600 text-white font-semibold">Sign in to see visitors</button><p class="text-slate-500">One-time setup: run <b>supabase-visits.sql</b> in Supabase, then add yourself under Authentication &gt; Users.</p></div>';
+}
+async function renderDashboard(reload) {
+try { localStorage.setItem('bgcs_notrack', '1'); } catch (e) {}
+renderDashboardPipeline();
+var box = document.getElementById('dashVisitors'); if (!box) return;
+if (reload || !DASH_VISITS) {
+var tok = await sbToken();
+if (!tok) { box.innerHTML = sbLoginForm('Sign in to load your visitor data.'); return; }
+box.innerHTML = '<p class="text-xs text-slate-400">Loading visits...</p>';
+try {
+var r = await fetch(SB_URL + '/rest/v1/site_visits?select=*&order=t.desc&limit=2000', { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + tok } });
+if (r.status === 401 || r.status === 403) { try { localStorage.removeItem('bgcs_sb_rt'); sessionStorage.removeItem('bgcs_sb_at'); } catch (e) {} box.innerHTML = sbLoginForm('Your sign-in expired. Please sign in again.'); return; }
+if (!r.ok) throw new Error(r.status + ' ' + (await r.text()).slice(0, 120));
+DASH_VISITS = await r.json();
+} catch (e) { box.innerHTML = sbLoginForm('Could not load visits (' + e.message + '). Make sure supabase-visits.sql was run.'); return; }
+}
+renderDashVisits();
+}
+function renderDashVisits() {
+var box = document.getElementById('dashVisitors'); if (!box || !DASH_VISITS) return;
+var days = parseInt(document.getElementById('dashRange').value, 10);
+var V = DASH_VISITS.filter(function (v) { return !days || v.t > Date.now() - days * 864e5; });
+if (!V.length) { box.innerHTML = '<p class="text-xs text-slate-500 italic">No visits in this range yet. Visits show up once tracker.js is live on your pages.</p>'; return; }
+var uniq = {}; V.forEach(function (v) { uniq[v.vid] = 1; });
+var avg = V.reduce(function (a, v) { return a + (v.sec || 0); }, 0) / V.length;
+var ret = Math.round(V.filter(function (v) { return v.ret; }).length / V.length * 100);
+var count = function (fn) { var o = {}; V.forEach(function (v) { var k = fn(v) || 'Unknown'; o[k] = (o[k] || 0) + 1; }); return Object.keys(o).map(function (k) { return [k, o[k]]; }).sort(function (a, b) { return b[1] - a[1]; }); };
+var pn = function (p) { return ({ 'index.html': 'Main page', 'labs.html': 'AI Lab landing', 'after-school.html': 'After School page', 'class-projects.html': 'Class projects', 'lab-projects.html': 'Client lab projects' })[p] || p; };
+var byDay = {}; V.forEach(function (v) { var d = new Date(v.t).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); byDay[d] = (byDay[d] || 0) + 1; });
+var dayRows = []; for (var i = Math.min(days || 14, 14) - 1; i >= 0; i--) { var k = new Date(Date.now() - i * 864e5).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); dayRows.push([k, byDay[k] || 0]); }
+var hrs = []; for (var h = 0; h < 24; h++) hrs.push(0); V.forEach(function (v) { hrs[new Date(v.t).getHours()]++; });
+var hmax = Math.max.apply(null, hrs.concat([1]));
+var hourChart = '<div class="flex items-end gap-0.5 h-20">' + hrs.map(function (n, h) { return '<div class="flex-1 bg-sky-500 rounded-t" title="' + (h % 12 || 12) + (h < 12 ? 'am' : 'pm') + ': ' + n + '" style="height:' + Math.max(3, Math.round(n / hmax * 100)) + '%"></div>'; }).join('') + '</div><div class="flex justify-between text-[10px] text-slate-500 mt-1"><span>12am</span><span>6am</span><span>12pm</span><span>6pm</span><span>11pm</span></div>';
+var loc = function (v) { return [v.city, v.region, v.country].filter(Boolean).join(', '); };
+var recent = V.slice(0, 15).map(function (v) {
+return '<tr class="border-t border-dark-600"><td class="py-1.5 pr-3 whitespace-nowrap">' + escHtml(new Date(v.t).toLocaleString(undefined, { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' })) + '</td><td class="pr-3">' + escHtml(pn(v.page)) + '</td><td class="pr-3">' + escHtml(loc(v) || 'Unknown') + '</td><td class="pr-3">' + escHtml((v.dev || '') + ' · ' + (v.os || '')) + '</td><td class="text-right whitespace-nowrap">' + fmtSecs(v.sec) + '</td></tr>';
+}).join('');
+box.innerHTML = '<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">' + dashCard('Visits', V.length) + dashCard('Unique visitors', Object.keys(uniq).length) + dashCard('Avg time on site', fmtSecs(avg)) + dashCard('Returning', ret + '%') + '</div>' +
+'<div class="grid md:grid-cols-2 gap-3">' + dashBox('Visits by page', dashBars(count(function (v) { return pn(v.page); }), 'bg-rose-500')) + dashBox('Visits by day', dashBars(dayRows, 'bg-purple-500')) +
+dashBox('Time of day (your local time)', hourChart) + dashBox('Devices', dashBars(count(function (v) { return v.dev; }), 'bg-emerald-500')) +
+dashBox('Top locations', dashBars(count(loc).slice(0, 8), 'bg-amber-500')) + dashBox('Where they came from', dashBars(count(function (v) { return v.ref || 'Direct link'; }).slice(0, 8), 'bg-sky-500')) + '</div>' +
+dashBox('Recent visits', '<div class="overflow-x-auto"><table class="w-full text-[11px] text-slate-300"><thead class="text-slate-500 text-left"><tr><th class="pb-1">When</th><th>Page</th><th>Location</th><th>Device</th><th class="text-right">Time on site</th></tr></thead><tbody>' + recent + '</tbody></table></div>');
+}
+</script>
 <script>
 if (typeof lucide === 'undefined') { window.lucide = { createIcons: function () {} }; }
 
@@ -1770,6 +2195,7 @@ v: 1, updatedAt: 0,
 prospects: ps,
 notes: JSON.parse(JSON.stringify(spiritMeetingNotes || [])),
 people: bgcsPeople.slice(),
+sites: JSON.parse(JSON.stringify(bgcsSites)),
 activity: activityLog.map(function (e) { const c = Object.assign({}, e); delete c.s; return c; }),
 deleted: JSON.parse(JSON.stringify(bgcsDeleted))
 };
@@ -1784,6 +2210,7 @@ v: 1, updatedAt: 0,
 prospects: ghMergeById(local.prospects, remote.prospects || [], dp),
 notes: ghMergeById(local.notes, remote.notes || [], dn),
 people: Array.from(new Set(local.people.concat(remote.people || []))),
+sites: ghMergeById(local.sites || [], remote.sites || [], {}),
 activity: ghMergeActivity(local.activity, remote.activity || []),
 deleted: { p: dp, n: dn }
 };
@@ -1791,7 +2218,7 @@ deleted: { p: dp, n: dn }
 function ghCanon(s) {
 function byId(a) { return (a || []).slice().sort(function (x, y) { return String(x.id) < String(y.id) ? -1 : 1; }); }
 return stableStringify({
-p: byId(s.prospects), n: byId(s.notes), pe: (s.people || []).slice().sort(),
+p: byId(s.prospects), n: byId(s.notes), si: byId(s.sites).map(function (x) { return { id: x.id, u: x._u, f: !!x.onFront, r: !!x.removed }; }), pe: (s.people || []).slice().sort(),
 a: byId(s.activity).map(function (e) { return { id: e.id, at: e.at, who: e.who, pid: e.pid, org: e.org || '', type: e.type, text: e.text }; }),
 d: { p: (s.deleted && s.deleted.p) || {}, n: (s.deleted && s.deleted.n) || {} }
 });
@@ -1814,6 +2241,7 @@ return f ? { name: r.name, date: r.date, url: f.url } : r;
 financialProspects = m.prospects;
 spiritMeetingNotes = m.notes;
 if (m.people && m.people.length) bgcsPeople = m.people;
+if (m.sites) { bgcsSites = m.sites; saveSitesLocal(); }
 bgcsDeleted = m.deleted;
 activityLog = m.activity.map(function (e) { return Object.assign({}, e, { s: false }); });
 saveFinancialProspectsLocal();
@@ -2095,6 +2523,8 @@ BGCS_CLOUD.pushTimer = setTimeout(pushToCloud, 15000);
 }
 function refreshAllViews() {
 refreshActivityViews();
+if (typeof renderSiteSubmissions === 'function') renderSiteSubmissions();
+if (typeof renderDashboardPipeline === 'function') renderDashboardPipeline();
 renderFinancialKanban();
 renderSpiritMeetingNotes();
 const pv = document.getElementById('prospectTodoList');
@@ -2435,7 +2865,7 @@ var TICKET_SHORT_FIELDS = [
 ['org', 'Organization name', 'name'], ['stage', 'Funnel stage', 'stage'], ['lostReason', 'Closed lost reason', 'stage'], ['classes', 'Target class goal', 'ticket'], ['price', 'Price per kid', 'ticket'],
 ['donation', 'Community donation %', 'ticket'], ['address', 'Address', 'contact'], ['phone', 'Phone number', 'contact'], ['email', 'Email address', 'contact'],
 ['schedule', 'Program schedule', 'ticket'], ['capacity', 'Student capacity', 'ticket'], ['paymentSource', 'Payment source', 'ticket'], ['contractCommitment', '6-month contract lock-in', 'ticket'],
-['emailSubject', 'Phase 1 email subject', 'email'], ['emailSentDate', 'Phase 1 date sent', 'email'], ['emailStatus', 'Phase 1 email status', 'email'], ['emailNextStep', 'Phase 1 next step', 'email'], ['emailFollowUp', 'Phase 1 follow-up date', 'email'],
+['emailSubject', 'Phase 1 email subject', 'email'], ['emailSentDate', 'Phase 1 date sent', 'email'], ['emailReplyDate', 'Phase 1 reply date', 'email'], ['emailStatus', 'Phase 1 email status', 'email'], ['emailNextStep', 'Phase 1 next step', 'email'], ['emailFollowUp', 'Phase 1 follow-up date', 'email'],
 ['callDate', 'Phase 2 call date', 'call'], ['callOutcome', 'Phase 2 call outcome', 'call'],
 ['fuSubject', 'Phase 3 email subject', 'email'], ['fuDate', 'Phase 3 date sent', 'email'], ['fuStatus', 'Phase 3 email status', 'email']
 ];
@@ -2488,6 +2918,7 @@ function submitTicketForm(event) {
 if (event && event.preventDefault) event.preventDefault();
 if (!document.getElementById('qpOrgInput').value.trim()) return;
 if (!ticketLostOk()) return;
+{ const _d = ticketFindDup(); if (_d) { dupPrompt(_d).then(function (c) { if (c === 'merge') ticketMergeInto(_d); }); return; } }
 showWhoDialog({
 title: 'Save changes',
 message: 'Pick who is making these changes. They will be saved and recorded in the activity log.',
@@ -2514,6 +2945,7 @@ if (r.choice === 'save') {
 const form = document.querySelector('#quickProspectModal form');
 if (form && !form.reportValidity()) return;
 if (!ticketLostOk()) return;
+{ const _d = ticketFindDup(); if (_d) { dupPrompt(_d).then(function (c) { if (c === 'merge') ticketMergeInto(_d, done); }); return; } }
 finalizeTicketSave();
 recordTicketChanges();
 } else if (r.choice === 'discard') {
@@ -2933,7 +3365,7 @@ let currentCalMonth = 9;
 function toggleMobileSidebar() {
 const sidebar = document.getElementById('sidebarNav');
 const overlay = document.getElementById('mobileSidebarOverlay');
-if (window.innerWidth >= 768) {
+if (window.innerWidth >= 1024) {
 sidebar.classList.toggle('sidebar-collapsed');
 try { localStorage.setItem('bgcs_sidebar_collapsed', sidebar.classList.contains('sidebar-collapsed') ? '1' : '0'); } catch (e) {}
 return;
@@ -2948,7 +3380,7 @@ overlay.classList.add('hidden');
 }
 (function restoreSidebarState() {
 try {
-if (localStorage.getItem('bgcs_sidebar_collapsed') === '1' && window.innerWidth >= 768) {
+if (localStorage.getItem('bgcs_sidebar_collapsed') === '1' && window.innerWidth >= 1024) {
 document.getElementById('sidebarNav').classList.add('sidebar-collapsed');
 }
 } catch (e) {}
@@ -3137,19 +3569,19 @@ document.getElementById('financialAuthModal').classList.remove('hidden');
 const fb = document.getElementById('finBioBtn');
 if (fb) fb.classList.toggle('hidden', !quCredId());
 const sbEl = document.getElementById('sidebarNav');
-if (window.innerWidth < 768 && sbEl && !sbEl.classList.contains('-translate-x-full')) {
+if (window.innerWidth < 1024 && sbEl && !sbEl.classList.contains('-translate-x-full')) {
 sbEl.classList.add('-translate-x-full');
 document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity', 'ailab', 'dashboard'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity', 'ailab', 'dashboard'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -3189,6 +3621,14 @@ const activeBtn = document.getElementById('nav-' + viewName);
 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 if (viewName === 'goals') {
 document.getElementById('pageTitle').innerText = "Target Audience";
+}
+if (viewName === 'dashboard') {
+document.getElementById('pageTitle').innerText = "Dashboard";
+renderDashboard(true);
+}
+if (viewName === 'ailab') {
+document.getElementById('pageTitle').innerText = "AI Lab Sites";
+renderSiteSubmissions();
 }
 if (viewName === 'activity') {
 document.getElementById('pageTitle').innerText = "Activity Log";
@@ -3425,6 +3865,7 @@ renderProspectTodosMaster();
 }
 function renderFinancialKanban() {
 renderOutreachSummary();
+refreshStageClocks();
 const pv = document.getElementById('profileView');
 if (currentProfileId && pv && !pv.classList.contains('hidden')) renderEmbeddedProspectTicket();
 ['financialKanbanContainer', 'salesFunnelContainer'].forEach(containerId => {
@@ -3522,6 +3963,7 @@ text-slate-100 text-xs cursor-pointer hover:text-rose-400 underline">${item.org}
 class="text-slate-400 hover:text-rose-400" title="Move to Trash"><i data-lucide="trash-2"
 class="w-3.5 h-3.5"></i></button>
 </div>
+<div class="mb-1">${stageDayBadge(item)}</div>
 <div class="text-[11px] text-slate-300 space-y-0.5"
 onclick="openQuickProspectModal(${item.id})" style="cursor:pointer;">
 ${item.org.includes('InspiHER') ? `<p>Event: <strong>2-Day
@@ -3554,7 +3996,7 @@ stage.</p>`;
 container.innerHTML += `
 <div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 space-y-3 min-w-[260px] flex-1 shrink-0">
 <div class="flex justify-between items-start border-b border-dark-600 pb-2">
-<div><h4 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h4><p class="text-[10px] text-slate-500 mt-0.5">${STAGE_HINTS[stage]}</p></div>
+<div><h4 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h4><p class="text-[10px] text-slate-500 mt-0.5">${STAGE_HINTS[stage]}${stageTierSummary(items, stage)}</p></div>
 <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300
 text-[10px]">${items.length}</span>
 </div>
@@ -3591,6 +4033,7 @@ document.getElementById('qpContractSelect').value = item.contractCommitment || '
 document.getElementById('qpPersonalNotes').value = item.personalNotes || '';
 document.getElementById('qpEmailSubject').value = item.emailSubject || '';
 document.getElementById('qpEmailSentDate').value = item.emailSentDate || '';
+document.getElementById('qpEmailReplyDate').value = item.emailReplyDate || '';
 document.getElementById('qpEmailStatus').value = item.emailStatus || '';
 document.getElementById('qpEmailBody').value = item.emailBody || '';
 document.getElementById('qpEmailResult').value = item.emailResult || '';
@@ -3631,6 +4074,7 @@ if(item.stage === 'Closed Won') badge.className += "bg-emerald-500/10 text-emera
 else if(item.stage === 'Lead') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
 else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
 document.getElementById('quickProspectModal').classList.remove('hidden');
+{ let dbEl = document.getElementById('qpDayBadge'); if (!dbEl) { dbEl = document.createElement('span'); dbEl.id = 'qpDayBadge'; dbEl.className = 'ml-2'; badge.parentNode.insertBefore(dbEl, badge.nextSibling); } dbEl.innerHTML = stageDayBadge(item); }
 ticketFormBaseline = JSON.stringify(readTicketForm());
 }
 function closeQuickProspectModal() {
@@ -3668,6 +4112,7 @@ item.contractCommitment = document.getElementById('qpContractSelect').value;
 item.personalNotes = document.getElementById('qpPersonalNotes').value;
 item.emailSubject = document.getElementById('qpEmailSubject').value;
 item.emailSentDate = document.getElementById('qpEmailSentDate').value;
+item.emailReplyDate = document.getElementById('qpEmailReplyDate').value;
 item.emailStatus = document.getElementById('qpEmailStatus').value;
 item.emailBody = document.getElementById('qpEmailBody').value;
 item.emailResult = document.getElementById('qpEmailResult').value;
@@ -3747,6 +4192,7 @@ const stage = document.getElementById('fpStage').value;
 const classes = parseInt(document.getElementById('fpClasses').value) || 1;
 const price = parseFloat(document.getElementById('fpPrice').value) || 125.00;
 const donation = parseFloat(document.getElementById('fpDonation').value) || 10;
+if (!window.__dupMergeId) { const _d = findDupProspect(org, document.getElementById('fpEmail').value, document.getElementById('fpPhone').value, null, document.getElementById('fpPerson').value); if (_d) { dupPrompt(_d).then(function (c) { if (c === 'merge') { window.__dupMergeId = _d.p.id; saveFinancialProspectCore(event); } }); return; } }
 financialProspects.push({ id: Date.now(), org, stage, classes, price, donation,
 address: document.getElementById('fpAddress').value,
 phone: document.getElementById('fpPhone').value,
@@ -3755,9 +4201,9 @@ schedule: document.getElementById('fpSchedule').value,
 capacity: parseInt(document.getElementById('fpCapacity').value) || 0,
 paymentSource: document.getElementById('fpPayment').value,
 contractCommitment: document.getElementById('fpContract').value,
-activities:
-[], clientTasks: [{ title: "Reach out to prospect this week", desc: `Contact ${org} and follow up
+activities: (function () { var _p = document.getElementById('fpPerson').value.trim(); return _p ? [{ type: 'Call / Outreach', date: new Date().toISOString().split('T')[0], person: _p, title: '', message: '', nextSteps: '', followUpDone: false }] : []; })(), clientTasks: [{ title: "Reach out to prospect this week", desc: `Contact ${org} and follow up
 next week if no response.`, date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] });
+if (window.__dupMergeId) { const _keep = financialProspects.find(function (x) { return x.id === window.__dupMergeId; }); const _np = financialProspects.pop(); window.__dupMergeId = null; _np.clientTasks = []; if (_keep) { mergeProspects(_keep, _np); logActivity(_keep.id, 'ticket', 'Merged duplicate entry "' + _np.org + '" into this ticket'); } closeFinancialProspectModal(); saveFinancialProspects(); renderFinancialKanban(); return; }
 { const _added = financialProspects[financialProspects.length - 1]; logActivity(_added.id, "created", "Prospect added: " + org + " (" + stage + ")"); }
 closeFinancialProspectModal();
 saveFinancialProspects();
@@ -3935,6 +4381,7 @@ const message = document.getElementById('commsMessage').value;
 const nextSteps = document.getElementById('commsNextSteps').value;
 const newStage = document.getElementById('commsNewStage').value;
 const followUpDone = document.getElementById('commsFollowUp').checked;
+if (!window.__dupMergeId) { const _d = findDupProspect('', '', '', currentProfileId, person); if (_d) { dupPrompt(_d).then(function (c) { if (c === 'merge') { window.__dupMergeId = _d.p.id; saveCommsActivityApply(event); } }); return; } }
 let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead) {
 if (lead.stage !== newStage) logActivity(lead.id, 'stage', 'Funnel stage changed from ' + lead.stage + ' to ' + newStage);
@@ -3951,6 +4398,7 @@ message,
 nextSteps,
 followUpDone
 });
+if (window.__dupMergeId) { const _keep = financialProspects.find(function (x) { return x.id === window.__dupMergeId; }); window.__dupMergeId = null; if (_keep) { mergeProspects(_keep, lead); logActivity(_keep.id, 'ticket', 'Merged duplicate file "' + lead.org + '" into this ticket'); logActivity(lead.id, 'deleted', 'Merged into ' + _keep.org, lead.org); financialProspects = financialProspects.filter(function (x) { return x.id !== lead.id; }); saveFinancialProspects(); closeCommsModal(); openProfile(_keep.id, 'comms', false); return; } }
 logActivity(lead.id, 'comms', type + ' logged with ' + person + (title ? ' (' + title + ')' : '') + (nextSteps ? '. Next steps: ' + nextSteps : ''));
 saveFinancialProspects();
 closeCommsModal();
@@ -4021,7 +4469,7 @@ window.location.hash = `profile=${id}&tab=${tabToOpen}`;
 const lead = financialProspects.find(l => l.id === id);
 if(!lead) return;
 // Hide all views explicitly
-['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity', 'ailab', 'dashboard'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
@@ -4292,6 +4740,7 @@ container.innerHTML = `
 bg-rose-500/10 text-rose-400 border-rose-500/20">Official Prospect Ticket</span>
 <span class="font-mono text-rose-400 font-bold">INV-2026-${lead.id}</span>
 </div>
+<div>${stageDayBadge(lead)}</div>
 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
 <div>
 <p class="text-slate-400 uppercase font-bold text-[10px]">Organization</p>
