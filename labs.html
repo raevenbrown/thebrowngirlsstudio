@@ -3,29 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The AI Lab: a hands-on 4-week studio where middle and high school students build working AI web apps. Join the December 2026 waitlist.">
+<meta name="theme-color" content="#2A160E">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Brown Girls Creative Studio">
+<meta property="og:title" content="The AI Lab — The Brown Girls Creative Studio">
+<meta property="og:description" content="The AI Lab: a hands-on 4-week studio where middle and high school students build working AI web apps. Join the December 2026 waitlist.">
+
 
   <title>The AI Lab — The Brown Girls Creative Studio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,450&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #140d0a;
+      --bg: #2A160E;
       --bg-soft: #1d120e;
-      --card-bg: rgba(31, 20, 15, 0.86);
+      --card-bg: rgba(59, 34, 22, 0.86);
 
-      --gold: #f59e0b;
-      --gold-light: #fbbf24;
-      --gold-soft: rgba(245, 158, 11, 0.10);
+      --gold: #C7994F;
+      --gold-light: #E3BD79;
+      --gold-soft: rgba(199, 153, 79, 0.10);
 
-      --text: #fdfbf7;
-      --text-muted: #b9ad9e;
+      --text: #F3E8D6;
+      --text-muted: #CDBA99;
 
-      --border: rgba(245, 158, 11, 0.20);
-      --border-hover: rgba(245, 158, 11, 0.55);
+      --border: rgba(199, 153, 79, 0.20);
+      --border-hover: rgba(199, 153, 79, 0.55);
     }
 
     * {
@@ -42,18 +49,18 @@
       background:
         radial-gradient(
           circle at 10% 10%,
-          rgba(245, 158, 11, 0.08),
+          rgba(199, 153, 79, 0.08),
           transparent 30%
         ),
         radial-gradient(
           circle at 90% 80%,
-          rgba(217, 119, 6, 0.06),
+          rgba(169, 121, 47, 0.06),
           transparent 35%
         ),
         var(--bg);
 
       color: var(--text);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Public Sans', sans-serif;
       line-height: 1.6;
       overflow-x: hidden;
     }
@@ -69,7 +76,7 @@
       align-items: center;
       gap: 20px;
       border-bottom: 1px solid var(--border);
-      background: rgba(20, 13, 10, 0.92);
+      background: rgba(42, 22, 14, 0.92);
       backdrop-filter: blur(12px);
       position: sticky;
       top: 0;
@@ -77,7 +84,7 @@
     }
 
     .brand {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Fraunces', sans-serif;
       font-weight: 700;
       color: var(--text);
       text-decoration: none;
@@ -131,7 +138,7 @@
     h1,
     h2,
     h3 {
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Fraunces', sans-serif;
       line-height: 1.08;
       letter-spacing: -0.03em;
     }
@@ -159,7 +166,7 @@
       align-items: center;
       gap: 8px;
       color: var(--gold-light);
-      background: rgba(245, 158, 11, 0.12);
+      background: rgba(199, 153, 79, 0.12);
       border: 1px solid var(--border-hover);
       padding: 8px 18px;
       border-radius: 999px;
@@ -213,13 +220,13 @@
     }
 
     .pilot-results-banner {
-      background: linear-gradient(145deg, rgba(35, 22, 16, 0.95), rgba(18, 11, 8, 0.98));
+      background: linear-gradient(145deg, rgba(59, 34, 22, 0.95), rgba(42, 22, 14, 0.98));
       border: 1px solid var(--gold);
-      border-radius: 24px;
+      border-radius: 4px;
       padding: 44px 32px 36px;
       margin-top: 60px;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(245, 158, 11, 0.12);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(199, 153, 79, 0.12);
       position: relative;
       overflow: hidden;
     }
@@ -256,8 +263,8 @@
 
     .metric-card {
       background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(245, 158, 11, 0.25);
-      border-radius: 16px;
+      border: 1px solid rgba(199, 153, 79, 0.25);
+      border-radius: 4px;
       padding: 24px 14px;
       display: flex;
       flex-direction: column;
@@ -269,7 +276,7 @@
     .metric-card:hover {
       transform: translateY(-4px);
       border-color: var(--gold-light);
-      background: rgba(245, 158, 11, 0.05);
+      background: rgba(199, 153, 79, 0.05);
     }
 
     .metric-card h2 {
@@ -277,7 +284,7 @@
       color: var(--gold-light);
       margin-bottom: 6px;
       line-height: 1;
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Fraunces', sans-serif;
       font-weight: 800;
     }
 
@@ -298,7 +305,7 @@
     .pilot-cta-bar {
       margin-top: 30px;
       padding-top: 24px;
-      border-top: 1px solid rgba(245, 158, 11, 0.15);
+      border-top: 1px solid rgba(199, 153, 79, 0.15);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -328,7 +335,7 @@
       justify-content: center;
       gap: 8px;
       padding: 14px 22px;
-      border-radius: 10px;
+      border-radius: 4px;
       font-size: 0.9rem;
       font-weight: 800;
       text-decoration: none;
@@ -346,9 +353,9 @@
       background: linear-gradient(
         135deg,
         var(--gold),
-        #d97706
+        #A9792F
       );
-      color: #130c08;
+      color: #2A160E;
     }
 
     .btn-secondary {
@@ -376,7 +383,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       padding: 32px;
-      border-radius: 18px;
+      border-radius: 4px;
     }
 
     .info-card h3 {
@@ -403,7 +410,7 @@
       background: var(--card-bg);
       border: 1px solid var(--border);
       padding: 26px;
-      border-radius: 16px;
+      border-radius: 4px;
     }
 
     .skill-icon {
@@ -463,11 +470,11 @@
       background:
         linear-gradient(
           135deg,
-          rgba(245,158,11,0.13),
-          rgba(28,18,14,0.90)
+          rgba(199, 153, 79,0.13),
+          rgba(59, 34, 22,0.90)
         );
       border: 1px solid var(--gold);
-      border-radius: 22px;
+      border-radius: 4px;
       padding: 46px;
     }
 
@@ -533,7 +540,7 @@
       text-decoration: none;
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 16px;
+      border-radius: 4px;
       padding: 28px;
       text-align: left;
       transition: 0.2s;
@@ -556,7 +563,7 @@
 
     .access-card strong {
       color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Fraunces', sans-serif;
       font-size: 1.15rem;
     }
 
@@ -574,7 +581,7 @@
     .project-preview-card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 18px;
+      border-radius: 4px;
       padding: 26px;
     }
 
@@ -690,328 +697,554 @@
       }
     }
   </style>
+<style>/* The Brown Girls Creative Studio - shared look for every public page.
+   Loaded AFTER each page's own styles so the navigation, footer, buttons and
+   type match everywhere. Change a color or font here and the whole site follows. */
+:root{
+  --bgx-espresso:#2A160E;
+  --bgx-espresso-2:#3B2216;
+  --bgx-espresso-3:#4A2C1C;
+  --bgx-cream:#F3E8D6;
+  --bgx-cream-dim:#DCC9A8;
+  --bgx-gold:#C7994F;
+  --bgx-gold-bright:#E3BD79;
+  --bgx-line:rgba(243,232,214,0.16);
+}
+
+/* ---------- type ---------- */
+body{ font-family:'Public Sans',sans-serif; }
+h1,h2,h3,h4{ font-family:'Fraunces',serif; }
+.eyebrow{ font-family:'IBM Plex Mono',monospace; letter-spacing:0.2em; }
+
+/* ---------- buttons share one shape ---------- */
+.btn{ border-radius:2px; letter-spacing:0.02em; }
+.btn-primary{ background:var(--bgx-gold); color:var(--bgx-espresso); }
+.btn-primary:hover{ background:var(--bgx-gold-bright); }
+
+/* ---------- navigation ---------- */
+.bgx-nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(42,22,14,0.94);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--bgx-line);
+  font-family:'Public Sans',sans-serif;
+}
+.bgx-nav *{ box-sizing:border-box; }
+.bgx-nav-inner{
+  max-width:1240px; margin:0 auto; padding:14px 32px;
+  display:flex; align-items:center; justify-content:space-between; gap:22px;
+}
+.bgx-logo{
+  font-family:'Fraunces',serif; font-weight:700; font-size:20px; letter-spacing:-0.01em;
+  white-space:nowrap; color:var(--bgx-cream); text-decoration:none;
+}
+.bgx-logo span{ color:var(--bgx-gold-bright); }
+.bgx-links{ display:flex; gap:22px; font-size:14px; align-items:center; }
+.bgx-links a{
+  text-decoration:none; color:var(--bgx-cream-dim); transition:color .2s;
+  padding:6px 0; border-bottom:1px solid transparent; white-space:nowrap;
+}
+.bgx-links a:hover{ color:var(--bgx-cream); }
+.bgx-links a.is-current{ color:var(--bgx-gold-bright); border-bottom-color:var(--bgx-gold); }
+.bgx-cta{
+  background:var(--bgx-gold); color:var(--bgx-espresso); text-decoration:none;
+  padding:11px 20px; border-radius:2px; font-size:13.5px; font-weight:600;
+  letter-spacing:0.02em; white-space:nowrap; transition:background .2s, transform .15s;
+}
+.bgx-cta:hover{ background:var(--bgx-gold-bright); transform:translateY(-1px); }
+.bgx-burger{
+  display:none; background:none; border:1px solid var(--bgx-line); color:var(--bgx-cream);
+  width:42px; height:40px; border-radius:2px; font-size:20px; line-height:1; cursor:pointer;
+}
+@media (max-width:1060px){
+  .bgx-burger{ display:block; }
+  .bgx-cta{ display:none; }
+  .bgx-links{
+    display:none; position:absolute; left:0; right:0; top:100%;
+    flex-direction:column; align-items:stretch; gap:0;
+    background:#2A160E; border-bottom:1px solid var(--bgx-line); padding:8px 32px 18px;
+  }
+  .bgx-nav.open .bgx-links{ display:flex; }
+  .bgx-links a{ padding:13px 0; border-bottom:1px solid var(--bgx-line); font-size:15px; }
+  .bgx-links a.bgx-links-cta{ display:block; margin-top:14px; text-align:center; background:var(--bgx-gold); color:var(--bgx-espresso); border-radius:2px; font-weight:600; border:none; }
+}
+@media (min-width:1061px){ .bgx-links a.bgx-links-cta{ display:none; } }
+
+/* ---------- keep exploring strip ---------- */
+.bgx-explore{
+  background:var(--bgx-espresso-2);
+  border-top:1px solid var(--bgx-line);
+  padding:64px 0 70px; font-family:'Public Sans',sans-serif;
+}
+.bgx-wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+.bgx-explore .bgx-eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.22em;
+  text-transform:uppercase; color:var(--bgx-gold-bright); margin-bottom:12px;
+  display:flex; align-items:center; gap:10px;
+}
+.bgx-explore .bgx-eyebrow::before{ content:''; width:22px; height:1px; background:var(--bgx-gold); display:inline-block; }
+.bgx-explore h2{
+  font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,3vw,36px);
+  color:var(--bgx-cream); letter-spacing:-0.01em; line-height:1.1; margin:0 0 28px;
+}
+.bgx-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media (max-width:820px){ .bgx-cards{ grid-template-columns:1fr; } }
+.bgx-card{
+  display:block; text-decoration:none; padding:24px 24px 22px;
+  border:1px solid var(--bgx-line); border-radius:2px; background:rgba(42,22,14,0.55);
+  transition:border-color .2s, transform .2s;
+}
+.bgx-card:hover{ border-color:var(--bgx-gold); transform:translateY(-2px); }
+.bgx-card small{
+  display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em;
+  text-transform:uppercase; color:var(--bgx-gold-bright); margin-bottom:10px;
+}
+.bgx-card b{
+  display:block; font-family:'Fraunces',serif; font-weight:600; font-size:20px;
+  color:var(--bgx-cream); margin-bottom:8px; line-height:1.15;
+}
+.bgx-card span{ display:block; font-size:14.5px; line-height:1.55; color:var(--bgx-cream-dim); }
+.bgx-card em{ display:inline-block; margin-top:14px; font-style:normal; font-size:13.5px; font-weight:600; color:var(--bgx-gold-bright); }
+
+/* ---------- footer ---------- */
+.bgx-footer{
+  background:var(--bgx-espresso); border-top:1px solid var(--bgx-line);
+  padding:44px 0 40px; font-family:'Public Sans',sans-serif; color:var(--bgx-cream-dim);
+}
+.bgx-footer .bgx-logo{ display:inline-block; margin-bottom:10px; }
+.bgx-footer p{ font-size:14px; max-width:520px; color:var(--bgx-cream-dim); margin:0; }
+.bgx-foot-links{ display:flex; flex-wrap:wrap; gap:8px 22px; margin:22px 0 18px; font-size:14px; }
+.bgx-foot-links a{ color:var(--bgx-cream-dim); text-decoration:none; }
+.bgx-foot-links a:hover{ color:var(--bgx-gold-bright); }
+.bgx-foot-base{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-size:12.5px; opacity:0.8; }
+.bgx-foot-base a{ color:inherit; text-decoration:none; opacity:0.5; }
+.bgx-foot-base a:hover{ opacity:1; }
+
+/* =====================================================================
+   INDEX LOOK FOR THE OTHER PAGES  (only applies when <body class="bgx-sub">)
+   Same grid-paper hero, left-aligned headings, mono labels with a rule,
+   flat bordered boxes, alternating espresso bands, ledger-style stat strips.
+   ===================================================================== */
+.bgx-sub{ background:var(--bgx-espresso); color:var(--bgx-cream); line-height:1.6; }
+.bgx-sub *{ text-shadow:none; }
+
+/* headings */
+.bgx-sub h1,.bgx-sub h2,.bgx-sub h3,.bgx-sub h4{ font-weight:600; letter-spacing:-0.01em; line-height:1.08; }
+.bgx-sub h2{ font-size:clamp(28px,3.4vw,42px); margin-bottom:14px; }
+.bgx-sub p{ color:var(--bgx-cream-dim); }
+
+/* mono label with the little gold rule */
+.bgx-sub .eyebrow,.bgx-sub .badge,.bgx-sub .hero-badge-live,.bgx-sub .info-kicker{
+  display:flex; align-items:center; gap:10px; width:fit-content;
+  font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:500;
+  letter-spacing:0.22em; text-transform:uppercase; color:var(--bgx-gold-bright);
+  background:none; border:none; border-radius:0; padding:0; margin:0 0 16px;
+}
+.bgx-sub .eyebrow::before,.bgx-sub .badge::before,.bgx-sub .hero-badge-live::before,.bgx-sub .info-kicker::before{
+  content:''; width:22px; height:1px; background:var(--bgx-gold); display:inline-block; flex:none;
+}
+.bgx-sub .hero-badge-live::before{ display:none; }
+
+/* hero: grid paper + glow, left aligned, 800px text column */
+.bgx-sub .hero,.bgx-sub .header-section,.bgx-sub .header{
+  position:relative; overflow:hidden; text-align:left; max-width:none; margin:0;
+  padding:110px max(32px, calc((100vw - 1180px)/2 + 32px)) 90px;
+  background-image:
+    linear-gradient(rgba(243,232,214,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243,232,214,0.05) 1px, transparent 1px);
+  background-size:56px 56px;
+}
+.bgx-sub .hero::after,.bgx-sub .header-section::after,.bgx-sub .header::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 60% 55% at 78% 18%, rgba(199,153,79,0.16), transparent 70%),
+             radial-gradient(ellipse 45% 45% at 8% 92%, rgba(163,70,46,0.10), transparent 70%);
+}
+.bgx-sub .hero > *,.bgx-sub .header-section > *,.bgx-sub .header > *{ position:relative; z-index:1; }
+.bgx-sub .hero .container{ width:auto; max-width:none; padding:0; margin:0; }
+.bgx-sub .hero h1,.bgx-sub .header-section h1,.bgx-sub .header h1{
+  font-size:clamp(38px,5.4vw,68px); line-height:1.08; letter-spacing:-0.01em;
+  max-width:800px; margin:0 0 26px; color:var(--bgx-cream);
+}
+.bgx-sub .hero h1 span,.bgx-sub .header-section h1 span,.bgx-sub .header h1 span{
+  font-style:italic; font-weight:450; color:var(--bgx-gold-bright);
+}
+.bgx-sub .hero-subtitle,.bgx-sub .subtitle{
+  max-width:600px; margin:0 0 36px; font-size:18px; line-height:1.6; color:var(--bgx-cream-dim);
+}
+.bgx-sub .hero-subtitle strong{ color:var(--bgx-cream) !important; }
+.bgx-sub .hero-buttons,.bgx-sub .final-buttons{ justify-content:flex-start; margin-top:0; gap:16px; }
+
+/* buttons: flat gold + ghost, like index */
+.bgx-sub .btn{ border-radius:2px; font-weight:600; font-size:14.5px; padding:14px 26px; }
+.bgx-sub .btn-primary,.bgx-sub .btn-launch{ background:var(--bgx-gold); color:var(--bgx-espresso); border-radius:2px; }
+.bgx-sub .btn-primary:hover,.bgx-sub .btn-launch:hover{ background:var(--bgx-gold-bright); opacity:1; }
+.bgx-sub .btn-secondary{ background:none; border:1px solid var(--bgx-line); color:var(--bgx-cream); }
+.bgx-sub .btn-secondary:hover{ border-color:var(--bgx-gold); color:var(--bgx-gold-bright); }
+
+/* sections: ruled top edge, alternating bands, left aligned */
+.bgx-sub .section,.bgx-sub .final-cta{ padding:80px 0; border-top:1px solid var(--bgx-line); text-align:left; }
+.bgx-sub .section-dark{ background:var(--bgx-espresso-2); border-top:1px solid var(--bgx-line); border-bottom:1px solid var(--bgx-line); }
+.bgx-sub .container{ width:auto; max-width:1180px; padding:0 32px; }
+.bgx-sub .final-cta p{ margin:0 0 28px; max-width:620px; }
+.bgx-sub .student-access{ text-align:left; }
+.bgx-sub .student-access p{ margin:0 0 30px; }
+.bgx-sub .access-buttons{ margin:0; max-width:none; }
+.bgx-sub .showcase-button{ text-align:left; }
+
+/* boxes: flat, 1px line, 2px corners */
+.bgx-sub .info-card,.bgx-sub .skill,.bgx-sub .project-preview-card,.bgx-sub .access-card,
+.bgx-sub .project-card,.bgx-sub .process-card{
+  background:var(--bgx-espresso-2); border:1px solid var(--bgx-line); border-radius:2px;
+  -webkit-backdrop-filter:none; backdrop-filter:none; box-shadow:none; text-align:left;
+}
+.bgx-sub .section-dark .info-card,.bgx-sub .section-dark .skill,.bgx-sub .section-dark .project-preview-card,
+.bgx-sub .section-dark .access-card,.bgx-sub .section-dark .process-card{ background:rgba(42,22,14,0.6); }
+.bgx-sub .process-card{ border-top:2px solid var(--bgx-gold); }
+.bgx-sub .step,.bgx-sub .category-tag{ font-family:'IBM Plex Mono',monospace; font-weight:500; letter-spacing:0.16em; color:var(--bgx-gold-bright); }
+.bgx-sub .project-card:hover,.bgx-sub .access-card:hover{ border-color:var(--bgx-gold); box-shadow:none; }
+.bgx-sub .cohort-box{ background:var(--bgx-espresso-2); border:1px solid var(--bgx-gold); border-radius:2px; }
+.bgx-sub .project-preview{ background:var(--bgx-espresso-3); }
+.bgx-sub .tech-pill,.bgx-sub .vibe-tag,.bgx-sub .feature-chip{ border-radius:2px; }
+
+/* proof banner -> ledger strip */
+.bgx-sub .pilot-results-banner{
+  background:var(--bgx-espresso-2); border:1px solid var(--bgx-line); border-radius:2px;
+  box-shadow:none; text-align:left; padding:36px 32px 30px; margin-top:64px;
+}
+.bgx-sub .pilot-results-banner::before{ display:none; }
+.bgx-sub .pilot-results-banner h3{ color:var(--bgx-cream); }
+.bgx-sub .pilot-subtitle{ margin:0 0 26px; max-width:none; }
+.bgx-sub .metrics-grid{ gap:0; border-top:1px solid var(--bgx-line); border-bottom:1px solid var(--bgx-line); }
+.bgx-sub .metric-card{
+  background:none; border:none; border-right:1px solid var(--bgx-line); border-radius:0;
+  align-items:flex-start; text-align:left; padding:18px 20px; transform:none;
+}
+.bgx-sub .metric-card:last-child{ border-right:none; }
+.bgx-sub .metric-card:hover{ transform:none; background:none; }
+.bgx-sub .metric-card h2{
+  font-family:'IBM Plex Mono',monospace; font-weight:400; font-size:clamp(1.6rem,2.6vw,2.2rem);
+  letter-spacing:0; color:var(--bgx-gold-bright); margin-bottom:8px;
+}
+.bgx-sub .metric-card p{ color:var(--bgx-cream); font-size:0.9rem; }
+.bgx-sub .pilot-cta-bar{ border-top:none; padding-top:22px; }
+.bgx-sub .pilot-cta-text strong{ color:var(--bgx-gold-bright); }
+@media (max-width:900px){ .bgx-sub .metric-card{ border-bottom:1px solid var(--bgx-line); } }
+@media (max-width:650px){
+  .bgx-sub .hero,.bgx-sub .header-section,.bgx-sub .header{ padding:72px 24px 60px; }
+  .bgx-sub .container{ padding:0 24px; }
+  .bgx-sub .metric-card{ border-right:none; }
+}
+
+/* class-projects report card */
+.bgx-sub .infographic-wrapper{ max-width:1180px; padding:0 32px; margin:0 auto 60px; }
+.bgx-sub .infographic-card{ background:var(--bgx-espresso-2); border:1px solid var(--bgx-line); border-radius:2px; box-shadow:none; }
+.bgx-sub .info-headline{ font-weight:600; letter-spacing:-0.01em; }
+.bgx-sub .info-headline span{ font-style:italic; font-weight:450; color:var(--bgx-gold-bright); }
+.bgx-sub .giant-stat-box,.bgx-sub .cohort-breakdown-card,.bgx-sub .pathway-container,
+.bgx-sub .editorial-quote-box{ border-radius:2px; }
+.bgx-sub .grid{ max-width:1180px; margin:0 auto; padding:0 32px 90px; }
+
+/* lab-projects gallery */
+.bgx-sub .gallery-grid{ max-width:1180px; padding:60px 32px 90px; }
+
+.bgx-sub .project-title{ font-size:1.35rem; letter-spacing:-0.01em; margin-bottom:10px; }
+.bgx-sub .bgx-explore h2{ margin-bottom:28px; }
+.bgx-sub .gallery-grid{ grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr)); }
+
+/* =====================================================================
+   THE AI LAB PAGE  (body.lab-page) : lab identity on top of the index look
+   ===================================================================== */
+.lab-page .lab-hero-grid{ display:grid; grid-template-columns:minmax(0,1.5fr) minmax(280px,0.8fr); gap:56px; align-items:center; }
+@media (max-width:960px){ .lab-page .lab-hero-grid{ grid-template-columns:1fr; gap:36px; } }
+.bgx-sub .hero .lab-wordmark{
+  font-size:clamp(72px,13vw,168px); line-height:0.9; font-weight:600; letter-spacing:-0.035em;
+  margin:6px 0 26px; max-width:none; color:var(--bgx-cream); display:block;
+}
+.bgx-sub .hero .lab-wordmark .lab-the{
+  display:block; font-style:italic; font-weight:450; font-size:0.28em; letter-spacing:0; color:var(--bgx-gold-bright); margin-bottom:6px;
+}
+.bgx-sub .hero .lab-wordmark .lab-ai{
+  display:inline-block; font-family:'IBM Plex Mono',monospace; font-weight:500; letter-spacing:-0.04em; font-style:normal;
+  color:var(--bgx-espresso); background:var(--bgx-gold); padding:0 0.14em; margin-right:0.12em; border-radius:2px;
+}
+.lab-page .lab-readout{ border:1px solid var(--bgx-gold); background:rgba(42,22,14,0.75); font-family:'IBM Plex Mono',monospace; }
+.lab-page .lab-readout-head{
+  display:flex; justify-content:space-between; align-items:center; padding:12px 18px;
+  border-bottom:1px solid var(--bgx-line); font-size:11px; letter-spacing:0.2em; text-transform:uppercase; color:var(--bgx-gold-bright);
+}
+.lab-page .lab-live{ display:inline-flex; align-items:center; gap:8px; color:#8AA873; }
+.lab-page .lab-live i{ width:8px; height:8px; border-radius:50%; background:#8AA873; display:inline-block; animation:pulseGreen 1.8s infinite; }
+.lab-page .lab-readout dl{ margin:0; }
+.lab-page .lab-readout dl > div{ display:flex; justify-content:space-between; gap:16px; padding:13px 18px; border-bottom:1px solid var(--bgx-line); font-size:13px; }
+.lab-page .lab-readout dl > div:last-child{ border-bottom:none; }
+.lab-page .lab-readout dt{ color:var(--bgx-cream-dim); }
+.lab-page .lab-readout dd{ margin:0; color:var(--bgx-gold-bright); font-weight:500; text-align:right; }
+
+.lab-page .lab-subnav{
+  position:sticky; top:72px; z-index:90; background:var(--bgx-espresso-2);
+  border-top:1px solid var(--bgx-line); border-bottom:1px solid var(--bgx-line);
+}
+.lab-page .lab-subnav .container{ display:flex; align-items:center; gap:26px; overflow-x:auto; padding-top:12px; padding-bottom:12px; white-space:nowrap; }
+.lab-page .lab-subnav strong{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--bgx-gold-bright); font-weight:500; padding-right:18px; border-right:1px solid var(--bgx-line); }
+.lab-page .lab-subnav a{ font-size:14px; color:var(--bgx-cream-dim); text-decoration:none; }
+.lab-page .lab-subnav a:hover{ color:var(--bgx-cream); }
+
+.lab-page .lab-paths{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:34px; }
+@media (max-width:860px){ .lab-page .lab-paths{ grid-template-columns:1fr; } }
+.lab-page .lab-path{ display:block; text-decoration:none; padding:26px; border:1px solid var(--bgx-line); background:var(--bgx-espresso-2); transition:border-color .2s, transform .2s; }
+.lab-page .lab-path:hover{ border-color:var(--bgx-gold); transform:translateY(-2px); }
+.lab-page .lab-path small{ display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--bgx-gold-bright); margin-bottom:12px; }
+.lab-page .lab-path b{ display:block; font-family:'Fraunces',serif; font-weight:600; font-size:24px; color:var(--bgx-cream); margin-bottom:10px; line-height:1.1; }
+.lab-page .lab-path span{ display:block; font-size:14.5px; color:var(--bgx-cream-dim); line-height:1.55; }
+.lab-page .lab-path em{ display:inline-block; margin-top:16px; font-style:normal; font-weight:600; font-size:13.5px; color:var(--bgx-gold-bright); }
+.lab-page .lab-tag{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:0.2em; text-transform:uppercase; color:var(--bgx-espresso); background:var(--bgx-gold); padding:5px 12px; margin-bottom:22px; border-radius:2px; }
+.lab-page .skill-no{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.18em; color:var(--bgx-gold-bright); margin-bottom:14px; }
+.lab-page .arc-grid{ grid-template-columns:repeat(3,1fr); }
+@media (max-width:900px){ .lab-page .arc-grid{ grid-template-columns:1fr; } .lab-page .project-preview-grid{ grid-template-columns:1fr !important; } }
+
+/* ---------- home page: "how do you want to work with us" path chooser ---------- */
+.bgx-paths{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+@media (max-width:1060px){ .bgx-paths{ grid-template-columns:repeat(2,1fr); } }
+@media (max-width:620px){ .bgx-paths{ grid-template-columns:1fr; } }
+.bgx-path{ display:flex; flex-direction:column; padding:24px; border:1px solid var(--bgx-line); background:rgba(42,22,14,0.55); border-radius:2px; }
+.bgx-path small{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--bgx-gold-bright); margin-bottom:12px; }
+.bgx-path b{ font-family:'Fraunces',serif; font-weight:600; font-size:22px; line-height:1.12; color:var(--bgx-cream); margin-bottom:10px; }
+.bgx-path span{ font-size:14.5px; line-height:1.55; color:var(--bgx-cream-dim); }
+.bgx-path-links{ display:flex; flex-direction:column; margin-top:auto; padding-top:18px; }
+.bgx-path-links a{ padding:11px 0; border-top:1px solid var(--bgx-line); font-size:14px; font-weight:600; color:var(--bgx-gold-bright); text-decoration:none; }
+.bgx-path-links a:hover{ color:var(--bgx-cream); }
+.bgx-path-links a::after{ content:' \2192'; }
+</style>
 </head>
 
-<body>
+<body class="bgx-sub lab-page">
+<script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
+   Edit the PAGES list once and every page updates. Load this as the first thing inside <body>. */
+(function () {
+  var PAGES = {
+    studio:  { href: 'index.html',          label: 'The Studio',     kicker: 'The Studio',      title: 'Data, AI & growth systems for business', text: 'Creative Metrix, done-with-you and done-for-you tiers, and the free growth audit.', cta: 'Visit the studio →' },
+    metrix:  { href: 'index.html#metrix',   label: 'Creative Metrix' },
+    clients: { href: 'lab-projects.html',   label: 'Client Labs',    kicker: 'Client Labs',     title: 'See the live platforms we build', text: 'Production dashboards and analytics engines built in our labs.', cta: 'View client labs →' },
+    lab:     { href: 'labs.html',           label: 'The AI Lab',     kicker: 'For students',    title: 'The AI Lab', text: 'A hands-on 4-week studio where middle and high school students build working AI web apps. December cohort waitlist is open.', cta: 'Explore The AI Lab →' },
+    after:   { href: 'labs.html#schools',   label: 'After School',   kicker: 'For schools',     title: 'Bring The AI Lab to your school', text: 'A 6–12 month after school program for cohorts of 20 students, built on our Career Day model.', cta: 'See the school program →' },
+    work:    { href: 'class-projects.html', label: 'Student Work',   kicker: 'Student showcase', title: 'What 100 students built in one day', text: 'Live concepts from Newton County STEAM Academy’s Career Day with The AI Lab.', cta: 'See the showcase →' }
+  };
+  var NAV = ['studio', 'metrix', 'clients', 'lab', 'work'];
+  var STRIP = {
+    'index.html':          ['lab', 'after', 'work'],
+    'labs.html':           ['work', 'clients', 'studio'],
+    'class-projects.html': ['lab', 'after', 'clients'],
+    'lab-projects.html':   ['lab', 'after', 'work']
+  };
+  var file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
 
-  <!-- =========================
-       NAVIGATION
-  ========================== -->
-  <nav class="nav">
-    <a href="index.html" class="brand">
-      the brown girls <span>creative studio</span>
-    </a>
+  function nav() {
+    var links = NAV.map(function (k) {
+      var p = PAGES[k], cur = p.href.split('#')[0] === file && p.href.indexOf('#') < 0;
+      return '<a href="' + p.href + '"' + (cur ? ' class="is-current" aria-current="page"' : '') + '>' + p.label + '</a>';
+    }).join('');
+    return '<header class="bgx-nav" id="bgxNav"><div class="bgx-nav-inner">' +
+      '<a class="bgx-logo" href="index.html">the brown girls <span>creative studio</span></a>' +
+      '<div class="bgx-links" id="bgxLinks">' + links + '<a class="bgx-links-cta" href="index.html#audit">Run Free Audit</a></div>' +
+      '<a class="bgx-cta" href="index.html#audit">Run Free Audit</a>' +
+      '<button class="bgx-burger" id="bgxBurger" aria-label="Open menu" aria-expanded="false">☰</button>' +
+      '</div></header>';
+  }
 
-    <a href="index.html" class="back-link">
-      ← Main Studio
-    </a>
-  </nav>
+  function strip() {
+    var keys = STRIP[file]; if (!keys) return '';
+    var cards = keys.map(function (k) {
+      var p = PAGES[k];
+      return '<a class="bgx-card" href="' + p.href + '"><small>' + p.kicker + '</small><b>' + p.title + '</b><span>' + p.text + '</span><em>' + p.cta + '</em></a>';
+    }).join('');
+    return '<section class="bgx-explore"><div class="bgx-wrap"><div class="bgx-eyebrow">Keep exploring</div><h2>More from the studio.</h2><div class="bgx-cards">' + cards + '</div></div></section>';
+  }
 
-  <!-- =========================
-       HERO & PILOT PROOF
-  ========================== -->
- <header class="hero">
-  <div class="container">
+  function footer() {
+    var links = ['studio', 'clients', 'lab', 'work'].map(function (k) { return '<a href="' + PAGES[k].href + '">' + PAGES[k].label + '</a>'; }).join('') + '<a href="index.html#apprenticeship">Apprenticeships</a>';
+    return '<footer class="bgx-footer"><div class="bgx-wrap">' +
+      '<a class="bgx-logo" href="index.html">the brown girls <span>creative studio</span></a>' +
+      '<p>Data architecture, AI innovation, workforce impact — built in-house, monthly.</p>' +
+      '<div class="bgx-foot-links">' + links + '</div>' +
+      '<div class="bgx-foot-base"><span>© The Brown Girls Creative Studio · The AI Lab</span><a href="pipeline.html">Staff Portal</a></div>' +
+      '</div></footer>';
+  }
 
-    <div class="hero-badge-live">
-      <span class="pulse-dot"></span>
-      December 2026 Cohort Registration Open
+  // nav goes in right now (script sits first in <body>); strip + footer go in once the page is parsed
+  document.body.insertAdjacentHTML('afterbegin', nav());
+  var burger = document.getElementById('bgxBurger'), bar = document.getElementById('bgxNav');
+  burger.addEventListener('click', function () {
+    var open = bar.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.getElementById('bgxLinks').addEventListener('click', function (e) { if (e.target.tagName === 'A') bar.classList.remove('open'); });
+
+  function tail() { document.body.insertAdjacentHTML('beforeend', strip() + footer()); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', tail); else tail();
+})();
+</script>
+
+  <!-- =========================  HERO: THE AI LAB  ========================= -->
+  <header class="hero lab-hero">
+    <div class="container">
+      <div class="lab-hero-grid">
+        <div>
+          <div class="eyebrow">The Brown Girls Creative Studio presents</div>
+          <h1 class="lab-wordmark"><span class="lab-the">The</span><span class="lab-ai">AI</span> Lab</h1>
+          <p class="hero-subtitle">
+            A hands-on studio where students stop scrolling apps and start building them: working AI web apps,
+            trained models and launched digital products.
+          </p>
+          <div class="hero-buttons">
+            <a href="#families" class="btn btn-primary">For families: December cohort</a>
+            <a href="#schools" class="btn btn-secondary">For schools: after school program</a>
+          </div>
+        </div>
+        <aside class="lab-readout" aria-label="Lab readout">
+          <div class="lab-readout-head"><span>Lab readout</span><span class="lab-live"><i></i> Open</span></div>
+          <dl>
+            <div><dt>Students trained</dt><dd>100</dd></div>
+            <div><dt>Project completion</dt><dd>100%</dd></div>
+            <div><dt>Teacher rating</dt><dd>5 / 5</dd></div>
+            <div><dt>December cohort</dt><dd>Waitlist open</dd></div>
+            <div><dt>School programs</dt><dd>Booking partners</dd></div>
+          </dl>
+        </aside>
+      </div>
     </div>
+  </header>
 
-    <h1>
-      Don't Just Scroll Apps.<br>
-      <span>Learn How to Build Them.</span>
-    </h1>
+  <div class="lab-subnav"><div class="container">
+    <strong>The AI Lab</strong>
+    <a href="#path">Choose your path</a>
+    <a href="#families">Families</a>
+    <a href="#schools">Schools</a>
+    <a href="#student-access">Student access</a>
+    <a href="#lab-work">Past lab work</a>
+  </div></div>
 
-    <p class="hero-subtitle">
-      The AI Lab is an elite, hands-on 4-week Saturday studio from
-      <strong style="color:#fff;">The Brown Girls Creative Studio</strong>
-      where middle schoolers stop being passive consumers and start building working AI web apps, training computer models, and launching digital products.
-    </p>
-
-    <div class="hero-buttons">
-      <a href="https://forms.gle/EsHCzdzKTUwTjp7g8"
-         class="btn btn-primary"
-         target="_blank"
-         rel="noopener">
-        Secure Your December Seat →
-      </a>
-
-      <a href="class-projects.html"
-         class="btn btn-secondary">
-        Student Access →
-      </a>
-    </div>
-        <a href="#december"
-           class="btn btn-secondary">
-          Explore the 4-Week Syllabus
+  <!-- =========================  CHOOSE YOUR PATH  ========================= -->
+  <section class="section" id="path">
+    <div class="container">
+      <div class="eyebrow">Start here</div>
+      <h2>Who is the AI Lab for?</h2>
+      <p style="max-width:640px;">One lab, two ways in. Pick the one that fits.</p>
+      <div class="lab-paths">
+        <a href="#families" class="lab-path">
+          <small>For families</small>
+          <b>December 2026 cohort</b>
+          <span>Four guided sessions for middle and high school students. Join the free waitlist.</span>
+          <em>See the cohort →</em>
+        </a>
+        <a href="#schools" class="lab-path">
+          <small>For schools and organizations</small>
+          <b>After school program</b>
+          <span>A 6 to 12 month program for cohorts of 20 students, taught on site.</span>
+          <em>See the program →</em>
+        </a>
+        <a href="index.html?inquiry=career-day#edu-intake" class="lab-path">
+          <small>Not sure yet?</small>
+          <b>Start with a free Career Day</b>
+          <span>Let your students try the AI Lab first, at no cost to the school.</span>
+          <em>Request a Career Day →</em>
         </a>
       </div>
 
-    <!-- High-Conversion Social Proof Banner -->
       <div class="pilot-results-banner">
         <div class="eyebrow" style="margin-bottom: 6px;">Classroom Pilot Validation</div>
         <h3>Proven Impact at Newton County STEAM Academy</h3>
-        <p class="pilot-subtitle">
-          Tested across 5 live sprints with 100 eighth-grade innovators.
-        </p>
-
+        <p class="pilot-subtitle">Tested across 5 live sprints with 100 eighth-grade innovators.</p>
         <div class="metrics-grid">
-          <div class="metric-card">
-            <h2>100</h2>
-            <p>Students Trained</p>
-            <span class="metric-sub">5 Live Sprint Sessions</span>
-          </div>
-
-          <div class="metric-card">
-            <h2>2.7x</h2>
-            <p>Cohort Capacity Demand</p>
-            <span class="metric-sub">54 Students Vying for 20 Seats</span>
-          </div>
-
-          <div class="metric-card">
-            <h2>5 / 5</h2>
-            <p>Teacher Endorsement</p>
-            <span class="metric-sub">Requested Multi-Week Residency</span>
-          </div>
-
-          <div class="metric-card">
-            <h2>100%</h2>
-            <p>Project Completion</p>
-            <span class="metric-sub">Every Team Pitched a Working Concept</span>
-          </div>
+          <div class="metric-card"><h2>100</h2><p>Students Trained</p><span class="metric-sub">5 Live Sprint Sessions</span></div>
+          <div class="metric-card"><h2>2.7x</h2><p>Cohort Capacity Demand</p><span class="metric-sub">54 Students Vying for 20 Seats</span></div>
+          <div class="metric-card"><h2>5 / 5</h2><p>Teacher Endorsement</p><span class="metric-sub">Requested Multi-Week Residency</span></div>
+          <div class="metric-card"><h2>100%</h2><p>Project Completion</p><span class="metric-sub">Every Team Pitched a Working Concept</span></div>
         </div>
-
         <div class="pilot-cta-bar">
           <div class="pilot-cta-text">
-            <strong>⚡ December Cohort Waitlist Active</strong>
+            <strong>December Cohort Waitlist Active</strong>
             <span>With 54 student inquiries already generated from Career Day, seats are allocated on a rolling basis.</span>
           </div>
-          <a href="https://forms.gle/EsHCzdzKTUwTjp7g8" class="btn btn-primary" target="_blank" rel="noopener">
-            Join Official Waitlist →
-          </a>
+          <a href="https://forms.gle/EsHCzdzKTUwTjp7g8" class="btn btn-primary" target="_blank" rel="noopener">Join Official Waitlist →</a>
         </div>
       </div>
-  <!-- =========================
-       WHAT IS THE AI LAB?
-  ========================== -->
+    </div>
+  </section>
+
+  <!-- =========================  WHAT IS THE AI LAB  ========================= -->
   <section class="section section-dark">
     <div class="container">
-      <div class="eyebrow">
-        The Program
-      </div>
-
-      <h2>
-        What is The AI Lab?
-      </h2>
-
+      <div class="eyebrow">The Program</div>
+      <h2>What is The AI Lab?</h2>
       <div class="intro-grid">
         <div class="info-card">
-          <div class="eyebrow">
-            The Studio
-          </div>
-
-          <h3>
-            The Brown Girls Creative Studio
-          </h3>
-
-          <p>
-            The Brown Girls Creative Studio builds data systems,
-            websites, dashboards, AI solutions, automation, and
-            digital growth infrastructure for businesses and
-            organizations[cite: 9].
-          </p>
+          <div class="eyebrow">The Studio</div>
+          <h3>The Brown Girls Creative Studio</h3>
+          <p>The Brown Girls Creative Studio builds data systems, websites, dashboards, AI solutions, automation, and digital growth infrastructure for businesses and organizations.</p>
         </div>
-
         <div class="info-card">
-          <div class="eyebrow">
-            The Lab
-          </div>
-
-          <h3>
-            Where students become builders.
-          </h3>
-
-          <p>
-            The AI Lab brings those same creative and technical
-            skills into student-centered learning experiences.
-            Students practice AI literacy, prompting, web creation,
-            teamwork, problem-solving, entrepreneurship, and
-            presentation skills through hands-on projects[cite: 6, 7, 8, 9, 13].
-          </p>
+          <div class="eyebrow">The Lab</div>
+          <h3>Where students become builders.</h3>
+          <p>The AI Lab brings those same creative and technical skills into student-centered learning experiences. Students practice AI literacy, prompting, web creation, teamwork, problem-solving, entrepreneurship, and presentation skills through hands-on projects.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       WHAT STUDENTS LEARN
-  ========================== -->
   <section class="section">
     <div class="container">
-      <div class="eyebrow">
-        Real Skills
-      </div>
-
-      <h2>
-        What students learn.
-      </h2>
-
-      <p style="max-width:700px;">
-        The goal is simple: students spend their time thinking
-        like AI designers and creators — not fighting with code.
-      </p>
-
+      <div class="eyebrow">Real Skills</div>
+      <h2>What students learn.</h2>
+      <p style="max-width:700px;">The goal is simple: students spend their time thinking like AI designers and creators, not fighting with code.</p>
       <div class="skills-grid">
-        <div class="skill">
-          <div class="skill-icon">💬</div>
-          <h3>AI Literacy</h3>
-          <p>
-            Understand what AI can do, how to use it responsibly,
-            and how to communicate with it effectively.
-          </p>
-        </div>
-
-        <div class="skill">
-          <div class="skill-icon">🧠</div>
-          <h3>Prompt Engineering</h3>
-          <p>
-            Learn how clearer instructions produce stronger,
-            more useful AI results.
-          </p>
-        </div>
-
-        <div class="skill">
-          <div class="skill-icon">💻</div>
-          <h3>Digital Creation</h3>
-          <p>
-            Turn ideas into websites, landing pages, prototypes,
-            and other digital experiences.
-          </p>
-        </div>
-
-        <div class="skill">
-          <div class="skill-icon">🎨</div>
-          <h3>Creative Problem-Solving</h3>
-          <p>
-            Explore ideas, audiences, branding, user experience,
-            and ways technology can solve real problems.
-          </p>
-        </div>
-
-        <div class="skill">
-          <div class="skill-icon">🤝</div>
-          <h3>Team Collaboration</h3>
-          <p>
-            Work together, divide responsibilities, communicate,
-            and turn a group idea into a finished concept[cite: 6].
-          </p>
-        </div>
-
-        <div class="skill">
-          <div class="skill-icon">🎤</div>
-          <h3>Pitching & Communication</h3>
-          <p>
-            Explain what was built, who it helps, why it matters,
-            and how the idea could grow[cite: 7].
-          </p>
-        </div>
+        <div class="skill"><div class="skill-no">01</div><h3>AI Literacy</h3><p>Understand what AI can do, how to use it responsibly, and how to communicate with it effectively.</p></div>
+        <div class="skill"><div class="skill-no">02</div><h3>Prompt Engineering</h3><p>Learn how clearer instructions produce stronger, more useful AI results.</p></div>
+        <div class="skill"><div class="skill-no">03</div><h3>Digital Creation</h3><p>Turn ideas into websites, landing pages, prototypes, and other digital experiences.</p></div>
+        <div class="skill"><div class="skill-no">04</div><h3>Creative Problem-Solving</h3><p>Explore ideas, audiences, branding, user experience, and ways technology can solve real problems.</p></div>
+        <div class="skill"><div class="skill-no">05</div><h3>Team Collaboration</h3><p>Work together, divide responsibilities, communicate, and turn a group idea into a finished concept.</p></div>
+        <div class="skill"><div class="skill-no">06</div><h3>Pitching &amp; Communication</h3><p>Explain what was built, who it helps, why it matters, and how the idea could grow.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       HOW THE LAB WORKS
-  ========================== -->
   <section class="section section-dark">
     <div class="container">
-      <div class="eyebrow">
-        The Experience
-      </div>
-
-      <h2>
-        How an AI Lab project comes to life.
-      </h2>
-
+      <div class="eyebrow">The Experience</div>
+      <h2>How an AI Lab project comes to life.</h2>
       <div class="process-grid">
-        <div class="process-card">
-          <div class="step">01</div>
-          <h3>Imagine</h3>
-          <p>Choose an idea, audience, problem, or opportunity.</p>
-        </div>
-
-        <div class="process-card">
-          <div class="step">02</div>
-          <h3>Prompt</h3>
-          <p>
-            Learn how to give AI clear instructions and improve
-            results through iteration.
-          </p>
-        </div>
-
-        <div class="process-card">
-          <div class="step">03</div>
-          <h3>Build</h3>
-          <p>
-            Turn the idea into a real digital project,
-            website, prototype, or experience.
-          </p>
-        </div>
-
-        <div class="process-card">
-          <div class="step">04</div>
-          <h3>Pitch</h3>
-          <p>
-            Present the idea, explain the value, and show
-            what was created[cite: 7].
-          </p>
-        </div>
+        <div class="process-card"><div class="step">01</div><h3>Imagine</h3><p>Choose an idea, audience, problem, or opportunity.</p></div>
+        <div class="process-card"><div class="step">02</div><h3>Prompt</h3><p>Learn how to give AI clear instructions and improve results through iteration.</p></div>
+        <div class="process-card"><div class="step">03</div><h3>Build</h3><p>Turn the idea into a real digital project, website, prototype, or experience.</p></div>
+        <div class="process-card"><div class="step">04</div><h3>Pitch</h3><p>Present the idea, explain the value, and show what was created.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       DECEMBER COHORT
-  ========================== -->
-  <section class="section" id="december">
+  <!-- =========================  FAMILIES  ========================= -->
+  <section class="section" id="families">
     <div class="container">
+      <div class="lab-tag">For families</div>
       <div class="cohort-box">
-        <div class="eyebrow">
-          Coming December 2026
-        </div>
-
-        <h2>
-          December 2026 AI Lab Cohort
-        </h2>
-
+        <div class="eyebrow">Coming December 2026</div>
+        <h2>December 2026 AI Lab Cohort</h2>
         <p class="cohort-lede">
-          Move beyond the one-day experience. The December AI Lab
-          gives students four weeks to take an idea further,
-          practice new AI skills, and develop a project they can
-          actually show.
+          Move beyond the one-day experience. The December AI Lab gives students four weeks to take an idea further,
+          practice new AI skills, and develop a project they can actually show.
           <br><br>
           <strong style="color:#fff;">Exact dates:</strong> Coming soon<br>
           <strong style="color:#fff;">Location:</strong> To be announced
         </p>
-
         <ul class="cohort-list">
           <li>4 guided AI Lab sessions</li>
           <li>Hands-on project development</li>
           <li>Prompt engineering practice</li>
           <li>Website or prototype creation</li>
-          <li>Creative & technical challenges</li>
-          <li>Teamwork and presentation skills[cite: 6, 7]</li>
+          <li>Creative &amp; technical challenges</li>
+          <li>Teamwork and presentation skills</li>
           <li>Final project showcase</li>
           <li>Portfolio-ready project experience</li>
         </ul>
-
-        <a href="https://forms.gle/EsHCzdzKTUwTjp7g8"
-           class="btn btn-primary"
-           target="_blank"
-           rel="noopener">
-          Join the December 2026 Waitlist →
-        </a>
-
+        <a href="https://forms.gle/EsHCzdzKTUwTjp7g8" class="btn btn-primary" target="_blank" rel="noopener">Join the December 2026 Waitlist →</a>
         <div class="parent-note">
           Joining the waitlist is free and does not commit your student to enrollment.
           The December 2026 AI Lab Cohort will be a paid program. Program pricing,
@@ -1022,132 +1255,101 @@
     </div>
   </section>
 
-  <!-- =========================
-       STUDENT ACCESS
-  ========================== -->
-  <section class="section section-dark student-access" id="student-access">
+  <!-- =========================  SCHOOLS  ========================= -->
+  <section class="section section-dark" id="schools">
     <div class="container">
-      <div class="eyebrow">
-        Career Day Students
-      </div>
-
-      <h2>
-        You built it. Now go see it.
-      </h2>
-
-      <p>
-        Use the options below to view your class projects or
-        explore more work created through The AI Lab and
-        The Brown Girls Creative Studio[cite: 9].
-      </p>
-
-      <div class="access-buttons">
-        <a href="class-projects.html" class="access-card">
-          <span>Student Access</span>
-          <strong>See My Class Project Site →</strong>
-        </a>
-
-        <a href="#december" class="access-card">
-          <span>Keep Building</span>
-          <strong>Join the December AI Lab →</strong>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- =========================
-       PAST LAB WORK
-  ========================== -->
-  <section class="section">
-    <div class="container">
-      <div class="eyebrow">
-        Built in the Studio
-      </div>
-
-      <h2>
-        Examples of past lab work.
-      </h2>
-
+      <div class="lab-tag">For schools and organizations</div>
+      <h2>Bring The AI Lab to your school.</h2>
       <p style="max-width:720px;">
-        The AI Lab connects student learning with the same
-        problem-solving, design, data, AI, and digital-building
-        mindset used throughout The Brown Girls Creative Studio.
+        A 6 to 12 month after school program where students learn AI literacy, prompting and web creation,
+        then pitch working projects. Taught in person by The Brown Girls Creative Studio and built on the
+        Career Day model proven at Newton County STEAM Academy.
       </p>
-
-      <div class="project-preview-grid">
-        <div class="project-preview-card">
-          <div class="icon">📊</div>
-          <h3>Creative Metrix</h3>
-          <p>
-            A live analytics and growth intelligence platform
-            connecting marketing, pipeline health, attribution,
-            and business performance.
-          </p>
-        </div>
-
-        <div class="project-preview-card">
-          <div class="icon">🎓</div>
-          <h3>Applied Data & AI Engines</h3>
-          <p>
-            Real-world dashboards, predictive models, automated
-            workflows, and AI-powered tools developed across
-            education, business, and workforce projects.
-          </p>
-        </div>
+      <div class="hero-buttons" style="margin-top:26px;">
+        <a href="index.html?inquiry=after-school#edu-intake" class="btn btn-primary">Book a Call →</a>
+        <a href="class-projects.html" class="btn btn-secondary">See the Newton County Results</a>
       </div>
 
-      <div class="showcase-button">
-        <a href="lab-projects.html" class="btn btn-secondary">
-          View All Lab Projects →
-        </a>
+      <h3 style="margin-top:60px;">From a free Career Day to a weekly program.</h3>
+      <div class="process-grid">
+        <div class="process-card"><div class="step">01</div><h3>Free Career Day</h3><p>We run a hands-on AI session for your students at no cost to the school.</p></div>
+        <div class="process-card"><div class="step">02</div><h3>Interest Builds</h3><p>Students and teachers see the work. At Newton County, 54 students asked for 20 seats.</p></div>
+        <div class="process-card"><div class="step">03</div><h3>Choose Your Term</h3><p>Pick a schedule and a 6- or 12-month agreement that fits your school.</p></div>
+        <div class="process-card"><div class="step">04</div><h3>Weekly Program</h3><p>We teach on site every week and finish with a student pitch showcase.</p></div>
+      </div>
+
+      <div class="cohort-box" style="margin-top:48px;">
+        <div class="eyebrow">Program at a Glance</div>
+        <h2>Simple for schools to say yes to.</h2>
+        <p class="cohort-lede">One instructor, one cohort, one clear price. Weekly sessions fit around your school’s existing after school schedule.</p>
+        <ul class="cohort-list">
+          <li>Cohorts of 20 students</li>
+          <li>Taught in person by the studio team</li>
+          <li>Two 1-hour sessions a week, or one 2-hour session</li>
+          <li>6- or 12-month agreements</li>
+          <li>$125 per student, per month</li>
+          <li>Hands-on projects, not lectures</li>
+          <li>Final student pitch showcase</li>
+          <li>Portfolio-ready student work</li>
+        </ul>
+        <a href="index.html?inquiry=after-school#edu-intake" class="btn btn-primary">Book a Call →</a>
+      </div>
+
+      <h3 style="margin-top:60px;">How a 6-month term unfolds.</h3>
+      <div class="process-grid arc-grid">
+        <div class="process-card"><div class="step">MONTHS 1–2</div><h3>Foundations</h3><p>AI literacy, responsible use, and prompting practice. Students choose an idea, audience and problem.</p></div>
+        <div class="process-card"><div class="step">MONTHS 3–4</div><h3>Build</h3><p>Teams turn their concept into a working website, prototype or digital product.</p></div>
+        <div class="process-card"><div class="step">MONTHS 5–6</div><h3>Pitch &amp; Showcase</h3><p>Students refine their work and present it to classmates, staff and families.</p></div>
+      </div>
+
+      <div class="intro-grid">
+        <div class="info-card"><h3>What we bring</h3><p>A lead instructor, a hands-on AI curriculum built on the Newton County pilot, and a final showcase where students present what they built.</p></div>
+        <div class="info-card"><h3>What we need from your school</h3><p>A classroom, student devices with internet access, and one staff point of contact to coordinate the schedule.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       FINAL CTA
-  ========================== -->
-  <section class="final-cta section-dark">
+  <!-- =========================  STUDENT ACCESS  ========================= -->
+  <section class="section student-access" id="student-access">
     <div class="container">
-      <div class="eyebrow">
-        Your Next Step
-      </div>
-
-      <h2>
-        Keep creating.
-      </h2>
-
-      <p>
-        Explore student work, join the next AI Lab cohort,
-        or learn more about The Brown Girls Creative Studio.
-      </p>
-
-      <div class="final-buttons">
-        <a href="class-projects.html" class="btn btn-primary">
-          View Class Projects
-        </a>
-
-        <a href="#december" class="btn btn-secondary">
-          December Cohort
-        </a>
-
-        <a href="lab-projects.html" class="btn btn-secondary">
-          Past Lab Work
-        </a>
-
-        <a href="index.html#education" class="btn btn-secondary">
-          Visit The Brown Girls Creative Studio
-        </a>
+      <div class="eyebrow">Career Day Students</div>
+      <h2>You built it. Now go see it.</h2>
+      <p>Use the options below to view your class projects or explore more work created through The AI Lab and The Brown Girls Creative Studio.</p>
+      <div class="access-buttons">
+        <a href="class-projects.html" class="access-card"><span>Student Access</span><strong>See My Class Project Site →</strong></a>
+        <a href="#families" class="access-card"><span>Keep Building</span><strong>Join the December AI Lab →</strong></a>
       </div>
     </div>
   </section>
 
-  <!-- =========================
-       FOOTER
-  ========================== -->
-  <footer class="footer">
-    <p>© The Brown Girls Creative Studio · The AI Lab</p>
-  </footer>
+  <!-- =========================  PAST LAB WORK  ========================= -->
+  <section class="section section-dark" id="lab-work">
+    <div class="container">
+      <div class="eyebrow">Built in the Studio</div>
+      <h2>Examples of past lab work.</h2>
+      <p style="max-width:720px;">The AI Lab connects student learning with the same problem-solving, design, data, AI, and digital-building mindset used throughout The Brown Girls Creative Studio.</p>
+      <div class="project-preview-grid" style="grid-template-columns:repeat(2,1fr);">
+        <div class="project-preview-card"><div class="skill-no">A</div><h3>Creative Metrix</h3><p>A live analytics and growth intelligence platform connecting marketing, pipeline health, attribution, and business performance.</p></div>
+        <div class="project-preview-card"><div class="skill-no">B</div><h3>Applied Data &amp; AI Engines</h3><p>Real-world dashboards, predictive models, automated workflows, and AI-powered tools developed across education, business, and workforce projects.</p></div>
+      </div>
+      <div class="showcase-button"><a href="lab-projects.html" class="btn btn-secondary">View All Lab Projects →</a></div>
+    </div>
+  </section>
 
+  <section class="final-cta">
+    <div class="container">
+      <div class="eyebrow">Your Next Step</div>
+      <h2>Keep creating.</h2>
+      <p>Join the next AI Lab cohort, bring the lab to your school, or explore student work.</p>
+      <div class="final-buttons">
+        <a href="https://forms.gle/EsHCzdzKTUwTjp7g8" class="btn btn-primary" target="_blank" rel="noopener">Join the Waitlist</a>
+        <a href="index.html?inquiry=after-school#edu-intake" class="btn btn-secondary">Book a Call for Your School</a>
+        <a href="class-projects.html" class="btn btn-secondary">View Class Projects</a>
+        <a href="index.html" class="btn btn-secondary">Visit The Brown Girls Creative Studio</a>
+      </div>
+    </div>
+  </section>
+
+<script src="tracker.js" defer></script>
 </body>
 </html>
