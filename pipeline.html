@@ -62,6 +62,15 @@ main { min-width: 0; }
 #financialKanbanContainer > *, #salesFunnelContainer > * { scroll-snap-align: start; flex-shrink: 0; }
 @media (hover: none) and (pointer: coarse) { input, select, textarea { font-size: 16px !important; } }
 @media (min-width: 1536px) { .max-w-7xl { max-width: 90rem; } }
+
+@media print {
+  body * { visibility: hidden !important; }
+  #funnelPage, #funnelPage * { visibility: visible !important; }
+  #funnelPage { position: absolute; left: 0; top: 0; width: 100%; background: #fff !important; color: #111 !important; padding: 16px; }
+  #funnelPage *:not(.fp-keep) { color: #111 !important; border-color: #ccc !important; background-color: transparent !important; box-shadow: none !important; }
+  #funnelPage .fp-keep { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .no-print { display: none !important; }
+}
 </style>
 </head>
 <body class="bg-dark-900 text-slate-100 min-h-screen font-sans flex antialiased">
@@ -158,17 +167,15 @@ shadow-sm transition">
 <i data-lucide="target" class="w-4 h-4 mr-3 text-rose-500"></i> Pipeline &
 Prospects
 </a>
-<a href="#view=financial" onclick="switchMainView('financial')" id="nav-financial"
-class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200
-hover:bg-dark-700 transition">
-<i data-lucide="dollar-sign" class="w-4 h-4 mr-3 text-purple-400"></i> Financial
-Goal Tracker
+
+<a href="#view=dashboard" onclick="switchMainView('dashboard')" id="nav-dashboard" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="filter" class="w-4 h-4 mr-3 text-emerald-400"></i> Funnel &amp; Dashboard
 </a>
 <a href="#view=goals" onclick="switchMainView('goals')" id="nav-goals" class="flex
 items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700
 transition">
 <i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Target
-Audience
+Audience Map
 </a>
 <a href="#view=agenda" onclick="switchMainView('agenda')" id="nav-agenda"
 class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200
@@ -176,17 +183,13 @@ hover:bg-dark-700 transition">
 <i data-lucide="calendar-check" class="w-4 h-4 mr-3 text-purple-400"></i> Spirit
 Meeting Outline
 </a>
-<a href="#view=prospects" onclick="switchMainView('prospects')"
-id="nav-prospects" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400
-hover:text-slate-200 hover:bg-dark-700 transition">
-<i data-lucide="check-square" class="w-4 h-4 mr-3 text-amber-400"></i>
-Prospect To-Do List
-</a>
+
 <a href="#view=activity" onclick="switchMainView('activity')" id="nav-activity" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="history" class="w-4 h-4 mr-3 text-sky-400"></i> Activity Log
 </a>
-<a href="#view=dashboard" onclick="switchMainView('dashboard')" id="nav-dashboard" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
-<i data-lucide="bar-chart-3" class="w-4 h-4 mr-3 text-emerald-400"></i> Dashboard
+
+<a href="#view=feedback" onclick="switchMainView('feedback')" id="nav-feedback" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="message-square" class="w-4 h-4 mr-3 text-emerald-400"></i> Feedback
 </a>
 <a href="#view=ailab" onclick="switchMainView('ailab')" id="nav-ailab" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="rocket" class="w-4 h-4 mr-3 text-amber-400"></i> AI Lab Sites
@@ -263,183 +266,6 @@ transition flex items-center">
 <button id="syncPill" onclick="forceSync()" title="Tap to sync now" class="px-2.5 py-1 rounded-lg border text-[10px] font-semibold border-dark-600 text-slate-400" style="display:none"></button>
 </div>
 <!-- Main Section: Financial Goal Tracker Dashboard -->
-<div id="mainView-financial" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full
-hidden">
-<div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm
-space-y-8">
-<!-- Financial Header with Privacy Eye Toggle -->
-<div class="flex justify-between items-center border-b border-dark-600 pb-4">
-<div>
-<h2 class="text-xl font-bold text-slate-100">Financial Goal Tracker & 3-Phase
-Scaling Meters</h2>
-<p class="text-xs text-slate-400 mt-1">Track progressive scaling across Phase
-1 ($7K), Phase 2 ($10K), and Phase 3 ($14K).</p>
-</div>
-<button onclick="togglePrivacyMode()" class="px-3.5 py-2 rounded-xl
-bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-200 border border-dark-600
-transition flex items-center space-x-2">
-<i data-lucide="eye" id="privacyIcon" class="w-4 h-4 text-rose-500"></i>
-<span id="privacyLabel">Privacy Mode: Off</span>
-</button>
-</div>
-<!-- Three Distinct Progress Meters for Phase 1, Phase 2, and Phase 3 -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<!-- Meter 1: Phase 1 ($7K Baseline) -->
-<div class="bg-dark-700/40 border border-amber-500/30 p-5 rounded-2xl flex
-flex-col items-center text-center space-y-3">
-<span class="px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs
-font-bold border border-amber-500/30">Phase 1 ($7K Baseline)</span>
-<div class="relative w-24 h-24 flex items-center justify-center">
-<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-<path class="text-dark-600" stroke-width="3.5" stroke="currentColor"
-fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0
--31.831"></path>
-
-<path id="meter1Fill" class="text-amber-400 transition-all duration-700"
-stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor"
-fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0
--31.831"></path>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center
-text-center">
-<span id="meter1Count" class="text-base font-extrabold
-text-slate-100">$0 / $7K</span>
-</div>
-</div>
-<p class="text-[11px] text-slate-300 leading-tight">1 Event ($750) + 3 Schools
-(1 Class each / $2,500).<br><em>Schedule:</em> Mon/Wed | Tue/Thu | 2-hr Fri.</p>
-</div>
-<!-- Meter 2: Phase 2 ($10K Growth) -->
-<div class="bg-dark-700/40 border border-purple-500/30 p-5 rounded-2xl flex
-flex-col items-center text-center space-y-3">
-<span class="px-3 py-1 rounded-full bg-purple-500/20 text-purple-400 text-xs
-font-bold border border-purple-500/30">Phase 2 ($10K Growth)</span>
-<div class="relative w-24 h-24 flex items-center justify-center">
-<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-<path class="text-dark-600" stroke-width="3.5" stroke="currentColor"
-fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0
--31.831"></path>
-<path id="meter2Fill" class="text-purple-400 transition-all duration-700"
-stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor"
-fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0
--31.831"></path>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center
-text-center">
-<span id="meter2Count" class="text-base font-extrabold
-text-slate-100">$0 / $10K</span>
-</div>
-</div>
-<p class="text-[11px] text-slate-300 leading-tight">Unlocks Company Polos,
-Marketing Materials, EIN reinstatement, & AI Intern Search (College Career Days).</p>
-</div>
-<!-- Meter 3: Phase 3 ($14K Full Scale) -->
-<div class="bg-dark-700/40 border border-emerald-500/30 p-5 rounded-2xl flex
-flex-col items-center text-center space-y-3">
-
-<span class="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400
-text-xs font-bold border border-emerald-500/30">Phase 3 ($14K Full Scale)</span>
-<div class="relative w-24 h-24 flex items-center justify-center">
-<svg class="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-<path class="text-dark-600" stroke-width="3.5" stroke="currentColor"
-fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0
--31.831"></path>
-<path id="meter3Fill" class="text-emerald-400 transition-all duration-700"
-stroke-dasharray="0, 100" stroke-width="3.5" stroke-linecap="round" stroke="currentColor"
-fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0
--31.831"></path>
-</svg>
-<div class="absolute inset-0 flex flex-col items-center justify-center
-text-center">
-<span id="meter3Count" class="text-base font-extrabold
-text-slate-100">$0 / $14K</span>
-</div>
-</div>
-<p class="text-[11px] text-slate-300 leading-tight">AI Developer ($300 bi-wk),
-Courtney ($250 bi-wk), Self Salary, & Tax Reserves.</p>
-</div>
-</div>
-<!-- Team Payroll & Tax Reserves Card with Individual Amount Toggles -->
-<div class="bg-dark-700/40 border border-dark-600 p-6 rounded-2xl space-y-4">
-<div class="flex justify-between items-center border-b border-dark-600 pb-3">
-<h3 class="font-bold text-sm text-slate-100 flex items-center"><i
-data-lucide="users" class="w-4 h-4 mr-2 text-rose-500"></i> Phase 3 Team Payroll & Tax
-Reserves ($14K Scaling Model)</h3>
-<button onclick="toggleAllPayrollAmounts()" class="px-2.5 py-1 rounded-lg
-bg-dark-700 hover:bg-dark-600 text-[11px] text-rose-400 border border-dark-600
-font-semibold">Toggle All Amounts</button>
-</div>
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
-<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
-space-y-2">
-<div class="flex justify-between items-center">
-<p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer
-(Paid Intern)</p>
-<button onclick="toggleSinglePayroll('payDev')" class="text-[10px]
-text-rose-400 underline">Show/Hide</button>
-</div>
-
-<p class="text-base font-bold text-purple-400 payroll-toggle-item"
-id="payDev" data-val="$300 bi-weekly">$300 bi-weekly</p>
-<p class="text-[10px] text-slate-400">Technical lab & system support.</p>
-</div>
-<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
-space-y-2">
-<div class="flex justify-between items-center">
-<p class="text-slate-400 uppercase font-bold text-[10px]">Courtney
-White (Assistant)</p>
-<button onclick="toggleSinglePayroll('payCourtney')" class="text-[10px]
-text-rose-400 underline">Show/Hide</button>
-</div>
-<p class="text-base font-bold text-emerald-400 payroll-toggle-item"
-id="payCourtney" data-val="$250 bi-weekly">$250 bi-weekly</p>
-<p class="text-[10px] text-slate-400">Operational & studio support.</p>
-</div>
-<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
-space-y-2">
-<div class="flex justify-between items-center">
-<p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer
-Teacher</p>
-<button onclick="toggleSinglePayroll('payTeacher')" class="text-[10px]
-text-rose-400 underline">Show/Hide</button>
-</div>
-<p class="text-base font-bold text-indigo-400 payroll-toggle-item"
-id="payTeacher" data-val="$1,250 / mo">$1,250 / mo</p>
-<p class="text-[10px] text-slate-400">Curriculum & mentorship.</p>
-</div>
-<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
-space-y-2">
-<div class="flex justify-between items-center">
-<p class="text-slate-400 uppercase font-bold text-[10px]">Tax Set-Aside
-Reserve</p>
-<button onclick="toggleSinglePayroll('payTax')" class="text-[10px]
-text-rose-400 underline">Show/Hide</button>
-</div>
-<p class="text-base font-bold text-amber-400 payroll-toggle-item"
-id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
-<p class="text-[10px] text-slate-400">Allocated for quarterly filing.</p>
-</div>
-</div>
-</div>
-<!-- 4-Stage Financial Kanban Board -->
-
-<div class="space-y-4">
-<div class="flex justify-between items-center">
-<h3 class="font-bold text-sm text-slate-100">Outreach Stage Tracker (Phase
-1–3 Execution)</h3>
-<button onclick="openFinancialProspectModal()" class="px-3.5 py-1.5
-rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex
-items-center">
-<i data-lucide="plus" class="w-3.5 h-3.5 mr-1"></i> Add Prospect
-</button>
-</div>
-<div class="flex gap-4 overflow-x-auto pb-3"
-id="financialKanbanContainer">
-<!-- Populated dynamically -->
-</div>
-</div>
-</div>
-</div>
 <!-- Main Section 1: Target Audience (The Main Three Categories) -->
 <div id="mainView-goals" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full
 hidden">
@@ -447,53 +273,11 @@ hidden">
 space-y-8">
 <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
 <div>
-<h2 class="text-xl font-bold text-slate-100">Target Audience: The Main Three
-Categories</h2>
-<p class="text-xs text-slate-400 mt-1">Click any category below to explore
-why these audiences are crucial for our AI Lab mission and student empowerment.</p>
+<h2 class="text-xl font-bold text-slate-100">Target Audience Map</h2>
+<p class="text-xs text-slate-400 mt-1">Who we sell to, what each audience pays, and how many tracked prospects sit in each group. Click a group to see its companies.</p>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs">
-<div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3
-cursor-pointer hover:border-rose-500 transition" onclick="toggleGoalDetail('careerDaysDetail')">
-<div class="flex items-center justify-between border-b border-dark-600 pb-2">
-<h4 class="font-bold text-rose-400 uppercase tracking-wider">1. Career
-Days & School Workshops</h4>
-<span class="px-2 py-0.5 rounded bg-rose-500/10 text-rose-400
-font-semibold text-[10px]">Click to View Companies</span>
-</div>
-<p class="text-slate-300"><strong>Why this helps:</strong> Sparks early
-curiosity and introduces AI and creative tools directly to students, inspiring them to build their
-own tech and creative ventures.</p>
-
-</div>
-<div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3
-cursor-pointer hover:border-purple-500 transition"
-onclick="toggleGoalDetail('afterSchoolDetail')">
-<div class="flex items-center justify-between border-b border-dark-600 pb-2">
-<h4 class="font-bold text-purple-400 uppercase tracking-wider">2.
-After-School Programs & Districts</h4>
-<span class="px-2 py-0.5 rounded bg-purple-500/10 text-purple-400
-font-semibold text-[10px]">Click to View Companies</span>
-</div>
-<p class="text-slate-300"><strong>Why this helps:</strong> Establishes
-recurring weekly mentorship where kids learn hands-on AI prompt engineering, web prototyping,
-and digital business creation.</p>
-</div>
-<div class="bg-dark-700/40 border border-dark-600 p-5 rounded-xl space-y-3
-cursor-pointer hover:border-emerald-500 transition"
-onclick="toggleGoalDetail('privateSchoolsDetail')">
-<div class="flex items-center justify-between border-b border-dark-600 pb-2">
-<h4 class="font-bold text-emerald-400 uppercase tracking-wider">3. Private
-Schools & Community Centers</h4>
-<span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400
-font-semibold text-[10px]">Click to View Companies</span>
-</div>
-<p class="text-slate-300"><strong>Why this helps:</strong> Expands
-community access, ensuring diverse groups of students master cutting-edge creative tech and
-launch independent ventures.</p>
-</div>
-</div>
+<div id="audienceMap" class="space-y-5"></div>
 <div id="goalDetailBox" class="bg-dark-700/60 border border-dark-600 p-6
 rounded-2xl space-y-4 hidden text-xs">
 <div class="flex justify-between items-center border-b border-dark-600 pb-3">
@@ -573,16 +357,120 @@ class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"><
 </div>
 <!-- Main Section: Dashboard -->
 <div id="mainView-dashboard" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
+<div class="flex flex-wrap items-center justify-between gap-3 no-print">
+<div><h2 class="text-xl font-bold text-slate-100">Funnel &amp; Dashboard</h2><p class="text-xs text-slate-400 mt-1">One page for the goal, the sales funnel, pending revenue and website traffic. Use Copy summary or Print for stakeholders.</p></div>
+<div class="flex flex-wrap items-center gap-2">
+<button onclick="togglePrivacyMode()" class="px-3 py-2 rounded-xl bg-dark-700 hover:bg-dark-600 text-xs font-semibold text-slate-200 border border-dark-600 transition flex items-center space-x-2"><i data-lucide="eye" id="privacyIcon" class="w-4 h-4 text-rose-500"></i><span id="privacyLabel">Privacy Mode: Off</span></button>
+<button onclick="openReportModal('copy')" id="copySummaryBtn" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300 hover:bg-dark-600">Copy summary</button>
+<button onclick="openReportModal('print')" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300 hover:bg-dark-600">Print / Save PDF</button>
+</div></div>
+<div id="funnelPage"></div>
+<div id="dashFeedback"></div>
+<!-- Team Payroll & Tax Reserves Card with Individual Amount Toggles -->
+<div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-4 no-print">
+<div class="flex justify-between items-center border-b border-dark-600 pb-3">
+<h3 class="font-bold text-sm text-slate-100 flex items-center"><i
+data-lucide="users" class="w-4 h-4 mr-2 text-rose-500"></i> Phase 3 Team Payroll & Tax
+Reserves ($14K Scaling Model)</h3>
+<button onclick="toggleAllPayrollAmounts()" class="px-2.5 py-1 rounded-lg
+bg-dark-700 hover:bg-dark-600 text-[11px] text-rose-400 border border-dark-600
+font-semibold">Toggle All Amounts</button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
+space-y-2">
+<div class="flex justify-between items-center">
+<p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer
+(Paid Intern)</p>
+<button onclick="toggleSinglePayroll('payDev')" class="text-[10px]
+text-rose-400 underline">Show/Hide</button>
+</div>
+
+<p class="text-base font-bold text-purple-400 payroll-toggle-item"
+id="payDev" data-val="$300 bi-weekly">$300 bi-weekly</p>
+<p class="text-[10px] text-slate-400">Technical lab & system support.</p>
+</div>
+<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
+space-y-2">
+<div class="flex justify-between items-center">
+<p class="text-slate-400 uppercase font-bold text-[10px]">Courtney
+White (Assistant)</p>
+<button onclick="toggleSinglePayroll('payCourtney')" class="text-[10px]
+text-rose-400 underline">Show/Hide</button>
+</div>
+<p class="text-base font-bold text-emerald-400 payroll-toggle-item"
+id="payCourtney" data-val="$250 bi-weekly">$250 bi-weekly</p>
+<p class="text-[10px] text-slate-400">Operational & studio support.</p>
+</div>
+<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
+space-y-2">
+<div class="flex justify-between items-center">
+<p class="text-slate-400 uppercase font-bold text-[10px]">AI Developer
+Teacher</p>
+<button onclick="toggleSinglePayroll('payTeacher')" class="text-[10px]
+text-rose-400 underline">Show/Hide</button>
+</div>
+<p class="text-base font-bold text-indigo-400 payroll-toggle-item"
+id="payTeacher" data-val="$1,250 / mo">$1,250 / mo</p>
+<p class="text-[10px] text-slate-400">Curriculum & mentorship.</p>
+</div>
+<div class="bg-dark-800/80 p-4 rounded-xl border border-dark-600
+space-y-2">
+<div class="flex justify-between items-center">
+<p class="text-slate-400 uppercase font-bold text-[10px]">Tax Set-Aside
+Reserve</p>
+<button onclick="toggleSinglePayroll('payTax')" class="text-[10px]
+text-rose-400 underline">Show/Hide</button>
+</div>
+<p class="text-base font-bold text-amber-400 payroll-toggle-item"
+id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
+<p class="text-[10px] text-slate-400">Allocated for quarterly filing.</p>
+</div>
+</div>
+</div>
+
+<div class="no-print space-y-4">
 <div class="flex flex-wrap items-center justify-between gap-3">
-<div><h2 class="text-xl font-bold text-slate-100">Dashboard</h2><p class="text-xs text-slate-400 mt-1">Everything the studio is collecting, in one place.</p></div>
+<h3 class="text-sm font-bold text-slate-100">Pipeline health &amp; website traffic</h3>
 <div class="flex items-center gap-2">
 <select id="dashRange" onchange="renderDashVisits()" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-xs text-slate-200"><option value="7">Last 7 days</option><option value="30">Last 30 days</option><option value="0">All time</option></select>
 <button onclick="renderDashboard(true)" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300">Refresh</button>
 </div></div>
 <div id="dashPipeline" class="space-y-4"></div>
-<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6 space-y-4"><h3 class="text-sm font-bold text-slate-100">Website Visitors <span class="text-xs text-slate-500 font-normal">all 4 public pages</span></h3><div id="dashVisitors"></div></div>
+<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6 space-y-4"><h3 class="text-sm font-bold text-slate-100">Website Visitors <span class="text-xs text-slate-500 font-normal">all public pages</span></h3><div id="dashVisitors"></div></div>
+</div>
 </div>
 <!-- Main Section: AI Lab Sites (group submissions -> front site) -->
+<div id="rptModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9998;background:rgba(0,0,0,.7);align-items:center;justify-content:center;padding:12px">
+<div class="bg-dark-800 border border-dark-600 rounded-2xl w-full flex flex-col" style="max-width:900px;height:92vh;background:#111827">
+<div class="flex items-start justify-between gap-3 p-4 border-b border-dark-600"><div><h3 id="rptTitle" class="text-base font-bold text-slate-100">Report</h3><p id="rptSub" class="text-xs text-slate-400 mt-1"></p></div><button onclick="closeReportModal()" class="text-slate-400 hover:text-white text-xl px-2" aria-label="Close">&times;</button></div>
+<div class="flex flex-wrap items-center gap-2 p-3 border-b border-dark-600">
+<button id="rptCopyBtn" onclick="rptCopy()" class="px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">Copy as text</button>
+<button id="rptPrintBtn" onclick="rptPrint()" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Print / Save as PDF</button>
+<button onclick="rptDownload('html')" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Download report</button>
+<button onclick="rptDownload('txt')" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Download text</button>
+<button onclick="rptShare()" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Share / Save to device</button>
+<label class="flex items-center gap-2 text-xs text-slate-300 ml-auto"><input id="rptMoney" type="checkbox" checked onchange="rptRefresh()"> Show dollar amounts</label></div>
+<p id="rptNote" class="px-4 pt-2 text-xs text-emerald-400 min-h-[1.25rem]"></p>
+<div class="flex-1 p-3 pt-1 min-h-0"><iframe id="rptFrame" title="Report preview" class="w-full h-full rounded-xl bg-white"></iframe></div>
+<p id="rptStamp" class="px-4 pb-3 text-[10px] text-slate-500"></p></div></div>
+<div id="mainView-feedback" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
+<div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl space-y-4">
+<div class="flex flex-wrap items-start justify-between gap-3"><div><h2 class="text-xl font-bold text-slate-100">Feedback</h2><p class="text-xs text-slate-400 mt-1">Pick the school or event, then start kiosk mode. In the last 10 minutes, Courtney can walk the room with the iPad so teachers and students can leave a review.</p></div>
+<button onclick="openFeedbackKiosk()" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-bold">Start iPad kiosk mode</button></div>
+<div class="grid sm:grid-cols-3 gap-3">
+<div><label class="block text-[11px] font-bold text-slate-400 mb-1">School or event</label><select id="fbSchool" onchange="saveFbSession()" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-100"></select></div>
+<div id="fbSchoolOtherWrap" class="hidden"><label class="block text-[11px] font-bold text-slate-400 mb-1">Type the name</label><input id="fbSchoolOther" oninput="saveFbSession()" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-100"></div>
+<div><label class="block text-[11px] font-bold text-slate-400 mb-1">Session date</label><input id="fbDate" type="date" onchange="saveFbSession()" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-100"></div></div>
+<p class="text-[11px] text-slate-400">Current session: <span id="fbSessionBadge" class="font-semibold text-slate-200">No session chosen</span> &middot; <span id="fbQueueNote"></span></p></div>
+<div class="grid lg:grid-cols-2 gap-6">
+<div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl"><h3 class="text-sm font-bold text-slate-100 mb-4">Leave feedback</h3><div id="fbFormHost"></div></div>
+<div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl"><div class="flex items-center justify-between mb-3"><h3 class="text-sm font-bold text-slate-100">Responses</h3><div class="flex gap-2"><button onclick="renderFeedbackList(true)" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300">Refresh</button><button onclick="exportFeedbackCsv()" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300">Export CSV</button></div></div><div id="fbList"></div></div></div>
+</div>
+<div id="fbKiosk" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;overflow-y:auto;background:#0b0f19">
+<div class="max-w-2xl mx-auto p-6 sm:p-10"><div class="flex items-start justify-between mb-6"><div><p class="text-[11px] uppercase tracking-widest font-bold text-rose-400">The AI Lab feedback</p><h2 id="fbKioskTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-100">The AI Lab</h2><p class="text-sm text-slate-400 mt-1">Takes about one minute. Thank you! <span id="fbKioskCount" class="text-slate-600"></span></p></div>
+<button id="fbKioskExit" onclick="closeFeedbackKiosk()" class="text-[11px] text-slate-500 px-2 py-1">Staff exit</button></div>
+<p id="fbKioskWarn" class="hidden text-xs text-amber-400 mb-4">Staff: no school or event was chosen, so these responses will not be tagged. Exit and pick one first.</p><div id="fbKioskBody"></div></div></div>
 <div id="mainView-ailab" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-5">
 <div class="border-b border-dark-600 pb-4">
@@ -605,6 +493,35 @@ class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"><
 <!-- Main Section 2: Spirit Meeting Outline & Agenda View (Dynamic Meeting Notes) -->
 <div id="mainView-agenda" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full
 hidden">
+<div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-5">
+<div class="border-b border-dark-600 pb-4"><h2 class="text-xl font-bold text-slate-100">Recurring meeting &amp; notes (Google Meet)</h2>
+<p class="text-xs text-slate-400 mt-1">Set up the meeting once in Google Calendar, then keep the Meet link and the notes doc here so they are one click away every week.</p></div>
+<div id="meetLinks" class="flex flex-wrap items-center gap-2"></div>
+<div class="grid grid-cols-2 lg:grid-cols-5 gap-3 text-xs">
+<label class="col-span-2 lg:col-span-2 space-y-1"><span class="text-slate-400 font-semibold">Meeting name</span><input id="meetName" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200" value="Spirit Meeting"></label>
+<label class="space-y-1"><span class="text-slate-400 font-semibold">Repeats</span><select id="meetFreq" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"><option value="WEEKLY">Weekly</option><option value="BIWEEKLY">Every 2 weeks</option><option value="MONTHLY">Monthly</option></select></label>
+<label class="space-y-1"><span class="text-slate-400 font-semibold">Day</span><select id="meetDay" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"><option value="MO">Monday</option><option value="TU">Tuesday</option><option value="WE">Wednesday</option><option value="TH">Thursday</option><option value="FR">Friday</option><option value="SA">Saturday</option><option value="SU">Sunday</option></select></label>
+<label class="space-y-1"><span class="text-slate-400 font-semibold">Time</span><input id="meetTime" type="time" value="09:00" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></label>
+<label class="space-y-1"><span class="text-slate-400 font-semibold">Minutes</span><input id="meetLen" type="number" min="15" step="5" value="45" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></label>
+<label class="col-span-2 lg:col-span-2 space-y-1"><span class="text-slate-400 font-semibold">Google Meet link (from the calendar event)</span><input id="meetLink" placeholder="https://meet.google.com/..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></label>
+<label class="col-span-2 lg:col-span-3 space-y-1"><span class="text-slate-400 font-semibold">Notes doc link (Google Doc)</span><input id="meetDoc" placeholder="https://docs.google.com/document/..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></label>
+</div>
+<div class="flex flex-wrap gap-2">
+<button onclick="openRecurringEvent()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">Create recurring event in Google Calendar</button>
+<button onclick="saveMeetSetup()" class="px-3.5 py-2 rounded-xl bg-dark-700 border border-dark-600 text-slate-200 font-semibold text-xs hover:bg-dark-600">Save links</button>
+<a href="https://docs.new" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl bg-dark-700 border border-dark-600 text-slate-200 font-semibold text-xs hover:bg-dark-600">New notes doc</a>
+</div>
+<details class="rounded-xl border border-dark-600 bg-dark-700/30 p-4 text-xs text-slate-300">
+<summary class="font-bold text-slate-100 cursor-pointer">How to get the notes saved every week</summary>
+<ol class="list-decimal pl-5 mt-3 space-y-2 leading-relaxed">
+<li>Click <strong>Create recurring event in Google Calendar</strong>. The event opens with your day, time and repeat already filled in. Click <strong>Add Google Meet video conferencing</strong>, add your guests, and save. Choose "all events" if Calendar asks.</li>
+<li>Open the saved event, copy the Meet link, and paste it above. That one link works for every repeat of the meeting.</li>
+<li><strong>Notes doc:</strong> in the event, use <strong>Create meeting notes</strong> (next to attachments) if you see it. It attaches a Google Doc to the event and shares it with guests when you save. If you do not see it, click New notes doc, then attach it with the paperclip and paste its link above.</li>
+<li><strong>Automatic notes:</strong> if your Google account has Meet's <strong>Take notes for me</strong> (it needs an eligible Google Workspace or Google AI plan), turn it on in the meeting. The notes are saved to the organizer's Drive in a Google Meet folder, attached to the Calendar event, and emailed to the organizer. Hosts can keep it on for future repeats of a recurring meeting.</li>
+<li>After each meeting, click <strong>Log this week in Meeting Notes</strong> to save the decisions and action items here with the doc link.</li>
+</ol>
+</details>
+</div>
 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm
 space-y-6">
 <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
@@ -624,29 +541,6 @@ bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex i
 <div id="meetingNotesList" class="space-y-3">
 <!-- Populated dynamically -->
 </div>
-</div>
-</div>
-</div>
-<!-- Main Section 3: Prospect To-Do Checklist (Synchronized Master Checklist) -->
-<div id="mainView-prospects" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full
-hidden">
-<div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm
-space-y-6">
-<div class="border-b border-dark-600 pb-4 flex justify-between items-center">
-<div>
-<h2 class="text-xl font-bold text-slate-100">Prospect Target Checklist (Master
-Task Rollup)</h2>
-<p class="text-xs text-slate-400 mt-1">All tasks created inside each prospect
-ticket are automatically displayed and linked here.</p>
-</div>
-<button onclick="openProspectTaskModal()" class="px-3.5 py-2 rounded-xl
-bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
-
-<i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect Task
-</button>
-</div>
-<div id="prospectTodoList" class="space-y-3 text-xs">
-<!-- Populated dynamically -->
 </div>
 </div>
 </div>
@@ -2007,6 +1901,541 @@ return out;
 <script>
 /* ===================== DASHBOARD ===================== */
 var DASH_VISITS = null;
+/* ===================== FUNNEL & DASHBOARD (Financial Goal Tracker merged in) ===================== */
+var FUNNEL_STAGES = [
+  { name: 'Prospect',         hint: 'Not contacted yet',                 color: '#f59e0b' },
+  { name: 'Email Drafted',    hint: 'Email written, not sent',           color: '#38bdf8' },
+  { name: 'First Touch Sent', hint: 'Waiting on a reply',                color: '#22d3ee' },
+  { name: 'Lead',             hint: 'Speaking with us / invoice pending', color: '#a855f7' },
+  { name: 'Closed Won',       hint: 'Paid or contract signed',           color: '#10b981' }
+];
+var GOAL_PHASES = [
+  { label: 'Phase 1', amount: 7000,  note: '1 event ($750) + 3 schools (1 class each, $2,500). Mon/Wed | Tue/Thu | 2-hr Fri.' },
+  { label: 'Phase 2', amount: 10000, note: 'Unlocks company polos, marketing materials, EIN reinstatement and AI intern search.' },
+  { label: 'Phase 3', amount: 14000, note: 'AI developer, assistant, teacher, your salary and tax reserves.' }
+];
+function fpMoney(n) { return '$' + Math.round(n).toLocaleString(); }
+function fpPot(p) { return String(p.org).indexOf('InspiHER') > -1 ? 750 : ((p.classes || 0) * 20 * (p.price || 0)); }
+function funnelNumbers() {
+  var P = (typeof financialProspects !== 'undefined' && financialProspects) || [];
+  var by = {}, val = {};
+  FUNNEL_STAGES.concat([{ name: 'Closed Lost' }]).forEach(function (st) { by[st.name] = 0; val[st.name] = 0; });
+  P.forEach(function (p) { if (by[p.stage] === undefined) return; by[p.stage]++; val[p.stage] += fpPot(p); });
+  var reached = FUNNEL_STAGES.map(function (st, i) {
+    return P.filter(function (p) { var k = FUNNEL_STAGES.findIndex(function (x) { return x.name === p.stage; }); return k >= i; }).length;
+  });
+  var closed = val['Closed Won'], pending = val['Lead'];
+  var open = val['Prospect'] + val['Email Drafted'] + val['First Touch Sent'];
+  return { P: P, by: by, val: val, reached: reached, closed: closed, pending: pending, open: open, goal: 14000 };
+}
+function renderFunnelPage() {
+  var el = document.getElementById('funnelPage'); if (!el) return;
+  var n = funnelNumbers(), goal = n.goal;
+  var pc = Math.min(100, n.closed / goal * 100), pp = Math.min(100 - pc, n.pending / goal * 100);
+  var gap = Math.max(0, goal - n.closed - n.pending);
+  var today = new Date().toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' });
+  var money = function (v) { return '<span class="privacy-field">' + fpMoney(v) + '</span>'; };
+  var card = function (label, v, sub, color) {
+    return '<div class="rounded-2xl border border-dark-600 bg-dark-700/40 p-4"><p class="text-[10px] uppercase tracking-wider font-bold" style="color:' + color + '">' + label + '</p><p class="text-2xl font-extrabold text-slate-100 mt-1">' + money(v) + '</p><p class="text-[11px] text-slate-400 mt-0.5">' + sub + '</p></div>';
+  };
+  var markers = GOAL_PHASES.map(function (ph) {
+    var left = ph.amount / goal * 100;
+    return '<div class="absolute top-0 h-full" style="left:' + left + '%;border-left:2px solid rgba(255,255,255,.45)"></div>' +
+      '<div class="absolute text-[10px] font-bold text-slate-300" style="top:26px;left:' + left + '%;transform:translateX(' + (left > 95 ? '-100%' : '-50%') + ')">' + ph.label + ' &middot; ' + fpMoney(ph.amount) + '</div>';
+  }).join('');
+  var funnel = FUNNEL_STAGES.map(function (st, i) {
+    var w = 100 - i * 13, cnt = n.by[st.name], v = n.val[st.name];
+    var conv = '';
+    if (i > 0) {
+      var prev = n.reached[i - 1], cur = n.reached[i];
+      conv = '<div class="text-center text-[10px] text-slate-500 py-1">' + (prev ? Math.round(cur / prev * 100) + '% of those moved on' : 'no data yet') + '</div>';
+    }
+    var label = st.name === 'Lead' ? 'Lead / Pending revenue' : st.name;
+    return conv + '<div class="mx-auto fp-keep rounded-xl px-4 py-3 flex flex-wrap items-center justify-between gap-2" style="width:' + w + '%;min-width:260px;background:' + st.color + '22;border:1px solid ' + st.color + '99">' +
+      '<div><p class="text-sm font-bold" style="color:' + st.color + '">' + label + '</p><p class="text-[11px] text-slate-400">' + st.hint + '</p></div>' +
+      '<div class="text-right"><p class="text-lg font-extrabold text-slate-100">' + cnt + ' <span class="text-[11px] font-medium text-slate-400">now here</span></p><p class="text-[11px] text-slate-300">' + money(v) + ' potential</p></div></div>';
+  }).join('');
+  var phases = GOAL_PHASES.map(function (ph) {
+    var got = n.closed >= ph.amount, withPending = n.closed + n.pending >= ph.amount;
+    var status = got ? 'Reached' : (withPending ? 'Reached once pending is paid' : fpMoney(Math.max(0, ph.amount - n.closed - n.pending)) + ' to go');
+    var color = got ? '#10b981' : (withPending ? '#a855f7' : '#94a3b8');
+    return '<div class="rounded-xl border border-dark-600 bg-dark-700/40 p-3 text-xs"><div class="flex justify-between items-center"><p class="font-bold text-slate-100">' + ph.label + ' &middot; ' + fpMoney(ph.amount) + '/mo</p><span class="font-semibold" style="color:' + color + '">' + status + '</span></div><p class="text-[11px] text-slate-400 mt-1 leading-snug">' + ph.note + '</p></div>';
+  }).join('');
+  el.innerHTML =
+    '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-5 sm:p-8 space-y-8">' +
+    '<div class="flex flex-wrap items-end justify-between gap-3"><div><p class="text-[10px] uppercase tracking-widest font-bold text-rose-400">The Brown Girls Creative Studio &middot; Monthly goal</p>' +
+    '<h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 mt-1">' + money(n.closed) + ' secured <span class="text-slate-400 font-semibold text-lg">of ' + fpMoney(goal) + ' a month</span></h2></div><p class="text-xs text-slate-400">As of ' + today + '</p></div>' +
+    '<div class="pb-8"><div class="relative h-5 rounded-full bg-dark-600 overflow-visible">' +
+    '<div class="absolute left-0 top-0 h-full rounded-l-full fp-keep" style="width:' + pc + '%;background:#10b981"></div>' +
+    '<div class="absolute top-0 h-full fp-keep" style="left:' + pc + '%;width:' + pp + '%;background:#a855f7"></div>' + markers + '</div>' +
+    '<div class="flex flex-wrap gap-4 mt-10 text-[11px] text-slate-400"><span><span class="inline-block w-2.5 h-2.5 rounded-sm fp-keep" style="background:#10b981"></span> Closed / paid</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm fp-keep" style="background:#a855f7"></span> Pending revenue</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-dark-600"></span> Still to win</span></div></div>' +
+    '<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">' +
+    card('Closed / paid', n.closed, n.by['Closed Won'] + ' deals won', '#10b981') +
+    card('Pending revenue', n.pending, n.by['Lead'] + ' lead' + (n.by['Lead'] === 1 ? '' : 's') + ' waiting on an invoice or signature', '#a855f7') +
+    card('Open pipeline', n.open, (n.by['Prospect'] + n.by['Email Drafted'] + n.by['First Touch Sent']) + ' prospects being worked', '#f59e0b') +
+    card('Gap to ' + fpMoney(goal), gap, 'after closed and pending', '#f43f5e') + '</div>' +
+    '<div><p class="text-xs font-bold text-slate-200 mb-3 uppercase tracking-wider">Sales funnel</p><div class="space-y-0">' + funnel + '</div>' +
+    '<p class="text-[11px] text-slate-500 mt-3 text-center">Closed lost: ' + n.by['Closed Lost'] + ' &middot; Potential = classes x 20 students x price per student, or the flat event fee.</p></div>' +
+    '<div><p class="text-xs font-bold text-slate-200 mb-3 uppercase tracking-wider">Goal phases</p><div class="grid md:grid-cols-3 gap-3">' + phases + '</div></div>' +
+    '</div>';
+  if (typeof privacyModeActive !== 'undefined' && privacyModeActive) el.querySelectorAll('.privacy-field').forEach(function (f) { f.classList.add('privacy-mask'); });
+}
+function copyFunnelSummary() {
+  var n = funnelNumbers(), L = [];
+  L.push('The Brown Girls Creative Studio - funnel summary (' + new Date().toLocaleDateString() + ')');
+  L.push('Monthly goal: ' + fpMoney(n.goal));
+  L.push('Closed / paid: ' + fpMoney(n.closed) + ' (' + n.by['Closed Won'] + ' deals)');
+  L.push('Pending revenue: ' + fpMoney(n.pending) + ' (' + n.by['Lead'] + ' leads awaiting invoice or signature)');
+  L.push('Open pipeline: ' + fpMoney(n.open));
+  L.push('Gap to goal after closed and pending: ' + fpMoney(Math.max(0, n.goal - n.closed - n.pending)));
+  L.push('');
+  FUNNEL_STAGES.forEach(function (st) { L.push(st.name + ': ' + n.by[st.name] + ' (' + fpMoney(n.val[st.name]) + ' potential)'); });
+  L.push('Closed lost: ' + n.by['Closed Lost']);
+  var txt = L.join('\n'), btn = document.getElementById('copySummaryBtn');
+  var done = function () { if (btn) { var o = btn.textContent; btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = o; }, 1500); } };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function () { window.prompt('Copy this summary:', txt); });
+  else window.prompt('Copy this summary:', txt);
+}
+
+/* ===================== TARGET AUDIENCE MAP (with prices) ===================== */
+var AUDIENCE_SEGMENTS = [
+  { key: 'careerDaysDetail', title: 'Career Days & School Workshops', color: '#f43f5e', role: 'Entry point',
+    prices: [['Career Day', 'Free', 'Lead generator that leads into the after school program'], ['Speaking engagement', '$750', 'Two-day event, flat fee']],
+    facts: ['Goal: book 3-4 more career days', 'Each one feeds the after school waitlist'], monthly: '$750 per paid event' },
+  { key: 'afterSchoolDetail', title: 'After-School Programs & Districts', color: '#a855f7', role: 'Core revenue',
+    prices: [['AI Lab after school', '$125', 'per student, per month'], ['One class of 20', '$2,500', 'per month, per school']],
+    facts: ['6 to 12 month contract = $15,000 to $30,000 per school', 'Capped at 3 partner schools this cycle'], monthly: '$7,500 per month at 3 schools' },
+  { key: 'privateSchoolsDetail', title: 'Private Schools & Community Centers', color: '#10b981', role: 'Core revenue',
+    prices: [['AI Lab after school', '$125', 'per student, per month (school or parent funded)'], ['One class of 20', '$2,500', 'per month, per site']],
+    facts: ['6-month contract lock-in', 'Shares the 3-school cap with districts'], monthly: 'Counts toward the same 3 schools' }
+];
+var AUDIENCE_ALSO = [
+  { title: 'Business owners (Studio services)', color: '#38bdf8', prices: [['Tier 1', '$950/mo', 'Foundations & Systems Training'], ['Tier 2', '$1,250/mo', 'Managed Growth Engine'], ['Tier 3', '$2,500/mo', 'Full-Scale Operations + Marketing']] },
+  { title: 'Families (Saturday AI Lab cohort)', color: '#f59e0b', prices: [['December 2026 cohort', 'Price to be set', 'Paid program, shared with the waitlist before registration']] }
+];
+function audienceOf(p) {
+  if (p.audience) return p.audience;
+  var o = String(p.org || '');
+  if (/InspiHER|Conference|Career Day|Newton College|Newton County STEAM/i.test(o)) return 'careerDaysDetail';
+  if (/After-School|Before-|YES Program|District|Elementary/i.test(o)) return 'afterSchoolDetail';
+  return 'privateSchoolsDetail';
+}
+function audienceStats() {
+  var P = (typeof financialProspects !== 'undefined' && financialProspects) || [], out = {};
+  AUDIENCE_SEGMENTS.forEach(function (sg) { out[sg.key] = { list: [], pot: 0, won: 0 }; });
+  P.forEach(function (p) { var k = audienceOf(p), o = out[k]; if (!o) return; o.list.push(p); if (p.stage !== 'Closed Lost') o.pot += fpPot(p); if (p.stage === 'Closed Won') o.won += fpPot(p); });
+  return out;
+}
+function renderAudienceMap() {
+  var el = document.getElementById('audienceMap'); if (!el) return;
+  var st = audienceStats();
+  var chip = function (a, b, c, color) { return '<div class="rounded-lg border border-dark-600 bg-dark-800/70 p-3"><div class="flex items-baseline justify-between gap-2"><p class="text-[11px] font-semibold text-slate-300">' + a + '</p><p class="text-lg font-extrabold" style="color:' + color + '">' + b + '</p></div><p class="text-[10px] text-slate-400 mt-0.5">' + c + '</p></div>'; };
+  var cols = AUDIENCE_SEGMENTS.map(function (sg) {
+    var s = st[sg.key];
+    return '<div class="flex flex-col items-stretch"><div class="mx-auto w-px h-6" style="background:' + sg.color + '88"></div>' +
+      '<div class="rounded-2xl border p-5 space-y-4 cursor-pointer hover:bg-dark-700/40 transition flex-1" style="border-color:' + sg.color + '66" onclick="toggleGoalDetail(\'' + sg.key + '\')">' +
+      '<div><p class="text-[10px] uppercase tracking-widest font-bold" style="color:' + sg.color + '">' + sg.role + '</p><h4 class="text-sm font-bold text-slate-100 mt-0.5">' + sg.title + '</h4></div>' +
+      '<div class="space-y-2">' + sg.prices.map(function (r) { return chip(r[0], r[1], r[2], sg.color); }).join('') + '</div>' +
+      '<ul class="text-[11px] text-slate-300 space-y-1 list-disc pl-4">' + sg.facts.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul>' +
+      '<div class="pt-3 border-t border-dark-600 text-[11px] space-y-0.5"><p class="font-bold text-slate-100">' + sg.monthly + '</p><p class="text-slate-400">' + s.list.length + ' tracked prospects &middot; <span class="privacy-field">' + fpMoney(s.pot) + '</span> potential</p><p class="font-semibold" style="color:' + sg.color + '">Click to see who is in this group</p></div></div></div>';
+  }).join('');
+  var also = AUDIENCE_ALSO.map(function (a) {
+    return '<div class="rounded-2xl border border-dark-600 bg-dark-700/30 p-4"><p class="text-xs font-bold text-slate-100 mb-2" style="color:' + a.color + '">' + a.title + '</p><div class="grid sm:grid-cols-' + Math.min(3, a.prices.length) + ' gap-2">' + a.prices.map(function (r) { return chip(r[0], r[1], r[2], a.color); }).join('') + '</div></div>';
+  }).join('');
+  el.innerHTML =
+    '<div class="flex flex-col items-center"><div class="rounded-2xl border border-rose-500/50 bg-rose-500/10 px-6 py-3 text-center"><p class="text-[10px] uppercase tracking-widest font-bold text-rose-400">The AI Lab</p><p class="text-sm font-bold text-slate-100">Goal: $14,000 a month</p></div><div class="w-px h-4 bg-dark-600"></div>' +
+    '<div class="hidden md:block h-px bg-dark-600 w-2/3"></div></div>' +
+    '<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">' + cols + '</div>' +
+    '<div><p class="text-xs font-bold text-slate-200 mt-2 mb-3 uppercase tracking-wider">Also on the map</p><div class="grid lg:grid-cols-2 gap-4">' + also + '</div></div>';
+  if (typeof privacyModeActive !== 'undefined' && privacyModeActive) el.querySelectorAll('.privacy-field').forEach(function (f) { f.classList.add('privacy-mask'); });
+}
+function toggleGoalDetail(key) {
+  var box = document.getElementById('goalDetailBox'), title = document.getElementById('goalDetailTitle'), body = document.getElementById('goalDetailContent');
+  if (!box) return;
+  var sg = AUDIENCE_SEGMENTS.filter(function (x) { return x.key === key; })[0]; if (!sg) return;
+  var list = audienceStats()[key].list;
+  title.textContent = sg.title + ' (' + list.length + ')';
+  body.innerHTML = list.length ? list.map(function (p) {
+    return '<div class="flex flex-wrap items-center justify-between gap-2 border-b border-dark-600 pb-2"><span class="font-semibold text-slate-100 cursor-pointer hover:text-rose-400" onclick="openQuickProspectModal(' + p.id + ')">' + escHtml(p.org) + '</span><span class="text-slate-400">' + escHtml(p.stage) + ' &middot; <span class="privacy-field">' + fpMoney(fpPot(p)) + '</span></span></div>';
+  }).join('') : '<p class="text-slate-500 italic">No prospects in this group yet.</p>';
+  box.classList.remove('hidden');
+  box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+/* ===================== SPIRIT MEETING: recurring Google Meet + notes ===================== */
+var MEET_KEY = 'bgcs_spirit_meet_setup';
+function meetSetup() { try { return JSON.parse(localStorage.getItem(MEET_KEY) || '{}') || {}; } catch (e) { return {}; } }
+function renderMeetSetup() {
+  var m = meetSetup(), set = function (id, v) { var e = document.getElementById(id); if (e && v !== undefined) e.value = v; };
+  set('meetName', m.name || 'Spirit Meeting'); set('meetDay', m.day || 'MO'); set('meetTime', m.time || '09:00');
+  set('meetLen', m.len || '45'); set('meetFreq', m.freq || 'WEEKLY'); set('meetLink', m.link || ''); set('meetDoc', m.doc || '');
+  var links = document.getElementById('meetLinks'); if (!links) return;
+  var a = function (href, label) { return '<a href="' + href + '" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-200 hover:bg-dark-600">' + label + '</a>'; };
+  links.innerHTML = (m.link ? a(m.link, 'Join Google Meet') : '') + (m.doc ? a(m.doc, 'Open notes doc') : '') +
+    (m.link || m.doc ? '<button onclick="addWeeklyNoteFromSetup()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold">Log this week in Meeting Notes</button>' : '<p class="text-[11px] text-slate-500">Save your Meet link and notes doc below and the buttons appear here.</p>');
+}
+function saveMeetSetup() {
+  var g = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; };
+  var m = { name: g('meetName'), day: g('meetDay'), time: g('meetTime'), len: g('meetLen'), freq: g('meetFreq'), link: g('meetLink'), doc: g('meetDoc') };
+  try { localStorage.setItem(MEET_KEY, JSON.stringify(m)); } catch (e) {}
+  renderMeetSetup();
+}
+function openRecurringEvent() {
+  saveMeetSetup();
+  var m = meetSetup(), dayIdx = { SU: 0, MO: 1, TU: 2, WE: 3, TH: 4, FR: 5, SA: 6 }[m.day || 'MO'];
+  var d = new Date(); d.setDate(d.getDate() + ((dayIdx - d.getDay() + 7) % 7 || 7));
+  var hm = (m.time || '09:00').split(':'), start = new Date(d.getFullYear(), d.getMonth(), d.getDate(), +hm[0], +hm[1]);
+  var end = new Date(start.getTime() + (parseInt(m.len, 10) || 45) * 60000);
+  var f = function (x) { var p = function (n) { return ('0' + n).slice(-2); }; return x.getFullYear() + p(x.getMonth() + 1) + p(x.getDate()) + 'T' + p(x.getHours()) + p(x.getMinutes()) + '00'; };
+  var rule = 'RRULE:FREQ=' + (m.freq === 'BIWEEKLY' ? 'WEEKLY;INTERVAL=2' : (m.freq || 'WEEKLY')) + (m.freq === 'MONTHLY' ? '' : ';BYDAY=' + (m.day || 'MO'));
+  var url = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(m.name || 'Spirit Meeting') +
+    '&dates=' + f(start) + '/' + f(end) + '&recur=' + encodeURIComponent(rule) + '&ctz=' + encodeURIComponent(Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York') +
+    '&details=' + encodeURIComponent('Recurring Spirit Meeting. Agenda and notes live in the BGCS pipeline (Spirit Meeting Outline).');
+  window.open(url, '_blank', 'noopener');
+}
+function addWeeklyNoteFromSetup() {
+  var m = meetSetup(); openMeetingNoteModal();
+  var t = document.getElementById('meetingTitleInput'); if (t && !t.value) t.value = m.name || 'Spirit Meeting';
+  var n = document.getElementById('meetingNotesText'); if (n) n.value = (m.doc ? 'Full notes: ' + m.doc + '\n\n' : '') + 'Decisions:\n\nAction items:\n\nNext meeting:';
+}
+
+/* ===================== FEEDBACK (separate student / teacher / parent surveys, iPad kiosk) ===================== */
+var FB_LOCAL = 'bgcs_feedback_local', FB_QUEUE = 'bgcs_feedback_queue', FB_SESSION = 'bgcs_fb_session';
+var FB_ROWS = null, FB_STATE = {};
+var FB_STARS = ['Poor', 'Fair', 'Good', 'Great', 'Loved it'];
+var FB_SURVEYS = {
+  Student: { intro: 'Tell us about your AI Lab class. There are no wrong answers.', liked: 'built', improve: 'help', recommend: 'again', q: [
+    { id: 'rating', t: 'stars', l: 'Overall, how was The AI Lab?' },
+    { id: 'built', t: 'text', l: 'What was the coolest thing you made or learned?', ph: 'I made...' },
+    { id: 'feel', t: 'choice', l: 'How did the class feel for you?', o: ['Too easy', 'Just right', 'A little hard', 'Too hard'] },
+    { id: 'help', t: 'text', l: 'Was anything confusing or boring? What should we change?', ph: 'It would be better if...' },
+    { id: 'next', t: 'text', l: 'What do you want to build or learn next?', ph: 'I want to build...' },
+    { id: 'again', t: 'choice', l: 'Would you come back for more?', o: ['Yes', 'Maybe', 'No'] }
+  ] },
+  Teacher: { intro: 'Your view helps us improve the program for your school.', liked: 'worked', improve: 'improve', recommend: 'recommend', q: [
+    { id: 'rating', t: 'stars', l: 'Overall, how would you rate The AI Lab program?' },
+    { id: 'engage', t: 'choice', l: 'How engaged were your students?', o: ['Not very', 'Somewhat', 'Mostly', 'Very'] },
+    { id: 'fit', t: 'choice', l: 'How well did it fit your classroom or schedule?', o: ['Poorly', 'Okay', 'Well', 'Very well'] },
+    { id: 'worked', t: 'text', l: 'What worked best for your students?', ph: 'The strongest part was...' },
+    { id: 'improve', t: 'text', l: 'What should we change or add?', ph: 'It would help if...' },
+    { id: 'growth', t: 'text', l: 'What skills or growth did you notice in your students?', ph: 'I noticed...' },
+    { id: 'support', t: 'text', l: 'What support would you need from us to continue or expand?', ph: 'We would need...' },
+    { id: 'recommend', t: 'choice', l: 'Would you recommend The AI Lab to another teacher or school?', o: ['Yes', 'Maybe', 'No'] }
+  ] },
+  Parent: { intro: 'Tell us what you saw at home and in the room.', liked: 'worked', improve: 'improve', recommend: 'recommend', q: [
+    { id: 'rating', t: 'stars', l: 'Overall, how was your experience with The AI Lab?' },
+    { id: 'worked', t: 'text', l: 'What did your child enjoy or talk about?', ph: 'They loved...' },
+    { id: 'improve', t: 'text', l: 'What could we do better?', ph: 'It would help if...' },
+    { id: 'recommend', t: 'choice', l: 'Would you recommend The AI Lab to another family?', o: ['Yes', 'Maybe', 'No'] }
+  ] }
+};
+function fbRead(k) { try { return JSON.parse(localStorage.getItem(k) || '[]') || []; } catch (e) { return []; } }
+function fbWrite(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+function fbSession() { try { return JSON.parse(localStorage.getItem(FB_SESSION) || '{}') || {}; } catch (e) { return {}; } }
+function fbEsc(t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+function fbRoleChooser(p, big) {
+  var cls = big ? 'text-2xl py-8' : 'text-sm py-4';
+  return '<div class="space-y-3"><p class="' + (big ? 'text-lg' : 'text-xs') + ' font-bold text-slate-200">Who is giving feedback?</p><div class="grid grid-cols-1 ' + (big ? '' : 'sm:grid-cols-3') + ' gap-3">' +
+    ['Student', 'Teacher', 'Parent'].map(function (r) { return '<button type="button" onclick="fbStart(\'' + p + '\',\'' + r + '\')" class="rounded-2xl border border-dark-600 bg-dark-700 hover:bg-rose-600 hover:border-rose-500 text-slate-100 font-extrabold ' + cls + '">' + (r === 'Parent' ? 'Parent or guest' : r) + '</button>'; }).join('') + '</div></div>';
+}
+function fbHost(p) { return document.getElementById(p === 'kiosk' ? 'fbKioskBody' : 'fbFormHost'); }
+function fbStart(p, role) {
+  var big = p === 'kiosk', sv = FB_SURVEYS[role], pad = big ? 'text-base' : 'text-xs';
+  FB_STATE[p] = { role: role, a: {} };
+  var ta = 'w-full rounded-xl bg-dark-700 border border-dark-600 p-3 text-slate-100 ' + pad;
+  var lbl = 'block font-bold text-slate-200 mb-2 ' + (big ? 'text-lg' : 'text-xs');
+  var qs = sv.q.map(function (q) {
+    var inner = '';
+    if (q.t === 'stars') inner = '<div class="flex gap-2" data-q="' + q.id + '">' + [1, 2, 3, 4, 5].map(function (n) { return '<button type="button" data-v="' + n + '" onclick="fbSet(\'' + p + '\',\'' + q.id + '\',' + n + ',this)" class="flex-1 rounded-xl border border-dark-600 bg-dark-700 text-slate-200 font-bold ' + (big ? 'text-3xl py-5' : 'text-lg py-3') + '">' + n + '<span class="block text-[10px] font-medium text-slate-400 mt-0.5">' + FB_STARS[n - 1] + '</span></button>'; }).join('') + '</div>';
+    else if (q.t === 'choice') inner = '<div class="flex flex-wrap gap-2" data-q="' + q.id + '">' + q.o.map(function (o) { return '<button type="button" data-v="' + fbEsc(o) + '" onclick="fbSet(\'' + p + '\',\'' + q.id + '\',this.getAttribute(\'data-v\'),this)" class="flex-1 min-w-[110px] rounded-xl border border-dark-600 bg-dark-700 text-slate-200 font-semibold px-3 ' + (big ? 'text-base py-4' : 'text-xs py-2.5') + '">' + fbEsc(o) + '</button>'; }).join('') + '</div>';
+    else inner = '<textarea rows="' + (big ? 3 : 2) + '" oninput="FB_STATE.' + p + '.a.' + q.id + '=this.value" class="' + ta + '" placeholder="' + fbEsc(q.ph || '') + '"></textarea>';
+    return '<div><label class="' + lbl + '">' + q.l + '</label>' + inner + '</div>';
+  }).join('');
+  host = fbHost(p);
+  host.innerHTML = '<form onsubmit="return fbSubmit(event,\'' + p + '\')" class="space-y-6"><div class="flex items-center justify-between"><p class="' + (big ? 'text-xl' : 'text-sm') + ' font-extrabold text-rose-400">' + role + ' survey</p><button type="button" onclick="fbReset(\'' + p + '\')" class="text-xs text-slate-400 underline">Change</button></div><p class="' + (big ? 'text-base' : 'text-xs') + ' text-slate-400 -mt-3">' + sv.intro + '</p>' + qs +
+    '<div class="grid sm:grid-cols-2 gap-3 items-end"><div><label class="' + lbl + '">First name (optional)</label><input id="fbName-' + p + '" class="' + ta + '" placeholder="First name"></div>' +
+    '<label class="flex items-center gap-2 text-slate-300 ' + (big ? 'text-sm' : 'text-xs') + ' pb-3"><input id="fbQuote-' + p + '" type="checkbox" class="w-5 h-5"> OK to quote me on the website (first name only)</label></div>' +
+    '<p id="fbErr-' + p + '" class="text-rose-400 text-sm hidden"></p>' +
+    '<button type="submit" class="w-full rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold ' + (big ? 'text-xl py-5' : 'text-sm py-3') + '">Submit feedback</button></form>';
+  if (big) window.scrollTo(0, 0);
+}
+var host;
+function fbReset(p) { FB_STATE[p] = {}; fbHost(p).innerHTML = fbRoleChooser(p, p === 'kiosk'); }
+function fbSet(p, id, val, btn) {
+  FB_STATE[p].a[id] = val;
+  Array.prototype.forEach.call(btn.parentNode.children, function (b) {
+    var on = b === btn || (btn.parentNode.getAttribute('data-q') === 'rating' && +b.getAttribute('data-v') <= +val && false);
+    b.classList.toggle('bg-rose-600', on); b.classList.toggle('border-rose-500', on); b.classList.toggle('text-white', on); b.classList.toggle('bg-dark-700', !on);
+  });
+}
+function fbSubmit(ev, p) {
+  ev.preventDefault();
+  var st = FB_STATE[p] || {}, sv = FB_SURVEYS[st.role], err = document.getElementById('fbErr-' + p);
+  if (!sv) return false;
+  if (!st.a.rating) { err.textContent = 'Please choose an overall rating (1 to 5).'; err.classList.remove('hidden'); return false; }
+  err.classList.add('hidden');
+  var ses = fbSession(), a = st.a, extra = {};
+  sv.q.forEach(function (q) { if (q.id !== 'rating' && q.id !== sv.liked && q.id !== sv.improve && a[q.id]) extra[q.id] = a[q.id]; });
+  var nm = document.getElementById('fbName-' + p), qk = document.getElementById('fbQuote-' + p);
+  var row = { cid: 'c' + Date.now().toString(36) + Math.random().toString(36).slice(2, 8), role: st.role, school: ses.school || '', session_date: ses.date || new Date().toISOString().slice(0, 10), rating: +a.rating,
+    liked: (a[sv.liked] || '').trim(), improve: (a[sv.improve] || '').trim(), recommend: a[sv.recommend] || '', answers: extra,
+    name: nm ? nm.value.trim() : '', quote_ok: !!(qk && qk.checked), device: p === 'kiosk' ? 'ipad-kiosk' : 'pipeline' };
+  var queue = fbRead(FB_QUEUE); queue.push(row); fbWrite(FB_QUEUE, queue);
+  var mine = fbRead(FB_LOCAL); mine.unshift(Object.assign({ at: new Date().toISOString() }, row)); fbWrite(FB_LOCAL, mine.slice(0, 500));
+  fbFlush(); FB_STATE[p] = {}; if (p === 'kiosk') { FB_COUNT++; var kc = document.getElementById('fbKioskCount'); if (kc) kc.textContent = FB_COUNT + ' submitted this session'; }
+  var h = fbHost(p), big = p === 'kiosk';
+  h.innerHTML = '<div class="text-center py-20 space-y-3"><p class="' + (big ? 'text-5xl' : 'text-2xl') + ' font-extrabold text-slate-100">Thank you!</p><p class="' + (big ? 'text-lg' : 'text-sm') + ' text-slate-300">Your feedback helps us make The AI Lab better.</p>' + (big ? '<p class="text-sm text-slate-500">Next person: tap anywhere</p>' : '') + '</div>';
+  var tid = setTimeout(function () { fbReset(p); }, big ? 4000 : 1800);
+  if (big) h.onclick = function () { clearTimeout(tid); h.onclick = null; fbReset(p); };
+  renderFeedbackList(false);
+  return false;
+}
+async function fbFlush() {
+  var queue = fbRead(FB_QUEUE); if (!queue.length) { fbQueueNote(); return; }
+  var left = [];
+  for (var i = 0; i < queue.length; i++) {
+    try {
+      var r = await fetch(SB_URL + '/rest/v1/feedback', { method: 'POST', headers: { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', Prefer: 'return=minimal' }, body: JSON.stringify(queue[i]) });
+      if (!r.ok) left.push(queue[i]);
+    } catch (e) { left.push(queue[i]); }
+  }
+  fbWrite(FB_QUEUE, left); fbQueueNote();
+}
+function fbQueueNote() {
+  var n = fbRead(FB_QUEUE).length, el = document.getElementById('fbQueueNote'); if (!el) return;
+  el.innerHTML = n ? '<span class="text-amber-400">' + n + ' response' + (n === 1 ? '' : 's') + ' waiting to upload. Saved on this device and retrying.</span> <button onclick="fbFlush()" class="underline text-rose-400 font-semibold">Retry now</button>' : '<span class="text-emerald-400">All responses uploaded.</span>';
+}
+function saveFbSession() {
+  var sel = document.getElementById('fbSchool'), d = document.getElementById('fbDate'), other = document.getElementById('fbSchoolOther');
+  var school = sel ? sel.value : ''; if (school === '__other' && other) school = other.value.trim();
+  try { localStorage.setItem(FB_SESSION, JSON.stringify({ school: school, date: d ? d.value : '' })); } catch (e) {}
+  var o = document.getElementById('fbSchoolOtherWrap'); if (o) o.classList.toggle('hidden', !(sel && sel.value === '__other'));
+  var b = document.getElementById('fbSessionBadge'); if (b) b.textContent = school || 'No session chosen';
+}
+function renderFeedbackView() {
+  var ses = fbSession(), orgs = (typeof financialProspects !== 'undefined' ? financialProspects : []).map(function (p) { return p.org; }).sort();
+  var sel = document.getElementById('fbSchool'); if (!sel) return;
+  sel.innerHTML = '<option value="">Choose the school or event</option>' + orgs.map(function (o) { return '<option value="' + fbEsc(o) + '"' + (ses.school === o ? ' selected' : '') + '>' + fbEsc(o) + '</option>'; }).join('') + '<option value="__other"' + (ses.school && orgs.indexOf(ses.school) < 0 ? ' selected' : '') + '>Other (type it in)</option>';
+  var other = document.getElementById('fbSchoolOther'); if (other && ses.school && orgs.indexOf(ses.school) < 0) other.value = ses.school;
+  var d = document.getElementById('fbDate'); if (d) d.value = ses.date || new Date().toISOString().slice(0, 10);
+  saveFbSession(); fbReset('page'); fbQueueNote(); fbFlush(); renderFeedbackList(true);
+}
+function openFeedbackKiosk() {
+  try { saveFbSession(); } catch (e) {}
+  var ses = fbSession(), k = document.getElementById('fbKiosk');
+  document.getElementById('fbKioskTitle').textContent = ses.school || 'The AI Lab'; FB_COUNT = 0; var kc0 = document.getElementById('fbKioskCount'); if (kc0) kc0.textContent = '';
+  var warn = document.getElementById('fbKioskWarn'); if (warn) warn.classList.toggle('hidden', !!ses.school);
+  fbReset('kiosk');
+  k.style.display = 'block'; document.body.style.overflow = 'hidden'; k.scrollTop = 0;
+  try { var f = k.requestFullscreen && k.requestFullscreen(); if (f && f.catch) f.catch(function () {}); } catch (e) {}
+}
+function closeFeedbackKiosk() {
+  var b = document.getElementById('fbKioskExit');
+  if (b && !b.getAttribute('data-armed')) { b.setAttribute('data-armed', '1'); b.textContent = 'Tap again to exit'; setTimeout(function () { b.removeAttribute('data-armed'); b.textContent = 'Staff exit'; }, 3000); return; }
+  if (b) { b.removeAttribute('data-armed'); b.textContent = 'Staff exit'; }
+  var k = document.getElementById('fbKiosk'); k.style.display = 'none'; document.body.style.overflow = '';
+  try { if (document.fullscreenElement) document.exitFullscreen(); } catch (e) {}
+  renderFeedbackList(true);
+}
+async function fbLoadRows() {
+  try {
+    var tok = await sbToken();
+    if (tok) { var r = await fetch(SB_URL + '/rest/v1/feedback?select=*&order=created_at.desc&limit=2000', { headers: { apikey: SB_KEY, Authorization: 'Bearer ' + tok } }); if (r.ok) FB_ROWS = await r.json(); }
+  } catch (e) {}
+  return FB_ROWS;
+}
+function fbAllRows() { return FB_ROWS ? FB_ROWS.map(function (x) { return Object.assign({}, x, { at: x.created_at }); }) : fbRead(FB_LOCAL); }
+var FB_VIEW = [], FB_COUNT = 0;
+function fbKey(x) { return x.cid || (x.id != null ? 'id' + x.id : 'at' + x.at); }
+async function renderFeedbackList(reload) {
+  var box = document.getElementById('fbList'); if (!box) return;
+  if (reload || !FB_ROWS) await fbLoadRows();
+  var rows = fbAllRows(), cloud = !!FB_ROWS; FB_VIEW = rows.slice(0, 100);
+  var n = rows.length, avg = n ? rows.reduce(function (a, x) { return a + (+x.rating || 0); }, 0) / n : 0;
+  var byRole = {}; rows.forEach(function (x) { byRole[x.role] = (byRole[x.role] || 0) + 1; });
+  var card = function (l, v, s) { return '<div class="bg-dark-700/40 border border-dark-600 rounded-2xl p-4"><p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">' + l + '</p><p class="text-2xl font-extrabold text-slate-100 mt-1">' + v + '</p><p class="text-[11px] text-slate-400">' + s + '</p></div>'; };
+  var stars = function (k) { return '<span class="text-amber-400">' + '★'.repeat(k) + '</span><span class="text-slate-600">' + '★'.repeat(5 - k) + '</span>'; };
+  var labels = { feel: 'Class felt', next: 'Wants next', engage: 'Engagement', fit: 'Fit', growth: 'Growth noticed', support: 'Support needed' };
+  var list = FB_VIEW.map(function (x, i) {
+    var ex = x.answers || {}, extras = Object.keys(ex).map(function (k) { return '<p class="text-slate-300"><span class="text-sky-400 font-semibold">' + (labels[k] || k) + ':</span> ' + fbEsc(ex[k]) + '</p>'; }).join('');
+    return '<div class="bg-dark-700/40 border border-dark-600 rounded-xl p-3 space-y-1 text-xs"><div class="flex flex-wrap items-center justify-between gap-2"><label class="flex items-center gap-2 font-bold text-slate-100"><input type="checkbox" class="fb-sel w-4 h-4" data-i="' + i + '" onchange="fbSelCount()"> ' + fbEsc(x.role) + (x.name ? ' &middot; ' + fbEsc(x.name) : '') + '</label><span>' + stars(+x.rating || 0) + '</span></div>' +
+      '<p class="text-[11px] text-slate-400">' + fbEsc(x.school || 'No school chosen') + ' &middot; ' + fbEsc(x.session_date || '') + (x.recommend ? ' &middot; Recommend/return: ' + fbEsc(x.recommend) : '') + (x.quote_ok ? ' &middot; <span class="text-emerald-400">OK to quote</span>' : '') + '</p>' +
+      (x.liked ? '<p class="text-slate-200"><span class="text-emerald-400 font-semibold">Best part:</span> ' + fbEsc(x.liked) + '</p>' : '') +
+      (x.improve ? '<p class="text-slate-200"><span class="text-amber-400 font-semibold">Could be better:</span> ' + fbEsc(x.improve) + '</p>' : '') + extras +
+      '<div class="pt-1"><button onclick="fbArm(this,\'one\',' + i + ')" class="text-[11px] text-rose-400 underline">Delete this response</button></div></div>';
+  }).join('');
+  var tools = n ? '<div class="flex flex-wrap items-center gap-2 mb-3 text-xs"><label class="flex items-center gap-2 text-slate-300"><input type="checkbox" id="fbSelAll" onchange="fbSelectAll(this.checked)" class="w-4 h-4"> Select all shown</label>' +
+    '<button id="fbDelSel" onclick="fbArm(this,\'sel\')" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 font-semibold text-rose-400">Delete selected (0)</button>' +
+    '<button onclick="fbArm(this,\'all\')" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 font-semibold text-rose-400">Delete all responses</button></div>' : '';
+  box.innerHTML = '<p class="text-[11px] text-slate-500 mb-3">' + (cloud ? 'Showing all saved responses.' : 'Showing responses from this device. Sign in on the Funnel &amp; Dashboard page to load everyone’s responses.') + '</p>' +
+    '<p id="fbDelNote" class="text-xs text-emerald-400 min-h-[1rem] mb-2"></p>' +
+    '<div class="grid grid-cols-2 gap-3 mb-4">' + card('Responses', n, Object.keys(byRole).map(function (k) { return k + ' ' + byRole[k]; }).join(' &middot; ') || 'none yet') + card('Average rating', n ? avg.toFixed(1) + ' / 5' : 'n/a', 'all surveys') + '</div>' + tools +
+    '<div class="space-y-2">' + (list || '<p class="text-xs text-slate-500 italic">No feedback yet. Choose a session above, then start kiosk mode on the iPad.</p>') + '</div>';
+}
+function fbSelCount() { var c = document.querySelectorAll('.fb-sel:checked').length, b = document.getElementById('fbDelSel'); if (b && !b.getAttribute('data-armed')) b.textContent = 'Delete selected (' + c + ')'; }
+function fbSelectAll(on) { document.querySelectorAll('.fb-sel').forEach(function (c) { c.checked = on; }); fbSelCount(); }
+function fbArm(btn, kind, i) {
+  var orig = btn.textContent;
+  if (!btn.getAttribute('data-armed')) {
+    btn.setAttribute('data-armed', '1'); btn.setAttribute('data-orig', orig); btn.textContent = 'Tap again to confirm delete';
+    setTimeout(function () { if (btn.getAttribute('data-armed')) { btn.removeAttribute('data-armed'); btn.textContent = btn.getAttribute('data-orig'); } }, 4000); return;
+  }
+  btn.removeAttribute('data-armed');
+  var rows = kind === 'one' ? [FB_VIEW[i]] : kind === 'all' ? fbAllRows() : Array.prototype.map.call(document.querySelectorAll('.fb-sel:checked'), function (c) { return FB_VIEW[+c.getAttribute('data-i')]; });
+  rows = rows.filter(Boolean);
+  if (!rows.length) { btn.textContent = btn.getAttribute('data-orig') || orig; fbDelNote('Nothing selected.', true); return; }
+  fbDeleteRows(rows);
+}
+function fbDelNote(msg, warn) { var e = document.getElementById('fbDelNote'); if (e) { e.textContent = msg; e.className = 'text-xs min-h-[1rem] mb-2 ' + (warn ? 'text-amber-400' : 'text-emerald-400'); } }
+async function fbDeleteRows(rows) {
+  var cids = {}, ids = [], cloudMsg = '';
+  rows.forEach(function (x) { if (x.cid) cids[x.cid] = 1; if (x.id != null) ids.push(x.id); });
+  if (ids.length) {
+    var tok = await sbToken();
+    if (!tok) cloudMsg = ' Cloud copies were NOT deleted: sign in on the Funnel & Dashboard page first, then delete again.';
+    else {
+      try {
+        var r = await fetch(SB_URL + '/rest/v1/feedback?id=in.(' + ids.join(',') + ')', { method: 'DELETE', headers: { apikey: SB_KEY, Authorization: 'Bearer ' + tok, Prefer: 'return=minimal' } });
+        if (!r.ok) cloudMsg = ' Cloud delete was refused. Run the latest supabase-feedback.sql in Supabase, then try again.';
+        else FB_ROWS = FB_ROWS.filter(function (x) { return ids.indexOf(x.id) < 0; });
+      } catch (e) { cloudMsg = ' Could not reach Supabase. Cloud copies were not deleted.'; }
+    }
+  }
+  var atSet = {}; rows.forEach(function (x) { if (x.at && !x.id) atSet[x.at] = 1; });
+  var gone = function (x) { return (x.cid && cids[x.cid]) || (!x.cid && atSet[x.at]); };
+  fbWrite(FB_LOCAL, fbRead(FB_LOCAL).filter(function (x) { return !gone(x); }));
+  fbWrite(FB_QUEUE, fbRead(FB_QUEUE).filter(function (x) { return !(x.cid && cids[x.cid]); }));
+  await renderFeedbackList(false); renderDashFeedback(); fbQueueNote();
+  fbDelNote('Deleted ' + rows.length + ' response' + (rows.length === 1 ? '' : 's') + '.' + cloudMsg, !!cloudMsg);
+}
+/* keep the school dropdown in step with the prospect list */
+function fbRefreshSchools() {
+  var sel = document.getElementById('fbSchool'); if (!sel || typeof financialProspects === 'undefined') return;
+  var cur = sel.value, ses = fbSession(), want = cur || ses.school || '';
+  var orgs = financialProspects.map(function (p) { return p.org; }).filter(Boolean).sort(function (a, b) { return a.localeCompare(b); });
+  sel.innerHTML = '<option value="">Choose the school or event</option>' + orgs.map(function (o) { return '<option value="' + fbEsc(o) + '"' + (want === o ? ' selected' : '') + '>' + fbEsc(o) + '</option>'; }).join('') + '<option value="__other"' + (want && orgs.indexOf(want) < 0 && cur === '__other' ? ' selected' : '') + '>Other (type it in)</option>';
+}
+/* Dashboard card: feedback scores by school (only shows once responses exist) */
+async function renderDashFeedback() {
+  var el = document.getElementById('dashFeedback'); if (!el) return;
+  if (!FB_ROWS) await fbLoadRows();
+  var rows = fbAllRows(); if (!rows.length) { el.innerHTML = ''; return; }
+  var mean = function (a) { return a.length ? a.reduce(function (s, x) { return s + (+x.rating || 0); }, 0) / a.length : null; };
+  var fmt = function (v) { return v == null ? '<span class="text-slate-600">n/a</span>' : v.toFixed(1); };
+  var pctYes = function (a) { var r = a.filter(function (x) { return x.recommend; }); return r.length ? Math.round(r.filter(function (x) { return x.recommend === 'Yes'; }).length / r.length * 100) + '%' : 'n/a'; };
+  var groups = {}; rows.forEach(function (x) { var k = x.school || 'No school chosen'; (groups[k] = groups[k] || []).push(x); });
+  var keys = Object.keys(groups).sort(function (a, b) { return mean(groups[b]) - mean(groups[a]); });
+  var tbl = keys.map(function (k) {
+    var g = groups[k], st = g.filter(function (x) { return x.role === 'Student'; }), te = g.filter(function (x) { return x.role === 'Teacher'; }), m = mean(g);
+    return '<tr class="border-t border-dark-600"><td class="py-2 pr-3 font-semibold text-slate-100">' + fbEsc(k) + '</td><td class="py-2 pr-3 text-slate-300">' + g.length + '</td>' +
+      '<td class="py-2 pr-3 w-40"><div class="flex items-center gap-2"><div class="h-2 flex-1 rounded-full bg-dark-700"><div class="h-2 rounded-full bg-emerald-500" style="width:' + (m / 5 * 100) + '%"></div></div><span class="font-bold text-slate-100">' + fmt(m) + '</span></div></td>' +
+      '<td class="py-2 pr-3 text-slate-300">' + fmt(mean(st)) + ' <span class="text-slate-500">(' + st.length + ')</span></td><td class="py-2 pr-3 text-slate-300">' + fmt(mean(te)) + ' <span class="text-slate-500">(' + te.length + ')</span></td><td class="py-2 text-slate-300">' + pctYes(g) + '</td></tr>';
+  }).join('');
+  var all = mean(rows);
+  el.innerHTML = '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-6 space-y-4"><div class="flex flex-wrap items-end justify-between gap-3"><div><h3 class="text-sm font-bold text-slate-100">Feedback scores by school</h3><p class="text-[11px] text-slate-400 mt-1">From the Feedback tab surveys. Rating is out of 5.</p></div>' +
+    '<div class="text-right"><p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">Overall score</p><p class="text-3xl font-extrabold text-emerald-400">' + fmt(all) + '<span class="text-sm text-slate-400"> / 5</span></p><p class="text-[11px] text-slate-400">' + rows.length + ' responses</p></div></div>' +
+    '<div class="overflow-x-auto"><table class="w-full text-xs text-left"><thead><tr class="text-[10px] uppercase tracking-wider text-slate-500"><th class="pb-2 pr-3">School or event</th><th class="pb-2 pr-3">Responses</th><th class="pb-2 pr-3">Overall</th><th class="pb-2 pr-3">Students</th><th class="pb-2 pr-3">Teachers</th><th class="pb-2">Would recommend / return</th></tr></thead><tbody>' + tbl + '</tbody></table></div></div>';
+}
+function exportFeedbackCsv() {
+  var rows = fbAllRows();
+  var head = ['date', 'role', 'school', 'rating', 'best_part', 'could_be_better', 'recommend_or_return', 'other_answers', 'name', 'ok_to_quote'];
+  var q = function (v) { return '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"'; };
+  var csv = [head.join(',')].concat(rows.map(function (x) { return [x.created_at || x.at || x.session_date, x.role, x.school, x.rating, x.liked, x.improve, x.recommend, JSON.stringify(x.answers || {}), x.name, x.quote_ok ? 'yes' : 'no'].map(q).join(','); })).join('\n');
+  var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv' })); a.download = 'bgcs-feedback.csv'; document.body.appendChild(a); a.click(); a.remove();
+}
+window.addEventListener('online', function () { try { fbFlush(); } catch (e) {} });
+
+/* ===================== REPORT POP-UP (copy / print / save the Funnel & Dashboard report) ===================== */
+var RPT = { money: true, mode: 'copy' };
+function rptBuild(withMoney) {
+  var n = funnelNumbers(), money = function (v) { return withMoney ? fpMoney(v) : 'hidden'; };
+  var today = new Date().toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+  var gap = Math.max(0, n.goal - n.closed - n.pending);
+  var T = [], H = [];
+  var esc = fbEsc;
+  T.push('THE BROWN GIRLS CREATIVE STUDIO - FUNNEL & DASHBOARD REPORT', today, '');
+  T.push('GOAL: ' + money(n.goal) + ' per month');
+  T.push('Closed / paid: ' + money(n.closed) + ' (' + n.by['Closed Won'] + ' deals)');
+  T.push('Pending revenue: ' + money(n.pending) + ' (' + n.by['Lead'] + ' leads awaiting invoice or signature)');
+  T.push('Open pipeline: ' + money(n.open));
+  T.push('Gap to goal after closed and pending: ' + money(gap), '', 'SALES FUNNEL');
+  var kpi = function (l, v, c) { return '<div class="k"><small>' + l + '</small><b style="color:' + c + '">' + v + '</b></div>'; };
+  H.push('<h1>The Brown Girls Creative Studio</h1><p class="sub">Funnel &amp; Dashboard report &middot; ' + esc(today) + '</p>');
+  H.push('<div class="ks">' + kpi('Monthly goal', money(n.goal), '#2A160E') + kpi('Closed / paid', money(n.closed), '#0f7a4d') + kpi('Pending revenue', money(n.pending), '#b36b00') + kpi('Open pipeline', money(n.open), '#2a5db0') + kpi('Gap to goal', money(gap), '#a31c3c') + '</div>');
+  var rows = FUNNEL_STAGES.map(function (st, i) { T.push('  ' + st.name + ': ' + n.by[st.name] + ' (' + money(n.val[st.name]) + ' potential)'); return '<tr><td>' + esc(st.name) + '</td><td>' + n.by[st.name] + '</td><td>' + n.reached[i] + '</td><td>' + money(n.val[st.name]) + '</td></tr>'; }).join('');
+  T.push('  Closed lost: ' + n.by['Closed Lost'], '');
+  H.push('<h2>Sales funnel</h2><table><tr><th>Stage</th><th>Now in stage</th><th>Reached this stage</th><th>Potential</th></tr>' + rows + '<tr><td>Closed Lost</td><td>' + n.by['Closed Lost'] + '</td><td></td><td></td></tr></table>');
+  var order = FUNNEL_STAGES.map(function (s) { return s.name; }).concat(['Closed Lost']).reverse();
+  var list = n.P.slice().sort(function (a, b) { return order.indexOf(a.stage) - order.indexOf(b.stage); });
+  T.push('PROSPECTS');
+  list.forEach(function (p) { T.push('  ' + p.org + ' | ' + p.stage + ' | ' + money(fpPot(p))); });
+  T.push('');
+  H.push('<h2>Prospects</h2><table><tr><th>Organization</th><th>Stage</th><th>Potential</th></tr>' + list.map(function (p) { return '<tr><td>' + esc(p.org) + '</td><td>' + esc(p.stage) + '</td><td>' + money(fpPot(p)) + '</td></tr>'; }).join('') + '</table>');
+  try {
+    var st = audienceStats();
+    T.push('TARGET AUDIENCE GROUPS');
+    var ar = AUDIENCE_SEGMENTS.map(function (sg) { var s = st[sg.key]; T.push('  ' + sg.title + ': ' + s.list.length + ' prospects, ' + money(s.pot) + ' potential'); return '<tr><td>' + esc(sg.title) + '</td><td>' + s.list.length + '</td><td>' + money(s.pot) + '</td></tr>'; }).join('');
+    T.push('');
+    H.push('<h2>Target audience groups</h2><table><tr><th>Group</th><th>Prospects</th><th>Potential</th></tr>' + ar + '</table>');
+  } catch (e) {}
+  try {
+    var fr = fbAllRows();
+    if (fr.length) {
+      var g = {}; fr.forEach(function (x) { var k = x.school || 'No school chosen'; (g[k] = g[k] || []).push(x); });
+      var avg = function (a) { return (a.reduce(function (s, x) { return s + (+x.rating || 0); }, 0) / a.length).toFixed(1); };
+      T.push('FEEDBACK SCORES (out of 5)');
+      var fh = Object.keys(g).map(function (k) { T.push('  ' + k + ': ' + avg(g[k]) + ' from ' + g[k].length + ' responses'); return '<tr><td>' + esc(k) + '</td><td>' + g[k].length + '</td><td>' + avg(g[k]) + ' / 5</td></tr>'; }).join('');
+      T.push('  Overall: ' + avg(fr) + ' from ' + fr.length + ' responses', '');
+      H.push('<h2>Feedback scores</h2><table><tr><th>School or event</th><th>Responses</th><th>Average</th></tr>' + fh + '<tr><td><b>Overall</b></td><td>' + fr.length + '</td><td><b>' + avg(fr) + ' / 5</b></td></tr></table>');
+    }
+  } catch (e) {}
+  return { text: T.join('\n'), body: H.join('') };
+}
+var RPT_CSS = 'body{font-family:Helvetica,Arial,sans-serif;color:#222;margin:0;padding:28px;max-width:860px}h1{font-size:22px;margin:0;color:#2A160E}.sub{color:#777;font-size:12px;margin:4px 0 18px}h2{font-size:14px;margin:22px 0 8px;color:#2A160E;border-bottom:2px solid #C7994F;padding-bottom:4px}table{width:100%;border-collapse:collapse;font-size:12px}th,td{text-align:left;padding:6px 8px;border-bottom:1px solid #e3ddd2}th{background:#f5eee1;font-size:11px;text-transform:uppercase;letter-spacing:.04em}.ks{display:flex;flex-wrap:wrap;gap:10px}.k{flex:1;min-width:120px;border:1px solid #e3ddd2;padding:10px 12px;border-radius:4px}.k small{display:block;color:#777;font-size:10px;text-transform:uppercase;letter-spacing:.06em}.k b{font-size:20px}';
+function rptDoc(r) { return '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>BGCS Funnel Report</title><style>' + RPT_CSS + '</style></head><body>' + r.body + '</body></html>'; }
+function rptRefresh() {
+  var cb = document.getElementById('rptMoney'); RPT.money = cb ? cb.checked : true;
+  var r = rptBuild(RPT.money); RPT.cur = r;
+  var f = document.getElementById('rptFrame'); if (f) f.srcdoc = rptDoc(r);
+  var t = document.getElementById('rptStamp'); if (t) t.textContent = 'Live report built ' + new Date().toLocaleTimeString();
+}
+function openReportModal(mode) {
+  RPT.mode = mode;
+  var m = document.getElementById('rptModal');
+  document.getElementById('rptTitle').textContent = mode === 'copy' ? 'Copy report' : 'Print or save report';
+  document.getElementById('rptSub').textContent = mode === 'copy' ? 'This is a live copy of the current page. Copy it as text for an email or message, or save it.' : 'Preview of the current page as a report. Print it, save it as a PDF, or download it to this device.';
+  var cb = document.getElementById('rptMoney'); cb.checked = !(typeof privacyModeActive !== 'undefined' && privacyModeActive);
+  rptRefresh(); m.style.display = 'flex';
+  document.getElementById(mode === 'copy' ? 'rptCopyBtn' : 'rptPrintBtn').focus();
+}
+function closeReportModal() { document.getElementById('rptModal').style.display = 'none'; }
+function rptNote(msg) { var e = document.getElementById('rptNote'); e.textContent = msg; clearTimeout(RPT.t); RPT.t = setTimeout(function () { e.textContent = ''; }, 3500); }
+function rptCopy() {
+  rptRefresh(); var txt = RPT.cur.text;
+  var ok = function () { rptNote('Copied. Paste it into an email, text or doc.'); };
+  var fallback = function () { var ta = document.createElement('textarea'); ta.value = txt; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy') ? ok() : rptNote('Copy was blocked. Use Download text instead.'); } catch (e) { rptNote('Copy was blocked. Use Download text instead.'); } ta.remove(); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(ok, fallback); else fallback();
+}
+function rptPrint() {
+  rptRefresh();
+  var f = document.getElementById('rptFrame');
+  try { f.contentWindow.focus(); f.contentWindow.print(); rptNote('In the print window, choose "Save as PDF" as the printer to save a PDF.'); } catch (e) { rptNote('Printing was blocked. Use Download report instead, then open and print it.'); }
+}
+function rptDownload(kind) {
+  rptRefresh();
+  var name = 'bgcs-funnel-report-' + new Date().toISOString().slice(0, 10);
+  var blob = kind === 'txt' ? new Blob([RPT.cur.text], { type: 'text/plain' }) : new Blob([rptDoc(RPT.cur)], { type: 'text/html' });
+  var file = name + (kind === 'txt' ? '.txt' : '.html');
+  var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file; document.body.appendChild(a); a.click(); a.remove();
+  rptNote('Saved ' + file + ' to this device (check Downloads or Files).');
+}
+function rptShare() {
+  rptRefresh();
+  var file = new File([rptDoc(RPT.cur)], 'bgcs-funnel-report.html', { type: 'text/html' });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) navigator.share({ files: [file], title: 'BGCS Funnel Report' }).catch(function () {});
+  else rptDownload('html');
+}
+
 function dashPot(p) { return String(p.org).indexOf('InspiHER') > -1 ? 750 : ((p.classes || 0) * 20 * (p.price || 0)); }
 function dashMoney(n) { return '$' + Math.round(n).toLocaleString(); }
 function dashCard(l, v, s) { return '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4"><p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold">' + l + '</p><p class="text-2xl font-extrabold text-slate-100 mt-1">' + v + '</p>' + (s ? '<p class="text-[11px] text-slate-400 mt-0.5">' + s + '</p>' : '') + '</div>'; }
@@ -2065,6 +2494,8 @@ return '<div class="text-xs text-slate-300 space-y-2"><p class="font-semibold te
 }
 async function renderDashboard(reload) {
 try { localStorage.setItem('bgcs_notrack', '1'); } catch (e) {}
+renderFunnelPage();
+renderDashFeedback();
 renderDashboardPipeline();
 var box = document.getElementById('dashVisitors'); if (!box) return;
 if (reload || !DASH_VISITS) {
@@ -2089,7 +2520,7 @@ var uniq = {}; V.forEach(function (v) { uniq[v.vid] = 1; });
 var avg = V.reduce(function (a, v) { return a + (v.sec || 0); }, 0) / V.length;
 var ret = Math.round(V.filter(function (v) { return v.ret; }).length / V.length * 100);
 var count = function (fn) { var o = {}; V.forEach(function (v) { var k = fn(v) || 'Unknown'; o[k] = (o[k] || 0) + 1; }); return Object.keys(o).map(function (k) { return [k, o[k]]; }).sort(function (a, b) { return b[1] - a[1]; }); };
-var pn = function (p) { return ({ 'index.html': 'Main page', 'labs.html': 'AI Lab landing', 'after-school.html': 'After School page', 'class-projects.html': 'Class projects', 'lab-projects.html': 'Client lab projects' })[p] || p; };
+var pn = function (p) { return ({ 'index.html': 'Main page', 'labs.html': 'The AI Lab (families + schools)', 'class-projects.html': 'Student work', 'lab-projects.html': 'Client labs', 'after-school.html': 'After School (old link)' })[p] || p; };
 var byDay = {}; V.forEach(function (v) { var d = new Date(v.t).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); byDay[d] = (byDay[d] || 0) + 1; });
 var dayRows = []; for (var i = Math.min(days || 14, 14) - 1; i >= 0; i--) { var k = new Date(Date.now() - i * 864e5).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }); dayRows.push([k, byDay[k] || 0]); }
 var hrs = []; for (var h = 0; h < 24; h++) hrs.push(0); V.forEach(function (v) { hrs[new Date(v.t).getHours()]++; });
@@ -3345,6 +3776,7 @@ saveFinancialProspectsLocal();
 if (!skipStamp) markLocalChange();
 }
 function saveFinancialProspectsLocal() {
+try { if (typeof fbRefreshSchools === 'function') fbRefreshSchools(); } catch (e) {}
 try {
 localStorage.setItem('bgcs_financial_prospects', JSON.stringify(financialProspects));
 } catch (e) {
@@ -3556,6 +3988,8 @@ renderSpiritMeetingNotes();
 }
 }
 function switchMainView(viewName, updateHash = true) {
+if (viewName === 'financial') viewName = 'dashboard';   /* Financial Goal Tracker now lives on the Funnel & Dashboard page */
+if (viewName === 'prospects') viewName = 'pipeline';    /* Prospect To-Do page removed */
 if (profileIsOpen() && !window.__bypassLeave) {
 requestLeaveProfile(function () {
 window.__bypassLeave = true;
@@ -3563,8 +3997,8 @@ try { switchMainView(viewName, updateHash); } finally { window.__bypassLeave = f
 });
 return;
 }
-if (viewName !== 'financial') document.getElementById('financialAuthModal').classList.add('hidden');
-if (viewName === 'financial' && !finUnlockedNow()) {
+if (viewName !== 'dashboard') document.getElementById('financialAuthModal').classList.add('hidden');
+if (viewName === 'dashboard' && !finUnlockedNow()) {
 document.getElementById('financialAuthModal').classList.remove('hidden');
 const fb = document.getElementById('finBioBtn');
 if (fb) fb.classList.toggle('hidden', !quCredId());
@@ -3575,13 +4009,13 @@ document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity', 'ailab', 'dashboard'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity', 'ailab', 'dashboard'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -3593,25 +4027,11 @@ if (updateHash) window.location.hash = "view=pipeline";
 
 const activeBtn = document.getElementById('nav-pipeline');
 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
-} else if (viewName === 'financial') {
-document.getElementById('mainView-financial').classList.remove('hidden');
-document.getElementById('pageTitle').innerText = "Financial Goal Tracker";
-renderFinancialKanban();
-applyPayrollToggleState();
-if (updateHash) window.location.hash = "view=financial";
-const activeBtn = document.getElementById('nav-financial');
-if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
-} else if (viewName === 'prospects') {
-document.getElementById('mainView-prospects').classList.remove('hidden');
-document.getElementById('pageTitle').innerText = "Prospect To-Do Checklist";
-renderProspectTodosMaster();
-if (updateHash) window.location.hash = "view=prospects";
-const activeBtn = document.getElementById('nav-prospects');
-if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 } else if (viewName === 'agenda') {
 document.getElementById('mainView-agenda').classList.remove('hidden');
 document.getElementById('pageTitle').innerText = "Spirit Meeting Outline & Agenda";
 renderSpiritMeetingNotes();
+renderMeetSetup();
 if (updateHash) window.location.hash = "view=agenda";
 const activeBtn = document.getElementById('nav-agenda');
 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
@@ -3620,11 +4040,17 @@ document.getElementById('mainView-' + viewName).classList.remove('hidden');
 const activeBtn = document.getElementById('nav-' + viewName);
 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 if (viewName === 'goals') {
-document.getElementById('pageTitle').innerText = "Target Audience";
+document.getElementById('pageTitle').innerText = "Target Audience Map";
+renderAudienceMap();
 }
 if (viewName === 'dashboard') {
-document.getElementById('pageTitle').innerText = "Dashboard";
+document.getElementById('pageTitle').innerText = "Funnel & Dashboard";
+applyPayrollToggleState();
 renderDashboard(true);
+}
+if (viewName === 'feedback') {
+document.getElementById('pageTitle').innerText = "Feedback";
+renderFeedbackView();
 }
 if (viewName === 'ailab') {
 document.getElementById('pageTitle').innerText = "AI Lab Sites";
@@ -3864,6 +4290,8 @@ renderProspectTodosMaster();
 }
 }
 function renderFinancialKanban() {
+try { if (typeof fbRefreshSchools === 'function') fbRefreshSchools(); } catch (e) {}
+if (typeof renderFunnelPage === 'function') renderFunnelPage();
 renderOutreachSummary();
 refreshStageClocks();
 const pv = document.getElementById('profileView');
@@ -4469,7 +4897,7 @@ window.location.hash = `profile=${id}&tab=${tabToOpen}`;
 const lead = financialProspects.find(l => l.id === id);
 if(!lead) return;
 // Hide all views explicitly
-['pipeline', 'goals', 'agenda', 'prospects', 'financial', 'activity', 'ailab', 'dashboard'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
