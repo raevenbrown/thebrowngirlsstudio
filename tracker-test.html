@@ -1,0 +1,16 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Tracker test</title>
+<style>body{font-family:-apple-system,Helvetica,sans-serif;background:#2A160E;color:#F3E8D6;padding:24px;max-width:640px;margin:auto;line-height:1.5}button{background:#C7994F;color:#2A160E;border:0;border-radius:4px;padding:14px 22px;font-size:18px;font-weight:600}pre{background:#3B2216;padding:12px;white-space:pre-wrap;word-break:break-word;border-radius:4px}</style></head><body>
+<h1>Tracker test</h1><p>Tap the button. It sends one test visit to your Supabase and shows exactly what came back.</p>
+<button id="b">Send test visit</button><pre id="o">Waiting...</pre>
+<script>
+var U="https://qlgnstoesdzmkcmyaqyw.supabase.co",K="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ";
+document.getElementById('b').onclick=async function(){
+ var o=document.getElementById('o');o.textContent='Sending...';
+ try{
+  var r=await fetch(U+'/rest/v1/site_visits',{method:'POST',headers:{apikey:K,Authorization:'Bearer '+K,'Content-Type':'application/json',Prefer:'return=minimal'},
+   body:JSON.stringify({sid:'test'+Date.now(),vid:'testdevice',t:Date.now(),page:'tracker-test.html',title:'Tracker test',ref:'',dev:'Test',os:'Test',br:'Test',sw:1,sh:1,tz:'',city:'Test',region:'',country:'',ret:false,sec:0})});
+  var txt=await r.text();
+  o.textContent='Status: '+r.status+(r.status===201?'\nSUCCESS: the visit was saved. Check site_visits in Supabase.':'\nFAILED: '+txt);
+ }catch(e){o.textContent='Could not reach Supabase: '+e.message+'\n(Project paused, no internet, or a blocker is on.)';}
+};
+</script></body></html>
