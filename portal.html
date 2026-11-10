@@ -379,10 +379,47 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 @media print{
   @page{ size:letter landscape; margin:0.5in; }
   body > *:not(main){ display:none !important; }
-  .pt-eyebrow, main h1, .pt-intro, .pt-card, #parentSection, #certSection > :not(#certificate){ display:none !important; }
+  .pt-eyebrow, main h1, .pt-intro, .pt-card, .pt-steps, .pt-panel, #feedSection, #parentSection, #certSection > :not(#certificate){ display:none !important; }
   main, #certSection{ padding:0 !important; margin:0 !important; border:0 !important; background:none !important; max-width:none !important; }
   #certificate{ display:block !important; box-sizing:border-box; width:100%; }
 }
+</style>
+<style>
+.pt-wide{ max-width:980px; }
+.pt-steps{ display:flex; gap:8px; flex-wrap:wrap; margin:0 0 22px; padding:0; list-style:none; }
+.pt-steps li{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; padding:8px 12px; border:1px solid rgba(243,232,214,.2); border-radius:999px; color:#DCC9A8; }
+.pt-steps li.on{ background:#C7994F; color:#2A160E; border-color:#E3BD79; font-weight:700; }
+.pt-steps li.done{ color:#E3BD79; border-color:#C7994F; cursor:pointer; }
+.pt-panel{ display:none; background:#3B2216; border:1px solid rgba(243,232,214,.16); border-radius:4px; padding:26px; margin-bottom:18px; }
+.pt-panel.on{ display:block; }
+.pt-panel h2{ font-family:'Fraunces',serif; font-weight:600; font-size:1.6rem; margin:0 0 8px; color:#fff; }
+.pt-panel p{ color:#DCC9A8; margin:0 0 14px; }
+.pt-groups{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.pt-gbtn{ background:#4A2C1C; color:#F3E8D6; border:1px solid rgba(243,232,214,.2); border-radius:4px; padding:20px 14px; font:inherit; font-weight:700; font-size:1.05rem; cursor:pointer; text-align:center; }
+.pt-gbtn small{ display:block; font-weight:400; color:#DCC9A8; margin-top:4px; }
+.pt-gbtn:hover, .pt-gbtn.sel{ background:#C7994F; color:#2A160E; border-color:#E3BD79; } .pt-gbtn:hover small, .pt-gbtn.sel small{ color:#2A160E; }
+.pt-mission{ border:1px solid #C7994F; border-radius:6px; background:rgba(199,153,79,.1); padding:16px 18px; color:#F3E8D6; font-size:1.05rem; margin-bottom:16px; }
+.pt-rules{ margin:0 0 18px; padding-left:20px; color:#DCC9A8; } .pt-rules li{ margin:4px 0; }
+.pt-f{ margin-bottom:16px; }
+.pt-f > label, .pt-f > .pt-l{ display:block; font-weight:700; font-size:.92rem; margin-bottom:5px; color:#F3E8D6; }
+.pt-panel input[type=text], .pt-panel select, .pt-panel textarea{ width:100%; padding:11px 12px; font:inherit; font-size:1rem; color:#2A160E; background:#F3E8D6; border:2px solid transparent; border-radius:2px; }
+.pt-panel textarea{ font-family:'IBM Plex Mono',monospace; font-size:.85rem; min-height:200px; }
+.pt-panel input:focus, .pt-panel select:focus, .pt-panel textarea:focus{ outline:none; border-color:#E3BD79; }
+.pt-chips{ display:flex; flex-wrap:wrap; gap:8px; }
+.pt-chip{ padding:8px 14px; border-radius:999px; background:#4A2C1C; color:#F3E8D6; border:1px solid rgba(243,232,214,.25); cursor:pointer; font:inherit; font-size:.92rem; }
+.pt-chip.on{ background:#C7994F; color:#2A160E; border-color:#E3BD79; font-weight:700; }
+.pt-score{ display:flex; align-items:center; gap:10px; margin:6px 0 4px; font-weight:700; color:#E3BD79; }
+.pt-bar{ flex:1; height:10px; background:#4A2C1C; border-radius:6px; overflow:hidden; } .pt-bar i{ display:block; height:100%; background:#C7994F; width:0; transition:width .25s; }
+.pt-tips{ margin:6px 0 0; padding-left:18px; color:#DCC9A8; font-size:.9rem; }
+.pt-out{ white-space:pre-wrap; background:#2A160E; border:1px dashed #C7994F; border-radius:4px; padding:14px; color:#F3E8D6; font-family:'IBM Plex Mono',monospace; font-size:.88rem; margin:10px 0; }
+.pt-note{ font-size:.85rem; color:#DCC9A8; border-left:3px solid #C7994F; padding:4px 0 4px 12px; margin:12px 0; }
+.pt-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; }
+.pt-b{ background:#C7994F; color:#2A160E; font:inherit; font-weight:800; padding:12px 20px; border:0; border-radius:2px; cursor:pointer; text-decoration:none; display:inline-block; }
+.pt-b:hover{ background:#E3BD79; } .pt-b.ghost{ background:transparent; color:#F3E8D6; border:1px solid rgba(243,232,214,.35); } .pt-b:disabled{ opacity:.5; cursor:default; }
+.pt-build{ display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:18px; }
+.pt-prev{ width:100%; height:420px; border:0; background:#fff; border-radius:4px; }
+.pt-two{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+@media (max-width:820px){ .pt-build{ grid-template-columns:1fr; } .pt-groups{ grid-template-columns:1fr; } .pt-prev{ height:340px; } }
 </style>
 </head>
 <body>
@@ -452,54 +489,105 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 })();
 </script>
 
-<main class="pt-wrap">
-  <div class="pt-eyebrow">The AI Lab · Student Showcase</div>
-  <h1>Show us what you <span>built.</span></h1>
-  <p class="pt-intro">Share your project and tell us how the session went. It takes about two minutes.</p>
+<main class="pt-wrap pt-wide">
+  <div class="pt-eyebrow">The AI Lab &middot; Student Studio</div>
+  <h1>Build something <span>real.</span></h1>
+  <p class="pt-intro">Pick your group, learn to write a strong prompt, then build your own page and keep it. No sign-in and no name needed.</p>
+  <ol class="pt-steps" id="steps"><li>1 &middot; Group</li><li>2 &middot; Mission</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Build</li><li>5 &middot; Finish</li></ol>
 
-  <form class="pt-card" id="submissionForm" novalidate>
-    <div class="pt-notice"><strong>Before you submit:</strong> don't type your name, phone number, email, address, or anything private. This is anonymous. Mrs. Brown reviews every submission before anything is shared.</div>
-
-    <div class="pt-field">
-      <label for="sessionTag">Your group</label>
-      <select id="sessionTag" required>
-        <option value="">Choose your group…</option>
-        <option value="5th Grade">5th grade</option>
-        <option value="Middle School">Middle school (6th–8th)</option>
-        <option value="High School">High school (9th–12th)</option>
-      </select>
-      <div class="pt-mission" id="missionBox" style="display:none;margin-top:12px;padding:12px 14px;border:1px solid #C7994F;border-radius:10px;background:rgba(199,153,79,.08);color:#F3E8D6;font-size:15px;line-height:1.5;"></div>
+  <section class="pt-panel" id="p0">
+    <h2>Who are you building with today?</h2>
+    <p>Choose your group.</p>
+    <div class="pt-groups">
+      <button class="pt-gbtn" data-g="5th Grade">5th grade<small>Website hero section</small></button>
+      <button class="pt-gbtn" data-g="Middle School">Middle school (6th&ndash;8th)<small>Project board</small></button>
+      <button class="pt-gbtn" data-g="High School">High school (9th&ndash;12th)<small>Project board</small></button>
     </div>
+  </section>
 
-    <div class="pt-field">
-      <label for="projectTitle">Project name</label>
-      <input type="text" id="projectTitle" maxlength="80" placeholder="e.g., EcoTech Solutions" autocomplete="off" required>
+  <section class="pt-panel" id="p1">
+    <h2>Your mission</h2>
+    <div class="pt-mission" id="missionText"></div>
+    <p><b style="color:#E3BD79">Ground rules</b></p>
+    <ul class="pt-rules">
+      <li>Never type your real name, phone number, address, email, or school. Use made-up names for your brand or idea.</li>
+      <li>Your work saves only on this Chromebook. Nothing is sent to us unless you tap the feedback button at the end.</li>
+      <li>You are the boss. AI helps, but you decide what is good.</li>
+    </ul>
+    <div class="pt-row"><button class="pt-b ghost" data-go="0">Back</button><button class="pt-b" data-go="2">Start the Prompt Lab</button></div>
+  </section>
+
+  <section class="pt-panel" id="p2">
+    <h2>Prompt Lab</h2>
+    <p>A strong prompt tells the AI who to be, what to make, the details, the style, and the format. Fill in each part and watch your score.</p>
+    <div class="pt-f"><label for="fRole">1. Who should the AI act as?</label><input type="text" id="fRole" maxlength="80" placeholder="e.g., a friendly website designer"></div>
+    <div class="pt-f"><label for="fGoal">2. What should it make?</label><input type="text" id="fGoal" maxlength="120" placeholder="e.g., the top section of my homepage"></div>
+    <div class="pt-f"><label for="fIdea">3. What is your idea?</label><input type="text" id="fIdea" maxlength="120" placeholder="e.g., a bakery that makes cupcakes for dogs"></div>
+    <div class="pt-f"><span class="pt-l">4. Pick words for the look (choose any)</span><div class="pt-chips" id="fStyle"></div></div>
+    <div class="pt-f"><label for="fFormat">5. How should the answer be organized?</label>
+      <select id="fFormat"><option value="">Choose&hellip;</option><option>a big headline, a short tagline, and a button label</option><option>a headline, three short benefit cards, and a button label</option><option>a title and a bulleted list of ideas</option></select></div>
+    <div class="pt-score"><span id="scoreTxt">0/5</span><div class="pt-bar"><i id="scoreBar"></i></div></div>
+    <ul class="pt-tips" id="tips"></ul>
+    <div class="pt-out" id="promptOut">Your prompt will appear here.</div>
+    <div class="pt-note"><b>Prompt Coach</b> checks the structure of your prompt. It is a checklist, not an AI. If your Chromebook allows an AI tool, copy your prompt and try it there. If not, no problem: keep going and build your page in the next step.</div>
+    <div class="pt-row"><button class="pt-b ghost" data-go="1">Back</button><button class="pt-b ghost" id="copyPrompt" type="button">Copy my prompt</button><button class="pt-b" data-go="3">Build my page</button></div>
+  </section>
+
+  <section class="pt-panel" id="p3">
+    <h2>Build your page</h2>
+    <p id="buildHint"></p>
+    <div class="pt-build">
+      <div>
+        <div class="pt-f"><label for="bHead">Headline</label><input type="text" id="bHead" maxlength="60"></div>
+        <div class="pt-f"><label for="bTag">Tagline</label><input type="text" id="bTag" maxlength="120"></div>
+        <div class="pt-f"><label for="bBtn">Button words</label><input type="text" id="bBtn" maxlength="30"></div>
+        <div id="boardFields">
+          <div class="pt-f"><label for="bSec">Section title</label><input type="text" id="bSec" maxlength="60"></div>
+          <div class="pt-f"><span class="pt-l">Three cards</span>
+            <div class="pt-two" style="margin-bottom:8px"><input type="text" id="c1t" maxlength="40" placeholder="Card 1 title"><input type="text" id="c1b" maxlength="90" placeholder="Card 1 text"></div>
+            <div class="pt-two" style="margin-bottom:8px"><input type="text" id="c2t" maxlength="40" placeholder="Card 2 title"><input type="text" id="c2b" maxlength="90" placeholder="Card 2 text"></div>
+            <div class="pt-two"><input type="text" id="c3t" maxlength="40" placeholder="Card 3 title"><input type="text" id="c3b" maxlength="90" placeholder="Card 3 text"></div>
+          </div>
+        </div>
+        <div class="pt-two">
+          <div class="pt-f"><label for="bTheme">Colors</label><select id="bTheme"></select></div>
+          <div class="pt-f"><label for="bFont">Font</label><select id="bFont"><option value="serif">Classic</option><option value="sans">Clean</option><option value="mono">Techy</option><option value="round">Friendly</option></select></div>
+        </div>
+        <div class="pt-f"><span class="pt-l">Icon</span><div class="pt-chips" id="bIcons"></div></div>
+        <div class="pt-f"><span class="pt-l">Layout</span><div class="pt-chips" id="bLayout"></div></div>
+      </div>
+      <div>
+        <iframe class="pt-prev" id="prev" sandbox="" title="Preview of your page"></iframe>
+        <details style="margin-top:10px"><summary style="cursor:pointer;color:#E3BD79;font-weight:700">Edit the code (optional)</summary>
+          <p style="margin-top:8px">Change the HTML or CSS and the preview updates. Tap &ldquo;Reset from controls&rdquo; to go back.</p>
+          <textarea id="code" spellcheck="false"></textarea>
+          <div class="pt-row"><button class="pt-b ghost" id="resetCode" type="button">Reset from controls</button></div>
+        </details>
+      </div>
     </div>
+    <div class="pt-row"><button class="pt-b ghost" data-go="2">Back</button><button class="pt-b" data-go="4">I&rsquo;m done</button></div>
+  </section>
 
-    <div class="pt-field">
-      <label for="projectUrl">Project link <span style="font-weight:400;color:#DCC9A8;">(optional)</span></label>
-      <span class="pt-hint">Paste the link to the site or prompt you made. Only share work you made in this class. No link yet? Leave it blank.</span>
-      <input type="url" id="projectUrl" maxlength="300" placeholder="https://…" autocomplete="off">
-    </div>
+  <section class="pt-panel" id="p4">
+    <h2>You built it!</h2>
+    <p>Save your page, grab your certificate, and tell us how it went.</p>
+    <div class="pt-row" style="margin-top:0"><button class="pt-b" id="dl" type="button">Download my page</button><button class="pt-b ghost" data-go="3">Keep editing</button><button class="pt-b ghost" id="restart" type="button">Start over</button></div>
+  </section>
 
-    <div class="pt-field">
-      <span class="pt-legend" id="ratingLabel">How fun was building with AI today?</span>
-      <div class="pt-scale" role="radiogroup" aria-labelledby="ratingLabel" id="ratingScale"></div>
-      <div class="pt-ends"><span>1 = not fun</span><span>10 = so fun</span></div>
-    </div>
-
-    <div class="pt-field">
-      <span class="pt-legend" id="returnLabel">Would you come back for a 4-week AI Builders Club?</span>
-      <div class="pt-scale" role="radiogroup" aria-labelledby="returnLabel" id="returnScale" style="grid-template-columns:repeat(3,1fr);"></div>
-    </div>
-
-    <div class="pt-hp" aria-hidden="true"><label>Leave this empty<input type="text" id="website" tabindex="-1" autocomplete="off"></label></div>
-
-    <button type="submit" class="pt-btn" id="submitBtn">Submit my project</button>
-    <div id="successMsg" class="pt-msg pt-ok" role="status">Thank you! Your project was submitted. Mrs. Brown will take a look.</div>
-    <div id="errorMsg" class="pt-msg pt-err" role="alert">That didn't go through. Check your internet and try again, or ask Mrs. Brown for help.</div>
-  </form>
-
+  <div id="finishExtras" style="display:none">
+    <section class="pt-sec" id="feedSection">
+      <h2>Quick feedback <span style="font-weight:400;font-size:.9rem;color:#DCC9A8">(anonymous)</span></h2>
+      <p>No names. Mrs. Brown reads every answer.</p>
+      <div class="pt-f"><span class="pt-l" id="ratingLabel">How fun was building with AI today?</span>
+        <div class="pt-scale" role="radiogroup" aria-labelledby="ratingLabel" id="ratingScale"></div>
+        <div class="pt-ends"><span>1 = not fun</span><span>10 = so fun</span></div></div>
+      <div class="pt-f"><span class="pt-l" id="returnLabel">Would you come back for a 4-week AI Builders Club?</span>
+        <div class="pt-scale" role="radiogroup" aria-labelledby="returnLabel" id="returnScale" style="grid-template-columns:repeat(3,1fr);"></div></div>
+      <div class="pt-hp" aria-hidden="true"><label>Leave this empty<input type="text" id="website" tabindex="-1" autocomplete="off"></label></div>
+      <button type="button" class="pt-btn2" id="submitBtn">Send feedback</button>
+      <div id="successMsg" class="pt-msg pt-ok" role="status">Thank you! Your feedback was sent.</div>
+      <div id="errorMsg" class="pt-msg pt-err" role="alert">That didn&rsquo;t go through. Check your internet and try again, or ask Mrs. Brown for help.</div>
+    </section>
   <section class="pt-sec" id="certSection">
     <h2>Your certificate</h2>
     <p>Type your name to see your certificate. Your name stays on your screen only. It is never sent or saved anywhere. You can print it or take a screenshot.</p>
@@ -521,75 +609,190 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     <p>Your daughter built something with AI today. Interested in a 4-week AI Builders Club in Spring 2027? Join the waitlist and we will send you the details.</p>
     <a class="pt-btn2" href="https://docs.google.com/forms/d/e/1FAIpQLSc3iR7g3Suo_yJnBKXmLaYNYc2sHLgG4pxm6IsJuq1nZ6Rvfw/viewform" target="_blank" rel="noopener">Join the Spring 2027 waitlist</a>
   </section>
+  </div>
 </main>
-
 <script>
 (function () {
   var SB_URL = "https://qlgnstoesdzmkcmyaqyw.supabase.co";
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ";
+  var KEY = 'bgcs_portal_v1';
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
 
-  var scale = document.getElementById('ratingScale');
-  for (var i = 1; i <= 10; i++) {
-    scale.insertAdjacentHTML('beforeend',
-      '<input type="radio" name="rating" id="r' + i + '" value="' + i + '"><label for="r' + i + '">' + i + '</label>');
+  var GROUPS = {
+    '5th Grade': { mode: 'hero', label: 'Hero section', role: 'a friendly website designer', goal: 'the top section of my homepage',
+      mission: 'Build your personal website hero section. Write a prompt, then design the top of a homepage for your dream career, hobby, or business idea.' },
+    'Middle School': { mode: 'board', label: 'Project board', role: 'a study coach and website designer', goal: 'a one-page project board',
+      mission: 'Build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.' },
+    'High School': { mode: 'board', label: 'Project board', role: 'a study coach and brand strategist', goal: 'a one-page landing page',
+      mission: 'Build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.' }
+  };
+  var STYLES = ['bold','playful','elegant','techy','calm','colorful'];
+  var THEMES = [
+    { n:'Espresso & Gold', bg:'#2A160E', fg:'#F3E8D6', ac:'#C7994F', bt:'#2A160E' },
+    { n:'Ocean', bg:'#0B3954', fg:'#FFFFFF', ac:'#FFD166', bt:'#0B3954' },
+    { n:'Mint', bg:'#E8FFF3', fg:'#12372A', ac:'#1FA971', bt:'#FFFFFF' },
+    { n:'Midnight', bg:'#12122B', fg:'#EEEEFF', ac:'#8EA2FF', bt:'#12122B' },
+    { n:'Berry', bg:'#3D0A3B', fg:'#FFE9F7', ac:'#FF6FB5', bt:'#3D0A3B' },
+    { n:'Sunshine', bg:'#FFF4CC', fg:'#3B2B00', ac:'#F2A900', bt:'#3B2B00' }
+  ];
+  var FONTS = { serif:"Georgia,'Times New Roman',serif", sans:"system-ui,Arial,sans-serif", mono:"'Courier New',monospace", round:"'Trebuchet MS',Verdana,sans-serif" };
+  var ICONS = ['✨','🚀','🎨','📚','👩‍💻','🌟','🤖','🌱'];
+
+  var st = { group:'', role:'', goal:'', idea:'', style:[], format:'', head:'', tag:'', btn:'', sec:'', c:['','','','','',''], theme:0, font:'serif', icon:0, layout:'center', code:'', codeEdited:false, step:0 };
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+
+  // chips
+  function chips(box, items, isOn, onTap, multi) {
+    box.innerHTML = '';
+    items.forEach(function (it, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip' + (isOn(i) ? ' on' : ''); b.textContent = it.label || it;
+      b.addEventListener('click', function () { onTap(i); chips(box, items, isOn, onTap, multi); }); box.appendChild(b);
+    });
+  }
+  function drawStyleChips() { chips($('fStyle'), STYLES, function (i) { return st.style.indexOf(STYLES[i]) > -1; }, function (i) { var v = STYLES[i], x = st.style.indexOf(v); if (x > -1) st.style.splice(x, 1); else st.style.push(v); coach(); }); }
+  function drawIcons() { chips($('bIcons'), ICONS, function (i) { return st.icon === i; }, function (i) { st.icon = i; render(); }); }
+  function drawLayout() { chips($('bLayout'), ['Centered','Left'], function (i) { return st.layout === (i ? 'left' : 'center'); }, function (i) { st.layout = i ? 'left' : 'center'; render(); }); }
+  var th = $('bTheme'); THEMES.forEach(function (t, i) { th.insertAdjacentHTML('beforeend', '<option value="' + i + '">' + esc(t.n) + '</option>'); });
+
+  // steps
+  var panels = ['p0','p1','p2','p3','p4'];
+  function go(n) {
+    if (n > 0 && !st.group) n = 0;
+    st.step = n;
+    panels.forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
+    $('finishExtras').style.display = n === 4 ? 'block' : 'none';
+    var lis = $('steps').children;
+    for (var i = 0; i < lis.length; i++) lis[i].className = i === n ? 'on' : (i < n ? 'done' : '');
+    if (n === 3) render();
+    save(); window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  $('steps').addEventListener('click', function (e) { var i = Array.prototype.indexOf.call($('steps').children, e.target); if (i > -1 && i < st.step) go(i); });
+  document.addEventListener('click', function (e) { var t = e.target; if (t && t.getAttribute && t.getAttribute('data-go') != null) go(parseInt(t.getAttribute('data-go'), 10)); });
+
+  // group
+  function applyGroup(g, fresh) {
+    var G = GROUPS[g]; st.group = g;
+    $('missionText').textContent = G.mission;
+    document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.classList.toggle('sel', b.getAttribute('data-g') === g); });
+    if (fresh) { st.role = G.role; st.goal = G.goal; }
+    $('boardFields').style.display = G.mode === 'board' ? 'block' : 'none';
+    $('buildHint').textContent = G.mode === 'hero' ? 'Make the top of your homepage. Change anything on the left and watch it update.' : 'Make a one-page board. Change anything on the left and watch it update.';
+    sync();
+  }
+  document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.addEventListener('click', function () { applyGroup(b.getAttribute('data-g'), true); go(1); }); });
+
+  // prompt lab
+  var inputs = { fRole:'role', fGoal:'goal', fIdea:'idea', fFormat:'format' };
+  Object.keys(inputs).forEach(function (id) { $(id).addEventListener('input', function () { st[inputs[id]] = this.value; coach(); }); $(id).addEventListener('change', function () { st[inputs[id]] = this.value; coach(); }); });
+  function buildPrompt() {
+    var p = 'Act as ' + (st.role || '[who the AI is]') + '. Create ' + (st.goal || '[what to make]') + ' for ' + (st.idea || '[my idea]') + '.';
+    if (st.style.length) p += ' Make the look ' + st.style.join(', ') + '.';
+    p += ' Give me ' + (st.format || '[the format you want]') + '. Keep the words short and easy to read.';
+    return p;
+  }
+  function coach() {
+    var ck = [[st.role.trim().length >= 3, 'Tell the AI who to act as.'], [st.goal.trim().length >= 8, 'Say what you want it to make.'], [st.idea.trim().length >= 5, 'Describe your idea with a few details.'],
+              [st.style.length >= 1, 'Pick at least one word for the look.'], [!!st.format, 'Choose how the answer should be organized.']];
+    var n = ck.filter(function (c) { return c[0]; }).length;
+    $('scoreTxt').textContent = n + '/5' + (n === 5 ? ' — strong prompt!' : '');
+    $('scoreBar').style.width = (n * 20) + '%';
+    $('tips').innerHTML = ck.filter(function (c) { return !c[0]; }).map(function (c) { return '<li>' + esc(c[1]) + '</li>'; }).join('');
+    $('promptOut').textContent = buildPrompt();
+    if (!st.codeEdited) seedBuild(); save();
+  }
+  $('copyPrompt').addEventListener('click', function () {
+    var b = this, t = buildPrompt();
+    function done() { b.textContent = 'Copied!'; setTimeout(function () { b.textContent = 'Copy my prompt'; }, 1500); }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () {}); else { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} ta.remove(); }
+  });
+
+  // build
+  function seedBuild() {
+    if (!st.head) st.head = '';
+    // only prefill empty fields from the idea; never overwrite what the student typed
+    var idea = st.idea.trim();
+    if (!st.head && idea) { st.head = idea.charAt(0).toUpperCase() + idea.slice(1, 50); $('bHead').value = st.head; }
+  }
+  var bmap = { bHead:'head', bTag:'tag', bBtn:'btn', bSec:'sec' };
+  Object.keys(bmap).forEach(function (id) { $(id).addEventListener('input', function () { st[bmap[id]] = this.value; st.codeEdited = false; render(); }); });
+  ['c1t','c1b','c2t','c2b','c3t','c3b'].forEach(function (id, i) { $(id).addEventListener('input', function () { st.c[i] = this.value; st.codeEdited = false; render(); }); });
+  $('bTheme').addEventListener('change', function () { st.theme = parseInt(this.value, 10); st.codeEdited = false; render(); });
+  $('bFont').addEventListener('change', function () { st.font = this.value; st.codeEdited = false; render(); });
+  function pageHtml() {
+    var T = THEMES[st.theme] || THEMES[0], G = GROUPS[st.group] || GROUPS['5th Grade'], left = st.layout === 'left';
+    var head = st.head || 'Your headline here', tag = st.tag || 'Your tagline goes here.', btn = st.btn || 'Learn more';
+    var cards = '';
+    if (G.mode === 'board') {
+      for (var i = 0; i < 3; i++) { var t = st.c[i * 2], b = st.c[i * 2 + 1]; if (t || b) cards += '<div class="card"><h3>' + esc(t) + '</h3><p>' + esc(b) + '</p></div>'; }
+      cards = '<h2>' + esc(st.sec || 'What I can do') + '</h2><div class="cards">' + (cards || '<div class="card"><h3>Card title</h3><p>Add your text on the left.</p></div>') + '</div>';
+    }
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(head) + '</title><style>' +
+      'body{margin:0;background:' + T.bg + ';color:' + T.fg + ';font-family:' + FONTS[st.font] + ';text-align:' + (left ? 'left' : 'center') + '}' +
+      '.wrap{max-width:760px;margin:0 auto;padding:48px 24px}.icon{font-size:48px}h1{font-size:2.4rem;margin:8px 0}p.tag{font-size:1.2rem;opacity:.9}' +
+      '.btn{display:inline-block;margin-top:14px;background:' + T.ac + ';color:' + T.bt + ';padding:12px 24px;border-radius:999px;font-weight:700;text-decoration:none}' +
+      'h2{margin-top:40px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;text-align:left}' +
+      '.card{border:2px solid ' + T.ac + ';border-radius:12px;padding:14px}.card h3{margin:0 0 6px;color:' + T.ac + '}.card p{margin:0}' +
+      '</style></head><body><div class="wrap"><div class="icon">' + ICONS[st.icon] + '</div><h1>' + esc(head) + '</h1><p class="tag">' + esc(tag) + '</p><a class="btn">' + esc(btn) + '</a>' + cards + '</div></body></html>';
+  }
+  function render() {
+    var html = st.codeEdited ? st.code : pageHtml();
+    if (!st.codeEdited) { st.code = html; $('code').value = html; }
+    $('prev').srcdoc = html; save();
+  }
+  $('code').addEventListener('input', function () { st.code = this.value; st.codeEdited = true; $('prev').srcdoc = st.code; save(); });
+  $('resetCode').addEventListener('click', function () { st.codeEdited = false; render(); });
+
+  function sync() {
+    $('fRole').value = st.role; $('fGoal').value = st.goal; $('fIdea').value = st.idea; $('fFormat').value = st.format;
+    $('bHead').value = st.head; $('bTag').value = st.tag; $('bBtn').value = st.btn; $('bSec').value = st.sec;
+    ['c1t','c1b','c2t','c2b','c3t','c3b'].forEach(function (id, i) { $(id).value = st.c[i] || ''; });
+    $('bTheme').value = st.theme; $('bFont').value = st.font; $('code').value = st.code || '';
+    drawStyleChips(); drawIcons(); drawLayout(); coach();
   }
 
-  var rs = document.getElementById('returnScale');
-  ['Yes','Maybe','Not right now'].forEach(function (v, i) {
-    rs.insertAdjacentHTML('beforeend', '<input type="radio" name="wouldReturn" id="w' + i + '" value="' + v + '"><label for="w' + i + '" style="width:auto;padding:0 10px;">' + v + '</label>');
+  $('dl').addEventListener('click', function () {
+    var blob = new Blob([st.codeEdited ? st.code : pageHtml()], { type: 'text/html' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'my-ai-page.html'; document.body.appendChild(a); a.click(); a.remove();
   });
-  var MISSIONS = {
-    '5th Grade': 'Your mission: build your personal website hero section. Write a prompt that makes the top of a homepage for your dream career, hobby, or business idea.',
-    'Middle School': 'Your mission: build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.',
-    'High School': 'Your mission: build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.'
-  };
-  document.getElementById('sessionTag').addEventListener('change', function () {
-    var box = document.getElementById('missionBox'), m = MISSIONS[this.value];
-    box.style.display = m ? 'block' : 'none'; box.textContent = m || '';
+  $('restart').addEventListener('click', function () {
+    if (!confirm('Start over? This clears what you built on this Chromebook.')) return;
+    try { localStorage.removeItem(KEY); } catch (e) {} location.reload();
   });
 
-
-  document.getElementById('certBtn').addEventListener('click', function () {
-    var n = document.getElementById('certName').value.trim();
-    document.getElementById('certNameOut').textContent = n || '\u00A0';
-    document.getElementById('certificate').style.display = 'block';
-    document.getElementById('printBtn').style.display = 'inline-block';
+  // certificate (name stays on screen only)
+  $('certBtn').addEventListener('click', function () {
+    var n = $('certName').value.trim();
+    $('certNameOut').textContent = n || ' ';
+    $('certificate').style.display = 'block'; $('printBtn').style.display = 'inline-block';
   });
-  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+  $('printBtn').addEventListener('click', function () { window.print(); });
 
-  var form = document.getElementById('submissionForm');
-  var btn = document.getElementById('submitBtn');
-  var ok = document.getElementById('successMsg'), err = document.getElementById('errorMsg');
+  // anonymous feedback
+  var scale = $('ratingScale');
+  for (var i = 1; i <= 10; i++) scale.insertAdjacentHTML('beforeend', '<input type="radio" name="rating" id="r' + i + '" value="' + i + '"><label for="r' + i + '">' + i + '</label>');
+  var rs = $('returnScale');
+  ['Yes','Maybe','Not right now'].forEach(function (v, i) { rs.insertAdjacentHTML('beforeend', '<input type="radio" name="wouldReturn" id="w' + i + '" value="' + v + '"><label for="w' + i + '" style="width:auto;padding:0 10px;">' + v + '</label>'); });
+  var ok = $('successMsg'), err = $('errorMsg'), btn = $('submitBtn');
   function show(el) { ok.style.display = 'none'; err.style.display = 'none'; if (el) el.style.display = 'block'; }
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
+  btn.addEventListener('click', function () {
     show(null);
-    if (document.getElementById('website').value) return;            // spam trap
-    var group = document.getElementById('sessionTag').value;
-    var title = document.getElementById('projectTitle').value.trim();
-    var url = document.getElementById('projectUrl').value.trim();
-    var rating = (form.querySelector('input[name=rating]:checked') || {}).value;
-    if (!group || !title || !rating) {
-      err.textContent = 'Please pick your group, add a project name, and pick a number for how fun it was.';
-      show(err); return;
-    }
-    if (url && !/^https?:\/\//i.test(url)) { err.textContent = 'Your link should start with https://'; show(err); return; }
-
+    if ($('website').value) return;
+    var rating = (document.querySelector('input[name=rating]:checked') || {}).value;
+    if (!rating) { err.textContent = 'Pick a number for how fun it was.'; show(err); return; }
+    var wr = (document.querySelector('input[name=wouldReturn]:checked') || {}).value || null;
+    var G = GROUPS[st.group] || GROUPS['5th Grade'];
     btn.disabled = true; btn.textContent = 'Sending…';
-    fetch(SB_URL + '/rest/v1/portal_submissions', {
-      method: 'POST',
+    fetch(SB_URL + '/rest/v1/portal_submissions', { method:'POST',
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ session_name: group, project_title: title, project_url: url || null, rating: parseInt(rating, 10), would_return: ((form.querySelector('input[name=wouldReturn]:checked') || {}).value) || null })
-    }).then(function (r) {
-      if (!r.ok) throw new Error('status ' + r.status);
-      form.reset(); btn.disabled = false; btn.textContent = 'Submit another project';
-      show(ok);
-    }).catch(function () {
-      err.textContent = "That didn't go through. Check your internet and try again, or ask Mrs. Brown for help.";
-      show(err); btn.disabled = false; btn.textContent = 'Submit my project';
-    });
+      body: JSON.stringify({ session_name: st.group || '5th Grade', project_title: G.label, project_url: null, rating: parseInt(rating, 10), would_return: wr })
+    }).then(function (r) { if (!r.ok) throw new Error(r.status); btn.textContent = 'Sent ✓'; show(ok); })
+      .catch(function () { err.textContent = "That didn't go through. Check your internet and try again, or ask Mrs. Brown for help."; show(err); btn.disabled = false; btn.textContent = 'Send feedback'; });
   });
+
+  // start
+  if (st.group && GROUPS[st.group]) { applyGroup(st.group, false); go(st.step || 0); } else { sync(); go(0); }
 })();
 </script>
 </body>
