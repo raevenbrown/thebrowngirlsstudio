@@ -385,6 +385,9 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 }
 </style>
 <style>
+.pt-time{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:#E3BD79; margin-bottom:8px; }
+.pt-clock{ display:none; margin:0 0 12px; padding:8px 12px; border:1px solid #C7994F; border-radius:4px; color:#F3E8D6; font-size:.9rem; }
+.pt-clock.late{ background:rgba(199,153,79,.2); font-weight:700; }
 .pt-wide{ max-width:980px; }
 .pt-steps{ display:flex; gap:8px; flex-wrap:wrap; margin:0 0 22px; padding:0; list-style:none; }
 .pt-steps li{ font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em; text-transform:uppercase; padding:8px 12px; border:1px solid rgba(243,232,214,.2); border-radius:999px; color:#DCC9A8; }
@@ -517,9 +520,11 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   <div class="pt-eyebrow">The AI Lab &middot; Student Studio</div>
   <h1>Build something <span>real.</span></h1>
   <p class="pt-intro">Learn how AI and vibe coding work, then use what you learned to build your own page and keep it. No name needed.</p>
+  <div id="clock" class="pt-clock"></div>
   <ol class="pt-steps" id="steps"><li>1 &middot; Group</li><li>2 &middot; Learn</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Build</li><li>5 &middot; Finish</li></ol>
 
   <section class="pt-panel" id="p0">
+    <div class="pt-time">&#9201; About 2 minutes</div>
     <h2>Who are you building with today?</h2>
     <p>Choose your group.</p>
     <div class="pt-groups">
@@ -530,10 +535,11 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   </section>
 
   <section class="pt-panel" id="p1">
+    <div class="pt-time">&#9201; About 8 minutes</div>
     <h2>Learn first, then build</h2>
     <div class="pt-mission" id="missionText"></div>
-    <p>Work through the four short lessons. Each one ends with a quick check.</p>
-    <div class="pt-score"><span id="lessonTxt">0/4 lessons</span><div class="pt-bar"><i id="lessonBar"></i></div></div>
+    <p>Three quick lessons, about 8 minutes. Each one ends with a quick check.</p>
+    <div class="pt-score"><span id="lessonTxt">0/3 lessons</span><div class="pt-bar"><i id="lessonBar"></i></div></div>
     <div id="lessons"></div>
     <p><b style="color:#E3BD79">Ground rules</b></p>
     <ul class="pt-rules">
@@ -545,8 +551,11 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   </section>
 
   <section class="pt-panel" id="p2">
+    <div class="pt-time">&#9201; About 10 minutes</div>
     <h2>Prompt Lab</h2>
     <p>A strong prompt tells the AI who to be, what to make, the details, the style, and the format. Fill in each part and watch your score.</p>
+    <div class="pt-note"><b>Weak:</b> <i>make a website</i><br><b>Strong:</b> <i>Act as a friendly designer. Create the top of my homepage for a dog bakery. Make it playful. Give me a headline, a tagline, and a button label.</i></div>
+    <div class="pt-row" style="margin:0 0 14px"><button class="pt-b ghost" id="fillEx" type="button">Stuck? Fill in an example</button></div>
     <div class="pt-f"><label for="fRole">1. Who should the AI act as?</label><input type="text" id="fRole" maxlength="80" placeholder="e.g., a friendly website designer"></div>
     <div class="pt-f"><label for="fGoal">2. What should it make?</label><input type="text" id="fGoal" maxlength="120" placeholder="e.g., the top section of my homepage"></div>
     <div class="pt-f"><label for="fIdea">3. What is your idea?</label><input type="text" id="fIdea" maxlength="120" placeholder="e.g., a bakery that makes cupcakes for dogs"></div>
@@ -561,6 +570,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   </section>
 
   <section class="pt-panel" id="p3">
+    <div class="pt-time">&#9201; About 20 minutes</div>
     <h2>Build your page</h2>
     <p id="buildHint"></p>
     <div class="pt-build">
@@ -596,6 +606,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   </section>
 
   <section class="pt-panel" id="p4">
+    <div class="pt-time">&#9201; Last 15 minutes: finish, feedback, certificate</div>
     <h2>You built it!</h2>
     <p>Save your page, grab your certificate, and tell us how it went.</p>
     <div class="pt-row" style="margin-top:0"><button class="pt-b" id="dl" type="button">Download my page</button><button class="pt-b ghost" data-go="3">Keep editing</button><button class="pt-b ghost" id="restart" type="button">Start over</button></div>
@@ -667,7 +678,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   var FONTS = { serif:"Georgia,'Times New Roman',serif", sans:"system-ui,Arial,sans-serif", mono:"'Courier New',monospace", round:"'Trebuchet MS',Verdana,sans-serif" };
   var ICONS = ['✨','🚀','🎨','📚','👩‍💻','🌟','🤖','🌱'];
 
-  var st = { group:'', role:'', goal:'', idea:'', style:[], format:'', head:'', tag:'', btn:'', sec:'', c:['','','','','',''], theme:0, font:'serif', icon:0, layout:'center', code:'', codeEdited:false, step:0, lessons:[] };
+  var st = { group:'', role:'', goal:'', idea:'', style:[], format:'', head:'', tag:'', btn:'', sec:'', c:['','','','','',''], theme:0, font:'serif', icon:0, layout:'center', code:'', codeEdited:false, step:0, lessons:[], t0:0 };
   try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
@@ -695,14 +706,14 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     for (var i = 0; i < lis.length; i++) lis[i].className = i === n ? 'on' : (i < n ? 'done' : '');
     if (n === 1) renderLessons();
     if (n === 3) render();
-    save(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    tick(); save(); window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   $('steps').addEventListener('click', function (e) { var i = Array.prototype.indexOf.call($('steps').children, e.target); if (i > -1 && i < st.step) go(i); });
   document.addEventListener('click', function (e) { var t = e.target; if (t && t.getAttribute && t.getAttribute('data-go') != null) go(parseInt(t.getAttribute('data-go'), 10)); });
 
   // group
   function applyGroup(g, fresh) {
-    var G = GROUPS[g]; st.group = g;
+    var G = GROUPS[g]; st.group = g; if (!st.t0) st.t0 = Date.now();
     $('missionText').textContent = G.mission;
     document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.classList.toggle('sel', b.getAttribute('data-g') === g); });
     if (fresh) { st.role = G.role; st.goal = G.goal; }
@@ -731,6 +742,11 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     $('promptOut').textContent = buildPrompt();
     if (!st.codeEdited) seedBuild(); save();
   }
+  $('fillEx').addEventListener('click', function () {
+    st.role = st.role || 'a friendly website designer'; st.goal = st.goal || 'the top section of my homepage';
+    st.idea = 'a bakery that makes cupcakes for dogs'; st.style = ['playful','colorful']; st.format = 'a big headline, a short tagline, and a button label';
+    $('fRole').value = st.role; $('fGoal').value = st.goal; $('fIdea').value = st.idea; $('fFormat').value = st.format; drawStyleChips(); coach();
+  });
   $('copyPrompt').addEventListener('click', function () {
     var b = this, t = buildPrompt();
     function done() { b.textContent = 'Copied!'; setTimeout(function () { b.textContent = 'Copy my prompt'; }, 1500); }
@@ -827,17 +843,12 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
       kid:'AI is a computer program that learns patterns from lots of examples. It is like how you learn to spot a dog after seeing many dogs. AI does not think or feel like a person. It makes a smart guess, and sometimes the guess is wrong. That is why YOU always check it.',
       teen:'AI chatbots are trained on huge amounts of text and predict what words are likely to come next. They can sound very sure even when they are wrong (this is called a hallucination), and they can repeat unfair patterns from the data they learned from. Your job is to direct it, verify it, and take responsibility for what you make.',
       q:'An AI gives you an answer that sounds very sure. What do you do?', o:['Trust it, it sounds smart','Check it with another source','Copy it right away'], a:1, why:'AI can be confidently wrong. Checking is part of the job.' },
-    { id:'prompt', title:'2. Writing a strong prompt',
-      kid:'A prompt is the instructions you give the AI. Strong prompts have five parts: WHO the AI should act as, WHAT to make, your IDEA, the LOOK, and the FORMAT. More detail gets a better result.',
-      teen:'A prompt is your instruction set. Strong prompts specify a role, a task, the context (your idea), constraints on style and tone, and the output format. When the result is off, do not start over. Change one part of the prompt and try again (iterate).',
-      ex:'Weak: <i>make a website</i><br>Strong: <i>Act as a friendly designer. Create the top of my homepage for a dog bakery. Make it playful. Give me a headline, a tagline, and a button label.</i>',
-      q:'Which prompt will get a better result?', o:['make me a website','Act as a designer. Make a homepage top for my dog bakery. Playful look. Headline, tagline, button.'], a:1, why:'It names who, what, the idea, the look, and the format.' },
-    { id:'vibe', title:'3. Vibe coding: describe, look, tweak',
+    { id:'vibe', title:'2. Vibe coding: describe, look, tweak',
       kid:'Vibe coding means you tell a computer what you want in plain words, it writes the code, and you test it and make it better. You do not have to memorize code. Try it: change the button below. Make it a different color and change what it says.',
       teen:'Vibe coding is building by describing what you want in plain language, letting an AI tool write the code, then testing and refining. The loop is describe, look, tweak. You still need to read the code enough to steer it and catch mistakes. Try it: edit the code and watch the result change.',
       try:true,
       q:'In vibe coding, what is your job?', o:['Memorize every code rule','Describe it, look at the result, and tweak it','Let the AI decide everything'], a:1, why:'You steer. The tool helps you build faster.' },
-    { id:'safe', title:'4. Stay safe and smart',
+    { id:'safe', title:'3. Stay safe and smart',
       kid:'Never type your real name, phone number, address, school, or email into AI tools or into a website you build. Use made-up names. Say where you got help. If an answer feels strange or unkind, tell a teacher.',
       teen:'Keep personal details out of prompts and projects: AI tools can store what you type, and anything you publish can be seen by anyone. Use made-up names and fake brands. Give credit when AI helped you, and fact-check anything you plan to rely on. If something feels off, tell a teacher.',
       q:'Which of these is okay to put in a prompt?', o:['My full name and school','My phone number','A made-up bakery idea'], a:2, why:'Made-up ideas are safe. Keep real personal details out.' }
@@ -871,7 +882,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     lessonProgress();
   }
   function lessonProgress() {
-    var n = (st.lessons || []).length; $('lessonTxt').textContent = n + '/4 lessons' + (n === 4 ? ' — ready to build!' : ''); $('lessonBar').style.width = (n * 25) + '%';
+    var n = (st.lessons || []).length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready to build!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%';
   }
 
   // ---------- class code gate ----------
@@ -888,6 +899,16 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   $('gateBtn').addEventListener('click', tryCode);
   $('gateCode').addEventListener('keydown', function (e) { if (e.key === 'Enter') tryCode(); });
   try { if (sessionStorage.getItem('bgcs_gate') === '1') unlock(); } catch (e) {}
+
+
+  // session clock (60-minute class)
+  function tick() {
+    var c = $('clock'); if (!st.t0 || !st.group) { c.style.display = 'none'; return; }
+    var m = Math.floor((Date.now() - st.t0) / 60000); c.style.display = 'block';
+    var late = m >= 45 && st.step < 4; c.className = 'pt-clock' + (late ? ' late' : '');
+    c.textContent = '\u23F1 Minute ' + Math.min(m, 60) + ' of 60' + (late ? ' \u2014 time to wrap up. Tap "I\u2019m done" to finish.' : '');
+  }
+  setInterval(tick, 15000);
 
   // start
   if (st.group && GROUPS[st.group]) { applyGroup(st.group, false); go(st.step || 0); } else { sync(); go(0); }
