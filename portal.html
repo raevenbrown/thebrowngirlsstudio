@@ -379,7 +379,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 @media print{
   @page{ size:letter landscape; margin:0.5in; }
   body > *:not(main){ display:none !important; }
-  .pt-eyebrow, main h1, .pt-intro, .pt-card, .pt-steps, .pt-panel, #feedSection, #parentSection, #certSection > :not(#certificate){ display:none !important; }
+  .pt-eyebrow, main h1, .pt-intro, .pt-card, .pt-steps, .pt-panel, #feedSection, #voteSection, #parentSection, .pt-clock, #certSection > :not(#certificate){ display:none !important; }
   main, #certSection{ padding:0 !important; margin:0 !important; border:0 !important; background:none !important; max-width:none !important; }
   #certificate{ display:block !important; box-sizing:border-box; width:100%; }
 }
@@ -581,9 +581,9 @@ main.pt-wrap{ position:relative; z-index:1; }
   <div class="pt-hero"><div class="pt-orb" aria-hidden="true"><span>The Brown<br>Girls</span></div>
     <div><div class="pt-eyebrow">Cosmic Code Academy &middot; The AI Lab</div>
     <h1>Real skills. <span>Brighter futures.</span></h1>
-    <p class="pt-intro" style="margin-bottom:0">Blast off with AI: learn how AI and vibe coding work, then build your own page and keep it. No name needed.</p></div><svg class="pt-chars pt-chars-hero" viewBox="0 0 240 190" role="img" aria-label="Grace, a Black girl with afro puffs, waving with her friendly robot"><use href="#duo"/></svg></div>
+    <p class="pt-intro" style="margin-bottom:0">Blast off with AI: learn how AI works, then practice the skill that matters most: writing great prompts. No name needed.</p></div><svg class="pt-chars pt-chars-hero" viewBox="0 0 240 190" role="img" aria-label="Grace, a Black girl with afro puffs, waving with her friendly robot"><use href="#duo"/></svg></div>
   <div id="clock" class="pt-clock"></div>
-  <ol class="pt-steps" id="steps"><li>1 &middot; Crew</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Build</li><li>5 &middot; Landing</li></ol>
+  <ol class="pt-steps" id="steps"><li>1 &middot; Crew</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Landing</li></ol>
 
   <section class="pt-panel" id="p0">
     <div class="pt-time">&#9201; About 2 minutes</div>
@@ -600,86 +600,48 @@ main.pt-wrap{ position:relative; z-index:1; }
     <div class="pt-time">&#9201; About 8 minutes</div>
     <h2>Voyage 1: AI Basics</h2>
     <div class="pt-mrow"><svg class="pt-chars" viewBox="0 0 240 190" role="img" aria-label="Grace and her robot"><use href="#duo"/></svg><div class="pt-mission" id="missionText" style="flex:1;margin:0"></div></div>
-    <p>Three quick lessons, about 8 minutes. Each one ends with a quick check.</p>
+    <p>Three quick lessons. The big idea: <b style="color:#E3BD79">AI does what you say, so your prompt is your superpower.</b></p>
     <div class="pt-score"><span id="lessonTxt">0/3 lessons</span><div class="pt-bar"><i id="lessonBar"></i></div></div>
     <div id="lessons"></div>
-    <p><b style="color:#E3BD79">Ground rules</b></p>
-    <ul class="pt-rules">
-      <li>Never type your real name, phone number, address, email, or school. Use made-up names for your brand or idea.</li>
-      <li>Your work saves only on this Chromebook. Nothing is sent to us unless you tap the feedback button at the end.</li>
-      <li>You are the boss. AI helps, but you decide what is good.</li>
-    </ul>
     <div class="pt-row"><button class="pt-b ghost" data-go="0">Back</button><button class="pt-b" data-go="2">Start the Prompt Lab</button></div>
   </section>
 
   <section class="pt-panel" id="p2">
-    <div class="pt-time">&#9201; About 10 minutes</div>
+    <div class="pt-time">&#9201; About 30 minutes</div>
     <h2>Voyage 2: Prompt Lab</h2>
-    <p>A strong prompt tells the AI who to be, what to make, the details, the style, and the format. Fill in each part and watch your score.</p>
-    <div class="pt-note"><b>Weak:</b> <i>make a website</i><br><b>Strong:</b> <i>Act as a friendly designer. Create the top of my homepage for a dog bakery. Make it playful. Give me a headline, a tagline, and a button label.</i></div>
-    <div class="pt-row" style="margin:0 0 14px"><button class="pt-b ghost" id="fillEx" type="button">Stuck? Fill in an example</button></div>
-    <div class="pt-f"><label for="fRole">1. Who should the AI act as?</label><input type="text" id="fRole" maxlength="80" placeholder="e.g., a friendly website designer"></div>
-    <div class="pt-f"><label for="fGoal">2. What should it make?</label><input type="text" id="fGoal" maxlength="120" placeholder="e.g., the top section of my homepage"></div>
-    <div class="pt-f"><label for="fIdea">3. What is your idea?</label><input type="text" id="fIdea" maxlength="120" placeholder="e.g., a bakery that makes cupcakes for dogs"></div>
-    <div class="pt-f"><span class="pt-l">4. Pick words for the look (choose any)</span><div class="pt-chips" id="fStyle"></div></div>
-    <div class="pt-f"><label for="fFormat">5. How should the answer be organized?</label>
-      <select id="fFormat"><option value="">Choose&hellip;</option><option>a big headline, a short tagline, and a button label</option><option>a headline, three short benefit cards, and a button label</option><option>a title and a bulleted list of ideas</option></select></div>
-<details class="ls tool" style="margin:6px 0 16px"><summary><span><span class="t">AI Tool Widget:</span> Prompt Practice</span><span class="tick">optional</span></summary><div class="lb">
-      <p>Type any prompt and see which of the five parts it has.</p>
-      <textarea id="ppText" spellcheck="false" style="min-height:80px;font-family:inherit;font-size:1rem" placeholder="Try: Act as a designer. Make a homepage top for my dog bakery..."></textarea>
-      <ul class="pp-list" id="ppList"></ul></div></details>
-    <div class="pt-score"><span id="scoreTxt">0/5</span><div class="pt-bar"><i id="scoreBar"></i></div></div>
-    <ul class="pt-tips" id="tips"></ul>
-    <div class="pt-out" id="promptOut">Your prompt will appear here.</div>
-    <div class="pt-note"><b>Prompt Coach</b> checks the structure of your prompt. It is a checklist, not an AI. If your Chromebook allows an AI tool, copy your prompt and try it there. If not, no problem: keep going and build your page in the next step.</div>
-    <div class="pt-row"><button class="pt-b ghost" data-go="1">Back</button><button class="pt-b ghost" id="copyPrompt" type="button">Copy my prompt</button><button class="pt-b" data-go="3">Build my page</button></div>
+    <p>Write a prompt, run it in Practice AI, see what you get, then make your prompt better and run it again. Can you get all 5 parts?</p>
+    <div class="pt-build">
+      <div>
+        <div class="pt-f"><label for="fRole">1. Who should the AI act as?</label><input type="text" id="fRole" maxlength="80" placeholder="e.g., a friendly website designer"></div>
+        <div class="pt-f"><label for="fGoal">2. What should it make?</label><input type="text" id="fGoal" maxlength="120" placeholder="e.g., the top section of my homepage"></div>
+        <div class="pt-f"><label for="fIdea">3. What is your idea?</label><input type="text" id="fIdea" maxlength="120" placeholder="e.g., a bakery that makes cupcakes for dogs"></div>
+        <div class="pt-f"><span class="pt-l">4. Pick words for the look (choose any)</span><div class="pt-chips" id="fStyle"></div></div>
+        <div class="pt-f"><label for="fFormat">5. How should the answer be organized?</label>
+          <select id="fFormat"><option value="">Choose&hellip;</option><option>a big headline, a short tagline, and a button label</option><option>a headline, three short benefit cards, and a button label</option><option>a title and a bulleted list of ideas</option></select></div>
+        <div class="pt-score"><span id="scoreTxt">0/5</span><div class="pt-bar"><i id="scoreBar"></i></div></div>
+        <ul class="pt-tips" id="tips"></ul>
+        <div class="pt-out" id="promptOut">Your prompt will appear here.</div>
+        <div class="pt-row" style="margin-top:8px"><button class="pt-b ghost" id="fillEx" type="button">Stuck? Fill in an example</button><button class="pt-b ghost" id="copyPrompt" type="button">Copy my prompt</button></div>
+        <details class="ls tool" style="margin:14px 0 0"><summary><span><span class="t">AI Tool Widget:</span> Prompt Practice</span><span class="tick">optional</span></summary><div class="lb">
+          <p>Type any prompt and see which of the five parts it has.</p>
+          <textarea id="ppText" spellcheck="false" style="min-height:80px;font-family:inherit;font-size:1rem" placeholder="Try: Act as a designer. Make a homepage top for my dog bakery..."></textarea>
+          <ul class="pp-list" id="ppList"></ul></div></details>
+      </div>
+      <div>
+        <div class="pt-row" style="margin:0 0 8px;align-items:center"><button class="pt-b" id="runBtn" type="button">Run my prompt</button><div class="pt-chips" id="tries"></div></div>
+        <iframe class="pt-prev" id="prev" sandbox="" title="What Practice AI made"></iframe>
+        <div class="pt-note" id="runHint">Press <b>Run my prompt</b> to see what Practice AI makes.</div>
+        <div class="pt-note"><b>Practice AI</b> is a simulator, not a real AI. It follows simple rules so you can see how a better prompt gets a better result. If your Chromebook allows a real AI tool, copy your prompt and try it there too.</div>
+      </div>
+    </div>
+    <div class="pt-row"><button class="pt-b ghost" data-go="1">Back</button><button class="pt-b" data-go="3">I&rsquo;m done</button></div>
   </section>
 
   <section class="pt-panel" id="p3">
-    <div class="pt-time">&#9201; About 20 minutes</div>
-    <h2>Voyage 3: Build your page</h2>
-    <p id="buildHint"></p>
-    <div class="pt-build">
-      <div>
-        <div class="pt-f"><label for="bHead">Headline</label><input type="text" id="bHead" maxlength="60"></div>
-        <div class="pt-f"><label for="bTag">Tagline</label><input type="text" id="bTag" maxlength="120"></div>
-        <div class="pt-f"><label for="bBtn">Button words</label><input type="text" id="bBtn" maxlength="30"></div>
-        <div id="boardFields">
-          <div class="pt-f"><label for="bSec">Section title</label><input type="text" id="bSec" maxlength="60"></div>
-          <div class="pt-f"><span class="pt-l">Three cards</span>
-            <div class="pt-two" style="margin-bottom:8px"><input type="text" id="c1t" maxlength="40" placeholder="Card 1 title"><input type="text" id="c1b" maxlength="90" placeholder="Card 1 text"></div>
-            <div class="pt-two" style="margin-bottom:8px"><input type="text" id="c2t" maxlength="40" placeholder="Card 2 title"><input type="text" id="c2b" maxlength="90" placeholder="Card 2 text"></div>
-            <div class="pt-two"><input type="text" id="c3t" maxlength="40" placeholder="Card 3 title"><input type="text" id="c3b" maxlength="90" placeholder="Card 3 text"></div>
-          </div>
-        </div>
-        <div class="pt-two">
-          <div class="pt-f"><label for="bTheme">Colors</label><select id="bTheme"></select></div>
-          <div class="pt-f"><label for="bFont">Font</label><select id="bFont"><option value="serif">Classic</option><option value="sans">Clean</option><option value="mono">Techy</option><option value="round">Friendly</option></select></div>
-        </div>
-        <div class="pt-f"><span class="pt-l">Icon</span><div class="pt-chips" id="bIcons"></div></div>
-        <div class="pt-f"><span class="pt-l">Layout</span><div class="pt-chips" id="bLayout"></div></div>
-      </div>
-      <div>
-        <iframe class="pt-prev" id="prev" sandbox="" title="Preview of your page"></iframe>
-<details class="ls tool" style="margin-top:10px"><summary><span><span class="t">AI Tool Widget:</span> Code Peek</span><span class="tick">optional</span></summary><div class="lb">
-          <p>Pick a piece of code to see what it means in plain words.</p>
-          <select id="cpSel" style="width:100%;padding:10px;border-radius:2px"></select>
-          <pre id="cpCode"></pre><ul class="pp-list" id="cpWhy"></ul></div></details>
-        <details style="margin-top:10px"><summary style="cursor:pointer;color:#E3BD79;font-weight:700">Edit the code (optional)</summary>
-          <p style="margin-top:8px">Change the HTML or CSS and the preview updates. Tap &ldquo;Reset from controls&rdquo; to go back.</p>
-          <textarea id="code" spellcheck="false"></textarea>
-          <div class="pt-row"><button class="pt-b ghost" id="resetCode" type="button">Reset from controls</button></div>
-        </details>
-      </div>
-    </div>
-    <div class="pt-row"><button class="pt-b ghost" data-go="2">Back</button><button class="pt-b" data-go="4">I&rsquo;m done</button></div>
-  </section>
-
-  <section class="pt-panel" id="p4">
     <div class="pt-time">&#9201; Last 15 minutes: finish, feedback, certificate</div>
     <h2>Landing: mission complete!</h2>
-    <p>Save your page, grab your certificate, and tell us how it went.</p>
-    <div class="pt-row" style="margin-top:0"><button class="pt-b" id="dl" type="button">Download my page</button><button class="pt-b ghost" data-go="3">Keep editing</button><button class="pt-b ghost" id="restart" type="button">Start over</button></div>
+    <p>You wrote, tested, and improved a prompt. That is the skill. Save your best result, grab your certificate, and tell us how it went.</p>
+    <div class="pt-row" style="margin-top:0"><button class="pt-b" id="dl" type="button">Download my best result</button><button class="pt-b ghost" data-go="2">Keep improving</button><button class="pt-b ghost" id="restart" type="button">Start over</button></div>
   </section>
 
   <div id="finishExtras" style="display:none">
@@ -692,7 +654,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     <section class="pt-sec" id="feedSection">
       <h2>Quick feedback <span style="font-weight:400;font-size:.9rem;color:#DCC9A8">(anonymous)</span></h2>
       <p>No names. Mrs. Brown reads every answer.</p>
-      <div class="pt-f"><span class="pt-l" id="ratingLabel">How fun was building with AI today?</span>
+      <div class="pt-f"><span class="pt-l" id="ratingLabel">How fun was learning with AI today?</span>
         <div class="pt-scale" role="radiogroup" aria-labelledby="ratingLabel" id="ratingScale"></div>
         <div class="pt-ends"><span>1 = not fun</span><span>10 = so fun</span></div></div>
       <div class="pt-f"><span class="pt-l" id="returnLabel">Would you come back for a 4-week AI Builders Club?</span>
@@ -730,93 +692,129 @@ main.pt-wrap{ position:relative; z-index:1; }
 (function () {
   var SB_URL = "https://qlgnstoesdzmkcmyaqyw.supabase.co";
   var SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ";
-  var KEY = 'bgcs_portal_v1';
+  var KEY = 'bgcs_portal_v2';
+  var LAST = 3;
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
 
   var GROUPS = {
-    '5th Grade': { mode: 'hero', label: 'Hero section', role: 'a friendly website designer', goal: 'the top section of my homepage',
-      mission: 'Build your personal website hero section. Write a prompt, then design the top of a homepage for your dream career, hobby, or business idea.' },
-    'Middle School': { mode: 'board', label: 'Project board', role: 'a study coach and website designer', goal: 'a one-page project board',
-      mission: 'Build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.' },
-    'High School': { mode: 'board', label: 'Project board', role: 'a study coach and brand strategist', goal: 'a one-page landing page',
-      mission: 'Build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.' }
+    '5th Grade': { mode:'hero', label:'Hero section', role:'a friendly website designer', goal:'the top section of my homepage',
+      mission:'Write a prompt that gets Practice AI to make the top of a homepage for your dream career, hobby, or business idea. Then make your prompt better until you love the result.' },
+    'Middle School': { mode:'board', label:'Project board', role:'a study coach and website designer', goal:'a one-page project board',
+      mission:'Write a prompt that gets Practice AI to make a project board that shows how you can use AI as a tutor, study partner, or brand builder. Then improve your prompt until the result is strong.' },
+    'High School': { mode:'board', label:'Project board', role:'a study coach and brand strategist', goal:'a one-page landing page',
+      mission:'Write a prompt that gets Practice AI to make a landing page that shows how you can use AI as a tutor, study partner, or brand builder. Then iterate on your prompt until the result is strong.' }
   };
   var STYLES = ['bold','playful','elegant','techy','calm','colorful'];
-  var THEMES = [
-    { n:'Espresso & Gold', bg:'#2A160E', fg:'#F3E8D6', ac:'#C7994F', bt:'#2A160E' },
-    { n:'Ocean', bg:'#0B3954', fg:'#FFFFFF', ac:'#FFD166', bt:'#0B3954' },
-    { n:'Mint', bg:'#E8FFF3', fg:'#12372A', ac:'#1FA971', bt:'#FFFFFF' },
-    { n:'Midnight', bg:'#12122B', fg:'#EEEEFF', ac:'#8EA2FF', bt:'#12122B' },
-    { n:'Berry', bg:'#3D0A3B', fg:'#FFE9F7', ac:'#FF6FB5', bt:'#3D0A3B' },
-    { n:'Sunshine', bg:'#FFF4CC', fg:'#3B2B00', ac:'#F2A900', bt:'#3B2B00' }
-  ];
-  var FONTS = { serif:"Georgia,'Times New Roman',serif", sans:"system-ui,Arial,sans-serif", mono:"'Courier New',monospace", round:"'Trebuchet MS',Verdana,sans-serif" };
-  var ICONS = ['✨','🚀','🎨','📚','👩‍💻','🌟','🤖','🌱'];
+  var LOOK = {
+    bold:{ bg:'#12122B', fg:'#EEEEFF', ac:'#8EA2FF', bt:'#12122B', font:"system-ui,Arial,sans-serif", icon:'🚀', tag:'Big ideas. Bold moves.' },
+    playful:{ bg:'#FFF4CC', fg:'#3B2B00', ac:'#F2A900', bt:'#3B2B00', font:"'Trebuchet MS',Verdana,sans-serif", icon:'🌟', tag:'Fun is the main ingredient!' },
+    elegant:{ bg:'#2A160E', fg:'#F3E8D6', ac:'#C7994F', bt:'#2A160E', font:"Georgia,'Times New Roman',serif", icon:'✨', tag:'Crafted with care.' },
+    techy:{ bg:'#0B3954', fg:'#FFFFFF', ac:'#FFD166', bt:'#0B3954', font:"'Courier New',monospace", icon:'🤖', tag:'Built for the future.' },
+    calm:{ bg:'#E8FFF3', fg:'#12372A', ac:'#1FA971', bt:'#FFFFFF', font:"system-ui,Arial,sans-serif", icon:'🌱', tag:'Take a deep breath. Start here.' },
+    colorful:{ bg:'#3D0A3B', fg:'#FFE9F7', ac:'#FF6FB5', bt:'#3D0A3B', font:"'Trebuchet MS',Verdana,sans-serif", icon:'🎨', tag:'Bright, bold, and made for you.' }
+  };
 
-  var st = { group:'', role:'', goal:'', idea:'', style:[], format:'', head:'', tag:'', btn:'', sec:'', c:['','','','','',''], theme:0, font:'serif', icon:0, layout:'center', code:'', codeEdited:false, step:0, lessons:[], t0:0 };
+  var st = { group:'', role:'', goal:'', idea:'', style:[], format:'', step:0, lessons:[], t0:0, tries:[], cur:-1 };
   try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
-  // chips
-  function chips(box, items, isOn, onTap, multi) {
-    box.innerHTML = '';
-    items.forEach(function (it, i) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip' + (isOn(i) ? ' on' : ''); b.textContent = it.label || it;
-      b.addEventListener('click', function () { onTap(i); chips(box, items, isOn, onTap, multi); }); box.appendChild(b);
+  // ---------- chips ----------
+  function drawStyleChips() {
+    var box = $('fStyle'); box.innerHTML = '';
+    STYLES.forEach(function (v) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip' + (st.style.indexOf(v) > -1 ? ' on' : ''); b.textContent = v;
+      b.addEventListener('click', function () { var x = st.style.indexOf(v); if (x > -1) st.style.splice(x, 1); else st.style.push(v); drawStyleChips(); coach(); });
+      box.appendChild(b);
     });
   }
-  function drawStyleChips() { chips($('fStyle'), STYLES, function (i) { return st.style.indexOf(STYLES[i]) > -1; }, function (i) { var v = STYLES[i], x = st.style.indexOf(v); if (x > -1) st.style.splice(x, 1); else st.style.push(v); coach(); }); }
-  function drawIcons() { chips($('bIcons'), ICONS, function (i) { return st.icon === i; }, function (i) { st.icon = i; render(); }); }
-  function drawLayout() { chips($('bLayout'), ['Centered','Left'], function (i) { return st.layout === (i ? 'left' : 'center'); }, function (i) { st.layout = i ? 'left' : 'center'; render(); }); }
-  var th = $('bTheme'); THEMES.forEach(function (t, i) { th.insertAdjacentHTML('beforeend', '<option value="' + i + '">' + esc(t.n) + '</option>'); });
 
-  // steps
-  var panels = ['p0','p1','p2','p3','p4'];
+  // ---------- steps ----------
+  var panels = ['p0','p1','p2','p3'];
   function go(n) {
     if (n > 0 && !st.group) n = 0;
     st.step = n;
     panels.forEach(function (id, i) { $(id).classList.toggle('on', i === n); });
-    $('finishExtras').style.display = n === 4 ? 'block' : 'none';
+    $('finishExtras').style.display = n === LAST ? 'block' : 'none';
     var lis = $('steps').children;
     for (var i = 0; i < lis.length; i++) lis[i].className = i === n ? 'on' : (i < n ? 'done' : '');
     if (n === 1) renderLessons();
-    if (n === 3) render();
+    if (n === 2) showTry(st.cur);
     tick(); save(); window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   $('steps').addEventListener('click', function (e) { var i = Array.prototype.indexOf.call($('steps').children, e.target); if (i > -1 && i < st.step) go(i); });
   document.addEventListener('click', function (e) { var t = e.target; if (t && t.getAttribute && t.getAttribute('data-go') != null) go(parseInt(t.getAttribute('data-go'), 10)); });
 
-  // group
   function applyGroup(g, fresh) {
     var G = GROUPS[g]; st.group = g; if (!st.t0) st.t0 = Date.now();
     $('missionText').textContent = 'Mission: ' + G.mission;
     document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.classList.toggle('sel', b.getAttribute('data-g') === g); });
     if (fresh) { st.role = G.role; st.goal = G.goal; }
-    $('boardFields').style.display = G.mode === 'board' ? 'block' : 'none';
-    $('buildHint').textContent = G.mode === 'hero' ? 'Make the top of your homepage. Change anything on the left and watch it update.' : 'Make a one-page board. Change anything on the left and watch it update.';
     sync();
   }
   document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.addEventListener('click', function () { applyGroup(b.getAttribute('data-g'), true); go(1); }); });
 
-  // prompt lab
+  // ---------- lessons ----------
+  var LESSONS = [
+    { id:'what', title:'1. What is AI?',
+      kid:'AI is a computer program that learned patterns from lots and lots of examples. When you ask it something, it makes a smart guess about what should come next. It does not think or feel like a person, and sometimes its guess is wrong. Try the game: how would AI finish this?',
+      teen:'AI chatbots learned patterns from huge amounts of text, and they write by predicting what words are likely to come next. That is why they can sound sure and still be wrong, and why they can repeat unfair patterns from their training data. Try the game: how would AI finish this?',
+      game:true, q:'How does AI come up with its answers?', o:['It thinks and feels like a person','It makes smart guesses based on patterns','It looks up one secret answer book'], a:1, why:'Pattern-based guesses are powerful, but they can be wrong, so humans check.' },
+    { id:'robot', title:'2. The robot does exactly what you say',
+      kid:'Imagine you tell a robot helper: "Make a sandwich." Watch what happens when the instruction gets better. This is why prompts matter: AI follows your words, not your mind.',
+      teen:'AI follows the words you give it, not the picture in your head. Vague instructions get vague results, and detailed instructions get better ones. Watch the same request at three levels of detail. This is the whole idea behind prompting.',
+      robot:true, q:'Why did the robot mess up the first time?', o:['It was being silly','The instruction did not have enough detail','Robots do not like sandwiches'], a:1, why:'More detail in the prompt means a better result.' },
+    { id:'safe', title:'3. Stay safe and smart',
+      kid:'Never type your real name, phone number, address, school, or email into AI tools or a website. Use made-up names. Say when AI helped you. If an answer feels strange or unkind, tell a teacher.',
+      teen:'Keep personal details out of prompts: AI tools can store what you type. Use made-up names and fake brands. Give credit when AI helped, and fact-check anything you plan to rely on. If something feels off, tell a teacher.',
+      q:'Which of these is okay to put in a prompt?', o:['My full name and school','My phone number','A made-up bakery idea'], a:2, why:'Made-up ideas are safe. Keep real personal details out.' }
+  ];
+  var GUESS = [['jelly','Yes! "Jelly" is the most likely word. AI picks words that usually come next.'],['the ocean','Possible, but not likely. AI picks the most likely word, so it would say "jelly."'],['Tuesday','Silly! AI would almost never pick that. It goes for the most likely word: "jelly."']];
+  var ROBOT = [['Make a sandwich.','Robot: "Okay!" It puts a jar of peanut butter on a plate. "Sandwich made!" (Not what you wanted.)'],
+               ['Make a peanut butter and jelly sandwich.','Robot: It spreads peanut butter and jelly on ONE slice of bread. Closer, but still not right.'],
+               ['Act as a chef. Make a peanut butter and jelly sandwich with two slices of bread, cut in triangles, on a plate.','Robot: Two slices, spread, closed, cut in triangles, on a plate. Perfect! Details made the difference.']];
+  function renderLessons() {
+    var teen = st.group && st.group !== '5th Grade', box = $('lessons'); box.innerHTML = '';
+    LESSONS.forEach(function (L) {
+      var done = st.lessons.indexOf(L.id) > -1, d = document.createElement('details'); d.className = 'ls' + (done ? ' done' : '');
+      var extra = '';
+      if (L.game) extra = '<div class="ex">Peanut butter and ____</div><div class="pt-chips" id="gChips">' + GUESS.map(function (g, i) { return '<button type="button" class="pt-chip" data-g="' + i + '">' + esc(g[0]) + '</button>'; }).join('') + '</div><div class="why" id="gOut" style="margin:8px 0"></div>';
+      if (L.robot) extra = '<div class="pt-chips" id="rChips">' + ROBOT.map(function (r, i) { return '<button type="button" class="pt-chip" data-r="' + i + '">Level ' + (i + 1) + '</button>'; }).join('') + '</div><div class="ex" id="rSay" style="margin-top:8px">Pick a level to hear the instruction.</div><div class="why" id="rOut"></div>';
+      d.innerHTML = '<summary><span>' + esc(L.title) + '</span><span class="tick">' + (done ? '✓ done' : '') + '</span></summary><div class="lb"><p>' + esc(teen ? L.teen : L.kid) + '</p>' + extra +
+        '<div class="q"><b>Quick check: ' + esc(L.q) + '</b>' + L.o.map(function (t, i) { return '<button type="button" class="opt" data-i="' + i + '">' + esc(t) + '</button>'; }).join('') + '<div class="why" data-why></div></div></div>';
+      d.querySelectorAll('.opt').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var i = parseInt(b.getAttribute('data-i'), 10), why = d.querySelector('[data-why]');
+          if (i === L.a) { b.className = 'opt right'; why.textContent = 'Correct! ' + L.why; if (st.lessons.indexOf(L.id) < 0) { st.lessons.push(L.id); save(); } d.classList.add('done'); d.querySelector('.tick').textContent = '✓ done'; lessonProgress(); }
+          else { b.className = 'opt wrong'; why.textContent = 'Not quite. Try another answer.'; }
+        });
+      });
+      if (L.game) d.querySelectorAll('[data-g]').forEach(function (b) { b.addEventListener('click', function () { d.querySelector('#gOut').textContent = GUESS[parseInt(b.getAttribute('data-g'), 10)][1]; }); });
+      if (L.robot) d.querySelectorAll('[data-r]').forEach(function (b) { b.addEventListener('click', function () { var r = ROBOT[parseInt(b.getAttribute('data-r'), 10)]; d.querySelector('#rSay').textContent = 'You say: "' + r[0] + '"'; d.querySelector('#rOut').textContent = r[1]; }); });
+      box.appendChild(d);
+    });
+    lessonProgress();
+  }
+  function lessonProgress() { var n = st.lessons.length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready for the Prompt Lab!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%'; }
+
+  // ---------- prompt lab ----------
   var inputs = { fRole:'role', fGoal:'goal', fIdea:'idea', fFormat:'format' };
   Object.keys(inputs).forEach(function (id) { $(id).addEventListener('input', function () { st[inputs[id]] = this.value; coach(); }); $(id).addEventListener('change', function () { st[inputs[id]] = this.value; coach(); }); });
+  function parts() { return [st.role.trim().length >= 3, st.goal.trim().length >= 8, st.idea.trim().length >= 5, st.style.length >= 1, !!st.format]; }
+  function scoreOf() { return parts().filter(Boolean).length; }
   function buildPrompt() {
     var p = 'Act as ' + (st.role || '[who the AI is]') + '. Create ' + (st.goal || '[what to make]') + ' for ' + (st.idea || '[my idea]') + '.';
     if (st.style.length) p += ' Make the look ' + st.style.join(', ') + '.';
     p += ' Give me ' + (st.format || '[the format you want]') + '. Keep the words short and easy to read.';
     return p;
   }
+  var TIPS = ['Tell the AI who to act as.','Say what you want it to make.','Describe your idea with a few details.','Pick at least one word for the look.','Choose how the answer should be organized.'];
   function coach() {
-    var ck = [[st.role.trim().length >= 3, 'Tell the AI who to act as.'], [st.goal.trim().length >= 8, 'Say what you want it to make.'], [st.idea.trim().length >= 5, 'Describe your idea with a few details.'],
-              [st.style.length >= 1, 'Pick at least one word for the look.'], [!!st.format, 'Choose how the answer should be organized.']];
-    var n = ck.filter(function (c) { return c[0]; }).length;
+    var ps = parts(), n = scoreOf();
     $('scoreTxt').textContent = n + '/5' + (n === 5 ? ' — strong prompt!' : '');
     $('scoreBar').style.width = (n * 20) + '%';
-    $('tips').innerHTML = ck.filter(function (c) { return !c[0]; }).map(function (c) { return '<li>' + esc(c[1]) + '</li>'; }).join('');
-    $('promptOut').textContent = buildPrompt();
-    if (!st.codeEdited) seedBuild(); save();
+    $('tips').innerHTML = ps.map(function (ok, i) { return ok ? '' : '<li>' + esc(TIPS[i]) + '</li>'; }).join('');
+    $('promptOut').textContent = buildPrompt(); save();
   }
   $('fillEx').addEventListener('click', function () {
     st.role = st.role || 'a friendly website designer'; st.goal = st.goal || 'the top section of my homepage';
@@ -829,60 +827,74 @@ main.pt-wrap{ position:relative; z-index:1; }
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t).then(done, function () {}); else { var ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); done(); } catch (e) {} ta.remove(); }
   });
 
-  // build
-  function seedBuild() {
-    if (!st.head) st.head = '';
-    // only prefill empty fields from the idea; never overwrite what the student typed
-    var idea = st.idea.trim();
-    if (!st.head && idea) { st.head = idea.charAt(0).toUpperCase() + idea.slice(1, 50); $('bHead').value = st.head; }
-  }
-  var bmap = { bHead:'head', bTag:'tag', bBtn:'btn', bSec:'sec' };
-  Object.keys(bmap).forEach(function (id) { $(id).addEventListener('input', function () { st[bmap[id]] = this.value; st.codeEdited = false; render(); }); });
-  ['c1t','c1b','c2t','c2b','c3t','c3b'].forEach(function (id, i) { $(id).addEventListener('input', function () { st.c[i] = this.value; st.codeEdited = false; render(); }); });
-  $('bTheme').addEventListener('change', function () { st.theme = parseInt(this.value, 10); st.codeEdited = false; render(); });
-  $('bFont').addEventListener('change', function () { st.font = this.value; st.codeEdited = false; render(); });
-  function pageHtml() {
-    var T = THEMES[st.theme] || THEMES[0], G = GROUPS[st.group] || GROUPS['5th Grade'], left = st.layout === 'left';
-    var head = st.head || 'Your headline here', tag = st.tag || 'Your tagline goes here.', btn = st.btn || 'Learn more';
+  // ---------- Practice AI (a simulator that follows rules) ----------
+  function simulate(snap) {
+    var n = snap.score, G = GROUPS[snap.group] || GROUPS['5th Grade'], hasIdea = snap.parts[2], hasStyle = snap.parts[3], fmt = snap.format || '';
+    var look = hasStyle ? LOOK[snap.style[0]] : { bg:'#EEEEEE', fg:'#333333', ac:'#888888', bt:'#FFFFFF', font:"system-ui,Arial,sans-serif", icon:'', tag:'This is a website.' };
+    var head = hasIdea ? snap.idea.trim().charAt(0).toUpperCase() + snap.idea.trim().slice(1, 50) : 'Welcome';
+    var btn = /button/i.test(fmt) ? (n >= 4 ? 'Get started' : 'Click') : '';
     var cards = '';
-    if (G.mode === 'board') {
-      for (var i = 0; i < 3; i++) { var t = st.c[i * 2], b = st.c[i * 2 + 1]; if (t || b) cards += '<div class="card"><h3>' + esc(t) + '</h3><p>' + esc(b) + '</p></div>'; }
-      cards = '<h2>' + esc(st.sec || 'What I can do') + '</h2><div class="cards">' + (cards || '<div class="card"><h3>Card title</h3><p>Add your text on the left.</p></div>') + '</div>';
+    if (/card|bullet|list/i.test(fmt)) {
+      var T = G.mode === 'board' ? [['Tutor','Explains hard ideas step by step.'],['Study partner','Quizzes me until I get it.'],['Brand builder','Helps me shape my big idea.']] : [['Fun','Made to make you smile.'],['Friendly','Easy for everyone to use.'],['Made for you','Built around your idea.']];
+      cards = '<div class="cards">' + T.map(function (c) { return '<div class="card"><h3>' + esc(c[0]) + '</h3><p>' + esc(c[1]) + '</p></div>'; }).join('') + '</div>';
     }
-    return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(head) + '</title><style>' +
-      'body{margin:0;background:' + T.bg + ';color:' + T.fg + ';font-family:' + FONTS[st.font] + ';text-align:' + (left ? 'left' : 'center') + '}' +
-      '.wrap{max-width:760px;margin:0 auto;padding:48px 24px}.icon{font-size:48px}h1{font-size:2.4rem;margin:8px 0}p.tag{font-size:1.2rem;opacity:.9}' +
-      '.btn{display:inline-block;margin-top:14px;background:' + T.ac + ';color:' + T.bt + ';padding:12px 24px;border-radius:999px;font-weight:700;text-decoration:none}' +
-      'h2{margin-top:40px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;text-align:left}' +
-      '.card{border:2px solid ' + T.ac + ';border-radius:12px;padding:14px}.card h3{margin:0 0 6px;color:' + T.ac + '}.card p{margin:0}' +
-      '</style></head><body><div class="wrap"><div class="icon">' + ICONS[st.icon] + '</div><h1>' + esc(head) + '</h1><p class="tag">' + esc(tag) + '</p><a class="btn">' + esc(btn) + '</a>' + cards + '</div></body></html>';
+    var icon = n === 5 && look.icon ? '<div class="icon">' + look.icon + '</div>' : '';
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(head) + '</title><style>body{margin:0;background:' + look.bg + ';color:' + look.fg + ';font-family:' + look.font + ';text-align:center}.wrap{max-width:720px;margin:0 auto;padding:44px 22px}.icon{font-size:46px}h1{font-size:2.2rem;margin:8px 0}p.tag{font-size:1.15rem;opacity:.9}.btn{display:inline-block;margin-top:12px;background:' + look.ac + ';color:' + look.bt + ';padding:11px 24px;border-radius:999px;font-weight:700}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px;text-align:left}.card{border:2px solid ' + look.ac + ';border-radius:12px;padding:12px}.card h3{margin:0 0 6px;color:' + look.ac + '}.card p{margin:0}</style></head><body><div class="wrap">' + icon + '<h1>' + esc(head) + '</h1><p class="tag">' + esc(look.tag) + '</p>' + (btn ? '<span class="btn">' + esc(btn) + '</span>' : '') + cards + '</div></body></html>';
   }
-  function render() {
-    var html = st.codeEdited ? st.code : pageHtml();
-    if (!st.codeEdited) { st.code = html; $('code').value = html; }
-    $('prev').srcdoc = html; save();
+  function hintFor(snap, prev) {
+    var missing = [];
+    var N = ['who the AI acts as','what to make','your idea','the look','the format'];
+    snap.parts.forEach(function (ok, i) { if (!ok) missing.push(N[i]); });
+    var msg = 'Try ' + (st.tries.length) + ' scored ' + snap.score + '/5.';
+    if (prev) msg += snap.score > prev.score ? ' That is ' + (snap.score - prev.score) + ' better than your last try. Nice improving!' : (snap.score === prev.score ? ' Same score as last time. Change something in your prompt.' : ' That is lower than your last try.');
+    if (snap.score === 5) msg += ' All 5 parts. Strong prompt!'; else msg += ' Missing: ' + missing.join(', ') + '. Add ' + (missing.length > 1 ? 'those' : 'that') + ' and run again.';
+    if (snap.score <= 2) msg += ' Practice AI had to guess, so it made a plain page.';
+    return msg;
   }
-  $('code').addEventListener('input', function () { st.code = this.value; st.codeEdited = true; $('prev').srcdoc = st.code; save(); });
-  $('resetCode').addEventListener('click', function () { st.codeEdited = false; render(); });
+  function drawTries() {
+    var box = $('tries'); box.innerHTML = '';
+    st.tries.forEach(function (t, i) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip' + (i === st.cur ? ' on' : ''); b.textContent = 'Try ' + (i + 1) + ' · ' + t.score + '/5';
+      b.addEventListener('click', function () { showTry(i); }); box.appendChild(b);
+    });
+  }
+  function showTry(i) {
+    if (i < 0 || !st.tries[i]) { drawTries(); return; }
+    st.cur = i; $('prev').srcdoc = st.tries[i].html; $('runHint').textContent = st.tries[i].hint; drawTries(); save();
+  }
+  $('runBtn').addEventListener('click', function () {
+    var snap = { group:st.group, role:st.role, goal:st.goal, idea:st.idea, style:st.style.slice(), format:st.format, parts:parts(), score:scoreOf() };
+    var prev = st.tries.length ? st.tries[st.tries.length - 1] : null;
+    snap.html = simulate(snap); if (st.tries.length >= 8) st.tries.shift();
+    st.tries.push(snap); snap.hint = hintFor(snap, prev); showTry(st.tries.length - 1);
+  });
+
+  // ---------- Prompt Practice widget ----------
+  var PP = [[/\b(act as|you are|pretend to be|be a|be an)\b/i,'Says who the AI should be'],[/\b(create|make|write|build|design|draw|plan)\b/i,'Says what to make'],
+            [function (t) { return t.trim().split(/\s+/).length >= 10; },'Has enough detail (10+ words)'],[/\b(bold|playful|elegant|techy|calm|colorful|bright|simple|fun|modern|cute|professional)\b/i,'Describes the look'],
+            [/\b(headline|tagline|button|list|bullet|steps|paragraph|title|table|sentences)\b/i,'Says how to organize the answer']];
+  function ppRun() {
+    var t = $('ppText').value, n = 0;
+    $('ppList').innerHTML = PP.map(function (c) { var ok = typeof c[0] === 'function' ? c[0](t) : c[0].test(t); if (ok) n++; return '<li class="' + (ok ? 'ok' : '') + '">' + (ok ? '✓ ' : '○ ') + esc(c[1]) + '</li>'; }).join('') + '<li style="margin-top:6px;color:#E3BD79;font-weight:700">' + n + '/5</li>';
+  }
+  $('ppText').addEventListener('input', ppRun); ppRun();
 
   function sync() {
     $('fRole').value = st.role; $('fGoal').value = st.goal; $('fIdea').value = st.idea; $('fFormat').value = st.format;
-    $('bHead').value = st.head; $('bTag').value = st.tag; $('bBtn').value = st.btn; $('bSec').value = st.sec;
-    ['c1t','c1b','c2t','c2b','c3t','c3b'].forEach(function (id, i) { $(id).value = st.c[i] || ''; });
-    $('bTheme').value = st.theme; $('bFont').value = st.font; $('code').value = st.code || '';
-    drawStyleChips(); drawIcons(); drawLayout(); coach();
+    drawStyleChips(); coach();
   }
 
+  // ---------- finish ----------
   $('dl').addEventListener('click', function () {
-    var blob = new Blob([st.codeEdited ? st.code : pageHtml()], { type: 'text/html' }), a = document.createElement('a');
-    a.href = URL.createObjectURL(blob); a.download = 'my-ai-page.html'; document.body.appendChild(a); a.click(); a.remove();
+    var best = null; st.tries.forEach(function (t) { if (!best || t.score >= best.score) best = t; });
+    var html = best ? best.html : simulate({ group:st.group, role:st.role, goal:st.goal, idea:st.idea, style:st.style, format:st.format, parts:parts(), score:scoreOf() });
+    var blob = new Blob([html], { type: 'text/html' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'my-best-result.html'; document.body.appendChild(a); a.click(); a.remove();
   });
   $('restart').addEventListener('click', function () {
-    if (!confirm('Start over? This clears what you built on this Chromebook.')) return;
+    if (!confirm('Start over? This clears what you did on this Chromebook.')) return;
     try { localStorage.removeItem(KEY); } catch (e) {} location.reload();
   });
-
-  // certificate (name stays on screen only)
   $('certBtn').addEventListener('click', function () {
     var n = $('certName').value.trim();
     $('certNameOut').textContent = n || ' ';
@@ -890,7 +902,16 @@ main.pt-wrap{ position:relative; z-index:1; }
   });
   $('printBtn').addEventListener('click', function () { window.print(); });
 
-  // anonymous feedback
+  // ---------- session clock (60-minute class) ----------
+  function tick() {
+    var c = $('clock'); if (!st.t0 || !st.group) { c.style.display = 'none'; return; }
+    var m = Math.floor((Date.now() - st.t0) / 60000); c.style.display = 'block';
+    var late = m >= 45 && st.step < LAST; c.className = 'pt-clock' + (late ? ' late' : '');
+    c.textContent = '⏱ Minute ' + Math.min(m, 60) + ' of 60' + (late ? ' — time to wrap up. Tap "I’m done" to finish.' : '');
+  }
+  setInterval(tick, 15000);
+
+  // ---------- anonymous feedback ----------
   var scale = $('ratingScale');
   for (var i = 1; i <= 10; i++) scale.insertAdjacentHTML('beforeend', '<input type="radio" name="rating" id="r' + i + '" value="' + i + '"><label for="r' + i + '">' + i + '</label>');
   var rs = $('returnScale');
@@ -911,73 +932,6 @@ main.pt-wrap{ position:relative; z-index:1; }
     }).then(function (r) { if (!r.ok) throw new Error(r.status); btn.textContent = 'Sent ✓'; show(ok); })
       .catch(function () { err.textContent = "That didn't go through. Check your internet and try again, or ask Mrs. Brown for help."; show(err); btn.disabled = false; btn.textContent = 'Send feedback'; });
   });
-
-
-  // ---------- lessons ----------
-  var LESSONS = [
-    { id:'what', title:'1. What is AI?',
-      kid:'AI is a computer program that learns patterns from lots of examples. It is like how you learn to spot a dog after seeing many dogs. AI does not think or feel like a person. It makes a smart guess, and sometimes the guess is wrong. That is why YOU always check it.',
-      teen:'AI chatbots are trained on huge amounts of text and predict what words are likely to come next. They can sound very sure even when they are wrong (this is called a hallucination), and they can repeat unfair patterns from the data they learned from. Your job is to direct it, verify it, and take responsibility for what you make.',
-      q:'An AI gives you an answer that sounds very sure. What do you do?', o:['Trust it, it sounds smart','Check it with another source','Copy it right away'], a:1, why:'AI can be confidently wrong. Checking is part of the job.' },
-    { id:'vibe', title:'2. Vibe coding: describe, look, tweak',
-      kid:'Vibe coding means you tell a computer what you want in plain words, it writes the code, and you test it and make it better. You do not have to memorize code. Try it: change the button below. Make it a different color and change what it says.',
-      teen:'Vibe coding is building by describing what you want in plain language, letting an AI tool write the code, then testing and refining. The loop is describe, look, tweak. You still need to read the code enough to steer it and catch mistakes. Try it: edit the code and watch the result change.',
-      try:true,
-      q:'In vibe coding, what is your job?', o:['Memorize every code rule','Describe it, look at the result, and tweak it','Let the AI decide everything'], a:1, why:'You steer. The tool helps you build faster.' },
-    { id:'safe', title:'3. Stay safe and smart',
-      kid:'Never type your real name, phone number, address, school, or email into AI tools or into a website you build. Use made-up names. Say where you got help. If an answer feels strange or unkind, tell a teacher.',
-      teen:'Keep personal details out of prompts and projects: AI tools can store what you type, and anything you publish can be seen by anyone. Use made-up names and fake brands. Give credit when AI helped you, and fact-check anything you plan to rely on. If something feels off, tell a teacher.',
-      q:'Which of these is okay to put in a prompt?', o:['My full name and school','My phone number','A made-up bakery idea'], a:2, why:'Made-up ideas are safe. Keep real personal details out.' }
-  ];
-  var TRY = '<h1>Hello!</h1>\n<button style="background:purple;color:white;padding:10px 18px;border:0;border-radius:8px">Click me</button>';
-  function renderLessons() {
-    var teen = st.group && st.group !== '5th Grade', box = $('lessons'); box.innerHTML = '';
-    if (!st.lessons) st.lessons = [];
-    LESSONS.forEach(function (L) {
-      var d = document.createElement('details'); d.className = 'ls' + (st.lessons.indexOf(L.id) > -1 ? ' done' : '');
-      var body = '<p>' + esc(teen ? L.teen : L.kid) + '</p>' + (L.ex ? '<div class="ex">' + L.ex + '</div>' : '') +
-        (L.try ? '<div class="tryit"><textarea spellcheck="false" id="tryCode"></textarea><iframe sandbox="" id="tryPrev" title="Try it preview"></iframe></div>' : '') +
-        '<div class="q"><b>Quick check: ' + esc(L.q) + '</b>' + L.o.map(function (t, i) { return '<button type="button" class="opt" data-i="' + i + '">' + esc(t) + '</button>'; }).join('') + '<div class="why"></div></div>';
-      d.innerHTML = '<summary><span>' + esc(L.title) + '</span><span class="tick">' + (st.lessons.indexOf(L.id) > -1 ? '✓ done' : '') + '</span></summary><div class="lb">' + body + '</div>';
-      d.querySelectorAll('.opt').forEach(function (b) {
-        b.addEventListener('click', function () {
-          var i = parseInt(b.getAttribute('data-i'), 10), why = d.querySelector('.why');
-          if (i === L.a) {
-            b.className = 'opt right'; why.textContent = 'Correct! ' + L.why;
-            if (st.lessons.indexOf(L.id) < 0) { st.lessons.push(L.id); save(); }
-            d.classList.add('done'); d.querySelector('.tick').textContent = '✓ done'; lessonProgress();
-          } else { b.className = 'opt wrong'; why.textContent = 'Not quite. Try another answer.'; }
-        });
-      });
-      box.appendChild(d);
-      if (L.try) {
-        var ta = d.querySelector('#tryCode'), fr = d.querySelector('#tryPrev'); ta.value = TRY; fr.srcdoc = TRY;
-        ta.addEventListener('input', function () { fr.srcdoc = ta.value; });
-      }
-    });
-    lessonProgress();
-  }
-  function lessonProgress() {
-    var n = (st.lessons || []).length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready to build!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%';
-  }
-
-
-  // ---------- AI tool widgets ----------
-  var PP = [[/\b(act as|you are|pretend to be|be a|be an)\b/i,'Says who the AI should be'],[/\b(create|make|write|build|design|draw|plan)\b/i,'Says what to make'],
-            [function (t) { return t.trim().split(/\s+/).length >= 10; },'Has enough detail (10+ words)'],[/\b(bold|playful|elegant|techy|calm|colorful|bright|simple|fun|modern|cute|professional)\b/i,'Describes the look'],
-            [/\b(headline|tagline|button|list|bullet|steps|paragraph|title|table|sentences)\b/i,'Says how to organize the answer']];
-  function ppRun() {
-    var t = $('ppText').value, n = 0;
-    $('ppList').innerHTML = PP.map(function (c) { var ok = typeof c[0] === 'function' ? c[0](t) : c[0].test(t); if (ok) n++; return '<li class="' + (ok ? 'ok' : '') + '">' + (ok ? '✓ ' : '○ ') + esc(c[1]) + '</li>'; }).join('') + '<li style="margin-top:6px;color:#E3BD79;font-weight:700">' + n + '/5</li>';
-  }
-  $('ppText').addEventListener('input', ppRun); ppRun();
-  var CP = [{ n:'A heading', c:'<h1>Hello!</h1>', e:['<h1> starts a big heading','Hello! is the words people see','</h1> ends the heading'] },
-            { n:'A button', c:'<a class="btn">Click me</a>', e:['<a> makes a link or button','class="btn" is a label the style rules use','Click me is the button words'] },
-            { n:'Page colors', c:'body { background: purple; color: white; }', e:['body means the whole page','background is the page color','color is the text color'] }];
-  CP.forEach(function (x, i) { $('cpSel').insertAdjacentHTML('beforeend', '<option value="' + i + '">' + esc(x.n) + '</option>'); });
-  function cpShow() { var x = CP[parseInt($('cpSel').value, 10) || 0]; $('cpCode').textContent = x.c; $('cpWhy').innerHTML = x.e.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join(''); }
-  $('cpSel').addEventListener('change', cpShow); cpShow();
-
 
   // ---------- name the robot ----------
   var VOTES = ['Byte','Nova','Pixel','Zip'], VKEY = 'bgcs_robot_vote';
@@ -1008,31 +962,15 @@ main.pt-wrap{ position:relative; z-index:1; }
 
   // ---------- class code gate ----------
   var CODE_HASH = "9ed7657b45b441262a50843a16fa5fb3b38060a4ae14e41bd95ce97899a7433f";
-  function sha(t) {
-    var buf = new TextEncoder().encode(t);
-    return crypto.subtle.digest('SHA-256', buf).then(function (h) { return Array.prototype.map.call(new Uint8Array(h), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); });
-  }
+  function sha(t) { var buf = new TextEncoder().encode(t); return crypto.subtle.digest('SHA-256', buf).then(function (h) { return Array.prototype.map.call(new Uint8Array(h), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }); }
   function unlock() { $('gate').style.display = 'none'; $('app').style.display = 'block'; try { sessionStorage.setItem('bgcs_gate', '1'); } catch (e) {} }
-  function tryCode() {
-    var v = $('gateCode').value.trim().toLowerCase();
-    sha(v).then(function (h) { if (h === CODE_HASH) unlock(); else $('gateErr').style.display = 'block'; });
-  }
+  function tryCode() { var v = $('gateCode').value.trim().toLowerCase(); sha(v).then(function (h) { if (h === CODE_HASH) unlock(); else $('gateErr').style.display = 'block'; }); }
   $('gateBtn').addEventListener('click', tryCode);
   $('gateCode').addEventListener('keydown', function (e) { if (e.key === 'Enter') tryCode(); });
   try { if (sessionStorage.getItem('bgcs_gate') === '1') unlock(); } catch (e) {}
 
-
-  // session clock (60-minute class)
-  function tick() {
-    var c = $('clock'); if (!st.t0 || !st.group) { c.style.display = 'none'; return; }
-    var m = Math.floor((Date.now() - st.t0) / 60000); c.style.display = 'block';
-    var late = m >= 45 && st.step < 4; c.className = 'pt-clock' + (late ? ' late' : '');
-    c.textContent = '\u23F1 Minute ' + Math.min(m, 60) + ' of 60' + (late ? ' \u2014 time to wrap up. Tap "I\u2019m done" to finish.' : '');
-  }
-  setInterval(tick, 15000);
-
-  // start
-  if (st.group && GROUPS[st.group]) { applyGroup(st.group, false); go(st.step || 0); } else { sync(); go(0); }
+  // ---------- start ----------
+  if (st.group && GROUPS[st.group]) { applyGroup(st.group, false); go(Math.min(st.step || 0, LAST)); } else { sync(); go(0); }
 })();
 </script>
 </body>
