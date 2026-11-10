@@ -1007,7 +1007,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   drawVote();
 
   // ---------- class code gate ----------
-  var CODE_HASH = "d4d46c6d47bf1be5db1787712d69acd2a2c940bb1f7cf3ed5bd6fd82be2d654e";
+  var CODE_HASH = "9ed7657b45b441262a50843a16fa5fb3b38060a4ae14e41bd95ce97899a7433f";
   function sha(t) {
     var buf = new TextEncoder().encode(t);
     return crypto.subtle.digest('SHA-256', buf).then(function (h) { return Array.prototype.map.call(new Uint8Array(h), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); });
