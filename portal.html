@@ -362,6 +362,28 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 .bgx-path-links a:hover{ color:var(--bgx-cream); }
 .bgx-path-links a::after{ content:' \2192'; }
 </style>
+
+<style>
+.pt-sec{ max-width:720px; margin:28px auto 0; padding:24px; background:#3B2216; border:1px solid rgba(243,232,214,0.16); border-radius:4px; color:#F3E8D6; }
+.pt-sec h2{ font-family:'Fraunces',serif; font-weight:600; margin:0 0 6px; font-size:1.5rem; }
+.pt-sec p{ color:#DCC9A8; line-height:1.55; margin:0 0 14px; }
+.pt-sec input[type=text]{ width:100%; box-sizing:border-box; padding:12px; background:#2A160E; color:#F3E8D6; border:1px solid rgba(243,232,214,0.25); border-radius:2px; font-size:1rem; }
+.pt-sec .pt-btn2{ display:inline-block; margin-top:12px; padding:12px 20px; background:#C7994F; color:#2A160E; font-weight:700; border:0; border-radius:2px; cursor:pointer; text-decoration:none; font-size:1rem; }
+#certificate{ display:none; margin-top:18px; padding:26px 22px; text-align:center; background:#F3E8D6; color:#2A160E; border:6px double #C7994F; }
+#certificate .c-top{ font-size:.8rem; letter-spacing:.2em; text-transform:uppercase; color:#7a4e1d; }
+#certificate .c-title{ font-family:'Fraunces',serif; font-size:2rem; font-weight:700; margin:10px 0 6px; line-height:1.1; }
+#certificate .c-name{ font-family:'Fraunces',serif; font-size:1.8rem; margin:14px auto 6px; padding:0 12px 4px; border-bottom:2px solid #C7994F; display:inline-block; min-width:60%; min-height:2.2rem; }
+#certificate .c-sub{ margin:8px 0; font-size:1rem; }
+#certificate .c-sign{ margin-top:22px; font-size:.95rem; }
+#certificate .c-sign b{ font-family:'Fraunces',serif; font-style:italic; font-size:1.3rem; display:block; }
+@media print{
+  @page{ size:letter landscape; margin:0.5in; }
+  body > *:not(main){ display:none !important; }
+  .pt-eyebrow, main h1, .pt-intro, .pt-card, #parentSection, #certSection > :not(#certificate){ display:none !important; }
+  main, #certSection{ padding:0 !important; margin:0 !important; border:0 !important; background:none !important; max-width:none !important; }
+  #certificate{ display:block !important; box-sizing:border-box; width:100%; }
+}
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -477,6 +499,28 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     <div id="successMsg" class="pt-msg pt-ok" role="status">Thank you! Your project was submitted. Mrs. Brown will take a look.</div>
     <div id="errorMsg" class="pt-msg pt-err" role="alert">That didn't go through. Check your internet and try again, or ask Mrs. Brown for help.</div>
   </form>
+
+  <section class="pt-sec" id="certSection">
+    <h2>Your certificate</h2>
+    <p>Type your name to see your certificate. Your name stays on your screen only. It is never sent or saved anywhere. You can print it or take a screenshot.</p>
+    <input type="text" id="certName" maxlength="40" placeholder="Type your name" autocomplete="off">
+    <button type="button" class="pt-btn2" id="certBtn">Show my certificate</button>
+    <div id="certificate">
+      <div class="c-top">InspiHER &times; The AI Lab &middot; December 2026</div>
+      <div class="c-title">Certified AI Creator</div>
+      <div class="c-sub">This certifies that</div>
+      <div class="c-name" id="certNameOut"></div>
+      <div class="c-sub">built a real project with AI and learned to work <em>with</em> AI, not for it.</div>
+      <div class="c-sign"><b>Raeven Brown</b>Founder, The Brown Girls Creative Studio &middot; The AI Lab</div>
+    </div>
+    <button type="button" class="pt-btn2" id="printBtn" style="display:none;">Print my certificate</button>
+  </section>
+
+  <section class="pt-sec" id="parentSection">
+    <h2>For parents and guardians</h2>
+    <p>Your daughter built something with AI today. Interested in a 4-week AI Builders Club in Spring 2027? Join the waitlist and we will send you the details.</p>
+    <a class="pt-btn2" href="https://docs.google.com/forms/d/e/1FAIpQLSc3iR7g3Suo_yJnBKXmLaYNYc2sHLgG4pxm6IsJuq1nZ6Rvfw/viewform" target="_blank" rel="noopener">Join the Spring 2027 waitlist</a>
+  </section>
 </main>
 
 <script>
@@ -503,6 +547,15 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     var box = document.getElementById('missionBox'), m = MISSIONS[this.value];
     box.style.display = m ? 'block' : 'none'; box.textContent = m || '';
   });
+
+
+  document.getElementById('certBtn').addEventListener('click', function () {
+    var n = document.getElementById('certName').value.trim();
+    document.getElementById('certNameOut').textContent = n || '\u00A0';
+    document.getElementById('certificate').style.display = 'block';
+    document.getElementById('printBtn').style.display = 'inline-block';
+  });
+  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
 
   var form = document.getElementById('submissionForm');
   var btn = document.getElementById('submitBtn');
