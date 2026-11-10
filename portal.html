@@ -436,12 +436,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   <p class="pt-intro">Share your project and tell us how the session went. It takes about two minutes.</p>
 
   <form class="pt-card" id="submissionForm" novalidate>
-    <div class="pt-notice"><strong>Before you submit:</strong> use only your first name and last initial. Don't include your phone number, address, or anything private. Mrs. Brown reviews every submission before anything is shared.</div>
-
-    <div class="pt-field">
-      <label for="studentName">First name and last initial</label>
-      <input type="text" id="studentName" maxlength="40" placeholder="e.g., Maya S." autocomplete="off" required>
-    </div>
+    <div class="pt-notice"><strong>Before you submit:</strong> don't type your name, phone number, email, address, or anything private. This is anonymous. Mrs. Brown reviews every submission before anything is shared.</div>
 
     <div class="pt-field">
       <label for="sessionTag">Your group</label>
@@ -451,6 +446,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
         <option value="Middle School">Middle school (6th–8th)</option>
         <option value="High School">High school (9th–12th)</option>
       </select>
+      <div class="pt-mission" id="missionBox" style="display:none;margin-top:12px;padding:12px 14px;border:1px solid #C7994F;border-radius:10px;background:rgba(199,153,79,.08);color:#F3E8D6;font-size:15px;line-height:1.5;"></div>
     </div>
 
     <div class="pt-field">
@@ -468,6 +464,11 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
       <span class="pt-legend" id="ratingLabel">How fun was building with AI today?</span>
       <div class="pt-scale" role="radiogroup" aria-labelledby="ratingLabel" id="ratingScale"></div>
       <div class="pt-ends"><span>1 = not fun</span><span>10 = so fun</span></div>
+    </div>
+
+    <div class="pt-field">
+      <span class="pt-legend" id="returnLabel">Would you come back for a 4-week AI Builders Club?</span>
+      <div class="pt-scale" role="radiogroup" aria-labelledby="returnLabel" id="returnScale" style="grid-template-columns:repeat(3,1fr);"></div>
     </div>
 
     <div class="pt-hp" aria-hidden="true"><label>Leave this empty<input type="text" id="website" tabindex="-1" autocomplete="off"></label></div>
@@ -489,6 +490,20 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
       '<input type="radio" name="rating" id="r' + i + '" value="' + i + '"><label for="r' + i + '">' + i + '</label>');
   }
 
+  var rs = document.getElementById('returnScale');
+  ['Yes','Maybe','Not right now'].forEach(function (v, i) {
+    rs.insertAdjacentHTML('beforeend', '<input type="radio" name="wouldReturn" id="w' + i + '" value="' + v + '"><label for="w' + i + '" style="width:auto;padding:0 10px;">' + v + '</label>');
+  });
+  var MISSIONS = {
+    '5th Grade': 'Your mission: build your personal website hero section. Write a prompt that makes the top of a homepage for your dream career, hobby, or business idea.',
+    'Middle School': 'Your mission: build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.',
+    'High School': 'Your mission: build a project board or mini landing page that shows how you can use AI as a tutor, study partner, or brand builder.'
+  };
+  document.getElementById('sessionTag').addEventListener('change', function () {
+    var box = document.getElementById('missionBox'), m = MISSIONS[this.value];
+    box.style.display = m ? 'block' : 'none'; box.textContent = m || '';
+  });
+
   var form = document.getElementById('submissionForm');
   var btn = document.getElementById('submitBtn');
   var ok = document.getElementById('successMsg'), err = document.getElementById('errorMsg');
@@ -498,13 +513,12 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     e.preventDefault();
     show(null);
     if (document.getElementById('website').value) return;            // spam trap
-    var name = document.getElementById('studentName').value.trim();
     var group = document.getElementById('sessionTag').value;
     var title = document.getElementById('projectTitle').value.trim();
     var url = document.getElementById('projectUrl').value.trim();
     var rating = (form.querySelector('input[name=rating]:checked') || {}).value;
-    if (!name || !group || !title || !rating) {
-      err.textContent = 'Please fill in your name, group, project name, and pick a number for how fun it was.';
+    if (!group || !title || !rating) {
+      err.textContent = 'Please pick your group, add a project name, and pick a number for how fun it was.';
       show(err); return;
     }
     if (url && !/^https?:\/\//i.test(url)) { err.textContent = 'Your link should start with https://'; show(err); return; }
@@ -513,7 +527,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     fetch(SB_URL + '/rest/v1/portal_submissions', {
       method: 'POST',
       headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + SB_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
-      body: JSON.stringify({ student_name: name, session_name: group, project_title: title, project_url: url || null, rating: parseInt(rating, 10) })
+      body: JSON.stringify({ session_name: group, project_title: title, project_url: url || null, rating: parseInt(rating, 10), would_return: ((form.querySelector('input[name=wouldReturn]:checked') || {}).value) || null })
     }).then(function (r) {
       if (!r.ok) throw new Error('status ' + r.status);
       form.reset(); btn.disabled = false; btn.textContent = 'Submit another project';
