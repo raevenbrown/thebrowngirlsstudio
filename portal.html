@@ -679,6 +679,14 @@ body{ background:#140b07 !important; }
 #chatIn{ font-size:1.15rem !important; padding:15px 14px !important; }
 #chatSend{ min-height:52px; padding:0 26px; font-size:1.05rem; }
 </style>
+<style id="engage">
+@keyframes pvPulse{ 0%{ box-shadow:0 0 0 0 rgba(227,189,121,.9);} 100%{ box-shadow:0 0 0 14px rgba(227,189,121,0);} }
+#prev.pulse{ animation:pvPulse .7s ease-out; }
+body[data-grade="5th Grade"] .cm, body[data-grade="5th Grade"] #chatIn{ font-size:1.25rem !important; }
+body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
+#homeDash .hm-hero p{ text-align:center !important; margin:0 auto 18px !important; }
+#homeDash .hm-hero .pt-b{ display:inline-flex; margin:0 auto; }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -1040,6 +1048,7 @@ body{ background:#140b07 !important; }
   function applyGroup(g, fresh) {
     var G = GROUPS[g], prev = st.group; st.group = g; if (!st.t0) st.t0 = Date.now();
     $('missionText').textContent = 'Mission: ' + G.mission;
+    document.body.setAttribute('data-grade', g);
     document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.classList.toggle('sel', b.getAttribute('data-g') === g); });
     if (fresh && prev !== g) { st.role = G.auto.role || ''; st.goal = G.auto.goal || ''; st.idea = ''; st.name = ''; st.feat = ''; st.aud = ''; st.cta = ''; st.style = []; st.format = ''; st.ov = {}; st.tries = []; st.cur = -1; $('chatLog').innerHTML = ''; }
     sync();
@@ -1335,7 +1344,7 @@ body{ background:#140b07 !important; }
         else if (f) { snap[f] = t; snap.ok[f] = f === 'feat' ? featsOf(t).length >= 1 : t.length >= 1; }
         else { var r = parseTweak(t); for (k in r.ov) snap.ov[k] = r.ov[k]; }
       }
-      $('prev').srcdoc = simulate(snap);
+      var nd = simulate(snap); if (nd !== $('prev').srcdoc) { $('prev').srcdoc = nd; var pv = $('prev'); pv.classList.remove('pulse'); void pv.offsetWidth; pv.classList.add('pulse'); }
     }, 70);
   }
   $('chatIn').addEventListener('input', draftPreview);
@@ -1408,20 +1417,19 @@ body{ background:#140b07 !important; }
     var fb = []; LESSONS.forEach(function (L) { if (st.lessons.indexOf(L.id) > -1) fb.push('Great job on "' + L.title.replace(/^\d+\.\s*/, '') + '"!'); });
     if (st.step >= 2 && $('runHint').textContent) fb.push($('runHint').textContent); if (improve.length) fb.push('Next: ' + improve[0] + '.'); if (!fb.length) fb.push('Welcome aboard! Start with AI Basics.');
     var tile = function (a, b, go2) { return '<button type="button" class="nx-tile" data-go="' + go2 + '"><span><b>' + esc(a) + '</b><small>' + esc(b) + '</small></span><span>›</span></button>'; };
+    var left = Math.max(0, 60 - mins), om = okMap();
+    var head = dn < nL ? ['Step 1 of 3', 'Learn how AI listens', 'Three quick checks. About 8 minutes.', 1, 'Start learning']
+      : (sc < tot ? ['Step 2 of 3', 'Build your site by chatting', 'Tell the robot your idea. Your site changes as you type.', 2, 'Start building']
+      : (!cert ? ['Step 2 of 3', 'Tweak your site', 'Change one thing at a time and look after each change.', 2, 'Keep tweaking']
+      : ['Step 3 of 3', 'Finish and get your certificate', 'Save your site, share feedback, and print your certificate.', 3, 'Finish up']));
     dash.innerHTML =
-      '<div class="nx-home"><div class="nx-col">' +
-      '<div class="hm-card"><div class="ck-k">Your learning path</div><div class="hm-path">' + path.map(function (p) { var d = p[1] >= 1; return '<div class="hm-step' + (d ? ' done' : '') + '"><span class="hm-dot">' + (d ? '✓' : '') + '</span><div><b>' + esc(p[0]) + '</b><small>' + esc(p[2]) + '</small><div class="ck-bar"><i style="width:' + Math.round(Math.min(p[1], 1) * 100) + '%"></i></div></div><button type="button" class="pt-b ghost" data-go="' + p[3] + '">' + (p[3] === 0 ? 'View' : (d ? 'Review' : 'Go')) + '</button></div>'; }).join('') + '</div><button type="button" class="pt-b" data-go="' + nxt[0] + '" style="margin-top:12px;width:100%">Next: ' + esc(nxt[1]) + ' ›</button></div>' +
-      '<div class="hm-card"><div class="ck-k">Recommended for you</div><button type="button" class="nx-tile" id="hmChat"><span><b>Chat with the robot</b><small>Build your prompt by talking</small></span><span>›</span></button><button type="button" class="nx-tile" id="hmPractice"><span><b>Prompt practice</b><small>Score any prompt</small></span><span>›</span></button></div></div>' +
-      '<div class="nx-col"><div class="hm-card nx-prog">' + brainSvg() + '<div class="hm-ringcard"><div class="ck-k">Your progress</div><div class="hm-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="hmg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c7994f"/><stop offset="1" stop-color="#e3bd79"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="10"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#hmg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - pct / 100)).toFixed(1) + '" transform="rotate(-90 60 60)"/></svg><div class="hm-pct"><b>' + pct + '%</b><span>completed</span></div></div><div class="hm-lvl">Current level: <b>' + levelOf(pct) + '</b></div></div>' +
-      '<div class="nx-acts"><div><button type="button" class="nx-act" data-more="m1"><span>New skills acquired</span><b>' + skills.length + ' ›</b></button><div class="nx-more" id="m1">' + lst(skills, 'Pass a lesson to earn your first skill.') + '</div></div><div><button type="button" class="nx-act" data-more="m2"><span>Skills to improve</span><b>' + improve.length + ' ›</b></button><div class="nx-more" id="m2">' + lst(improve.slice(0, 4), 'Nothing! Your prompt is strong.') + '</div></div><div><button type="button" class="nx-act" data-more="m3"><span>Certificates earned</span><b>' + (cert ? '1' : '0') + ' ›</b></button><div class="nx-more" id="m3">' + (cert ? '<p>Certified AI Creator is ready. <a href="#" id="hmCert">Get it</a></p>' : '<p class="hm-empty">Finish to unlock your certificate.</p>') + '</div></div></div></div>' +
-      '<div class="nx-three"><div class="hm-card"><div class="ck-k">Adaptive suggestions</div>' + sugg.map(function (x) { return tile(x[0], x[1], x[2]); }).join('') + '</div><div class="hm-card"><div class="ck-k">Performance analytics</div>' + chartSvg() + '</div><div class="hm-card"><div class="ck-k">Real-time feedback</div>' + fb.slice(-3).map(function (t) { return '<div class="nx-bubble">' + esc(t) + '</div>'; }).join('') + '</div></div></div></div>' +
-      '<div class="nx-strip hm-stats"><div><b>' + mins + '</b>minutes of 60</div><div><b>' + sc + '/' + tot + '</b>prompt score</div><div><b>' + st.tries.length + '</b>versions saved</div><div><b>' + dn + '/' + nL + '</b>lessons passed</div></div>' +
+      '<div class="hm-card hm-hero" style="text-align:center;padding:26px 20px;margin-bottom:14px"><div class="ck-k">' + head[0] + '</div><h2 style="margin:6px 0 8px;font-size:clamp(1.5rem,3.4vw,2.1rem)">' + head[1] + '</h2><p style="margin:0 auto 16px;max-width:520px">' + head[2] + '</p><button type="button" class="pt-b" id="hmGo" style="font-size:1.15rem;padding:14px 34px;min-height:54px">' + head[4] + ' &rarr;</button></div>' +
+      '<div class="nx-three"><div class="hm-card"><div class="ck-k">Your path</div><div class="hm-path">' + path.map(function (p) { var d = p[1] >= 1; return '<div class="hm-step' + (d ? ' done' : '') + '"><span class="hm-dot">' + (d ? '&#10003;' : '') + '</span><span><small>' + esc(p[0]) + '</small></span><span></span></div>'; }).join('') + '</div></div>' +
+      '<div class="hm-card"><div class="ck-k">Your prompt: ' + sc + ' of ' + tot + ' parts</div><div class="hm-path">' + G.fields.map(function (f) { var d = !!om[f]; return '<div class="hm-step' + (d ? ' done' : '') + '"><span class="hm-dot">' + (d ? '&#10003;' : '') + '</span><span><small>' + esc(NAMES[f] || f) + '</small></span><span></span></div>'; }).join('') + '</div></div>' +
+      '<div class="hm-card"><div class="ck-k">Time</div><p style="font-size:2rem;margin:6px 0 2px;color:#e3bd79;font-weight:700">' + left + ' min</p><p style="margin:0">left of 60. Last 15 minutes: feedback and your certificate.</p></div></div>' +
       '<p style="text-align:center;margin:12px 0 0"><button type="button" class="pt-b ghost hm-sw" id="hmSwitch" style="margin:0">Switch group</button></p>';
     $('hmSwitch').addEventListener('click', function () { st.showPick = true; renderHome(); });
-    dash.querySelectorAll('[data-more]').forEach(function (b) { b.addEventListener('click', function () { var m = $(b.getAttribute('data-more')); m.classList.toggle('on'); }); });
-    $('hmChat').addEventListener('click', function () { go(2); setTimeout(function () { $('chatIn').focus(); }, 350); });
-    $('hmPractice').addEventListener('click', function () { go(2); var d = $('ppText').closest('details'); d.open = true; d.scrollIntoView({ behavior:'smooth', block:'center' }); });
-    var hc = $('hmCert'); if (hc) hc.addEventListener('click', function (e) { e.preventDefault(); go(3); setTimeout(function () { var s = $('certSection'); if (s) s.scrollIntoView({ behavior:'smooth' }); }, 300); });
+    $('hmGo').addEventListener('click', function () { go(head[3]); if (head[3] === 2) setTimeout(function () { $('chatIn').focus(); }, 350); });
   }
 
   // ---------- mission control HUD ----------
