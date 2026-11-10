@@ -737,6 +737,19 @@ body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
 @keyframes msPop{ 0%{ transform:scale(.85); opacity:0;} 100%{ transform:scale(1); opacity:1;} }
 @media(max-width:820px){ .ms-tabs,.fc-row,.ms-opts,.pk-row{ grid-template-columns:1fr; } .ms-opts.two{ grid-template-columns:1fr 1fr; } .fc{ height:130px; } }
 </style>
+<style id="funnel">
+.fn-wrap{ display:grid; grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr); gap:20px; align-items:start; }
+.fn-col{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+.fn{ display:flex; align-items:center; gap:8px; justify-content:center; background:linear-gradient(180deg,#4a2c1c,#2a160e); color:#f3e8d6; border:2px solid rgba(199,153,79,.55); border-radius:12px 12px 22px 22px; padding:12px 10px; font:700 1rem inherit; font-family:inherit; cursor:pointer; min-height:54px; }
+.fn b{ width:26px; height:26px; border-radius:50%; display:grid; place-items:center; background:#2a160e; border:2px solid #c7994f; color:#e3bd79; font-size:.85rem; flex:none; }
+.fn.on{ border-color:#ffe29a; box-shadow:0 0 16px rgba(255,226,154,.4); } .fn.ok b{ background:#c7994f; color:#2a160e; } .fn.lock{ opacity:.45; cursor:not-allowed; }
+.fn-out{ color:#e3bd79; font-weight:700; margin-top:6px; }
+.fn-pane{ background:rgba(59,34,22,.55); border:1px solid rgba(199,153,79,.4); border-radius:14px; padding:16px; } .fn-pane h4{ margin:4px 0 8px; font:700 1.35rem Fraunces,Georgia,serif; color:#ffe29a; } .fn-pane p{ margin:0 0 12px; font-size:1.05rem; }
+.fn-aha{ margin-top:14px; padding:12px 14px; border-radius:12px; background:rgba(199,153,79,.18); border:2px solid #e3bd79; animation:msPop .4s ease-out; } .fn-aha b{ color:#ffe29a; }
+.fn-pile{ display:flex; flex-wrap:wrap; gap:6px; margin:12px 0 6px; min-height:34px; } .fn-chip{ background:#f3e8d6; color:#2a160e; padding:4px 10px; border-radius:999px; font-size:.85rem; font-weight:600; animation:msPop .3s ease-out; }
+.sf-line{ display:block; width:100%; text-align:left; margin:8px 0; background:#3b2216; color:#f3e8d6; border:2px solid #c7994f; border-radius:12px; padding:12px; font:inherit; font-size:1rem; cursor:pointer; } .sf-line.right{ background:#c7994f; color:#2a160e; } .sf-line.wrong{ opacity:.55; border-style:dashed; }
+@media(max-width:820px){ .fn-wrap{ grid-template-columns:1fr; } .fn-col{ flex-direction:row; flex-wrap:wrap; justify-content:center; } .fn{ width:auto !important; flex:1 1 30%; font-size:.85rem; padding:8px 6px; } .fn-out{ display:none; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -882,7 +895,7 @@ body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
     <div class="pt-time">&#9201; About 8 minutes</div>
     <h2>AI Basics</h2>
     <div class="pt-mrow"><svg class="pt-chars" viewBox="0 0 240 190" role="img" aria-label="Grace and her robot"><use href="#duo"/></svg><div class="pt-mission" id="missionText" style="flex:1;margin:0"></div></div>
-    <p>Three quick missions. Flip, tap, and play. The big idea: <b style="color:#e3bd79">AI does what you say, so your prompt is your superpower.</b></p>
+    <p>Three quick missions. Tap, try, and play. The big idea: <b style="color:#e3bd79">AI does what you say, so your prompt is your superpower.</b></p>
     <div class="pt-score"><span id="lessonTxt">0/3 lessons</span><div class="pt-bar"><i id="lessonBar"></i></div></div>
     <div id="lessons"></div>
     <div class="pt-row"><button class="pt-b ghost" data-go="0">Back</button><button class="pt-b" data-go="2">Start the Prompt Lab</button></div>
@@ -1107,7 +1120,7 @@ body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
 
   // ---------- lessons ----------
   var LESSONS = [
-    { id:'what', title:'1. What is AI?',
+    { id:'what', title:'1. How AI really works',
       kid:'AI is a computer program that learned patterns from lots and lots of examples. When you ask it something, it makes a smart guess about what should come next. It does not think or feel like a person, and sometimes its guess is wrong. Try the game: how would AI finish this?',
       teen:'AI chatbots learned patterns from huge amounts of text, and they write by predicting what words are likely to come next. That is why they can sound sure and still be wrong, and why they can repeat unfair patterns from their training data. Try the game: how would AI finish this?',
       mid:'AI chatbots learned patterns from huge amounts of text and guess which word comes next, like autocomplete on a phone but much bigger. It can sound sure and still be wrong, so you always check it. Try the game: how would AI finish this?',
@@ -1158,14 +1171,64 @@ body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
       stage.querySelector('.ms-win').scrollIntoView({ block:'nearest', behavior:'smooth' });
     }
     function mFlash(stage) {
-      var cards = FLASH[v], seen = {}, nSeen = 0;
-      stage.innerHTML = '<h3>Flip the cards</h3><p class="ms-sub">Tap each card to flip it. Then play the guessing game.</p><div class="fc-row">' + cards.map(function (c, i) { return '<button type="button" class="fc" data-c="' + i + '"><span class="fc-in"><span class="fc-f">' + esc(c[0]) + '<small>tap to flip</small></span><span class="fc-b">' + esc(c[1]) + '</span></span></button>'; }).join('') + '</div><div id="msGame"></div>';
-      function game() {
-        $('msGame').innerHTML = '<h3>Guess like an AI</h3><div class="ex">Peanut butter and ____</div><div class="ms-opts">' + GUESS.map(function (g, i) { return '<button type="button" class="ms-opt" data-g="' + i + '">' + esc(g[0]) + '</button>'; }).join('') + '</div><div class="why" id="gOut" style="margin:8px 0"></div>';
-        stage.querySelectorAll('[data-g]').forEach(function (b) { b.addEventListener('click', function () { var i = +b.getAttribute('data-g'); $('gOut').textContent = GUESS[i][1]; if (i === 0) { b.classList.add('right'); if (!stage.querySelector('.ms-win')) win(stage, 0, 'AI guesses the most likely next word from patterns it learned.'); } else b.classList.add('wrong'); }); });
+      var kid = v === 'kid', teen = v === 'teen', fin = isDone(0);
+      var ERR = kid ? [['The first person to walk on the moon was Neil Armstrong.',0],['He walked on the moon in 1969.',0],['He took his pet cat Luna with him.',1]]
+                    : [['Neil Armstrong was the first person to walk on the Moon, in 1969.',0],['He was part of NASA\'s Apollo 11 mission.',0],['He carried a pet cat named Luna in his spacesuit.',1]];
+      var ST = [
+        { t:'Data', head:'It starts with a mountain of examples',
+          body: kid ? 'People gave a computer a gigantic pile of books, websites, and pictures to look at.' : 'AI is built from a gigantic pile of text, images, and code that people wrote and made. Billions of examples.',
+          aha: 'AI does not start out knowing anything. It only knows what it was shown.' },
+        { t:'Training', head:'It plays a guessing game, billions of times',
+          body: kid ? 'The computer hides a word and tries to guess it. When it is wrong, it fixes itself. It does this over and over.' : 'Training is a giant fill-in-the-blank game. The model guesses the missing word, gets scored, adjusts, and repeats billions of times until it spots patterns.',
+          aha: 'Nobody typed in the answers. The AI found the patterns by itself.' },
+        { t:'The model', head:'What is left is a pattern machine',
+          body: kid ? 'After all that practice, the computer is really good at guessing what comes next. It is not a brain.' : 'The result is a model: millions of numbers that capture patterns. It does not store a list of answers and it does not think like a person.',
+          aha: 'AI is not searching a secret answer book. It is making a smart guess.' },
+        { t:'Your prompt', head:'Your words steer the guess',
+          body: kid ? 'This is the skinny part of the funnel. Your words go in here, so better words make better answers.' : 'The narrow neck of the funnel is you. The model can only work from the words in your prompt, so your wording decides what comes out.',
+          aha: 'You are the steering wheel. Better instructions, better results.' },
+        { t:'The answer', head:'A confident guess, not a fact',
+          body: kid ? 'AI writes an answer that sounds sure. But it can still be wrong, so people check it.' : 'The output sounds fluent and certain because it predicts likely words, not true ones. Sometimes it invents details. That is why humans fact-check.',
+          aha: 'Sounding sure is not the same as being right. You are the checker.' }
+      ];
+      var open = 0, ok = fin ? [1,1,1,1,1] : [0,0,0,0,0];
+      function bars() {
+        return ST.map(function (S, i) { var lock = !fin && i > 0 && !ok[i - 1] && !ok[i]; return '<button type="button" class="fn' + (i === open ? ' on' : '') + (ok[i] ? ' ok' : '') + (lock ? ' lock' : '') + '" data-s="' + i + '" style="width:' + (100 - i * 13) + '%"><b>' + (ok[i] ? '&#10003;' : (lock ? '&#128274;' : (i + 1))) + '</b>' + esc(S.t) + '</button>'; }).join('');
       }
-      stage.querySelectorAll('.fc').forEach(function (c) { c.addEventListener('click', function () { c.classList.toggle('flip'); var k = c.getAttribute('data-c'); if (!seen[k]) { seen[k] = 1; nSeen++; if (nSeen === cards.length) game(); } }); });
-      if (isDone(0)) { stage.querySelectorAll('.fc').forEach(function () {}); game(); }
+      function draw() {
+        var S = ST[open];
+        stage.innerHTML = '<h3>How AI works: follow the funnel</h3><p class="ms-sub">Tap each part, from the wide top to your prompt at the narrow neck. Try each demo.</p>' +
+          '<div class="fn-wrap"><div class="fn-col">' + bars() + '<div class="fn-out">&#8595; an answer comes out</div></div><div class="fn-pane"><div class="ck-k">Part ' + (open + 1) + ' of 5: ' + esc(S.t) + '</div><h4>' + esc(S.head) + '</h4><p>' + esc(S.body) + '</p><div id="fnDemo"></div><div class="fn-aha" id="fnAha" style="display:' + (ok[open] ? 'block' : 'none') + '"><b>Aha!</b> ' + esc(S.aha) + (open < 4 && ok[open] ? '<br><button type="button" class="pt-b" id="fnNext" style="margin-top:10px">Next part &rarr;</button>' : '') + '</div></div></div>';
+        stage.querySelectorAll('.fn').forEach(function (b) { b.addEventListener('click', function () { var i = +b.getAttribute('data-s'); if (b.classList.contains('lock')) return; open = i; draw(); }); });
+        var nx = $('fnNext'); if (nx) nx.addEventListener('click', function () { open++; draw(); });
+        demo(open);
+        if (ok.every(Boolean) && !stage.querySelector('.ms-win')) win(stage, 0, 'You can explain how AI works: examples, training, a pattern model, your prompt, and a guess you check.');
+      }
+      function pass(i) { if (ok[i]) return; ok[i] = 1; var again = ok.every(Boolean); $('fnAha').style.display = 'block'; if (!again && i < 4) $('fnAha').insertAdjacentHTML('beforeend', '<br><button type="button" class="pt-b" id="fnNext" style="margin-top:10px">Next part &rarr;</button>'); var n = $('fnNext'); if (n) n.addEventListener('click', function () { open = i + 1; draw(); }); stage.querySelectorAll('.fn')[i].classList.add('ok'); stage.querySelectorAll('.fn')[i].querySelector('b').innerHTML = '&#10003;'; var nb = stage.querySelectorAll('.fn')[i + 1]; if (nb) { nb.classList.remove('lock'); if (!ok[i + 1]) nb.querySelector('b').textContent = i + 2; } if (again) { if (!stage.querySelector('.ms-win')) win(stage, 0, 'You can explain how AI works: examples, training, a pattern model, your prompt, and a guess you check.'); } }
+      function demo(i) {
+        var d = $('fnDemo');
+        if (i === 0) {
+          var n = ok[0] ? 3 : 0, EX = ['a story', 'a recipe', 'a science fact', 'a joke', 'a news article', 'a poem', 'code', 'a song review'];
+          d.innerHTML = '<button type="button" class="pt-b" id="feed">Feed the AI &#127860;</button><div class="fn-pile" id="pile"></div><div class="why" id="cnt"></div>';
+          function fill() { $('pile').innerHTML = EX.slice(0, n * 3).map(function (e) { return '<span class="fn-chip">' + e + '</span>'; }).join(''); $('cnt').textContent = n ? ['', '1,000 examples...', '1,000,000 examples...', 'Billions of examples!'][n] : 'Tap to feed it examples.'; }
+          fill(); $('feed').addEventListener('click', function () { if (n < 3) n++; fill(); if (n >= 3) pass(0); });
+        } else if (i === 1) {
+          d.innerHTML = '<div class="ex">Peanut butter and ____</div><div class="ms-opts">' + GUESS.map(function (g, k) { return '<button type="button" class="ms-opt" data-g="' + k + '">' + esc(g[0]) + '</button>'; }).join('') + '</div><div class="why" id="gOut"></div>';
+          d.querySelectorAll('[data-g]').forEach(function (b) { b.addEventListener('click', function () { var k = +b.getAttribute('data-g'); $('gOut').textContent = GUESS[k][1]; if (k === 0) { b.classList.add('right'); pass(1); } else b.classList.add('wrong'); }); });
+        } else if (i === 2) {
+          d.innerHTML = '<div class="ex">Does AI look up the answer in a secret book, or guess from patterns?</div><div class="ms-opts two"><button type="button" class="ms-opt" data-k="0">&#128214; Looks it up</button><button type="button" class="ms-opt" data-k="1">&#127922; Smart guess</button></div><div class="why" id="mOut"></div>';
+          d.querySelectorAll('[data-k]').forEach(function (b) { b.addEventListener('click', function () { if (b.getAttribute('data-k') === '1') { b.classList.add('right'); $('mOut').textContent = 'Yes! It predicts what fits the pattern. That is why it can be wrong.'; pass(2); } else { b.classList.add('wrong'); $('mOut').textContent = 'Not quite. There is no answer book. Try the other one.'; } }); });
+        } else if (i === 3) {
+          var lv = ok[3] ? 2 : 0, RBv = ROBOTS[v];
+          d.innerHTML = '<div class="ex" id="pSay"></div><div class="why" id="pOut"></div><button type="button" class="pt-b" id="more"></button>';
+          function show() { $('pSay').textContent = 'You say: "' + RBv[lv][0] + '"'; $('pOut').textContent = RBv[lv][1]; $('more').textContent = lv < 2 ? 'Add more detail +' : 'Detail maxed out!'; $('more').disabled = lv >= 2; }
+          show(); $('more').addEventListener('click', function () { if (lv < 2) lv++; show(); if (lv >= 2) pass(3); });
+        } else {
+          d.innerHTML = '<div class="ex">AI wrote this answer. Tap the sentence that is made up:</div>' + ERR.map(function (e, k) { return '<button type="button" class="sf-line" data-e="' + e[1] + '">' + esc(e[0]) + '</button>'; }).join('') + '<div class="why" id="eOut"></div>';
+          d.querySelectorAll('.sf-line').forEach(function (b) { b.addEventListener('click', function () { if (b.getAttribute('data-e') === '1') { b.classList.add('right'); $('eOut').textContent = 'Found it! AI made up the cat. It sounded just as sure as the true parts.'; pass(4); } else { b.classList.add('wrong'); $('eOut').textContent = 'That one is true. Keep looking.'; } }); });
+        }
+      }
+      draw();
     }
     function mLevels(stage) {
       var r = 0, right = 0;
