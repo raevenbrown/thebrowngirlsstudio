@@ -683,6 +683,12 @@ main.pt-wrap{ position:relative; z-index:1; }
   </section>
 
   <div id="finishExtras" style="display:none">
+    <section class="pt-sec" id="voteSection">
+      <h2>Name Grace&rsquo;s robot!</h2>
+      <p>Grace&rsquo;s robot needs a name. Vote once for your favorite.</p>
+      <div class="pt-chips" id="voteChips"></div>
+      <div id="voteRes" style="margin-top:12px"></div>
+    </section>
     <section class="pt-sec" id="feedSection">
       <h2>Quick feedback <span style="font-weight:400;font-size:.9rem;color:#DCC9A8">(anonymous)</span></h2>
       <p>No names. Mrs. Brown reads every answer.</p>
@@ -971,6 +977,32 @@ main.pt-wrap{ position:relative; z-index:1; }
   CP.forEach(function (x, i) { $('cpSel').insertAdjacentHTML('beforeend', '<option value="' + i + '">' + esc(x.n) + '</option>'); });
   function cpShow() { var x = CP[parseInt($('cpSel').value, 10) || 0]; $('cpCode').textContent = x.c; $('cpWhy').innerHTML = x.e.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join(''); }
   $('cpSel').addEventListener('change', cpShow); cpShow();
+
+
+  // ---------- name the robot ----------
+  var VOTES = ['Byte','Nova','Pixel','Zip'], VKEY = 'bgcs_robot_vote';
+  function showVotes() {
+    fetch(SB_URL + '/rest/v1/rpc/robot_vote_counts', { method:'POST', headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer ' + SB_KEY, 'Content-Type':'application/json' }, body:'{}' })
+      .then(function (r) { if (!r.ok) throw 0; return r.json(); }).then(function (rows) {
+        var tot = rows.reduce(function (a, r) { return a + r.votes; }, 0) || 1;
+        $('voteRes').innerHTML = rows.map(function (r) { var pc = Math.round(r.votes * 100 / tot); return '<div style="margin:6px 0"><div style="display:flex;justify-content:space-between"><b>' + esc(r.choice) + '</b><span>' + r.votes + ' vote' + (r.votes === 1 ? '' : 's') + '</span></div><div class="pt-bar"><i style="width:' + pc + '%"></i></div></div>'; }).join('');
+      }).catch(function () {});
+  }
+  function drawVote() {
+    var voted = ''; try { voted = localStorage.getItem(VKEY) || ''; } catch (e) {}
+    var box = $('voteChips'); box.innerHTML = '';
+    VOTES.forEach(function (v) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip' + (voted === v ? ' on' : ''); b.textContent = v; b.disabled = !!voted;
+      b.addEventListener('click', function () {
+        fetch(SB_URL + '/rest/v1/robot_votes', { method:'POST', headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer ' + SB_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' }, body:JSON.stringify({ choice:v }) })
+          .then(function (r) { if (!r.ok) throw 0; try { localStorage.setItem(VKEY, v); } catch (e) {} drawVote(); })
+          .catch(function () { $('voteRes').textContent = "That didn't go through. Try again."; });
+      });
+      box.appendChild(b);
+    });
+    if (voted) showVotes();
+  }
+  drawVote();
 
   // ---------- class code gate ----------
   var CODE_HASH = "d4d46c6d47bf1be5db1787712d69acd2a2c940bb1f7cf3ed5bd6fd82be2d654e";
