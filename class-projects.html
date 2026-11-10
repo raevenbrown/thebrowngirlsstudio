@@ -1387,6 +1387,19 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 
   </div>
 
+  <!-- December Student Prompt Projects (approved by Mrs. Brown; hidden until there is at least one) -->
+  <div id="decShowcase" style="display:none;max-width:1200px;margin:56px auto 0;padding:0 20px;">
+    <h2 style="font-family:'Fraunces',serif;color:#E3BD79;margin:0 0 6px;">Fresh from The AI Lab</h2>
+    <p style="color:#DCC9A8;margin:0 0 20px;">Pages students made by writing prompts. Every project is reviewed before it appears here.</p>
+    <div class="grid" id="decGrid"></div>
+  </div>
+  <div id="decModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(10,5,3,.86);align-items:center;justify-content:center;padding:16px;" onclick="document.getElementById('decModal').style.display='none'">
+    <div style="width:min(900px,100%);background:#2A160E;border:1px solid #C7994F;border-radius:12px;padding:12px;" onclick="event.stopPropagation()">
+      <div style="display:flex;justify-content:space-between;align-items:center;color:#F3E8D6;margin-bottom:8px;"><b id="decTitle"></b><button onclick="document.getElementById('decModal').style.display='none'" style="background:none;border:0;color:#F3E8D6;font-size:1.3rem;cursor:pointer">&#10005;</button></div>
+      <iframe id="decFrame" sandbox="" title="Student page" style="width:100%;height:min(70vh,560px);border:0;background:#fff;border-radius:8px"></iframe>
+    </div>
+  </div>
+
   <!-- Step 2: The Pitch & Specs Modal -->
   <div class="modal-overlay" id="pitchModal" onclick="closeModal(event)">
     <div class="modal-container" onclick="event.stopPropagation()">
@@ -3048,6 +3061,25 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     }
   </script>
 
+<script>
+(function () {
+  var U = "https://qlgnstoesdzmkcmyaqyw.supabase.co", K = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ";
+  function esc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  fetch(U + '/rest/v1/rpc/showcase_approved', { method:'POST', headers:{ apikey:K, Authorization:'Bearer ' + K, 'Content-Type':'application/json' }, body:'{}' })
+    .then(function (r) { if (!r.ok) throw 0; return r.json(); })
+    .then(function (rows) {
+      if (!rows || !rows.length) return;
+      var grid = document.getElementById('decGrid'); grid.innerHTML = '';
+      rows.forEach(function (r) {
+        var d = document.createElement('div'); d.className = 'project-card';
+        d.innerHTML = '<div><div class="tag-row"><span class="vibe-tag">' + esc(r.session_name) + '</span><span class="team-badge">Prompt Lab</span></div><h3>' + esc(r.title) + '</h3><p class="project-desc">' + esc(r.blurb) + '</p></div><button class="btn-launch">Open student page \u2192</button>';
+        d.querySelector('button').addEventListener('click', function () { document.getElementById('decTitle').textContent = r.title; document.getElementById('decFrame').srcdoc = r.page_html; document.getElementById('decModal').style.display = 'flex'; });
+        grid.appendChild(d);
+      });
+      document.getElementById('decShowcase').style.display = 'block';
+    }).catch(function () {});
+})();
+</script>
 <script src="tracker.js" defer></script>
 </body>
 </html>

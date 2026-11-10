@@ -379,7 +379,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 @media print{
   @page{ size:letter landscape; margin:0.5in; }
   body > *:not(main){ display:none !important; }
-  .pt-eyebrow, main h1, .pt-intro, .pt-card, .pt-steps, .pt-panel, #feedSection, #voteSection, #parentSection, .pt-clock, #certSection > :not(#certificate){ display:none !important; }
+  .pt-eyebrow, main h1, .pt-intro, .pt-card, .pt-steps, .pt-panel, #feedSection, #voteSection, #showSection, #parentSection, .pt-clock, #certSection > :not(#certificate){ display:none !important; }
   main, #certSection{ padding:0 !important; margin:0 !important; border:0 !important; background:none !important; max-width:none !important; }
   #certificate{ display:block !important; box-sizing:border-box; width:100%; }
 }
@@ -473,6 +473,14 @@ main.pt-wrap{ position:relative; z-index:1; }
 .ls.tool pre{ margin:8px 0; padding:10px 12px; background:#2A160E; border:1px dashed #C7994F; border-radius:6px; color:#F3E8D6; font-family:'IBM Plex Mono',monospace; font-size:.85rem; white-space:pre-wrap; }
 .pp-list{ list-style:none; margin:8px 0 0; padding:0; } .pp-list li{ padding:3px 0; color:#DCC9A8; } .pp-list li.ok{ color:#E3BD79; font-weight:700; }
 @media (max-width:760px){ .pt-chars-hero{ display:none; } .pt-mrow{ flex-direction:column; align-items:flex-start; } .pt-chars{ width:130px; } }
+</style>
+<style>
+.pt-sec select{ width:100%; padding:11px 12px; font:inherit; font-size:1rem; color:#2A160E; background:#F3E8D6; border:2px solid transparent; border-radius:2px; }
+.pt-sec .pt-f{ margin-bottom:16px; } .pt-sec .pt-f > label{ display:block; font-weight:700; font-size:.92rem; margin-bottom:5px; color:#F3E8D6; }
+.pt-pc{ margin:14px 0; border:1px solid rgba(227,189,121,.55); border-radius:14px; padding:14px; background:rgba(20,11,7,.6); box-shadow:0 0 18px rgba(227,189,121,.12); max-width:420px; }
+.pt-pc .vt{ display:inline-block; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#E3BD79; border:1px solid #C7994F; border-radius:999px; padding:3px 10px; }
+.pt-pc h3{ font-family:'Fraunces',serif; margin:10px 0 4px; color:#fff; font-size:1.25rem; } .pt-pc p{ margin:0 0 10px; color:#DCC9A8; }
+.pt-pc iframe{ width:100%; height:190px; border:0; border-radius:8px; background:#fff; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -651,6 +659,18 @@ main.pt-wrap{ position:relative; z-index:1; }
       <div class="pt-chips" id="voteChips"></div>
       <div id="voteRes" style="margin-top:12px"></div>
     </section>
+    <section class="pt-sec" id="showSection">
+      <h2>Your spot on the AI Lab Showcase</h2>
+      <p>This is how your project can look on our showcase website. Pick your best try and adjust the words. <b>Mrs. Brown reads every project before anything goes up.</b> Use a made-up title, no real names, no school, no phone or email.</p>
+      <div class="pt-f"><label for="scTry">Which try do you want to show?</label><select id="scTry"></select></div>
+      <div class="pt-f"><label for="scTitle">Project title</label><input type="text" id="scTitle" maxlength="60"></div>
+      <div class="pt-f"><label for="scBlurb">One-line description</label><input type="text" id="scBlurb" maxlength="160"></div>
+      <div class="pt-pc" id="scCard"></div>
+      <div class="pt-hp" aria-hidden="true"><label>Leave this empty<input type="text" id="website2" tabindex="-1" autocomplete="off"></label></div>
+      <button type="button" class="pt-btn2" id="scSend">Send to Mrs. Brown for the showcase</button>
+      <div id="scMsg" class="pt-msg" role="status"></div>
+      <p style="margin-top:12px;font-size:.88rem">Want it better first? Tap <b>Keep improving</b> above, make a new try, and come back.</p>
+    </section>
     <section class="pt-sec" id="feedSection">
       <h2>Quick feedback <span style="font-weight:400;font-size:.9rem;color:#DCC9A8">(anonymous)</span></h2>
       <p>No names. Mrs. Brown reads every answer.</p>
@@ -740,6 +760,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     for (var i = 0; i < lis.length; i++) lis[i].className = i === n ? 'on' : (i < n ? 'done' : '');
     if (n === 1) renderLessons();
     if (n === 2) showTry(st.cur);
+    if (n === LAST) drawShowcase();
     tick(); save(); window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   $('steps').addEventListener('click', function (e) { var i = Array.prototype.indexOf.call($('steps').children, e.target); if (i > -1 && i < st.step) go(i); });
@@ -910,6 +931,43 @@ main.pt-wrap{ position:relative; z-index:1; }
     c.textContent = '⏱ Minute ' + Math.min(m, 60) + ' of 60' + (late ? ' — time to wrap up. Tap "I’m done" to finish.' : '');
   }
   setInterval(tick, 15000);
+
+
+  // ---------- showcase preview ----------
+  function headOf(t) { return t.parts[2] ? t.idea.trim().charAt(0).toUpperCase() + t.idea.trim().slice(1, 50) : 'Welcome'; }
+  function tagOf(t) { return t.parts[3] ? LOOK[t.style[0]].tag : 'This is a website.'; }
+  var scSent = false;
+  function drawShowcase() {
+    var sel = $('scTry'), cur = sel.value;
+    sel.innerHTML = '';
+    if (!st.tries.length) { sel.innerHTML = '<option value="">Run a prompt first (go back to the Prompt Lab)</option>'; $('scCard').innerHTML = ''; return; }
+    st.tries.forEach(function (t, i) { sel.insertAdjacentHTML('beforeend', '<option value="' + i + '">Try ' + (i + 1) + ' · ' + t.score + '/5</option>'); });
+    var best = 0; st.tries.forEach(function (t, i) { if (t.score >= st.tries[best].score) best = i; });
+    sel.value = cur !== '' && st.tries[+cur] ? cur : String(best);
+    fillShowDefaults(); drawCard();
+  }
+  function fillShowDefaults() { var t = st.tries[+$('scTry').value]; if (!t) return; $('scTitle').value = headOf(t).slice(0, 60); $('scBlurb').value = tagOf(t).slice(0, 160); }
+  function drawCard() {
+    var t = st.tries[+$('scTry').value]; if (!t) return;
+    $('scCard').innerHTML = '<span class="vt">' + esc(st.group || 'Student') + '</span><h3>' + esc($('scTitle').value || 'Your title') + '</h3><p>' + esc($('scBlurb').value || 'Your description') + '</p><iframe sandbox="" title="Your page" srcdoc="' + esc(t.html) + '"></iframe>';
+  }
+  $('scTry').addEventListener('change', function () { fillShowDefaults(); drawCard(); });
+  $('scTitle').addEventListener('input', drawCard); $('scBlurb').addEventListener('input', drawCard);
+  function looksPrivate(t) { return /@/.test(t) || /https?:|www\./i.test(t) || t.replace(/\D/g, '').length >= 7; }
+  $('scSend').addEventListener('click', function () {
+    var msg = $('scMsg'), b = this; msg.className = 'pt-msg'; msg.style.display = 'none';
+    if ($('website2').value) return;
+    var t = st.tries[+$('scTry').value], title = $('scTitle').value.trim(), blurb = $('scBlurb').value.trim();
+    function say(txt, good) { msg.textContent = txt; msg.className = 'pt-msg ' + (good ? 'pt-ok' : 'pt-err'); msg.style.display = 'block'; }
+    if (!t) { say('Run a prompt first so there is something to show.', false); return; }
+    if (!title || !blurb) { say('Add a title and a one-line description.', false); return; }
+    if (looksPrivate(title + ' ' + blurb)) { say('Please remove emails, links, or phone numbers. Keep it private and safe.', false); return; }
+    b.disabled = true; b.textContent = 'Sending…';
+    fetch(SB_URL + '/rest/v1/showcase_entries', { method:'POST', headers:{ 'apikey':SB_KEY, 'Authorization':'Bearer ' + SB_KEY, 'Content-Type':'application/json', 'Prefer':'return=minimal' },
+      body: JSON.stringify({ session_name: st.group || '5th Grade', title: title, blurb: blurb, page_html: t.html }) })
+      .then(function (r) { if (!r.ok) throw new Error(r.status); say('Sent! Mrs. Brown will read it before it goes on the showcase.', true); b.textContent = 'Sent ✓'; })
+      .catch(function () { say("That didn't go through. Check your internet and try again, or ask Mrs. Brown for help.", false); b.disabled = false; b.textContent = 'Send to Mrs. Brown for the showcase'; });
+  });
 
   // ---------- anonymous feedback ----------
   var scale = $('ratingScale');
