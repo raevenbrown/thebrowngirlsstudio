@@ -714,6 +714,29 @@ body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
   #chatSend{ min-height:46px !important; padding:0 18px !important; }
 }
 </style>
+<style id="missions">
+.ms-tabs{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:6px 0 14px; }
+.ms-tile{ display:flex; align-items:center; gap:10px; text-align:left; background:rgba(26,13,7,.7); color:#f3e8d6; border:2px solid rgba(199,153,79,.45); border-radius:14px; padding:10px 12px; cursor:pointer; font:inherit; }
+.ms-tile b{ flex:none; width:34px; height:34px; border-radius:50%; display:grid; place-items:center; background:#2a160e; border:2px solid #c7994f; color:#e3bd79; } .ms-tile span{ font-size:.92rem; line-height:1.2; }
+.ms-tile.on{ border-color:#ffe29a; box-shadow:0 0 14px rgba(255,226,154,.35); } .ms-tile.ok b{ background:#c7994f; color:#2a160e; }
+.ms-stage{ background:rgba(26,13,7,.55); border:1px solid rgba(199,153,79,.4); border-radius:16px; padding:18px; min-height:240px; }
+.ms-stage h3{ margin:0 0 6px; color:#e3bd79; font-size:1.25rem; } .ms-sub{ margin:0 0 12px; color:#dcc9a8; }
+.fc-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:8px 0 18px; }
+.fc{ perspective:900px; background:none; border:0; padding:0; height:150px; cursor:pointer; font:inherit; color:inherit; }
+.fc-in{ position:relative; display:block; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; }
+.fc.flip .fc-in{ transform:rotateY(180deg); }
+.fc-f,.fc-b{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:12px; border-radius:14px; backface-visibility:hidden; -webkit-backface-visibility:hidden; border:2px solid #c7994f; }
+.fc-f{ background:linear-gradient(160deg,#4a2c1c,#2a160e); color:#ffe29a; font-family:Fraunces,Georgia,serif; font-size:1.2rem; font-weight:700; } .fc-f small{ margin-top:8px; font:600 .72rem 'IBM Plex Mono',monospace; color:#dcc9a8; letter-spacing:.08em; text-transform:uppercase; }
+.fc-b{ background:#f3e8d6; color:#2a160e; transform:rotateY(180deg); font-size:.95rem; line-height:1.35; }
+.ms-opts{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:10px 0; } .ms-opts.two{ grid-template-columns:1fr 1fr; }
+.ms-opt{ background:#3b2216; color:#f3e8d6; border:2px solid #c7994f; border-radius:14px; padding:14px 10px; font:700 1.05rem inherit; font-family:inherit; cursor:pointer; min-height:56px; }
+.ms-opt.right,.pk.right{ background:#c7994f; color:#2a160e; border-color:#ffe29a; } .ms-opt.wrong,.pk.wrong{ opacity:.55; border-style:dashed; }
+.pk-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; } .pk{ text-align:left; background:#3b2216; color:#f3e8d6; border:2px solid #c7994f; border-radius:14px; padding:14px; font:inherit; font-size:1rem; line-height:1.35; cursor:pointer; } .pk small{ display:block; color:#e3bd79; font:600 .72rem 'IBM Plex Mono',monospace; letter-spacing:.08em; text-transform:uppercase; margin-bottom:6px; }
+.sf-card{ margin:10px auto 14px; max-width:420px; text-align:center; background:#f3e8d6; color:#2a160e; border:3px solid #c7994f; border-radius:18px; padding:26px 16px; font:700 1.4rem Fraunces,Georgia,serif; box-shadow:0 8px 0 #7a4b2a; }
+.ms-win{ margin-top:16px; text-align:center; padding:16px; border-radius:14px; background:rgba(199,153,79,.16); border:2px solid #e3bd79; animation:msPop .5s ease-out; } .ms-win p{ margin:6px 0 12px; } .ms-star{ font-size:2.4rem; color:#ffe29a; text-shadow:0 0 16px #e3bd79; }
+@keyframes msPop{ 0%{ transform:scale(.85); opacity:0;} 100%{ transform:scale(1); opacity:1;} }
+@media(max-width:820px){ .ms-tabs,.fc-row,.ms-opts,.pk-row{ grid-template-columns:1fr; } .ms-opts.two{ grid-template-columns:1fr 1fr; } .fc{ height:130px; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -859,7 +882,7 @@ body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
     <div class="pt-time">&#9201; About 8 minutes</div>
     <h2>AI Basics</h2>
     <div class="pt-mrow"><svg class="pt-chars" viewBox="0 0 240 190" role="img" aria-label="Grace and her robot"><use href="#duo"/></svg><div class="pt-mission" id="missionText" style="flex:1;margin:0"></div></div>
-    <p>Three quick lessons. The big idea: <b style="color:#e3bd79">AI does what you say, so your prompt is your superpower.</b></p>
+    <p>Three quick missions. Flip, tap, and play. The big idea: <b style="color:#e3bd79">AI does what you say, so your prompt is your superpower.</b></p>
     <div class="pt-score"><span id="lessonTxt">0/3 lessons</span><div class="pt-bar"><i id="lessonBar"></i></div></div>
     <div id="lessons"></div>
     <div class="pt-row"><button class="pt-b ghost" data-go="0">Back</button><button class="pt-b" data-go="2">Start the Prompt Lab</button></div>
@@ -1107,27 +1130,64 @@ body[data-grade="5th Grade"] .pt-panel p{ font-size:1.08rem; }
   var ROBOTS = { kid: ROBOT,
     mid: [['Help me study.','Robot: "Study what?" It lists random tips about studying. Not helpful.'],['Help me study for my science test.','Robot: It gives general science facts. Closer, but not your test.'],['Act as a study coach. Make 5 flashcards for my 7th grade science test on cells, in simple words.','Robot: Five flashcards about cells in simple words, ready to use. Detail made the difference.']],
     teen: [['Write a bio.','Robot: It writes a bio for a made-up stranger. Useless.'],['Write a bio for my business.','Robot: A generic bio that could be any business.'],['Act as a brand strategist. Write a 2-sentence bio for a math tutoring brand for high school girls, warm and confident.','Robot: Specific, on-brand, and usable. Role, audience, and tone did the work.']] };
+  var FLASH = {
+    kid:[['What is AI?','A computer program that learned patterns from lots and lots of examples.'],['Does AI think like you?','No! It makes smart guesses. It does not think or feel like a person.'],['Can AI be wrong?','Yes! Always double-check with a teacher or grown-up.']],
+    mid:[['What is AI?','A program that learned patterns from huge amounts of text and guesses which word comes next, like autocomplete but much bigger.'],['Why can it sound sure and be wrong?','It predicts likely words. It does not check facts, so you have to.'],['What is a prompt?','The instructions you give AI. Better words in, better results out.']],
+    teen:[['How do chatbots work?','They learned patterns from massive text data and generate responses by predicting likely next words.'],['Why can AI be biased or wrong?','Training data has gaps and unfair patterns. Fluent does not mean accurate.'],['What is a prompt?','Your instructions. Role, goal, context, and format change the output a lot.']]
+  };
+  var SAFE = [['A made-up bakery name',1,'Made-up names are safe.'],['My full name',0,'Keep your real name private.'],['My school name',0,'Keep your school private.'],['A pretend business idea',1,'Pretend ideas are exactly what we want.'],['My phone number',0,'Never type your phone number.'],['A fake brand called "Sunny Paws"',1,'Fake brands are safe and fun.']];
+  var LVLQ = [[0,1],[1,2],[0,2]];
   function renderLessons() {
-    var v = st.group === '5th Grade' ? 'kid' : (st.group === 'Middle School' ? 'mid' : 'teen'), RB = ROBOTS[v], box = $('lessons'); box.innerHTML = '';
-    LESSONS.forEach(function (L) {
-      var done = st.lessons.indexOf(L.id) > -1, d = document.createElement('details'); d.className = 'ls' + (done ? ' done' : '');
-      var extra = '';
-      if (L.game) extra = '<div class="ex">Peanut butter and ____</div><div class="pt-chips" id="gChips">' + GUESS.map(function (g, i) { return '<button type="button" class="pt-chip" data-g="' + i + '">' + esc(g[0]) + '</button>'; }).join('') + '</div><div class="why" id="gOut" style="margin:8px 0"></div>';
-      if (L.robot) extra = '<div class="pt-chips" id="rChips">' + RB.map(function (r, i) { return '<button type="button" class="pt-chip" data-r="' + i + '">Level ' + (i + 1) + '</button>'; }).join('') + '</div><div class="ex" id="rSay" style="margin-top:8px">Pick a level to hear the instruction.</div><div class="why" id="rOut"></div>';
-      d.innerHTML = '<summary><span>' + esc(L.title) + '</span><span class="tick">' + (done ? '✓ done' : '') + '</span></summary><div class="lb"><p>' + esc(L[v]) + '</p>' + extra +
-        '<div class="q"><b>Quick check: ' + esc(L.q) + '</b>' + L.o.map(function (t, i) { return '<button type="button" class="opt" data-i="' + i + '">' + esc(t) + '</button>'; }).join('') + '<div class="why" data-why></div></div></div>';
-      d.querySelectorAll('.opt').forEach(function (b) {
-        b.addEventListener('click', function () {
-          var i = parseInt(b.getAttribute('data-i'), 10), why = d.querySelector('[data-why]');
-          if (i === L.a) { b.className = 'opt right'; why.textContent = 'Correct! ' + L.why; if (st.lessons.indexOf(L.id) < 0) { st.lessons.push(L.id); save(); } d.classList.add('done'); d.querySelector('.tick').textContent = '✓ done'; lessonProgress(); }
-          else { b.className = 'opt wrong'; why.textContent = 'Not quite. Try another answer.'; }
-        });
-      });
-      if (L.game) d.querySelectorAll('[data-g]').forEach(function (b) { b.addEventListener('click', function () { d.querySelector('#gOut').textContent = GUESS[parseInt(b.getAttribute('data-g'), 10)][1]; }); });
-      if (L.robot) d.querySelectorAll('[data-r]').forEach(function (b) { b.addEventListener('click', function () { var r = RB[parseInt(b.getAttribute('data-r'), 10)]; d.querySelector('#rSay').textContent = 'You say: "' + r[0] + '"'; d.querySelector('#rOut').textContent = r[1]; }); });
-      box.appendChild(d);
-    });
-    lessonProgress();
+    var v = st.group === '5th Grade' ? 'kid' : (st.group === 'Middle School' ? 'mid' : 'teen'), RB = ROBOTS[v], box = $('lessons'), cur = 0;
+    var ids = LESSONS.map(function (L) { return L.id; });
+    function isDone(i) { return st.lessons.indexOf(ids[i]) > -1; }
+    function finish(i) { if (!isDone(i)) { st.lessons.push(ids[i]); save(); } lessonProgress(); }
+    function draw() {
+      var tabs = LESSONS.map(function (L, i) { return '<button type="button" class="ms-tile' + (i === cur ? ' on' : '') + (isDone(i) ? ' ok' : '') + '" data-m="' + i + '"><b>' + (isDone(i) ? '&#9733;' : (i + 1)) + '</b><span>' + esc(L.title.replace(/^\d+\.\s*/, '')) + '</span></button>'; }).join('');
+      box.innerHTML = '<div class="ms-tabs">' + tabs + '</div><div class="ms-stage" id="msStage"></div>';
+      box.querySelectorAll('.ms-tile').forEach(function (t) { t.addEventListener('click', function () { cur = +t.getAttribute('data-m'); draw(); }); });
+      [mFlash, mLevels, mSafe][cur]($('msStage'));
+    }
+    function win(stage, i, msg) {
+      finish(i);
+      var nx = i < 2 ? '<button type="button" class="pt-b" id="msNext">Next mission &rarr;</button>' : '<button type="button" class="pt-b" data-go="2" id="msLab">Start the Prompt Lab &rarr;</button>';
+      stage.insertAdjacentHTML('beforeend', '<div class="ms-win"><div class="ms-star">&#9733;</div><b>Mission complete!</b><p>' + esc(msg) + '</p>' + nx + '</div>');
+      var n = $('msNext'); if (n) n.addEventListener('click', function () { cur = i + 1; draw(); });
+      var l = $('msLab'); if (l) l.addEventListener('click', function () { go(2); setTimeout(function () { $('chatIn').focus(); }, 350); });
+      box.querySelectorAll('.ms-tile')[i].classList.add('ok'); box.querySelectorAll('.ms-tile')[i].querySelector('b').innerHTML = '&#9733;';
+      stage.querySelector('.ms-win').scrollIntoView({ block:'nearest', behavior:'smooth' });
+    }
+    function mFlash(stage) {
+      var cards = FLASH[v], seen = {}, nSeen = 0;
+      stage.innerHTML = '<h3>Flip the cards</h3><p class="ms-sub">Tap each card to flip it. Then play the guessing game.</p><div class="fc-row">' + cards.map(function (c, i) { return '<button type="button" class="fc" data-c="' + i + '"><span class="fc-in"><span class="fc-f">' + esc(c[0]) + '<small>tap to flip</small></span><span class="fc-b">' + esc(c[1]) + '</span></span></button>'; }).join('') + '</div><div id="msGame"></div>';
+      function game() {
+        $('msGame').innerHTML = '<h3>Guess like an AI</h3><div class="ex">Peanut butter and ____</div><div class="ms-opts">' + GUESS.map(function (g, i) { return '<button type="button" class="ms-opt" data-g="' + i + '">' + esc(g[0]) + '</button>'; }).join('') + '</div><div class="why" id="gOut" style="margin:8px 0"></div>';
+        stage.querySelectorAll('[data-g]').forEach(function (b) { b.addEventListener('click', function () { var i = +b.getAttribute('data-g'); $('gOut').textContent = GUESS[i][1]; if (i === 0) { b.classList.add('right'); if (!stage.querySelector('.ms-win')) win(stage, 0, 'AI guesses the most likely next word from patterns it learned.'); } else b.classList.add('wrong'); }); });
+      }
+      stage.querySelectorAll('.fc').forEach(function (c) { c.addEventListener('click', function () { c.classList.toggle('flip'); var k = c.getAttribute('data-c'); if (!seen[k]) { seen[k] = 1; nSeen++; if (nSeen === cards.length) game(); } }); });
+      if (isDone(0)) { stage.querySelectorAll('.fc').forEach(function () {}); game(); }
+    }
+    function mLevels(stage) {
+      var r = 0, right = 0;
+      function round() {
+        if (r >= LVLQ.length) { win(stage, 1, 'More detail in your prompt means a better result. That is your superpower.'); return; }
+        var q = LVLQ[r], swap = r % 2, A = swap ? q[1] : q[0], B = swap ? q[0] : q[1];
+        stage.innerHTML = '<h3>Which prompt wins? (' + (r + 1) + ' of ' + LVLQ.length + ')</h3><p class="ms-sub">Read both. Tap the one that gets the better result.</p><div class="pk-row">' + [A, B].map(function (L, i) { return '<button type="button" class="pk" data-l="' + L + '"><small>Prompt ' + (i ? 'B' : 'A') + '</small>&ldquo;' + esc(RB[L][0]) + '&rdquo;</button>'; }).join('') + '</div><div class="why" id="pkOut"></div>';
+        stage.querySelectorAll('.pk').forEach(function (b) { b.addEventListener('click', function () { var L = +b.getAttribute('data-l'), best = Math.max(q[0], q[1]); if (L === best) { b.classList.add('right'); $('pkOut').innerHTML = esc(RB[L][1]) + '<br><button type="button" class="pt-b" id="pkNext" style="margin-top:10px">' + (r + 1 < LVLQ.length ? 'Next round' : 'Finish') + ' &rarr;</button>'; stage.querySelectorAll('.pk').forEach(function (x) { x.disabled = true; }); $('pkNext').addEventListener('click', function () { r++; round(); }); } else { b.classList.add('wrong'); $('pkOut').textContent = 'Not quite. Here is what the robot did: ' + RB[L][1]; } }); });
+      }
+      round();
+    }
+    function mSafe(stage) {
+      var i = 0;
+      function card() {
+        if (i >= SAFE.length) { stage.innerHTML = '<h3>Safe or private?</h3>'; win(stage, 2, 'Made-up ideas are safe. Real names, schools, and phone numbers stay private.'); return; }
+        var it = SAFE[i];
+        stage.innerHTML = '<h3>Safe or private? (' + (i + 1) + ' of ' + SAFE.length + ')</h3><p class="ms-sub">Could you type this into an AI tool?</p><div class="sf-card">' + esc(it[0]) + '</div><div class="ms-opts two"><button type="button" class="ms-opt" data-a="1">&#10003; Safe to type</button><button type="button" class="ms-opt" data-a="0">&#128274; Keep private</button></div><div class="why" id="sfOut"></div>';
+        stage.querySelectorAll('[data-a]').forEach(function (b) { b.addEventListener('click', function () { if (+b.getAttribute('data-a') === it[1]) { b.classList.add('right'); $('sfOut').textContent = 'Yes! ' + it[2]; stage.querySelectorAll('[data-a]').forEach(function (x) { x.disabled = true; }); setTimeout(function () { i++; card(); }, 900); } else { b.classList.add('wrong'); $('sfOut').textContent = 'Not quite. ' + it[2]; } }); });
+      }
+      card();
+    }
+    draw();
   }
   function lessonProgress() { var n = st.lessons.length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready for the Prompt Lab!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%'; hud(); }
 
