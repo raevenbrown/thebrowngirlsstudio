@@ -593,6 +593,33 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
   #ratingScale{ grid-template-columns:repeat(5,1fr) !important; }
 }
 </style>
+<style id="boot-css">
+#boot{ position:fixed; inset:0; z-index:99999; display:none; align-items:center; justify-content:center; background:#0A0503; color:#F3E8D6; overflow:hidden; cursor:pointer; }
+#boot.on{ display:flex; } #boot.out{ opacity:0; transition:opacity .7s ease; pointer-events:none; }
+#boot .bt-bg{ position:absolute; inset:0; background:linear-gradient(rgba(10,5,3,.55),rgba(10,5,3,.8)),url(cosmic-cockpit.jpg) center/cover no-repeat; opacity:0; animation:btfade 1.2s .1s forwards; }
+#boot .bt-box{ position:relative; width:min(440px,88vw); text-align:center; }
+#boot.rev .bt-box{ animation:btshake .09s infinite; }
+.bt-eng{ position:relative; width:170px; height:170px; margin:0 auto 18px; }
+.bt-core{ position:absolute; inset:46px; border-radius:50%; background:radial-gradient(circle,#FFF3CF 0,#E3BD79 35%,rgba(199,153,79,.0) 72%); box-shadow:0 0 30px #E3BD79,0 0 80px rgba(227,189,121,.7); animation:btpulse 1s ease-in-out infinite alternate; }
+#boot.rev .bt-core{ animation-duration:.35s; } #boot.max .bt-core{ animation-duration:.14s; box-shadow:0 0 60px #FFE29A,0 0 140px #E3BD79; }
+.bt-ring{ position:absolute; inset:0; border-radius:50%; border:2px solid #E3BD79; opacity:0; animation:btring 1.6s ease-out infinite; }
+.bt-ring:nth-child(2){ animation-delay:.5s; } .bt-ring:nth-child(3){ animation-delay:1s; }
+#boot.rev .bt-ring{ animation-duration:.9s; } #boot.max .bt-ring{ animation-duration:.5s; }
+.bt-t{ font-family:'Fraunces',serif; font-weight:700; font-size:clamp(1.3rem,5vw,1.8rem); color:#E3BD79; letter-spacing:.06em; text-transform:uppercase; text-shadow:0 0 18px rgba(227,189,121,.7); }
+.bt-lines{ font-family:'IBM Plex Mono',monospace; font-size:13px; letter-spacing:.1em; text-transform:uppercase; text-align:left; margin:16px auto 14px; width:min(330px,86vw); min-height:76px; }
+.bt-lines div{ display:flex; justify-content:space-between; opacity:0; animation:btline .3s forwards; } .bt-lines b{ color:#7BE0A4; }
+.bt-bar{ height:10px; border-radius:99px; border:1px solid #E3BD79; background:rgba(0,0,0,.5); overflow:hidden; width:min(330px,86vw); margin:0 auto; }
+.bt-bar i{ display:block; height:100%; width:0; background:linear-gradient(90deg,#C7994F,#FFE29A); box-shadow:0 0 14px #E3BD79; }
+.bt-skip{ margin-top:12px; font-size:12px; color:#DCC9A8; opacity:.7; }
+.bt-flash{ position:absolute; inset:0; background:radial-gradient(circle,#FFF3CF,rgba(227,189,121,.6) 40%,transparent 70%); opacity:0; pointer-events:none; }
+#boot.max .bt-flash{ animation:btflash .7s forwards; }
+@keyframes btfade{ to{ opacity:1; } } @keyframes btline{ to{ opacity:1; } }
+@keyframes btpulse{ from{ transform:scale(.82); } to{ transform:scale(1.12); } }
+@keyframes btring{ 0%{ transform:scale(.35); opacity:.9; } 100%{ transform:scale(1.6); opacity:0; } }
+@keyframes btshake{ 0%{ transform:translate(0,0); } 25%{ transform:translate(1px,-1px); } 50%{ transform:translate(-1px,1px); } 75%{ transform:translate(1px,1px); } 100%{ transform:translate(0,0); } }
+@keyframes btflash{ 0%{ opacity:0; } 40%{ opacity:.95; } 100%{ opacity:0; } }
+@media (prefers-reduced-motion:reduce){ #boot.rev .bt-box,.bt-core,.bt-ring{ animation:none !important; } .bt-ring{ display:none; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -859,6 +886,17 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
   <div class="ck-console" aria-hidden="true"><div class="ck-pad"></div><div class="ck-mid">The Brown<br>Girls</div><div class="ck-pad"></div></div>
 </div>
 </main>
+<div id="boot" role="status" aria-live="polite" aria-label="Powering up">
+  <div class="bt-bg"></div>
+  <div class="bt-box">
+    <div class="bt-eng" aria-hidden="true"><div class="bt-ring"></div><div class="bt-ring"></div><div class="bt-ring"></div><div class="bt-core"></div></div>
+    <div class="bt-t" id="btTitle">Powering up&hellip;</div>
+    <div class="bt-lines" id="btLines"></div>
+    <div class="bt-bar"><i id="btBar"></i></div>
+    <div class="bt-skip">Tap to skip</div>
+  </div>
+  <div class="bt-flash"></div>
+</div>
 <script>
 (function () {
   var SB_URL = "https://qlgnstoesdzmkcmyaqyw.supabase.co";
@@ -1379,11 +1417,42 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
   }
   drawVote();
 
+  // ---------- engine power-up after the class code ----------
+  function runBoot(done) {
+    var el = $('boot'), fin = false, T = [], reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (navigator.webdriver && location.hash.indexOf('boot') < 0) { done(); return; }
+    function later(fn, ms) { T.push(setTimeout(fn, ms)); }
+    var ac = null, osc = null;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (AC && !reduce) {
+        ac = new AC(); osc = ac.createOscillator(); var g = ac.createGain(), f = ac.createBiquadFilter();
+        osc.type = 'sawtooth'; osc.frequency.setValueAtTime(38, ac.currentTime); osc.frequency.exponentialRampToValueAtTime(190, ac.currentTime + 2.4);
+        f.type = 'lowpass'; f.frequency.setValueAtTime(160, ac.currentTime); f.frequency.exponentialRampToValueAtTime(900, ac.currentTime + 2.4);
+        g.gain.setValueAtTime(0.0001, ac.currentTime); g.gain.exponentialRampToValueAtTime(0.05, ac.currentTime + 0.5); g.gain.exponentialRampToValueAtTime(0.0001, ac.currentTime + 2.9);
+        osc.connect(f); f.connect(g); g.connect(ac.destination); osc.start(); osc.stop(ac.currentTime + 3);
+      }
+    } catch (e) {}
+    function end() {
+      if (fin) return; fin = true; T.forEach(clearTimeout);
+      try { if (osc) osc.stop(); if (ac) ac.close(); } catch (e) {}
+      done(); el.classList.add('out'); setTimeout(function () { el.classList.remove('on', 'out', 'rev', 'max'); $('btLines').innerHTML = ''; $('btBar').style.width = '0'; }, 750);
+    }
+    $('btLines').innerHTML = ''; $('btTitle').textContent = 'Powering up…'; $('btBar').style.transition = 'none'; $('btBar').style.width = '0';
+    el.className = 'on'; el.onclick = end;
+    var L = [['Engines', 'ignition', 500], ['AI Galaxy', 'online', 1150], ['Grace + robot', 'ready', 1750]];
+    L.forEach(function (l) { later(function () { $('btLines').insertAdjacentHTML('beforeend', '<div><span>' + l[0] + '</span><b>' + l[1] + '</b></div>'); }, l[2]); });
+    later(function () { $('btBar').style.transition = 'width 2.2s cubic-bezier(.4,0,.2,1)'; $('btBar').style.width = '100%'; }, 60);
+    later(function () { el.classList.add('rev'); }, 700);
+    later(function () { el.classList.add('max'); $('btTitle').textContent = 'Liftoff!'; }, 2250);
+    later(end, 2750);
+  }
+
   // ---------- class code gate ----------
   var CODE_HASH = "9ed7657b45b441262a50843a16fa5fb3b38060a4ae14e41bd95ce97899a7433f";
   function sha(t) { var buf = new TextEncoder().encode(t); return crypto.subtle.digest('SHA-256', buf).then(function (h) { return Array.prototype.map.call(new Uint8Array(h), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }); }
   function unlock() { $('ckbg').classList.remove('bright'); $('gate').style.display = 'none'; $('app').style.display = 'grid'; try { sessionStorage.setItem('bgcs_gate', '1'); } catch (e) {} }
-  function tryCode() { var v = $('gateCode').value.trim().toLowerCase(); sha(v).then(function (h) { if (h === CODE_HASH) unlock(); else $('gateErr').style.display = 'block'; }); }
+  function tryCode() { var v = $('gateCode').value.trim().toLowerCase(); sha(v).then(function (h) { if (h === CODE_HASH) runBoot(unlock); else $('gateErr').style.display = 'block'; }); }
   $('gateBtn').addEventListener('click', tryCode);
   $('gateCode').addEventListener('keydown', function (e) { if (e.key === 'Enter') tryCode(); });
   try { if (sessionStorage.getItem('bgcs_gate') === '1') unlock(); } catch (e) {}
