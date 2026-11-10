@@ -685,7 +685,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   <div id="finishExtras" style="display:none">
     <section class="pt-sec" id="voteSection">
       <h2>Name Grace&rsquo;s robot!</h2>
-      <p>Grace&rsquo;s robot needs a name. Vote once for your favorite.</p>
+      <p>Grace&rsquo;s robot needs a name. Vote once for your favorite. We will share the winner at the end of class.</p>
       <div class="pt-chips" id="voteChips"></div>
       <div id="voteRes" style="margin-top:12px"></div>
     </section>
@@ -1000,7 +1000,9 @@ main.pt-wrap{ position:relative; z-index:1; }
       });
       box.appendChild(b);
     });
-    if (voted) showVotes();
+    var reveal = location.hash === '#reveal';
+    if (reveal) { showVotes(); $('voteRes').insertAdjacentHTML('beforebegin', '<button type="button" class="pt-b ghost" id="voteRefresh" style="margin-top:10px">Refresh results</button>'); var rf = $('voteRefresh'); if (rf) rf.addEventListener('click', showVotes); }
+    else if (voted) $('voteRes').innerHTML = '<p style="margin:8px 0 0">Thanks for voting! We will share the winning name at the end of class.</p>';
   }
   drawVote();
 
