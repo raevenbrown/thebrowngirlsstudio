@@ -546,6 +546,13 @@ main.pt-wrap.pt-wide{ max-width:1340px; padding-top:16px; }
 #p1 .pt-mrow{ display:none; }
 @media print{ #app{ display:block !important; } .ck-top,.ck-left,.ck-right,.ck-console,.ck-bg{ display:none !important; } }
 </style>
+<style id="cockpit-art">
+.ck-bg{ background:linear-gradient(rgba(14,7,4,.80),rgba(14,7,4,.92)),url(cosmic-cockpit.jpg) center top/cover no-repeat !important; filter:blur(3px) !important; transform:scale(1.04); }
+.ck-bg.bright{ background:linear-gradient(rgba(14,7,4,.10),rgba(14,7,4,.35)),url(cosmic-cockpit.jpg) center/cover no-repeat !important; filter:none !important; transform:none; }
+#gate{ position:relative; border:2px solid #E3BD79 !important; border-radius:26px !important; background:rgba(16,9,6,.86) !important; box-shadow:0 0 0 6px rgba(16,9,6,.8),0 0 0 7px rgba(199,153,79,.8),0 0 40px rgba(227,189,121,.5),inset 0 0 30px rgba(227,189,121,.16) !important; margin:clamp(40px,12vh,130px) auto 40px !important; text-align:center; }
+#gate .pt-f{ text-align:left; }
+@media (max-width:760px){ .ck-bg{ background-position:center top !important; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -641,7 +648,7 @@ main.pt-wrap.pt-wide{ max-width:1340px; padding-top:16px; }
   </g>
 </symbol></defs></svg>
 <main class="pt-wrap pt-wide">
-<div class="ck-bg" aria-hidden="true"></div>
+<div class="ck-bg bright" id="ckbg" aria-hidden="true"></div>
   <section class="pt-panel on" id="gate" style="max-width:480px;margin:40px auto;">
     <div class="pt-eyebrow">The AI Lab &middot; Student Studio</div>
     <h2 style="margin-top:8px">Enter your class code</h2>
@@ -1335,7 +1342,7 @@ main.pt-wrap.pt-wide{ max-width:1340px; padding-top:16px; }
   // ---------- class code gate ----------
   var CODE_HASH = "9ed7657b45b441262a50843a16fa5fb3b38060a4ae14e41bd95ce97899a7433f";
   function sha(t) { var buf = new TextEncoder().encode(t); return crypto.subtle.digest('SHA-256', buf).then(function (h) { return Array.prototype.map.call(new Uint8Array(h), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }); }
-  function unlock() { $('gate').style.display = 'none'; $('app').style.display = 'grid'; try { sessionStorage.setItem('bgcs_gate', '1'); } catch (e) {} }
+  function unlock() { $('ckbg').classList.remove('bright'); $('gate').style.display = 'none'; $('app').style.display = 'grid'; try { sessionStorage.setItem('bgcs_gate', '1'); } catch (e) {} }
   function tryCode() { var v = $('gateCode').value.trim().toLowerCase(); sha(v).then(function (h) { if (h === CODE_HASH) unlock(); else $('gateErr').style.display = 'block'; }); }
   $('gateBtn').addEventListener('click', tryCode);
   $('gateCode').addEventListener('keydown', function (e) { if (e.key === 'Enter') tryCode(); });
