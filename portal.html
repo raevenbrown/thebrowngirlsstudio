@@ -482,6 +482,13 @@ main.pt-wrap{ position:relative; z-index:1; }
 .pt-pc h3{ font-family:'Fraunces',serif; margin:10px 0 4px; color:#fff; font-size:1.25rem; } .pt-pc p{ margin:0 0 10px; color:#DCC9A8; }
 .pt-pc iframe{ width:100%; height:190px; border:0; border-radius:8px; background:#fff; pointer-events:none; }
 </style>
+<style>
+.pt-loop{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; list-style:none; padding:0; margin:0 0 16px; }
+.pt-loop li{ border:1px solid rgba(227,189,121,.45); border-radius:12px; padding:10px; background:rgba(20,11,7,.55); font-size:.85rem; color:#DCC9A8; } .pt-loop b{ display:block; color:#E3BD79; } .pt-loop span{ display:block; margin-top:2px; }
+.pt-tweak{ margin-top:12px; padding:12px 14px; border:1px solid rgba(227,189,121,.4); border-radius:12px; background:rgba(20,11,7,.5); color:#F3E8D6; }
+.pt-tweak > b{ color:#E3BD79; } .pt-cb{ display:block; margin:6px 0 0; color:#DCC9A8; font-size:.92rem; } .pt-cb input{ margin-right:8px; }
+@media (max-width:620px){ .pt-loop{ grid-template-columns:1fr 1fr; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -589,7 +596,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   <div class="pt-hero"><div class="pt-orb" aria-hidden="true"><span>The Brown<br>Girls</span></div>
     <div><div class="pt-eyebrow">Cosmic Code Academy &middot; The AI Lab</div>
     <h1>Real skills. <span>Brighter futures.</span></h1>
-    <p class="pt-intro" style="margin-bottom:0">Blast off with AI: learn how AI works, then practice the skill that matters most: writing great prompts. No name needed.</p></div><svg class="pt-chars pt-chars-hero" viewBox="0 0 240 190" role="img" aria-label="Grace, a Black girl with afro puffs, waving with her friendly robot"><use href="#duo"/></svg></div>
+    <p class="pt-intro" style="margin-bottom:0">Blast off with AI: learn how AI works, then practice the skill that matters most: writing great prompts and vibe coding with them. No name needed.</p></div><svg class="pt-chars pt-chars-hero" viewBox="0 0 240 190" role="img" aria-label="Grace, a Black girl with afro puffs, waving with her friendly robot"><use href="#duo"/></svg></div>
   <div id="clock" class="pt-clock"></div>
   <ol class="pt-steps" id="steps"><li>1 &middot; Crew</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Landing</li></ol>
 
@@ -617,7 +624,8 @@ main.pt-wrap{ position:relative; z-index:1; }
   <section class="pt-panel" id="p2">
     <div class="pt-time">&#9201; About 30 minutes</div>
     <h2>Voyage 2: Prompt Lab</h2>
-    <p>Write a prompt, run it in Practice AI, see what you get, then make your prompt better and run it again. Can you get all 5 parts?</p>
+    <p><b style="color:#E3BD79">This is vibe coding:</b> you describe what you want in plain words, look at what you get, tweak it with a new instruction, and repeat. You never have to write code.</p>
+    <ol class="pt-loop"><li><b>1 Describe</b><span>Write your 5-part prompt</span></li><li><b>2 Run</b><span>See what Practice AI makes</span></li><li><b>3 Look</b><span>Check it like a builder</span></li><li><b>4 Tweak</b><span>Say one change in plain words</span></li></ol>
     <div class="pt-build">
       <div>
         <div class="pt-f"><label for="fRole">1. Who should the AI act as?</label><input type="text" id="fRole" maxlength="80" placeholder="e.g., a friendly website designer"></div>
@@ -639,6 +647,16 @@ main.pt-wrap{ position:relative; z-index:1; }
         <div class="pt-row" style="margin:0 0 8px;align-items:center"><button class="pt-b" id="runBtn" type="button">Run my prompt</button><div class="pt-chips" id="tries"></div></div>
         <iframe class="pt-prev" id="prev" sandbox="" title="What Practice AI made"></iframe>
         <div class="pt-note" id="runHint">Press <b>Run my prompt</b> to see what Practice AI makes.</div>
+        <div class="pt-tweak">
+          <b>3 &middot; Look like a builder</b>
+          <label class="pt-cb"><input type="checkbox"> Does it match my idea?</label>
+          <label class="pt-cb"><input type="checkbox"> Are the words easy to read?</label>
+          <label class="pt-cb"><input type="checkbox"> I know ONE thing I want to change.</label>
+          <b style="display:block;margin-top:12px">4 &middot; Tweak it</b>
+          <div class="pt-row" style="margin:6px 0 0;flex-wrap:nowrap"><input type="text" id="tweakIn" maxlength="100" placeholder="e.g., make the button purple" style="flex:1"><button class="pt-b" id="tweakBtn" type="button">Apply</button></div>
+          <div class="pt-chips" id="tweakEx" style="margin-top:8px"></div>
+        </div>
+        <div class="pt-note"><b>Vibe rules:</b> be specific &middot; change ONE thing at a time &middot; look after every change &middot; keep what works (tap an older Try to go back).</div>
         <div class="pt-note"><b>Practice AI</b> is a simulator, not a real AI. It follows simple rules so you can see how a better prompt gets a better result. If your Chromebook allows a real AI tool, copy your prompt and try it there too.</div>
       </div>
     </div>
@@ -849,19 +867,72 @@ main.pt-wrap{ position:relative; z-index:1; }
   });
 
   // ---------- Practice AI (a simulator that follows rules) ----------
+  function lum(hex) { var h = hex.replace('#',''); var r = parseInt(h.substr(0,2),16)/255, g = parseInt(h.substr(2,2),16)/255, b = parseInt(h.substr(4,2),16)/255; return 0.2126*r + 0.7152*g + 0.0722*b; }
   function simulate(snap) {
-    var n = snap.score, G = GROUPS[snap.group] || GROUPS['5th Grade'], hasIdea = snap.parts[2], hasStyle = snap.parts[3], fmt = snap.format || '';
-    var look = hasStyle ? LOOK[snap.style[0]] : { bg:'#EEEEEE', fg:'#333333', ac:'#888888', bt:'#FFFFFF', font:"system-ui,Arial,sans-serif", icon:'', tag:'This is a website.' };
+    var n = snap.score, G = GROUPS[snap.group] || GROUPS['5th Grade'], hasIdea = snap.parts[2], hasStyle = snap.parts[3], fmt = snap.format || '', ov = snap.ov || {};
+    var base = hasStyle ? LOOK[snap.style[0]] : { bg:'#EEEEEE', fg:'#333333', ac:'#888888', bt:'#FFFFFF', font:"system-ui,Arial,sans-serif", icon:'', tag:'This is a website.' };
+    var look = { bg:base.bg, fg:base.fg, ac:base.ac, bt:base.bt, font:base.font, icon:base.icon, tag:base.tag };
+    if (ov.bg) { look.bg = ov.bg; look.fg = lum(ov.bg) > 0.55 ? '#1B1B1B' : '#F5F5F5'; }
+    if (ov.ac) { look.ac = ov.ac; look.bt = lum(ov.ac) > 0.55 ? '#1B1B1B' : '#FFFFFF'; }
     var head = hasIdea ? snap.idea.trim().charAt(0).toUpperCase() + snap.idea.trim().slice(1, 50) : 'Welcome';
-    var btn = /button/i.test(fmt) ? (n >= 4 ? 'Get started' : 'Click') : '';
+    if (ov.head) head = ov.head; if (ov.shortHead) head = head.split(/\s+/).slice(0, 3).join(' ');
+    var btn = /button/i.test(fmt) ? (n >= 4 ? 'Get started' : 'Click') : ''; if ('btn' in ov) btn = ov.btn;
+    var btnBg = ov.btnColor || look.ac, btnFg = lum(btnBg) > 0.55 ? '#1B1B1B' : '#FFFFFF';
+    var wantCards = /card|bullet|list/i.test(fmt); if ('cards' in ov) wantCards = ov.cards;
     var cards = '';
-    if (/card|bullet|list/i.test(fmt)) {
+    if (wantCards) {
       var T = G.mode === 'board' ? [['Tutor','Explains hard ideas step by step.'],['Study partner','Quizzes me until I get it.'],['Brand builder','Helps me shape my big idea.']] : [['Fun','Made to make you smile.'],['Friendly','Easy for everyone to use.'],['Made for you','Built around your idea.']];
       cards = '<div class="cards">' + T.map(function (c) { return '<div class="card"><h3>' + esc(c[0]) + '</h3><p>' + esc(c[1]) + '</p></div>'; }).join('') + '</div>';
     }
-    var icon = n === 5 && look.icon ? '<div class="icon">' + look.icon + '</div>' : '';
-    return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(head) + '</title><style>body{margin:0;background:' + look.bg + ';color:' + look.fg + ';font-family:' + look.font + ';text-align:center}.wrap{max-width:720px;margin:0 auto;padding:44px 22px}.icon{font-size:46px}h1{font-size:2.2rem;margin:8px 0}p.tag{font-size:1.15rem;opacity:.9}.btn{display:inline-block;margin-top:12px;background:' + look.ac + ';color:' + look.bt + ';padding:11px 24px;border-radius:999px;font-weight:700}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px;text-align:left}.card{border:2px solid ' + look.ac + ';border-radius:12px;padding:12px}.card h3{margin:0 0 6px;color:' + look.ac + '}.card p{margin:0}</style></head><body><div class="wrap">' + icon + '<h1>' + esc(head) + '</h1><p class="tag">' + esc(look.tag) + '</p>' + (btn ? '<span class="btn">' + esc(btn) + '</span>' : '') + cards + '</div></body></html>';
+    var showIcon = n === 5 && look.icon; if ('icon' in ov) showIcon = ov.icon && (look.icon || '✨'); 
+    var icon = showIcon ? '<div class="icon">' + (look.icon || '✨') + '</div>' : '';
+    var hs = ov.headSize || '2.2rem', al = ov.align || 'center';
+    return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(head) + '</title><style>body{margin:0;background:' + look.bg + ';color:' + look.fg + ';font-family:' + look.font + ';text-align:' + al + '}.wrap{max-width:720px;margin:0 auto;padding:44px 22px}.icon{font-size:46px}h1{font-size:' + hs + ';margin:8px 0}p.tag{font-size:1.15rem;opacity:.9}.btn{display:inline-block;margin-top:12px;background:' + btnBg + ';color:' + btnFg + ';padding:11px 24px;border-radius:999px;font-weight:700}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:28px;text-align:left}.card{border:2px solid ' + look.ac + ';border-radius:12px;padding:12px}.card h3{margin:0 0 6px;color:' + look.ac + '}.card p{margin:0}</style></head><body><div class="wrap">' + icon + '<h1>' + esc(head) + '</h1><p class="tag">' + esc(look.tag) + '</p>' + (btn ? '<span class="btn">' + esc(btn) + '</span>' : '') + cards + '</div></body></html>';
   }
+  // Practice AI understands a short list of plain-word changes (a simulator, not a real AI)
+  var COLORS = { red:'#D7263D', orange:'#F28C28', yellow:'#F2C94C', green:'#2E9E5B', teal:'#1B998B', blue:'#2F6FDE', purple:'#7B4FD0', pink:'#FF6FB5', black:'#141414', white:'#FFFFFF', gold:'#C7994F' };
+  function parseTweak(txt) {
+    var t = txt.toLowerCase(), ov = {}, did = [], color = null;
+    Object.keys(COLORS).forEach(function (c) { if (!color && new RegExp('\\b' + c + '\\b').test(t)) color = c; });
+    var mCall = txt.match(/(?:call it|name it)\s*"?([^"]{2,50})"?$/i) || txt.match(/(?:headline|title)\s*(?:to|is|as|:)\s*"?([^"]{2,50})"?$/i);
+    if (mCall) { ov.head = mCall[1].trim(); did.push('headline is now "' + ov.head + '"'); }
+    if (color && /button/.test(t)) { ov.btnColor = COLORS[color]; did.push('button is ' + color); }
+    else if (color && /(background|page|backdrop)/.test(t)) { ov.bg = COLORS[color]; did.push('background is ' + color); }
+    else if (color && !mCall) { ov.ac = COLORS[color]; did.push('accent color is ' + color); }
+    if (/\bdark\b/.test(t)) { ov.bg = '#141414'; did.push('dark background'); } else if (/\blight\b/.test(t) && !/lighter/.test(t)) { ov.bg = '#FFFFFF'; did.push('light background'); }
+    if (/add (a |the )?button/.test(t)) { ov.btn = 'Get started'; did.push('added a button'); }
+    if (/(remove|delete|no) (the )?button/.test(t)) { ov.btn = ''; did.push('removed the button'); }
+    if (/(add|show) (three |3 |some )?cards?/.test(t)) { ov.cards = true; did.push('added cards'); }
+    if (/(remove|delete|hide|no) (the )?cards?/.test(t)) { ov.cards = false; did.push('removed cards'); }
+    if (/(bigger|larger|huge|big) (headline|title)/.test(t)) { ov.headSize = '3rem'; did.push('bigger headline'); }
+    if (/(smaller|tiny|small) (headline|title)/.test(t)) { ov.headSize = '1.7rem'; did.push('smaller headline'); }
+    if (/shorter (headline|title)/.test(t)) { ov.shortHead = true; did.push('shorter headline'); }
+    if (/(add|show) (an? )?(emoji|icon)/.test(t)) { ov.icon = true; did.push('added an icon'); }
+    if (/(remove|delete|no) (the )?(emoji|icon)/.test(t)) { ov.icon = false; did.push('removed the icon'); }
+    if (/\bleft\b/.test(t) && /(align|left side|move)/.test(t)) { ov.align = 'left'; did.push('aligned left'); }
+    if (/\bcenter(ed)?\b/.test(t)) { ov.align = 'center'; did.push('centered'); }
+    return { ov: ov, did: did };
+  }
+  var TWEAKS = ['make the button purple','make the background dark','add cards','make the headline bigger','add an icon','call it Pup Cupcakes Co.'];
+  function drawTweakEx() {
+    var box = $('tweakEx'); box.innerHTML = '';
+    TWEAKS.forEach(function (t) { var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip'; b.textContent = t; b.addEventListener('click', function () { $('tweakIn').value = t; }); box.appendChild(b); });
+  }
+  function applyTweak() {
+    var txt = $('tweakIn').value.trim();
+    if (!st.tries.length) { $('runHint').textContent = 'Run your prompt first, then tweak what it makes.'; return; }
+    if (!txt) { $('runHint').textContent = 'Type one change in plain words, like "make the button purple".'; return; }
+    var baseT = st.tries[st.cur >= 0 && st.tries[st.cur] ? st.cur : st.tries.length - 1], r = parseTweak(txt);
+    if (!r.did.length) { $('runHint').textContent = 'Practice AI did not understand "' + txt + '". Be specific and name ONE change, like "make the button purple", "add cards", or "call it Pup Cupcakes".'; return; }
+    var snap = { group:baseT.group, role:baseT.role, goal:baseT.goal, idea:baseT.idea, style:baseT.style.slice(), format:baseT.format, parts:baseT.parts.slice(), score:baseT.score, tweak:true };
+    snap.ov = {}; var k; for (k in (baseT.ov || {})) snap.ov[k] = baseT.ov[k]; for (k in r.ov) snap.ov[k] = r.ov[k];
+    snap.html = simulate(snap); if (st.tries.length >= 12) st.tries.shift();
+    st.tries.push(snap); snap.hint = 'Tweak ' + st.tries.length + ': ' + r.did.join(', ') + '. Look at it. What is the next ONE thing you want to change? (Or tap an older Try to go back.)';
+    $('tweakIn').value = ''; showTry(st.tries.length - 1);
+  }
+  $('tweakBtn').addEventListener('click', applyTweak);
+  $('tweakIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') applyTweak(); });
+  drawTweakEx();
   function hintFor(snap, prev) {
     var missing = [];
     var N = ['who the AI acts as','what to make','your idea','the look','the format'];
@@ -875,7 +946,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   function drawTries() {
     var box = $('tries'); box.innerHTML = '';
     st.tries.forEach(function (t, i) {
-      var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip' + (i === st.cur ? ' on' : ''); b.textContent = 'Try ' + (i + 1) + ' · ' + t.score + '/5';
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip' + (i === st.cur ? ' on' : ''); b.textContent = 'Try ' + (i + 1) + ' · ' + (t.tweak ? 'tweak' : t.score + '/5');
       b.addEventListener('click', function () { showTry(i); }); box.appendChild(b);
     });
   }
@@ -886,7 +957,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   $('runBtn').addEventListener('click', function () {
     var snap = { group:st.group, role:st.role, goal:st.goal, idea:st.idea, style:st.style.slice(), format:st.format, parts:parts(), score:scoreOf() };
     var prev = st.tries.length ? st.tries[st.tries.length - 1] : null;
-    snap.html = simulate(snap); if (st.tries.length >= 8) st.tries.shift();
+    snap.html = simulate(snap); if (st.tries.length >= 12) st.tries.shift();
     st.tries.push(snap); snap.hint = hintFor(snap, prev); showTry(st.tries.length - 1);
   });
 
@@ -934,14 +1005,14 @@ main.pt-wrap{ position:relative; z-index:1; }
 
 
   // ---------- showcase preview ----------
-  function headOf(t) { return t.parts[2] ? t.idea.trim().charAt(0).toUpperCase() + t.idea.trim().slice(1, 50) : 'Welcome'; }
+  function headOf(t) { if (t.ov && t.ov.head) return t.ov.head; return t.parts[2] ? t.idea.trim().charAt(0).toUpperCase() + t.idea.trim().slice(1, 50) : 'Welcome'; }
   function tagOf(t) { return t.parts[3] ? LOOK[t.style[0]].tag : 'This is a website.'; }
   var scSent = false;
   function drawShowcase() {
     var sel = $('scTry'), cur = sel.value;
     sel.innerHTML = '';
     if (!st.tries.length) { sel.innerHTML = '<option value="">Run a prompt first (go back to the Prompt Lab)</option>'; $('scCard').innerHTML = ''; return; }
-    st.tries.forEach(function (t, i) { sel.insertAdjacentHTML('beforeend', '<option value="' + i + '">Try ' + (i + 1) + ' · ' + t.score + '/5</option>'); });
+    st.tries.forEach(function (t, i) { sel.insertAdjacentHTML('beforeend', '<option value="' + i + '">Try ' + (i + 1) + ' · ' + (t.tweak ? 'tweak' : t.score + '/5') + '</option>'); });
     var best = 0; st.tries.forEach(function (t, i) { if (t.score >= st.tries[best].score) best = i; });
     sel.value = cur !== '' && st.tries[+cur] ? cur : String(best);
     fillShowDefaults(); drawCard();
