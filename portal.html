@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#2A160E">
-<title>Student Showcase Portal | The AI Lab</title>
+<title>Student Studio | The AI Lab</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,450&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -421,6 +421,21 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 .pt-two{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
 @media (max-width:820px){ .pt-build{ grid-template-columns:1fr; } .pt-groups{ grid-template-columns:1fr; } .pt-prev{ height:340px; } }
 </style>
+<style>
+.ls{ border:1px solid rgba(243,232,214,.2); border-radius:6px; margin:0 0 10px; background:#4A2C1C; }
+.ls summary{ cursor:pointer; padding:14px 16px; font-weight:700; color:#F3E8D6; list-style:none; display:flex; justify-content:space-between; gap:10px; }
+.ls summary::-webkit-details-marker{ display:none; }
+.ls .tick{ color:#E3BD79; } .ls.done{ border-color:#C7994F; }
+.ls .lb{ padding:0 16px 16px; color:#DCC9A8; } .ls .lb p{ margin:0 0 10px; color:#F3E8D6; }
+.ls .q{ margin-top:12px; padding-top:12px; border-top:1px dashed rgba(243,232,214,.25); }
+.ls .q b{ color:#E3BD79; display:block; margin-bottom:8px; }
+.ls .opt{ display:block; width:100%; text-align:left; margin:0 0 6px; padding:10px 12px; background:#3B2216; color:#F3E8D6; border:1px solid rgba(243,232,214,.25); border-radius:4px; font:inherit; cursor:pointer; }
+.ls .opt.right{ background:rgba(110,190,130,.2); border-color:#7bc58c; } .ls .opt.wrong{ background:rgba(220,100,90,.18); border-color:#e08a82; }
+.ls .why{ margin:6px 0 0; font-size:.9rem; color:#DCC9A8; }
+.ls .tryit{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0; } .ls .tryit textarea{ min-height:150px; } .ls .tryit iframe{ width:100%; height:170px; border:0; background:#fff; border-radius:4px; }
+.ls .ex{ background:#2A160E; border:1px dashed #C7994F; border-radius:4px; padding:10px 12px; font-family:'IBM Plex Mono',monospace; font-size:.85rem; margin:8px 0; color:#F3E8D6; }
+@media (max-width:820px){ .ls .tryit{ grid-template-columns:1fr; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -490,10 +505,19 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
 </script>
 
 <main class="pt-wrap pt-wide">
+  <section class="pt-panel on" id="gate" style="max-width:480px;margin:40px auto;">
+    <div class="pt-eyebrow">The AI Lab &middot; Student Studio</div>
+    <h2 style="margin-top:8px">Enter your class code</h2>
+    <p>Your teacher will give you the code. Then you can pick your group and get started.</p>
+    <div class="pt-f"><label for="gateCode">Class code</label><input type="text" id="gateCode" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the code"></div>
+    <p id="gateErr" style="color:#fbd9d5;display:none;margin:0 0 10px">That code didn&rsquo;t work. Check it and try again.</p>
+    <button type="button" class="pt-b" id="gateBtn">Go in</button>
+  </section>
+<div id="app" style="display:none">
   <div class="pt-eyebrow">The AI Lab &middot; Student Studio</div>
   <h1>Build something <span>real.</span></h1>
-  <p class="pt-intro">Pick your group, learn to write a strong prompt, then build your own page and keep it. No sign-in and no name needed.</p>
-  <ol class="pt-steps" id="steps"><li>1 &middot; Group</li><li>2 &middot; Mission</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Build</li><li>5 &middot; Finish</li></ol>
+  <p class="pt-intro">Learn how AI and vibe coding work, then use what you learned to build your own page and keep it. No name needed.</p>
+  <ol class="pt-steps" id="steps"><li>1 &middot; Group</li><li>2 &middot; Learn</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Build</li><li>5 &middot; Finish</li></ol>
 
   <section class="pt-panel" id="p0">
     <h2>Who are you building with today?</h2>
@@ -506,8 +530,11 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   </section>
 
   <section class="pt-panel" id="p1">
-    <h2>Your mission</h2>
+    <h2>Learn first, then build</h2>
     <div class="pt-mission" id="missionText"></div>
+    <p>Work through the four short lessons. Each one ends with a quick check.</p>
+    <div class="pt-score"><span id="lessonTxt">0/4 lessons</span><div class="pt-bar"><i id="lessonBar"></i></div></div>
+    <div id="lessons"></div>
     <p><b style="color:#E3BD79">Ground rules</b></p>
     <ul class="pt-rules">
       <li>Never type your real name, phone number, address, email, or school. Use made-up names for your brand or idea.</li>
@@ -610,6 +637,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     <a class="pt-btn2" href="https://docs.google.com/forms/d/e/1FAIpQLSc3iR7g3Suo_yJnBKXmLaYNYc2sHLgG4pxm6IsJuq1nZ6Rvfw/viewform" target="_blank" rel="noopener">Join the Spring 2027 waitlist</a>
   </section>
   </div>
+</div>
 </main>
 <script>
 (function () {
@@ -639,7 +667,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
   var FONTS = { serif:"Georgia,'Times New Roman',serif", sans:"system-ui,Arial,sans-serif", mono:"'Courier New',monospace", round:"'Trebuchet MS',Verdana,sans-serif" };
   var ICONS = ['✨','🚀','🎨','📚','👩‍💻','🌟','🤖','🌱'];
 
-  var st = { group:'', role:'', goal:'', idea:'', style:[], format:'', head:'', tag:'', btn:'', sec:'', c:['','','','','',''], theme:0, font:'serif', icon:0, layout:'center', code:'', codeEdited:false, step:0 };
+  var st = { group:'', role:'', goal:'', idea:'', style:[], format:'', head:'', tag:'', btn:'', sec:'', c:['','','','','',''], theme:0, font:'serif', icon:0, layout:'center', code:'', codeEdited:false, step:0, lessons:[] };
   try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
@@ -665,6 +693,7 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     $('finishExtras').style.display = n === 4 ? 'block' : 'none';
     var lis = $('steps').children;
     for (var i = 0; i < lis.length; i++) lis[i].className = i === n ? 'on' : (i < n ? 'done' : '');
+    if (n === 1) renderLessons();
     if (n === 3) render();
     save(); window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -790,6 +819,75 @@ h1,h2,h3,h4{ font-family:'Fraunces',serif; }
     }).then(function (r) { if (!r.ok) throw new Error(r.status); btn.textContent = 'Sent ✓'; show(ok); })
       .catch(function () { err.textContent = "That didn't go through. Check your internet and try again, or ask Mrs. Brown for help."; show(err); btn.disabled = false; btn.textContent = 'Send feedback'; });
   });
+
+
+  // ---------- lessons ----------
+  var LESSONS = [
+    { id:'what', title:'1. What is AI?',
+      kid:'AI is a computer program that learns patterns from lots of examples. It is like how you learn to spot a dog after seeing many dogs. AI does not think or feel like a person. It makes a smart guess, and sometimes the guess is wrong. That is why YOU always check it.',
+      teen:'AI chatbots are trained on huge amounts of text and predict what words are likely to come next. They can sound very sure even when they are wrong (this is called a hallucination), and they can repeat unfair patterns from the data they learned from. Your job is to direct it, verify it, and take responsibility for what you make.',
+      q:'An AI gives you an answer that sounds very sure. What do you do?', o:['Trust it, it sounds smart','Check it with another source','Copy it right away'], a:1, why:'AI can be confidently wrong. Checking is part of the job.' },
+    { id:'prompt', title:'2. Writing a strong prompt',
+      kid:'A prompt is the instructions you give the AI. Strong prompts have five parts: WHO the AI should act as, WHAT to make, your IDEA, the LOOK, and the FORMAT. More detail gets a better result.',
+      teen:'A prompt is your instruction set. Strong prompts specify a role, a task, the context (your idea), constraints on style and tone, and the output format. When the result is off, do not start over. Change one part of the prompt and try again (iterate).',
+      ex:'Weak: <i>make a website</i><br>Strong: <i>Act as a friendly designer. Create the top of my homepage for a dog bakery. Make it playful. Give me a headline, a tagline, and a button label.</i>',
+      q:'Which prompt will get a better result?', o:['make me a website','Act as a designer. Make a homepage top for my dog bakery. Playful look. Headline, tagline, button.'], a:1, why:'It names who, what, the idea, the look, and the format.' },
+    { id:'vibe', title:'3. Vibe coding: describe, look, tweak',
+      kid:'Vibe coding means you tell a computer what you want in plain words, it writes the code, and you test it and make it better. You do not have to memorize code. Try it: change the button below. Make it a different color and change what it says.',
+      teen:'Vibe coding is building by describing what you want in plain language, letting an AI tool write the code, then testing and refining. The loop is describe, look, tweak. You still need to read the code enough to steer it and catch mistakes. Try it: edit the code and watch the result change.',
+      try:true,
+      q:'In vibe coding, what is your job?', o:['Memorize every code rule','Describe it, look at the result, and tweak it','Let the AI decide everything'], a:1, why:'You steer. The tool helps you build faster.' },
+    { id:'safe', title:'4. Stay safe and smart',
+      kid:'Never type your real name, phone number, address, school, or email into AI tools or into a website you build. Use made-up names. Say where you got help. If an answer feels strange or unkind, tell a teacher.',
+      teen:'Keep personal details out of prompts and projects: AI tools can store what you type, and anything you publish can be seen by anyone. Use made-up names and fake brands. Give credit when AI helped you, and fact-check anything you plan to rely on. If something feels off, tell a teacher.',
+      q:'Which of these is okay to put in a prompt?', o:['My full name and school','My phone number','A made-up bakery idea'], a:2, why:'Made-up ideas are safe. Keep real personal details out.' }
+  ];
+  var TRY = '<h1>Hello!</h1>\n<button style="background:purple;color:white;padding:10px 18px;border:0;border-radius:8px">Click me</button>';
+  function renderLessons() {
+    var teen = st.group && st.group !== '5th Grade', box = $('lessons'); box.innerHTML = '';
+    if (!st.lessons) st.lessons = [];
+    LESSONS.forEach(function (L) {
+      var d = document.createElement('details'); d.className = 'ls' + (st.lessons.indexOf(L.id) > -1 ? ' done' : '');
+      var body = '<p>' + esc(teen ? L.teen : L.kid) + '</p>' + (L.ex ? '<div class="ex">' + L.ex + '</div>' : '') +
+        (L.try ? '<div class="tryit"><textarea spellcheck="false" id="tryCode"></textarea><iframe sandbox="" id="tryPrev" title="Try it preview"></iframe></div>' : '') +
+        '<div class="q"><b>Quick check: ' + esc(L.q) + '</b>' + L.o.map(function (t, i) { return '<button type="button" class="opt" data-i="' + i + '">' + esc(t) + '</button>'; }).join('') + '<div class="why"></div></div>';
+      d.innerHTML = '<summary><span>' + esc(L.title) + '</span><span class="tick">' + (st.lessons.indexOf(L.id) > -1 ? '✓ done' : '') + '</span></summary><div class="lb">' + body + '</div>';
+      d.querySelectorAll('.opt').forEach(function (b) {
+        b.addEventListener('click', function () {
+          var i = parseInt(b.getAttribute('data-i'), 10), why = d.querySelector('.why');
+          if (i === L.a) {
+            b.className = 'opt right'; why.textContent = 'Correct! ' + L.why;
+            if (st.lessons.indexOf(L.id) < 0) { st.lessons.push(L.id); save(); }
+            d.classList.add('done'); d.querySelector('.tick').textContent = '✓ done'; lessonProgress();
+          } else { b.className = 'opt wrong'; why.textContent = 'Not quite. Try another answer.'; }
+        });
+      });
+      box.appendChild(d);
+      if (L.try) {
+        var ta = d.querySelector('#tryCode'), fr = d.querySelector('#tryPrev'); ta.value = TRY; fr.srcdoc = TRY;
+        ta.addEventListener('input', function () { fr.srcdoc = ta.value; });
+      }
+    });
+    lessonProgress();
+  }
+  function lessonProgress() {
+    var n = (st.lessons || []).length; $('lessonTxt').textContent = n + '/4 lessons' + (n === 4 ? ' — ready to build!' : ''); $('lessonBar').style.width = (n * 25) + '%';
+  }
+
+  // ---------- class code gate ----------
+  var CODE_HASH = "d4d46c6d47bf1be5db1787712d69acd2a2c940bb1f7cf3ed5bd6fd82be2d654e";
+  function sha(t) {
+    var buf = new TextEncoder().encode(t);
+    return crypto.subtle.digest('SHA-256', buf).then(function (h) { return Array.prototype.map.call(new Uint8Array(h), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); });
+  }
+  function unlock() { $('gate').style.display = 'none'; $('app').style.display = 'block'; try { sessionStorage.setItem('bgcs_gate', '1'); } catch (e) {} }
+  function tryCode() {
+    var v = $('gateCode').value.trim().toLowerCase();
+    sha(v).then(function (h) { if (h === CODE_HASH) unlock(); else $('gateErr').style.display = 'block'; });
+  }
+  $('gateBtn').addEventListener('click', tryCode);
+  $('gateCode').addEventListener('keydown', function (e) { if (e.key === 'Enter') tryCode(); });
+  try { if (sessionStorage.getItem('bgcs_gate') === '1') unlock(); } catch (e) {}
 
   // start
   if (st.group && GROUPS[st.group]) { applyGroup(st.group, false); go(st.step || 0); } else { sync(); go(0); }
