@@ -613,9 +613,9 @@ main.pt-wrap{ position:relative; z-index:1; }
     <h2>Choose your crew</h2>
     <p>Choose your group.</p>
     <div class="pt-groups">
-      <button class="pt-gbtn" data-g="5th Grade">5th grade<small>Website hero section</small></button>
-      <button class="pt-gbtn" data-g="Middle School">Middle school (6th&ndash;8th)<small>Project board</small></button>
-      <button class="pt-gbtn" data-g="High School">High school (9th&ndash;12th)<small>Landing page</small></button>
+      <button class="pt-gbtn" data-g="5th Grade">5th grade<small>Concept site: top of the page</small></button>
+      <button class="pt-gbtn" data-g="Middle School">Middle school (6th&ndash;8th)<small>Concept site: business page</small></button>
+      <button class="pt-gbtn" data-g="High School">High school (9th&ndash;12th)<small>Concept site: landing page</small></button>
     </div>
   </section>
 
@@ -633,14 +633,16 @@ main.pt-wrap{ position:relative; z-index:1; }
     <div class="pt-time">&#9201; About 30 minutes</div>
     <h2>Voyage 2: Prompt Lab</h2>
     <p><b style="color:#E3BD79">This is vibe coding:</b> you describe what you want in plain words, look at what you get, tweak it with a new instruction, and repeat. You never have to write code.</p>
-    <ol class="pt-loop"><li><b>1 Describe</b><span>Write your 5-part prompt</span></li><li><b>2 Run</b><span>See what Practice AI makes</span></li><li><b>3 Look</b><span>Check it like a builder</span></li><li><b>4 Tweak</b><span>Say one change in plain words</span></li></ol>
+    <ol class="pt-loop"><li><b>1 Describe</b><span>Write your prompt, part by part</span></li><li><b>2 Run</b><span>See what Practice AI makes</span></li><li><b>3 Look</b><span>Check it like a builder</span></li><li><b>4 Tweak</b><span>Say one change in plain words</span></li></ol>
     <div class="pt-build">
       <div>
         <div class="pt-mission" id="labMission" style="margin:0 0 12px"></div>
         <div class="pt-f" data-f="role"><label for="fRole">Who should the AI act as?</label><input type="text" id="fRole" maxlength="80"></div>
         <div class="pt-f" data-f="goal"><label for="fGoal">What should it make?</label><input type="text" id="fGoal" maxlength="120"></div>
+        <div class="pt-f" data-f="name"><label for="fName">Name</label><input type="text" id="fName" maxlength="40"></div>
         <div class="pt-f" data-f="idea"><label for="fIdea">What is your idea?</label><input type="text" id="fIdea" maxlength="120"></div>
         <div class="pt-f" data-f="aud"><label for="fAud">Who is it for?</label><input type="text" id="fAud" maxlength="100"></div>
+        <div class="pt-f" data-f="feat"><label for="fFeat">Features</label><input type="text" id="fFeat" maxlength="110"></div>
         <div class="pt-f" data-f="style"><span class="pt-l">Pick words for the look (choose any)</span><div class="pt-chips" id="fStyle"></div></div>
         <div class="pt-f" data-f="format"><label for="fFormat">How should the answer be organized?</label><select id="fFormat"></select></div>
         <div class="pt-f" data-f="cta"><label for="fCta">What should visitors do?</label><input type="text" id="fCta" maxlength="30"></div>
@@ -752,26 +754,26 @@ main.pt-wrap{ position:relative; z-index:1; }
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
 
   var GROUPS = {
-    '5th Grade': { mode:'hero', label:'Hero section', fields:['idea','style','format'], auto:{ role:'a friendly website designer', goal:'the top section of my homepage' },
-      mission:'Make the top of a homepage for your dream career, hobby, or business idea. Then make your prompt better until you love it.',
-      lab:'You are building the TOP of a website (a hero section). Practice AI already knows to act as a friendly website designer, so you only need 3 things.',
-      L:{ idea:['What is your idea?','e.g., a bakery that makes cupcakes for dogs'], style:['Pick words for the look (choose any)'], format:['How should your page be organized?'] },
-      formats:['a big headline, a short tagline, and a button label','a headline, three short fun cards, and a button label'],
-      example:{ idea:'a bakery that makes cupcakes for dogs', style:['playful','colorful'], format:'a big headline, a short tagline, and a button label' },
+    '5th Grade': { mode:'hero', label:'Concept site: hero', fields:['name','idea','style','format'], auto:{ role:'a friendly website designer', goal:'the top section of a business website' },
+      mission:'Invent your own business or cause and build the top of its website, like the Newton County STEAM students did. Then improve your prompt until you love it.',
+      lab:'Like the Newton County STEAM students, you are inventing your OWN business or cause and building its website. Practice AI already knows to act as a website designer, so you only need 4 things.',
+      L:{ name:['Name your business or cause','e.g., Pup Cupcakes Co.'], idea:['What does it do, and who does it help?','e.g., Cupcakes made just for dogs'], style:['Pick words for the vibe (choose any)'], format:['How should the page be organized?'] },
+      formats:['a big name, a short tagline, and a button label','a big name, a tagline, three short cards, and a button label'],
+      example:{ name:'Pup Cupcakes Co.', idea:'Cupcakes made just for dogs', style:['playful','colorful'], format:'a big name, a short tagline, and a button label' },
       tweaks:['make the button purple','make the background dark','add an icon','make the headline bigger','call it Pup Cupcakes Co.'] },
-    'Middle School': { mode:'board', label:'Project board', fields:['role','idea','aud','style','format'], auto:{ goal:'a one-page project board' },
-      mission:'Make a project board that shows how you can use AI as a tutor, study partner, or brand builder. Then improve your prompt until the result is strong.',
-      lab:'You are building a PROJECT BOARD: a one-page board with a title and cards. This time you also choose who the AI acts as and who your board is for (5 parts).',
-      L:{ role:['Who should the AI act as?','e.g., a study coach and website designer'], idea:['What is your board about?','e.g., a math helper for girls my age'], aud:['Who is it for?','e.g., sixth graders who find fractions hard'], style:['Pick words for the look (choose any)'], format:['How should the board be organized?'] },
-      formats:['a title, a short tagline, and three cards: Tutor, Study partner, Brand builder','a title, three cards, and a button label','a title and a bulleted list of ideas'],
-      example:{ role:'a study coach and website designer', idea:'a math helper for girls my age', aud:'sixth graders who find fractions hard', style:['calm','playful'], format:'a title, three cards, and a button label' },
-      tweaks:['make the background dark','add a button','make the button teal','remove the cards','call it Fraction Fixers'] },
-    'High School': { mode:'landing', label:'Landing page', fields:['role','goal','idea','aud','style','format','cta'], auto:{}, compare:true,
-      mission:'Make a landing page that shows how you can use AI as a tutor, study partner, or brand builder. Then iterate on your prompt until the result is strong.',
-      lab:'You are building a LANDING PAGE with a nav bar, hero, benefit cards, and a call to action. You write all 7 parts of the prompt, then save versions and compare them.',
-      L:{ role:['Who should the AI act as?','e.g., a brand strategist and web designer'], goal:['What should it make?','e.g., a one-page landing page'], idea:['What is the product or idea?','e.g., a tutoring brand for girls in math'], aud:['Who is the audience?','e.g., high school girls who want to feel confident in math'], style:['Pick words for the look and tone (choose any)'], format:['How should the page be structured?'], cta:['Call to action (what should visitors do?)','e.g., Join the waitlist'] },
-      formats:['a hero headline, a tagline, three benefit cards, and a button label','a hero headline, a short "who it is for" line, three benefit cards, and a call-to-action button','a headline and a bulleted list of features'],
-      example:{ role:'a brand strategist and web designer', goal:'a one-page landing page', idea:'a tutoring brand for girls in math', aud:'high school girls who want to feel confident in math', style:['elegant','bold'], format:'a hero headline, a short "who it is for" line, three benefit cards, and a call-to-action button', cta:'Join the waitlist' },
+    'Middle School': { mode:'board', label:'Concept site: business page', fields:['name','idea','aud','feat','style','format'], auto:{ role:'a website designer and brand strategist', goal:'a one-page business website' },
+      mission:'Invent your own business or cause and build its website, like the Newton County STEAM students did: a name, a pitch, who it is for, and three features. Then improve your prompt.',
+      lab:'Like the Newton County STEAM students, you are inventing your OWN business or cause. Your site gets a name, a pitch, an audience, and three features you choose (6 parts).',
+      L:{ name:['Name your business or cause','e.g., Scholar Supplies'], idea:['Your pitch: what does it do and why does it matter?','e.g., School supplies for students who cannot afford them, for just 40 cents'], aud:['Who is it for?','e.g., students and teachers in my county'], feat:['Three features your site has (separate with commas)','e.g., Supply locker, Teacher donations, Request hub'], style:['Pick words for the vibe (choose any)'], format:['How should the page be organized?'] },
+      formats:['a name, a tagline, three feature cards, and a button label','a name, a pitch line, who it is for, and three feature cards','a name and a bulleted list of features'],
+      example:{ name:'Scholar Supplies', idea:'School supplies for students who cannot afford them, for just 40 cents', aud:'students and teachers in my county', feat:'Supply locker, Teacher donations, Request hub', style:['calm','playful'], format:'a name, a tagline, three feature cards, and a button label' },
+      tweaks:['make the background dark','add a button','make the button teal','remove the cards','call it Scholar Supplies'] },
+    'High School': { mode:'landing', label:'Concept site: landing page', fields:['role','name','idea','aud','feat','style','format','cta'], auto:{ goal:'a one-page business website' }, compare:true,
+      mission:'Invent your own business, brand, or cause and build its landing page, like the Newton County STEAM students did, with a pitch, audience, features, and a call to action. Then iterate until it is strong.',
+      lab:'Like the Newton County STEAM students, you are launching your OWN business, brand, or cause. You write all 8 parts of the prompt, then save versions and compare them.',
+      L:{ role:['Who should the AI act as?','e.g., a brand strategist and web designer'], name:['Brand or business name','e.g., Study Spark'], idea:['Your pitch: what is it and why does it matter?','e.g., Math tutoring made for girls who are tired of feeling behind'], aud:['Target audience','e.g., high school girls who want to feel confident in math'], feat:['Three features or services (separate with commas)','e.g., Live tutoring, Practice quizzes, Study community'], style:['Pick words for the brand vibe (choose any)'], format:['How should the page be structured?'], cta:['Call to action (what should visitors do?)','e.g., Join the waitlist'] },
+      formats:['a hero name, a tagline, three feature cards, and a button label','a hero name, a short "who it is for" line, three feature cards, and a call-to-action button','a name and a bulleted list of features'],
+      example:{ role:'a brand strategist and web designer', name:'Study Spark', idea:'Math tutoring made for girls who are tired of feeling behind', aud:'high school girls who want to feel confident in math', feat:'Live tutoring, Practice quizzes, Study community', style:['elegant','bold'], format:'a hero name, a short "who it is for" line, three feature cards, and a call-to-action button', cta:'Join the waitlist' },
       tweaks:['make the button gold','make the background dark','make the headline shorter','align it left','call it Study Spark'] }
   };
   var STYLES = ['bold','playful','elegant','techy','calm','colorful'];
@@ -784,7 +786,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     colorful:{ bg:'#3D0A3B', fg:'#FFE9F7', ac:'#FF6FB5', bt:'#3D0A3B', font:"'Trebuchet MS',Verdana,sans-serif", icon:'🎨', tag:'Bright, bold, and made for you.' }
   };
 
-  var st = { group:'', role:'', goal:'', idea:'', aud:'', cta:'', style:[], format:'', step:0, lessons:[], t0:0, tries:[], cur:-1, ov:{} };
+  var st = { group:'', role:'', goal:'', name:'', feat:'', idea:'', aud:'', cta:'', style:[], format:'', step:0, lessons:[], t0:0, tries:[], cur:-1, ov:{} };
   try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
@@ -819,7 +821,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     var G = GROUPS[g], prev = st.group; st.group = g; if (!st.t0) st.t0 = Date.now();
     $('missionText').textContent = 'Mission: ' + G.mission;
     document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.classList.toggle('sel', b.getAttribute('data-g') === g); });
-    if (fresh && prev !== g) { st.role = G.auto.role || ''; st.goal = G.auto.goal || ''; st.idea = ''; st.aud = ''; st.cta = ''; st.style = []; st.format = ''; st.ov = {}; st.tries = []; st.cur = -1; }
+    if (fresh && prev !== g) { st.role = G.auto.role || ''; st.goal = G.auto.goal || ''; st.idea = ''; st.name = ''; st.feat = ''; st.aud = ''; st.cta = ''; st.style = []; st.format = ''; st.ov = {}; st.tries = []; st.cur = -1; }
     sync();
   }
   document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.addEventListener('click', function () { applyGroup(b.getAttribute('data-g'), true); go(1); }); });
@@ -874,27 +876,28 @@ main.pt-wrap{ position:relative; z-index:1; }
   function lessonProgress() { var n = st.lessons.length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready for the Prompt Lab!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%'; }
 
   // ---------- prompt lab (live preview) ----------
-  var inputs = { fRole:'role', fGoal:'goal', fIdea:'idea', fAud:'aud', fCta:'cta', fFormat:'format' };
+  var inputs = { fRole:'role', fGoal:'goal', fName:'name', fFeat:'feat', fIdea:'idea', fAud:'aud', fCta:'cta', fFormat:'format' };
   Object.keys(inputs).forEach(function (id) { var h = function () { st[inputs[id]] = this.value; coach(); }; $(id).addEventListener('input', h); $(id).addEventListener('change', h); });
   function gOf() { return GROUPS[st.group] || GROUPS['5th Grade']; }
-  function okMap() { var t = function (v, n) { return String(v || '').trim().length >= n; }; return { role:t(st.role,3), goal:t(st.goal,8), idea:t(st.idea,5), aud:t(st.aud,4), cta:t(st.cta,3), style:st.style.length >= 1, format:!!st.format }; }
+  function featsOf(v) { return String(v || '').split(/,|\n|;| and /i).map(function (x) { return x.trim().slice(0, 32); }).filter(Boolean).slice(0, 3); }
+  function okMap() { var t = function (v, n) { return String(v || '').trim().length >= n; }; return { role:t(st.role,3), goal:t(st.goal,8), name:t(st.name,2), feat:featsOf(st.feat).length >= 1, idea:t(st.idea,8), aud:t(st.aud,4), cta:t(st.cta,3), style:st.style.length >= 1, format:!!st.format }; }
   function parts() { var m = okMap(); return gOf().fields.map(function (f) { return m[f]; }); }
   function scoreOf() { return parts().filter(Boolean).length; }
   function snapNow() {
     var ov = {}, k; for (k in st.ov) ov[k] = st.ov[k];
-    return { group:st.group, role:st.role, goal:st.goal, idea:st.idea, aud:st.aud, cta:st.cta, style:st.style.slice(), format:st.format, ok:okMap(), parts:parts(), score:scoreOf(), total:gOf().fields.length, ov:ov };
+    return { group:st.group, role:st.role, goal:st.goal, name:st.name, feat:st.feat, idea:st.idea, aud:st.aud, cta:st.cta, style:st.style.slice(), format:st.format, ok:okMap(), parts:parts(), score:scoreOf(), total:gOf().fields.length, ov:ov };
   }
   function buildPrompt() {
-    var G = gOf(), p = 'Act as ' + (st.role || '[who the AI is]') + '. Create ' + (st.goal || '[what to make]') + ' for ' + (st.idea || '[my idea]');
-    if (G.fields.indexOf('aud') > -1) p += ', made for ' + (st.aud || '[who it is for]');
-    p += '.';
-    if (st.style.length) p += ' Make the look ' + st.style.join(', ') + '.';
+    var G = gOf(), f = G.fields, p = 'Act as ' + (st.role || '[who the AI is]') + '. Create ' + (st.goal || '[what to make]') + ' for a business called ' + (st.name || '[name]') + '. ' + (st.idea ? st.idea.trim().replace(/[.!?]*$/, '') : '[what it does]') + '.';
+    if (f.indexOf('aud') > -1) p += ' It is for ' + (st.aud || '[who it is for]') + '.';
+    if (f.indexOf('feat') > -1) p += ' Features: ' + (featsOf(st.feat).join(', ') || '[three features]') + '.';
+    if (st.style.length) p += ' Make the vibe ' + st.style.join(', ') + '.';
     p += ' Give me ' + (st.format || '[the format you want]') + '.';
-    if (G.fields.indexOf('cta') > -1) p += ' The button should say "' + (st.cta || '[call to action]') + '".';
+    if (f.indexOf('cta') > -1) p += ' The button should say "' + (st.cta || '[call to action]') + '".';
     return p + ' Keep the words short and easy to read.';
   }
-  var TIPS = { role:'Tell the AI who to act as.', goal:'Say what you want it to make.', idea:'Describe your idea with a few details.', aud:'Say who it is for.', cta:'Say what visitors should do, like "Join the waitlist".', style:'Pick at least one word for the look.', format:'Choose how the answer should be organized.' };
-  var NAMES = { role:'who the AI acts as', goal:'what to make', idea:'your idea', aud:'who it is for', cta:'the call to action', style:'the look', format:'the format' };
+  var TIPS = { name:'Give your business or cause a name.', feat:'List up to three features, separated by commas.', role:'Tell the AI who to act as.', goal:'Say what you want it to make.', idea:'Say what it does and why it matters (a full sentence).', aud:'Say who it is for.', cta:'Say what visitors should do, like "Join the waitlist".', style:'Pick at least one word for the look.', format:'Choose how the answer should be organized.' };
+  var NAMES = { name:'a name', feat:'your features', role:'who the AI acts as', goal:'what to make', idea:'your idea', aud:'who it is for', cta:'the call to action', style:'the look', format:'the format' };
   function missingOf(snap) { var G = GROUPS[snap.group] || GROUPS['5th Grade']; return G.fields.filter(function (f, i) { return !snap.parts[i]; }); }
   var rt = null;
   function live() { clearTimeout(rt); rt = setTimeout(function () { if (st.group) $('prev').srcdoc = simulate(snapNow()); }, 120); }
@@ -909,7 +912,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   }
   function setupLab() {
     var G = gOf();
-    ['role','goal','idea','aud','cta','style','format'].forEach(function (f) {
+    ['role','goal','name','idea','aud','feat','cta','style','format'].forEach(function (f) {
       var box = document.querySelector('[data-f="' + f + '"]'), idx = G.fields.indexOf(f); box.style.display = idx > -1 ? '' : 'none';
       if (idx > -1 && G.L[f]) { var l = box.querySelector('label,.pt-l'); l.textContent = (idx + 1) + '. ' + G.L[f][0]; var inp = box.querySelector('input'); if (inp && G.L[f][1]) inp.placeholder = G.L[f][1]; }
     });
@@ -920,7 +923,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   }
   function sync() {
     setupLab();
-    $('fRole').value = st.role; $('fGoal').value = st.goal; $('fIdea').value = st.idea; $('fAud').value = st.aud; $('fCta').value = st.cta; $('fFormat').value = st.format;
+    $('fRole').value = st.role; $('fGoal').value = st.goal; $('fName').value = st.name; $('fFeat').value = st.feat; $('fIdea').value = st.idea; $('fAud').value = st.aud; $('fCta').value = st.cta; $('fFormat').value = st.format;
     drawStyleChips(); drawTries(); coach();
   }
   $('fillEx').addEventListener('click', function () {
@@ -937,36 +940,38 @@ main.pt-wrap{ position:relative; z-index:1; }
   function lum(hex) { var h = hex.replace('#',''); var r = parseInt(h.substr(0,2),16)/255, g = parseInt(h.substr(2,2),16)/255, b = parseInt(h.substr(4,2),16)/255; return 0.2126*r + 0.7152*g + 0.0722*b; }
   function simulate(s) {
     var G = GROUPS[s.group] || GROUPS['5th Grade'], mode = G.mode, ok = s.ok || {}, fmt = s.format || '', ov = s.ov || {}, ratio = s.total ? s.score / s.total : 0;
-    var base = ok.style ? LOOK[s.style[0]] : { bg:'#EEEEEE', fg:'#333333', ac:'#888888', bt:'#FFFFFF', font:"system-ui,Arial,sans-serif", icon:'', tag:'This is a website.' };
+    var base = ok.style ? LOOK[s.style[0]] : { bg:'#EEEEEE', fg:'#333333', ac:'#888888', bt:'#FFFFFF', font:"system-ui,Arial,sans-serif", icon:'', tag:'' };
     var look = { bg:base.bg, fg:base.fg, ac:base.ac, bt:base.bt, font:base.font, icon:base.icon, tag:base.tag };
     if (ov.bg) { look.bg = ov.bg; look.fg = lum(ov.bg) > 0.55 ? '#1B1B1B' : '#F5F5F5'; }
     if (ov.ac) { look.ac = ov.ac; look.bt = lum(ov.ac) > 0.55 ? '#1B1B1B' : '#FFFFFF'; }
-    var idea = ok.idea ? s.idea.trim() : '', aud = ok.aud ? s.aud.trim().slice(0, 70) : '';
-    var head = idea ? idea.charAt(0).toUpperCase() + idea.slice(1, 50) : 'Welcome';
+    var idea = ok.idea ? s.idea.trim() : '', aud = ok.aud ? s.aud.trim().slice(0, 70) : '', feats = featsOf(s.feat);
+    var head = ok.name ? s.name.trim().slice(0, 40) : 'Your Business Name';
     if (ov.head) head = ov.head; if (ov.shortHead) head = head.split(/\s+/).slice(0, 3).join(' ');
+    var pill = ok.style ? s.style.join(' · ') : 'Concept site';
     var btn = /button|call-to-action/i.test(fmt) ? (ratio >= 0.8 ? 'Get started' : 'Click') : '';
     if (mode === 'landing' && ok.cta && btn) btn = s.cta.trim().slice(0, 30);
     if ('btn' in ov) btn = ov.btn;
     var btnBg = ov.btnColor || look.ac, btnFg = lum(btnBg) > 0.55 ? '#1B1B1B' : '#FFFFFF';
     var wantCards = /card/i.test(fmt); if ('cards' in ov) wantCards = ov.cards;
     var wantList = /bullet|list/i.test(fmt) && !wantCards && ov.cards !== false;
-    var short = (idea || 'my idea').toLowerCase().slice(0, 44);
-    var T;
-    if (mode === 'board') T = [['Tutor','Explains ' + short + ' step by step.'],['Study partner','Quizzes me until I get it.'],['Brand builder','Helps me shape my big idea.']];
-    else if (mode === 'landing') T = [['Why it helps', idea ? idea.slice(0, 60) : 'Built around you.'],['Who it is for', aud || 'Everyone ready to start.'],['What to do next', btn ? 'Tap "' + btn + '" below.' : 'Take the first step today.']];
-    else T = [['Fun','Made to make you smile.'],['Friendly','Easy for everyone to use.'],['Made for you','Built around your idea.']];
+    var T = feats.length ? feats.map(function (f) { return [f, 'A key part of ' + head + (aud ? ' for ' + aud : '') + '.']; }) : [['Your feature','Add up to three features in your prompt.']];
+    if (mode === 'hero' && wantCards) T = [['Fun','Made to make you smile.'],['Friendly','Easy for everyone to use.'],['Made for you','Built around your idea.']];
     var cards = wantCards ? '<div class="cards">' + T.map(function (c) { return '<div class="card"><h3>' + esc(c[0]) + '</h3><p>' + esc(c[1]) + '</p></div>'; }).join('') + '</div>' : '';
-    if (wantList) cards = '<ul class="list">' + T.map(function (c) { return '<li><b>' + esc(c[0]) + ':</b> ' + esc(c[1]) + '</li>'; }).join('') + '</ul>';
-    var showIcon = mode === 'hero' ? (ratio === 1 && look.icon) : (ratio === 1 && look.icon && mode !== 'landing'); if ('icon' in ov) showIcon = ov.icon && (look.icon || '✨');
+    if (wantList) cards = '<ul class="list">' + T.map(function (c) { return '<li><b>' + esc(c[0]) + '</b></li>'; }).join('') + '</ul>';
+    var chips = (!wantCards && !wantList && feats.length) ? '<div class="chips">' + feats.map(function (f) { return '<span>' + esc(f) + '</span>'; }).join('') + '</div>' : '';
+    var showIcon = mode === 'hero' && ratio === 1 && look.icon; if ('icon' in ov) showIcon = ov.icon && (look.icon || '✨');
     var icon = showIcon ? '<div class="icon">' + (look.icon || '✨') + '</div>' : '';
-    var hs = ov.headSize || (mode === 'landing' ? '2.6rem' : '2.2rem'), al = ov.align || (mode === 'board' ? 'left' : 'center');
-    var tagTxt = look.tag; if (aud && mode !== 'hero') tagTxt = (mode === 'board' ? 'A project board for ' : 'Made for ') + aud;
+    var hs = ov.headSize || (mode === 'landing' ? '2.6rem' : '2.3rem'), al = ov.align || 'center';
+    var para = idea || 'Write your pitch in the prompt and it shows up here.';
+    var strip = '<div class="strip"><b>● Interactive Concept Demo</b> · A prototype designed by a student in The AI Lab</div>';
     var bt = btn ? '<span class="btn">' + esc(btn) + '</span>' : '';
+    var audLine = aud ? '<p class="aud">For ' + esc(aud) + '</p>' : '';
+    var hero = '<div class="heroBox">' + icon + '<span class="pill">' + esc(pill) + '</span><h1>' + esc(head) + '</h1><p class="tag">' + esc(para) + '</p>' + audLine + bt + '</div>';
     var body;
-    if (mode === 'board') body = '<div class="bar">📋 Project board</div><div class="wrap">' + icon + '<h1>' + esc(head) + '</h1><p class="tag">' + esc(tagTxt) + '</p>' + bt + cards + '</div>';
-    else if (mode === 'landing') body = '<nav><b>' + esc(head.slice(0, 22)) + '</b><span>About</span><span>Why</span><span>Join</span></nav><div class="wrap hero">' + icon + '<h1>' + esc(head) + '</h1><p class="tag">' + esc(look.tag) + '</p>' + (aud ? '<p class="aud">' + esc(tagTxt) + '</p>' : '') + bt + '</div><div class="wrap">' + cards + '</div><footer>Made with Practice AI</footer>';
-    else body = '<div class="wrap">' + icon + '<h1>' + esc(head) + '</h1><p class="tag">' + esc(tagTxt) + '</p>' + bt + cards + '</div>';
-    var css = 'body{margin:0;background:' + look.bg + ';color:' + look.fg + ';font-family:' + look.font + ';text-align:' + al + '}.wrap{max-width:720px;margin:0 auto;padding:36px 22px}.icon{font-size:46px}h1{font-size:' + hs + ';margin:8px 0}p.tag{font-size:1.1rem;opacity:.9}p.aud{font-size:.95rem;opacity:.75;margin:0}.btn{display:inline-block;margin-top:12px;background:' + btnBg + ';color:' + btnFg + ';padding:11px 24px;border-radius:999px;font-weight:700}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:24px;text-align:left}.card{border:2px solid ' + look.ac + ';border-radius:12px;padding:12px}.card h3{margin:0 0 6px;color:' + look.ac + '}.card p{margin:0}.list{text-align:left;margin:20px 0 0;padding-left:20px;line-height:1.6}.bar{background:' + look.ac + ';color:' + (lum(look.ac) > 0.55 ? '#1B1B1B' : '#FFFFFF') + ';padding:8px 22px;font-weight:700;text-align:left}nav{display:flex;gap:16px;align-items:center;padding:12px 22px;border-bottom:1px solid ' + look.ac + ';text-align:left}nav b{margin-right:auto;color:' + look.ac + '}nav span{font-size:.9rem;opacity:.8}.hero{padding-top:44px}footer{text-align:center;opacity:.6;font-size:.8rem;padding:18px}';
+    if (mode === 'hero') body = '<div class="wrap">' + strip + hero + chips + cards + '</div>';
+    else if (mode === 'board') body = '<div class="wrap">' + strip + hero + chips + cards + '</div>';
+    else body = '<nav><b>' + esc(head.slice(0, 22)) + '</b><span>About</span><span>Features</span><span>Join</span></nav><div class="wrap">' + strip + hero + chips + cards + (ok.cta || btn ? '<div class="cta"><h2>Ready to start?</h2>' + (btn ? '<span class="btn">' + esc(btn) + '</span>' : '') + '</div>' : '') + '</div><footer>Concept demo · Built with Practice AI in The AI Lab</footer>';
+    var css = 'body{margin:0;background:' + look.bg + ';color:' + look.fg + ';font-family:' + look.font + ';text-align:' + al + '}.wrap{max-width:760px;margin:0 auto;padding:18px 20px 30px}.strip{border:1px solid ' + look.ac + ';border-radius:4px;padding:8px 12px;font-size:.78rem;margin-bottom:14px;text-align:left;opacity:.9}.strip b{color:' + look.ac + '}.heroBox{border:1px solid ' + look.ac + ';border-radius:6px;padding:30px 18px}.pill{display:inline-block;background:' + look.ac + ';color:' + (lum(look.ac) > 0.55 ? '#1B1B1B' : '#FFFFFF') + ';border-radius:999px;padding:4px 14px;font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}.icon{font-size:42px}h1{font-size:' + hs + ';margin:12px 0 8px}p.tag{font-size:1.05rem;opacity:.92;max-width:560px;margin:0 auto 10px}p.aud{font-size:.9rem;opacity:.75;margin:0 0 8px}.btn{display:inline-block;margin-top:10px;background:' + btnBg + ';color:' + btnFg + ';padding:11px 24px;border-radius:999px;font-weight:700}.chips{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.chips span{border:1px solid ' + look.ac + ';border-radius:999px;padding:4px 12px;font-size:.82rem}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:20px;text-align:left}.card{border:2px solid ' + look.ac + ';border-radius:12px;padding:12px}.card h3{margin:0 0 6px;color:' + look.ac + '}.card p{margin:0;font-size:.9rem}.list{text-align:left;margin:18px 0 0;padding-left:22px;line-height:1.7}.cta{margin-top:22px;border-radius:10px;padding:20px;background:' + look.ac + '22;border:1px solid ' + look.ac + '}.cta h2{margin:0}nav{display:flex;gap:16px;align-items:center;padding:12px 22px;border-bottom:1px solid ' + look.ac + ';text-align:left}nav b{margin-right:auto;color:' + look.ac + '}nav span{font-size:.9rem;opacity:.8}footer{text-align:center;opacity:.6;font-size:.78rem;padding:16px}';
     return '<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(head) + '</title><style>' + css + '</style></head><body>' + body + '</body></html>';
   }
   // Practice AI understands a short list of plain-word changes (a simulator, not a real AI)
@@ -1030,7 +1035,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   function showTry(i) {
     var t = st.tries[i]; if (!t) return;
     if (t.ok && t.group === st.group) {
-      st.role = t.role; st.goal = t.goal; st.idea = t.idea; st.aud = t.aud || ''; st.cta = t.cta || ''; st.style = t.style.slice(); st.format = t.format; st.ov = {}; for (var k in (t.ov || {})) st.ov[k] = t.ov[k];
+      st.role = t.role; st.goal = t.goal; st.name = t.name || ''; st.feat = t.feat || ''; st.idea = t.idea; st.aud = t.aud || ''; st.cta = t.cta || ''; st.style = t.style.slice(); st.format = t.format; st.ov = {}; for (var k in (t.ov || {})) st.ov[k] = t.ov[k];
       st.cur = i; sync();
     } else { st.cur = i; $('prev').srcdoc = t.html; drawTries(); }
     $('runHint').textContent = (t.hint || '') + ' (Restored Try ' + (i + 1) + '.)'; save();
@@ -1094,8 +1099,8 @@ main.pt-wrap{ position:relative; z-index:1; }
 
 
   // ---------- showcase preview ----------
-  function headOf(t) { if (t.ov && t.ov.head) return t.ov.head; return t.ok && t.ok.idea ? t.idea.trim().charAt(0).toUpperCase() + t.idea.trim().slice(1, 50) : 'Welcome'; }
-  function tagOf(t) { return t.ok && t.ok.style ? LOOK[t.style[0]].tag : 'This is a website.'; }
+  function headOf(t) { if (t.ov && t.ov.head) return t.ov.head; return t.ok && t.ok.name ? t.name.trim() : 'My Concept Site'; }
+  function tagOf(t) { return t.ok && t.ok.idea ? t.idea.trim() : 'A concept site made in The AI Lab.'; }
   var scSent = false;
   function drawShowcase() {
     var sel = $('scTry'), cur = sel.value;
