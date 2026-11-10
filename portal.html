@@ -575,7 +575,7 @@ main.pt-wrap.pt-wide{ max-width:1340px; padding-top:16px; }
   main.pt-wrap.pt-wide{ padding-left:12px; padding-right:12px; }
 }
 @media (max-width:1080px) and (min-width:821px){ .pt-build .pt-stick .pt-prev{ height:340px !important; } }
-@media (max-height:800px) and (min-width:1081px){ .pt-prev{ height:340px !important; } .ck-console{ height:80px; } }
+@media (max-height:820px) and (min-width:1081px){ .pt-loop{ display:none; } .ck-top{ margin-bottom:10px; } .pt-prev{ height:340px !important; } .ck-console{ height:80px; } }
 </style>
 <style id="phone-fit">
 html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
@@ -1416,6 +1416,14 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
     else if (voted) $('voteRes').innerHTML = '<p style="margin:8px 0 0">Thanks for voting! We will share the winning name at the end of class.</p>';
   }
   drawVote();
+
+  // ---------- auto-fit to the screen (laptops) ----------
+  function fit() {
+    var m = document.querySelector('main'), w = window.innerWidth, h = window.innerHeight, z = 1;
+    if (w > 1080) z = Math.max(0.7, Math.min(1, w / 1440, h / 820));
+    m.style.zoom = z < 0.995 ? String(Math.round(z * 100) / 100) : '';
+  }
+  window.addEventListener('resize', fit); fit();
 
   // ---------- engine power-up after the class code ----------
   function runBoot(done) {
