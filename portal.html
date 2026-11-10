@@ -620,6 +620,26 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
 @keyframes btflash{ 0%{ opacity:0; } 40%{ opacity:.95; } 100%{ opacity:0; } }
 @media (prefers-reduced-motion:reduce){ #boot.rev .bt-box,.bt-core,.bt-ring{ animation:none !important; } .bt-ring{ display:none; } }
 </style>
+<style id="home-css">
+.hm-title{ font-family:'Fraunces',serif; font-weight:700; font-size:1.35rem; color:#E3BD79; text-transform:uppercase; letter-spacing:.05em; margin:0 0 12px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.hm-title span{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.16em; color:#DCC9A8; border:1px solid #C7994F; border-radius:99px; padding:3px 10px; }
+.hm-sw{ margin-left:auto; min-height:34px !important; padding:6px 14px !important; font-size:.8rem !important; }
+.hm-card{ border:1px solid rgba(227,189,121,.6); border-radius:12px; padding:12px 14px; background:linear-gradient(160deg,rgba(60,36,22,.9),rgba(24,13,8,.92)); box-shadow:inset 0 0 14px rgba(227,189,121,.08); margin-bottom:12px; }
+.hm-card ul{ margin:6px 0 0; padding:0; list-style:none; } .hm-card li{ font-size:.92rem; padding:3px 0 3px 20px; position:relative; color:#F3E8D6; } .hm-card li::before{ content:'✦'; position:absolute; left:0; color:#E3BD79; }
+.hm-card p{ margin:6px 0 0 !important; font-size:.92rem; } .hm-card a{ color:#E3BD79; font-weight:700; }
+.hm-empty{ color:#DCC9A8 !important; font-size:.88rem; }
+.hm-top{ display:grid; grid-template-columns:minmax(220px,.8fr) 1.4fr; gap:12px; align-items:start; }
+.hm-ringcard{ text-align:center; } .hm-ring{ position:relative; width:170px; height:170px; margin:8px auto; } .hm-ring svg{ width:100%; height:100%; filter:drop-shadow(0 0 10px rgba(227,189,121,.5)); }
+.hm-pct{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; } .hm-pct b{ font-family:'Fraunces',serif; font-size:2.5rem; color:#fff; line-height:1; } .hm-pct span{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; letter-spacing:.14em; text-transform:uppercase; color:#DCC9A8; }
+.hm-lvl{ color:#DCC9A8; font-size:.92rem; } .hm-lvl b{ color:#E3BD79; }
+.hm-path{ display:flex; flex-direction:column; gap:10px; margin-top:8px; }
+.hm-step{ display:grid; grid-template-columns:28px 1fr auto; gap:12px; align-items:center; } .hm-step small{ display:block; color:#DCC9A8; font-size:.8rem; margin-bottom:2px; }
+.hm-dot{ width:26px; height:26px; border-radius:50%; border:2px solid #C7994F; display:grid; place-items:center; color:#2A160E; font-weight:700; font-size:.8rem; } .hm-step.done .hm-dot{ background:#E3BD79; box-shadow:0 0 12px rgba(227,189,121,.7); }
+.hm-step .pt-b{ min-height:36px !important; padding:6px 16px !important; font-size:.85rem !important; }
+.hm-row{ display:grid; grid-template-columns:1.3fr 1fr; gap:12px; } .hm-chart{ width:100%; height:auto; margin-top:6px; } .hm-coach{ font-size:1rem !important; color:#F3E8D6 !important; }
+.hm-stats{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; } .hm-stats div{ border:1px solid rgba(227,189,121,.5); border-radius:10px; padding:8px 6px; text-align:center; background:rgba(0,0,0,.3); font-size:.78rem; color:#DCC9A8; } .hm-stats b{ display:block; font-family:'Fraunces',serif; font-size:1.3rem; color:#E3BD79; }
+@media (max-width:820px){ .hm-top,.hm-row{ grid-template-columns:1fr; } .hm-stats{ grid-template-columns:repeat(2,1fr); } .hm-sw{ margin-left:0; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -725,9 +745,9 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
     <button type="button" class="pt-b" id="gateBtn">Go in</button>
   </section>
 <div id="app" style="display:none">
-  <div class="ck-top"><div class="ck-plate big">Cosmic Code<br>Academy</div><div class="pt-orb" aria-hidden="true"><span>The Brown<br>Girls</span></div><div class="ck-plate r">Real skills.<br>Brighter futures.</div></div>
+  <div class="ck-top"><div class="ck-plate big"><small style="display:block;font-size:.75em;letter-spacing:.16em;color:#DCC9A8">The AI Lab</small>Cosmic Code<br>Academy</div><div class="pt-orb" aria-hidden="true"><span>The Brown<br>Girls</span></div><div class="ck-plate r">Real skills.<br>Brighter futures.</div></div>
   <aside class="ck-left" aria-label="Voyage map"><div class="ck-k">Voyage map</div>
-  <ol class="pt-steps" id="steps"><li>1 &middot; Crew</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Landing</li></ol>
+  <ol class="pt-steps" id="steps"><li>1 &middot; Home</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Landing</li></ol>
     <div class="ck-gal" aria-hidden="true"></div><div class="ck-k ck-cap">AI Galaxy</div></aside>
   <aside class="ck-right" aria-label="Mission control">
     <div class="ck-card"><div class="ck-k">Mission</div>
@@ -745,6 +765,8 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
   <div id="clock" class="pt-clock"></div>
 
   <section class="pt-panel" id="p0">
+    <div id="homeDash" style="display:none"></div>
+    <div id="crewPick">
     <div class="pt-time">&#9201; About 2 minutes</div>
     <h2>Choose your crew</h2>
     <p>Choose your group.</p>
@@ -752,6 +774,7 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
       <button class="pt-gbtn" data-g="5th Grade">5th grade<small>Concept site: top of the page</small></button>
       <button class="pt-gbtn" data-g="Middle School">Middle school (6th&ndash;8th)<small>Concept site: business page</small></button>
       <button class="pt-gbtn" data-g="High School">High school (9th&ndash;12th)<small>Concept site: landing page</small></button>
+    </div>
     </div>
   </section>
 
@@ -939,7 +962,7 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
     colorful:{ bg:'#3D0A3B', fg:'#FFE9F7', ac:'#FF6FB5', bt:'#3D0A3B', font:"'Trebuchet MS',Verdana,sans-serif", icon:'🎨', tag:'Bright, bold, and made for you.' }
   };
 
-  var st = { group:'', role:'', goal:'', name:'', feat:'', idea:'', aud:'', cta:'', style:[], format:'', step:0, lessons:[], t0:0, tries:[], cur:-1, ov:{} };
+  var st = { group:'', role:'', goal:'', name:'', feat:'', idea:'', aud:'', cta:'', style:[], format:'', step:0, lessons:[], t0:0, tries:[], cur:-1, ov:{}, showPick:false };
   try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
   function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
 
@@ -977,7 +1000,7 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
     if (fresh && prev !== g) { st.role = G.auto.role || ''; st.goal = G.auto.goal || ''; st.idea = ''; st.name = ''; st.feat = ''; st.aud = ''; st.cta = ''; st.style = []; st.format = ''; st.ov = {}; st.tries = []; st.cur = -1; $('chatLog').innerHTML = ''; }
     sync();
   }
-  document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.addEventListener('click', function () { applyGroup(b.getAttribute('data-g'), true); go(1); }); });
+  document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.addEventListener('click', function () { st.showPick = false; applyGroup(b.getAttribute('data-g'), true); go(1); }); });
 
   // ---------- lessons ----------
   var LESSONS = [
@@ -1280,11 +1303,48 @@ html{ -webkit-text-size-adjust:100%; text-size-adjust:100%; }
   $('chatSend').addEventListener('click', function () { chatHandle($('chatIn').value); });
   $('chatIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); chatHandle($('chatIn').value); } });
 
+  // ---------- home dashboard (progress) ----------
+  function pctOf() { var G = GROUPS[st.group]; if (!G) return 0; return Math.round((Math.min(st.lessons.length / LESSONS.length, 1) * 0.3 + scoreOf() / G.fields.length * 0.7) * 100); }
+  function levelOf(p) { return p >= 100 ? 'Captain Builder' : p >= 75 ? 'Commander' : p >= 50 ? 'Pilot' : p >= 25 ? 'Navigator' : 'Cadet'; }
+  var SKILL = { what:'Knows what AI really is', robot:'Writes clear instructions', safe:'Stays safe with AI' };
+  function chartSvg() {
+    var pts = st.tries.map(function (t) { return Math.round(t.score / (t.total || 5) * 100); });
+    if (pts.length < 2) return '<div class="hm-empty">Save 2 versions in the Prompt Lab to see your growth line.</div>';
+    var W = 300, H = 110, n = pts.length, xs = function (i) { return 14 + i * (W - 28) / (n - 1); }, ys = function (v) { return H - 14 - v * (H - 28) / 100; };
+    var line = pts.map(function (v, i) { return xs(i) + ',' + ys(v); }).join(' ');
+    return '<svg viewBox="0 0 ' + W + ' ' + H + '" class="hm-chart" role="img" aria-label="Prompt score for each saved try"><line x1="14" y1="' + ys(100) + '" x2="' + (W - 14) + '" y2="' + ys(100) + '" stroke="rgba(227,189,121,.25)" stroke-dasharray="3 4"/><text x="16" y="' + (ys(100) - 3) + '" fill="#DCC9A8" font-size="9">High mastery</text><text x="16" y="' + (H - 2) + '" fill="#DCC9A8" font-size="9">Needs review</text><polyline points="' + line + '" fill="none" stroke="#E3BD79" stroke-width="2.5"/>' + pts.map(function (v, i) { return '<circle cx="' + xs(i) + '" cy="' + ys(v) + '" r="4" fill="#FFE29A"/>'; }).join('') + '</svg>';
+  }
+  function renderHome() {
+    var G = GROUPS[st.group], dash = $('homeDash'), pick = $('crewPick');
+    pick.style.display = st.group && !st.showPick ? 'none' : 'block'; dash.style.display = st.group ? 'block' : 'none';
+    if (!G) return;
+    var nL = LESSONS.length, dn = st.lessons.length, sc = scoreOf(), tot = G.fields.length, pct = pctOf(), C = 2 * Math.PI * 52;
+    var mins = st.t0 ? Math.min(60, Math.floor((Date.now() - st.t0) / 60000)) : 0, tw = st.tries.filter(function (t) { return t.tweak; }).length;
+    var skills = LESSONS.filter(function (L) { return st.lessons.indexOf(L.id) > -1; }).map(function (L) { return SKILL[L.id]; });
+    if (sc > 0) skills.push('Wrote ' + sc + ' of ' + tot + ' prompt parts'); if (tw) skills.push('Tweaked a site ' + tw + (tw === 1 ? ' time' : ' times'));
+    var improve = LESSONS.filter(function (L) { return st.lessons.indexOf(L.id) < 0; }).map(function (L) { return 'Pass: ' + L.title.replace(/^\d+\.\s*/, ''); }).concat(missingOf(snapNow()).map(function (f) { return 'Add ' + NAMES[f]; }));
+    var cert = st.step === 3 || st.tries.length && pct >= 100;
+    var next = dn < nL ? [1, 'Voyage 1: AI Basics'] : (sc < tot ? [2, 'Voyage 2: Prompt Lab'] : [3, 'Landing: finish and certificate']);
+    var path = [['Choose your crew', 1, 'Crew: ' + st.group, 0], ['Voyage 1: AI Basics', dn / nL, dn + '/' + nL + ' lessons', 1], ['Voyage 2: Prompt Lab', sc / tot, sc + '/' + tot + ' prompt parts', 2], ['Landing', st.step === 3 ? 1 : 0, st.step === 3 ? 'Reached' : 'Not yet', 3]];
+    var coach = dn === 0 && !st.tries.length ? 'Welcome aboard! Start with Voyage 1 and learn how AI really works.' : (st.step >= 2 && $('runHint').textContent ? $('runHint').textContent : (dn ? 'Great job! You passed ' + dn + ' of ' + nL + ' lessons.' : 'Keep going!'));
+    var lst = function (a, empty) { return a.length ? '<ul>' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '<p class="hm-empty">' + empty + '</p>'; };
+    dash.innerHTML =
+      '<div class="hm-title"><span>The AI Lab</span> Cosmic Code Academy <button type="button" class="pt-b ghost hm-sw" id="hmSwitch">Switch crew</button></div>' +
+      '<div class="hm-top"><div class="hm-card hm-ringcard"><div class="ck-k">Your progress</div><div class="hm-ring"><svg viewBox="0 0 120 120" aria-hidden="true"><defs><linearGradient id="hmg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#C7994F"/><stop offset="1" stop-color="#FFE29A"/></linearGradient></defs><circle cx="60" cy="60" r="52" fill="none" stroke="rgba(0,0,0,.45)" stroke-width="10"/><circle cx="60" cy="60" r="52" fill="none" stroke="url(#hmg)" stroke-width="10" stroke-linecap="round" stroke-dasharray="' + C.toFixed(1) + '" stroke-dashoffset="' + (C * (1 - pct / 100)).toFixed(1) + '" transform="rotate(-90 60 60)"/></svg><div class="hm-pct"><b>' + pct + '%</b><span>completed</span></div></div><div class="hm-lvl">Current level: <b>' + levelOf(pct) + '</b></div></div>' +
+      '<div class="hm-side"><div class="hm-card"><div class="ck-k">New skills acquired (' + skills.length + ')</div>' + lst(skills, 'Pass a lesson to earn your first skill.') + '</div><div class="hm-card"><div class="ck-k">Skills to improve (' + improve.length + ')</div>' + lst(improve.slice(0, 4), 'Nothing! Your prompt is strong.') + '</div><div class="hm-card"><div class="ck-k">Certificates earned</div>' + (cert ? '<p>Certified AI Creator is ready. <a href="#" id="hmCert">Get it</a></p>' : '<p class="hm-empty">Finish the mission to unlock your certificate.</p>') + '</div></div></div>' +
+      '<div class="hm-card"><div class="ck-k">Your voyage path</div><div class="hm-path">' + path.map(function (p) { var d = p[1] >= 1; return '<div class="hm-step' + (d ? ' done' : '') + '"><span class="hm-dot">' + (d ? '✓' : '') + '</span><div><b>' + esc(p[0]) + '</b><small>' + esc(p[2]) + '</small><div class="ck-bar"><i style="width:' + Math.round(Math.min(p[1], 1) * 100) + '%"></i></div></div><button type="button" class="pt-b ghost" data-go="' + (p[3]) + '">' + (p[3] === 0 ? 'View' : (d ? 'Review' : 'Go')) + '</button></div>'; }).join('') + '</div><button type="button" class="pt-b" data-go="' + next[0] + '" style="margin-top:12px">Continue: ' + esc(next[1]) + '</button></div>' +
+      '<div class="hm-row"><div class="hm-card"><div class="ck-k">Prompt growth</div>' + chartSvg() + '</div><div class="hm-card"><div class="ck-k">Robot coach says</div><p class="hm-coach">' + esc(coach) + '</p></div></div>' +
+      '<div class="hm-stats"><div><b>' + mins + '</b>of 60 min</div><div><b>' + sc + '/' + tot + '</b>prompt score</div><div><b>' + st.tries.length + '</b>versions saved</div><div><b>' + dn + '/' + nL + '</b>lessons passed</div></div>';
+    $('hmSwitch').addEventListener('click', function () { st.showPick = true; renderHome(); });
+    var hc = $('hmCert'); if (hc) hc.addEventListener('click', function (e) { e.preventDefault(); go(3); setTimeout(function () { var s = $('certSection'); if (s) s.scrollIntoView({ behavior:'smooth' }); }, 300); });
+  }
+
   // ---------- mission control HUD ----------
-  var VOY = ['Pick your crew','Voyage 1: AI Basics','Voyage 2: Prompt Lab','Landing: mission complete'];
-  var TASK = ['pick your crew','pass 3 quick checks','build your site with the chat','save, share, get your certificate'];
+  var VOY = ['Home: your progress','Voyage 1: AI Basics','Voyage 2: Prompt Lab','Landing: mission complete'];
+  var TASK = ['check your progress, then continue','pass 3 quick checks','build your site with the chat','save, share, get your certificate'];
   function hud() {
     var G = GROUPS[st.group], step = st.step || 0;
+    if (step === 0) renderHome();
     $('hudVoy').textContent = VOY[step]; $('hudTask').textContent = 'Task: ' + TASK[step];
     $('hudVoyBar').style.width = ((step + 1) * 25) + '%';
     if (!G) { $('hudMission').textContent = 'Choose your group to get your mission.'; $('hudPct').textContent = 'Data collected: 0%'; $('hudBar').style.width = '0%'; return; }
