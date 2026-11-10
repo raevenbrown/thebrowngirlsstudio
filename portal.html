@@ -673,6 +673,12 @@ body{ background:#140b07 !important; }
 .hm-card{ margin-bottom:0 !important; }
 @media (max-width:900px){ .nx-home,.nx-three,.nx-prog{ grid-template-columns:1fr; } .nx-brain{ display:none; } .nx-tab{ padding:10px 8px; font-size:.86rem; } .nx-tabs{ justify-content:space-between; } .nx-bar{ flex-wrap:wrap; gap:8px; padding:8px 12px; } .nx-tabs{ order:3; width:100%; margin:0; } .nx-right{ margin-left:auto; } .nx-logo{ font-size:1rem; } }
 </style>
+<style id="chat-first">
+.pt-build [data-f],.pt-tweak,#chatQuick,.pt-tips,#tips{ display:none !important; }
+.pt-chat{ padding:16px; } .pt-chat-log{ max-height:min(30vh,260px); min-height:140px; } .cm{ font-size:1.05rem; }
+#chatIn{ font-size:1.15rem !important; padding:15px 14px !important; }
+#chatSend{ min-height:52px; padding:0 26px; font-size:1.05rem; }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -1153,7 +1159,7 @@ body{ background:#140b07 !important; }
   function lum(hex) { var h = hex.replace('#',''); var r = parseInt(h.substr(0,2),16)/255, g = parseInt(h.substr(2,2),16)/255, b = parseInt(h.substr(4,2),16)/255; return 0.2126*r + 0.7152*g + 0.0722*b; }
   function simulate(s) {
     var G = GROUPS[s.group] || GROUPS['5th Grade'], mode = G.mode, ok = s.ok || {}, fmt = s.format || '', ov = s.ov || {}, ratio = s.total ? s.score / s.total : 0;
-    var base = ok.style ? LOOK[s.style[0]] : { bg:'#EEEEEE', fg:'#333333', ac:'#888888', bt:'#FFFFFF', font:"system-ui,Arial,sans-serif", icon:'', tag:'' };
+    var base = ok.style ? LOOK[s.style[0]] : { bg:'#3B2216', fg:'#F3E8D6', ac:'#C7994F', bt:'#2A160E', font:"system-ui,Arial,sans-serif", icon:'', tag:'' };
     var look = { bg:base.bg, fg:base.fg, ac:base.ac, bt:base.bt, font:base.font, icon:base.icon, tag:base.tag };
     if (ov.bg) { look.bg = ov.bg; look.fg = lum(ov.bg) > 0.55 ? '#1B1B1B' : '#F5F5F5'; }
     if (ov.ac) { look.ac = ov.ac; look.bt = lum(ov.ac) > 0.55 ? '#1B1B1B' : '#FFFFFF'; }
@@ -1291,7 +1297,7 @@ body{ background:#140b07 !important; }
   var chatAsked = '';
   function say(who, text) { var d = document.createElement('div'); d.className = 'cm ' + who; d.textContent = text; var log = $('chatLog'); log.appendChild(d); log.scrollTop = log.scrollHeight; }
   function nextField() { var m = okMap(), f = gOf().fields; for (var i = 0; i < f.length; i++) if (!m[f[i]]) return f[i]; return ''; }
-  function quick(list, fn) { var box = $('chatQuick'); box.innerHTML = ''; list.forEach(function (t, i) { var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip'; b.textContent = t.length > 46 ? t.slice(0, 44) + '…' : t; b.addEventListener('click', function () { chatHandle(fn ? fn(t, i) : t, true); }); box.appendChild(b); }); }
+  function quick() { $('chatQuick').innerHTML = ''; }
   function ask() {
     var f = nextField(), G = gOf(); chatAsked = f;
     if (!f) { say('bot', 'Your prompt has all ' + G.fields.length + ' parts, and your site is live on the right! Now tell me ONE change you want, like "' + G.tweaks[0] + '".'); quick(G.tweaks); return; }
@@ -1306,6 +1312,32 @@ body{ background:#140b07 !important; }
     say('bot', "Hi! I'm Grace's robot. Tell me what you want to build and I'll help you write the prompt. I'll also fix spelling as we go. Remember: use made-up names, no real names, school, phone, or email.");
     ask();
   }
+  function matchStyles(t) {
+    var found = []; t.toLowerCase().split(/[^a-z]+/).forEach(function (w) { if (w.length < 3) return; STYLES.forEach(function (v) { if (found.indexOf(v) < 0 && (v === w || (w.length >= 4 && (v.indexOf(w) === 0 || lev(v, w) <= 1)))) found.push(v); }); });
+    return found;
+  }
+  function pickFormat(t) {
+    var G = gOf();
+    var n = parseInt(t, 10), pick = (n >= 1 && n <= G.formats.length) ? G.formats[n - 1] : '';
+    if (!pick) G.formats.forEach(function (x) { if (!pick && (x === t || x.toLowerCase().indexOf(t.toLowerCase()) > -1 && t.length >= 5)) pick = x; });
+    return pick;
+  }
+  var dpt = null;
+  function draftPreview() {
+    clearTimeout(dpt); dpt = setTimeout(function () {
+      if (!st.group) return;
+      var snap = snapNow(), txt = $('chatIn').value.trim(), f = nextField(), k;
+      if (txt && !looksPrivate(txt)) {
+        var t = fixSpelling(txt).text;
+        if (f === 'style') { var fs = matchStyles(t); if (fs.length) { snap.style = fs; snap.ok.style = true; } }
+        else if (f === 'format') { var pk = pickFormat(t); if (pk) { snap.format = pk; snap.ok.format = true; } }
+        else if (f) { snap[f] = t; snap.ok[f] = f === 'feat' ? featsOf(t).length >= 1 : t.length >= 1; }
+        else { var r = parseTweak(t); for (k in r.ov) snap.ov[k] = r.ov[k]; }
+      }
+      $('prev').srcdoc = simulate(snap);
+    }, 70);
+  }
+  $('chatIn').addEventListener('input', draftPreview);
   function chatHandle(raw, tapped) {
     var txt = String(raw || '').trim(); if (!txt) return;
     say('me', txt); $('chatIn').value = '';
@@ -1322,13 +1354,12 @@ body{ background:#140b07 !important; }
       say('bot', $('runHint').textContent + (fx.changes.length ? note : '')); return;
     }
     if (f === 'style') {
-      var found = []; t.toLowerCase().split(/[^a-z]+/).forEach(function (w) { if (w.length < 3) return; STYLES.forEach(function (v) { if (found.indexOf(v) < 0 && (v === w || (w.length >= 4 && (v.indexOf(w) === 0 || lev(v, w) <= 1)))) found.push(v); }); });
+      var found = matchStyles(t);
       if (!found.length) { say('bot', 'I did not catch a vibe word. Pick from: ' + STYLES.join(', ') + '.'); return; }
       st.style = found; sync(); say('bot', 'Great vibe: ' + found.join(' + ') + '. Look at your site!' + note); ask(); return;
     }
     if (f === 'format') {
-      var n = parseInt(t, 10), pick = (n >= 1 && n <= G.formats.length) ? G.formats[n - 1] : '';
-      if (!pick) G.formats.forEach(function (x) { if (!pick && (x === t || x.toLowerCase().indexOf(t.toLowerCase()) > -1 && t.length >= 5)) pick = x; });
+      var pick = pickFormat(t);
       if (!pick) { say('bot', 'Tap one of the choices, or type 1' + (G.formats.length > 1 ? ' to ' + G.formats.length : '') + '.'); return; }
       st.format = pick; sync(); say('bot', 'Perfect, the page is organized: ' + pick + '.'); ask(); return;
     }
