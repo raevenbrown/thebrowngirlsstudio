@@ -904,9 +904,9 @@ main.pt-wrap{ position:relative; z-index:1; }
     if (/(remove|delete|no) (the )?button/.test(t)) { ov.btn = ''; did.push('removed the button'); }
     if (/(add|show) (three |3 |some )?cards?/.test(t)) { ov.cards = true; did.push('added cards'); }
     if (/(remove|delete|hide|no) (the )?cards?/.test(t)) { ov.cards = false; did.push('removed cards'); }
-    if (/(bigger|larger|huge|big) (headline|title)/.test(t)) { ov.headSize = '3rem'; did.push('bigger headline'); }
-    if (/(smaller|tiny|small) (headline|title)/.test(t)) { ov.headSize = '1.7rem'; did.push('smaller headline'); }
-    if (/shorter (headline|title)/.test(t)) { ov.shortHead = true; did.push('shorter headline'); }
+    if (/(bigger|larger|huge|big) (headline|title)|(headline|title).*(bigger|larger|huge)/.test(t)) { ov.headSize = '3rem'; did.push('bigger headline'); }
+    if (/(smaller|tiny|small) (headline|title)|(headline|title).*(smaller|tiny)/.test(t)) { ov.headSize = '1.7rem'; did.push('smaller headline'); }
+    if (/shorter (headline|title)|(headline|title).*shorter/.test(t)) { ov.shortHead = true; did.push('shorter headline'); }
     if (/(add|show) (an? )?(emoji|icon)/.test(t)) { ov.icon = true; did.push('added an icon'); }
     if (/(remove|delete|no) (the )?(emoji|icon)/.test(t)) { ov.icon = false; did.push('removed the icon'); }
     if (/\bleft\b/.test(t) && /(align|left side|move)/.test(t)) { ov.align = 'left'; did.push('aligned left'); }
