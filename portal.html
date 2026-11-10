@@ -1005,8 +1005,9 @@ body{ background:#140b07 !important; }
   };
 
   var st = { group:'', role:'', goal:'', name:'', feat:'', idea:'', aud:'', cta:'', style:[], format:'', step:0, lessons:[], t0:0, tries:[], cur:-1, ov:{}, showPick:false };
+  try { var ts = +localStorage.getItem(KEY + '_ts') || 0; if (ts && Date.now() - ts > 4 * 3600 * 1000) { localStorage.removeItem(KEY); localStorage.removeItem('bgcs_robot_vote'); localStorage.removeItem(KEY + '_ts'); } } catch (e) {}
   try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved && typeof saved === 'object') for (var k in saved) if (k in st) st[k] = saved[k]; } catch (e) {}
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); } catch (e) {} }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(st)); localStorage.setItem(KEY + '_ts', String(Date.now())); } catch (e) {} }
 
   // ---------- chips ----------
   function drawStyleChips() {
