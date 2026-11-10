@@ -498,6 +498,54 @@ main.pt-wrap{ position:relative; z-index:1; }
 @media(min-width:900px){.pt-stick{position:sticky;top:84px;z-index:2;background:#2A160E;padding-bottom:4px}}
 @media(prefers-reduced-motion:reduce){.pt-live i{animation:none}}
 </style>
+<style id="cockpit">
+/* ===== Cosmic cockpit layout ===== */
+main.pt-wrap.pt-wide{ max-width:1340px; padding-top:16px; }
+.ck-bg{ position:fixed; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(circle at 50% 44%,rgba(255,226,154,.20),transparent 30%),conic-gradient(from 20deg at 50% 44%,rgba(227,189,121,.20),transparent 14%,rgba(199,153,79,.15) 28%,transparent 42%,rgba(227,189,121,.20) 58%,transparent 72%,rgba(199,153,79,.15) 86%,transparent); filter:blur(22px); }
+#app{ grid-template-columns:172px minmax(0,1fr) 264px; column-gap:16px; row-gap:0; align-items:start; }
+#app .pt-hero{ display:none; }
+.ck-top{ grid-column:1/-1; display:flex; align-items:center; justify-content:space-between; gap:14px; margin:0 0 16px; }
+.ck-plate{ border:1px solid #C7994F; border-radius:10px; padding:10px 18px; background:linear-gradient(180deg,rgba(66,40,25,.96),rgba(28,16,10,.96)); box-shadow:0 0 18px rgba(227,189,121,.3),inset 0 0 12px rgba(227,189,121,.14); font-family:'Fraunces',serif; font-weight:700; color:#F3E8D6; letter-spacing:.05em; text-transform:uppercase; line-height:1.15; }
+.ck-plate.big{ font-size:1.35rem; color:#E3BD79; }
+.ck-plate.r{ text-align:right; font-size:1.05rem; }
+.ck-top .pt-orb{ width:84px; height:84px; flex:0 0 auto; } .ck-top .pt-orb span{ font-size:.72rem; }
+.ck-left{ grid-column:1; grid-row:2 / span 40; position:sticky; top:84px; border:1px solid rgba(227,189,121,.5); border-radius:14px; background:rgba(20,11,7,.72); padding:14px 12px; box-shadow:0 0 18px rgba(227,189,121,.18),inset 0 0 14px rgba(227,189,121,.08); }
+.ck-k{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:#E3BD79; }
+#steps{ flex-direction:column; flex-wrap:nowrap; gap:0; margin:8px 0 0; }
+#steps li{ border:none !important; background:none !important; box-shadow:none !important; border-radius:0 !important; padding:11px 0 11px 28px; position:relative; font-size:11px; }
+#steps li::before{ content:''; position:absolute; left:4px; top:50%; width:12px; height:12px; border-radius:50%; border:2px solid #C7994F; background:#2A160E; transform:translateY(-50%); box-shadow:0 0 8px rgba(227,189,121,.4); }
+#steps li::after{ content:''; position:absolute; left:9px; top:calc(50% + 8px); height:calc(100% - 4px); width:2px; background:linear-gradient(#C7994F,transparent); }
+#steps li:last-child::after{ display:none; }
+#steps li.on{ color:#E3BD79; font-weight:700; } #steps li.on::before{ background:#E3BD79; box-shadow:0 0 14px #E3BD79; } #steps li.done::before{ background:#C7994F; }
+.ck-gal{ width:100%; aspect-ratio:1; margin-top:12px; border-radius:50%; background:conic-gradient(from 0deg,rgba(227,189,121,.65),rgba(199,153,79,.05),rgba(227,189,121,.65),rgba(199,153,79,.05),rgba(227,189,121,.65)); -webkit-mask-image:radial-gradient(circle,#000 18%,transparent 68%); mask-image:radial-gradient(circle,#000 18%,transparent 68%); animation:pt-spin-r 70s linear infinite; }
+.ck-cap{ text-align:center; margin-top:2px; }
+#clock{ grid-column:2; grid-row:2; margin:0 7px 16px !important; }
+#app .pt-panel,#app .pt-sec{ grid-column:2; position:relative; max-width:none !important; margin:7px 7px 22px !important; border:2px solid #E3BD79 !important; border-radius:26px !important; background:linear-gradient(rgba(22,12,8,.92),rgba(22,12,8,.92)) !important; box-shadow:0 0 0 6px rgba(16,9,6,.9),0 0 0 7px rgba(199,153,79,.75),0 0 34px rgba(227,189,121,.38),inset 0 0 30px rgba(227,189,121,.14) !important; }
+#finishExtras{ grid-column:2; }
+.ck-right{ grid-column:3; grid-row:2 / span 40; position:sticky; top:84px; display:flex; flex-direction:column; gap:12px; }
+.ck-card{ border:1px solid #E3BD79; border-radius:12px; padding:12px 14px; background:linear-gradient(160deg,rgba(66,40,25,.96),rgba(26,14,9,.96)); box-shadow:0 0 16px rgba(227,189,121,.28),inset 0 0 14px rgba(227,189,121,.1); }
+.ck-h{ font-family:'Fraunces',serif; font-weight:700; color:#fff; font-size:.98rem; line-height:1.2; text-transform:uppercase; margin:4px 0 6px; }
+.ck-card p{ margin:0 0 8px; font-size:.88rem; color:#DCC9A8; line-height:1.4; }
+.ck-bar{ height:8px; border-radius:99px; background:rgba(0,0,0,.5); border:1px solid rgba(227,189,121,.45); overflow:hidden; margin-top:6px; }
+.ck-bar i{ display:block; height:100%; width:0; background:linear-gradient(90deg,#C7994F,#FFE29A); box-shadow:0 0 10px #E3BD79; transition:width .4s; }
+.ck-mrow{ display:flex; gap:10px; align-items:center; } .ck-mrow .pt-chars{ width:88px; flex:0 0 auto; }
+.ck-w{ display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:6px; }
+.ck-w button{ font:inherit; font-size:.8rem; font-weight:700; color:#F3E8D6; background:rgba(0,0,0,.35); border:1px solid #C7994F; border-radius:8px; padding:10px 6px 8px; cursor:pointer; box-shadow:inset 0 0 10px rgba(227,189,121,.12); }
+.ck-w button:hover,.ck-w button:focus-visible{ background:rgba(199,153,79,.25); outline:none; }
+.ck-w button b{ display:block; font-size:1rem; color:#E3BD79; margin-bottom:2px; }
+.ck-console{ grid-column:1/-1; grid-row:auto; margin-top:6px; height:112px; border-radius:30px 30px 0 0; border:1px solid rgba(227,189,121,.55); background:linear-gradient(180deg,#22140C,#0E0704); box-shadow:inset 0 2px 22px rgba(227,189,121,.2),0 0 26px rgba(227,189,121,.2); display:flex; align-items:center; justify-content:center; gap:34px; }
+.ck-pad{ width:150px; height:44px; border-radius:50%; border:2px solid #E3BD79; background:radial-gradient(ellipse,rgba(227,189,121,.3),transparent 70%); box-shadow:0 0 20px rgba(227,189,121,.6),inset 0 0 14px rgba(227,189,121,.5); }
+.ck-mid{ border:1px solid #C7994F; border-radius:8px; padding:12px 22px; background:#1A0F09; font-family:'Fraunces',serif; font-weight:700; color:#F3E8D6; text-align:center; line-height:1.1; box-shadow:0 0 14px rgba(227,189,121,.3); }
+@media (max-width:1080px){
+  #app{ grid-template-columns:1fr; }
+  .ck-left,.ck-right,#clock,#app .pt-panel,#finishExtras{ grid-column:1; grid-row:auto; position:static; }
+  .ck-top{ order:0; flex-wrap:wrap; } .ck-left{ order:1; margin-bottom:14px; } #clock{ order:2; } #app .pt-panel{ order:3; } #finishExtras{ order:3; } .ck-right{ order:4; } .ck-console{ order:5; }
+  #steps{ flex-direction:row; flex-wrap:wrap; gap:6px; } #steps li{ padding:8px 12px 8px 26px; border:1px solid rgba(243,232,214,.2) !important; border-radius:999px !important; } #steps li::before{ left:8px; } #steps li::after,.ck-gal,.ck-cap{ display:none; }
+  .ck-top .pt-orb{ display:none; } .ck-plate.big{ font-size:1.1rem; } .ck-console{ height:70px; } .ck-pad{ width:70px; height:28px; }
+}
+#p1 .pt-mrow{ display:none; }
+@media print{ #app{ display:block !important; } .ck-top,.ck-left,.ck-right,.ck-console,.ck-bg{ display:none !important; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -593,6 +641,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   </g>
 </symbol></defs></svg>
 <main class="pt-wrap pt-wide">
+<div class="ck-bg" aria-hidden="true"></div>
   <section class="pt-panel on" id="gate" style="max-width:480px;margin:40px auto;">
     <div class="pt-eyebrow">The AI Lab &middot; Student Studio</div>
     <h2 style="margin-top:8px">Enter your class code</h2>
@@ -602,12 +651,24 @@ main.pt-wrap{ position:relative; z-index:1; }
     <button type="button" class="pt-b" id="gateBtn">Go in</button>
   </section>
 <div id="app" style="display:none">
+  <div class="ck-top"><div class="ck-plate big">Cosmic Code<br>Academy</div><div class="pt-orb" aria-hidden="true"><span>The Brown<br>Girls</span></div><div class="ck-plate r">Real skills.<br>Brighter futures.</div></div>
+  <aside class="ck-left" aria-label="Voyage map"><div class="ck-k">Voyage map</div>
+  <ol class="pt-steps" id="steps"><li>1 &middot; Crew</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Landing</li></ol>
+    <div class="ck-gal" aria-hidden="true"></div><div class="ck-k ck-cap">AI Galaxy</div></aside>
+  <aside class="ck-right" aria-label="Mission control">
+    <div class="ck-card"><div class="ck-k">Mission</div>
+      <div class="ck-mrow"><svg class="pt-chars" viewBox="0 0 240 190" role="img" aria-label="Grace and her robot"><use href="#duo"/></svg><div class="ck-h" id="hudVoy">Pick your crew</div></div>
+      <p id="hudMission">Choose your group to get your mission.</p>
+      <div class="ck-k" id="hudPct">Data collected: 0%</div><div class="ck-bar"><i id="hudBar"></i></div>
+      <p style="margin:8px 0 0" id="hudTask">Task: pick your crew</p><div class="ck-bar"><i id="hudVoyBar"></i></div></div>
+    <div class="ck-card"><div class="ck-k">AI tool widgets</div>
+      <div class="ck-w"><button type="button" id="wPractice"><b>Aa</b>Prompt practice</button><button type="button" id="wChat"><b>&#9998;</b>Chat with robot</button></div></div>
+  </aside>
   <div class="pt-hero"><div class="pt-orb" aria-hidden="true"><span>The Brown<br>Girls</span></div>
     <div><div class="pt-eyebrow">Cosmic Code Academy &middot; The AI Lab</div>
     <h1>Real skills. <span>Brighter futures.</span></h1>
     <p class="pt-intro" style="margin-bottom:0">Blast off with AI: learn how AI works, then practice the skill that matters most: writing great prompts and vibe coding with them. No name needed.</p></div><svg class="pt-chars pt-chars-hero" viewBox="0 0 240 190" role="img" aria-label="Grace, a Black girl with afro puffs, waving with her friendly robot"><use href="#duo"/></svg></div>
   <div id="clock" class="pt-clock"></div>
-  <ol class="pt-steps" id="steps"><li>1 &middot; Crew</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Landing</li></ol>
 
   <section class="pt-panel" id="p0">
     <div class="pt-time">&#9201; About 2 minutes</div>
@@ -748,6 +809,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     <a class="pt-btn2" href="https://docs.google.com/forms/d/e/1FAIpQLSc3iR7g3Suo_yJnBKXmLaYNYc2sHLgG4pxm6IsJuq1nZ6Rvfw/viewform" target="_blank" rel="noopener">Join the Spring 2027 waitlist</a>
   </section>
   </div>
+  <div class="ck-console" aria-hidden="true"><div class="ck-pad"></div><div class="ck-mid">The Brown<br>Girls</div><div class="ck-pad"></div></div>
 </div>
 </main>
 <script>
@@ -818,7 +880,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     if (n === 1) renderLessons();
     if (n === 2) { sync(); chatStart(); }
     if (n === LAST) { autoSave(); drawShowcase(); }
-    tick(); save(); window.scrollTo({ top: 0, behavior: 'smooth' });
+    tick(); hud(); save(); window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   $('steps').addEventListener('click', function (e) { var i = Array.prototype.indexOf.call($('steps').children, e.target); if (i > -1 && i < st.step) go(i); });
   document.addEventListener('click', function (e) { var t = e.target; if (t && t.getAttribute && t.getAttribute('data-go') != null) go(parseInt(t.getAttribute('data-go'), 10)); });
@@ -879,7 +941,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     });
     lessonProgress();
   }
-  function lessonProgress() { var n = st.lessons.length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready for the Prompt Lab!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%'; }
+  function lessonProgress() { var n = st.lessons.length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready for the Prompt Lab!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%'; hud(); }
 
   // ---------- prompt lab (live preview) ----------
   var inputs = { fRole:'role', fGoal:'goal', fName:'name', fFeat:'feat', fIdea:'idea', fAud:'aud', fCta:'cta', fFormat:'format' };
@@ -914,7 +976,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     $('tips').innerHTML = G.fields.map(function (f, i) { return ps[i] ? '' : '<li>' + esc(TIPS[f]) + '</li>'; }).join('');
     $('promptOut').textContent = buildPrompt();
     $('runHint').textContent = n === tot ? 'Your prompt has all ' + tot + ' parts. Look at your site, then tweak ONE thing in plain words.' : 'Your site updates as you fill in your prompt. Still missing: ' + missingOf(snapNow()).map(function (f) { return NAMES[f]; }).join(', ') + '.';
-    live(); save();
+    live(); hud(); save();
   }
   function setupLab() {
     var G = gOf();
@@ -1133,6 +1195,20 @@ main.pt-wrap{ position:relative; z-index:1; }
   $('chatSend').addEventListener('click', function () { chatHandle($('chatIn').value); });
   $('chatIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); chatHandle($('chatIn').value); } });
 
+  // ---------- mission control HUD ----------
+  var VOY = ['Pick your crew','Voyage 1: AI Basics','Voyage 2: Prompt Lab','Landing: mission complete'];
+  var TASK = ['pick your crew','pass 3 quick checks','build your site with the chat','save, share, get your certificate'];
+  function hud() {
+    var G = GROUPS[st.group], step = st.step || 0;
+    $('hudVoy').textContent = VOY[step]; $('hudTask').textContent = 'Task: ' + TASK[step];
+    $('hudVoyBar').style.width = ((step + 1) * 25) + '%';
+    if (!G) { $('hudMission').textContent = 'Choose your group to get your mission.'; $('hudPct').textContent = 'Data collected: 0%'; $('hudBar').style.width = '0%'; return; }
+    var pct = Math.round((Math.min(st.lessons.length / LESSONS.length, 1) * 0.3 + scoreOf() / G.fields.length * 0.7) * 100);
+    $('hudMission').textContent = G.mission; $('hudPct').textContent = 'Data collected: ' + pct + '%'; $('hudBar').style.width = pct + '%';
+  }
+  $('wPractice').addEventListener('click', function () { if (!st.group) return; go(2); var d = $('ppText').closest('details'); d.open = true; d.scrollIntoView({ behavior:'smooth', block:'center' }); });
+  $('wChat').addEventListener('click', function () { if (!st.group) return; go(2); setTimeout(function () { $('chatIn').focus(); }, 350); });
+
   // ---------- Prompt Practice widget ----------
   var PP = [[/\b(act as|you are|pretend to be|be a|be an)\b/i,'Says who the AI should be'],[/\b(create|make|write|build|design|draw|plan)\b/i,'Says what to make'],
             [function (t) { return t.trim().split(/\s+/).length >= 10; },'Has enough detail (10+ words)'],[/\b(bold|playful|elegant|techy|calm|colorful|bright|simple|fun|modern|cute|professional)\b/i,'Describes the look'],
@@ -1259,7 +1335,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   // ---------- class code gate ----------
   var CODE_HASH = "9ed7657b45b441262a50843a16fa5fb3b38060a4ae14e41bd95ce97899a7433f";
   function sha(t) { var buf = new TextEncoder().encode(t); return crypto.subtle.digest('SHA-256', buf).then(function (h) { return Array.prototype.map.call(new Uint8Array(h), function (b) { return ('0' + b.toString(16)).slice(-2); }).join(''); }); }
-  function unlock() { $('gate').style.display = 'none'; $('app').style.display = 'block'; try { sessionStorage.setItem('bgcs_gate', '1'); } catch (e) {} }
+  function unlock() { $('gate').style.display = 'none'; $('app').style.display = 'grid'; try { sessionStorage.setItem('bgcs_gate', '1'); } catch (e) {} }
   function tryCode() { var v = $('gateCode').value.trim().toLowerCase(); sha(v).then(function (h) { if (h === CODE_HASH) unlock(); else $('gateErr').style.display = 'block'; }); }
   $('gateBtn').addEventListener('click', tryCode);
   $('gateCode').addEventListener('keydown', function (e) { if (e.key === 'Enter') tryCode(); });
