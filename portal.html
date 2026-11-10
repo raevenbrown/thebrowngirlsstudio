@@ -491,6 +491,7 @@ main.pt-wrap{ position:relative; z-index:1; }
 </style>
 <style>
 .pt-prev{height:400px!important}
+.pt-chat{border:1px solid #C7994F;border-radius:12px;padding:12px;margin:0 0 14px;background:rgba(0,0,0,.18)}.pt-chat-h{font-weight:700;color:#E3BD79;margin-bottom:8px}.pt-chat-log{max-height:260px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;padding-right:4px}.cm{padding:8px 12px;border-radius:12px;max-width:92%;white-space:pre-wrap;line-height:1.4}.cm.bot{background:#3B2216;border:1px solid #4A2C1C;align-self:flex-start}.cm.me{background:#C7994F;color:#2A160E;align-self:flex-end;font-weight:600}
 .pt-live{display:flex;align-items:center;gap:8px;font-weight:700;color:#E3BD79;margin:0 0 6px;flex-wrap:wrap}
 .pt-live i{width:10px;height:10px;border-radius:50%;background:#5BD68A;animation:ptlp 1.6s infinite}
 @keyframes ptlp{50%{opacity:.25}}
@@ -637,6 +638,11 @@ main.pt-wrap{ position:relative; z-index:1; }
     <div class="pt-build">
       <div>
         <div class="pt-mission" id="labMission" style="margin:0 0 12px"></div>
+        <div class="pt-chat"><div class="pt-chat-h">Chat with Grace&rsquo;s robot</div>
+          <div class="pt-chat-log" id="chatLog" aria-live="polite"></div>
+          <div class="pt-chips" id="chatQuick" style="margin:8px 0"></div>
+          <div class="pt-row" style="margin:0;flex-wrap:nowrap"><input type="text" id="chatIn" maxlength="140" spellcheck="true" autocomplete="off" autocorrect="on" placeholder="Type here and press Enter" style="flex:1"><button class="pt-b" id="chatSend" type="button">Send</button></div>
+          <div class="pt-note" style="margin:8px 0 0">The robot fixes common spelling mistakes. Your answers fill in your prompt below, and you can also type there yourself.</div></div>
         <div class="pt-f" data-f="role"><label for="fRole">Who should the AI act as?</label><input type="text" id="fRole" maxlength="80"></div>
         <div class="pt-f" data-f="goal"><label for="fGoal">What should it make?</label><input type="text" id="fGoal" maxlength="120"></div>
         <div class="pt-f" data-f="name"><label for="fName">Name</label><input type="text" id="fName" maxlength="40"></div>
@@ -810,7 +816,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     var lis = $('steps').children;
     for (var i = 0; i < lis.length; i++) lis[i].className = i === n ? 'on' : (i < n ? 'done' : '');
     if (n === 1) renderLessons();
-    if (n === 2) sync();
+    if (n === 2) { sync(); chatStart(); }
     if (n === LAST) { autoSave(); drawShowcase(); }
     tick(); save(); window.scrollTo({ top: 0, behavior: 'smooth' });
   }
@@ -821,7 +827,7 @@ main.pt-wrap{ position:relative; z-index:1; }
     var G = GROUPS[g], prev = st.group; st.group = g; if (!st.t0) st.t0 = Date.now();
     $('missionText').textContent = 'Mission: ' + G.mission;
     document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.classList.toggle('sel', b.getAttribute('data-g') === g); });
-    if (fresh && prev !== g) { st.role = G.auto.role || ''; st.goal = G.auto.goal || ''; st.idea = ''; st.name = ''; st.feat = ''; st.aud = ''; st.cta = ''; st.style = []; st.format = ''; st.ov = {}; st.tries = []; st.cur = -1; }
+    if (fresh && prev !== g) { st.role = G.auto.role || ''; st.goal = G.auto.goal || ''; st.idea = ''; st.name = ''; st.feat = ''; st.aud = ''; st.cta = ''; st.style = []; st.format = ''; st.ov = {}; st.tries = []; st.cur = -1; $('chatLog').innerHTML = ''; }
     sync();
   }
   document.querySelectorAll('.pt-gbtn').forEach(function (b) { b.addEventListener('click', function () { applyGroup(b.getAttribute('data-g'), true); go(1); }); });
@@ -1059,6 +1065,73 @@ main.pt-wrap{ position:relative; z-index:1; }
     if (last && last.html === html) return;
     pushTry(s, false, 'Final version.');
   }
+
+  // ---------- chat with the robot (guided, with spelling help) ----------
+  var MIS = { suplys:'supplies', suply:'supply', suplies:'supplies', aford:'afford', afford:'afford', cloths:'clothes', tecnology:'technology', techology:'technology', teh:'the', becuase:'because', becasue:'because', becuz:'because', wich:'which', freind:'friend', freinds:'friends', frend:'friend', frends:'friends', definately:'definitely', seperate:'separate', beleive:'believe', recieve:'receive', alot:'a lot', wierd:'weird', tommorow:'tomorrow', bussiness:'business', buisness:'business', busines:'business', bizness:'business', buisnes:'business', comunity:'community', commuinty:'community', supplys:'supplies', studnets:'students', studens:'students', studants:'students', stundents:'students', techer:'teacher', teachar:'teacher', scool:'school', skool:'school', shcool:'school', nieghbor:'neighbor', favorit:'favorite', beutiful:'beautiful', beautifull:'beautiful', bootiful:'beautiful', wensite:'website', websit:'website', wesite:'website', girsl:'girls', gils:'girls', grils:'girls', hlep:'help', hepl:'help', helpp:'help', everone:'everyone', evryone:'everyone', pepole:'people', peple:'people', poeple:'people', mony:'money', monee:'money', experiance:'experience', expirience:'experience', diffrent:'different', diferent:'different', importent:'important', inportant:'important', intresting:'interesting', interesing:'interesting', thier:'their', happend:'happened', usally:'usually', realy:'really', rellay:'really', probly:'probably', goverment:'government', enviroment:'environment', sience:'science', scince:'science', mathamatics:'mathematics', homwork:'homework', homeowrk:'homework', excersize:'exercise', exercize:'exercise', healty:'healthy', helthy:'healthy', heathy:'healthy', delishous:'delicious', delicous:'delicious', delicius:'delicious', fashon:'fashion', fasion:'fashion', musci:'music', gaem:'game', gmae:'game', vidoe:'video', vedio:'video', desing:'design', desgin:'design', creat:'create', creatve:'creative', tutering:'tutoring', tuter:'tutor', cupcaks:'cupcakes', cupcaeks:'cupcakes', cuppcakes:'cupcakes', bakry:'bakery', bakerey:'bakery', resturant:'restaurant', restaraunt:'restaurant', jewlery:'jewelry', jewelery:'jewelry', accesories:'accessories', acessories:'accessories', clohtes:'clothes', clothe:'clothes', elementery:'elementary', libary:'library', ofcourse:'of course', accross:'across', agian:'again', allready:'already', anwser:'answer', calender:'calendar', comming:'coming', dont:"don't", cant:"can't", wont:"won't", doesnt:"doesn't", isnt:"isn't", im:"I'm", ive:"I've", youre:"you're", whats:"what's", thats:"that's", lets:"let's" };
+  function fixSpelling(text) {
+    var changes = [], out = text.replace(/[A-Za-z']+/g, function (w) {
+      var lw = w.toLowerCase(), fix = MIS[lw];
+      if (!fix) return w;
+      if (fix === w) return w;
+      var r = (w.charAt(0) === w.charAt(0).toUpperCase() && w.length > 1 && fix.charAt(0) !== 'I') ? fix.charAt(0).toUpperCase() + fix.slice(1) : fix;
+      changes.push(w + ' → ' + r); return r;
+    });
+    out = out.replace(/\bi\b/g, function () { changes.push('i → I'); return 'I'; });
+    out = out.replace(/\s{2,}/g, ' ').trim();
+    return { text: out, changes: changes.filter(function (c, i, a) { return a.indexOf(c) === i; }) };
+  }
+  function lev(a, b) { var d = [], i, j; for (i = 0; i <= a.length; i++) { d[i] = [i]; } for (j = 1; j <= b.length; j++) d[0][j] = j; for (i = 1; i <= a.length; i++) for (j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i-1][j] + 1, d[i][j-1] + 1, d[i-1][j-1] + (a[i-1] === b[j-1] ? 0 : 1)); return d[a.length][b.length]; }
+  var chatAsked = '';
+  function say(who, text) { var d = document.createElement('div'); d.className = 'cm ' + who; d.textContent = text; var log = $('chatLog'); log.appendChild(d); log.scrollTop = log.scrollHeight; }
+  function nextField() { var m = okMap(), f = gOf().fields; for (var i = 0; i < f.length; i++) if (!m[f[i]]) return f[i]; return ''; }
+  function quick(list, fn) { var box = $('chatQuick'); box.innerHTML = ''; list.forEach(function (t, i) { var b = document.createElement('button'); b.type = 'button'; b.className = 'pt-chip'; b.textContent = t.length > 46 ? t.slice(0, 44) + '…' : t; b.addEventListener('click', function () { chatHandle(fn ? fn(t, i) : t, true); }); box.appendChild(b); }); }
+  function ask() {
+    var f = nextField(), G = gOf(); chatAsked = f;
+    if (!f) { say('bot', 'Your prompt has all ' + G.fields.length + ' parts, and your site is live on the right! Now tell me ONE change you want, like "' + G.tweaks[0] + '".'); quick(G.tweaks); return; }
+    var q;
+    if (f === 'style') { q = 'What vibe do you want? Tap one or type it: ' + STYLES.join(', ') + '. You can pick more than one.'; quick(STYLES); }
+    else if (f === 'format') { q = 'How should the page be organized? Tap a number or the choice:\n' + G.formats.map(function (x, i) { return (i + 1) + '. ' + x; }).join('\n'); quick(G.formats); }
+    else { q = G.L[f][0].replace(/\s*\(.*?\)\s*$/, '').replace(/\?+$/, '') + '?' + (G.L[f][1] ? ' (' + G.L[f][1] + ')' : ''); $('chatQuick').innerHTML = ''; }
+    say('bot', q);
+  }
+  function chatStart() {
+    if ($('chatLog').children.length) return;
+    say('bot', "Hi! I'm Grace's robot. Tell me what you want to build and I'll help you write the prompt. I'll also fix spelling as we go. Remember: use made-up names, no real names, school, phone, or email.");
+    ask();
+  }
+  function chatHandle(raw, tapped) {
+    var txt = String(raw || '').trim(); if (!txt) return;
+    say('me', txt); $('chatIn').value = '';
+    if (looksPrivate(txt)) { say('bot', 'Let\'s keep that private. Please use a made-up name or idea instead, with no emails, links, or phone numbers.'); return; }
+    var fx = fixSpelling(txt), t = fx.text, G = gOf(), f = nextField();
+    var note = fx.changes.length ? ' (I fixed: ' + fx.changes.join(', ') + ')' : '';
+    var chg = t.match(/^(?:change|set|make)\s+(?:the\s+|my\s+)?(name|idea|pitch|audience|features?|call to action|button text)\s+(?:to|is|as|:)\s*(.{2,120})$/i);
+    if (chg) {
+      var map = { name:'name', idea:'idea', pitch:'idea', audience:'aud', feature:'feat', features:'feat', 'call to action':'cta', 'button text':'cta' }, key = map[chg[1].toLowerCase()];
+      if (G.fields.indexOf(key) > -1) { st[key] = chg[2].trim(); sync(); say('bot', 'Done! I changed your ' + chg[1].toLowerCase() + ' to "' + chg[2].trim() + '".' + note); ask(); return; }
+    }
+    if (!f) {
+      $('tweakIn').value = t; applyTweak();
+      say('bot', $('runHint').textContent + (fx.changes.length ? note : '')); return;
+    }
+    if (f === 'style') {
+      var found = []; t.toLowerCase().split(/[^a-z]+/).forEach(function (w) { if (w.length < 3) return; STYLES.forEach(function (v) { if (found.indexOf(v) < 0 && (v === w || (w.length >= 4 && (v.indexOf(w) === 0 || lev(v, w) <= 1)))) found.push(v); }); });
+      if (!found.length) { say('bot', 'I did not catch a vibe word. Pick from: ' + STYLES.join(', ') + '.'); return; }
+      st.style = found; sync(); say('bot', 'Great vibe: ' + found.join(' + ') + '. Look at your site!' + note); ask(); return;
+    }
+    if (f === 'format') {
+      var n = parseInt(t, 10), pick = (n >= 1 && n <= G.formats.length) ? G.formats[n - 1] : '';
+      if (!pick) G.formats.forEach(function (x) { if (!pick && (x === t || x.toLowerCase().indexOf(t.toLowerCase()) > -1 && t.length >= 5)) pick = x; });
+      if (!pick) { say('bot', 'Tap one of the choices, or type 1' + (G.formats.length > 1 ? ' to ' + G.formats.length : '') + '.'); return; }
+      st.format = pick; sync(); say('bot', 'Perfect, the page is organized: ' + pick + '.'); ask(); return;
+    }
+    if (f === 'idea') t = t.charAt(0).toUpperCase() + t.slice(1);
+    var before = st[f]; st[f] = t;
+    if (!okMap()[f]) { st[f] = before; say('bot', f === 'idea' ? 'Say a little more! Write a full sentence about what it does and why it matters.' : 'Can you give me a little more? Try again.'); return; }
+    sync(); say('bot', 'Love it!' + note); ask();
+  }
+  $('chatSend').addEventListener('click', function () { chatHandle($('chatIn').value); });
+  $('chatIn').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); chatHandle($('chatIn').value); } });
 
   // ---------- Prompt Practice widget ----------
   var PP = [[/\b(act as|you are|pretend to be|be a|be an)\b/i,'Says who the AI should be'],[/\b(create|make|write|build|design|draw|plan)\b/i,'Says what to make'],
