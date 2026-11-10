@@ -465,6 +465,15 @@ main.pt-wrap{ position:relative; z-index:1; }
 .pt-clock{ border-radius:999px; background:rgba(20,11,7,.6); }
 @media (max-width:560px){ .pt-hero{ flex-direction:column; align-items:flex-start; } .pt-orb{ width:104px; height:104px; } }
 </style>
+<style>
+.pt-chars{ width:150px; height:auto; flex:0 0 auto; filter:drop-shadow(0 0 10px rgba(227,189,121,.35)); }
+.pt-chars-hero{ width:210px; margin-left:auto; }
+.pt-mrow{ display:flex; align-items:center; gap:16px; margin-bottom:16px; }
+.ls.tool summary .t{ color:#E3BD79; }
+.ls.tool pre{ margin:8px 0; padding:10px 12px; background:#2A160E; border:1px dashed #C7994F; border-radius:6px; color:#F3E8D6; font-family:'IBM Plex Mono',monospace; font-size:.85rem; white-space:pre-wrap; }
+.pp-list{ list-style:none; margin:8px 0 0; padding:0; } .pp-list li{ padding:3px 0; color:#DCC9A8; } .pp-list li.ok{ color:#E3BD79; font-weight:700; }
+@media (max-width:760px){ .pt-chars-hero{ display:none; } .pt-mrow{ flex-direction:column; align-items:flex-start; } .pt-chars{ width:130px; } }
+</style>
 </head>
 <body>
 <script>/* The Brown Girls Creative Studio - shared navigation, "keep exploring" strip and footer.
@@ -533,6 +542,26 @@ main.pt-wrap{ position:relative; z-index:1; }
 })();
 </script>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="duo" viewBox="0 0 240 170">
+  <g transform="translate(138,14)">
+    <line x1="45" y1="0" x2="45" y2="16" stroke="#C7994F" stroke-width="3"/><circle cx="45" cy="0" r="5" fill="#E3BD79"/>
+    <rect x="8" y="16" width="74" height="54" rx="15" fill="#DCC9A8" stroke="#C7994F" stroke-width="3"/>
+    <circle cx="31" cy="42" r="9" fill="#2A160E"/><circle cx="59" cy="42" r="9" fill="#2A160E"/><circle cx="31" cy="42" r="4.5" fill="#E3BD79"/><circle cx="59" cy="42" r="4.5" fill="#E3BD79"/>
+    <rect x="34" y="57" width="22" height="4" rx="2" fill="#2A160E"/>
+    <rect x="18" y="74" width="54" height="50" rx="11" fill="#C7994F" stroke="#E3BD79" stroke-width="2"/>
+    <rect x="28" y="85" width="34" height="16" rx="4" fill="#2A160E"/><path d="M45 88l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#E3BD79"/>
+    <rect x="0" y="82" width="14" height="34" rx="7" fill="#DCC9A8" stroke="#C7994F" stroke-width="2"/><rect x="76" y="82" width="14" height="34" rx="7" fill="#DCC9A8" stroke="#C7994F" stroke-width="2"/>
+    <rect x="26" y="126" width="14" height="22" rx="6" fill="#DCC9A8" stroke="#C7994F" stroke-width="2"/><rect x="50" y="126" width="14" height="22" rx="6" fill="#DCC9A8" stroke="#C7994F" stroke-width="2"/>
+  </g>
+  <g transform="translate(14,14)">
+    <circle cx="20" cy="26" r="17" fill="#2A160E"/><circle cx="80" cy="26" r="17" fill="#2A160E"/>
+    <circle cx="50" cy="44" r="31" fill="#8D5524"/><path d="M19 38c2-22 60-22 62 0-10-12-52-12-62 0z" fill="#2A160E"/>
+    <circle cx="39" cy="46" r="3.4" fill="#2A160E"/><circle cx="61" cy="46" r="3.4" fill="#2A160E"/><path d="M40 58q10 9 20 0" fill="none" stroke="#2A160E" stroke-width="3" stroke-linecap="round"/>
+    <rect x="20" y="78" width="60" height="54" rx="16" fill="#E3BD79"/><path d="M50 84l3 6 6.5.9-4.7 4.6 1.1 6.4-5.9-3.1-5.9 3.1 1.1-6.4-4.7-4.6 6.5-.9z" fill="#2A160E" opacity=".75"/>
+    <path d="M80 92l30 -8" stroke="#8D5524" stroke-width="11" stroke-linecap="round"/>
+    <rect x="28" y="130" width="16" height="26" rx="7" fill="#4A2C1C"/><rect x="56" y="130" width="16" height="26" rx="7" fill="#4A2C1C"/>
+  </g>
+</symbol></defs></svg>
 <main class="pt-wrap pt-wide">
   <section class="pt-panel on" id="gate" style="max-width:480px;margin:40px auto;">
     <div class="pt-eyebrow">The AI Lab &middot; Student Studio</div>
@@ -546,7 +575,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   <div class="pt-hero"><div class="pt-orb" aria-hidden="true"><span>The Brown<br>Girls</span></div>
     <div><div class="pt-eyebrow">Cosmic Code Academy &middot; The AI Lab</div>
     <h1>Real skills. <span>Brighter futures.</span></h1>
-    <p class="pt-intro" style="margin-bottom:0">Blast off with AI: learn how AI and vibe coding work, then build your own page and keep it. No name needed.</p></div></div>
+    <p class="pt-intro" style="margin-bottom:0">Blast off with AI: learn how AI and vibe coding work, then build your own page and keep it. No name needed.</p></div><svg class="pt-chars pt-chars-hero" viewBox="0 0 240 170" role="img" aria-label="A girl and her friendly robot waving"><use href="#duo"/></svg></div>
   <div id="clock" class="pt-clock"></div>
   <ol class="pt-steps" id="steps"><li>1 &middot; Crew</li><li>2 &middot; AI Basics</li><li>3 &middot; Prompt Lab</li><li>4 &middot; Build</li><li>5 &middot; Landing</li></ol>
 
@@ -564,7 +593,7 @@ main.pt-wrap{ position:relative; z-index:1; }
   <section class="pt-panel" id="p1">
     <div class="pt-time">&#9201; About 8 minutes</div>
     <h2>Voyage 1: AI Basics</h2>
-    <div class="pt-mission" id="missionText"></div>
+    <div class="pt-mrow"><svg class="pt-chars" viewBox="0 0 240 170" role="img" aria-label="A girl and her robot"><use href="#duo"/></svg><div class="pt-mission" id="missionText" style="flex:1;margin:0"></div></div>
     <p>Three quick lessons, about 8 minutes. Each one ends with a quick check.</p>
     <div class="pt-score"><span id="lessonTxt">0/3 lessons</span><div class="pt-bar"><i id="lessonBar"></i></div></div>
     <div id="lessons"></div>
@@ -589,6 +618,10 @@ main.pt-wrap{ position:relative; z-index:1; }
     <div class="pt-f"><span class="pt-l">4. Pick words for the look (choose any)</span><div class="pt-chips" id="fStyle"></div></div>
     <div class="pt-f"><label for="fFormat">5. How should the answer be organized?</label>
       <select id="fFormat"><option value="">Choose&hellip;</option><option>a big headline, a short tagline, and a button label</option><option>a headline, three short benefit cards, and a button label</option><option>a title and a bulleted list of ideas</option></select></div>
+<details class="ls tool" style="margin:6px 0 16px"><summary><span><span class="t">AI Tool Widget:</span> Prompt Practice</span><span class="tick">optional</span></summary><div class="lb">
+      <p>Type any prompt and see which of the five parts it has.</p>
+      <textarea id="ppText" spellcheck="false" style="min-height:80px;font-family:inherit;font-size:1rem" placeholder="Try: Act as a designer. Make a homepage top for my dog bakery..."></textarea>
+      <ul class="pp-list" id="ppList"></ul></div></details>
     <div class="pt-score"><span id="scoreTxt">0/5</span><div class="pt-bar"><i id="scoreBar"></i></div></div>
     <ul class="pt-tips" id="tips"></ul>
     <div class="pt-out" id="promptOut">Your prompt will appear here.</div>
@@ -622,6 +655,10 @@ main.pt-wrap{ position:relative; z-index:1; }
       </div>
       <div>
         <iframe class="pt-prev" id="prev" sandbox="" title="Preview of your page"></iframe>
+<details class="ls tool" style="margin-top:10px"><summary><span><span class="t">AI Tool Widget:</span> Code Peek</span><span class="tick">optional</span></summary><div class="lb">
+          <p>Pick a piece of code to see what it means in plain words.</p>
+          <select id="cpSel" style="width:100%;padding:10px;border-radius:2px"></select>
+          <pre id="cpCode"></pre><ul class="pp-list" id="cpWhy"></ul></div></details>
         <details style="margin-top:10px"><summary style="cursor:pointer;color:#E3BD79;font-weight:700">Edit the code (optional)</summary>
           <p style="margin-top:8px">Change the HTML or CSS and the preview updates. Tap &ldquo;Reset from controls&rdquo; to go back.</p>
           <textarea id="code" spellcheck="false"></textarea>
@@ -911,6 +948,23 @@ main.pt-wrap{ position:relative; z-index:1; }
   function lessonProgress() {
     var n = (st.lessons || []).length; $('lessonTxt').textContent = n + '/' + LESSONS.length + ' lessons' + (n === LESSONS.length ? ' — ready to build!' : ''); $('lessonBar').style.width = Math.round(n * 100 / LESSONS.length) + '%';
   }
+
+
+  // ---------- AI tool widgets ----------
+  var PP = [[/\b(act as|you are|pretend to be|be a|be an)\b/i,'Says who the AI should be'],[/\b(create|make|write|build|design|draw|plan)\b/i,'Says what to make'],
+            [function (t) { return t.trim().split(/\s+/).length >= 10; },'Has enough detail (10+ words)'],[/\b(bold|playful|elegant|techy|calm|colorful|bright|simple|fun|modern|cute|professional)\b/i,'Describes the look'],
+            [/\b(headline|tagline|button|list|bullet|steps|paragraph|title|table|sentences)\b/i,'Says how to organize the answer']];
+  function ppRun() {
+    var t = $('ppText').value, n = 0;
+    $('ppList').innerHTML = PP.map(function (c) { var ok = typeof c[0] === 'function' ? c[0](t) : c[0].test(t); if (ok) n++; return '<li class="' + (ok ? 'ok' : '') + '">' + (ok ? '✓ ' : '○ ') + esc(c[1]) + '</li>'; }).join('') + '<li style="margin-top:6px;color:#E3BD79;font-weight:700">' + n + '/5</li>';
+  }
+  $('ppText').addEventListener('input', ppRun); ppRun();
+  var CP = [{ n:'A heading', c:'<h1>Hello!</h1>', e:['<h1> starts a big heading','Hello! is the words people see','</h1> ends the heading'] },
+            { n:'A button', c:'<a class="btn">Click me</a>', e:['<a> makes a link or button','class="btn" is a label the style rules use','Click me is the button words'] },
+            { n:'Page colors', c:'body { background: purple; color: white; }', e:['body means the whole page','background is the page color','color is the text color'] }];
+  CP.forEach(function (x, i) { $('cpSel').insertAdjacentHTML('beforeend', '<option value="' + i + '">' + esc(x.n) + '</option>'); });
+  function cpShow() { var x = CP[parseInt($('cpSel').value, 10) || 0]; $('cpCode').textContent = x.c; $('cpWhy').innerHTML = x.e.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join(''); }
+  $('cpSel').addEventListener('change', cpShow); cpShow();
 
   // ---------- class code gate ----------
   var CODE_HASH = "d4d46c6d47bf1be5db1787712d69acd2a2c940bb1f7cf3ed5bd6fd82be2d654e";
