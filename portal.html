@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portal | The AI Lab</title>
+    <style>
+        :root {
+            --primary: #5c275f;    /* Deep Purple */
+            --accent: #f39c12;     /* Gold Accent */
+            --bg: #faf7fc;         /* Light Neutral */
+            --text: #2c3e50;       /* Dark Text */
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--bg);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+        .header h1 { color: var(--primary); margin: 0; font-size: 24px; }
+        .header p { color: #666; font-size: 14px; margin-top: 5px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; color: var(--primary); }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 15px;
+        }
+        button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s ease;
+        }
+        button:hover { background-color: #4a1f4d; }
+        .success-msg { display: none; color: green; font-weight: bold; text-align: center; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The AI Lab — Student Showcase Portal</h1>
+            <p>Submit your live project concept & complete your exit survey!</p>
+        </div>
+
+        <form id="submissionForm">
+            <div class="form-group">
+                <label for="studentName">First Name & Last Initial</label>
+                <input type="text" id="studentName" placeholder="e.g., Maya S." required>
+            </div>
+
+            <div class="form-group">
+                <label for="sessionTag">Session / Grade Cohort</label>
+                <select id="sessionTag" required>
+                    <option value="">Select your session...</option>
+                    <option value="InspiHER 5th Grade">5th Grade Cohort (Day 1)</option>
+                    <option value="InspiHER Middle School">Middle School (6th-8th)</option>
+                    <option value="InspiHER High School">High School (9th-12th)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="projectTitle">Project / Concept Title</label>
+                <input type="text" id="projectTitle" placeholder="e.g., EcoTech Solutions" required>
+            </div>
+
+            <div class="form-group">
+                <label for="projectUrl">Project Link / Preview URL</label>
+                <input type="url" id="projectUrl" placeholder="https://..." required>
+            </div>
+
+            <div class="form-group">
+                <label for="rating">How fun was building with AI today? (1 to 10)</label>
+                <input type="number" id="rating" min="1" max="10" required>
+            </div>
+
+            <div class="form-group">
+                <label for="parentEmail">Parent / Guardian Email (to send your project link)</label>
+                <input type="email" id="parentEmail" placeholder="parent@example.com" required>
+            </div>
+
+            <button type="submit" id="submitBtn">Submit Project to Showcase</button>
+            <div id="successMsg" class="success-msg">🎉 Awesome job! Your project is submitted to the showcase!</div>
+        </form>
+    </div>
+
+    <script>
+        const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE"; // Pipedream, Make.com, or Vercel Endpoint
+
+        document.getElementById('submissionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.innerText = 'Publishing...';
+            submitBtn.disabled = true;
+
+            const payload = {
+                student_name: document.getElementById('studentName').value,
+                session_name: document.getElementById('sessionTag').value,
+                project_title: document.getElementById('projectTitle').value,
+                project_url: document.getElementById('projectUrl').value,
+                rating: document.getElementById('rating').value,
+                parent_email: document.getElementById('parentEmail').value
+            };
+
+            try {
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                document.getElementById('successMsg').style.display = 'block';
+                submitBtn.innerText = 'Submitted!';
+            } catch (err) {
+                alert('Submission failed. Please check connection!');
+                submitBtn.disabled = false;
+                submitBtn.innerText = 'Submit Project';
+            }
+        });
+    </script>
+</body>
+</html>
