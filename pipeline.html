@@ -187,6 +187,9 @@ Meeting Outline
 <a href="#view=activity" onclick="switchMainView('activity')" id="nav-activity" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="history" class="w-4 h-4 mr-3 text-sky-400"></i> Activity Log
 </a>
+<a href="#view=expenses" onclick="switchMainView('expenses')" id="nav-expenses" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="receipt" class="w-4 h-4 mr-3 text-amber-400"></i> Expenses
+</a>
 
 <a href="#view=feedback" onclick="switchMainView('feedback')" id="nav-feedback" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="message-square" class="w-4 h-4 mr-3 text-emerald-400"></i> Feedback
@@ -479,6 +482,29 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <div class="max-w-2xl mx-auto p-6 sm:p-10"><div class="flex items-start justify-between mb-6"><div><p class="text-[11px] uppercase tracking-widest font-bold text-rose-400">The AI Lab feedback</p><h2 id="fbKioskTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-100">The AI Lab</h2><p class="text-sm text-slate-400 mt-1">Takes about one minute. Thank you! <span id="fbKioskCount" class="text-slate-600"></span></p></div>
 <button id="fbKioskExit" onclick="closeFeedbackKiosk()" class="text-[11px] text-slate-500 px-2 py-1">Staff exit</button></div>
 <p id="fbKioskWarn" class="hidden text-xs text-amber-400 mb-4">Staff: no school or event was chosen, so these responses will not be tagged. Exit and pick one first.</p><div id="fbKioskBody"></div></div></div>
+<!-- Main Section: Expenses -->
+<div id="mainView-expenses" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="exCards"></div>
+<div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl space-y-4">
+<div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-bold text-slate-100 text-sm">Add an expense</h3>
+<button type="button" onclick="exQuickClaude()" class="px-3 py-2 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold">+ Claude subscription</button></div>
+<form id="exForm" onsubmit="exAdd(event)" class="grid grid-cols-2 sm:grid-cols-6 gap-3">
+<input id="exDate" type="date" required class="col-span-1 sm:col-span-1 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
+<input id="exVendor" type="text" required placeholder="Vendor (e.g. Claude)" class="col-span-1 sm:col-span-2 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
+<select id="exCat" class="col-span-1 sm:col-span-1 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200"><option>Software &amp; AI</option><option>Marketing</option><option>Events &amp; supplies</option><option>Legal &amp; filing</option><option>Travel</option><option>Other</option></select>
+<input id="exAmt" type="number" step="0.01" min="0" required placeholder="Amount $" class="col-span-1 sm:col-span-1 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
+<input id="exNote" type="text" placeholder="Note (optional)" class="col-span-2 sm:col-span-5 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
+<label class="col-span-1 sm:col-span-1 flex items-center gap-2 text-xs text-slate-300"><input id="exRecur" type="checkbox"> Repeats monthly</label>
+<button type="submit" class="col-span-2 sm:col-span-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">Save expense</button>
+</form>
+<div id="exRecurBox"></div>
+</div>
+<div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl space-y-3">
+<div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-bold text-slate-100 text-sm">All expenses</h3><button type="button" onclick="exCsv()" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Download CSV</button></div>
+<div id="exList"></div>
+<p class="text-[11px] text-slate-500">Expenses are saved in this browser and included in your backup file. They do not sync between devices yet, so use one device to enter them or download the CSV.</p>
+</div>
+</div>
 <div id="mainView-ailab" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-5">
 <div class="border-b border-dark-600 pb-4">
@@ -2445,7 +2471,7 @@ function rptShare() {
 }
 
 /* ===================== BACKUP & RESTORE (protects your pipeline data) ===================== */
-var BK_KEYS = ['bgcs_financial_prospects', 'bgcs_spirit_meeting_notes', 'bgcs_people', 'bgcs_site_submissions', 'bgcs_activity_log', 'bgcs_deleted'];
+var BK_KEYS = ['bgcs_financial_prospects', 'bgcs_spirit_meeting_notes', 'bgcs_people', 'bgcs_site_submissions', 'bgcs_activity_log', 'bgcs_deleted', 'bgcs_expenses'];
 function bkCollect() {
   var o = { app: 'bgcs-pipeline', at: new Date().toISOString(), data: {} };
   BK_KEYS.forEach(function (k) { try { var v = localStorage.getItem(k); if (v != null) o.data[k] = v; } catch (e) {} });
@@ -3730,100 +3756,231 @@ err.classList.remove('hidden');
 }
 }
 const defaultFinancialProspects = [
-{ id: 1, org: "Heritage Christian Academy (Conyers)", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 2, org: "Newton College & Career Academy", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-
-{ id: 3, org: "Newton County STEAM Academy (District After-School Pitch)", stage:
-"Prospect", classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.",
-date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active:
-true }], taxReceipts: [] },
-{ id: 4, org: "Washington Street Community Center", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 5, org: "Flint River Community Center Boys & Girls Club", stage: "Prospect",
-classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date:
-"2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }],
-taxReceipts: [] },
-{ id: 6, org: "Strong Rock Christian School", stage: "Prospect", classes: 1, price: 125.00,
-donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 7, org: "Clayton County Parks & Recreation", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 8, org: "George Walton Academy", stage: "Prospect", classes: 1, price: 125.00,
-donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 9, org: "Young Americans Christian School", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 10, org: "Peachtree Academy", stage: "Prospect", classes: 1, price: 125.00,
-donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 11, org: "Champions Before- and After-School (Clayton/Henry)", stage: "Prospect",
-classes: 1, price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date:
-"2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }],
-taxReceipts: [] },
-{ id: 12, org: "Boys & Girls Club of North Central Georgia", stage: "Prospect", classes: 1,
-price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week",
-desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09",
-assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: []
-},
-
-{ id: 13, org: "YES Program", stage: "Prospect", classes: 1, price: 125.00, donation: 10,
-activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown",
-urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 14, org: "Timber Ridge Elementary School", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 15, org: "Conyers-Rockdale Library System", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 16, org: "Porterdale Elementary School", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 17, org: "St. Mary's Academy", stage: "Prospect", classes: 1, price: 125.00,
-donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 18, org: "Newton County Parks & Recreation", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 19, org: "Covington Family YMCA", stage: "Prospect", classes: 1, price: 125.00,
-donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 20, org: "Pleasant Grove Elementary School", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 21, org: "South Metro Sports & Learning Complexes", stage: "Prospect", classes: 1,
-price: 125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week",
-desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09",
-assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: []
-},
-{ id: 22, org: "Providence Christian Academy", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 23, org: "Newton County Library System", stage: "Prospect", classes: 1, price:
-125.00, donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 24, org: "Girl Scouts of Greater Atlanta", stage: "Prospect", classes: 1, price: 125.00,
-donation: 10, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc: "Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee: "Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] },
-{ id: 25, org: "InspiHER Conference / Newton District", stage: "Lead", classes: 1, price:
-750.00, donation: 0, activities: [], clientTasks: [{ title: "Reach out to prospect this week", desc:
-"Contact leadership and follow up next week if no response.", date: "2026-10-09", assignee:
-"Raeven Brown", urgency: "High (Urgent)", done: false, active: true }], taxReceipts: [] }
+ {
+  "id": 101,
+  "org": "InspiHER Conference / Newton District",
+  "stage": "Lead",
+  "classes": 1,
+  "price": 750.0,
+  "donation": 0,
+  "_u": 1794703500000,
+  "activities": [
+   {
+    "type": "Email",
+    "date": "2026-11-14",
+    "person": "Molly",
+    "title": "Dec 2-3 sessions: waiting on Molly",
+    "phone": "",
+    "email": "",
+    "message": "Dec 2: two 1-hour sessions of 20 fifth graders. Dec 3: middle school (6-8) and high school (9-12), 20 girls each. Open items with Molly: Chromebook and AI-tool access, parent card / district approval, W-9, photo rules. Logged Nov 14; original send date not recorded.",
+    "nextSteps": "Follow up with Molly. Ask if she knows the Newton Education Foundation and can introduce us.",
+    "followUpDone": false
+   }
+  ],
+  "clientTasks": [
+   {
+    "title": "Follow up with Molly on Dec 2-3 details",
+    "desc": "Chromebooks, AI tools, parent card, W-9, photo rules. Ask about Foundation intro.",
+    "date": "2026-11-18",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  ],
+  "taxReceipts": []
+ },
+ {
+  "id": 102,
+  "org": "Newton County After-School Program (Deena Sam)",
+  "stage": "First Touch Sent",
+  "classes": 1,
+  "price": 125.0,
+  "donation": 10,
+  "_u": 1794703500000,
+  "activities": [
+   {
+    "type": "Email",
+    "date": "2026-11-14",
+    "person": "Deena Sam",
+    "title": "Emailed Deena Sam, waiting on reply",
+    "phone": "",
+    "email": "",
+    "message": "Introduced The AI Lab for the Newton County after-school program. Waiting on her reply. Logged Nov 14; original send date not recorded.",
+    "nextSteps": "Nudge about a week after sending if no reply. After Dec 3, send a recap and a Spring 2027 proposal.",
+    "followUpDone": false
+   }
+  ],
+  "clientTasks": [
+   {
+    "title": "Nudge Deena if no reply",
+    "desc": "One short follow-up about a week after the first email.",
+    "date": "2026-11-21",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  ],
+  "taxReceipts": []
+ },
+ {
+  "id": 103,
+  "org": "Girl Scouts of Greater Atlanta",
+  "stage": "First Touch Sent",
+  "classes": 1,
+  "price": 125.0,
+  "donation": 10,
+  "_u": 1794703500000,
+  "activities": [
+   {
+    "type": "Email",
+    "date": "2026-11-14",
+    "person": "",
+    "title": "Contacted: not ready until March",
+    "phone": "",
+    "email": "",
+    "message": "Girl Scouts are not ready to schedule until March 2027. Logged Nov 14.",
+    "nextSteps": "Ask for a specific tentative March date and keep it on the calendar.",
+    "followUpDone": false
+   }
+  ],
+  "clientTasks": [
+   {
+    "title": "Reconnect with Girl Scouts for a March date",
+    "desc": "Ask for a specific tentative March 2027 date.",
+    "date": "2027-02-15",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  ],
+  "taxReceipts": []
+ },
+ {
+  "id": 104,
+  "org": "Newton Education Foundation",
+  "stage": "Email Drafted",
+  "classes": 1,
+  "price": 125.0,
+  "donation": 0,
+  "_u": 1794703500000,
+  "email": "info@newtoneducationfoundation.org",
+  "activities": [
+   {
+    "type": "Email",
+    "date": "2026-11-14",
+    "person": "",
+    "title": "Intro email drafted (no money ask)",
+    "phone": "",
+    "email": "info@newtoneducationfoundation.org",
+    "message": "Intro draft asks for 15 minutes to learn what the Foundation funds and how teachers or partners apply. They are in their ALL IN FOR KIDS year-end campaign.",
+    "nextSteps": "Hold until Molly replies, then send. Tell Molly first.",
+    "followUpDone": false
+   }
+  ],
+  "clientTasks": [
+   {
+    "title": "Send Foundation intro after Molly replies",
+    "desc": "Let Molly know first or ask for an introduction.",
+    "date": "2026-11-25",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  ],
+  "taxReceipts": []
+ },
+ {
+  "id": 105,
+  "org": "Coding with Culture (Victor \"Coach\" Hicks)",
+  "stage": "Prospect",
+  "classes": 1,
+  "price": 125.0,
+  "donation": 10,
+  "_u": 1794703500000,
+  "activities": [],
+  "clientTasks": [
+   {
+    "title": "Email Victor Hicks about collaborating",
+    "desc": "Framed as collaborator: referrals, co-hosting, shared school pitch. Ask for a 15-minute call.",
+    "date": "2026-11-24",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  ],
+  "taxReceipts": []
+ },
+ {
+  "id": 106,
+  "org": "4kiddos (Atlanta parent events)",
+  "stage": "Prospect",
+  "classes": 1,
+  "price": 125.0,
+  "donation": 10,
+  "_u": 1794703500000,
+  "activities": [],
+  "clientTasks": [
+   {
+    "title": "Ask 4kiddos about listing and Kid Tech Fest",
+    "desc": "Parent discovery channel for the Spring 2027 waitlist.",
+    "date": "2026-11-24",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  ],
+  "taxReceipts": []
+ },
+ {
+  "id": 107,
+  "org": "Brilliant & Kind (Atlanta)",
+  "stage": "Prospect",
+  "classes": 1,
+  "price": 125.0,
+  "donation": 10,
+  "_u": 1794703500000,
+  "email": "info@brilliantandkind.com",
+  "activities": [],
+  "clientTasks": [
+   {
+    "title": "Check what Brilliant & Kind does, then decide",
+    "desc": "Look at their site first. Email info@brilliantandkind.com only if they book or host kids' programs.",
+    "date": "2026-11-24",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  ],
+  "taxReceipts": []
+ }
 ];
 var DEFAULTS_JSON = JSON.stringify(defaultFinancialProspects);
+(function () {
+  var FLAG = 'bgcs_reset_20261114', STAMP = 1794703500000;
+  try {
+    if (localStorage.getItem(FLAG)) return;
+    var cur = JSON.parse(localStorage.getItem('bgcs_financial_prospects') || 'null');
+    if (cur && cur.length) {
+      localStorage.setItem('bgcs_before_reset', JSON.stringify({ t: Date.now(), prospects: cur }));
+      var keep = cur.filter(function (p) { return p.id >= 100; });
+      cur.forEach(function (p) { if (p.id < 100) bgcsDeleted.p[p.id] = STAMP; });
+      var have = {}; keep.forEach(function (p) { have[p.id] = 1; });
+      var fresh = JSON.parse(DEFAULTS_JSON).filter(function (p) { return !have[p.id]; });
+      localStorage.setItem('bgcs_financial_prospects', JSON.stringify(keep.concat(fresh)));
+      try { localStorage.setItem('bgcs_deleted', JSON.stringify(bgcsDeleted)); } catch (e) {}
+      localStorage.removeItem('bgcs_seeded');
+      localStorage.setItem('bgcs_local_updated', String(Date.now()));
+    }
+    localStorage.setItem(FLAG, '1');
+  } catch (e) {}
+})();
 let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects'));
 if (!financialProspects || financialProspects.length === 0) {
 financialProspects = defaultFinancialProspects;
@@ -4066,6 +4223,52 @@ saveSpiritMeetingNotes();
 renderSpiritMeetingNotes();
 }
 }
+/* ===================== EXPENSES ===================== */
+var EX_KEY = 'bgcs_expenses';
+function exRead() { try { return JSON.parse(localStorage.getItem(EX_KEY) || '[]') || []; } catch (e) { return []; } }
+function exWrite(a) { try { localStorage.setItem(EX_KEY, JSON.stringify(a)); localStorage.setItem('bgcs_local_updated', String(Date.now())); } catch (err) { alert('Could not save: browser storage is full or blocked.'); } }
+function exEsc(t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function exMoney(n) { return '$' + (Math.round(n * 100) / 100).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+function exToday() { var d = new Date(); return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+function exMonthKey(d) { return String(d).slice(0, 7); }
+function exAdd(ev) {
+  ev.preventDefault();
+  var a = exRead(), amt = parseFloat(document.getElementById('exAmt').value);
+  if (!(amt >= 0)) return;
+  a.push({ id: 'ex_' + Date.now() + Math.random().toString(36).slice(2, 5), date: document.getElementById('exDate').value || exToday(), vendor: document.getElementById('exVendor').value.trim(), cat: document.getElementById('exCat').value, amt: amt, note: document.getElementById('exNote').value.trim(), recur: document.getElementById('exRecur').checked });
+  exWrite(a); document.getElementById('exForm').reset(); document.getElementById('exDate').value = exToday();
+  try { logActivity(null, 'expense', 'Expense added: ' + a[a.length - 1].vendor + ' ' + exMoney(amt), 'Company'); } catch (err) {}
+  renderExpenses();
+}
+function exDel(id) { if (!confirm('Delete this expense?')) return; exWrite(exRead().filter(function (x) { return x.id !== id; })); renderExpenses(); }
+function exQuickClaude() {
+  document.getElementById('exVendor').value = 'Claude (Anthropic)'; document.getElementById('exCat').value = 'Software & AI';
+  document.getElementById('exRecur').checked = true; document.getElementById('exNote').value = 'Monthly subscription'; document.getElementById('exDate').value = exToday();
+  document.getElementById('exAmt').focus();
+}
+function exAddRecurNow(id) {
+  var a = exRead(), t = a.filter(function (x) { return x.id === id; })[0]; if (!t) return;
+  a.push({ id: 'ex_' + Date.now(), date: exToday(), vendor: t.vendor, cat: t.cat, amt: t.amt, note: t.note || '', recur: false, from: t.id });
+  exWrite(a); renderExpenses();
+}
+function exCsv() {
+  var rows = [['Date', 'Vendor', 'Category', 'Amount', 'Note']].concat(exRead().sort(function (x, y) { return x.date < y.date ? 1 : -1; }).map(function (x) { return [x.date, x.vendor, x.cat, x.amt.toFixed(2), x.note || '']; }));
+  var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+  var b = new Blob([csv], { type: 'text/csv' }), l = document.createElement('a'); l.href = URL.createObjectURL(b); l.download = 'bgcs-expenses-' + exToday() + '.csv'; l.click();
+}
+function renderExpenses() {
+  var d = document.getElementById('exDate'); if (d && !d.value) d.value = exToday();
+  var a = exRead().sort(function (x, y) { return x.date < y.date ? 1 : (x.date > y.date ? -1 : 0); });
+  var now = new Date(), thisM = exToday().slice(0, 7), pm = new Date(now.getFullYear(), now.getMonth() - 1, 1), lastM = pm.getFullYear() + '-' + ('0' + (pm.getMonth() + 1)).slice(-2), yr = String(now.getFullYear());
+  var sum = function (f) { return a.filter(f).reduce(function (s, x) { return s + x.amt; }, 0); };
+  var cards = [['This month', sum(function (x) { return exMonthKey(x.date) === thisM; })], ['Last month', sum(function (x) { return exMonthKey(x.date) === lastM; })], ['This year', sum(function (x) { return x.date.slice(0, 4) === yr; })], ['All time', sum(function () { return true; })]];
+  document.getElementById('exCards').innerHTML = cards.map(function (c) { return '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4"><p class="text-[10px] uppercase tracking-wider font-bold text-slate-500">' + c[0] + '</p><p class="text-xl font-bold text-slate-100 mt-1">' + exMoney(c[1]) + '</p></div>'; }).join('');
+  var rec = a.filter(function (x) { return x.recur; }), seen = {}; rec = rec.filter(function (x) { var k = x.vendor.toLowerCase(); if (seen[k]) return false; seen[k] = 1; return true; });
+  document.getElementById('exRecurBox').innerHTML = rec.length ? '<p class="text-[11px] uppercase tracking-wider font-bold text-slate-500 mb-2">Monthly charges</p>' + rec.map(function (t) { var has = a.some(function (x) { return x.vendor.toLowerCase() === t.vendor.toLowerCase() && exMonthKey(x.date) === thisM; }); return '<div class="flex items-center justify-between gap-2 py-1.5 text-xs text-slate-300"><span>' + exEsc(t.vendor) + ' &middot; ' + exMoney(t.amt) + '/mo</span>' + (has ? '<span class="text-emerald-400 font-bold">Logged this month</span>' : '<button type="button" onclick="exAddRecurNow(\'' + t.id + '\')" class="px-2.5 py-1.5 rounded-lg bg-amber-500/15 border border-amber-500/40 text-amber-300 font-bold">Log this month</button>') + '</div>'; }).join('') : '';
+  var byCat = {}; a.forEach(function (x) { byCat[x.cat] = (byCat[x.cat] || 0) + x.amt; });
+  var catHtml = Object.keys(byCat).length ? '<div class="flex flex-wrap gap-2 mb-3">' + Object.keys(byCat).map(function (k) { return '<span class="px-2.5 py-1 rounded-full bg-dark-700 border border-dark-600 text-[11px] text-slate-300">' + exEsc(k) + ': <b class="text-slate-100">' + exMoney(byCat[k]) + '</b></span>'; }).join('') + '</div>' : '';
+  document.getElementById('exList').innerHTML = a.length ? catHtml + '<div class="divide-y divide-dark-600">' + a.map(function (x) { return '<div class="py-2.5 flex items-start justify-between gap-3"><div class="min-w-0"><p class="text-sm font-semibold text-slate-100">' + exEsc(x.vendor) + (x.recur ? ' <span class="text-[10px] text-amber-300 font-bold">MONTHLY</span>' : '') + '</p><p class="text-[11px] text-slate-400">' + exEsc(x.date) + ' &middot; ' + exEsc(x.cat) + (x.note ? ' &middot; ' + exEsc(x.note) : '') + '</p></div><div class="flex items-center gap-3 shrink-0"><span class="text-sm font-bold text-slate-100">' + exMoney(x.amt) + '</span><button type="button" onclick="exDel(\'' + x.id + '\')" class="text-slate-500 hover:text-rose-400 text-xs">Delete</button></div></div>'; }).join('') + '</div>' : '<p class="text-sm text-slate-400 py-4">No expenses yet. Tap "+ Claude subscription" above to add your monthly Claude charge.</p>';
+}
 function switchMainView(viewName, updateHash = true) {
 if (viewName === 'financial') viewName = 'dashboard';   /* Financial Goal Tracker now lives on the Funnel & Dashboard page */
 if (viewName === 'prospects') viewName = 'pipeline';    /* Prospect To-Do page removed */
@@ -4088,13 +4291,13 @@ document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -4134,6 +4337,10 @@ renderFeedbackView();
 if (viewName === 'ailab') {
 document.getElementById('pageTitle').innerText = "AI Lab Sites";
 renderSiteSubmissions();
+}
+if (viewName === 'expenses') {
+document.getElementById('pageTitle').innerText = "Expenses";
+renderExpenses();
 }
 if (viewName === 'activity') {
 document.getElementById('pageTitle').innerText = "Activity Log";
