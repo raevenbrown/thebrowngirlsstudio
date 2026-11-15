@@ -187,6 +187,9 @@ Meeting Outline
 <a href="#view=activity" onclick="switchMainView('activity')" id="nav-activity" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="history" class="w-4 h-4 mr-3 text-sky-400"></i> Activity Log
 </a>
+<a href="#view=coach" onclick="switchMainView('coach')" id="nav-coach" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="target" class="w-4 h-4 mr-3 text-amber-400"></i> Revenue Coach
+</a>
 <a href="#view=expenses" onclick="switchMainView('expenses')" id="nav-expenses" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="receipt" class="w-4 h-4 mr-3 text-amber-400"></i> Expenses
 </a>
@@ -483,6 +486,13 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <button id="fbKioskExit" onclick="closeFeedbackKiosk()" class="text-[11px] text-slate-500 px-2 py-1">Staff exit</button></div>
 <p id="fbKioskWarn" class="hidden text-xs text-amber-400 mb-4">Staff: no school or event was chosen, so these responses will not be tagged. Exit and pick one first.</p><div id="fbKioskBody"></div></div></div>
 <!-- Main Section: Expenses -->
+<div id="mainView-coach" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
+<div id="coHero" class="bg-dark-800 border border-amber-500/30 p-5 sm:p-6 rounded-2xl"></div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="coCards"></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><h3 class="font-bold text-slate-100 text-sm">Today's moves</h3><div id="coTips" class="space-y-2"></div></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><h3 class="font-bold text-slate-100 text-sm">Assumptions <span class="text-slate-500 font-normal text-xs">(change these as real numbers come in)</span></h3><div id="coInputs" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-bold text-slate-100 text-sm">Deeper read with Claude</h3><button type="button" onclick="coCopy()" class="px-3 py-2 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold">Copy pipeline summary</button></div><p class="text-xs text-slate-400">This page does rule-based math on your pipeline. It is not a live AI. Paste the summary into a Claude chat for strategy and email drafts.</p></div>
+</div>
 <div id="mainView-expenses" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="exCards"></div>
 <div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl space-y-4">
@@ -4638,6 +4648,64 @@ function exCsv() {
   var csv = rows.map(function (r) { return r.map(function (c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
   var b = new Blob([csv], { type: 'text/csv' }), l = document.createElement('a'); l.href = URL.createObjectURL(b); l.download = 'bgcs-expenses-' + exToday() + '.csv'; l.click();
 }
+
+/* ===== Revenue Coach ===== */
+var CO_DEF = { goal: 14000, classVal: 2500, maxClasses: 5, reply: 25, call: 50, close: 30, deadline: '2027-01-15' };
+function coCfg() { try { return Object.assign({}, CO_DEF, JSON.parse(localStorage.getItem('bgcs_coach') || '{}')); } catch (e) { return Object.assign({}, CO_DEF); } }
+function coSet(k, v) { var c = coCfg(); c[k] = (k === 'deadline') ? v : (parseFloat(v) || 0); localStorage.setItem('bgcs_coach', JSON.stringify(c)); renderCoach(); }
+function coWeekdays(to) { var d = new Date(); d.setHours(0, 0, 0, 0); var e = new Date(to + 'T00:00:00'); var n = 0; while (d < e) { var w = d.getDay(); if (w > 0 && w < 6) n++; d.setDate(d.getDate() + 1); } return Math.max(n, 1); }
+function coFmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function coModel() {
+  var c = coCfg(), P = financialProspects || [], today = new Date().toISOString().slice(0, 10);
+  var isEvent = function (p) { return (p.price || 0) >= 500; };
+  var won = P.filter(function (p) { return p.stage === 'Closed Won' && !isEvent(p); });
+  var slots = won.reduce(function (a, p) { return a + (p.classes || 0); }, 0);
+  var cap = c.maxClasses, remaining = Math.max(cap - slots, 0);
+  var perEmail = (c.reply / 100) * (c.call / 100) * (c.close / 100);
+  var perClass = perEmail > 0 ? 1 / perEmail : 0;
+  var out = P.filter(function (p) { return p.stage === 'First Touch Sent'; });
+  var leads = P.filter(function (p) { return p.stage === 'Lead'; });
+  var needAll = Math.ceil(perClass * remaining);
+  var needNew = Math.max(needAll - out.length, 0);
+  var days = coWeekdays(c.deadline);
+  var perDay = Math.ceil(needNew / days);
+  var capRev = cap * c.classVal, gap = Math.max(c.goal - capRev, 0);
+  var tasks = [];
+  P.forEach(function (p) { (p.clientTasks || []).forEach(function (t) { if (!t.done && t.active !== false && t.date) tasks.push({ p: p, t: t }); }); });
+  tasks.sort(function (a, b) { return a.t.date < b.t.date ? -1 : 1; });
+  var overdue = tasks.filter(function (x) { return x.t.date <= today; });
+  var stale = out.filter(function (p) { return p.emailSentDate && (new Date(today) - new Date(p.emailSentDate)) / 86400000 >= 5; });
+  return { c: c, P: P, won: won, slots: slots, cap: cap, remaining: remaining, perClass: perClass, out: out, leads: leads, needAll: needAll, needNew: needNew, days: days, perDay: perDay, capRev: capRev, gap: gap, tasks: tasks, overdue: overdue, stale: stale, today: today };
+}
+function renderCoach() {
+  var m = coModel(), c = m.c;
+  var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); };
+  document.getElementById('coHero').innerHTML =
+    '<div class="text-xs uppercase tracking-widest text-amber-400 font-bold">Daily outreach target</div>' +
+    '<div class="text-4xl sm:text-5xl font-black text-slate-100 mt-1">' + m.perDay + ' <span class="text-lg font-semibold text-slate-400">new emails per weekday</span></div>' +
+    '<p class="text-sm text-slate-300 mt-2">About ' + Math.round(m.perClass) + ' emails per signed class at your rates. To fill ' + m.remaining + ' open class slot' + (m.remaining === 1 ? '' : 's') + ' you need ~' + m.needAll + ' total, ' + m.out.length + ' are already out, so ~' + m.needNew + ' more over ' + m.days + ' weekdays until ' + esc(c.deadline) + '. Plus follow-ups on anything 5+ days old.</p>' +
+    (m.gap > 0 ? '<p class="text-xs text-amber-300 mt-2">Heads up: ' + m.cap + ' classes x ' + coFmt(c.classVal) + ' = ' + coFmt(m.capRev) + '. Your ' + coFmt(c.goal) + ' goal is ' + coFmt(m.gap) + ' higher, so you also need a higher price per class (about ' + coFmt(c.goal / m.cap) + ') or add events or workshops.</p>' : '');
+  var lv = m.leads.reduce(function (a, p) { return a + (p.price || 0) * (p.classes || 0); }, 0);
+  document.getElementById('coCards').innerHTML = [
+    ['Class slots filled', m.slots + ' / ' + m.cap], ['Emails out, waiting', m.out.length], ['Warm leads', m.leads.length], ['Lead value', coFmt(lv)]
+  ].map(function (x) { return '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4"><div class="text-[10px] uppercase tracking-widest text-slate-500">' + x[0] + '</div><div class="text-xl font-black text-slate-100 mt-1">' + x[1] + '</div></div>'; }).join('');
+  var tips = [];
+  m.overdue.slice(0, 4).forEach(function (x) { tips.push(['Due: ' + x.p.org, x.t.title + ' (' + x.t.date + ')']); });
+  m.stale.slice(0, 5).forEach(function (p) { tips.push(['Follow up: ' + p.org, 'Sent ' + p.emailSentDate + ', no reply. One short, specific nudge.']); });
+  tips.push(['Send ' + m.perDay + ' new first-touch emails today', 'Target Georgia school districts, charter and STEM schools, after-school programs, Boys & Girls Clubs, libraries, parks and rec. Name one specific thing from their site.']);
+  if (m.slots === 0) tips.push(['No class is signed yet', 'Past customers and warm replies convert best. Prioritize STEAM Academy, ASAP after-school, Porterdale, and the district.']);
+  tips.push(['After Dec 3', 'Ask Dr. Williams for a testimonial and a referral to other Newton schools.']);
+  document.getElementById('coTips').innerHTML = tips.map(function (t) { return '<div class="rounded-xl bg-dark-700 border border-dark-600 p-3"><div class="text-sm font-bold text-slate-100">' + esc(t[0]) + '</div><div class="text-xs text-slate-400 mt-0.5">' + esc(t[1]) + '</div></div>'; }).join('');
+  var f = [['goal', 'Monthly goal $'], ['classVal', 'Revenue per class $'], ['maxClasses', 'Max classes'], ['reply', 'Reply rate %'], ['call', 'Reply to call %'], ['close', 'Call to class %'], ['deadline', 'Deadline']];
+  document.getElementById('coInputs').innerHTML = f.map(function (x) { return '<label class="text-[10px] uppercase tracking-widest text-slate-500">' + x[0 === 0 ? 1 : 1] + '<input type="' + (x[0] === 'deadline' ? 'date' : 'number') + '" value="' + esc(c[x[0]]) + '" onchange="coSet(\'' + x[0] + '\',this.value)" class="mt-1 w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200 normal-case tracking-normal"></label>'; }).join('');
+}
+function coCopy() {
+  var m = coModel(), L = ['PIPELINE SUMMARY ' + m.today, 'Goal ' + coFmt(m.c.goal) + '/mo, max ' + m.cap + ' classes at ' + coFmt(m.c.classVal) + '. Slots filled: ' + m.slots + '. Need ~' + m.perDay + ' new emails/weekday.', ''];
+  m.P.forEach(function (p) { var last = (p.activities || [])[0]; L.push('- ' + p.org + ' [' + p.stage + '] ' + (p.emailSentDate ? 'sent ' + p.emailSentDate : '') + (last ? ' | last: ' + last.title : '')); });
+  L.push('', 'Open tasks:'); m.tasks.slice(0, 15).forEach(function (x) { L.push('- ' + x.t.date + ' ' + x.p.org + ': ' + x.t.title); });
+  var t = L.join('\n');
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { alert('Copied. Paste it into a Claude chat.'); }, function () { prompt('Copy this:', t); });
+}
 function renderExpenses() {
   var d = document.getElementById('exDate'); if (d && !d.value) d.value = exToday();
   var a = exRead().sort(function (x, y) { return x.date < y.date ? 1 : (x.date > y.date ? -1 : 0); });
@@ -4673,13 +4741,13 @@ document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -4719,6 +4787,10 @@ renderFeedbackView();
 if (viewName === 'ailab') {
 document.getElementById('pageTitle').innerText = "AI Lab Sites";
 renderSiteSubmissions();
+}
+if (viewName === 'coach') {
+document.getElementById('pageTitle').innerText = "Revenue Coach";
+renderCoach();
 }
 if (viewName === 'expenses') {
 document.getElementById('pageTitle').innerText = "Expenses";
