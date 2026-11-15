@@ -187,6 +187,9 @@ Meeting Outline
 <a href="#view=activity" onclick="switchMainView('activity')" id="nav-activity" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="history" class="w-4 h-4 mr-3 text-sky-400"></i> Activity Log
 </a>
+<a href="#view=advisor" onclick="switchMainView('advisor')" id="nav-advisor" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="brain" class="w-4 h-4 mr-3 text-amber-400"></i> AI Advisor
+</a>
 <a href="#view=coach" onclick="switchMainView('coach')" id="nav-coach" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="target" class="w-4 h-4 mr-3 text-amber-400"></i> Revenue Coach
 </a>
@@ -486,6 +489,14 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <button id="fbKioskExit" onclick="closeFeedbackKiosk()" class="text-[11px] text-slate-500 px-2 py-1">Staff exit</button></div>
 <p id="fbKioskWarn" class="hidden text-xs text-amber-400 mb-4">Staff: no school or event was chosen, so these responses will not be tagged. Exit and pick one first.</p><div id="fbKioskBody"></div></div></div>
 <!-- Main Section: Expenses -->
+<div id="mainView-advisor" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
+<div class="bg-dark-800 border border-amber-500/30 p-5 sm:p-6 rounded-2xl space-y-2"><div class="text-xs uppercase tracking-widest text-amber-400 font-bold">AI Advisor: your team of departments</div>
+<p class="text-sm text-slate-300">Pick a department. It packages your live pipeline, expenses, tasks and revenue math into one brief and tells Claude to research the web, cite sources, and push back instead of agreeing. Paste it into a Claude chat to get the real answer.</p>
+<p class="text-xs text-slate-500">Honest limit: this page cannot call Claude by itself. The analysis and the competitor research happen in the chat, where web search works.</p></div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="adDepts"></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><div class="flex flex-wrap items-center justify-between gap-2"><h3 id="adTitle" class="font-bold text-slate-100 text-sm">Brief</h3><button type="button" onclick="adCopy()" class="px-3 py-2 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold">Copy brief for Claude</button></div><textarea id="adBrief" readonly rows="14" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-3 text-xs text-slate-300 font-mono"></textarea></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><h3 class="font-bold text-slate-100 text-sm">Competitor snapshot <span class="text-slate-500 font-normal text-xs">(researched Nov 15, 2026, from public listing pages; verify before you quote)</span></h3><div id="adComp" class="space-y-2"></div></div>
+</div>
 <div id="mainView-coach" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
 <div id="coHero" class="bg-dark-800 border border-amber-500/30 p-5 sm:p-6 rounded-2xl"></div>
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="coCards"></div>
@@ -4677,6 +4688,52 @@ function exCsv() {
   var b = new Blob([csv], { type: 'text/csv' }), l = document.createElement('a'); l.href = URL.createObjectURL(b); l.download = 'bgcs-expenses-' + exToday() + '.csv'; l.click();
 }
 
+
+/* ===== AI Advisor ===== */
+var AD_DEPTS = {
+  ceo: ['CEO', 'Act as my CEO advisor. Using the data, tell me the 3 highest-leverage moves this week to reach the revenue goal, what to stop doing, and what the biggest risk is. Challenge my assumptions.'],
+  sales: ['Sales', 'Act as my head of sales. Rank my open leads by likelihood to close, write the follow-up plan for each, and tell me which outreach channels and target lists to add. Draft emails only; I send them myself.'],
+  marketing: ['Marketing & Promotion', 'Act as my marketer. Research how competitors promote, then give me a 30-day promotion plan (TikTok, parents, schools, local press) with specific posts and hooks. Say what you cannot verify.'],
+  finance: ['Finance', 'Act as my financial advisor. Review expenses and revenue. Show runway, the gap to my goal, pricing options, and what a hire would require. Flag any numbers I gave that look unrealistic.'],
+  product: ['Product', 'Act as my head of product. Using the competitor snapshot and what schools say they need, tell me what to add, cut, or package (monthly program, semester term, event fee) and how to price each.'],
+  tech: ['Engineering & Tech', 'Act as my CTO. Review my student portal, pipeline tool and website. List what to fix, automate or build next, and what is risky (student data, under-13 AI rules, hosting). Rank by effort versus revenue impact.'],
+  partners: ['Partnerships', 'Act as my partnerships lead. Research Georgia funders, districts, nonprofits and programs that could pay for or refer my classes, including who can legally pay a vendor. Give me a ranked list with the first email for each.'],
+  research: ['Competitor Research', 'Act as my market researcher. Search the web for providers doing youth AI and coding education in Georgia. Report pricing, how they sell to schools, gaps I can exploit, and where I am weaker. Cite every source and say how recent it is.']
+};
+var AD_COMP = [
+  ['Code Ninjas (Atlanta)', 'Camps $225-$250/week, ages 5-14, includes creating with AI.', 'https://www.codeninjas.com/ga-atlanta/camps'],
+  ['The Coder School (Suwanee)', 'Camps $339/week; after-school Code Coaching ages 7-18; AI classes (LEGO AI, Python AI Creator Lab, AI Explorers Club); free intro session. Tuition for after-school not listed.', 'https://www.thecoderschool.com/locations/suwanee/'],
+  ['Club SciKidz Atlanta', '$425/week, middle and high school, AI and chatbots.', 'https://atlantastemsummercamps.com/blog/top-coding-camps-atlanta-2026'],
+  ['Kids4Coding', '$329-$529/week, middle and high school, no AI listed.', 'https://atlantastemsummercamps.com/blog/top-coding-camps-atlanta-2026'],
+  ['Black Girls Code (Atlanta)', 'Summer camp, girls 10-17, listed $25-$100 (unit not stated). Strong brand and a Spelman location. Closest to your audience.', 'https://www.wearebgc.org/summer-camp'],
+  ['Level-Up (Morehouse)', 'Saturdays, grades 6-12, boys of color, AI is one topic.', 'https://atlantastemsummercamps.com/blog/top-coding-camps-atlanta-2026']
+];
+var AD_TAKE = [
+  'None of these listings mention school-day or district partnerships. Delivering inside schools with the curriculum, materials and facilitation handled is your clearest gap to own.',
+  'They sell weekly summer camps to parents ($225-$529/week). You sell a monthly class to schools ($125 per kid). Different buyer, so do not compare price per hour until you know your hours per month.',
+  'Funding is the open question. Perkins V, Title IV-A and Georgia DOE STEM/CS grants exist, but the sources I found do not say a vendor can be paid from them. Ask Molly or Dr. Williams how the district pays outside providers.'
+];
+var adCur = 'ceo';
+function adBriefText(k) {
+  var m = coModel(), c = m.c, d = AD_DEPTS[k];
+  var ex = []; try { ex = exRead(); } catch (e) {}
+  var exTotal = ex.reduce(function (a, x) { return a + (parseFloat(x.amt) || 0); }, 0);
+  var L = ['ROLE: ' + d[1], 'RULES: Use web search for anything about the outside world and cite sources with dates. Do not agree with me to be nice. Mark every number as verified, assumed or unknown. Never send emails for me.', '', 'BUSINESS: The Brown Girls Creative Studio / The AI Lab (Newton County, GA). Goal $' + c.goal + '/month. Price $125 per kid per month, 20 kids per class, max ' + c.maxClasses + ' classes until I hire. Dec 2-3 InspiHER event is a $750 flat speaker fee, not my class rate, and is my foot in the door with the district.', 'SNAPSHOT ' + m.today + ': class slots filled ' + m.slots + '/' + m.cap + '; emails out waiting ' + m.out.length + '; warm leads ' + m.leads.length + '; need about ' + m.perDay + ' new emails per weekday (assumed reply ' + c.reply + '%, reply-to-call ' + c.call + '%, call-to-class ' + c.close + '%, not yet measured).', 'EXPENSES logged: ' + ex.length + ' entries, $' + exTotal.toFixed(2) + ' total.', '', 'PIPELINE:'];
+  m.P.forEach(function (p) { var last = (p.activities || [])[0]; L.push('- ' + p.org + ' [' + p.stage + ']' + (p.emailSentDate ? ' sent ' + p.emailSentDate : '') + (last ? ' | last: ' + last.title : '')); });
+  L.push('', 'OPEN TASKS:'); m.tasks.slice(0, 20).forEach(function (x) { L.push('- ' + x.t.date + ' ' + x.p.org + ': ' + x.t.title); });
+  L.push('', 'COMPETITOR NOTES (public listings, Nov 15 2026, verify):'); AD_COMP.forEach(function (x) { L.push('- ' + x[0] + ': ' + x[1]); });
+  return L.join('\n');
+}
+function renderAdvisor() {
+  var esc = function (x) { return String(x).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); };
+  document.getElementById('adDepts').innerHTML = Object.keys(AD_DEPTS).map(function (k) { var on = k === adCur; return '<button type="button" onclick="adPick(\'' + k + '\')" class="px-3 py-2.5 rounded-xl text-xs font-bold border ' + (on ? 'bg-amber-500/20 border-amber-500/60 text-amber-300' : 'bg-dark-800 border-dark-600 text-slate-300') + '">' + AD_DEPTS[k][0] + '</button>'; }).join('');
+  document.getElementById('adTitle').innerText = AD_DEPTS[adCur][0] + ' brief';
+  document.getElementById('adBrief').value = adBriefText(adCur);
+  document.getElementById('adComp').innerHTML = AD_COMP.map(function (x) { return '<div class="rounded-xl bg-dark-700 border border-dark-600 p-3"><a href="' + x[2] + '" target="_blank" rel="noopener" class="text-sm font-bold text-amber-300">' + esc(x[0]) + '</a><div class="text-xs text-slate-400 mt-0.5">' + esc(x[1]) + '</div></div>'; }).join('') +
+    '<div class="rounded-xl border border-amber-500/30 p-3 text-xs text-slate-300 space-y-1"><div class="font-bold text-amber-300">What this means</div>' + AD_TAKE.map(function (t) { return '<div>' + esc(t) + '</div>'; }).join('') + '</div>';
+}
+function adPick(k) { adCur = k; renderAdvisor(); }
+function adCopy() { var t = document.getElementById('adBrief').value; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { alert('Copied. Paste it into a Claude chat.'); }, function () { var b = document.getElementById('adBrief'); b.select(); }); }
 /* ===== Revenue Coach ===== */
 var CO_DEF = { goal: 14000, classVal: 2500, maxClasses: 5, reply: 25, call: 50, close: 30, deadline: '2027-01-15' };
 function coCfg() { try { return Object.assign({}, CO_DEF, JSON.parse(localStorage.getItem('bgcs_coach') || '{}')); } catch (e) { return Object.assign({}, CO_DEF); } }
@@ -4769,13 +4826,13 @@ document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -4815,6 +4872,10 @@ renderFeedbackView();
 if (viewName === 'ailab') {
 document.getElementById('pageTitle').innerText = "AI Lab Sites";
 renderSiteSubmissions();
+}
+if (viewName === 'advisor') {
+document.getElementById('pageTitle').innerText = "AI Advisor";
+renderAdvisor();
 }
 if (viewName === 'coach') {
 document.getElementById('pageTitle').innerText = "Revenue Coach";
