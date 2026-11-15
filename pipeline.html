@@ -591,7 +591,7 @@ bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex i
 <!-- View 1: Main Pipeline / Sales Funnel Columns (Synchronized with all 25 prospects)
 -->
 <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
-<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
 <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl
 shadow-sm">
 <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase
@@ -620,6 +620,10 @@ shadow-sm">
 tracking-wider">Lead</p>
 <h3 id="stat-invoice" class="text-2xl sm:text-3xl font-bold text-purple-400
 mt-2">0</h3>
+</div>
+<div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
+<p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Invoice Pending</p>
+<h3 id="stat-ip" class="text-2xl sm:text-3xl font-bold text-yellow-400 mt-2">0</h3>
 </div>
 <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl
 shadow-sm">
@@ -733,6 +737,7 @@ border-dark-600 p-2 text-slate-200 font-semibold">
 <option value="Email Drafted">Email Drafted</option>
 <option value="First Touch Sent">First Touch Sent</option>
 <option value="Lead">Lead (speaking with us)</option>
+<option value="Invoice Pending">Invoice Pending (confirmed, awaiting payment)</option>
 <option value="Closed Won">Closed Won</option>
 <option value="Closed Lost">Closed Lost</option>
 </select>
@@ -1140,6 +1145,7 @@ border-dark-600 p-2.5 text-slate-200 font-semibold">
 <option value="Email Drafted">Email Drafted</option>
 <option value="First Touch Sent">First Touch Sent</option>
 <option value="Lead">Lead (speaking with us)</option>
+<option value="Invoice Pending">Invoice Pending (confirmed, awaiting payment)</option>
 <option value="Closed Won">Closed Won</option>
 <option value="Closed Lost">Closed Lost</option>
 </select>
@@ -1279,6 +1285,7 @@ border-dark-600 p-2.5 text-slate-200 font-semibold">
 <option value="Email Drafted">Email Drafted</option>
 <option value="First Touch Sent">First Touch Sent</option>
 <option value="Lead">Lead (speaking with us)</option>
+<option value="Invoice Pending">Invoice Pending (confirmed, awaiting payment)</option>
 <option value="Closed Won">Closed Won</option>
 <option value="Closed Lost">Closed Lost</option>
 </select>
@@ -1546,6 +1553,7 @@ border-dark-600 p-2.5 text-slate-200 font-semibold">
 <option value="Email Drafted">Email Drafted</option>
 <option value="First Touch Sent">First Touch Sent</option>
 <option value="Lead">Lead (speaking with us)</option>
+<option value="Invoice Pending">Invoice Pending (confirmed, awaiting payment)</option>
 <option value="Closed Won">Closed Won</option>
 </select>
 </div>
@@ -1896,7 +1904,7 @@ if (old === undefined && typeof activityLog !== 'undefined') {
 var hit = activityLog.find(function (e) { return e.pid === p.id && ((e.type === 'stage' && String(e.text).slice(-(p.stage.length + 4)) === ' to ' + p.stage) || (e.type === 'created' && String(e.text).indexOf('(' + p.stage + ')') > -1)); });
 if (hit) d = hit.at;
 }
-if (old === 'First Touch Sent' && (p.stage === 'Lead' || p.stage === 'Closed Won') && !p.respondedAt) { p.respondedAt = now; p.sentFallback = p.stageSince; }
+if (old === 'First Touch Sent' && (p.stage === 'Lead' || p.stage === 'Invoice Pending' || p.stage === 'Closed Won') && !p.respondedAt) { p.respondedAt = now; p.sentFallback = p.stageSince; }
 if (old !== undefined && p.stage === 'First Touch Sent' && !p.emailSentDate) { var t = new Date(); p.emailSentDate = t.getFullYear() + '-' + ('0' + (t.getMonth() + 1)).slice(-2) + '-' + ('0' + t.getDate()).slice(-2); }
 p.stageSince = d || now; p.stageSinceStage = p.stage; changed = true;
 }
@@ -1950,7 +1958,8 @@ var FUNNEL_STAGES = [
   { name: 'Prospect',         hint: 'Not contacted yet',                 color: '#f59e0b' },
   { name: 'Email Drafted',    hint: 'Email written, not sent',           color: '#38bdf8' },
   { name: 'First Touch Sent', hint: 'Waiting on a reply',                color: '#22d3ee' },
-  { name: 'Lead',             hint: 'Speaking with us / invoice pending', color: '#a855f7' },
+  { name: 'Lead',             hint: 'Speaking with us, not confirmed', color: '#a855f7' },
+  { name: 'Invoice Pending',  hint: 'Confirmed, invoice sent, waiting on payment', color: '#d4a017' },
   { name: 'Closed Won',       hint: 'Paid or contract signed',           color: '#10b981' }
 ];
 var GOAL_PHASES = [
@@ -1968,7 +1977,7 @@ function funnelNumbers() {
   var reached = FUNNEL_STAGES.map(function (st, i) {
     return P.filter(function (p) { var k = FUNNEL_STAGES.findIndex(function (x) { return x.name === p.stage; }); return k >= i; }).length;
   });
-  var closed = val['Closed Won'], pending = val['Lead'];
+  var closed = val['Closed Won'], pending = val['Lead'] + val['Invoice Pending'];
   var open = val['Prospect'] + val['Email Drafted'] + val['First Touch Sent'];
   return { P: P, by: by, val: val, reached: reached, closed: closed, pending: pending, open: open, goal: 14000 };
 }
@@ -2015,7 +2024,7 @@ function renderFunnelPage() {
     '<div class="flex flex-wrap gap-4 mt-10 text-[11px] text-slate-400"><span><span class="inline-block w-2.5 h-2.5 rounded-sm fp-keep" style="background:#10b981"></span> Closed / paid</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm fp-keep" style="background:#a855f7"></span> Pending revenue</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-dark-600"></span> Still to win</span></div></div>' +
     '<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">' +
     card('Closed / paid', n.closed, n.by['Closed Won'] + ' deals won', '#10b981') +
-    card('Pending revenue', n.pending, n.by['Lead'] + ' lead' + (n.by['Lead'] === 1 ? '' : 's') + ' waiting on an invoice or signature', '#a855f7') +
+    card('Pending revenue', n.pending, (n.by['Lead'] + n.by['Invoice Pending']) + ' deal' + ((n.by['Lead'] + n.by['Invoice Pending']) === 1 ? '' : 's') + ' waiting on payment or signature', '#a855f7') +
     card('Open pipeline', n.open, (n.by['Prospect'] + n.by['Email Drafted'] + n.by['First Touch Sent']) + ' prospects being worked', '#f59e0b') +
     card('Gap to ' + fpMoney(goal), gap, 'after closed and pending', '#f43f5e') + '</div>' +
     '<div><p class="text-xs font-bold text-slate-200 mb-3 uppercase tracking-wider">Sales funnel</p><div class="space-y-0">' + funnel + '</div>' +
@@ -2029,7 +2038,7 @@ function copyFunnelSummary() {
   L.push('The Brown Girls Creative Studio - funnel summary (' + new Date().toLocaleDateString() + ')');
   L.push('Monthly goal: ' + fpMoney(n.goal));
   L.push('Closed / paid: ' + fpMoney(n.closed) + ' (' + n.by['Closed Won'] + ' deals)');
-  L.push('Pending revenue: ' + fpMoney(n.pending) + ' (' + n.by['Lead'] + ' leads awaiting invoice or signature)');
+  L.push('Pending revenue: ' + fpMoney(n.pending) + ' (' + (n.by['Lead'] + n.by['Invoice Pending']) + ' deals awaiting payment or signature)');
   L.push('Open pipeline: ' + fpMoney(n.open));
   L.push('Gap to goal after closed and pending: ' + fpMoney(Math.max(0, n.goal - n.closed - n.pending)));
   L.push('');
@@ -2400,7 +2409,7 @@ function rptBuild(withMoney) {
   T.push('THE BROWN GIRLS CREATIVE STUDIO - FUNNEL & DASHBOARD REPORT', today, '');
   T.push('GOAL: ' + money(n.goal) + ' per month');
   T.push('Closed / paid: ' + money(n.closed) + ' (' + n.by['Closed Won'] + ' deals)');
-  T.push('Pending revenue: ' + money(n.pending) + ' (' + n.by['Lead'] + ' leads awaiting invoice or signature)');
+  T.push('Pending revenue: ' + money(n.pending) + ' (' + (n.by['Lead'] + n.by['Invoice Pending']) + ' deals awaiting payment or signature)');
   T.push('Open pipeline: ' + money(n.open));
   T.push('Gap to goal after closed and pending: ' + money(gap), '', 'SALES FUNNEL');
   var kpi = function (l, v, c) { return '<div class="k"><small>' + l + '</small><b style="color:' + c + '">' + v + '</b></div>'; };
@@ -3769,7 +3778,7 @@ const defaultFinancialProspects = [
  {
   "id": 201,
   "org": "InspiHER Conference / Newton District",
-  "stage": "Lead",
+  "stage": "Invoice Pending",
   "classes": 1,
   "price": 750.0,
   "donation": 0,
@@ -4371,6 +4380,25 @@ var DEFAULTS_JSON = JSON.stringify(defaultFinancialProspects);
       ex.push({ id: 'ex_seed_claude_2', date: '2026-11-11', vendor: 'Claude (Anthropic)', cat: 'Software & AI', amt: 20, note: 'Monthly subscription (month 2)', recur: true });
       localStorage.setItem('bgcs_expenses', JSON.stringify(ex));
     }
+  } catch (e) {}
+})();
+(function () {
+  var FLAG = 'bgcs_stage_20261115';
+  try {
+    if (localStorage.getItem(FLAG)) return;
+    var cur = JSON.parse(localStorage.getItem('bgcs_financial_prospects') || 'null');
+    if (cur && cur.length) {
+      var n = Date.now();
+      cur.forEach(function (p) {
+        if (p.id === 201 && p.stage === 'Lead') {
+          p.stage = 'Invoice Pending'; p._u = n;
+          (p.activities = p.activities || []).unshift({ type: 'Note', date: '2026-11-15', person: '', title: 'Moved to Invoice Pending', phone: '', email: '', message: 'Both days are confirmed and the invoice is with Dr. Williams. Waiting on payment.', nextSteps: 'Confirm payment timing. Move to Closed Won when paid.', followUpDone: false });
+        }
+      });
+      localStorage.setItem('bgcs_financial_prospects', JSON.stringify(cur));
+      localStorage.setItem('bgcs_local_updated', String(n));
+    }
+    localStorage.setItem(FLAG, '1');
   } catch (e) {}
 })();
 let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects'));
@@ -5046,6 +5074,7 @@ const stageColors = {
 "Email Drafted": "border-sky-500/30 text-sky-400",
 "First Touch Sent": "border-cyan-500/30 text-cyan-400",
 "Lead": "border-purple-500/30 text-purple-400",
+"Invoice Pending": "border-yellow-500/30 text-yellow-400",
 "Closed Won": "border-emerald-500/30 text-emerald-400",
 "Closed Lost": "border-rose-500/30 text-rose-400"
 };
@@ -5110,6 +5139,7 @@ d.stage === 'Prospect').length;
 document.getElementById('stat-invoice').innerText = financialProspects.filter(d =>
 d.stage === 'Lead').length;
 document.getElementById('stat-won').innerText = wonDealsCount;
+const _si = document.getElementById('stat-ip'); if (_si) _si.innerText = financialProspects.filter(d => d.stage === 'Invoice Pending').length;
 const _sd = document.getElementById('stat-draft'); if (_sd) _sd.innerText = financialProspects.filter(d => d.stage === 'Email Drafted').length;
 const _ss = document.getElementById('stat-sent'); if (_ss) _ss.innerText = financialProspects.filter(d => d.stage === 'First Touch Sent').length;
 stages.forEach(stage => {
@@ -5239,6 +5269,7 @@ let badge = document.getElementById('qpStageBadge');
 badge.innerText = item.stage;
 badge.className = "px-2.5 py-0.5 rounded text-[10px] font-bold uppercase border ";
 if(item.stage === 'Closed Won') badge.className += "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+else if(item.stage === 'Invoice Pending') badge.className += "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
 else if(item.stage === 'Lead') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
 else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
 document.getElementById('quickProspectModal').classList.remove('hidden');
@@ -5658,6 +5689,7 @@ let badge = document.getElementById('profileBadge');
 badge.innerText = lead.stage;
 badge.className = "px-3 py-1 rounded-lg text-xs font-semibold border ";
 if(lead.stage === 'Closed Won') badge.className += "bg-emerald-500/10 text-emerald-400 border-emerald-500/20";
+else if(lead.stage === 'Invoice Pending') badge.className += "bg-yellow-500/10 text-yellow-400 border-yellow-500/20";
 else if(lead.stage === 'Lead') badge.className += "bg-purple-500/10 text-purple-400 border-purple-500/20";
 else badge.className += "bg-amber-500/10 text-amber-400 border-amber-500/20";
 const orgContainer = document.getElementById('orgChartContainer');
@@ -5740,12 +5772,13 @@ ${rows.map((r, i) => `
 </div>`).join('')}
 </div>`;
 }
-var STAGES = ['Prospect', 'Email Drafted', 'First Touch Sent', 'Lead', 'Closed Won', 'Closed Lost'];
+var STAGES = ['Prospect', 'Email Drafted', 'First Touch Sent', 'Lead', 'Invoice Pending', 'Closed Won', 'Closed Lost'];
 var STAGE_HINTS = {
 'Prospect': 'Not contacted yet',
 'Email Drafted': 'Email written, not sent',
 'First Touch Sent': 'Waiting on a reply',
-'Lead': 'Speaking with us, or waiting on an invoice',
+'Lead': 'Speaking with us, not confirmed yet',
+'Invoice Pending': 'Confirmed and booked, waiting on payment',
 'Closed Won': 'Signed and paid',
 'Closed Lost': 'Said no, or no reply in 30 days'
 };
@@ -6064,7 +6097,7 @@ if (!lead) return;
 let total = lead.stage === 'Closed Won' ? (lead.org.includes('InspiHER') ? 750.00 :
 lead.classes * 20 * lead.price) : 0;
 
-let pending = lead.stage === 'Lead' ? (lead.org.includes('InspiHER') ? 750.00 :
+let pending = (lead.stage === 'Lead' || lead.stage === 'Invoice Pending') ? (lead.org.includes('InspiHER') ? 750.00 :
 lead.classes * 20 * lead.price) : 0;
 let closed = lead.stage === 'Closed Won' ? total : 0;
 const auditTable = document.getElementById('auditTableBody');
