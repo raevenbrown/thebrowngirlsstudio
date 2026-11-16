@@ -210,6 +210,111 @@
    ],
    "taxReceipts": [],
    "_u": 1794857000000
+  },
+  {
+   "id": 307,
+   "org": "Real IMPACT Center (Macon, girls STEM)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "hello@realimpactcenter.org",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "hello@realimpactcenter.org",
+     "message": "Draft to the general inbox of a girls STEM program in Macon-Bibb. Asks about a guest workshop or joint session.",
+     "nextSteps": "Read, personalize, send.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Real IMPACT Center",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794858000000
+  },
+  {
+   "id": 308,
+   "org": "Team3 After School Program (Conyers)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "info@team3asp.com",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "info@team3asp.com",
+     "message": "Draft to the general inbox of a Conyers after-school program (PreK3-9th). Offers a guest session or pilot.",
+     "nextSteps": "Read, personalize, send.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Team3 After School",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794858000000
+  },
+  {
+   "id": 309,
+   "org": "Chroma ELA, McDonough (after-school)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "info@chromaela.com",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "info@chromaela.com",
+     "message": "Draft to the general inbox of a McDonough after-school program (ages 5-12). Offers a guest session or pilot.",
+     "nextSteps": "Read, personalize, send.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Chroma ELA",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794858000000
   }
  ],
  "updates": []
