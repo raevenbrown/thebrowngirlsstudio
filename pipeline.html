@@ -3895,9 +3895,9 @@ const defaultFinancialProspects = [
   ],
   "clientTasks": [
    {
-    "title": "Nudge Deena Sams if no reply",
-    "desc": "One short follow-up.",
-    "date": "2026-11-17",
+    "title": "Update Deena Sams after InspiHER",
+    "desc": "Planned: connect right after Dec 3 with results, photos and the InspiHER and STEAM Academy proof. No nudge before then.",
+    "date": "2026-12-07",
     "assignee": "Raeven Brown",
     "urgency": "High (Urgent)",
     "done": false,
@@ -4404,6 +4404,26 @@ var DEFAULTS_JSON = JSON.stringify(defaultFinancialProspects);
         if (p.id === 201 && p.stage === 'Lead') {
           p.stage = 'Invoice Pending'; p._u = n;
           (p.activities = p.activities || []).unshift({ type: 'Note', date: '2026-11-15', person: '', title: 'Moved to Invoice Pending', phone: '', email: '', message: 'Both days are confirmed and the invoice is with Dr. Williams. Waiting on payment.', nextSteps: 'Confirm payment timing. Move to Closed Won when paid.', followUpDone: false });
+        }
+      });
+      localStorage.setItem('bgcs_financial_prospects', JSON.stringify(cur));
+      localStorage.setItem('bgcs_local_updated', String(n));
+    }
+    localStorage.setItem(FLAG, '1');
+  } catch (e) {}
+})();
+(function () {
+  var FLAG = 'bgcs_deena_20261116';
+  try {
+    if (localStorage.getItem(FLAG)) return;
+    var cur = JSON.parse(localStorage.getItem('bgcs_financial_prospects') || 'null');
+    if (cur && cur.length) {
+      var n = Date.now();
+      cur.forEach(function (p) {
+        if (p.id === 202) {
+          (p.clientTasks || []).forEach(function (t) { if (/Nudge Deena/.test(t.title || '') && !t.done) { t.title = 'Update Deena Sams after InspiHER'; t.desc = 'Planned: connect right after Dec 3 with results, photos and the InspiHER and STEAM Academy proof. No nudge before then.'; t.date = '2026-12-07'; } });
+          (p.activities = p.activities || []).unshift({ type: 'Note', date: '2026-11-16', person: '', title: 'Holding follow-up until after Dec 3', phone: '', email: '', message: 'Decision: no nudge now. Reconnect right after InspiHER with a real update and proof from Newton County.', nextSteps: 'Email Deena the week of Dec 7.', followUpDone: false });
+          p._u = n;
         }
       });
       localStorage.setItem('bgcs_financial_prospects', JSON.stringify(cur));
