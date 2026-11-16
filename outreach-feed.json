@@ -1,0 +1,216 @@
+{
+ "note": "Maintained by Claude. Pipeline merges new items once per browser. Do not hand-edit ids.",
+ "prospects": [
+  {
+   "id": 301,
+   "org": "Newton County 4-H (UGA Extension)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "cscott@uga.edu",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "cscott@uga.edu",
+     "message": "Draft to Charlene Scott, 4-H Agent: guest STEM and AI workshop for 4-H clubs.",
+     "nextSteps": "Send, then log reply.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Newton County 4-H",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794857000000
+  },
+  {
+   "id": 302,
+   "org": "Rockdale County Public Schools",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "rcpsinfo@rockdale.k12.ga.us",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "rcpsinfo@rockdale.k12.ga.us",
+     "message": "Draft to the general district inbox asking to route to CTAE, Instructional Technology or the 21st CCLC after-school team.",
+     "nextSteps": "Send, then find a named CTAE contact.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Rockdale County Public Schools",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794857000000
+  },
+  {
+   "id": 303,
+   "org": "YWCA Greater Atlanta: Teen Girls in Technology",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "sooraya.williams@ywcaatlanta.org",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "sooraya.williams@ywcaatlanta.org",
+     "message": "Draft to the contact listed on the TGI Tech page. Asks about a guest workshop or pilot session.",
+     "nextSteps": "Send, then log reply.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to YWCA TGI Tech",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794857000000
+  },
+  {
+   "id": 304,
+   "org": "Inspiredu Atlanta (Gen AI Labs)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "program@iuatl.org",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "program@iuatl.org",
+     "message": "Draft to the Programs inbox asking for the partnerships lead.",
+     "nextSteps": "Send, then find a named contact.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Inspiredu",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794857000000
+  },
+  {
+   "id": 305,
+   "org": "Engineering for Kids (Atlanta area)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "",
+     "message": "Draft written, no recipient yet. Needs the local owner's email.",
+     "nextSteps": "Find the owner's email, then send.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Find Engineering for Kids owner email and send",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794857000000
+  },
+  {
+   "id": 306,
+   "org": "Atlanta CARES Mentoring",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-16",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "",
+     "message": "Draft written, no recipient yet. Needs a contact email.",
+     "nextSteps": "Find a contact email, then send.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Find Atlanta CARES contact and send",
+     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
+     "date": "2026-11-17",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794857000000
+  }
+ ],
+ "updates": []
+}

@@ -4456,6 +4456,32 @@ if (!fp.taxReceipts) fp.taxReceipts = [];
 });
 saveFinancialProspects(true);
 initProspectHashes();
+function bgcsFeedSync() {
+  try {
+    fetch('outreach-feed.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (feed) {
+      if (!feed) return;
+      var A = {}; try { (JSON.parse(localStorage.getItem('bgcs_feed_applied') || '[]') || []).forEach(function (k) { A[k] = 1; }); } catch (e) {}
+      var changed = false;
+      (feed.prospects || []).forEach(function (p) {
+        var k = 'p' + p.id; if (A[k]) return; A[k] = 1;
+        if (bgcsDeleted.p[p.id]) return;
+        if (!financialProspects.some(function (x) { return x.id === p.id; })) { p.activities = p.activities || []; p.clientTasks = p.clientTasks || []; p.taxReceipts = p.taxReceipts || []; financialProspects.push(p); changed = true; }
+      });
+      (feed.updates || []).forEach(function (u) {
+        var k = 'u' + u.key; if (A[k]) return;
+        var t = financialProspects.find(function (x) { return x.id === u.id; }); if (!t) return;
+        A[k] = 1;
+        if (u.stage) t.stage = u.stage; if (u.emailSentDate) t.emailSentDate = u.emailSentDate; if (u.emailStatus) t.emailStatus = u.emailStatus;
+        if (u.activity) (t.activities = t.activities || []).unshift(u.activity);
+        if (u.addTask) (t.clientTasks = t.clientTasks || []).push(u.addTask);
+        changed = true;
+      });
+      try { localStorage.setItem('bgcs_feed_applied', JSON.stringify(Object.keys(A))); } catch (e) {}
+      if (changed) { saveFinancialProspects(false); try { refreshAllViews(); } catch (e) {} }
+    }).catch(function () {});
+  } catch (e) {}
+}
+bgcsFeedSync();
 function saveFinancialProspects(skipStamp) {
 if (!skipStamp) stampChangedProspects();
 saveFinancialProspectsLocal();
