@@ -4711,14 +4711,28 @@ var AD_COMP = [
 var AD_TAKE = [
   'None of these listings mention school-day or district partnerships. Delivering inside schools with the curriculum, materials and facilitation handled is your clearest gap to own.',
   'They sell weekly summer camps to parents ($225-$529/week). You sell a monthly class to schools ($125 per kid). Different buyer, so do not compare price per hour until you know your hours per month.',
+  'Biggest risk: on Aug 31 Dr. Williams said the district is not approving AI literacy programs with students. InspiHER got through, but Molly has not answered whether AI tools can run on student Chromebooks. Frame sales as tech and career discovery, and get that answer in writing before Dec 2.',
   'Funding is the open question. Perkins V, Title IV-A and Georgia DOE STEM/CS grants exist, but the sources I found do not say a vendor can be paid from them. Ask Molly or Dr. Williams how the district pays outside providers.'
+];
+var AD_PROGRAM = 'THE AI LAB (program of The Brown Girls Creative Studio): hands-on AI and tech career workshops for K-12 students. We handle 100% of curriculum, materials and facilitation so teachers add no work. Students learn AI prompting, coding and web prototyping and build real digital projects, moving from technology consumers to creators. Pricing: $125 per kid per month, 20 kids per class. Founder Raeven Brown also does data analytics and backend consulting (for example the Kamaris Coffee ops audit, Aug 2026).';
+var AD_THESIS = 'STRATEGY: Turn one Career Day appearance into a repeatable "Career Day Academy" discipline. Path so far: Career Day speaker, then 5 sessions at Newton County STEAM Academy (100+ students), then Dr. Jennifer Williams (district) invited us to InspiHER Dec 2-3. Next: use that proof to open doors at other Newton schools, other districts, and private programs in the right Atlanta areas, at the real monthly price.';
+var AD_STORY = [
+  ['Aug 23', 'Sent the district a proposal: free 1-hour after-school AI discovery pilot at STEAM Academy plus a $25 drop-in studio hour. Passed to Dr. Williams Aug 25.'],
+  ['Aug 31', 'Dr. Williams said she could not approve after-school pilots and the district was "not approving any AI Literacy programs with students at this time." Within the hour she asked for a Zoom to learn more.'],
+  ['Sep 4', 'Volunteered as a STEAM Academy Career Day speaker for Sept 25 (Data Analytics and AI Entrepreneurship).'],
+  ['Sep 8', 'Discovery call with Dr. Williams (moved to phone/Teams after a Meet link was blocked).'],
+  ['Sep 10', 'Sent the InspiHER 2026 proposal: AI & Tech Discovery Studio, Dec 2-3.'],
+  ['Oct 1', 'Dr. Williams confirmed both days, has the invoice, asked for a W-9 (sent same day).'],
+  ['Oct 7', 'Emailed Ms. Bunting about a Q1 return after the 5-session STEAM run. Also emailed Heritage Hills and (Oct 8) NCCA. No replies yet.'],
+  ['Nov 9', 'Asked Molly Bowden about AI tools on Chromebooks and the parent card. Still waiting.'],
+  ['Nov 10-13', 'First-touch emails: ASAP after-school, Progressive Steps, the district, Gwinnett, Clayton. 4kiddos replied and booked a Jan 12 call.']
 ];
 var adCur = 'ceo';
 function adBriefText(k) {
   var m = coModel(), c = m.c, d = AD_DEPTS[k];
   var ex = []; try { ex = exRead(); } catch (e) {}
   var exTotal = ex.reduce(function (a, x) { return a + (parseFloat(x.amt) || 0); }, 0);
-  var L = ['ROLE: ' + d[1], 'RULES: Use web search for anything about the outside world and cite sources with dates. Do not agree with me to be nice. Mark every number as verified, assumed or unknown. Never send emails for me.', '', 'BUSINESS: The Brown Girls Creative Studio / The AI Lab (Newton County, GA). Goal $' + c.goal + '/month. Price $125 per kid per month, 20 kids per class, max ' + c.maxClasses + ' classes until I hire. Dec 2-3 InspiHER event is a $750 flat speaker fee, not my class rate, and is my foot in the door with the district.', 'SNAPSHOT ' + m.today + ': class slots filled ' + m.slots + '/' + m.cap + '; emails out waiting ' + m.out.length + '; warm leads ' + m.leads.length + '; need about ' + m.perDay + ' new emails per weekday (assumed reply ' + c.reply + '%, reply-to-call ' + c.call + '%, call-to-class ' + c.close + '%, not yet measured).', 'EXPENSES logged: ' + ex.length + ' entries, $' + exTotal.toFixed(2) + ' total.', '', 'PIPELINE:'];
+  var L = ['ROLE: ' + d[1], 'RULES: Use web search for anything about the outside world and cite sources with dates. Do not agree with me to be nice. Mark every number as verified, assumed or unknown. Never send emails for me.', '', 'BUSINESS: The Brown Girls Creative Studio / The AI Lab (Newton County, GA). Goal $' + c.goal + '/month. Price $125 per kid per month, 20 kids per class, max ' + c.maxClasses + ' classes until I hire. Dec 2-3 InspiHER event is a $750 flat speaker fee, not my class rate, and is my foot in the door with the district.', 'SNAPSHOT ' + m.today + ': class slots filled ' + m.slots + '/' + m.cap + '; emails out waiting ' + m.out.length + '; warm leads ' + m.leads.length + '; need about ' + m.perDay + ' new emails per weekday (assumed reply ' + c.reply + '%, reply-to-call ' + c.call + '%, call-to-class ' + c.close + '%, not yet measured).', 'EXPENSES logged: ' + ex.length + ' entries, $' + exTotal.toFixed(2) + ' total.', '', AD_PROGRAM, AD_THESIS, '', 'HISTORY (from my email):'].concat(AD_STORY.map(function (x) { return '- ' + x[0] + ': ' + x[1]; })).concat(['', 'PIPELINE:']);
   m.P.forEach(function (p) { var last = (p.activities || [])[0]; L.push('- ' + p.org + ' [' + p.stage + ']' + (p.emailSentDate ? ' sent ' + p.emailSentDate : '') + (last ? ' | last: ' + last.title : '')); });
   L.push('', 'OPEN TASKS:'); m.tasks.slice(0, 20).forEach(function (x) { L.push('- ' + x.t.date + ' ' + x.p.org + ': ' + x.t.title); });
   L.push('', 'COMPETITOR NOTES (public listings, Nov 15 2026, verify):'); AD_COMP.forEach(function (x) { L.push('- ' + x[0] + ': ' + x[1]); });
@@ -4730,7 +4744,7 @@ function renderAdvisor() {
   document.getElementById('adTitle').innerText = AD_DEPTS[adCur][0] + ' brief';
   document.getElementById('adBrief').value = adBriefText(adCur);
   document.getElementById('adComp').innerHTML = AD_COMP.map(function (x) { return '<div class="rounded-xl bg-dark-700 border border-dark-600 p-3"><a href="' + x[2] + '" target="_blank" rel="noopener" class="text-sm font-bold text-amber-300">' + esc(x[0]) + '</a><div class="text-xs text-slate-400 mt-0.5">' + esc(x[1]) + '</div></div>'; }).join('') +
-    '<div class="rounded-xl border border-amber-500/30 p-3 text-xs text-slate-300 space-y-1"><div class="font-bold text-amber-300">What this means</div>' + AD_TAKE.map(function (t) { return '<div>' + esc(t) + '</div>'; }).join('') + '</div>';
+    '<div class="rounded-xl border border-amber-500/30 p-3 text-xs text-slate-300 space-y-1"><div class="font-bold text-amber-300">Our story so far (from your email)</div>' + AD_STORY.map(function (x) { return '<div><b class="text-slate-100">' + esc(x[0]) + ':</b> ' + esc(x[1]) + '</div>'; }).join('') + '</div><div class="rounded-xl border border-amber-500/30 p-3 text-xs text-slate-300 space-y-1"><div class="font-bold text-amber-300">What this means</div>' + AD_TAKE.map(function (t) { return '<div>' + esc(t) + '</div>'; }).join('') + '</div>';
 }
 function adPick(k) { adCur = k; renderAdvisor(); }
 function adCopy() { var t = document.getElementById('adBrief').value; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { alert('Copied. Paste it into a Claude chat.'); }, function () { var b = document.getElementById('adBrief'); b.select(); }); }
