@@ -317,5 +317,30 @@
    "_u": 1794858000000
   }
  ],
- "updates": []
+ "updates": [
+  {
+   "key": "reply-201-20261116",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-16",
+    "person": "Molly Bowden",
+    "title": "Reply: Chromebooks, AI tools, feedback",
+    "phone": "",
+    "email": "bowden.molly@newton.k12.ga.us",
+    "message": "Molly: students should be able to open the page, please send the link to test. Most AI tools are blocked for students, asked which one is needed. Feedback form likely fine, she will confirm with Dr. Williams. She will check on the W-9 and EIN. Spaces and times not final yet.",
+    "nextSteps": "Send the test link and answer the AI tools question (no outside AI tool needed). Draft reply is in Gmail.",
+    "followUpDone": false
+   },
+   "addTask": {
+    "title": "Send Molly the portal test link and AI tools answer",
+    "desc": "Reply draft is in Gmail Drafts. Also wait for final rooms and times.",
+    "date": "2026-11-17",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  }
+ ]
 }
