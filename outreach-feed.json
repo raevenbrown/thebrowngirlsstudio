@@ -419,6 +419,21 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "sent-201-20261116",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-16",
+    "person": "Molly Bowden",
+    "title": "Emailed: Re: InspiHER Session",
+    "phone": "",
+    "email": "bowden.molly@newton.k12.ga.us",
+    "message": "Raeven followed up on her earlier note: in final prep for the Dec 2-3 sessions and checking details with Dr. Bowden. Molly replied the same day.",
+    "nextSteps": "Send Molly the test link and AI tools answer.",
+    "followUpDone": false
+   }
   }
  ]
 }
