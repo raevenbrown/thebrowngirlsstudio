@@ -459,6 +459,31 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "sent-212-20261116",
+   "id": 212,
+   "stage": "Lead",
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-16",
+    "person": "Progressive Steps Inc. Team",
+    "title": "Sent reply: 20 students/class, 1-hour, Jan start, asked how meals and take-home work",
+    "phone": "470-896-0810",
+    "email": "psi@progressivestepsinc.org",
+    "message": "Answered their 6 questions. Classes 1 to 3 days a week or Saturdays, locations vary by client, no long-term contracts. Asked how meals work on-site (snack or dinner) and whether students can take food home. Asked for a call.",
+    "nextSteps": "Wait for their reply, then book the call. Ask what PSI needs in writing at each site.",
+    "followUpDone": false
+   },
+   "addTask": {
+    "title": "Follow up with Progressive Steps if no reply",
+    "desc": "Reply sent Nov 16. Nudge once. Ask about meals on-site, take-home, and what they need per site.",
+    "date": "2026-11-23",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
