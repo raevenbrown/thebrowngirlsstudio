@@ -499,6 +499,22 @@
    "completeTasks": [
     "Answer Progressive Steps' 6 questions"
    ]
+  },
+  {
+   "key": "llc-fix-20261116",
+   "id": 201,
+   "completeTasks": [
+    "Re-register The Brown Girls Creative Studio LLC"
+   ],
+   "addTask": {
+    "title": "Re-register the LLC (not urgent for pay)",
+    "desc": "You bill under your own name and EIN, so W-9s work now. Do the LLC for liability protection, grant eligibility and bigger partners. If you switch, get a new EIN for the LLC and send updated W-9s.",
+    "date": "2026-12-10",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
