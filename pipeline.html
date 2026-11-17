@@ -4475,6 +4475,7 @@ function bgcsFeedSync() {
         if (u.stage) t.stage = u.stage; if (u.emailSentDate) t.emailSentDate = u.emailSentDate; if (u.emailStatus) t.emailStatus = u.emailStatus;
         if (u.activity) (t.activities = t.activities || []).unshift(u.activity);
         if (u.addTask) (t.clientTasks = t.clientTasks || []).push(u.addTask);
+        if (u.completeTasks) (t.clientTasks || []).forEach(function (ct) { if (!ct.done && u.completeTasks.some(function (m) { return (ct.title || '').indexOf(m) === 0; })) ct.done = true; });
         changed = true;
       });
       try { localStorage.setItem('bgcs_feed_applied', JSON.stringify(Object.keys(A))); } catch (e) {}
