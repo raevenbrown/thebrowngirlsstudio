@@ -341,6 +341,84 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "task-llc-20261116",
+   "id": 201,
+   "addTask": {
+    "title": "Re-register The Brown Girls Creative Studio LLC",
+    "desc": "Needed for W-9/EIN, vendor payments, contracts and any sponsor or school paying you. Check GA Secretary of State for current fee. Molly already asked for W-9 and EIN.",
+    "date": "2026-11-18",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "task-profile-20261116",
+   "id": 201,
+   "addTask": {
+    "title": "Finish student profile link (portal) before replying fully to Molly",
+    "desc": "Then send Molly the test link, the AI tools answer (no outside AI, simulator only) and ask for final rooms and times.",
+    "date": "2026-11-19",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "task-sendhold-20261116",
+   "id": 201,
+   "addTask": {
+    "title": "Review and send short holding reply to Molly",
+    "desc": "Draft is in Gmail Drafts. Tell her the link and answers come before end of week.",
+    "date": "2026-11-16",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "task-review-20261116",
+   "id": 201,
+   "addTask": {
+    "title": "Review and send the 9 outreach drafts (14-20 a day, spaced out)",
+    "desc": "Open Gmail Drafts, read each one, send a few per hour (not all at once). Engineering for Kids and Atlanta CARES still need a recipient email.",
+    "date": "2026-11-17",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "task-sponsor-20261116",
+   "id": 201,
+   "addTask": {
+    "title": "Decide the sponsored-seats offer and ask how Newton Schools pays vendors",
+    "desc": "$125 per seat, 20 seats = $2,500/mo per class. Ask the school/foundation if sponsors can pay them and they pay you. Hold the foundation email until Molly or Dr. Williams knows.",
+    "date": "2026-11-20",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "task-price-20261116",
+   "id": 201,
+   "addTask": {
+    "title": "Set price floor: confirm sessions per month for the 1-hour class",
+    "desc": "Weekly = about 4 sessions/month. Needed to compare against district after-school rates.",
+    "date": "2026-11-20",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
