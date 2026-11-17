@@ -329,13 +329,13 @@
     "phone": "",
     "email": "bowden.molly@newton.k12.ga.us",
     "message": "Molly: students should be able to open the page, please send the link to test. Most AI tools are blocked for students, asked which one is needed. Feedback form likely fine, she will confirm with Dr. Williams. She will check on the W-9 and EIN. Spaces and times not final yet.",
-    "nextSteps": "Send the test link and answer the AI tools question (no outside AI tool needed). Draft reply is in Gmail.",
+    "nextSteps": "Holding reply drafted (send today). Send test link, AI tools answer and final profile link before end of week.",
     "followUpDone": false
    },
    "addTask": {
-    "title": "Send Molly the portal test link and AI tools answer",
-    "desc": "Reply draft is in Gmail Drafts. Also wait for final rooms and times.",
-    "date": "2026-11-17",
+    "title": "Send Molly final portal link + AI tools answer",
+    "desc": "Short holding reply is in Gmail Drafts. Finish the profile link first; then send the full answer (no outside AI tool needed, simulator only).",
+    "date": "2026-11-19",
     "assignee": "Raeven Brown",
     "urgency": "High (Urgent)",
     "done": false,
