@@ -602,6 +602,7 @@ bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex i
 <!-- View 1: Main Pipeline / Sales Funnel Columns (Synchronized with all 25 prospects)
 -->
 <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
+<div id="homeCmd" class="space-y-4"></div>
 <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
 <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl
 shadow-sm">
@@ -4794,6 +4795,48 @@ function renderAdvisor() {
 }
 function adPick(k) { adCur = k; renderAdvisor(); }
 function adCopy() { var t = document.getElementById('adBrief').value; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { alert('Copied. Paste it into a Claude chat.'); }, function () { var b = document.getElementById('adBrief'); b.select(); }); }
+
+/* ===== Home command center (first thing on the Pipeline page) ===== */
+function homeEsc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, function (ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; }); }
+function homeDone(pid, ti) {
+  var p = (financialProspects || []).find(function (x) { return x.id === pid; });
+  if (!p || !p.clientTasks || !p.clientTasks[ti]) return;
+  p.clientTasks[ti].done = !p.clientTasks[ti].done;
+  try { logActivity(p.id, 'task', 'Task ' + (p.clientTasks[ti].done ? 'completed' : 'reopened') + ': ' + (p.clientTasks[ti].title || '')); } catch (e) {}
+  saveFinancialProspects();
+  renderHome();
+}
+function homeOpen(pid) { try { if (typeof openProfile === 'function') openProfile(pid); } catch (e) {} }
+function renderHome() {
+  var box = document.getElementById('homeCmd'); if (!box) return;
+  var m = coModel(), P = m.P, E = homeEsc, today = m.today;
+  var box1 = function (title, body, cls) { return '<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5 ' + (cls || '') + '"><p class="text-[11px] uppercase tracking-wider font-bold text-amber-400 mb-2">' + title + '</p>' + body + '</div>'; };
+  var wk = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
+  var shown = m.tasks.filter(function (x) { return x.t.date <= wk; }).slice(0, 10);
+  var tl = shown.length ? shown.map(function (x) {
+    var ti = x.p.clientTasks.indexOf(x.t), od = x.t.date < today, td = x.t.date === today;
+    return '<div class="flex items-start gap-2.5 py-2 border-b border-dark-600 last:border-0"><input type="checkbox" onchange="homeDone(' + x.p.id + ',' + ti + ')" class="mt-1 accent-amber-500 w-4 h-4 shrink-0"><div class="min-w-0 flex-1"><p class="text-sm font-semibold text-slate-100">' + E(x.t.title) + '</p><p class="text-[11px] text-slate-400"><a href="javascript:void(0)" onclick="homeOpen(' + x.p.id + ')" class="text-amber-300">' + E(x.p.org) + '</a> &middot; <span class="' + (od ? 'text-rose-400 font-bold' : td ? 'text-amber-300 font-bold' : '') + '">' + (od ? 'Overdue ' : td ? 'Today ' : '') + E(x.t.date) + '</span></p>' + (x.t.desc ? '<p class="text-[11px] text-slate-500 mt-0.5">' + E(x.t.desc) + '</p>' : '') + '</div></div>';
+  }).join('') : '<p class="text-sm text-slate-400">Nothing due in the next 7 days.</p>';
+  var more = m.tasks.length - shown.length;
+  var taskBox = box1('Your task list &middot; ' + m.tasks.length + ' open' + (m.overdue.length ? ' &middot; <span class="text-rose-400">' + m.overdue.length + ' due or overdue</span>' : ''), tl + (more > 0 ? '<p class="text-[11px] text-slate-500 mt-2">+ ' + more + ' later this month. Open a company to see them.</p>' : ''), 'lg:col-span-2');
+  var ex = []; try { ex = JSON.parse(localStorage.getItem('bgcs_expenses') || '[]') || []; } catch (e) {}
+  var mk = today.slice(0, 7), exM = ex.filter(function (x) { return String(x.date || '').slice(0, 7) === mk; }).reduce(function (a, x) { return a + (parseFloat(x.amt) || 0); }, 0);
+  var booked = m.slots * m.c.classVal;
+  var pct = Math.min(100, Math.round(booked / m.c.goal * 100));
+  var goalBox = box1('Goal: ' + coFmt(m.c.goal) + ' a month', '<div class="flex items-end justify-between"><span class="text-3xl font-black text-slate-100">' + coFmt(booked) + '</span><span class="text-xs text-slate-400">recurring booked</span></div><div class="h-2 rounded-full bg-dark-700 mt-2 overflow-hidden"><div class="h-2 bg-amber-500" style="width:' + pct + '%"></div></div><p class="text-xs text-slate-300 mt-3">' + m.slots + ' of ' + m.cap + ' class slots signed. Even full, 5 classes is ' + coFmt(m.capRev) + ', which is <b class="text-rose-300">' + coFmt(m.gap) + ' short</b>. You need a 6th class, a higher price, or a second revenue line (events, sponsors).</p><p class="text-xs text-slate-400 mt-2">To fill the slots: about <b class="text-slate-200">' + m.perDay + ' new emails per weekday</b> until ' + E(m.c.deadline) + ' at your current reply and close rates.</p>');
+  var hot = P.filter(function (p) { return p.stage === 'Lead' || p.stage === 'Invoice Pending'; });
+  var hotHtml = hot.length ? hot.map(function (p) { var a = (p.activities || [])[0]; return '<div class="py-1.5 border-b border-dark-600 last:border-0"><a href="javascript:void(0)" onclick="homeOpen(' + p.id + ')" class="text-sm font-semibold text-amber-300">' + E(p.org) + '</a> <span class="text-[10px] px-1.5 py-0.5 rounded bg-dark-700 text-slate-300">' + E(p.stage) + '</span>' + (a ? '<p class="text-[11px] text-slate-400">' + E(a.date) + ': ' + E(a.title) + '</p>' : '') + '</div>'; }).join('') : '<p class="text-sm text-slate-400">No replies logged yet.</p>';
+  var repBox = box1('Who has replied &middot; ' + hot.length, hotHtml);
+  var cnt = function (st) { return P.filter(function (p) { return p.stage === st; }).length; };
+  var outBox = box1('Outreach', '<div class="grid grid-cols-3 gap-2 text-center"><div class="rounded-xl bg-dark-700 p-2"><div class="text-xl font-bold text-slate-100">' + cnt('Email Drafted') + '</div><div class="text-[10px] text-slate-400">Drafted, not sent</div></div><div class="rounded-xl bg-dark-700 p-2"><div class="text-xl font-bold text-slate-100">' + cnt('First Touch Sent') + '</div><div class="text-[10px] text-slate-400">Sent, waiting</div></div><div class="rounded-xl bg-dark-700 p-2"><div class="text-xl font-bold text-slate-100">' + cnt('Lead') + '</div><div class="text-[10px] text-slate-400">Replied</div></div></div>' + (m.stale.length ? '<p class="text-xs text-amber-300 mt-3">' + m.stale.length + ' sent 5+ days ago with no reply: ' + m.stale.slice(0, 3).map(function (p) { return E(p.org); }).join(', ') + '. One short nudge each.</p>' : '<p class="text-xs text-slate-400 mt-3">No stale follow-ups.</p>') + '<p class="text-[11px] text-slate-500 mt-2">Keep sends to about 14-20 a day, spaced out.</p>');
+  var comp = (typeof AD_COMP !== 'undefined' ? AD_COMP : []).slice(0, 3).map(function (x) { return '<div class="py-1.5 border-b border-dark-600 last:border-0"><a href="' + x[2] + '" target="_blank" rel="noopener" class="text-sm font-semibold text-amber-300">' + E(x[0]) + '</a><p class="text-[11px] text-slate-400">' + E(x[1]) + '</p></div>'; }).join('');
+  var take = (typeof AD_TAKE !== 'undefined' ? AD_TAKE : []).slice(0, 2).map(function (x) { return '<li>' + E(x) + '</li>'; }).join('');
+  var compBox = box1('Competitors &amp; how to win', comp + '<ul class="list-disc pl-4 mt-2 space-y-1 text-xs text-slate-300">' + take + '</ul><a href="#view=advisor" onclick="switchMainView(\'advisor\')" class="inline-block mt-2 text-xs font-bold text-amber-300">Open full AI Advisor &rarr;</a>', 'lg:col-span-2');
+  var money = box1('Money this month', '<div class="text-3xl font-black text-slate-100">' + coFmt(exM) + '</div><p class="text-xs text-slate-400">logged expenses in ' + mk + '</p><p class="text-xs text-slate-300 mt-2">Closed Won recurring: ' + coFmt(booked) + '.</p><p class="text-xs text-slate-400 mt-2">InspiHER ($750, Dec 2-3) is Invoice Pending. It is not counted as recurring.</p>');
+  var watch = box1('Watch list (straight talk)', '<ul class="list-disc pl-4 space-y-1 text-xs text-slate-300"><li>LLC is not re-registered yet. Molly asked for a W-9 and EIN, and no school or sponsor can pay you without it.</li><li>The district said in August it is not approving AI programs with students. Keep the Dec sessions framed as tech and career discovery and keep Molly informed.</li><li>One-time events do not reach $14k. Only monthly classes do.</li></ul>');
+  box.innerHTML = '<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">' + taskBox + goalBox + repBox + outBox + money + compBox + watch + '</div>';
+}
+(function () { var _rfk = renderFinancialKanban; renderFinancialKanban = function () { var r = _rfk.apply(this, arguments); try { renderHome(); } catch (e) { console.warn('home', e); } return r; }; })();
 /* ===== Revenue Coach ===== */
 var CO_DEF = { goal: 14000, classVal: 2500, maxClasses: 5, reply: 25, call: 50, close: 30, deadline: '2027-01-15' };
 function coCfg() { try { return Object.assign({}, CO_DEF, JSON.parse(localStorage.getItem('bgcs_coach') || '{}')); } catch (e) { return Object.assign({}, CO_DEF); } }

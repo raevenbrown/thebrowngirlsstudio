@@ -434,6 +434,31 @@
     "nextSteps": "Send Molly the test link and AI tools answer.",
     "followUpDone": false
    }
+  },
+  {
+   "key": "reply-212-20261116",
+   "id": 212,
+   "stage": "Lead",
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-16",
+    "person": "Progressive Steps Inc. Team",
+    "title": "Reply: interested in a partnership, asked 6 questions",
+    "phone": "470-896-0810",
+    "email": "psi@progressivestepsinc.org",
+    "message": "They want The AI Lab to deliver enrichment while PSI provides meals through its after-school nutrition program, inside PSI's after-school programming. Asked: students per location, addresses, grades, days/hours, ongoing vs events, school agreements.",
+    "nextSteps": "Review and send the draft answer in Gmail, then book a 20-min call.",
+    "followUpDone": false
+   },
+   "addTask": {
+    "title": "Answer Progressive Steps' 6 questions and book a call",
+    "desc": "Draft reply is in Gmail Drafts. Check the facts, send, then ask which PSI sites exist. Ask how they pay program partners.",
+    "date": "2026-11-17",
+    "assignee": "Raeven Brown",
+    "urgency": "High (Urgent)",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
