@@ -315,6 +315,41 @@
    ],
    "taxReceipts": [],
    "_u": 1794858000000
+  },
+  {
+   "id": 310,
+   "org": "Black Girls Do Engineer (BGDE)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "info@blackgirlsdoengineer.org",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-17",
+     "person": "",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "832-767-1046",
+     "email": "info@blackgirlsdoengineer.org",
+     "message": "Nonprofit (Houston, Brooklyn, Detroit, virtual). Draft asks about partnering in Georgia (co-hosted workshop, serving GA girls, AI curriculum ideas). They also have a sponsor/partner interest form on Jotform (not submitted).",
+     "nextSteps": "Review, send, then decide whether to fill their partner form too.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Black Girls Do Engineer",
+     "desc": "Draft is in Gmail Drafts. Peer and possible partner, not a likely buyer. Their Jotform asks for a partnership idea; you fill it in yourself.",
+     "date": "2026-11-19",
+     "assignee": "Raeven Brown",
+     "urgency": "Low",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1794960000000
   }
  ],
  "updates": [
