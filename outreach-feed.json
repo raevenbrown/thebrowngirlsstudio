@@ -350,6 +350,41 @@
    ],
    "taxReceipts": [],
    "_u": 1794960000000
+  },
+  {
+   "id": 311,
+   "org": "Newton County Boys & Girls Club (Nakita Williams)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "nwilliams@bgcncg.com",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-20",
+     "person": "Nakita Williams",
+     "title": "Intro email drafted in Gmail, not sent",
+     "phone": "",
+     "email": "nwilliams@bgcncg.com",
+     "message": "Director per a Covington News article; article date not confirmed, so check she is still the director.",
+     "nextSteps": "Review, send, then log reply.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Newton County Boys & Girls Club",
+     "desc": "Draft is in Gmail Drafts. Confirm the director is still Nakita Williams (bgcncg.com/newtoncounty).",
+     "date": "2026-11-21",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1795200000000
   }
  ],
  "updates": [
