@@ -585,6 +585,30 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "sent-205-20261120",
+   "id": 205,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-20",
+    "person": "Dwayaa Ward",
+    "title": "Emailed: Re: Porterdale Elementary School's Career Day",
+    "phone": "",
+    "email": "ward.dwayaa@newton.k12.ga.us",
+    "message": "Follow-up after Career Day asking for a short call in December or the second week of January to plan Q1 2027 collaboration; briefly described The AI Lab build-along style for younger students.",
+    "nextSteps": "Follow up in 5-7 days if no reply.",
+    "followUpDone": false
+   },
+   "addTask": {
+    "title": "Follow up with Porterdale Elementary",
+    "desc": "No reply yet to Nov 20 email asking for a Dec/Jan call.",
+    "date": "2026-11-26",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
