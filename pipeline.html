@@ -66,6 +66,13 @@ document.documentElement.classList.add('is-authenticated');
 .privacy-mask { filter: blur(6px); transition: filter 0.3s ease; user-select: none; }
 .privacy-mask:hover { filter: blur(0px); }
 html { -webkit-text-size-adjust: 100%; }
+html, body { overflow-x: clip; }
+main { max-width: 100%; overflow-x: clip; }
+[id^="mainView-"], #pipelineView, #profileView { min-width: 0; max-width: 100%; }
+main p, main li, main h1, main h2, main h3, main h4, main label { overflow-wrap: anywhere; }
+@media (max-width: 1023px) { .grid[class*="lg:grid-cols"]:not([class*=" grid-cols"]):not([class^="grid-cols"]) { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 767px) { .grid[class*="md:grid-cols"]:not([class*=" grid-cols"]):not([class^="grid-cols"]) { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 639px) { .grid[class*="sm:grid-cols"]:not([class*=" grid-cols"]):not([class^="grid-cols"]) { grid-template-columns: minmax(0, 1fr); } }
 body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); touch-action: manipulation; }
 main > header { padding-top: max(1rem, env(safe-area-inset-top)) !important; }
 #sidebarNav { padding-top: env(safe-area-inset-top); }
@@ -188,8 +195,7 @@ Prospects
 <a href="#view=goals" onclick="switchMainView('goals')" id="nav-goals" class="flex
 items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700
 transition">
-<i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Target
-Audience Map
+<i data-lucide="trending-up" class="w-4 h-4 mr-3 text-emerald-400"></i> Offers &amp; Pricing
 </a>
 <a href="#view=agenda" onclick="switchMainView('agenda')" id="nav-agenda"
 class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200
@@ -202,10 +208,7 @@ Meeting Outline
 <i data-lucide="history" class="w-4 h-4 mr-3 text-sky-400"></i> Activity Log
 </a>
 <a href="#view=advisor" onclick="switchMainView('advisor')" id="nav-advisor" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
-<i data-lucide="brain" class="w-4 h-4 mr-3 text-amber-400"></i> AI Advisor
-</a>
-<a href="#view=coach" onclick="switchMainView('coach')" id="nav-coach" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
-<i data-lucide="target" class="w-4 h-4 mr-3 text-amber-400"></i> Revenue Coach
+<i data-lucide="brain" class="w-4 h-4 mr-3 text-amber-400"></i> AI Coach
 </a>
 <a href="#view=expenses" onclick="switchMainView('expenses')" id="nav-expenses" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="receipt" class="w-4 h-4 mr-3 text-amber-400"></i> Expenses
@@ -299,7 +302,7 @@ hidden">
 space-y-8">
 <div class="border-b border-dark-600 pb-4 flex justify-between items-center">
 <div>
-<h2 class="text-xl font-bold text-slate-100">Target Audience Map</h2>
+<h2 class="text-xl font-bold text-slate-100">Offers &amp; Pricing</h2>
 <p class="text-xs text-slate-400 mt-1">Who we sell to, what each audience pays, and how many tracked prospects sit in each group. Click a group to see its companies.</p>
 </div>
 </div>
@@ -504,19 +507,24 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <p id="fbKioskWarn" class="hidden text-xs text-amber-400 mb-4">Staff: no school or event was chosen, so these responses will not be tagged. Exit and pick one first.</p><div id="fbKioskBody"></div></div></div>
 <!-- Main Section: Expenses -->
 <div id="mainView-advisor" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
-<div class="bg-dark-800 border border-amber-500/30 p-5 sm:p-6 rounded-2xl space-y-2"><div class="text-xs uppercase tracking-widest text-amber-400 font-bold">AI Advisor: your team of departments</div>
-<p class="text-sm text-slate-300">Pick a department. It packages your live pipeline, expenses, tasks and revenue math into one brief and tells Claude to research the web, cite sources, and push back instead of agreeing. Paste it into a Claude chat to get the real answer.</p>
-<p class="text-xs text-slate-500">Honest limit: this page cannot call Claude by itself. The analysis and the competitor research happen in the chat, where web search works.</p></div>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="adDepts"></div>
-<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><div class="flex flex-wrap items-center justify-between gap-2"><h3 id="adTitle" class="font-bold text-slate-100 text-sm">Brief</h3><button type="button" onclick="adCopy()" class="px-3 py-2 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold">Copy brief for Claude</button></div><textarea id="adBrief" readonly rows="14" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-3 text-xs text-slate-300 font-mono"></textarea></div>
-<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><h3 class="font-bold text-slate-100 text-sm">Competitor snapshot <span class="text-slate-500 font-normal text-xs">(researched Nov 15, 2026, from public listing pages; verify before you quote)</span></h3><div id="adComp" class="space-y-2"></div></div>
-</div>
-<div id="mainView-coach" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
+<div class="bg-dark-800 border border-amber-500/30 p-5 sm:p-6 rounded-2xl space-y-3"><div class="text-xs uppercase tracking-widest text-amber-400 font-bold">AI Coach</div>
+<h2 class="text-lg font-bold text-slate-100">Your plan, your advisors, and Claude in one place</h2>
+<p class="text-sm text-slate-300"><b class="text-slate-100">Plan</b> is the math on your pipeline against the $14,000 goal, plus today's moves. <b class="text-slate-100">Advisors</b> are specialists (CEO, sales, marketing, finance and more) who read your live numbers. <b class="text-slate-100">Ask Claude</b> opens the live chat, which already knows your pipeline.</p>
+<div id="advTabs" class="grid grid-cols-3 gap-2"></div></div>
+<div id="advSecPlan" class="space-y-6">
 <div id="coHero" class="bg-dark-800 border border-amber-500/30 p-5 sm:p-6 rounded-2xl"></div>
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="coCards"></div>
 <div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><h3 class="font-bold text-slate-100 text-sm">Today's moves</h3><div id="coTips" class="space-y-2"></div></div>
 <div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><h3 class="font-bold text-slate-100 text-sm">Assumptions <span class="text-slate-500 font-normal text-xs">(change these as real numbers come in)</span></h3><div id="coInputs" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div></div>
-<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-bold text-slate-100 text-sm">Deeper read with Claude</h3><button type="button" onclick="coCopy()" class="px-3 py-2 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 text-xs font-bold">Copy pipeline summary</button></div><p class="text-xs text-slate-400">This page does rule-based math on your pipeline. It is not a live AI. Paste the summary into a Claude chat for strategy and email drafts.</p></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><div class="flex flex-wrap items-center justify-between gap-2"><h3 class="font-bold text-slate-100 text-sm">Go deeper with Claude</h3><div class="flex flex-wrap gap-2"><button type="button" onclick="advSub('ask')" class="px-3 py-2 rounded-xl bg-amber-500/25 border border-amber-500/60 text-amber-200 text-xs font-bold">Ask Claude</button><button type="button" onclick="coCopy()" class="px-3 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold">Copy pipeline summary</button></div></div><p class="text-xs text-slate-400">The numbers above are rule-based math on your pipeline. For strategy, research and email drafts, tap Ask Claude. It already knows your pipeline.</p></div>
+</div>
+<div id="advSecTeam" class="space-y-6 hidden">
+<p class="text-xs text-slate-400">Pick an advisor, then tap Ask Claude now. Every advisor reads your live pipeline, expenses and tasks, researches the web, cites sources, and pushes back instead of agreeing.</p>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="adDepts"></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><div class="flex flex-wrap items-center justify-between gap-2"><h3 id="adTitle" class="font-bold text-slate-100 text-sm">Brief</h3><div class="flex flex-wrap gap-2"><button type="button" onclick="adAsk()" class="px-3 py-2 rounded-xl bg-amber-500/25 border border-amber-500/60 text-amber-200 text-xs font-bold">Ask Claude now</button><button type="button" onclick="adCopy()" class="px-3 py-2 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-bold">Copy brief</button></div></div><textarea id="adBrief" readonly rows="14" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-3 text-xs text-slate-300 font-mono"></textarea></div>
+<div class="bg-dark-800 border border-dark-600 p-5 rounded-2xl space-y-3"><h3 class="font-bold text-slate-100 text-sm">Competitor snapshot <span class="text-slate-500 font-normal text-xs">(researched Nov 15, 2026, from public listing pages; verify before you quote)</span></h3><div id="adComp" class="space-y-2"></div></div>
+
+</div>
 </div>
 <div id="mainView-expenses" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3" id="exCards"></div>
@@ -2051,8 +2059,8 @@ function renderFunnelPage() {
     '<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">' +
     card('Closed / paid', n.closed, n.by['Closed Won'] + ' deals won', '#10b981') +
     card('Pending revenue', n.pending, (n.by['Lead'] + n.by['Invoice Pending']) + ' deal' + ((n.by['Lead'] + n.by['Invoice Pending']) === 1 ? '' : 's') + ' waiting on payment or signature', '#E3BD79') +
-    card('Open pipeline', n.open, (n.by['Prospect'] + n.by['Email Drafted'] + n.by['First Touch Sent']) + ' prospects being worked', '#f59e0b') +
-    card('Gap to ' + fpMoney(goal), gap, 'after closed and pending', '#f43f5e') + '</div>' +
+    card('Open pipeline', n.open, (n.by['Prospect'] + n.by['Email Drafted'] + n.by['First Touch Sent']) + ' prospects being worked', '#d6aa62') +
+    card('Gap to ' + fpMoney(goal), gap, 'after closed and pending', '#ee917e') + '</div>' +
     '<div><p class="text-xs font-bold text-slate-200 mb-3 uppercase tracking-wider">Sales funnel</p><div class="space-y-0">' + funnel + '</div>' +
     '<p class="text-[11px] text-slate-500 mt-3 text-center">Closed lost: ' + n.by['Closed Lost'] + ' &middot; Potential = classes x 20 students x price per student, or the flat event fee.</p></div>' +
     '<div><p class="text-xs font-bold text-slate-200 mb-3 uppercase tracking-wider">Goal phases</p><div class="grid md:grid-cols-3 gap-3">' + phases + '</div></div>' +
@@ -2078,19 +2086,19 @@ function copyFunnelSummary() {
 
 /* ===================== TARGET AUDIENCE MAP (with prices) ===================== */
 var AUDIENCE_SEGMENTS = [
-  { key: 'careerDaysDetail', title: 'Career Days & School Workshops', color: '#f43f5e', role: 'Entry point',
+  { key: 'careerDaysDetail', title: 'Career Days & School Workshops', color: '#d9c49a', role: 'Entry point',
     prices: [['Career Day', 'Free', 'Lead generator that leads into the after school program'], ['Speaking engagement', '$750', 'Two-day event, flat fee']],
     facts: ['Goal: book 3-4 more career days', 'Each one feeds the after school waitlist'], monthly: '$750 per paid event' },
   { key: 'afterSchoolDetail', title: 'After-School Programs & Districts', color: '#E3BD79', role: 'Core revenue',
     prices: [['AI Lab after school', '$125', 'per student, per month'], ['One class of 20', '$2,500', 'per month, per school']],
     facts: ['6 to 12 month contract = $15,000 to $30,000 per school', 'Capped at 3 partner schools this cycle'], monthly: '$7,500 per month at 3 schools' },
-  { key: 'privateSchoolsDetail', title: 'Private Schools & Community Centers', color: '#10b981', role: 'Core revenue',
+  { key: 'privateSchoolsDetail', title: 'Private Schools & Community Centers', color: '#d28b5e', role: 'Core revenue',
     prices: [['AI Lab after school', '$125', 'per student, per month (school or parent funded)'], ['One class of 20', '$2,500', 'per month, per site']],
     facts: ['6-month contract lock-in', 'Shares the 3-school cap with districts'], monthly: 'Counts toward the same 3 schools' }
 ];
 var AUDIENCE_ALSO = [
-  { title: 'Business owners (Studio services)', color: '#d28b5e', prices: [['Tier 1', '$950/mo', 'Foundations & Systems Training'], ['Tier 2', '$1,250/mo', 'Managed Growth Engine'], ['Tier 3', '$2,500/mo', 'Full-Scale Operations + Marketing']] },
-  { title: 'Families (Saturday AI Lab cohort)', color: '#f59e0b', prices: [['December 2026 cohort', 'Price to be set', 'Paid program, shared with the waitlist before registration']] }
+  { title: 'Business owners (Studio services)', color: '#b8925a', prices: [['Tier 1', '$950/mo', 'Foundations & Systems Training'], ['Tier 2', '$1,250/mo', 'Managed Growth Engine'], ['Tier 3', '$2,500/mo', 'Full-Scale Operations + Marketing']] },
+  { title: 'Families (Saturday AI Lab cohort)', color: '#efdcae', prices: [['December 2026 cohort', 'Price to be set', 'Paid program, shared with the waitlist before registration']] }
 ];
 function audienceOf(p) {
   if (p.audience) return p.audience;
@@ -2122,7 +2130,7 @@ function renderAudienceMap() {
     return '<div class="rounded-2xl border border-dark-600 bg-dark-700/30 p-4"><p class="text-xs font-bold text-slate-100 mb-2" style="color:' + a.color + '">' + a.title + '</p><div class="grid sm:grid-cols-' + Math.min(3, a.prices.length) + ' gap-2">' + a.prices.map(function (r) { return chip(r[0], r[1], r[2], a.color); }).join('') + '</div></div>';
   }).join('');
   el.innerHTML =
-    '<div class="flex flex-col items-center"><div class="rounded-2xl border border-rose-500/50 bg-rose-500/10 px-6 py-3 text-center"><p class="text-[10px] uppercase tracking-widest font-bold text-rose-400">The AI Lab</p><p class="text-sm font-bold text-slate-100">Goal: $14,000 a month</p></div><div class="w-px h-4 bg-dark-600"></div>' +
+    '<div class="flex flex-col items-center"><div class="rounded-2xl border border-amber-500/50 bg-amber-500/10 px-6 py-3 text-center"><p class="text-[10px] uppercase tracking-widest font-bold text-amber-400">The AI Lab</p><p class="text-sm font-bold text-slate-100">Goal: $14,000 a month</p></div><div class="w-px h-4 bg-dark-600"></div>' +
     '<div class="hidden md:block h-px bg-dark-600 w-2/3"></div></div>' +
     '<div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">' + cols + '</div>' +
     '<div><p class="text-xs font-bold text-slate-200 mt-2 mb-3 uppercase tracking-wider">Also on the map</p><div class="grid lg:grid-cols-2 gap-4">' + also + '</div></div>';
@@ -4809,6 +4817,17 @@ function renderAdvisor() {
     '<div class="rounded-xl border border-amber-500/30 p-3 text-xs text-slate-300 space-y-1"><div class="font-bold text-amber-300">Our story so far (from your email)</div>' + AD_STORY.map(function (x) { return '<div><b class="text-slate-100">' + esc(x[0]) + ':</b> ' + esc(x[1]) + '</div>'; }).join('') + '</div><div class="rounded-xl border border-amber-500/30 p-3 text-xs text-slate-300 space-y-1"><div class="font-bold text-amber-300">What this means</div>' + AD_TAKE.map(function (t) { return '<div>' + esc(t) + '</div>'; }).join('') + '</div>';
 }
 function adPick(k) { adCur = k; renderAdvisor(); }
+function adAsk() { var d = AD_DEPTS[adCur]; if (d && window.hxAsk) window.hxAsk(d[1]); else adCopy(); }
+var advSubCur = (function () { try { var v = localStorage.getItem('bgcs_adv_sub'); return v === 'team' ? 'team' : 'plan'; } catch (e) { return 'plan'; } })();
+function advTabs() {
+  var plan = document.getElementById('advSecPlan'), team = document.getElementById('advSecTeam'), box = document.getElementById('advTabs');
+  if (plan) plan.classList.toggle('hidden', advSubCur !== 'plan');
+  if (team) team.classList.toggle('hidden', advSubCur !== 'team');
+  if (!box) return;
+  var on = 'bg-amber-500/20 border-amber-500/60 text-amber-300', off = 'bg-dark-700 border-dark-600 text-slate-300';
+  box.innerHTML = [['plan', 'Plan'], ['team', 'Advisors'], ['ask', 'Ask Claude']].map(function (t) { var a = t[0] === advSubCur; return '<button type="button" onclick="advSub(\'' + t[0] + '\')" class="px-3 py-3 rounded-xl text-xs font-bold border ' + (t[0] === 'ask' ? 'bg-amber-700 border-amber-600 text-white' : (a ? on : off)) + '">' + t[1] + '</button>'; }).join('');
+}
+function advSub(k) { if (k === 'ask') { if (window.hxToggle) window.hxToggle(); return; } advSubCur = k; try { localStorage.setItem('bgcs_adv_sub', k); } catch (e) {} advTabs(); window.scrollTo(0, 0); }
 function adCopy() { var t = document.getElementById('adBrief').value; (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(function () { alert('Copied. Paste it into a Claude chat.'); }, function () { var b = document.getElementById('adBrief'); b.select(); }); }
 
 /* ===== Home command center (first thing on the Pipeline page) ===== */
@@ -4923,6 +4942,7 @@ function renderExpenses() {
   document.getElementById('exList').innerHTML = a.length ? catHtml + '<div class="divide-y divide-dark-600">' + a.map(function (x) { return '<div class="py-2.5 flex items-start justify-between gap-3"><div class="min-w-0"><p class="text-sm font-semibold text-slate-100">' + exEsc(x.vendor) + (x.recur ? ' <span class="text-[10px] text-amber-300 font-bold">MONTHLY</span>' : '') + '</p><p class="text-[11px] text-slate-400">' + exEsc(x.date) + ' &middot; ' + exEsc(x.cat) + (x.note ? ' &middot; ' + exEsc(x.note) : '') + '</p></div><div class="flex items-center gap-3 shrink-0"><span class="text-sm font-bold text-slate-100">' + exMoney(x.amt) + '</span><button type="button" onclick="exDel(\'' + x.id + '\')" class="text-slate-500 hover:text-rose-400 text-xs">Delete</button></div></div>'; }).join('') + '</div>' : '<p class="text-sm text-slate-400 py-4">No expenses yet. Tap "+ Claude subscription" above to add your monthly Claude charge.</p>';
 }
 function switchMainView(viewName, updateHash = true) {
+if (viewName === 'coach') { viewName = 'advisor'; advSubCur = 'plan'; }   /* Revenue Coach and AI Advisor are now one page: AI Coach */
 if (viewName === 'financial') viewName = 'dashboard';   /* Financial Goal Tracker now lives on the Funnel & Dashboard page */
 if (viewName === 'prospects') viewName = 'pipeline';    /* Prospect To-Do page removed */
 if (profileIsOpen() && !window.__bypassLeave) {
@@ -4975,7 +4995,7 @@ document.getElementById('mainView-' + viewName).classList.remove('hidden');
 const activeBtn = document.getElementById('nav-' + viewName);
 if (activeBtn) activeBtn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-white bg-dark-700 border border-dark-600 shadow-sm transition";
 if (viewName === 'goals') {
-document.getElementById('pageTitle').innerText = "Target Audience Map";
+document.getElementById('pageTitle').innerText = "Offers & Pricing";
 renderAudienceMap();
 }
 if (viewName === 'dashboard') {
@@ -4992,12 +5012,10 @@ document.getElementById('pageTitle').innerText = "AI Lab Sites";
 renderSiteSubmissions();
 }
 if (viewName === 'advisor') {
-document.getElementById('pageTitle').innerText = "AI Advisor";
+document.getElementById('pageTitle').innerText = "AI Coach";
 renderAdvisor();
-}
-if (viewName === 'coach') {
-document.getElementById('pageTitle').innerText = "Revenue Coach";
 renderCoach();
+advTabs();
 }
 if (viewName === 'expenses') {
 document.getElementById('pageTitle').innerText = "Expenses";
@@ -6354,6 +6372,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.21-4"></script>
+<script src="pipeline-home.js?b=2026.11.21-5"></script>
 </body>
 </html>

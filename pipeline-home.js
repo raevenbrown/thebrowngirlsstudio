@@ -106,7 +106,7 @@
     ' body.hx-mob #hxChips{display:flex}',
     ' html:has(body.hx-mob),body.hx-mob{overflow-x:clip}.hx-swipe-fg>div,.hx-row>div{min-width:0;overflow-wrap:anywhere}',
     ' body.hx-mob .hx-river{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;overflow:visible;padding:4px 0 6px}body.hx-mob .hx-stage{flex:none;min-width:0;padding:12px 6px}',
-    ' body.hx-mob main>header button[onclick="exportCSV()"]{display:none}body.hx-mob main>header #pageTitle,body.hx-mob main>header button[onclick^="openFinancialProspectModal"]{white-space:nowrap}',
+    ' main>header button[onclick="exportCSV()"]{display:none}main>header #pageTitle,main>header button[onclick^="openFinancialProspectModal"]{white-space:nowrap}',
     ' body.hx-mob #hxFunnelWrap>div:first-child{display:block;border:0;padding-bottom:4px}body.hx-mob #hxFunnelWrap>div:first-child p{display:none}',
     ' body.hx-mob #salesFunnelContainer{flex-direction:column;overflow:visible;gap:0}',
     ' body.hx-mob #salesFunnelContainer>.hx-col{display:none;min-width:0;width:100%;flex:none}body.hx-mob #salesFunnelContainer>.hx-col.hx-show{display:block}',
@@ -338,7 +338,7 @@
 
     var comp = (typeof AD_COMP !== 'undefined' ? AD_COMP : []).slice(0, 3).map(function (x) { return '<div class="hx-row"><div><a class="hx-a" href="' + E(x[2]) + '" target="_blank" rel="noopener">' + E(x[0]) + '</a><div class="hx-mu" style="font-size:12px">' + E(x[1]) + '</div></div></div>'; }).join('');
     var take = (typeof AD_TAKE !== 'undefined' ? AD_TAKE : [])[0];
-    var compCard = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Competitors and how to win</div>' + comp + (take ? '<p class="hx-mu" style="margin-top:8px"><b style="color:#F3E8D6">Your edge:</b> ' + E(take) + '</p>' : '') + '<a class="hx-a" href="#view=advisor" onclick="switchMainView(\'advisor\')" style="font-size:12px;display:inline-block;margin-top:8px">Open full advisor &rarr;</a></div>';
+    var compCard = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Competitors and how to win</div>' + comp + (take ? '<p class="hx-mu" style="margin-top:8px"><b style="color:#F3E8D6">Your edge:</b> ' + E(take) + '</p>' : '') + '<a class="hx-a" href="#view=advisor" onclick="switchMainView(\'advisor\')" style="font-size:12px;display:inline-block;margin-top:8px">Open the AI Coach &rarr;</a></div>';
 
     var verLine = '<div class="hx-ver">Version ' + E(BUILD) + ' &middot; <button onclick="hxRefresh()">Refresh now</button></div>';
     var body;
@@ -366,7 +366,7 @@
     ['board', 'Board', '<rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/>'],
     ['clips', 'Clips', '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/>'],
     ['intel', 'Intel', '<path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/>'],
-    ['coach', 'Coach', '<path d="M4 5h16v10H9l-5 4z"/>']
+    ['coach', 'Ask', '<path d="M4 5h16v10H9l-5 4z"/>']
   ];
   function pipelineVisible() { var v = document.getElementById('pipelineView'); var pv = document.getElementById('profileView'); return !!v && !v.classList.contains('hidden') && (!pv || pv.classList.contains('hidden')); }
   function drawBar() {
