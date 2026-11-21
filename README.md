@@ -59,3 +59,6 @@ thebrowngirlsstudio/
 ├── labs.html          # Portfolio gallery of live Streamlit/Vercel engines
 ├── README.md          # Project architecture & system documentation
 └── assets/            # Static media, icons, and styling components
+
+## Releasing a pipeline update
+Bump the build id in two places so installed phones pick it up: `?b=` on the `pipeline-home.js` script tag in `pipeline.html`, and `v` in `version.json`. Open copies show "New version ready", or pull down / tap the refresh button.

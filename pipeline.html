@@ -18,15 +18,21 @@ tailwind.config = {
 darkMode: 'class',
 theme: {
 extend: {
-colors: {
-dark: {
-900: '#0a0a0c',
-800: '#121316',
-700: '#1a1b20',
-600: '#262831',
-500: '#3f4250'
-}
-}
+colors: (function () {
+/* Brand palette: warm browns, gold, copper and cream, used everywhere so the whole app matches the home screen. */
+var GOLD = { 50: '#fbf5e9', 100: '#f6ecd3', 200: '#efdcae', 300: '#E3BD79', 400: '#d6aa62', 500: '#C7994F', 600: '#a97f3c', 700: '#86632f', 800: '#634823', 900: '#42301a', 950: '#2a1d10' };
+var COPPER = { 50: '#fbf1ea', 100: '#f5dfd0', 200: '#ebc3a8', 300: '#e3a57c', 400: '#d28b5e', 500: '#b86f3f', 600: '#9a5a30', 700: '#774526', 800: '#58331d', 900: '#3c2316', 950: '#27160d' };
+var CREAM = { 50: '#fdfaf3', 100: '#f8f1e2', 200: '#f0e4cb', 300: '#e6d6b4', 400: '#d9c49a', 500: '#c3aa7b', 600: '#a08859', 700: '#7d6945', 800: '#5a4c33', 900: '#3b3223', 950: '#251f16' };
+var ROSE = { 50: '#fdf1ee', 100: '#fbdcd5', 200: '#f6c0b4', 300: '#f2a898', 400: '#ee917e', 500: '#d96f5a', 600: '#b9523f', 700: '#93402f', 800: '#6e3024', 900: '#4a211a', 950: '#2c120e' };
+var WARM = { 50: '#fbf6ec', 100: '#f3e8d6', 200: '#e4d6bd', 300: '#cdbea2', 400: '#a99a80', 500: '#857763', 600: '#62564a', 700: '#463c32', 800: '#2f2822', 900: '#1d1814', 950: '#120f0c' };
+return {
+dark: { 900: '#150e0a', 800: '#1d140e', 700: '#281b13', 600: '#3a2819', 500: '#57402a' },
+slate: WARM, gray: WARM, zinc: WARM, neutral: WARM, stone: WARM,
+amber: GOLD, yellow: GOLD, orange: COPPER, rose: ROSE, red: ROSE,
+purple: GOLD, violet: GOLD, indigo: GOLD, fuchsia: COPPER, pink: COPPER,
+blue: COPPER, sky: COPPER, cyan: CREAM, teal: CREAM
+};
+})()
 }
 }
 }
@@ -103,8 +109,8 @@ class="w-full rounded-xl bg-dark-700 border border-dark-600 px-4 py-3 text-sm te
 text-center tracking-widest focus:outline-none focus:ring-2 focus:ring-rose-500">
 <p id="errorMsg" class="text-xs text-rose-500 hidden">Incorrect password. Please try
 again.</p>
-<button type="submit" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500
-text-white font-semibold text-xs shadow-lg shadow-rose-600/20 transition">
+<button type="submit" class="w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600
+text-white font-semibold text-xs shadow-lg shadow-amber-600/20 transition">
 Unlock Dashboard
 </button>
 </form>
@@ -216,7 +222,7 @@ Meeting Outline
 <div class="p-4 border-t border-dark-600 flex items-center justify-between relative">
 <div class="flex items-center space-x-3 cursor-pointer flex-1"
 onclick="toggleMutePopup()">
-<div class="w-8 h-8 rounded-full bg-rose-600/20 text-rose-500 font-bold flex
+<div class="w-8 h-8 rounded-full bg-amber-700/20 text-rose-500 font-bold flex
 items-center justify-center text-xs">
 RB
 </div>
@@ -275,7 +281,7 @@ items-center shadow-sm">
 </button>
 
 <button onclick="openFinancialProspectModal()" class="px-3.5 py-2 rounded-xl
-bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white shadow-lg shadow-rose-600/20
+bg-amber-700 hover:bg-amber-600 text-xs font-semibold text-white shadow-lg shadow-amber-600/20
 transition flex items-center">
 <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Prospect
 </button>
@@ -363,7 +369,7 @@ class="text-slate-400 hover:text-slate-200"><i data-lucide="x" class="w-4 h-4"><
 <div id="mainView-activity" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
 <details class="bg-dark-800 border border-dark-600 rounded-2xl p-4 sm:p-5" ontoggle="renderBackupCard()"><summary class="cursor-pointer text-sm font-bold text-slate-100">Backup &amp; restore your pipeline data</summary>
 <div class="mt-3 space-y-3"><p class="text-xs text-slate-400">Your prospects, stages and notes are stored in this browser. Download a backup now and then, and keep the file somewhere safe. The pipeline also keeps automatic snapshots below.</p>
-<div class="flex flex-wrap items-center gap-2"><button onclick="bkDownload()" class="px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">Download backup</button>
+<div class="flex flex-wrap items-center gap-2"><button onclick="bkDownload()" class="px-3 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-xs font-bold">Download backup</button>
 <label class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200 cursor-pointer">Restore from backup file<input type="file" accept=".json,application/json" class="hidden" onchange="bkRestoreFile(this)"></label></div>
 <p id="bkNote" class="text-xs text-emerald-400 min-h-[1rem]"></p><div><p class="text-[11px] uppercase tracking-wider font-bold text-slate-500 mb-1">Automatic snapshots (newest first)</p><div id="bkList"></div></div></div></details>
 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
@@ -466,10 +472,10 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 </div>
 <!-- Main Section: AI Lab Sites (group submissions -> front site) -->
 <div id="rptModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9998;background:rgba(0,0,0,.7);align-items:center;justify-content:center;padding:12px">
-<div class="bg-dark-800 border border-dark-600 rounded-2xl w-full flex flex-col" style="max-width:900px;height:92vh;background:#111827">
+<div class="bg-dark-800 border border-dark-600 rounded-2xl w-full flex flex-col" style="max-width:900px;height:92vh;background:#1b120d">
 <div class="flex items-start justify-between gap-3 p-4 border-b border-dark-600"><div><h3 id="rptTitle" class="text-base font-bold text-slate-100">Report</h3><p id="rptSub" class="text-xs text-slate-400 mt-1"></p></div><button onclick="closeReportModal()" class="text-slate-400 hover:text-white text-xl px-2" aria-label="Close">&times;</button></div>
 <div class="flex flex-wrap items-center gap-2 p-3 border-b border-dark-600">
-<button id="rptCopyBtn" onclick="rptCopy()" class="px-3 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">Copy as text</button>
+<button id="rptCopyBtn" onclick="rptCopy()" class="px-3 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-xs font-bold">Copy as text</button>
 <button id="rptPrintBtn" onclick="rptPrint()" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Print / Save as PDF</button>
 <button onclick="rptDownload('html')" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Download report</button>
 <button onclick="rptDownload('txt')" class="px-3 py-2 rounded-xl bg-dark-700 border border-dark-600 text-xs font-bold text-slate-200">Download text</button>
@@ -481,7 +487,7 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <div id="mainView-feedback" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden">
 <div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl space-y-4">
 <div class="flex flex-wrap items-start justify-between gap-3"><div><h2 class="text-xl font-bold text-slate-100">Feedback</h2><p class="text-xs text-slate-400 mt-1">Pick the school or event, then start kiosk mode. In the last 10 minutes, Courtney can walk the room with the iPad so teachers and students can leave a review.</p></div>
-<button onclick="openFeedbackKiosk()" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-sm font-bold">Start iPad kiosk mode</button></div>
+<button onclick="openFeedbackKiosk()" class="px-4 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-sm font-bold">Start iPad kiosk mode</button></div>
 <div class="grid sm:grid-cols-3 gap-3">
 <div><label class="block text-[11px] font-bold text-slate-400 mb-1">School or event</label><select id="fbSchool" onchange="saveFbSession()" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-100"></select></div>
 <div id="fbSchoolOtherWrap" class="hidden"><label class="block text-[11px] font-bold text-slate-400 mb-1">Type the name</label><input id="fbSchoolOther" oninput="saveFbSession()" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-100"></div>
@@ -491,7 +497,7 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl"><h3 class="text-sm font-bold text-slate-100 mb-4">Leave feedback</h3><div id="fbFormHost"></div></div>
 <div class="bg-dark-800 border border-dark-600 p-5 sm:p-6 rounded-2xl"><div class="flex items-center justify-between mb-3"><h3 class="text-sm font-bold text-slate-100">Responses</h3><div class="flex gap-2"><button onclick="renderFeedbackList(true)" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300">Refresh</button><button onclick="exportFeedbackCsv()" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-300">Export CSV</button></div></div><div id="fbList"></div></div></div>
 </div>
-<div id="fbKiosk" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;overflow-y:auto;background:#0b0f19">
+<div id="fbKiosk" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;overflow-y:auto;background:#150e0a">
 <div class="max-w-2xl mx-auto p-6 sm:p-10"><div class="flex items-start justify-between mb-6"><div><p class="text-[11px] uppercase tracking-widest font-bold text-rose-400">The AI Lab feedback</p><h2 id="fbKioskTitle" class="text-2xl sm:text-3xl font-extrabold text-slate-100">The AI Lab</h2><p class="text-sm text-slate-400 mt-1">Takes about one minute. Thank you! <span id="fbKioskCount" class="text-slate-600"></span></p></div>
 <button id="fbKioskExit" onclick="closeFeedbackKiosk()" class="text-[11px] text-slate-500 px-2 py-1">Staff exit</button></div>
 <p id="fbKioskWarn" class="hidden text-xs text-amber-400 mb-4">Staff: no school or event was chosen, so these responses will not be tagged. Exit and pick one first.</p><div id="fbKioskBody"></div></div></div>
@@ -523,7 +529,7 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <input id="exAmt" type="number" step="0.01" min="0" required placeholder="Amount $" class="col-span-1 sm:col-span-1 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
 <input id="exNote" type="text" placeholder="Note (optional)" class="col-span-2 sm:col-span-5 rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200">
 <label class="col-span-1 sm:col-span-1 flex items-center gap-2 text-xs text-slate-300"><input id="exRecur" type="checkbox"> Repeats monthly</label>
-<button type="submit" class="col-span-2 sm:col-span-6 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold">Save expense</button>
+<button type="submit" class="col-span-2 sm:col-span-6 py-2.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-xs font-bold">Save expense</button>
 </form>
 <div id="exRecurBox"></div>
 </div>
@@ -569,7 +575,7 @@ hidden">
 <label class="col-span-2 lg:col-span-3 space-y-1"><span class="text-slate-400 font-semibold">Notes doc link (Google Doc)</span><input id="meetDoc" placeholder="https://docs.google.com/document/..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></label>
 </div>
 <div class="flex flex-wrap gap-2">
-<button onclick="openRecurringEvent()" class="px-3.5 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">Create recurring event in Google Calendar</button>
+<button onclick="openRecurringEvent()" class="px-3.5 py-2 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs">Create recurring event in Google Calendar</button>
 <button onclick="saveMeetSetup()" class="px-3.5 py-2 rounded-xl bg-dark-700 border border-dark-600 text-slate-200 font-semibold text-xs hover:bg-dark-600">Save links</button>
 <a href="https://docs.new" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl bg-dark-700 border border-dark-600 text-slate-200 font-semibold text-xs hover:bg-dark-600">New notes doc</a>
 </div>
@@ -594,7 +600,7 @@ Agenda</h2>
 and update strategic takeaways.</p>
 </div>
 <button onclick="openMeetingNoteModal()" class="px-3.5 py-2 rounded-xl
-bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
+bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs transition flex items-center">
 <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Add Meeting Notes
 </button>
 </div>
@@ -610,7 +616,7 @@ bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex i
 -->
 <div id="pipelineView" class="p-4 sm:p-8 space-y-8 max-w-7xl mx-auto w-full">
 <div id="homeCmd" class="space-y-4"></div>
-<div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
+<div id="hxStats" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
 <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl
 shadow-sm">
 <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase
@@ -622,7 +628,7 @@ mt-2">0</h3>
 shadow-sm">
 <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase
 tracking-wider">Prospect</p>
-<h3 id="stat-prospect" class="text-2xl sm:text-3xl font-bold text-amber-400
+<h3 id="stat-prospect" class="text-2xl sm:text-3xl font-bold text-slate-300
 mt-2">0</h3>
 </div>
 <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
@@ -637,12 +643,12 @@ mt-2">0</h3>
 shadow-sm">
 <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase
 tracking-wider">Lead</p>
-<h3 id="stat-invoice" class="text-2xl sm:text-3xl font-bold text-purple-400
+<h3 id="stat-invoice" class="text-2xl sm:text-3xl font-bold text-amber-400
 mt-2">0</h3>
 </div>
 <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm">
 <p class="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">Invoice Pending</p>
-<h3 id="stat-ip" class="text-2xl sm:text-3xl font-bold text-yellow-400 mt-2">0</h3>
+<h3 id="stat-ip" class="text-2xl sm:text-3xl font-bold text-yellow-200 mt-2">0</h3>
 </div>
 <div class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl
 shadow-sm">
@@ -653,7 +659,7 @@ mt-2">0</h3>
 </div>
 </div>
 <div id="outreachSummaryCard" class="bg-dark-800 border border-dark-600 p-4 sm:p-6 rounded-2xl shadow-sm space-y-3"></div>
-<div class="space-y-6">
+<div id="hxFunnelWrap" class="space-y-6">
 
 <div class="flex justify-between items-center border-b border-dark-600 pb-3">
 <h2 class="font-bold text-base text-slate-100">Sales Funnel Stage Breakdown
@@ -705,7 +711,7 @@ text-[10px]">Primary Contact</p>
 <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600
 pb-3">
 <button onclick="switchTab('tasks')" id="tabBtn-tasks" class="px-3 sm:px-4 py-2.5
-rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition
+rounded-xl text-xs font-semibold bg-amber-700 text-white shadow-md transition
 text-center">Tasks & Stage Progress</button>
 <button onclick="switchTab('info')" id="tabBtn-info" class="px-3 sm:px-4 py-2.5
 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition
@@ -735,7 +741,7 @@ Tracker</h3>
 status, check off tasks, and assign team members.</p>
 </div>
 <button onclick="openClientTaskModal()" class="px-3 py-1.5 rounded-xl
-bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">
+bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs">
 + Add Task
 </button>
 </div>
@@ -807,7 +813,7 @@ Receipts Folder</h3>
 tax receipts (Amazon, printing, etc.) from your computer.</p>
 </div>
 <button onclick="openUploadModal('Tax Receipts')" class="px-3.5 py-1.5
-rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex
+rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs transition flex
 items-center">
 <i data-lucide="upload" class="w-3.5 h-3.5 mr-1.5"></i> Upload Tax Receipt
 </button>
@@ -876,7 +882,7 @@ Timeline</h3>
 meetings, and track follow-ups.</p>
 </div>
 <button onclick="openCommsModal()" class="px-3.5 py-1.5 rounded-xl
-bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center">
+bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs transition flex items-center">
 <i data-lucide="plus" class="w-3.5 h-3.5 mr-1.5"></i> Log Activity / Note
 </button>
 </div>
@@ -899,7 +905,7 @@ upload files from your device, rename, or reorder items.</p>
 </div>
 <div class="flex flex-wrap gap-2 w-full sm:w-auto justify-end">
 <button onclick="openFolderModal()" class="px-3.5 py-1.5 rounded-xl
-bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
+bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs transition">
 + New Folder
 </button>
 <button onclick="openUploadModal('current')" class="px-3.5 py-1.5
@@ -926,7 +932,7 @@ Schedule</h3>
 and end date tracking for multi-day workshops and meetings.</p>
 </div>
 <button onclick="openCalendarModal()" class="px-3.5 py-1.5 rounded-xl
-bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">
+bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs transition">
 + Schedule Meeting / Event
 </button>
 </div>
@@ -996,7 +1002,7 @@ tracking-wider">Scheduled Events & Milestones</h4>
 <p class="text-xs text-slate-400 mt-1">Use Face ID or your device passcode to open the pipeline.</p>
 </div>
 <p id="lockMsg" class="text-xs text-rose-400 hidden"></p>
-<button type="button" onclick="lockUnlockWithBio()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-lg shadow-rose-600/20 transition">Unlock with Face ID / Passcode</button>
+<button type="button" onclick="lockUnlockWithBio()" class="w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs shadow-lg shadow-amber-600/20 transition">Unlock with Face ID / Passcode</button>
 <button type="button" onclick="lockUsePassword()" class="text-xs text-slate-400 underline">Use my password instead</button>
 </div>
 </div>
@@ -1006,7 +1012,7 @@ tracking-wider">Scheduled Events & Milestones</h4>
 <div class="bg-dark-800 border border-dark-600 rounded-2xl shadow-2xl max-w-sm w-full p-6 space-y-4 text-center">
 <h3 class="font-bold text-slate-100 text-sm">Make signing in easier?</h3>
 <p class="text-xs text-slate-400">Use Face ID or your device passcode on this device instead of typing your password.</p>
-<button type="button" onclick="quOfferAccept()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">Set Up Face ID / Passcode</button>
+<button type="button" onclick="quOfferAccept()" class="w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs">Set Up Face ID / Passcode</button>
 <button type="button" onclick="quOfferDecline()" class="w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 text-xs font-semibold">Not Now</button>
 </div>
 </div>
@@ -1029,7 +1035,7 @@ tracking-wider">Scheduled Events & Milestones</h4>
 <p class="text-[10px] text-slate-500 mt-1">Stored only on this device. Use a token limited to that one repository with Contents set to Read and write.</p>
 </div>
 <p id="ghMsg" class="text-xs text-rose-400 hidden"></p>
-<button type="button" onclick="ghConnect()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-lg shadow-rose-600/20 transition">Connect This Device</button>
+<button type="button" onclick="ghConnect()" class="w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs shadow-lg shadow-amber-600/20 transition">Connect This Device</button>
 <button type="button" id="ghCopyBtn" onclick="ghCopyCode()" class="hidden w-full py-2.5 rounded-xl border border-dark-600 text-slate-200 text-xs font-semibold">Copy Connection Code for Another Device</button>
 <button type="button" id="ghDisconnectBtn" onclick="ghDisconnect()" class="hidden w-full py-2.5 rounded-xl border border-rose-500/50 text-rose-400 text-xs font-semibold">Disconnect This Device</button>
 <button type="button" onclick="closeGhModal()" class="w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 text-xs font-semibold">Close</button>
@@ -1046,7 +1052,7 @@ tracking-wider">Scheduled Events & Milestones</h4>
 <select id="lostReasonSelect" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200 font-semibold"></select>
 <textarea id="lostNoteInput" rows="3" placeholder="Anything else worth remembering (optional)..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></textarea>
 <p id="lostErr" class="text-xs text-rose-400 hidden">Pick a reason first.</p>
-<button type="button" onclick="lostConfirm()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs">Close as Lost</button>
+<button type="button" onclick="lostConfirm()" class="w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs">Close as Lost</button>
 <button type="button" onclick="lostCancel()" class="w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 text-xs font-semibold">Cancel</button>
 </div>
 </div>
@@ -1081,7 +1087,7 @@ border-dark-600 p-2.5 text-slate-200"></textarea>
 <div class="flex justify-end space-x-2 pt-2">
 <button type="button" onclick="closeMeetingNoteModal()" class="px-3 py-1.5
 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-<button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white
+<button type="submit" class="px-3 py-1.5 rounded-xl bg-amber-700 text-white
 font-semibold">Save Notes</button>
 </div>
 </form>
@@ -1181,7 +1187,7 @@ bg-dark-700 border-dark-600 text-rose-600 focus:ring-rose-500">
 
 <button type="button" onclick="closeCommsModal()" class="px-3 py-1.5 rounded-xl
 border border-dark-600 text-slate-300">Cancel</button>
-<button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white
+<button type="submit" class="px-3 py-1.5 rounded-xl bg-amber-700 text-white
 font-semibold">Save Activity & Update Stage</button>
 </div>
 </form>
@@ -1200,7 +1206,7 @@ Receipt</h3>
 File from Computer</label>
 <input type="file" id="deviceFileInput" required onchange="handleFileSelect(event)"
 class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2 text-slate-200 file:mr-4 file:py-1
-file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-rose-600 file:text-white
+file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-amber-700 file:text-white
 hover:file:bg-rose-500">
 </div>
 <input type="text" id="uploadNameInput" required placeholder="Receipt Name (e.g. Amazon_Supplies.pdf)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5
@@ -1209,7 +1215,7 @@ text-slate-200">
 <div class="flex justify-end space-x-2 pt-2">
 <button type="button" onclick="closeUploadModal()" class="px-3 py-1.5 rounded-xl
 border border-dark-600 text-slate-300">Cancel</button>
-<button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white
+<button type="submit" class="px-3 py-1.5 rounded-xl bg-amber-700 text-white
 font-semibold">Upload Receipt</button>
 </div>
 </form>
@@ -1265,7 +1271,7 @@ border-dark-600 p-2.5 text-slate-200 font-semibold">
 <button type="button" onclick="closeClientTaskModal()" class="px-3 py-1.5
 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
 
-<button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white
+<button type="submit" class="px-3 py-1.5 rounded-xl bg-amber-700 text-white
 font-semibold">Add Task</button>
 </div>
 </form>
@@ -1545,8 +1551,8 @@ font-semibold underline text-xs">Open Full Company Profile & Tasks</button>
 <div class="space-x-2">
 <button type="button" onclick="requestCloseTicket()" class="px-3 py-2
 rounded-xl border border-dark-600 text-slate-300">Close</button>
-<button type="submit" class="px-4 py-2 rounded-xl bg-rose-600
-hover:bg-rose-500 text-white font-semibold">Save Changes</button>
+<button type="submit" class="px-4 py-2 rounded-xl bg-amber-700
+hover:bg-amber-600 text-white font-semibold">Save Changes</button>
 </div>
 </div>
 </form>
@@ -1636,7 +1642,7 @@ rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
 <div class="flex justify-end space-x-2 pt-2">
 <button type="button" onclick="closeFinancialProspectModal()" class="px-3 py-1.5
 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-<button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white
+<button type="submit" class="px-3 py-1.5 rounded-xl bg-amber-700 text-white
 font-semibold">Save Prospect</button>
 </div>
 </form>
@@ -1692,7 +1698,7 @@ border-dark-600 p-2.5 text-slate-200 font-semibold">
 
 <button type="button" onclick="closeProspectTaskModal()" class="px-3 py-1.5
 rounded-xl border border-dark-600 text-slate-300">Cancel</button>
-<button type="submit" class="px-3 py-1.5 rounded-xl bg-rose-600 text-white
+<button type="submit" class="px-3 py-1.5 rounded-xl bg-amber-700 text-white
 font-semibold">Add Task</button>
 </div>
 </form>
@@ -1733,13 +1739,13 @@ font-semibold">Add Task</button>
 <input id="sxLink" type="url" placeholder="Link to your site (https://)" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200">
 </div>
 <p id="sxErr" class="text-rose-500 hidden"></p>
-<button type="button" onclick="submitSiteForm()" class="w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold shadow-lg shadow-rose-600/20 transition">Send to the Studio</button>
+<button type="button" onclick="submitSiteForm()" class="w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold shadow-lg shadow-amber-600/20 transition">Send to the Studio</button>
 </div>
 <div id="siteDone" class="hidden text-center py-8 space-y-3">
 <div class="text-4xl">&#127881;</div>
 <p class="text-base font-bold text-slate-100">Submitted!</p>
 <p class="text-slate-400">The site is in the ticket portal waiting for review.</p>
-<button type="button" onclick="closeSiteForm()" class="px-6 py-2.5 rounded-xl bg-rose-600 text-white font-semibold">Done</button>
+<button type="button" onclick="closeSiteForm()" class="px-6 py-2.5 rounded-xl bg-amber-700 text-white font-semibold">Done</button>
 </div>
 </div>
 </div>
@@ -1974,11 +1980,11 @@ return out;
 var DASH_VISITS = null;
 /* ===================== FUNNEL & DASHBOARD (Financial Goal Tracker merged in) ===================== */
 var FUNNEL_STAGES = [
-  { name: 'Prospect',         hint: 'Not contacted yet',                 color: '#f59e0b' },
-  { name: 'Email Drafted',    hint: 'Email written, not sent',           color: '#38bdf8' },
-  { name: 'First Touch Sent', hint: 'Waiting on a reply',                color: '#22d3ee' },
-  { name: 'Lead',             hint: 'Speaking with us, not confirmed', color: '#a855f7' },
-  { name: 'Invoice Pending',  hint: 'Confirmed, invoice sent, waiting on payment', color: '#d4a017' },
+  { name: 'Prospect',         hint: 'Not contacted yet',                 color: '#8a7a5e' },
+  { name: 'Email Drafted',    hint: 'Email written, not sent',           color: '#d28b5e' },
+  { name: 'First Touch Sent', hint: 'Waiting on a reply',                color: '#d9c49a' },
+  { name: 'Lead',             hint: 'Speaking with us, not confirmed', color: '#d6aa62' },
+  { name: 'Invoice Pending',  hint: 'Confirmed, invoice sent, waiting on payment', color: '#efdcae' },
   { name: 'Closed Won',       hint: 'Paid or contract signed',           color: '#10b981' }
 ];
 var GOAL_PHASES = [
@@ -2030,7 +2036,7 @@ function renderFunnelPage() {
   var phases = GOAL_PHASES.map(function (ph) {
     var got = n.closed >= ph.amount, withPending = n.closed + n.pending >= ph.amount;
     var status = got ? 'Reached' : (withPending ? 'Reached once pending is paid' : fpMoney(Math.max(0, ph.amount - n.closed - n.pending)) + ' to go');
-    var color = got ? '#10b981' : (withPending ? '#a855f7' : '#94a3b8');
+    var color = got ? '#10b981' : (withPending ? '#E3BD79' : '#a99a80');
     return '<div class="rounded-xl border border-dark-600 bg-dark-700/40 p-3 text-xs"><div class="flex justify-between items-center"><p class="font-bold text-slate-100">' + ph.label + ' &middot; ' + fpMoney(ph.amount) + '/mo</p><span class="font-semibold" style="color:' + color + '">' + status + '</span></div><p class="text-[11px] text-slate-400 mt-1 leading-snug">' + ph.note + '</p></div>';
   }).join('');
   el.innerHTML =
@@ -2039,11 +2045,11 @@ function renderFunnelPage() {
     '<h2 class="text-2xl sm:text-3xl font-extrabold text-slate-100 mt-1">' + money(n.closed) + ' secured <span class="text-slate-400 font-semibold text-lg">of ' + fpMoney(goal) + ' a month</span></h2></div><p class="text-xs text-slate-400">As of ' + today + '</p></div>' +
     '<div class="pb-8"><div class="relative h-5 rounded-full bg-dark-600 overflow-visible">' +
     '<div class="absolute left-0 top-0 h-full rounded-l-full fp-keep" style="width:' + pc + '%;background:#10b981"></div>' +
-    '<div class="absolute top-0 h-full fp-keep" style="left:' + pc + '%;width:' + pp + '%;background:#a855f7"></div>' + markers + '</div>' +
+    '<div class="absolute top-0 h-full fp-keep" style="left:' + pc + '%;width:' + pp + '%;background:#E3BD79"></div>' + markers + '</div>' +
     '<div class="flex flex-wrap gap-4 mt-10 text-[11px] text-slate-400"><span><span class="inline-block w-2.5 h-2.5 rounded-sm fp-keep" style="background:#10b981"></span> Closed / paid</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm fp-keep" style="background:#a855f7"></span> Pending revenue</span><span><span class="inline-block w-2.5 h-2.5 rounded-sm bg-dark-600"></span> Still to win</span></div></div>' +
     '<div class="grid grid-cols-2 lg:grid-cols-4 gap-3">' +
     card('Closed / paid', n.closed, n.by['Closed Won'] + ' deals won', '#10b981') +
-    card('Pending revenue', n.pending, (n.by['Lead'] + n.by['Invoice Pending']) + ' deal' + ((n.by['Lead'] + n.by['Invoice Pending']) === 1 ? '' : 's') + ' waiting on payment or signature', '#a855f7') +
+    card('Pending revenue', n.pending, (n.by['Lead'] + n.by['Invoice Pending']) + ' deal' + ((n.by['Lead'] + n.by['Invoice Pending']) === 1 ? '' : 's') + ' waiting on payment or signature', '#E3BD79') +
     card('Open pipeline', n.open, (n.by['Prospect'] + n.by['Email Drafted'] + n.by['First Touch Sent']) + ' prospects being worked', '#f59e0b') +
     card('Gap to ' + fpMoney(goal), gap, 'after closed and pending', '#f43f5e') + '</div>' +
     '<div><p class="text-xs font-bold text-slate-200 mb-3 uppercase tracking-wider">Sales funnel</p><div class="space-y-0">' + funnel + '</div>' +
@@ -2074,7 +2080,7 @@ var AUDIENCE_SEGMENTS = [
   { key: 'careerDaysDetail', title: 'Career Days & School Workshops', color: '#f43f5e', role: 'Entry point',
     prices: [['Career Day', 'Free', 'Lead generator that leads into the after school program'], ['Speaking engagement', '$750', 'Two-day event, flat fee']],
     facts: ['Goal: book 3-4 more career days', 'Each one feeds the after school waitlist'], monthly: '$750 per paid event' },
-  { key: 'afterSchoolDetail', title: 'After-School Programs & Districts', color: '#a855f7', role: 'Core revenue',
+  { key: 'afterSchoolDetail', title: 'After-School Programs & Districts', color: '#E3BD79', role: 'Core revenue',
     prices: [['AI Lab after school', '$125', 'per student, per month'], ['One class of 20', '$2,500', 'per month, per school']],
     facts: ['6 to 12 month contract = $15,000 to $30,000 per school', 'Capped at 3 partner schools this cycle'], monthly: '$7,500 per month at 3 schools' },
   { key: 'privateSchoolsDetail', title: 'Private Schools & Community Centers', color: '#10b981', role: 'Core revenue',
@@ -2082,7 +2088,7 @@ var AUDIENCE_SEGMENTS = [
     facts: ['6-month contract lock-in', 'Shares the 3-school cap with districts'], monthly: 'Counts toward the same 3 schools' }
 ];
 var AUDIENCE_ALSO = [
-  { title: 'Business owners (Studio services)', color: '#38bdf8', prices: [['Tier 1', '$950/mo', 'Foundations & Systems Training'], ['Tier 2', '$1,250/mo', 'Managed Growth Engine'], ['Tier 3', '$2,500/mo', 'Full-Scale Operations + Marketing']] },
+  { title: 'Business owners (Studio services)', color: '#d28b5e', prices: [['Tier 1', '$950/mo', 'Foundations & Systems Training'], ['Tier 2', '$1,250/mo', 'Managed Growth Engine'], ['Tier 3', '$2,500/mo', 'Full-Scale Operations + Marketing']] },
   { title: 'Families (Saturday AI Lab cohort)', color: '#f59e0b', prices: [['December 2026 cohort', 'Price to be set', 'Paid program, shared with the waitlist before registration']] }
 ];
 function audienceOf(p) {
@@ -2144,7 +2150,7 @@ function renderMeetSetup() {
   var links = document.getElementById('meetLinks'); if (!links) return;
   var a = function (href, label) { return '<a href="' + href + '" target="_blank" rel="noopener" class="px-3 py-1.5 rounded-xl bg-dark-700 border border-dark-600 text-xs font-semibold text-slate-200 hover:bg-dark-600">' + label + '</a>'; };
   links.innerHTML = (m.link ? a(m.link, 'Join Google Meet') : '') + (m.doc ? a(m.doc, 'Open notes doc') : '') +
-    (m.link || m.doc ? '<button onclick="addWeeklyNoteFromSetup()" class="px-3 py-1.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-semibold">Log this week in Meeting Notes</button>' : '<p class="text-[11px] text-slate-500">Save your Meet link and notes doc below and the buttons appear here.</p>');
+    (m.link || m.doc ? '<button onclick="addWeeklyNoteFromSetup()" class="px-3 py-1.5 rounded-xl bg-amber-700 hover:bg-amber-600 text-white text-xs font-semibold">Log this week in Meeting Notes</button>' : '<p class="text-[11px] text-slate-500">Save your Meet link and notes doc below and the buttons appear here.</p>');
 }
 function saveMeetSetup() {
   var g = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; };
@@ -2208,7 +2214,7 @@ function fbEsc(t) { return String(t == null ? '' : t).replace(/&/g, '&amp;').rep
 function fbRoleChooser(p, big) {
   var cls = big ? 'text-2xl py-8' : 'text-sm py-4';
   return '<div class="space-y-3"><p class="' + (big ? 'text-lg' : 'text-xs') + ' font-bold text-slate-200">Who is giving feedback?</p><div class="grid grid-cols-1 ' + (big ? '' : 'sm:grid-cols-3') + ' gap-3">' +
-    ['Student', 'Teacher', 'Parent'].map(function (r) { return '<button type="button" onclick="fbStart(\'' + p + '\',\'' + r + '\')" class="rounded-2xl border border-dark-600 bg-dark-700 hover:bg-rose-600 hover:border-rose-500 text-slate-100 font-extrabold ' + cls + '">' + (r === 'Parent' ? 'Parent or guest' : r) + '</button>'; }).join('') + '</div></div>';
+    ['Student', 'Teacher', 'Parent'].map(function (r) { return '<button type="button" onclick="fbStart(\'' + p + '\',\'' + r + '\')" class="rounded-2xl border border-dark-600 bg-dark-700 hover:bg-amber-700 hover:border-rose-500 text-slate-100 font-extrabold ' + cls + '">' + (r === 'Parent' ? 'Parent or guest' : r) + '</button>'; }).join('') + '</div></div>';
 }
 function fbHost(p) { return document.getElementById(p === 'kiosk' ? 'fbKioskBody' : 'fbFormHost'); }
 function fbStart(p, role) {
@@ -2228,7 +2234,7 @@ function fbStart(p, role) {
     '<div class="grid sm:grid-cols-2 gap-3 items-end"><div><label class="' + lbl + '">First name (optional)</label><input id="fbName-' + p + '" class="' + ta + '" placeholder="First name"></div>' +
     '<label class="flex items-center gap-2 text-slate-300 ' + (big ? 'text-sm' : 'text-xs') + ' pb-3"><input id="fbQuote-' + p + '" type="checkbox" class="w-5 h-5"> OK to quote me on the website (first name only)</label></div>' +
     '<p id="fbErr-' + p + '" class="text-rose-400 text-sm hidden"></p>' +
-    '<button type="submit" class="w-full rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold ' + (big ? 'text-xl py-5' : 'text-sm py-3') + '">Submit feedback</button></form>';
+    '<button type="submit" class="w-full rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-bold ' + (big ? 'text-xl py-5' : 'text-sm py-3') + '">Submit feedback</button></form>';
   if (big) window.scrollTo(0, 0);
 }
 var host;
@@ -2237,7 +2243,7 @@ function fbSet(p, id, val, btn) {
   FB_STATE[p].a[id] = val;
   Array.prototype.forEach.call(btn.parentNode.children, function (b) {
     var on = b === btn || (btn.parentNode.getAttribute('data-q') === 'rating' && +b.getAttribute('data-v') <= +val && false);
-    b.classList.toggle('bg-rose-600', on); b.classList.toggle('border-rose-500', on); b.classList.toggle('text-white', on); b.classList.toggle('bg-dark-700', !on);
+    b.classList.toggle('bg-amber-700', on); b.classList.toggle('border-rose-500', on); b.classList.toggle('text-white', on); b.classList.toggle('bg-dark-700', !on);
   });
 }
 function fbSubmit(ev, p) {
@@ -2631,7 +2637,7 @@ sbSave(await r.json()); renderDashboard(true);
 } catch (e) { er.textContent = 'Could not reach Supabase. Check your connection.'; }
 }
 function sbLoginForm(msg) {
-return '<div class="text-xs text-slate-300 space-y-2"><p class="font-semibold text-amber-300">' + escHtml(msg) + '</p><div class="grid sm:grid-cols-2 gap-2"><input id="sbEmail" type="email" placeholder="Your Supabase owner email" class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"><input id="sbPass" type="password" placeholder="Password" class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></div><p id="sbErr" class="text-rose-500"></p><button onclick="sbLogin()" class="px-4 py-2.5 rounded-xl bg-rose-600 text-white font-semibold">Sign in to see visitors</button><p class="text-slate-500">One-time setup: run <b>supabase-visits.sql</b> in Supabase, then add yourself under Authentication &gt; Users.</p></div>';
+return '<div class="text-xs text-slate-300 space-y-2"><p class="font-semibold text-amber-300">' + escHtml(msg) + '</p><div class="grid sm:grid-cols-2 gap-2"><input id="sbEmail" type="email" placeholder="Your Supabase owner email" class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"><input id="sbPass" type="password" placeholder="Password" class="rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"></div><p id="sbErr" class="text-rose-500"></p><button onclick="sbLogin()" class="px-4 py-2.5 rounded-xl bg-amber-700 text-white font-semibold">Sign in to see visitors</button><p class="text-slate-500">One-time setup: run <b>supabase-visits.sql</b> in Supabase, then add yourself under Authentication &gt; Users.</p></div>';
 }
 async function renderDashboard(reload) {
 try { localStorage.setItem('bgcs_notrack', '1'); } catch (e) {}
@@ -3326,8 +3332,8 @@ refreshActivityViews();
 
 /* ---- who is making this change (drop-down) ---- */
 var WHO_BTN = {
-primary: 'w-full py-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-lg shadow-rose-600/20 transition',
-danger: 'w-full py-3 rounded-xl border border-rose-500/50 text-rose-400 font-semibold text-xs hover:bg-rose-500/10 transition',
+primary: 'w-full py-3 rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs shadow-lg shadow-amber-600/20 transition',
+danger: 'w-full py-3 rounded-xl border border-rose-500/50 text-rose-400 font-semibold text-xs hover:bg-amber-600/10 transition',
 neutral: 'w-full py-2.5 rounded-xl border border-dark-600 text-slate-300 font-semibold text-xs hover:bg-dark-700 transition'
 };
 function fillWhoSelect(selectName) {
@@ -5024,7 +5030,7 @@ if (btn) btn.className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold b
 const activeEl = document.getElementById('tabContent-' + tabName);
 const activeBtn = document.getElementById('tabBtn-' + tabName);
 if (activeEl) activeEl.classList.remove('hidden');
-if (activeBtn) activeBtn.className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-rose-600 text-white shadow-md transition text-center";
+if (activeBtn) activeBtn.className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-amber-700 text-white shadow-md transition text-center";
 if (tabName === 'calendar') {
 renderVisualCalendar();
 }
@@ -5242,11 +5248,11 @@ if (!container) return;
 container.innerHTML = '';
 const stages = STAGES;
 const stageColors = {
-"Prospect": "border-amber-500/30 text-amber-400",
+"Prospect": "border-slate-500/30 text-slate-300",
 "Email Drafted": "border-sky-500/30 text-sky-400",
 "First Touch Sent": "border-cyan-500/30 text-cyan-400",
-"Lead": "border-purple-500/30 text-purple-400",
-"Invoice Pending": "border-yellow-500/30 text-yellow-400",
+"Lead": "border-amber-500/30 text-amber-400",
+"Invoice Pending": "border-yellow-500/30 text-yellow-200",
 "Closed Won": "border-emerald-500/30 text-emerald-400",
 "Closed Lost": "border-rose-500/30 text-rose-400"
 };
@@ -5355,7 +5361,7 @@ font-semibold">
 ${STAGES.map(function (s) { return '<option value="' + s + '"' + (stage === s ? ' selected' : '') + '>' + s + '</option>'; }).join('')}
 </select>
 <button onclick="openQuickProspectModal(${item.id})"
-class="text-rose-400 font-semibold underline">Edit Ticket</button>
+class="text-amber-300 font-semibold underline">Edit Ticket</button>
 </div>
 </div>`;
 });
@@ -5364,7 +5370,7 @@ cards = `<p class="text-xs text-slate-500 italic py-4 text-center">No targets in
 stage.</p>`;
 }
 container.innerHTML += `
-<div class="bg-dark-800 border border-dark-600 rounded-2xl p-4 space-y-3 min-w-[260px] flex-1 shrink-0">
+<div data-stage="${stage}" class="hx-col bg-dark-800 border border-dark-600 rounded-2xl p-4 space-y-3 min-w-[260px] flex-1 shrink-0">
 <div class="flex justify-between items-start border-b border-dark-600 pb-2">
 <div><h4 class="font-bold text-sm uppercase tracking-wider ${stageColors[stage]}">${stage}</h4><p class="text-[10px] text-slate-500 mt-0.5">${STAGE_HINTS[stage]}${stageTierSummary(items, stage)}</p></div>
 <span class="px-2 py-0.5 rounded bg-dark-700 text-slate-300
@@ -5620,7 +5626,7 @@ if (!lead.clientTasks) lead.clientTasks = [];
 container.innerHTML = '';
 if (lead.clientTasks.length > 0) {
 lead.clientTasks.forEach((ct, cIdx) => {
-let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-rose-600/10' : 'border-dark-600 bg-dark-700/40';
+let highlightClass = ct.active ? 'border-rose-500 bg-rose-500/10 ring-1 ring-rose-500 shadow-lg shadow-amber-600/10' : 'border-dark-600 bg-dark-700/40';
 let urgencyColor = ct.urgency === 'High (Urgent)' ? 'bg-rose-500/20 text-rose-400 border-rose-500/30' : (ct.urgency === 'Medium' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30');
 container.innerHTML += `
 <div class="border ${highlightClass} p-4 rounded-xl flex flex-col sm:flex-row
@@ -6254,7 +6260,7 @@ Communication & Next Steps</p>
 </div>
 <div class="pt-2 flex justify-end">
 <button onclick="openQuickProspectModal(${lead.id})" class="px-3.5 py-1.5
-rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition">Edit This
+rounded-xl bg-amber-700 hover:bg-amber-600 text-white font-semibold text-xs transition">Edit This
 Ticket</button>
 </div>
 </div>`;
@@ -6347,6 +6353,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js"></script>
+<script src="pipeline-home.js?b=2026.11.21-3"></script>
 </body>
 </html>

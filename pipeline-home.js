@@ -2,6 +2,8 @@
    Brown and gold, light 3D depth, one clear next action, live data, market digest, and a coach chat. */
 (function () {
   'use strict';
+  var BUILD = (function () { try { var m = /[?&]b=([^&]+)/.exec((document.currentScript && document.currentScript.src) || ''); return m ? decodeURIComponent(m[1]) : '0'; } catch (e) { return '0'; } })();
+  try { if (/[?&]r=\d+/.test(location.search) && history.replaceState) history.replaceState(null, '', location.pathname + location.hash); } catch (e) {}
 
   var CHAT_URL = 'https://qlgnstoesdzmkcmyaqyw.supabase.co/functions/v1/pipeline-chat';
   var STAGES = ['Prospect', 'Email Drafted', 'First Touch Sent', 'Lead', 'Invoice Pending', 'Closed Won'];
@@ -89,8 +91,25 @@
     '#hxBar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:rgba(26,17,12,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(199,153,79,.3)}',
     '.hx-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0 4px;border:0;background:none;color:#9c8a6c;font-size:10.5px;font-weight:800;letter-spacing:.03em;cursor:pointer;min-height:52px;border-radius:14px;transition:color .2s,transform .15s}',
     '.hx-tab svg{width:23px;height:23px}.hx-tab.on{color:#E3BD79}.hx-tab.on svg{filter:drop-shadow(0 0 6px rgba(227,189,121,.7))}.hx-tab:active{transform:scale(.92)}',
+    '.hx-rf{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(199,153,79,.4);background:rgba(199,153,79,.12);color:#E3BD79;cursor:pointer;padding:0;flex:none}',
+    '.hx-rf svg{width:19px;height:19px;transition:transform .5s}.hx-rf:active svg{transform:rotate(180deg)}.hx-rf.spin svg{animation:hxspin .8s linear infinite}@keyframes hxspin{to{transform:rotate(360deg)}}',
+    '#hxUpd{position:fixed;left:12px;right:12px;top:calc(env(safe-area-inset-top) + 8px);z-index:99990;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px 10px 16px;border-radius:18px;background:linear-gradient(135deg,#E3BD79,#C7994F);color:#2A160E;font-weight:800;font-size:14px;box-shadow:0 16px 36px -10px rgba(0,0,0,.7);animation:hxdown .35s cubic-bezier(.2,.8,.2,1) both}',
+    '#hxUpd .hx-btn{background:#2A160E;color:#F3E8D6;border-color:#2A160E;min-height:38px;padding:8px 14px}@keyframes hxdown{from{transform:translateY(-130%)}to{transform:none}}',
+    '#hxPtr{position:fixed;left:50%;top:calc(env(safe-area-inset-top) + 6px);transform:translate(-50%,-60px);z-index:99980;display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#2A160E;border:1px solid rgba(227,189,121,.5);color:#E3BD79;font-size:12.5px;font-weight:800;opacity:0;pointer-events:none;transition:opacity .15s}',
+    '#hxPtr.show{opacity:1}#hxPtr span{display:inline-block;transition:transform .2s;font-size:15px}#hxPtr.rdy{background:#E3BD79;color:#2A160E}',
+    '.hx-ver{grid-column:span 12;text-align:center;font-size:12px;color:#9c8a6c;padding:6px 0 2px}.hx-ver button{background:none;border:0;color:#E3BD79;font-weight:800;font-size:12px;text-decoration:underline;padding:6px 4px;cursor:pointer}',
+    '#hxChips{display:none;flex-wrap:wrap;gap:8px;margin-bottom:12px}',
     '@media(max-width:1023px){',
-    ' #homeCmd{padding-bottom:120px}.hx-card{padding:16px 16px;border-radius:20px}',
+    ' body.hx-mob #hxStats,body.hx-mob #outreachSummaryCard,body.hx-mob #hxFunnelWrap{display:none}',
+    ' body.hx-mob[data-hxtab=board] #outreachSummaryCard,body.hx-mob[data-hxtab=board] #hxFunnelWrap{display:block}',
+    ' body.hx-mob #pipelineView{padding-bottom:calc(100px + env(safe-area-inset-bottom))}',
+    ' body.hx-mob #hxChips{display:flex}',
+    ' body.hx-mob .hx-river{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;overflow:visible;padding:4px 0 6px}body.hx-mob .hx-stage{flex:none;min-width:0;padding:12px 6px}',
+    ' body.hx-mob main>header button[onclick="exportCSV()"]{display:none}body.hx-mob main>header #pageTitle,body.hx-mob main>header button[onclick^="openFinancialProspectModal"]{white-space:nowrap}',
+    ' body.hx-mob #hxFunnelWrap>div:first-child{display:block;border:0;padding-bottom:4px}body.hx-mob #hxFunnelWrap>div:first-child p{display:none}',
+    ' body.hx-mob #salesFunnelContainer{flex-direction:column;overflow:visible;gap:0}',
+    ' body.hx-mob #salesFunnelContainer>.hx-col{display:none;min-width:0;width:100%;flex:none}body.hx-mob #salesFunnelContainer>.hx-col.hx-show{display:block}',
+    ' #homeCmd{padding-bottom:0}.hx-card{padding:16px 16px;border-radius:20px}',
     ' .hx-btn{min-height:46px;padding:11px 16px;font-size:14px}.hx-btnrow .hx-btn{flex:1 1 calc(50% - 8px);justify-content:center}.hx-btnrow .hx-btn.pri{flex:1 1 100%}',
     ' .hx-chip{min-height:34px;display:inline-flex;align-items:center;padding:4px 12px}',
     ' .hx-chk{width:28px;height:28px;border-radius:10px}.hx-row{padding:12px 0}',
@@ -266,7 +285,7 @@
     if (cands.length > 1) actBtns += '<button class="hx-btn" onclick="hxSkip()">Not this one</button>';
 
     var pips = ''; for (var i = 0; i < WIN_GOAL; i++) pips += '<span class="hx-pip' + (i < wToday ? ' on' : '') + '"></span>';
-    var strip = '<div class="hx-strip"><div><div class="hx-k" style="margin:0">' + greeting() + ', Raeven</div><div style="font-size:12px;color:#CDBA99">' + E(levelName(wToday)) + ' &middot; ' + wToday + ' win' + (wToday === 1 ? '' : 's') + ' today</div></div><div style="display:flex;align-items:center;gap:10px"><div class="hx-pips">' + pips + '</div><div class="hx-flame" title="Day streak">&#128293; ' + stk + '</div></div></div>';
+    var strip = '<div class="hx-strip"><div><div class="hx-k" style="margin:0">' + greeting() + ', Raeven</div><div style="font-size:12px;color:#CDBA99">' + E(levelName(wToday)) + ' &middot; ' + wToday + ' win' + (wToday === 1 ? '' : 's') + ' today</div></div><div style="display:flex;align-items:center;gap:10px"><div class="hx-pips">' + pips + '</div><div class="hx-flame" title="Day streak">&#128293; ' + stk + '</div><button class="hx-rf' + (upd.busy ? ' spin' : '') + '" onclick="hxRefresh()" aria-label="Refresh the app" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button></div></div>';
 
     var hero =
       '<div class="hx-card fx-tilt hx-next hx-7 hx-in"><div class="hx-z">' +
@@ -320,16 +339,17 @@
     var take = (typeof AD_TAKE !== 'undefined' ? AD_TAKE : [])[0];
     var compCard = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Competitors and how to win</div>' + comp + (take ? '<p class="hx-mu" style="margin-top:8px"><b style="color:#F3E8D6">Your edge:</b> ' + E(take) + '</p>' : '') + '<a class="hx-a" href="#view=advisor" onclick="switchMainView(\'advisor\')" style="font-size:12px;display:inline-block;margin-top:8px">Open full advisor &rarr;</a></div>';
 
+    var verLine = '<div class="hx-ver">Version ' + E(BUILD) + ' &middot; <button onclick="hxRefresh()">Refresh now</button></div>';
     var body;
     if (mob) {
       var tab = S.tab;
-      if (tab === 'board') body = river + warm + tasksCardFn(8) + autos + '<div style="grid-column:span 12;text-align:center"><button class="hx-btn" onclick="hxToKanban()">Open full board &darr;</button></div>';
+      if (tab === 'board') body = river + warm + tasksCardFn(8);
       else if (tab === 'clips') body = marketingCard();
       else if (tab === 'intel') body = newsCard() + compCard;
-      else body = hero + tasksCardFn(3) + quick + ring;
+      else body = hero + tasksCardFn(3) + quick + ring + autos + verLine;
       body = '<div class="hx-grid">' + body + '</div>';
     } else {
-      body = '<div class="hx-grid">' + hero + ring + river + marketingCard() + tasksCardFn(5) + newsCard() + quick + warm + compCard + autos + '</div>';
+      body = '<div class="hx-grid">' + hero + ring + river + marketingCard() + tasksCardFn(5) + newsCard() + quick + warm + compCard + autos + verLine + '</div>';
     }
     box.className = '';
     box.innerHTML = strip + body;
@@ -354,6 +374,7 @@
     var show = isMobile() && pipelineVisible();
     b.style.display = show ? 'flex' : 'none';
     document.body.classList.toggle('hx-mob', show);
+    document.body.setAttribute('data-hxtab', S.tab);
     b.innerHTML = TABS.map(function (t) {
       var on = t[0] === S.tab && t[0] !== 'coach';
       return '<button class="hx-tab' + (on ? ' on' : '') + '" onclick="hxTab(\'' + t[0] + '\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + t[2] + '</svg><span>' + t[1] + '</span></button>';
@@ -500,6 +521,71 @@
       })
       .catch(function () { sending = false; chat.pop(); ls.set('bgcs_home_chat', JSON.stringify(chat)); setNote('Could not reach the coach. Check your connection and try again.'); drawChat(); });
   }
+
+  /* ---------- stage chips for the board (phone) ---------- */
+  function syncChips() {
+    var cont = document.getElementById('salesFunnelContainer'); if (!cont) return;
+    var cols = [].slice.call(cont.children).filter(function (c) { return c.getAttribute && c.getAttribute('data-stage'); });
+    if (!cols.length) return;
+    var names = cols.map(function (c) { return c.getAttribute('data-stage'); });
+    var P = (typeof financialProspects !== 'undefined' && financialProspects) || [], cnt = {};
+    P.forEach(function (p) { cnt[p.stage] = (cnt[p.stage] || 0) + 1; });
+    if (!S.stage || names.indexOf(S.stage) < 0) {
+      var saved = ls.get('bgcs_home_stage', ''); S.stage = names.indexOf(saved) >= 0 ? saved : (cnt['Email Drafted'] ? 'Email Drafted' : (names.filter(function (n) { return cnt[n]; })[0] || names[0]));
+    }
+    var chips = document.getElementById('hxChips');
+    if (!chips) { chips = document.createElement('div'); chips.id = 'hxChips'; cont.parentNode.insertBefore(chips, cont); }
+    chips.innerHTML = names.map(function (n) { return '<button type="button" class="hx-chip' + (n === S.stage ? ' on' : '') + '" data-s="' + E(n) + '" onclick="hxStage(this.getAttribute(\'data-s\'))">' + E(n) + ' &middot; ' + (cnt[n] || 0) + '</button>'; }).join('');
+    cols.forEach(function (c) { c.classList.toggle('hx-show', c.getAttribute('data-stage') === S.stage); });
+  }
+  window.hxStage = function (n) { S.stage = n; ls.set('bgcs_home_stage', n); buzz(8); syncChips(); };
+  (function () { var cont = document.getElementById('salesFunnelContainer'); if (cont && window.MutationObserver) { new MutationObserver(function () { try { syncChips(); } catch (e) {} }).observe(cont, { childList: true }); } try { syncChips(); } catch (e) {} })();
+
+  /* ---------- updates: refresh button, pull down, new-version banner ---------- */
+  var upd = { busy: false, remote: null };
+  function spinAll(on) { [].forEach.call(document.querySelectorAll('.hx-rf'), function (b) { b.classList.toggle('spin', !!on); }); }
+  function hardRefresh(msg) {
+    if (upd.busy) return; upd.busy = true; spinAll(true); buzz(14); toast(msg || 'Refreshing...');
+    var base = location.pathname.replace(/[^\/]*$/, ''), done = false;
+    function go() { if (done) return; done = true; try { if (window.caches && caches.keys) caches.keys().then(function (k) { k.forEach(function (n) { caches.delete(n); }); }); } catch (e) {} location.replace(location.pathname + '?r=' + Date.now() + (location.hash || '#view=pipeline')); }
+    setTimeout(go, 7000);
+    function reload(u) { return fetch(base + u, { cache: 'reload' }).catch(function () {}); }
+    fetch(base + 'version.json?t=' + Date.now(), { cache: 'reload' }).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; })
+      .then(function (j) { var v = (j && j.v) || BUILD; return Promise.all([reload('pipeline.html'), reload('pipeline-home.js?b=' + encodeURIComponent(v)), reload('outreach-feed.json'), reload('news-feed.json')]); })
+      .then(go, go);
+  }
+  window.hxRefresh = function () { hardRefresh('Refreshing...'); };
+  window.hxUpdate = function () { hardRefresh('Updating...'); };
+  function updBanner(show) {
+    var b = document.getElementById('hxUpd');
+    if (!show) { if (b) b.remove(); return; }
+    if (b) return; b = document.createElement('div'); b.id = 'hxUpd';
+    b.innerHTML = '<span>New version ready</span><button class="hx-btn" onclick="hxUpdate()">Update now</button>';
+    document.body.appendChild(b); buzz(10);
+  }
+  function checkVersion() {
+    return fetch('version.json?t=' + Date.now(), { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { if (!j || !j.v) return; upd.remote = j.v; updBanner(String(j.v) !== String(BUILD)); }).catch(function () {});
+  }
+  (function () {
+    var y0 = 0, dy = 0, on = false, el = null;
+    function ind() { if (!el) { el = document.createElement('div'); el.id = 'hxPtr'; el.innerHTML = '<span>&darr;</span><b>Pull to refresh</b>'; document.body.appendChild(el); } return el; }
+    document.addEventListener('touchstart', function (e) {
+      on = isMobile() && (window.scrollY || 0) <= 0 && e.touches.length === 1 && !(e.target.closest && e.target.closest('#hxPanel,#hxSheet,#hxBar,.fixed,input,textarea,select,.hx-swipe'));
+      if (on) { y0 = e.touches[0].clientY; dy = 0; }
+    }, { passive: true });
+    document.addEventListener('touchmove', function (e) {
+      if (!on) return; var d = e.touches[0].clientY - y0;
+      if (d <= 8 || (window.scrollY || 0) > 0) { if (el) el.className = ''; dy = 0; return; }
+      dy = Math.min(d, 150); var i = ind(), ready = dy > 85;
+      i.style.transform = 'translate(-50%,' + (Math.min(dy, 110) * 0.6 - 40) + 'px)'; i.className = (ready ? 'rdy ' : '') + 'show';
+      i.querySelector('b').textContent = ready ? 'Release to refresh' : 'Pull to refresh'; i.firstChild.style.transform = 'rotate(' + (ready ? 180 : 0) + 'deg)';
+    }, { passive: true });
+    document.addEventListener('touchend', function () { if (!on) return; on = false; var go = dy > 85; if (el) el.className = ''; dy = 0; if (go) hardRefresh('Refreshing...'); }, { passive: true });
+  })();
+  setTimeout(checkVersion, 2500);
+  setInterval(checkVersion, 5 * 60 * 1000);
+  document.addEventListener('visibilitychange', function () { if (!document.hidden) checkVersion(); });
 
   /* ---------- go live ---------- */
   if (mq && mq.addEventListener) mq.addEventListener('change', function () { renderHome(); });
