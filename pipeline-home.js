@@ -104,6 +104,7 @@
     ' body.hx-mob[data-hxtab=board] #outreachSummaryCard,body.hx-mob[data-hxtab=board] #hxFunnelWrap{display:block}',
     ' body.hx-mob #pipelineView{padding-bottom:calc(100px + env(safe-area-inset-bottom))}',
     ' body.hx-mob #hxChips{display:flex}',
+    ' html:has(body.hx-mob),body.hx-mob{overflow-x:clip}.hx-swipe-fg>div,.hx-row>div{min-width:0;overflow-wrap:anywhere}',
     ' body.hx-mob .hx-river{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;overflow:visible;padding:4px 0 6px}body.hx-mob .hx-stage{flex:none;min-width:0;padding:12px 6px}',
     ' body.hx-mob main>header button[onclick="exportCSV()"]{display:none}body.hx-mob main>header #pageTitle,body.hx-mob main>header button[onclick^="openFinancialProspectModal"]{white-space:nowrap}',
     ' body.hx-mob #hxFunnelWrap>div:first-child{display:block;border:0;padding-bottom:4px}body.hx-mob #hxFunnelWrap>div:first-child p{display:none}',

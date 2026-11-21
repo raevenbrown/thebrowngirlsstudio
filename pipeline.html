@@ -67,7 +67,8 @@ document.documentElement.classList.add('is-authenticated');
 .privacy-mask:hover { filter: blur(0px); }
 html { -webkit-text-size-adjust: 100%; }
 body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); touch-action: manipulation; }
-main > header { padding-top: max(1rem, env(safe-area-inset-top)); }
+main > header { padding-top: max(1rem, env(safe-area-inset-top)) !important; }
+#sidebarNav { padding-top: env(safe-area-inset-top); }
 #sidebarNav { height: 100vh; height: 100dvh; padding-bottom: env(safe-area-inset-bottom); overflow-y: auto; }
 main { min-width: 0; }
 .fixed.inset-0 > div { max-height: calc(100dvh - 1rem); overflow-y: auto; overscroll-behavior: contain; }
@@ -6353,6 +6354,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.21-3"></script>
+<script src="pipeline-home.js?b=2026.11.21-4"></script>
 </body>
 </html>
