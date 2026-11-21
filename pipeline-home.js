@@ -13,7 +13,7 @@
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   };
 
-  var S = { skip: 0, showAll: false, newsFilter: 'All', news: null, newsErr: false, timer: null, timerLeft: 0, animated: false };
+  var S = { tab: (function () { try { return localStorage.getItem('bgcs_home_tab') || 'today'; } catch (e) { return 'today'; } })(), skip: 0, showAll: false, newsFilter: 'All', news: null, newsErr: false, timer: null, timerLeft: 0, animated: false };
 
   /* ---------- styles ---------- */
   var css = [
@@ -68,6 +68,36 @@
     '.hxdots span{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:#E3BD79;animation:hxd 1s infinite}.hxdots span:nth-child(2){animation-delay:.15s}.hxdots span:nth-child(3){animation-delay:.3s}',
     '@keyframes hxd{50%{transform:translateY(-5px);opacity:.4}}',
     '.hx-input{width:100%;background:rgba(0,0,0,.35);border:1px solid rgba(199,153,79,.3);border-radius:14px;color:#F3E8D6;padding:11px 13px;font-size:16px;outline:none}.hx-input:focus{border-color:#E3BD79}',
+    '.hx-strip{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:2px 4px 14px}',
+    '.hx-pips{display:flex;gap:6px}.hx-pip{width:26px;height:9px;border-radius:9px;background:rgba(255,235,200,.14);transition:background .4s,box-shadow .4s}.hx-pip.on{background:linear-gradient(90deg,#C7994F,#F0CC8C);box-shadow:0 0 10px rgba(227,189,121,.6)}',
+    '.hx-flame{font-weight:900;font-size:15px;color:#E3BD79;background:rgba(199,153,79,.14);border:1px solid rgba(199,153,79,.3);padding:5px 10px;border-radius:999px}',
+    '.hx-btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}',
+    '.hx-qgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}',
+    '.hx-q{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;padding:13px 12px;border-radius:16px;border:1px solid rgba(199,153,79,.28);background:linear-gradient(155deg,rgba(90,56,34,.7),rgba(32,21,15,.9));color:#F3E8D6;cursor:pointer;transition:transform .15s,border-color .2s}',
+    '.hx-q:hover{transform:translateY(-3px);border-color:rgba(227,189,121,.6)}.hx-q:active{transform:scale(.97)}',
+    '.hx-q span{font-size:20px;line-height:1}.hx-q b{font-size:13.5px;margin-top:4px}.hx-q i{font-style:normal;font-size:11px;color:#9c8a6c}',
+    '.hx-swipe{position:relative;overflow:hidden;border-radius:12px}',
+    '.hx-swipe-bg{position:absolute;inset:0;display:flex;align-items:center;padding-left:16px;font-weight:900;color:#2A160E;background:linear-gradient(90deg,#E3BD79,#C7994F);opacity:0;border-radius:12px}',
+    '.hx-swipe-fg{position:relative;background:#241711;touch-action:pan-y}',
+    '#hxToast{position:fixed;left:50%;bottom:calc(92px + env(safe-area-inset-bottom));transform:translate(-50%,20px);z-index:100000;background:#2A160E;color:#F3E8D6;border:1px solid rgba(227,189,121,.6);padding:11px 18px;border-radius:999px;font-weight:700;font-size:13.5px;box-shadow:0 14px 30px -10px #000;opacity:0;pointer-events:none;transition:all .3s;max-width:90vw;text-align:center}',
+    '#hxToast.show{opacity:1;transform:translate(-50%,0)}',
+    '#hxVeil{position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);animation:hxin .2s both}',
+    '#hxSheet{position:fixed;left:0;right:0;bottom:0;z-index:9991;max-height:78dvh;overflow-y:auto;padding:10px 18px calc(20px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;background:linear-gradient(170deg,#3a2316,#1b120d);border:1px solid rgba(227,189,121,.35);border-bottom:0;color:#F3E8D6;box-shadow:0 -20px 50px -10px #000;animation:hxup .3s cubic-bezier(.2,.8,.2,1) both}',
+    '@keyframes hxup{from{transform:translateY(100%)}to{transform:none}}',
+    '@media(min-width:700px){#hxSheet{left:50%;right:auto;width:520px;transform:translateX(-50%);animation:hxin .25s both}}',
+    '.hx-grab{width:44px;height:5px;border-radius:5px;background:rgba(255,235,200,.25);margin:0 auto 12px}',
+    '#hxBar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:rgba(26,17,12,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(199,153,79,.3)}',
+    '.hx-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0 4px;border:0;background:none;color:#9c8a6c;font-size:10.5px;font-weight:800;letter-spacing:.03em;cursor:pointer;min-height:52px;border-radius:14px;transition:color .2s,transform .15s}',
+    '.hx-tab svg{width:23px;height:23px}.hx-tab.on{color:#E3BD79}.hx-tab.on svg{filter:drop-shadow(0 0 6px rgba(227,189,121,.7))}.hx-tab:active{transform:scale(.92)}',
+    '@media(max-width:1023px){',
+    ' #homeCmd{padding-bottom:120px}.hx-card{padding:16px 16px;border-radius:20px}',
+    ' .hx-btn{min-height:46px;padding:11px 16px;font-size:14px}.hx-btnrow .hx-btn{flex:1 1 calc(50% - 8px);justify-content:center}.hx-btnrow .hx-btn.pri{flex:1 1 100%}',
+    ' .hx-chip{min-height:34px;display:inline-flex;align-items:center;padding:4px 12px}',
+    ' .hx-chk{width:28px;height:28px;border-radius:10px}.hx-row{padding:12px 0}',
+    ' #hxFab{display:none}',
+    ' #hxPanel{position:fixed;inset:0;width:auto;height:auto;border-radius:0;bottom:calc(66px + env(safe-area-inset-bottom))}',
+    ' #hxDock{right:0;bottom:0}',
+    '}',
     '@media(prefers-reduced-motion:reduce){#homeCmd:before,#homeCmd:after,.hx-stage:after,.hx-pulse{animation:none}.hx-card,.hx-btn,.hx-stage{transition:none}.hx-in{animation:none}}'
   ].join('\n');
   var st = document.createElement('style'); st.id = 'hxStyle'; st.textContent = css; document.head.appendChild(st);
@@ -208,9 +238,19 @@
   window.hxClipDel = function (id) { clipsSet(clipsGet().filter(function (c) { return c.id !== id; })); renderHome(); };
 
   /* ---------- render ---------- */
+  var mq = null; try { mq = window.matchMedia('(max-width:1023px)'); } catch (e) {}
+  function isMobile() { return !!(mq && mq.matches); }
+  function toast(msg) {
+    var t = document.getElementById('hxToast'); if (!t) { t = document.createElement('div'); t.id = 'hxToast'; document.body.appendChild(t); }
+    t.textContent = msg; t.className = 'show'; clearTimeout(toast._t); toast._t = setTimeout(function () { t.className = ''; }, 2600);
+  }
+  function buzz(n) { try { if (navigator.vibrate) navigator.vibrate(n || 12); } catch (e) {} }
+  var WIN_GOAL = 3;
+  function levelName(w) { return w >= 6 ? 'Unstoppable' : w >= WIN_GOAL ? 'Day made' : w >= 1 ? 'On a roll' : 'Warm-up'; }
+
   function renderHome() {
     var box = document.getElementById('homeCmd'); if (!box) return;
-    var m = coModel(), P = m.P, today = m.today;
+    var m = coModel(), P = m.P, today = m.today, mob = isMobile();
     var booked = m.slots * m.c.classVal, pct = Math.min(100, Math.round(booked / m.c.goal * 100));
     var C = 2 * Math.PI * 54, off = C * (1 - pct / 100);
     var cands = candidates(m), cur = cands[S.skip % cands.length];
@@ -220,21 +260,22 @@
     var actBtns = '';
     if (cur.kind === 'task') actBtns += '<button class="hx-btn pri" onclick="hxDone(' + cur.pid + ',' + cur.ti + ',event)">Done &#10003;</button>';
     if (cur.kind === 'follow') actBtns += '<button class="hx-btn pri" onclick="homeOpen(' + cur.pid + ')">Open ' + E(cur.org) + '</button><button class="hx-btn" onclick="hxAsk(\'Help me write one specific, non-generic follow-up for ' + E(cur.org).replace(/'/g, '') + '. Ask me what I know about them first, then draft it.\')">Draft with coach</button>';
-    if (cur.kind === 'task' && cur.pid) actBtns += '<button class="hx-btn" onclick="homeOpen(' + cur.pid + ')">Open ' + E(cur.org) + '</button>';
+    if (cur.kind === 'task' && cur.pid) actBtns += '<button class="hx-btn" onclick="homeOpen(' + cur.pid + ')">Open</button>';
     if (cur.kind === 'plan' || cur.kind === 'send') actBtns += '<button class="hx-btn pri" onclick="hxAsk(\'' + (cur.kind === 'send' ? 'Which of my drafted emails should I send first today, and why?' : 'Which organization in my pipeline should I research next, and what should I look for?') + '\')">Ask coach</button>';
-    actBtns += '<button class="hx-btn" id="hxFocusBtn" onclick="hxTimer()">' + (S.timer ? 'Stop' : 'Focus 10 min') + '</button>';
+    actBtns += '<button class="hx-btn" id="hxFocusBtn" onclick="hxTimer()">' + (S.timer ? 'Stop timer' : 'Focus 10 min') + '</button>';
     if (cands.length > 1) actBtns += '<button class="hx-btn" onclick="hxSkip()">Not this one</button>';
+
+    var pips = ''; for (var i = 0; i < WIN_GOAL; i++) pips += '<span class="hx-pip' + (i < wToday ? ' on' : '') + '"></span>';
+    var strip = '<div class="hx-strip"><div><div class="hx-k" style="margin:0">' + greeting() + ', Raeven</div><div style="font-size:12px;color:#CDBA99">' + E(levelName(wToday)) + ' &middot; ' + wToday + ' win' + (wToday === 1 ? '' : 's') + ' today</div></div><div style="display:flex;align-items:center;gap:10px"><div class="hx-pips">' + pips + '</div><div class="hx-flame" title="Day streak">&#128293; ' + stk + '</div></div></div>';
 
     var hero =
       '<div class="hx-card fx-tilt hx-next hx-7 hx-in"><div class="hx-z">' +
-      '<div class="hx-k"><span class="hx-pulse"></span>' + greeting() + ', Raeven &middot; do this next</div>' +
+      '<div class="hx-k"><span class="hx-pulse"></span>Do this next</div>' +
       '<div class="hx-h1">' + E(cur.title) + '</div>' +
       (cur.org && cur.kind !== 'follow' ? '<p class="hx-mu" style="margin-top:4px">' + E(cur.org) + '</p>' : '') +
       '<p class="hx-mu" style="margin-top:8px">' + E(cur.why) + '</p>' +
       (S.timer ? '<div style="margin-top:12px;font-size:34px;font-weight:900;color:#E3BD79;font-variant-numeric:tabular-nums" id="hxTimer">' + timerFmt() + '</div>' : '') +
-      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px">' + actBtns + '</div>' +
-      '<p style="font-size:12px;color:#9c8a6c;margin-top:12px">Wins today: <b style="color:#E3BD79">' + wToday + '</b>' + (stk > 1 ? ' &middot; ' + stk + '-day streak' : '') + '</p>' +
-      '</div></div>';
+      '<div class="hx-btnrow">' + actBtns + '</div></div></div>';
 
     var ring =
       '<div class="hx-card fx-tilt hx-5 hx-in"><div class="hx-z"><div class="hx-k">Goal &middot; ' + money(m.c.goal) + ' a month</div>' +
@@ -244,45 +285,132 @@
       '<div style="flex:1;min-width:150px"><div style="font-size:30px;font-weight:900;color:#F3E8D6" data-count="' + booked + '" data-pre="$">' + money(booked) + '</div><div class="hx-mu">recurring booked &middot; ' + m.slots + ' of ' + m.cap + ' class slots</div>' +
       '<p class="hx-mu" style="margin-top:8px">Full house is ' + money(m.capRev) + ', which is <b style="color:#f0a090">' + money(m.gap) + ' short</b>. Closing that gap takes a sixth class, a higher group price, or paid workshops. The $750 InspiHER fee is one time, so it is not counted here.</p></div></div></div></div>';
 
-    var river = '<div class="hx-card hx-12 hx-in" style="grid-column:span 12"><div class="hx-k">Where everyone is</div><div class="hx-river">' +
+    var river = '<div class="hx-card hx-in" style="grid-column:span 12"><div class="hx-k">Where everyone is</div><div class="hx-river">' +
       STAGES.map(function (s) { return '<div class="hx-stage" onclick="hxToKanban()"><div class="hx-n" data-count="' + cnt(s) + '">' + cnt(s) + '</div><div style="font-size:12px;font-weight:800;color:#F3E8D6;margin-top:6px">' + E(s) + '</div><div style="font-size:11px;color:#9c8a6c">' + E(STAGE_HINT[s]) + '</div></div>'; }).join('') + '</div></div>';
 
-    var wk = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
-    var due = m.tasks.filter(function (x) { return x.t.date <= wk; });
-    var shown = S.showAll ? m.tasks.slice(0, 40) : due.slice(0, 5);
-    var tl = shown.length ? shown.map(function (x) {
-      var ti = x.p.clientTasks.indexOf(x.t), od = x.t.date < today, td = x.t.date === today;
-      return '<div class="hx-row"><input type="checkbox" class="hx-chk" onclick="hxDone(' + x.p.id + ',' + ti + ',event)"><div style="min-width:0;flex:1"><div style="font-size:14px;font-weight:700;color:#F3E8D6">' + E(x.t.title) + '</div><div style="font-size:12px;color:#CDBA99"><a class="hx-a" href="javascript:void(0)" onclick="homeOpen(' + x.p.id + ')">' + E(x.p.org) + '</a> &middot; <span style="' + (od ? 'color:#f0a090;font-weight:800' : td ? 'color:#E3BD79;font-weight:800' : '') + '">' + (od ? 'Overdue ' : td ? 'Today ' : '') + E(x.t.date) + '</span></div></div></div>';
-    }).join('') : '<p class="hx-mu">Nothing due this week. Nice. Pick an organization to research.</p>';
-    var tasksCard = '<div class="hx-card fx-tilt hx-7 hx-in"><div class="hx-k">Your list &middot; ' + m.tasks.length + ' open' + (m.overdue.length ? ' &middot; <span style="color:#f0a090">' + m.overdue.length + ' due now</span>' : '') + '</div>' + tl +
-      (m.tasks.length > shown.length || S.showAll ? '<div style="margin-top:8px"><span class="hx-chip" onclick="hxAll()">' + (S.showAll ? 'Show less' : 'Show all ' + m.tasks.length) + '</span></div>' : '') + '</div>';
+    function tasksCardFn(limit) {
+      var wk = new Date(Date.now() + 7 * 86400000).toISOString().slice(0, 10);
+      var due = m.tasks.filter(function (x) { return x.t.date <= wk; });
+      var shown = S.showAll ? m.tasks.slice(0, 40) : due.slice(0, limit);
+      var tl = shown.length ? shown.map(function (x) {
+        var ti = x.p.clientTasks.indexOf(x.t), od = x.t.date < today, td = x.t.date === today;
+        return '<div class="hx-swipe" data-pid="' + x.p.id + '" data-ti="' + ti + '"><div class="hx-swipe-bg">Done &#10003;</div><div class="hx-row hx-swipe-fg"><input type="checkbox" class="hx-chk" onclick="hxDone(' + x.p.id + ',' + ti + ',event)" aria-label="Mark done"><div style="min-width:0;flex:1"><div style="font-size:14.5px;font-weight:700;color:#F3E8D6">' + E(x.t.title) + '</div><div style="font-size:12px;color:#CDBA99"><a class="hx-a" href="javascript:void(0)" onclick="homeOpen(' + x.p.id + ')">' + E(x.p.org) + '</a> &middot; <span style="' + (od ? 'color:#f0a090;font-weight:800' : td ? 'color:#E3BD79;font-weight:800' : '') + '">' + (od ? 'Overdue ' : td ? 'Today ' : '') + E(x.t.date) + '</span></div></div></div></div>';
+      }).join('') : '<p class="hx-mu">Nothing due this week. Nice. Pick an organization to research.</p>';
+      return '<div class="hx-card fx-tilt hx-7 hx-in"><div class="hx-k">Your list &middot; ' + m.tasks.length + ' open' + (m.overdue.length ? ' &middot; <span style="color:#f0a090">' + m.overdue.length + ' due now</span>' : '') + '</div>' + (mob ? '<p style="font-size:11px;color:#9c8a6c;margin:-2px 0 4px">Swipe a task right to finish it.</p>' : '') + tl +
+        (m.tasks.length > shown.length || S.showAll ? '<div style="margin-top:8px"><span class="hx-chip" onclick="hxAll()">' + (S.showAll ? 'Show less' : 'Show all ' + m.tasks.length) + '</span></div>' : '') + '</div>';
+    }
 
-    var feedApplied = 0; try { var fa = JSON.parse(ls.get('bgcs_feed_applied', '{}')); feedApplied = Array.isArray(fa) ? fa.length : Object.keys(fa).length; } catch (e) {}
-    var autos = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Automations</div>' +
-      [['Gmail to pipeline', 'Every night at 7:41 PM it logs what you sent and who replied. ' + (feedApplied ? feedApplied + ' updates applied here so far.' : ''), null],
-       ['Market digest', 'Every night it researches competitors, who to market to and AI news, then posts it here.', null],
-       ['Reset my day', 'Moves every overdue task to today so nothing nags you.', '<button class="hx-btn" onclick="hxReset()">Do it</button>'],
-       ['Plan with coach', 'Ask for today\'s plan based on your real pipeline.', '<button class="hx-btn" onclick="hxAsk(\'Build my plan for today from my pipeline. Max 3 things, in order.\')">Ask</button>'],
-       ['Copy summary', 'Copies your pipeline so you can paste it into any Claude chat.', '<button class="hx-btn" onclick="coCopy()">Copy</button>']
-      ].map(function (a) { return '<div class="hx-row"><div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:800;color:#F3E8D6">' + E(a[0]) + (a[2] ? '' : ' <span class="hx-tag">auto</span>') + '</div><div class="hx-mu" style="font-size:12px">' + E(a[1]) + '</div></div>' + (a[2] || '') + '</div>'; }).join('') + '</div>';
+    var feedApplied = 0; try { var fa = JSON.parse(ls.get('bgcs_feed_applied', '[]')); feedApplied = Array.isArray(fa) ? fa.length : Object.keys(fa).length; } catch (e) {}
+    var drafted = P.filter(function (p) { return p.stage === 'Email Drafted'; }).length;
+    var quick = '<div class="hx-card hx-4 hx-in"><div class="hx-k">Quick actions</div><div class="hx-qgrid">' +
+      '<button class="hx-q" onclick="hxSheet()"><span>&#9993;</span><b>I sent an email</b><i>' + drafted + ' drafts waiting</i></button>' +
+      '<button class="hx-q" onclick="hxReset()"><span>&#8635;</span><b>Reset my day</b><i>Overdue &rarr; today</i></button>' +
+      '<button class="hx-q" onclick="hxAsk(\'Build my plan for today from my pipeline. Max 3 things, in order.\')"><span>&#10024;</span><b>Plan my day</b><i>Ask the coach</i></button>' +
+      '<button class="hx-q" onclick="coCopy()"><span>&#128203;</span><b>Copy summary</b><i>Paste into Claude</i></button></div></div>';
+    var autos = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Running for you</div>' +
+      [['Gmail to pipeline', 'Every night at 7:41 PM it logs what you sent and who replied. ' + (feedApplied ? feedApplied + ' updates applied so far.' : '')],
+       ['Market digest', 'Every night at 8:13 PM it researches competitors, who to market to, AI news and funding.']
+      ].map(function (a) { return '<div class="hx-row"><div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:800;color:#F3E8D6">' + E(a[0]) + ' <span class="hx-tag">auto</span></div><div class="hx-mu" style="font-size:12px">' + E(a[1]) + '</div></div></div>'; }).join('') + '</div>';
 
     var hot = P.filter(function (p) { return p.stage === 'Lead' || p.stage === 'Invoice Pending'; });
-    var hotHtml = hot.length ? hot.map(function (p) { var a = (p.activities || [])[0]; return '<div class="hx-row"><div style="min-width:0"><a class="hx-a" href="javascript:void(0)" onclick="homeOpen(' + p.id + ')">' + E(p.org) + '</a> <span class="hx-tag">' + E(p.stage) + '</span>' + (a ? '<div class="hx-mu" style="font-size:12px">' + E(a.date) + ': ' + E(a.title) + '</div>' : '') + '</div></div>'; }).join('') : '<p class="hx-mu">No replies logged yet.</p>';
+    var hotHtml = hot.length ? hot.map(function (p) { var a = (p.activities || [])[0]; return '<div class="hx-row" onclick="homeOpen(' + p.id + ')" style="cursor:pointer"><div style="min-width:0"><a class="hx-a" href="javascript:void(0)">' + E(p.org) + '</a> <span class="hx-tag">' + E(p.stage) + '</span>' + (a ? '<div class="hx-mu" style="font-size:12px">' + E(a.date) + ': ' + E(a.title) + '</div>' : '') + '</div></div>'; }).join('') : '<p class="hx-mu">No replies logged yet.</p>';
     var warm = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Who replied &middot; ' + hot.length + '</div>' + hotHtml + '</div>';
 
     var comp = (typeof AD_COMP !== 'undefined' ? AD_COMP : []).slice(0, 3).map(function (x) { return '<div class="hx-row"><div><a class="hx-a" href="' + E(x[2]) + '" target="_blank" rel="noopener">' + E(x[0]) + '</a><div class="hx-mu" style="font-size:12px">' + E(x[1]) + '</div></div></div>'; }).join('');
     var take = (typeof AD_TAKE !== 'undefined' ? AD_TAKE : [])[0];
     var compCard = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Competitors and how to win</div>' + comp + (take ? '<p class="hx-mu" style="margin-top:8px"><b style="color:#F3E8D6">Your edge:</b> ' + E(take) + '</p>' : '') + '<a class="hx-a" href="#view=advisor" onclick="switchMainView(\'advisor\')" style="font-size:12px;display:inline-block;margin-top:8px">Open full advisor &rarr;</a></div>';
 
+    var body;
+    if (mob) {
+      var tab = S.tab;
+      if (tab === 'board') body = river + warm + tasksCardFn(8) + autos + '<div style="grid-column:span 12;text-align:center"><button class="hx-btn" onclick="hxToKanban()">Open full board &darr;</button></div>';
+      else if (tab === 'clips') body = marketingCard();
+      else if (tab === 'intel') body = newsCard() + compCard;
+      else body = hero + tasksCardFn(3) + quick + ring;
+      body = '<div class="hx-grid">' + body + '</div>';
+    } else {
+      body = '<div class="hx-grid">' + hero + ring + river + marketingCard() + tasksCardFn(5) + newsCard() + quick + warm + compCard + autos + '</div>';
+    }
     box.className = '';
-    box.innerHTML = '<div class="hx-grid">' + hero + ring + river + marketingCard() + tasksCard + newsCard() + autos + warm + compCard + '</div>';
+    box.innerHTML = strip + body;
     countUp(box);
     if (!S.animated && !reduce) { requestAnimationFrame(function () { var fg = box.querySelector('.hx-ring .fg'); if (fg) { void fg.getBoundingClientRect(); fg.style.strokeDashoffset = fg.getAttribute('data-off'); } }); }
     S.animated = true;
+    try { drawBar(); } catch (e) {}
   }
 
+  /* ---------- bottom tab bar (phone) ---------- */
+  var TABS = [
+    ['today', 'Today', '<path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/>'],
+    ['board', 'Board', '<rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/>'],
+    ['clips', 'Clips', '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/>'],
+    ['intel', 'Intel', '<path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/>'],
+    ['coach', 'Coach', '<path d="M4 5h16v10H9l-5 4z"/>']
+  ];
+  function pipelineVisible() { var v = document.getElementById('pipelineView'); var pv = document.getElementById('profileView'); return !!v && !v.classList.contains('hidden') && (!pv || pv.classList.contains('hidden')); }
+  function drawBar() {
+    var b = document.getElementById('hxBar');
+    if (!b) { b = document.createElement('nav'); b.id = 'hxBar'; document.body.appendChild(b); }
+    var show = isMobile() && pipelineVisible();
+    b.style.display = show ? 'flex' : 'none';
+    document.body.classList.toggle('hx-mob', show);
+    b.innerHTML = TABS.map(function (t) {
+      var on = t[0] === S.tab && t[0] !== 'coach';
+      return '<button class="hx-tab' + (on ? ' on' : '') + '" onclick="hxTab(\'' + t[0] + '\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + t[2] + '</svg><span>' + t[1] + '</span></button>';
+    }).join('');
+  }
+  window.hxTab = function (t) {
+    if (t === 'coach') { window.hxToggle(); return; }
+    S.tab = t; ls.set('bgcs_home_tab', t); buzz(8);
+    var p = document.getElementById('hxPanel'); if (p) p.classList.remove('open');
+    renderHome(); try { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
+  };
+
+  /* ---------- quick log sheet: I sent an email ---------- */
+  function sheetClose() { var s = document.getElementById('hxSheet'); if (s) s.remove(); var o = document.getElementById('hxVeil'); if (o) o.remove(); }
+  window.hxSheet = function () {
+    sheetClose();
+    var P = (financialProspects || []).filter(function (p) { return p.stage === 'Email Drafted' || p.stage === 'Prospect'; });
+    var veil = document.createElement('div'); veil.id = 'hxVeil'; veil.onclick = sheetClose; document.body.appendChild(veil);
+    var sh = document.createElement('div'); sh.id = 'hxSheet';
+    sh.innerHTML = '<div class="hx-grab"></div><div style="font-family:Fraunces,Georgia,serif;font-weight:700;font-size:19px;margin-bottom:2px">Which one did you send?</div><p class="hx-mu" style="margin-bottom:8px">Tap it and I will move it to First Touch Sent and add a follow-up for 6 days from now.</p>' +
+      (P.length ? P.map(function (p) { return '<div class="hx-row" style="align-items:center"><div style="flex:1;min-width:0"><div style="font-weight:700;font-size:14.5px">' + E(p.org) + '</div><div class="hx-mu" style="font-size:12px">' + E(p.stage) + (p.email ? ' &middot; ' + E(p.email) : '') + '</div></div><button class="hx-btn pri" onclick="hxSent(' + p.id + ')">Sent</button></div>'; }).join('') : '<p class="hx-mu">No drafted emails to log. The nightly sync also picks up anything you send.</p>') +
+      '<div style="margin-top:12px"><button class="hx-btn" onclick="hxSheetClose()" style="width:100%;justify-content:center">Close</button></div>';
+    document.body.appendChild(sh);
+  };
+  window.hxSheetClose = sheetClose;
+  window.hxSent = function (pid) {
+    var p = (financialProspects || []).find(function (x) { return x.id === pid; }); if (!p) return;
+    var d = new Date(), iso = dayKey(d), fu = new Date(d.getTime() + 6 * 86400000).toISOString().slice(0, 10);
+    p.stage = 'First Touch Sent'; p.emailSentDate = iso;
+    (p.activities = p.activities || []).unshift({ type: 'Email', date: iso, person: '', title: 'Emailed (marked sent from phone)', phone: '', email: p.email || '', message: 'First email sent.', nextSteps: 'Follow up in 5-7 days if no reply.', followUpDone: false });
+    (p.clientTasks = p.clientTasks || []).push({ title: 'Follow up with ' + p.org, desc: 'No reply yet. Make it specific to them.', date: fu, assignee: 'Raeven Brown', urgency: 'Medium', done: false, active: true });
+    /* tell the nightly sync this send is already logged so it does not add it twice */
+    try { var A = JSON.parse(ls.get('bgcs_feed_applied', '[]')) || []; var k = 'usent-' + pid + '-' + iso.replace(/-/g, ''); if (A.indexOf(k) < 0) { A.push(k); ls.set('bgcs_feed_applied', JSON.stringify(A)); } } catch (e) {}
+    saveFinancialProspects(); winsAdd(); buzz(20); confetti(window.innerWidth / 2, window.innerHeight * 0.45);
+    toast('Logged. Follow-up set for ' + fu + '.'); sheetClose(); renderHome();
+    var w = (winsGet()[dayKey(new Date())] || 0); if (w === WIN_GOAL) setTimeout(function () { toast('3 wins today. Day made.'); confetti(window.innerWidth / 2, 160); }, 1800);
+  };
+
+  /* ---------- swipe to finish a task ---------- */
+  (function () {
+    var row = null, x0 = 0, y0 = 0, dx = 0, lock = '';
+    document.addEventListener('touchstart', function (e) { var r = e.target.closest && e.target.closest('.hx-swipe'); if (!r || e.target.closest('a,input,button')) { row = null; return; } row = r; var t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; dx = 0; lock = ''; }, { passive: true });
+    document.addEventListener('touchmove', function (e) {
+      if (!row) return; var t = e.touches[0], mx = t.clientX - x0, my = t.clientY - y0;
+      if (!lock) { if (Math.abs(mx) > 10 || Math.abs(my) > 10) lock = Math.abs(mx) > Math.abs(my) ? 'x' : 'y'; }
+      if (lock === 'y') { row = null; return; }
+      if (lock === 'x') { dx = Math.max(0, Math.min(mx, 170)); var fg = row.querySelector('.hx-swipe-fg'); fg.style.transition = 'none'; fg.style.transform = 'translateX(' + dx + 'px)'; row.querySelector('.hx-swipe-bg').style.opacity = Math.min(1, dx / 90); }
+    }, { passive: true });
+    document.addEventListener('touchend', function (e) {
+      if (!row) return; var r = row; row = null; var fg = r.querySelector('.hx-swipe-fg');
+      if (dx > 95) { var pid = parseInt(r.getAttribute('data-pid'), 10), ti = parseInt(r.getAttribute('data-ti'), 10); fg.style.transition = 'transform .2s'; fg.style.transform = 'translateX(110%)'; var t = e.changedTouches[0]; setTimeout(function () { window.hxDone(pid, ti, { clientX: t.clientX, clientY: t.clientY }); }, 160); buzz(18); }
+      else { fg.style.transition = 'transform .2s'; fg.style.transform = ''; r.querySelector('.hx-swipe-bg').style.opacity = 0; }
+    }, { passive: true });
+  })();
+
   /* ---------- actions exposed to inline handlers ---------- */
-  window.hxDone = function (pid, ti, ev) { var x = ev && (ev.clientX || 0), y = ev && (ev.clientY || 0); var p = (financialProspects || []).find(function (q) { return q.id === pid; }); var was = p && p.clientTasks[ti] && p.clientTasks[ti].done; homeDone(pid, ti); if (!was) { winsAdd(); confetti(x || window.innerWidth / 2, y || 200); renderHome(); } };
+  window.hxDone = function (pid, ti, ev) { var x = ev && (ev.clientX || 0), y = ev && (ev.clientY || 0); var p = (financialProspects || []).find(function (q) { return q.id === pid; }); var was = p && p.clientTasks[ti] && p.clientTasks[ti].done; homeDone(pid, ti); if (!was) { winsAdd(); buzz(18); confetti(x || window.innerWidth / 2, y || 200); renderHome(); if ((winsGet()[dayKey(new Date())] || 0) === WIN_GOAL) { toast('3 wins today. Day made.'); } } };
   window.hxSkip = function () { S.skip++; renderHome(); };
   window.hxAll = function () { S.showAll = !S.showAll; renderHome(); };
   window.hxTimer = timerStart;
@@ -374,6 +502,9 @@
   }
 
   /* ---------- go live ---------- */
+  if (mq && mq.addEventListener) mq.addEventListener('change', function () { renderHome(); });
+  try { var _smv = window.switchMainView; if (typeof _smv === 'function') { window.switchMainView = function () { var r = _smv.apply(this, arguments); try { drawBar(); } catch (e) {} return r; }; } } catch (e) {}
+  setInterval(function () { try { drawBar(); } catch (e) {} }, 900);
   buildDock();
   renderHome();
   loadNews();
