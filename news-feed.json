@@ -1,1 +1,38 @@
-{"generated":"","note":"","items":[]}
+{
+  "generated": "2026-11-21",
+  "note": "Thin week: only 4 items verified as recent and credible. No competitor or local-district news from the last 14 days could be confirmed, so none is included. BOOST afterschool grant (Georgia Statewide Afterschool Network) is listed as active on an aggregator but its deadline was not verified.",
+  "items": [
+    {
+      "cat": "AI news",
+      "title": "Atlanta Public Schools holds community conversation on AI policy for students and parents",
+      "why": "A metro district is publicly debating student AI rules (the draft earlier limited student AI use to stated instructional objectives). Districts nearby will likely follow, so frame your classes as teacher-guided, objective-based AI literacy with no sensitive student data entered, and offer that language to Newton and Rockdale decision makers.",
+      "url": "https://www.atlantanewsfirst.com/video/2026/11/19/students-parents-react-school-systems-ai-policy/",
+      "source": "Atlanta News First",
+      "date": "2026-11-19"
+    },
+    {
+      "cat": "AI news",
+      "title": "Georgia colleges add mandatory AI coursework while worrying students over-rely on AI",
+      "why": "Colleges are now requiring AI classes and stressing critical thinking over tool use. Use this in pitches: your program builds the thinking skills and basic AI literacy that K-12 students need before college. Good talking point for parents and principals.",
+      "url": "https://www.ajc.com/education/2026/11/georgia-colleges-grapple-with-student-ai-use/",
+      "source": "Atlanta Journal-Constitution",
+      "date": "2026-11-12"
+    },
+    {
+      "cat": "AI news",
+      "title": "Georgia students raise privacy concerns over Meta AI smart glasses; state law bans such devices in schools",
+      "why": "Shows student privacy and recording are live issues with Georgia families and schools. Add a short data-privacy and device-use statement to your program overview so administrators see you are ahead of the concern.",
+      "url": "https://www.wsbtv.com/news/local/georgia-students-raise-privacy-concerns-over-ai-smart-glasses/IK3UPAJXKFDRJLSEQF52LX2C7U/",
+      "source": "WSB-TV",
+      "date": "2026-11-10"
+    },
+    {
+      "cat": "Funding",
+      "title": "Toshiba America Foundation grants for grades 6-12 STEM projects; next listed deadline Dec 1, 2026",
+      "why": "Grants of up to $5,000 (and larger) go to educators with STEM project ideas, so a middle or high school teacher partner could apply for a project that includes your class. Reach out to a partner teacher this week; verify eligibility and which deadline applies on the funder page.",
+      "url": "https://youthtoday.org/2026/10/grades-6-12-stem-education-project-grants/",
+      "source": "Youth Today",
+      "date": "2026-10-09"
+    }
+  ]
+}
