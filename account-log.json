@@ -1,6 +1,6 @@
 {
  "generated": "2026-11-22",
- "source": "Read from the AI Lab Gmail (sent, received, drafts, scheduled) on Nov 22, 2026",
+ "source": "Read from the AI Lab Gmail (sent, received, drafts, scheduled) on Nov 22, 2026. Full backfill of every in and out email per account.",
  "accounts": {
   "201": {
    "headline": "Booked for InspiHER Dec 2-3 (4 one-hour sessions). Invoice with Dr. Williams, W-9 sent, rooms/times and payment timing still open.",
@@ -161,10 +161,28 @@
       },
       {
        "d": "2026-09-02",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Applied AI & STEM Partnership Proposal // Newton County STEAM Academy Pilot",
+       "sum": "Checked whether Friday morning still worked for a Zoom, or whether another time next week fit better.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r4922161682298328143",
+       "mid": "1a063102ec7ca8d7"
+      },
+      {
+       "d": "2026-09-02",
        "dir": "in",
        "who": "Dr. Williams",
        "sub": "Re: Applied AI & STEM Partnership Proposal",
        "sum": "Asked if you could meet Tuesday."
+      },
+      {
+       "d": "2026-09-02",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Applied AI & STEM Partnership Proposal // Newton County STEAM Academy Pilot",
+       "sum": "Replied yes and asked what time worked best for her.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r4922161682298328143",
+       "mid": "1a06345eade14954"
       },
       {
        "d": "2026-09-03",
@@ -175,12 +193,49 @@
       },
       {
        "d": "2026-09-03",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Applied AI & STEM Partnership Proposal // Newton County STEAM Academy Pilot",
+       "sum": "Confirmed 2:00 PM on Tuesday Sept 8 and offered a calendar invite. This copy had a typo.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r4922161682298328143",
+       "mid": "1a066e13ccbedb7b"
+      },
+      {
+       "d": "2026-09-03",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Applied AI & STEM Partnership Proposal // Newton County STEAM Academy Pilot",
+       "sum": "Sent the corrected confirmation about a minute later.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r4922161682298328143",
+       "mid": "1a066e225dda2035"
+      },
+      {
+       "d": "2026-09-03",
+       "dir": "in",
+       "who": "Dr. Williams",
+       "sub": "Re: Applied AI & STEM Partnership Proposal // Newton County STEAM Academy Pilot",
+       "sum": "Replied \"Sure!\" to your offer to send a calendar invite.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r4922161682298328143",
+       "mid": "1a066e3d54c0e5de"
+      },
+      {
+       "d": "2026-09-03",
        "dir": "invite",
        "who": "Dr. Williams",
        "sub": "Accepted: Discovery Call: The Brown Girls Creative Studio x Newton County Schools",
        "sum": "She accepted the calendar invite.",
        "gm": "q:subject:\"Discovery Call\"",
        "tag": "meet"
+      },
+      {
+       "d": "2026-09-08",
+       "dir": "note",
+       "who": "You and Dr. Williams",
+       "sub": "Re: Accepted: Discovery Call: The Brown Girls Creative Studio x Newton County Schools",
+       "sum": "14 quick emails back and forth (7 sent, 7 received) between 2:06 and 2:27 PM while you both worked on connecting to the Zoom. Her last note offered a phone call if the link would not work.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1875317628972189240",
+       "tag": "meet",
+       "mid": "1a0677729bea4638-sep8"
       },
       {
        "d": "2026-09-08",
@@ -240,12 +295,39 @@
        "sum": "Asked for your phone number to add to the invoice. You replied."
       },
       {
+       "d": "2026-10-02",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Follow-up & Career Day Impact Report",
+       "sum": "Sent the phone number she asked for so it could go on the invoice.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-6992105903060808690",
+       "mid": "1a0fd4cef915decf"
+      },
+      {
        "d": "2026-10-27",
        "dir": "in",
        "who": "Dr. Molly Bowden",
        "sub": "InspiHER Session",
        "sum": "Asked for a session name, short description and a photo for the sign. Shared the 2026 theme: Be You, Be Confident, Be Courageous, Be Resilient, Be Great.",
        "gm": "q:subject:\"InspiHER Session\""
+      },
+      {
+       "d": "2026-10-27",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: InspiHER Session",
+       "sum": "Went out with only your signature and no message. Your corrected reply followed at 2:19 PM.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1880226189151113974",
+       "mid": "1a17e7c28ec1922a"
+      },
+      {
+       "d": "2026-10-27",
+       "dir": "in",
+       "who": "Dr. Molly Bowden",
+       "sub": "Re: InspiHER Session",
+       "sum": "Thanked you and asked whether you wanted to change the session name or description.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1880226189151113974",
+       "mid": "1a17e8f072d3ddc9"
       },
       {
        "d": "2026-10-27",
@@ -261,6 +343,15 @@
        "sub": "Re: InspiHER Session",
        "sum": "Day 1: two 1-hour sessions, 20 fifth graders each. Day 2: two 1-hour sessions, grades 6-8 and 9-12, 20 girls each. Walk-through coming.",
        "tag": "win"
+      },
+      {
+       "d": "2026-10-28",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: InspiHER Session",
+       "sum": "Thanked her for the session details and said 20 students per 1-hour session works well for hands-on building.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1880226189151113974",
+       "mid": "1a1836f859ea1d92"
       },
       {
        "d": "2026-11-02",
@@ -298,11 +389,22 @@
        "sub": "Re: InspiHER Session",
        "sum": "Promised the final student link and an answer on AI tools by the end of the week (Fri Nov 20).",
        "tag": "overdue"
+      },
+      {
+       "d": "2026-11-23",
+       "dir": "out",
+       "who": "Scheduled",
+       "sub": "Re: InspiHER Session",
+       "sum": "Scheduled in Gmail for Mon Nov 23, 8:00 AM ET. Closes the loop on payment before InspiHER and refers to her Nov 16 note about your W-9 and Dr. Williams.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1880226189151113974",
+       "tag": "sched",
+       "mid": "1a2087ded297b186"
       }
      ]
     }
    ],
    "todo": [
+    "Your payment email to Dr. Bowden is scheduled for Mon Nov 23, 8:00 AM ET. Watch for her reply, and for any answer on the W-9 and payment date.",
     "Send Dr. Bowden the student link and your answer on AI tools. You promised it by Fri Nov 20, so it is overdue.",
     "Ask Dr. Bowden for rooms and start times for all 4 sessions.",
     "Ask whether accounts payable has your W-9 and when payment goes out.",
@@ -442,7 +544,16 @@
      "n": 1,
      "title": "Welcome email",
      "state": "todo",
-     "items": []
+     "items": [
+      {
+       "d": "2026-11-20",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Re: STEM & AI Badge Workshops for Girl Scouts",
+       "sum": "A follow-up draft is in Gmail Drafts, not sent.",
+       "tag": "draft"
+      }
+     ]
     },
     {
      "n": 2,
@@ -547,6 +658,15 @@
        "d": "2026-11-12",
        "dir": "out",
        "who": "You",
+       "sub": "Re: Collaboration Inquiry: The AI Lab & 4kiddos Youth Programming for 2027",
+       "sum": "Went out with only your signature and no message. Your full reply followed about 18 minutes later.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3552245375291217570",
+       "mid": "1a1d047303607946"
+      },
+      {
+       "d": "2026-11-12",
+       "dir": "out",
+       "who": "You",
        "sub": "Re: Collaboration Inquiry",
        "sum": "Proposed the week of Jan 11."
       },
@@ -565,6 +685,15 @@
        "sum": "Locked Jan 12 and offered 9 AM-12 PM."
       },
       {
+       "d": "2026-11-12",
+       "dir": "in",
+       "who": "Janelle Jones",
+       "sub": "Re: Collaboration Inquiry: The AI Lab & 4kiddos Youth Programming for 2027",
+       "sum": "Confirmed that 9:30 AM works.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3552245375291217570",
+       "mid": "1a1d0f365c73e878"
+      },
+      {
        "d": "2026-11-13",
        "dir": "invite",
        "who": "Janelle Jones",
@@ -572,6 +701,15 @@
        "sum": "Calendar invite for Tue Jan 12, 2027, 9:30-10:00 AM ET.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1881729708698944906",
        "tag": "meet"
+      },
+      {
+       "d": "2026-11-13",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Collaboration Inquiry: The AI Lab & 4kiddos Youth Programming for 2027",
+       "sum": "Confirmed you received and accepted her calendar invite.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3552245375291217570",
+       "mid": "1a1d5ca24c030af5"
       }
      ]
     },
@@ -643,6 +781,24 @@
      "title": "Meeting set-up",
      "state": "active",
      "items": [
+      {
+       "d": "2026-11-11",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Porterdale Elementary School's Career Day",
+       "sum": "Went out blank. She told you it was empty.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1881576559202582997",
+       "mid": "1a1cb3e9e86431e9"
+      },
+      {
+       "d": "2026-11-11",
+       "dir": "in",
+       "who": "Dwayaa Ward",
+       "sub": "Re: Porterdale Elementary School's Career Day",
+       "sum": "Told you the email you sent was blank.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1881576559202582997",
+       "mid": "1a1cb4e846875cca"
+      },
       {
        "d": "2026-11-11",
        "dir": "out",
@@ -746,6 +902,15 @@
        "sum": "Auto-reply only. Not a human reply. He retired from Newton County Schools Nov 1 and moved to the Georgia Department of Education.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1881728890311004323",
        "tag": "flag"
+      },
+      {
+       "d": "2026-11-13",
+       "dir": "out",
+       "who": "You to Tim Schmitt",
+       "sub": "Re: Enhancing K-12 Tech & AI Readiness in Newton County Schools",
+       "sum": "Resent your note to Dr. Schmitt, saying the first one may not have gone through.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3020615553989177573",
+       "mid": "1a1d4fe55a2350a9"
       },
       {
        "d": "2026-11-13",
@@ -901,7 +1066,7 @@
    "gq": "from:beverly.holyfield@clayton.k12.ga.us OR to:beverly.holyfield@clayton.k12.ga.us"
   },
   "209": {
-   "headline": "No reply in 6+ weeks. A follow-up draft has been waiting since Nov 20.",
+   "headline": "No reply in 6+ weeks. A follow-up is scheduled to send Tue Dec 1 at 9:00 AM ET.",
    "lastReply": null,
    "facts": {
     "address": "",
@@ -935,12 +1100,14 @@
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r5932942850936239764"
       },
       {
-       "d": "2026-11-20",
-       "dir": "note",
-       "who": "Draft waiting",
-       "sub": "Re: Locking in Q1 return!",
-       "sum": "A follow-up draft is in Gmail Drafts, not sent.",
-       "tag": "draft"
+       "d": "2026-12-01",
+       "dir": "out",
+       "who": "Scheduled",
+       "sub": "Re: Locking in Q1 return! ( class portfolio review )",
+       "sum": "Scheduled in Gmail for Tue Dec 1, 9:00 AM ET. Follow-up about what worked in the five sessions and what Q1 could look like.",
+       "tag": "sched",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r5932942850936239764",
+       "mid": "1a231e7bbf0aed6d"
       }
      ]
     },
@@ -958,7 +1125,7 @@
     }
    ],
    "todo": [
-    "Send the waiting follow-up draft."
+    "Follow-up sends Tue Dec 1 at 9:00 AM ET. If there is still no reply by mid-December, let it rest and try again in January."
    ],
    "flags": [
     "A teacher at NCSA asked about bringing you back for a longer session (your Oct 1 email). Lead with that."
@@ -1753,7 +1920,7 @@
    "gq": "from:info@newtoneducationfoundation.org OR to:info@newtoneducationfoundation.org"
   },
   "214": {
-   "headline": "Competitor and possible partner. Sells custom school partnerships (CS and STEM instruction, workshops with AI literacy, teacher coverage, custom curriculum) mainly for K-8. Not contacted yet. Partner note drafted, task due Nov 24.",
+   "headline": "Competitor and possible partner. Sells custom school partnerships (CS and STEM instruction, workshops with AI literacy, teacher coverage, custom curriculum) mainly for K-8. Partner note is scheduled to send Mon Nov 23 at 9:00 AM ET.",
    "lastReply": null,
    "facts": {
     "address": "",
@@ -1768,7 +1935,7 @@
      "email": "",
      "phone": "",
      "addr": "",
-     "note": "No direct email found. info@codingwithculture.com is on their own site.",
+     "note": "The partner note goes to an address from his own Instagram/Threads profile, with info@codingwithculture.com (from their site) copied.",
      "linked": []
     }
    ],
@@ -1797,7 +1964,18 @@
      "n": 1,
      "title": "Welcome email",
      "state": "todo",
-     "items": []
+     "items": [
+      {
+       "d": "2026-11-23",
+       "dir": "out",
+       "who": "Scheduled",
+       "sub": "Partnering to reach young women in tech",
+       "sum": "Scheduled in Gmail for Mon Nov 23, 9:00 AM ET. Partner note about sending girls and families to each other. Sent to the address from his own Instagram/Threads profile, with the info@ address from their site copied.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1882565623546332285",
+       "tag": "sched",
+       "mid": "1a208b4dafcd545d"
+      }
+     ]
     },
     {
      "n": 2,
@@ -1813,7 +1991,7 @@
     }
    ],
    "todo": [
-    "Send the partner note to Coach Hicks on Tuesday, after the buyer emails. The address above comes from their own site."
+    "Partner note sends Mon Nov 23 at 9:00 AM ET. If there is no reply in about a week, send one short follow-up."
    ],
    "flags": [
     "Their form page and schools page both list AI literacy, and the form adds AI training for teachers, so they compete with you directly on AI. Keep your pricing and curriculum out of the first email.",

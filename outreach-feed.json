@@ -660,6 +660,681 @@
     "nextSteps": "Write the first email or drop this account.",
     "followUpDone": false
    }
+  },
+  {
+   "key": "trail-201-20260824-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-24",
+    "person": "Chantal Hendrix",
+    "title": "Emailed: Your first email to Newton.",
+    "phone": "",
+    "email": "",
+    "message": "Your first email to Newton. Offered a free 1-hour after-school AI discovery session, a $25 hands-on studio hour and teacher tools. Curriculum proposal attached.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260825-in-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-25",
+    "person": "Chantal Hendrix",
+    "title": "Reply: Thanked you and copied her boss, Dr. Williams, as the right person to review.",
+    "phone": "",
+    "email": "",
+    "message": "Thanked you and copied her boss, Dr. Williams, as the right person to review.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260825-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-25",
+    "person": "Chantal Hendrix",
+    "title": "Emailed: Thanked her and said you look forward to talking with Dr. Williams.",
+    "phone": "",
+    "email": "",
+    "message": "Thanked her and said you look forward to talking with Dr. Williams.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260831-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-31",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Followed up on the proposal and recapped the offer.",
+    "phone": "",
+    "email": "",
+    "message": "Followed up on the proposal and recapped the offer.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260831-in-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-31",
+    "person": "Dr. Jennifer Williams",
+    "title": "Reply: Said she cannot approve after-school pilots and is not approving AI literacy programs with students…",
+    "phone": "",
+    "email": "",
+    "message": "Said she cannot approve after-school pilots and is not approving AI literacy programs with students at this time.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260831-out-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-31",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Gracious reply. Left the door open for educator PD later.",
+    "phone": "",
+    "email": "",
+    "message": "Gracious reply. Left the door open for educator PD later.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260831-in-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-31",
+    "person": "Dr. Jennifer Williams",
+    "title": "Reply: 45 minutes later she said she would like to learn more about your organization and asked for a Zoom.",
+    "phone": "",
+    "email": "",
+    "message": "45 minutes later she said she would like to learn more about your organization and asked for a Zoom.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260831-out-3",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-08-31",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Offered Wed Sept 2 (10 AM-1 PM) or Fri Sept 4 (9:30 AM-12:30 PM) and asked what areas she wanted to…",
+    "phone": "",
+    "email": "",
+    "message": "Offered Wed Sept 2 (10 AM-1 PM) or Fri Sept 4 (9:30 AM-12:30 PM) and asked what areas she wanted to explore.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260902-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-02",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Checked whether Friday morning still worked for a Zoom, or whether another time next week fit…",
+    "phone": "",
+    "email": "",
+    "message": "Checked whether Friday morning still worked for a Zoom, or whether another time next week fit better.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260902-in-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-02",
+    "person": "Dr. Jennifer Williams",
+    "title": "Reply: Asked if you could meet Tuesday.",
+    "phone": "",
+    "email": "",
+    "message": "Asked if you could meet Tuesday.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260902-out-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-02",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Replied yes and asked what time worked best for her.",
+    "phone": "",
+    "email": "",
+    "message": "Replied yes and asked what time worked best for her.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260903-in-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-03",
+    "person": "Dr. Jennifer Williams",
+    "title": "Reply: Proposed 2:00 PM. You confirmed Tuesday Sept 8 at 2:00 PM.",
+    "phone": "",
+    "email": "",
+    "message": "Proposed 2:00 PM. You confirmed Tuesday Sept 8 at 2:00 PM.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260903-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-03",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Confirmed 2:00 PM on Tuesday Sept 8 and offered a calendar invite.",
+    "phone": "",
+    "email": "",
+    "message": "Confirmed 2:00 PM on Tuesday Sept 8 and offered a calendar invite. This copy had a typo.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260903-out-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-03",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Sent the corrected confirmation about a minute later.",
+    "phone": "",
+    "email": "",
+    "message": "Sent the corrected confirmation about a minute later.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260903-in-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-03",
+    "person": "Dr. Jennifer Williams",
+    "title": "Reply: Replied \"Sure!\" to your offer to send a calendar invite.",
+    "phone": "",
+    "email": "",
+    "message": "Replied \"Sure!\" to your offer to send a calendar invite.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261001-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-01",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Shared your 5-session NCSA results (96% satisfaction), the live class-projects page, and asked to…",
+    "phone": "",
+    "email": "",
+    "message": "Shared your 5-session NCSA results (96% satisfaction), the live class-projects page, and asked to lock in InspiHER.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261001-out-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-01",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Sent W-9 and EIN letter for accounts payable.",
+    "phone": "",
+    "email": "",
+    "message": "Sent W-9 and EIN letter for accounts payable. Asked for an ACH vendor form.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261002-in-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-02",
+    "person": "Dr. Jennifer Williams",
+    "title": "Reply: Asked for your phone number to add to the invoice.",
+    "phone": "",
+    "email": "",
+    "message": "Asked for your phone number to add to the invoice. You replied.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261002-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-02",
+    "person": "Dr. Jennifer Williams",
+    "title": "Emailed: Sent the phone number she asked for so it could go on the invoice.",
+    "phone": "",
+    "email": "",
+    "message": "Sent the phone number she asked for so it could go on the invoice.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261027-in-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-27",
+    "person": "Dr. Molly Bowden",
+    "title": "Reply: Asked for a session name, short description and a photo for the sign.",
+    "phone": "",
+    "email": "",
+    "message": "Asked for a session name, short description and a photo for the sign. Shared the 2026 theme: Be You, Be Confident, Be Courageous, Be Resilient, Be Great.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261027-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-27",
+    "person": "Dr. Molly Bowden",
+    "title": "Emailed: Went out with only your signature and no message.",
+    "phone": "",
+    "email": "",
+    "message": "Went out with only your signature and no message. Your corrected reply followed at 2:19 PM.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261027-in-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-27",
+    "person": "Dr. Molly Bowden",
+    "title": "Reply: Thanked you and asked whether you wanted to change the session name or description.",
+    "phone": "",
+    "email": "",
+    "message": "Thanked you and asked whether you wanted to change the session name or description.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261027-out-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-27",
+    "person": "Dr. Molly Bowden",
+    "title": "Emailed: Accepted the title \"AI & Me! An AI and Tech Discovery Workshop\".",
+    "phone": "",
+    "email": "",
+    "message": "Accepted the title \"AI & Me! An AI and Tech Discovery Workshop\". Sent your logo. Asked group size, length and room setup.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261028-out-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-10-28",
+    "person": "Dr. Molly Bowden",
+    "title": "Emailed: Thanked her for the session details and said 20 students per 1-hour session works well for hands-on…",
+    "phone": "",
+    "email": "",
+    "message": "Thanked her for the session details and said 20 students per 1-hour session works well for hands-on building.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261102-in-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-02",
+    "person": "Dr. Molly Bowden",
+    "title": "Reply: Walk-through done: Wi-Fi on site, students bring Chromebooks, projector or Cleartouch panel…",
+    "phone": "",
+    "email": "",
+    "message": "Walk-through done: Wi-Fi on site, students bring Chromebooks, projector or Cleartouch panel (unknown), tables or desks, spare power strips.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20261116-out-2",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-16",
+    "person": "Dr. Molly Bowden",
+    "title": "Emailed: Promised the final student link and an answer on AI tools by the end of the week (Fri Nov 20).",
+    "phone": "",
+    "email": "",
+    "message": "Promised the final student link and an answer on AI tools by the end of the week (Fri Nov 20).",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "sched-201-20261123",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Dr. Molly Bowden",
+    "title": "Scheduled: Re: InspiHER Session",
+    "phone": "",
+    "email": "",
+    "message": "Scheduled in Gmail for Mon Nov 23, 8:00 AM ET. Closes the loop on payment before InspiHER and refers to her Nov 16 note about your W-9 and Dr. Williams.",
+    "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent.",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261111-out-1",
+   "id": 204,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-11",
+    "person": "Janelle Jones",
+    "title": "Emailed: Introduced The AI Lab and asked about partnering on family workshops.",
+    "phone": "",
+    "email": "",
+    "message": "Introduced The AI Lab and asked about partnering on family workshops.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261112-in-1",
+   "id": 204,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-12",
+    "person": "Janelle Jones",
+    "title": "Reply: Open to a conversation in Q1.",
+    "phone": "",
+    "email": "",
+    "message": "Open to a conversation in Q1.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261112-out-1",
+   "id": 204,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-12",
+    "person": "Janelle Jones",
+    "title": "Emailed: Went out with only your signature and no message.",
+    "phone": "",
+    "email": "",
+    "message": "Went out with only your signature and no message. Your full reply followed about 18 minutes later.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261112-out-2",
+   "id": 204,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-12",
+    "person": "Janelle Jones",
+    "title": "Emailed: Proposed the week of Jan 11.",
+    "phone": "",
+    "email": "",
+    "message": "Proposed the week of Jan 11.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261112-in-2",
+   "id": 204,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-12",
+    "person": "Janelle Jones",
+    "title": "Reply: Jan 12 works, not the 11th.",
+    "phone": "",
+    "email": "",
+    "message": "Jan 12 works, not the 11th.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261112-in-3",
+   "id": 204,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-12",
+    "person": "Janelle Jones",
+    "title": "Reply: Confirmed that 9:30 AM works.",
+    "phone": "",
+    "email": "",
+    "message": "Confirmed that 9:30 AM works.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261113-out-1",
+   "id": 204,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-13",
+    "person": "Janelle Jones",
+    "title": "Emailed: Confirmed you received and accepted her calendar invite.",
+    "phone": "",
+    "email": "",
+    "message": "Confirmed you received and accepted her calendar invite.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-205-20261111-in-1",
+   "id": 205,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-11",
+    "person": "Dwayaa Ward",
+    "title": "Reply: Invited you to Career Day, Thu Nov 19, 2026.",
+    "phone": "",
+    "email": "",
+    "message": "Invited you to Career Day, Thu Nov 19, 2026. Arrive 8:00 AM, rotations 8:30-11:00.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-205-20261111-out-1",
+   "id": 205,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-11",
+    "person": "Dwayaa Ward",
+    "title": "Emailed: Went out blank. She told you it was empty.",
+    "phone": "",
+    "email": "",
+    "message": "Went out blank. She told you it was empty.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-205-20261111-in-2",
+   "id": 205,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-11",
+    "person": "Dwayaa Ward",
+    "title": "Reply: Told you the email you sent was blank.",
+    "phone": "",
+    "email": "",
+    "message": "Told you the email you sent was blank.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-205-20261111-out-2",
+   "id": 205,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-11",
+    "person": "Dwayaa Ward",
+    "title": "Emailed: Declined Career Day because of a scheduling conflict and pitched a Q1 visit.",
+    "phone": "",
+    "email": "",
+    "message": "Declined Career Day because of a scheduling conflict and pitched a Q1 visit.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-205-20261111-in-3",
+   "id": 205,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-11",
+    "person": "Dwayaa Ward",
+    "title": "Reply: Understood. Asked to keep in touch.",
+    "phone": "",
+    "email": "",
+    "message": "Understood. Asked to keep in touch.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-206-20261112-out-1",
+   "id": 206,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-12",
+    "person": "Tim Schmitt",
+    "title": "Emailed: First email to the district CTAE contact.",
+    "phone": "",
+    "email": "",
+    "message": "First email to the district CTAE contact.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-206-20261113-in-1",
+   "id": 206,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-13",
+    "person": "Tim Schmitt (auto-reply)",
+    "title": "Reply: Auto-reply only. Not a human reply.",
+    "phone": "",
+    "email": "",
+    "message": "Auto-reply only. Not a human reply. He retired from Newton County Schools Nov 1 and moved to the Georgia Department of Education.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-206-20261113-out-1",
+   "id": 206,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-13",
+    "person": "Tim Schmitt",
+    "title": "Emailed: Resent your note to Dr. Schmitt, saying the first one may not have gone through.",
+    "phone": "",
+    "email": "",
+    "message": "Resent your note to Dr. Schmitt, saying the first one may not have gone through.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "sched-209-20261201",
+   "id": 209,
+   "activity": {
+    "type": "Email",
+    "date": "2026-12-01",
+    "person": "Audria Bunting",
+    "title": "Scheduled: Re: Locking in Q1 return! ( class portfolio review )",
+    "phone": "",
+    "email": "",
+    "message": "Scheduled in Gmail for Tue Dec 1, 9:00 AM ET. Follow-up about what worked in the five sessions and what Q1 could look like.",
+    "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent.",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "sched-214-20261123",
+   "id": 214,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Victor \"Coach\" Hicks",
+    "title": "Scheduled: Partnering to reach young women in tech",
+    "phone": "",
+    "email": "",
+    "message": "Scheduled in Gmail for Mon Nov 23, 9:00 AM ET. Partner note about sending girls and families to each other. Sent to the address from his own Instagram/Threads profile, with the info@ address from their site copied.",
+    "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent.",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "sched-312-20261123",
+   "id": 312,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Dr. Romain",
+    "title": "Scheduled: AI Enrichment Workshop Trial for 2027 - The AI Lab",
+    "phone": "",
+    "email": "",
+    "message": "Scheduled in Gmail for Mon Nov 23, 9:00 AM ET.",
+    "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent.",
+    "followUpDone": false
+   }
   }
  ]
 }
