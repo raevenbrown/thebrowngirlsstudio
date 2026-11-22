@@ -25,6 +25,8 @@
     '#homeCmd:after{width:360px;height:360px;right:-100px;top:240px;background:#C7994F;animation:hxf2 22s ease-in-out infinite alternate}',
     '@keyframes hxf1{to{transform:translate(70px,50px)}}@keyframes hxf2{to{transform:translate(-60px,-40px)}}',
     '.hx-grid{display:grid;gap:16px;grid-template-columns:repeat(12,minmax(0,1fr))}',
+    '.hx-cols{grid-column:span 12;column-count:2;column-gap:16px}.hx-cols>.hx-card{break-inside:avoid;-webkit-column-break-inside:avoid;display:block;width:100%;margin:0 0 16px}',
+    '@media(max-width:1023px){.hx-cols{column-count:1}}',
     '.hx-grid>*{grid-column:span 12;min-width:0}',
     '@media(min-width:1024px){.hx-7{grid-column:span 7}.hx-5{grid-column:span 5}.hx-4{grid-column:span 4}.hx-8{grid-column:span 8}}',
     '@media(min-width:1024px) and (max-width:1279px){.hx-7,.hx-5,.hx-8{grid-column:span 12}.hx-4{grid-column:span 6}}',
@@ -351,7 +353,7 @@
       else body = hero + tasksCardFn(3) + quick + ring + autos + verLine;
       body = '<div class="hx-grid">' + body + '</div>';
     } else {
-      body = '<div class="hx-grid">' + hero + ring + river + marketingCard() + tasksCardFn(5) + newsCard() + quick + warm + compCard + autos + verLine + '</div>';
+      body = '<div class="hx-grid">' + hero + ring + river + marketingCard() + '<div class="hx-cols">' + tasksCardFn(5) + quick + warm + autos + newsCard() + compCard + '</div>' + verLine + '</div>';
     }
     box.className = '';
     box.innerHTML = strip + body;
