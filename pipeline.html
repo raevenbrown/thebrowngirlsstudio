@@ -78,6 +78,7 @@ main > header { padding-top: max(1rem, env(safe-area-inset-top)) !important; }
 #sidebarNav { padding-top: env(safe-area-inset-top); }
 #sidebarNav { height: 100vh; height: 100dvh; padding-bottom: env(safe-area-inset-bottom); overflow-y: auto; }
 main { min-width: 0; }
+#mainDashboard { min-width: 0; }   /* body is a flex row: without this the dashboard grows to its widest child and pushes the header buttons off screen */
 .fixed.inset-0 > div { max-height: calc(100dvh - 1rem); overflow-y: auto; overscroll-behavior: contain; }
 #financialKanbanContainer, #salesFunnelContainer { scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; overscroll-behavior-x: contain; }
 #financialKanbanContainer > *, #salesFunnelContainer > * { scroll-snap-align: start; flex-shrink: 0; }
@@ -2915,9 +2916,11 @@ if (res.ok) { done = true; BGCS_GH.etag = null; }
 if (!done) throw new Error('Could not save after several tries');
 activityLog.forEach(function (e) { e.s = true; });
 saveActivityLocal();
+BGCS_GH.needsReconnect = false;
 setSyncStatus('Synced ' + syncTimeStr());
 } catch (e) {
 console.error(e);
+BGCS_GH.needsReconnect = !!(e && (e.status === 401 || e.status === 404));
 setSyncStatus(ghErrText(e));
 } finally {
 BGCS_GH.busy = false;
@@ -3278,7 +3281,7 @@ location.reload();
 
 async function forceSync(silent) {
 if (!BGCS_CLOUD.enabled) {
-if (BGCS_GH.enabled) { ghSyncNow(); return; }
+if (BGCS_GH.enabled) { if (BGCS_GH.needsReconnect) { openGhModal(); return; } ghSyncNow(); return; }
 if (!silent) openGhModal();
 return;
 }
@@ -6372,6 +6375,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.21-5"></script>
+<script src="pipeline-home.js?b=2026.11.21-6"></script>
 </body>
 </html>
