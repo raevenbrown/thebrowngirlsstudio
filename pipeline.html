@@ -4572,6 +4572,9 @@ function bgcsFeedSync() {
         A[k] = 1;
         if (u.stage) t.stage = u.stage; if (u.emailSentDate) t.emailSentDate = u.emailSentDate; if (u.emailStatus) t.emailStatus = u.emailStatus;
         if (u.activity) { t.activities = t.activities || []; var _aj = JSON.stringify(u.activity); if (!t.activities.some(function (a) { return JSON.stringify(a) === _aj; })) t.activities.unshift(u.activity); }
+        if (u.set) Object.keys(u.set).forEach(function (k) { t[k] = u.set[k]; });
+        if (u.holdTasks) (t.clientTasks || []).forEach(function (ct) { if (!ct.done && u.holdTasks.some(function (m) { return (ct.title || '').indexOf(m) === 0; })) ct.hold = true; });
+        if (u.releaseTasks) (t.clientTasks || []).forEach(function (ct) { if (ct.hold && u.releaseTasks.some(function (m) { return (ct.title || '').indexOf(m) === 0; })) delete ct.hold; });
         if (u.addTask) { t.clientTasks = t.clientTasks || []; if (!t.clientTasks.some(function (x) { return (x.title || '') === (u.addTask.title || '') && (x.date || '') === (u.addTask.date || ''); })) t.clientTasks.push(u.addTask); }
         if (u.completeTasks) (t.clientTasks || []).forEach(function (ct) { if (!ct.done && u.completeTasks.some(function (m) { return (ct.title || '').indexOf(m) === 0; })) ct.done = true; });
         changed = true;
@@ -4969,11 +4972,12 @@ function coModel() {
   var perDay = Math.ceil(needNew / days);
   var capRev = cap * c.classVal, gap = Math.max(c.goal - capRev, 0);
   var tasks = [];
-  P.forEach(function (p) { (p.clientTasks || []).forEach(function (t) { if (!t.done && t.active !== false && t.date) tasks.push({ p: p, t: t }); }); });
-  tasks.sort(function (a, b) { return a.t.date < b.t.date ? -1 : 1; });
-  var overdue = tasks.filter(function (x) { return x.t.date <= today; });
-  var stale = out.filter(function (p) { return p.emailSentDate && (new Date(today) - new Date(p.emailSentDate)) / 86400000 >= 5; });
-  return { c: c, P: P, won: won, slots: slots, cap: cap, remaining: remaining, perClass: perClass, out: out, leads: leads, needAll: needAll, needNew: needNew, days: days, perDay: perDay, capRev: capRev, gap: gap, tasks: tasks, overdue: overdue, stale: stale, today: today };
+  P.forEach(function (p) { (p.clientTasks || []).forEach(function (t) { if (!t.done && t.active !== false && t.date) tasks.push({ p: p, t: t, held: !!(p.hold || t.hold) }); }); });
+  /* held items (waiting on someone else, by choice) sink to the bottom and never count as due */
+  tasks.sort(function (a, b) { if (a.held !== b.held) return a.held ? 1 : -1; return a.t.date < b.t.date ? -1 : 1; });
+  var overdue = tasks.filter(function (x) { return !x.held && x.t.date <= today; });
+  var stale = out.filter(function (p) { return !p.hold && p.emailSentDate && (new Date(today) - new Date(p.emailSentDate)) / 86400000 >= 5; });
+  return { c: c, P: P, won: won, slots: slots, cap: cap, remaining: remaining, perClass: perClass, out: out, leads: leads, needAll: needAll, needNew: needNew, days: days, perDay: perDay, capRev: capRev, gap: gap, tasks: tasks, held: tasks.filter(function (x) { return x.held; }), overdue: overdue, stale: stale, today: today };
 }
 function renderCoach() {
   var m = coModel(), c = m.c;
@@ -6460,6 +6464,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.22-1"></script>
+<script src="pipeline-home.js?b=2026.11.22-2"></script>
 </body>
 </html>

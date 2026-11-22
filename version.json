@@ -1,1 +1,1 @@
-{"v": "2026.11.22-1", "note": "Fix: a task completed on one device no longer gets undone by another. Molly tasks held until payment, 4-H task updated."}
+{"v": "2026.11.22-2", "note": "Held items (Molly, Deena) sink to the bottom and leave the top 3; ready drafts lead. Task sync fix."}

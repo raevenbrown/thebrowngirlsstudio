@@ -1425,6 +1425,45 @@
     "nextSteps": "Read it and send or schedule it.",
     "followUpDone": false
    }
+  },
+  {
+   "key": "hold-202-20261122",
+   "id": 202,
+   "set": {
+    "hold": true
+   }
+  },
+  {
+   "key": "holdtasks-201-20261122",
+   "id": 201,
+   "holdTasks": [
+    "Send Molly",
+    "Have the student profile link",
+    "Review and send short holding reply to Molly",
+    "Follow up with Molly",
+    "Finish student profile link"
+   ]
+  },
+  {
+   "key": "ready-301-20261122",
+   "id": 301,
+   "set": {
+    "draftReady": true
+   }
+  },
+  {
+   "key": "ready-308-20261122",
+   "id": 308,
+   "set": {
+    "draftReady": true
+   }
+  },
+  {
+   "key": "ready-309-20261122",
+   "id": 309,
+   "set": {
+    "draftReady": true
+   }
   }
  ]
 }

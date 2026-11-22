@@ -196,7 +196,7 @@
   /* ---------- next action ---------- */
   function candidates(m) {
     var out = [], today = m.today;
-    m.tasks.filter(function (x) { return x.t.date <= today; }).forEach(function (x) {
+    m.tasks.filter(function (x) { return !x.held && x.t.date <= today; }).forEach(function (x) {
       out.push({ kind: 'task', title: x.t.title, org: x.p.org, pid: x.p.id, ti: x.p.clientTasks.indexOf(x.t), why: (x.t.date < today ? 'Overdue since ' : 'Due ') + x.t.date + '. Small step, then it is off your mind.' });
     });
     m.stale.forEach(function (p) {
@@ -466,10 +466,11 @@
   }
   function bar(v, t) { var pct = Math.min(100, Math.round(v / Math.max(1, t) * 100)); return '<div class="co-bar"><i style="width:' + pct + '%"></i></div>'; }
   function movesList(m, pm) {
+    /* Top 3 = sending drafts that are ready. Held items (Molly, Deena) never show here. Waiting-on-them chasing comes after. */
     var out = [], today = m.today;
-    m.tasks.filter(function (x) { return x.t.date <= today; }).slice(0, 1).forEach(function (x) { out.push({ t: x.t.title, o: x.p.org, pid: x.p.id, min: 5, tab: 'tasks' }); });
-    m.stale.slice(0, 1).forEach(function (p) { out.push({ t: 'Follow up with ' + p.org, o: 'First email sent ' + fmtD(p.emailSentDate) + ', no reply', pid: p.id, min: 3, tab: 'trail' }); });
-    pm.drafts.filter(function (p) { return p.email; }).slice(0, 3).forEach(function (p) { if (out.length < 3) out.push({ t: 'Read and send the draft to ' + p.org, o: 'Draft is waiting in Gmail', pid: p.id, min: 2, tab: 'trail' }); });
+    pm.drafts.filter(function (p) { return p.email && p.draftReady && !p.hold; }).slice(0, 3).forEach(function (p) { out.push({ t: 'Read and send the draft to ' + p.org, o: 'Rewritten and waiting in Gmail', pid: p.id, min: 2, tab: 'trail' }); });
+    if (out.length < 3) m.stale.slice(0, 3 - out.length).forEach(function (p) { out.push({ t: 'Follow up with ' + p.org, o: 'First email sent ' + fmtD(p.emailSentDate) + ', no reply', pid: p.id, min: 3, tab: 'trail' }); });
+    if (out.length < 3) m.tasks.filter(function (x) { return !x.held && x.t.date <= today; }).slice(0, 3 - out.length).forEach(function (x) { out.push({ t: x.t.title, o: x.p.org, pid: x.p.id, min: 5, tab: 'tasks' }); });
     return out.slice(0, 3);
   }
   function coachCard(m) {
@@ -951,8 +952,8 @@
       var due = m.tasks.filter(function (x) { return x.t.date <= wk; });
       var shown = S.showAll ? m.tasks.slice(0, 40) : due.slice(0, limit);
       var tl = shown.length ? shown.map(function (x) {
-        var ti = x.p.clientTasks.indexOf(x.t), od = x.t.date < today, td = x.t.date === today;
-        return '<div class="hx-swipe" data-pid="' + x.p.id + '" data-ti="' + ti + '"><div class="hx-swipe-bg">Done &#10003;</div><div class="hx-row hx-swipe-fg"><input type="checkbox" class="hx-chk" onclick="hxDone(' + x.p.id + ',' + ti + ',event)" aria-label="Mark done"><div style="min-width:0;flex:1"><div style="font-size:14.5px;font-weight:700;color:#F3E8D6">' + E(x.t.title) + '</div><div style="font-size:12px;color:#CDBA99"><a class="hx-a" href="javascript:void(0)" onclick="homeOpen(' + x.p.id + ')">' + E(x.p.org) + '</a> &middot; <span style="' + (od ? 'color:#f0a090;font-weight:800' : td ? 'color:#E3BD79;font-weight:800' : '') + '">' + (od ? 'Overdue ' : td ? 'Today ' : '') + E(x.t.date) + '</span></div></div></div></div>';
+        var ti = x.p.clientTasks.indexOf(x.t), od = !x.held && x.t.date < today, td = !x.held && x.t.date === today;
+        return '<div class="hx-swipe" data-pid="' + x.p.id + '" data-ti="' + ti + '"><div class="hx-swipe-bg">Done &#10003;</div><div class="hx-row hx-swipe-fg"><input type="checkbox" class="hx-chk" onclick="hxDone(' + x.p.id + ',' + ti + ',event)" aria-label="Mark done"><div style="min-width:0;flex:1"><div style="font-size:14.5px;font-weight:700;color:#F3E8D6">' + E(x.t.title) + (x.held ? ' <span class="hx-chip" style="cursor:default;margin-left:4px">On hold</span>' : '') + '</div><div style="font-size:12px;color:#CDBA99"><a class="hx-a" href="javascript:void(0)" onclick="homeOpen(' + x.p.id + ')">' + E(x.p.org) + '</a> &middot; <span style="' + (od ? 'color:#f0a090;font-weight:800' : td ? 'color:#E3BD79;font-weight:800' : '') + '">' + (od ? 'Overdue ' : td ? 'Today ' : '') + E(x.t.date) + '</span></div></div></div></div>';
       }).join('') : '<p class="hx-mu">Nothing due this week. Nice. Pick an organization to research.</p>';
       return '<div class="hx-card fx-tilt hx-7 hx-in"><div class="hx-k">Your list &middot; ' + m.tasks.length + ' open' + (m.overdue.length ? ' &middot; <span style="color:#f0a090">' + m.overdue.length + ' due now</span>' : '') + '</div>' + (mob ? '<p style="font-size:11px;color:#9c8a6c;margin:-2px 0 4px">Swipe a task right to finish it.</p>' : '') + tl +
         (m.tasks.length > shown.length || S.showAll ? '<div style="margin-top:8px"><span class="hx-chip" onclick="hxAll()">' + (S.showAll ? 'Show less' : 'Show all ' + m.tasks.length) + '</span></div>' : '') + '</div>';
