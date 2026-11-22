@@ -1,8 +1,20 @@
 {
  "version": 2,
  "generated": "2026-11-22",
- "note": "Checked Nov 22. Every item was read at its source. Items marked Verify have a detail that still needs confirming with the funder. Nothing is included just to fill space.",
+ "note": "Checked Nov 22. Added one verified grant. Dropped older items past the freshness window (APS Sept item, BOOST, 21st CCLC, Education Dept AI grant priority, June funding-risk items). Nothing new and verified from Georgia districts or Radar leads this run; several source pages could not be opened.",
  "items": [
+  {
+   "cat": "Grants",
+   "title": "Society for Science STEM Action Grants: small grants for community STEM nonprofits",
+   "why": "A $5,000 grant could fund a season of your classes if a nonprofit partner applies. Send the link to a youth organization or library you work with and offer to write the program section; applications open in December.",
+   "url": "https://societyforscience.org/outreach-and-equity/stem-action-grants/",
+   "source": "Society for Science",
+   "date": "2026-11",
+   "deadline": "2027-02-12",
+   "amount": "Up to $5,000 per grant, renewable up to 3 years",
+   "who": "Nonprofit organizations working to increase public participation in STEM",
+   "verify": "Page lists no detailed eligibility. Check the About & FAQ page, and whether a for-profit studio can apply directly or must partner with a nonprofit."
+  },
   {
    "cat": "GA schools",
    "title": "Atlanta Public Schools holds community conversation on AI policy for students and parents",
@@ -13,27 +25,11 @@
   },
   {
    "cat": "GA schools",
-   "title": "APS proposed AI rules: students may use AI only for a stated instructional objective, staff keep sensitive data out",
-   "why": "Borrow this framing word for word in emails: objective-based, teacher-guided, no sensitive data entered. APS planned to decide at a November meeting, so check whether it passed before you call it adopted.",
-   "url": "https://www.atlantanewsfirst.com/2026/09/17/atlanta-public-schools-moves-toward-adopting-new-ai-policy/",
-   "source": "Atlanta News First",
-   "date": "2026-09-16"
-  },
-  {
-   "cat": "GA schools",
    "title": "Georgia students raise privacy concerns over Meta AI smart glasses; state law bans such devices in schools",
    "why": "Student privacy and recording are live issues with Georgia families and schools. Add a short data-privacy and device-use statement to your program overview so administrators see you are ahead of the concern.",
    "url": "https://www.wsbtv.com/news/local/georgia-students-raise-privacy-concerns-over-ai-smart-glasses/IK3UPAJXKFDRJLSEQF52LX2C7U/",
    "source": "WSB-TV",
    "date": "2026-11-10"
-  },
-  {
-   "cat": "AI in education",
-   "title": "Teachers say district AI rules are unclear: 60% of educators disagree their district made policy clear (EdWeek 2025 figure cited)",
-   "why": "Offer teacher training next to student classes: using AI safely, protecting student data, checking AI output. Raise it with Dr. Williams after InspiHER.",
-   "url": "https://www.ajc.com/education/2026/08/how-teachers-are-navigating-the-wild-west-of-ai/",
-   "source": "Atlanta Journal-Constitution (opinion)",
-   "date": "2026-08-06"
   },
   {
    "cat": "AI in education",
@@ -54,64 +50,6 @@
    "amount": "Up to $5,000, larger projects possible",
    "who": "Grade 6-12 educators (not stated for schools or nonprofits)",
    "verify": "Listing gives Nov 1 and Dec 1, 2026 without saying which tier. Check the funder page."
-  },
-  {
-   "cat": "Grants",
-   "title": "BOOST out-of-school-time grants: $7.5M expansion announced May 18, 2026",
-   "why": "BOOST pays community after-school groups, and it has funded STEM supplies and staff training. Ask every after-school prospect: are you a BOOST grantee, and can it cover a vendor like us?",
-   "url": "https://athensceo.com/news/2026/05/georgia-expands-afterschool-and-summer-learning-75-million-public-private-investment/",
-   "source": "Athens CEO",
-   "date": "2026-05-18",
-   "amount": "Last cycle: $20K-$300K a year for community groups",
-   "who": "Georgia nonprofits, municipalities and colleges serving public K-12 students in after-school or summer programs (2+ years, 25%+ low-income)",
-   "verify": "Next application window not announced. Last cycle closed Aug 1, 2025. Watch afterschoolga.org."
-  },
-  {
-   "cat": "Grants",
-   "title": "Education Department now favors grant proposals that build AI literacy and teach educators to use AI",
-   "why": "Districts and colleges that propose AI literacy and teacher training score higher on federal discretionary grants. Offer Newton, Rockdale, Clayton or Gwinnett a co-written application: you bring the curriculum and training.",
-   "url": "https://www.k12dive.com/news/how-the-education-department-will-prioritise-ai-in-awarding-grants/817340/",
-   "source": "K-12 Dive",
-   "date": "2026-04-14",
-   "who": "Districts and colleges (article does not mention nonprofits)",
-   "verify": "Final rule effective May 13, 2026. It names no specific grant programs."
-  },
-  {
-   "cat": "Grants",
-   "title": "Georgia 21st Century Community Learning Centers (after-school funding)",
-   "why": "The biggest after-school funding stream in the state, so many of your prospects depend on it. Federal money for Georgia was frozen then restored in July 2025, so ask prospects how secure theirs is.",
-   "url": "https://www.fox5atlanta.com/news/federal-funds-restored-georgia-after-school-programs",
-   "source": "Fox 5 Atlanta",
-   "date": "2025-07-21",
-   "verify": "Current Georgia application dates not confirmed. Check GaDOE before you tell anyone a deadline."
-  },
-  {
-   "cat": "Radar",
-   "kind": "funding-risk",
-   "title": "Gwinnett County identified $18M in administrative costs it could cut",
-   "why": "Gwinnett is already planning for tighter budgets. Pitch your classes as low cost and grant-fundable, and send the Gwinnett email in that frame.",
-   "url": "https://www.edweek.org/policy-politics/districts-brace-for-the-unexpected-as-federal-funding-troubles-linger/2026/06",
-   "source": "Education Week",
-   "date": "2026-06-01"
-  },
-  {
-   "cat": "Radar",
-   "kind": "funding-risk",
-   "title": "House committee advanced a FY2027 plan to cut Title I by $1.6B and end over $3B in teacher training and English-learner grants",
-   "why": "If this passes, districts lose teacher-training money. Do not build your plan on district PD budgets. After-school and community funders are steadier ground.",
-   "url": "https://www.edweek.org/policy-politics/districts-brace-for-the-unexpected-as-federal-funding-troubles-linger/2026/06",
-   "source": "Education Week",
-   "date": "2026-06-01",
-   "verify": "Senate had not acted as of June 2026."
-  },
-  {
-   "cat": "Radar",
-   "kind": "lead",
-   "title": "BOOST statewide grantees: Georgia Alliance of Boys & Girls Clubs ($2M), Georgia Alliance of YMCAs ($1.8M), Georgia Recreation and Park Association ($1.6M)",
-   "why": "These groups pass funding to local sites. You already have Newton Boys & Girls Club and Heritage Hills. Add your local YMCA branches and county parks and recreation department as new prospects.",
-   "url": "https://www.wrdw.com/2025/10/23/georgia-awards-grants-after-school-programs-across-state/",
-   "source": "WRDW",
-   "date": "2025-10-23"
   }
  ]
 }
