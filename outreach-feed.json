@@ -887,6 +887,51 @@
    }
   },
   {
+   "key": "trail-201-20260903-invite-1",
+   "id": 201,
+   "activity": {
+    "type": "Meeting",
+    "date": "2026-09-03",
+    "person": "Dr. Jennifer Williams",
+    "title": "Calendar invite: She accepted the calendar invite.",
+    "phone": "",
+    "email": "",
+    "message": "She accepted the calendar invite.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260908-note-1",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-09-08",
+    "person": "You and Dr. Williams",
+    "title": "Emails during the call: 14 quick emails back and forth (7 sent, 7 received) between 2:06 and 2:27 PM while you both worked…",
+    "phone": "",
+    "email": "",
+    "message": "14 quick emails back and forth (7 sent, 7 received) between 2:06 and 2:27 PM while you both worked on connecting to the Zoom. Her last note offered a phone call if the link would not work.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-201-20260908-call-1",
+   "id": 201,
+   "activity": {
+    "type": "Call",
+    "date": "2026-09-08",
+    "person": "You and Dr. Williams",
+    "title": "Call: Google Meet and her Teams link were both blocked, so you moved to a phone call.",
+    "phone": "",
+    "email": "",
+    "message": "Google Meet and her Teams link were both blocked, so you moved to a phone call. Her follow-up on Oct 1 refers to \"our conversation.\"",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
    "key": "trail-201-20261001-out-1",
    "id": 201,
    "activity": {
@@ -1152,6 +1197,21 @@
     "phone": "",
     "email": "",
     "message": "Confirmed that 9:30 AM works.",
+    "nextSteps": "",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "trail-204-20261113-invite-1",
+   "id": 204,
+   "activity": {
+    "type": "Meeting",
+    "date": "2026-11-13",
+    "person": "Janelle Jones",
+    "title": "Calendar invite for Tue Jan 12, 2027, 9:30-10:00 AM ET.",
+    "phone": "",
+    "email": "",
+    "message": "Calendar invite for Tue Jan 12, 2027, 9:30-10:00 AM ET.",
     "nextSteps": "",
     "followUpDone": false
    }
