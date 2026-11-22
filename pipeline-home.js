@@ -98,6 +98,7 @@
     '#hxChips{display:none;flex-wrap:wrap;gap:8px;margin-bottom:12px}',
     '@media(max-width:1023px){',
     ' body.hx-mob #hxStats,body.hx-mob #outreachSummaryCard,body.hx-mob #hxFunnelWrap{display:none}',
+    ' body.hx-mob .hx-lkbtn,body.hx-mob .hx-clbtn{display:none}',
     ' body.hx-mob[data-hxtab=board] #outreachSummaryCard,body.hx-mob[data-hxtab=board] #hxFunnelWrap{display:block}',
     ' body.hx-mob #pipelineView{padding-bottom:calc(100px + env(safe-area-inset-bottom))}',
     ' body.hx-mob #hxChips{display:flex}',
@@ -283,7 +284,7 @@
         (c.status === 'Posted' ? '<input type="number" min="0" value="' + (c.views || 0) + '" onchange="hxClipViews(' + c.id + ',this.value)" title="Views" style="width:72px;background:rgba(0,0,0,.35);border:1px solid rgba(199,153,79,.3);border-radius:10px;color:#F3E8D6;padding:4px 6px;font-size:12px">' : '') +
         '<button class="hx-chip" onclick="hxClipDel(' + c.id + ')" aria-label="Delete">&times;</button></div>';
     }).join('') : '<p class="hx-mu">No clips yet. Tap an idea below to start your list.</p>';
-    return '<div class="hx-card fx-tilt hx-12 hx-in" style="grid-column:span 12"><div class="hx-k">Digital marketing &middot; ' + starts + '</div>' +
+    return '<div class="hx-card fx-tilt hx-12 hx-in" style="grid-column:span 12"><div class="hx-k">Your own studio content &middot; ' + starts + '</div>' +
       '<div style="display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))"><div>' +
       '<div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font-size:15px;font-weight:800;color:#F3E8D6">Weekly clip goal</div><div style="font-weight:900;color:#E3BD79">' + posted + ' / ' + goal + '</div></div>' +
       '<div style="height:9px;border-radius:9px;background:rgba(255,235,200,.1);margin:8px 0 10px;overflow:hidden"><div style="height:9px;width:' + pct + '%;background:linear-gradient(90deg,#C7994F,#F0CC8C);transition:width .8s"></div></div>' +
@@ -376,7 +377,9 @@
   function gmUrl(x) { if (!x) return ''; return x.indexOf('q:') === 0 ? GM + 'search/' + encodeURIComponent(x.slice(2)) : x; }
   function gmSearch(q) { return GM + 'search/' + encodeURIComponent(q); }
   function fmtD(d) {
-    if (!d) return ''; var p = String(d).split('-'); if (p.length < 3) return d;
+    if (!d) return ''; var p = String(d).split('-');
+    if (p.length === 2) return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][+p[1] - 1] + ' ' + p[0];
+    if (p.length < 3) return d;
     var M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     return M[+p[1] - 1] + ' ' + (+p[2]) + (+p[0] !== new Date().getFullYear() ? ', ' + p[0] : '');
   }
@@ -590,6 +593,300 @@
   var hiddenAt = 0;
   document.addEventListener('visibilitychange', function () { if (document.hidden) hiddenAt = Date.now(); else if (hiddenAt && Date.now() - hiddenAt > 30 * 60000) setTimeout(function () { nudgeCheck(false); }, 1500); });
 
+
+  /* ---------- news, split into separate sections ---------- */
+  var OLDCAT = { 'AI news': 'AI in education', 'Funding': 'Grants', 'Market': 'Radar', 'Competitor': 'Radar' };
+  function nCat(i) { return OLDCAT[i.cat] || i.cat; }
+  function daysTo(ds) { return Math.round((new Date(ds + 'T00:00:00') - new Date(new Date().toISOString().slice(0, 10) + 'T00:00:00')) / 864e5); }
+  window.hxCopyN = function (i) {
+    var x = S.cb && S.cb[i]; if (!x) return;
+    var t = x.title + '\n' + (x.why || '') + '\nSource: ' + (x.source || '') + (x.date ? ', ' + fmtD(x.date) : '') + (x.url ? '\n' + x.url : '');
+    function ok() { toast('Copied. Paste it into your email.'); buzz(10); }
+    try { navigator.clipboard.writeText(t).then(ok, function () { fallbackCopy(t); ok(); }); } catch (e) { fallbackCopy(t); ok(); }
+  };
+  function fallbackCopy(t) { var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0'; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); } catch (e) {} a.remove(); }
+  function newsSection(cat, title, empty) {
+    var n = S.news, items = n && n.items ? n.items.filter(function (i) { return nCat(i) === cat; }) : [];
+    var head = '<div class="hx-k">' + E(title) + (n && n.generated ? ' &middot; checked ' + fmtD(n.generated) : '') + '</div>';
+    if (!n) return '<div class="hx-card fx-tilt hx-in">' + head + '<p class="hx-mu">' + (S.newsErr ? 'Could not load this section. Tap refresh.' : 'Loading...') + '</p></div>';
+    items.sort(function (a, b) {
+      if (cat === 'Grants') { if (a.deadline && b.deadline) return a.deadline < b.deadline ? -1 : 1; if (a.deadline) return -1; if (b.deadline) return 1; }
+      return (b.date || '') < (a.date || '') ? -1 : 1;
+    });
+    var rows = items.slice(0, 6).map(function (i) {
+      var idx = (S.cb = S.cb || []).push(i) - 1, chips = '';
+      if (i.deadline) { var d = daysTo(i.deadline); chips += '<span class="hx-tag" style="' + (d >= 0 && d <= 14 ? 'background:rgba(240,160,144,.2);color:#f0a090' : '') + '">' + (d < 0 ? 'Closed ' + fmtD(i.deadline) : 'Closes ' + fmtD(i.deadline) + (d <= 30 ? ' (' + d + ' days)' : '')) + '</span> '; }
+      if (i.amount) chips += '<span class="hx-tag">' + E(i.amount) + '</span> ';
+      if (i.kind === 'funding-risk') chips += '<span class="hx-tag" style="background:rgba(240,160,144,.2);color:#f0a090">Funding risk</span> ';
+      if (i.kind === 'lead') chips += '<span class="hx-tag">New lead source</span> ';
+      var fresh = i.date && daysTo(i.date) >= -3 ? '<span class="hx-tag">New</span> ' : '';
+      return '<div class="hx-row"><div style="min-width:0;flex:1">' + fresh + chips + (chips || fresh ? '<br>' : '') + (i.url ? '<a class="hx-a" href="' + E(i.url) + '" target="_blank" rel="noopener">' + E(i.title) + '</a>' : '<b>' + E(i.title) + '</b>') +
+        (i.who ? '<p class="hx-mu" style="margin-top:3px;font-size:12px"><b style="color:#F3E8D6">Who can apply:</b> ' + E(i.who) + '</p>' : '') +
+        (i.why ? '<p class="hx-mu" style="margin-top:3px"><b style="color:#F3E8D6">How to use it:</b> ' + E(i.why) + '</p>' : '') +
+        (i.verify ? '<p class="hx-mu" style="margin-top:3px;font-size:12px"><b style="color:#E3BD79">Verify:</b> ' + E(i.verify) + '</p>' : '') +
+        '<p style="font-size:11px;color:#9c8a6c;margin-top:3px">' + E(i.source || '') + (i.date ? ' &middot; ' + E(fmtD(i.date)) : '') + ' &middot; <a href="javascript:void(0)" class="hx-a" onclick="hxCopyN(' + idx + ')">Copy for an email</a></p></div></div>';
+    }).join('');
+    return '<div class="hx-card fx-tilt hx-in">' + head + (rows || '<p class="hx-mu">' + E(empty) + '</p>') + (n.note && cat === 'Grants' ? '<p style="font-size:11px;color:#9c8a6c;margin-top:8px">' + E(n.note) + '</p>' : '') + '</div>';
+  }
+
+  /* ---------- links: every link for the business in one place ---------- */
+  var SITE = 'https://raevenbrown.github.io/thebrowngirlsstudio/';
+  var GM = 'https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com';
+  var LINK_GROUPS = [
+    { id: 'site', t: 'Your website and pages', s: 'These live on your site.' },
+    { id: 'forms', t: 'Google Forms and sign-ups', s: 'Where parents and schools sign up.' },
+    { id: 'google', t: 'Gmail, calendar and Drive', s: 'All under creativemetrixbgcs@gmail.com.' },
+    { id: 'back', t: 'Behind the scenes', s: 'The code, the cloud sync and the database. You rarely need these.' },
+    { id: 'demo', t: 'Lab project demos', s: 'Live demos linked from your Lab Projects page.' }
+  ];
+  var LINKS = [
+    { g: 'site', n: 'Pipeline (this app)', u: SITE + 'pipeline.html', w: 'Your pipeline, coach and email trail.', top: 1 },
+    { g: 'site', n: 'Main website', u: SITE, w: 'The Brown Girls Creative Studio home page.', top: 1 },
+    { g: 'site', n: 'The AI Lab', u: SITE + 'labs.html', w: 'Program page: classes, December cohort and waitlist buttons.', top: 1 },
+    { g: 'site', n: 'Student Studio', u: SITE + 'portal.html', w: 'Student page. Its button goes to the Spring 2027 waitlist.' },
+    { g: 'site', n: 'Free Family AI Event page', u: SITE + 'free-event.html', w: 'Event page with a parent waitlist button.' },
+    { g: 'site', n: 'Season 2 interest page', u: SITE + 'season2.html', w: 'The page the InspiHER QR opens. It points to the interest form.', note: 'Hold this one back from Newton families until the district approves it.' },
+    { g: 'site', n: 'Season 2 interest page (QR version)', u: SITE + 'season2.html?src=inspiher', w: 'Same page, tagged so you know the visit came from the QR code.' },
+    { g: 'site', n: 'Parent card', u: SITE + 'parent-card.html', w: 'The printable card with the QR code on it.' },
+    { g: 'site', n: 'InspiHER QR code image', u: SITE + 'inspiher-qr.png', w: 'The QR itself, for flyers, slides and the table sign.' },
+    { g: 'site', n: 'InspiHER session plan', u: SITE + 'inspiher-plan.html', w: 'The game plan for each InspiHER session.' },
+    { g: 'site', n: 'Lab projects', u: SITE + 'lab-projects.html', w: 'Applied AI labs and engines you can show to schools.' },
+    { g: 'site', n: 'Student project showcase', u: SITE + 'class-projects.html', w: 'NCSA student project showcase.' },
+
+    { g: 'forms', n: 'Waitlist form (short link)', u: 'https://forms.gle/EsHCzdzKTUwTjp7g8', w: 'The link on the AI Lab page, the free event page and the Season 2 page.', top: 1 },
+    { g: 'forms', n: 'Spring 2027 waitlist form', u: 'https://docs.google.com/forms/d/e/1FAIpQLSc3iR7g3Suo_yJnBKXmLaYNYc2sHLgG4pxm6IsJuq1nZ6Rvfw/viewform', w: 'The link on the Student Studio page.' },
+    { g: 'forms', n: 'December 2026 Cohort Waitlist (edit and responses)', u: 'https://docs.google.com/forms/d/11LHu_5zcZ7uFfi06kSMV-ViG7eQqvu7iCAvoDB3apo8/edit', w: 'The only form in your Drive. Open it here to see who signed up.', note: 'I could not tell from here whether this is the same form as the short link above. Open both once and check the title.' },
+
+    { g: 'google', n: 'Gmail inbox', u: GM + '#inbox', w: 'Replies come here.', top: 1 },
+    { g: 'google', n: 'Gmail drafts', u: GM + '#drafts', w: 'The emails waiting for you to send.' },
+    { g: 'google', n: 'Gmail scheduled', u: GM + '#scheduled', w: 'Emails set to go out later.' },
+    { g: 'google', n: 'Gmail sent', u: GM + '#sent', w: 'Everything you have sent.' },
+    { g: 'google', n: 'Google Calendar', u: 'https://calendar.google.com/calendar?authuser=creativemetrixbgcs@gmail.com', w: 'Meetings, InspiHER dates and your work blocks.' },
+    { g: 'google', n: 'Start a Google Meet', u: 'https://meet.google.com/new', w: 'Opens a new meeting you can paste into an invite.' },
+    { g: 'google', n: 'Drive: The Brown Girls Creative Studio', u: 'https://drive.google.com/drive/folders/1tiULlwLpYEQsMze5I3yT2VW2o6lV6Hvf', w: 'Studio folder.' },
+    { g: 'google', n: 'Drive: The AI Lab', u: 'https://drive.google.com/drive/folders/1qiitUCbCztSJMPoxMuisvIc3_mPpcFuy', w: 'Career Day run of show, facilitation guide, proposal, December schedule and handouts.' },
+
+    { g: 'back', n: 'Site code on GitHub', u: 'https://github.com/raevenbrown/thebrowngirlsstudio', w: 'Where the site and this app live. Public.' },
+    { g: 'back', n: 'Private data backup on GitHub', u: 'https://github.com/raevenbrown/bgcs-data-sync', w: 'Where the pipeline syncs between your devices. Private.' },
+    { g: 'back', n: 'Supabase project', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw', w: 'Database and the coach chat function.' },
+
+    { g: 'demo', n: 'Creative Metrix', u: 'https://v0-open-in-v0-gamma-nine-95.vercel.app/integrations', w: 'Integrations demo.' },
+    { g: 'demo', n: 'AutoGuard Claims Dashboard', u: 'https://autoguard-claims-dashboard-lyuc6v8avzfjjmt5kt4qn3.streamlit.app/', w: 'Claims dashboard demo.' },
+    { g: 'demo', n: 'Coles Navigate360 IR Engine', u: 'https://ksu-institutional-ir-engine-nsfzyeyxgrogvxuzssmxib.streamlit.app/', w: 'Institutional research demo.' },
+    { g: 'demo', n: 'Omnimetrix MSP Console', u: 'https://omnimetrix-msp-engine-mbx2qgs8zkdv2vx5jkprkd.streamlit.app/', w: 'Managed services console demo.' }
+  ];
+  var LINK_GAPS = [
+    'No Instagram, TikTok, LinkedIn or YouTube link appears on any page of your site. Send them to me and I will add them here and to the site.',
+    'Your site runs on a github.io address. A custom domain would look more professional on emails and the QR card. Say the word and I will walk you through it.',
+    'Your Google Form responses sheet is not in your Drive search. Open the form, tap Responses, then the sheet icon, and send me the link so it lives here.'
+  ];
+  function linksCustom() { try { return JSON.parse(ls.get('bgcs_links_custom', '[]')) || []; } catch (e) { return []; } }
+  function safeUrl(u) { u = String(u || '').trim(); if (u && !/^https?:\/\//i.test(u)) u = 'https://' + u; return /^https?:\/\/[^\s"'<>]+\.[^\s"'<>]+$/i.test(u) ? u : ''; }
+  window.hxLinkCopy = function (u) {
+    function ok() { toast('Link copied.'); buzz(10); }
+    try { navigator.clipboard.writeText(u).then(ok, function () { fallbackCopy(u); ok(); }); } catch (e) { fallbackCopy(u); ok(); }
+  };
+  window.hxLinkAdd = function (ev) {
+    if (ev && ev.preventDefault) ev.preventDefault();
+    var f = ev && ev.target && ev.target.elements ? ev.target.elements : {}, n = (f.n && f.n.value) || '', u = safeUrl(f.u && f.u.value);
+    n = n.trim().slice(0, 80);
+    if (!n || !u) { toast('Add a name and a full link, like https://example.com'); return false; }
+    var a = linksCustom(); a.push({ id: Date.now(), n: n, u: u }); ls.set('bgcs_links_custom', JSON.stringify(a));
+    toast('Saved to your links.'); buzz(12); linksRefresh(); return false;
+  };
+  window.hxLinkDel = function (id) { ls.set('bgcs_links_custom', JSON.stringify(linksCustom().filter(function (x) { return x.id !== id; }))); linksRefresh(); };
+  window.hxLinkFilter = function (q) {
+    q = String(q || '').toLowerCase(); S.linkQ = q;
+    document.querySelectorAll('.hx-lk').forEach(function (r) { r.style.display = !q || (r.getAttribute('data-q') || '').indexOf(q) >= 0 ? '' : 'none'; });
+    document.querySelectorAll('.hx-lkg').forEach(function (g) { var any = g.querySelector('.hx-lk:not([style*="none"])'); g.style.display = (!q || any) ? '' : 'none'; });
+  };
+  function linkRow(l, mine) {
+    var q = (l.n + ' ' + (l.w || '') + ' ' + l.u).toLowerCase();
+    return '<div class="hx-row hx-lk" data-q="' + E(q) + '"><div style="min-width:0;flex:1">' +
+      '<b style="font-size:14.5px">' + E(l.n) + '</b>' +
+      (l.w ? '<p class="hx-mu" style="margin-top:2px">' + E(l.w) + '</p>' : '') +
+      (l.note ? '<p class="hx-mu" style="margin-top:3px;font-size:12px"><b style="color:#E3BD79">Note:</b> ' + E(l.note) + '</p>' : '') +
+      '<p style="font-size:11px;color:#9c8a6c;margin-top:3px;word-break:break-all">' + E(l.u.replace(/^https?:\/\/(www\.)?/, '')) + '</p></div>' +
+      '<div style="display:flex;gap:6px;flex-shrink:0;align-items:center;flex-wrap:wrap;justify-content:flex-end">' +
+      '<a class="hx-btn pri" href="' + E(l.u) + '" target="_blank" rel="noopener">Open</a>' +
+      '<button class="hx-btn" data-u="' + E(l.u) + '" onclick="hxLinkCopy(this.getAttribute(\'data-u\'))">Copy</button>' +
+      (mine ? '<button class="hx-btn" onclick="hxLinkDel(' + l.id + ')" aria-label="Remove ' + E(l.n) + '">Remove</button>' : '') + '</div></div>';
+  }
+  function linksBody() {
+    var top = LINKS.filter(function (l) { return l.top; });
+    var quick = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 12px">' + top.map(function (l) { return '<a class="hx-btn pri" href="' + E(l.u) + '" target="_blank" rel="noopener">' + E(l.n.replace(' (this app)', '')) + '</a>'; }).join('') + '</div>';
+    var groups = LINK_GROUPS.map(function (g) {
+      var items = LINKS.filter(function (l) { return l.g === g.id; });
+      return '<div class="hx-lkg" style="margin-top:14px"><div class="hx-k">' + E(g.t) + ' &middot; ' + items.length + '</div><p class="hx-mu" style="margin-bottom:4px">' + E(g.s) + '</p>' + items.map(function (l) { return linkRow(l); }).join('') + '</div>';
+    }).join('');
+    var mine = linksCustom();
+    var mineHtml = '<div class="hx-lkg" style="margin-top:14px"><div class="hx-k">Links you added &middot; ' + mine.length + '</div>' +
+      (mine.length ? mine.map(function (l) { return linkRow(l, true); }).join('') : '<p class="hx-mu">Nothing yet. Add any link you use for the business below, like a Canva design, a sheet or a social page.</p>') +
+      '<form onsubmit="return hxLinkAdd(event)" style="margin-top:10px;display:grid;gap:8px"><input name="n" placeholder="Name (example: Canva flyer)" maxlength="80" style="padding:11px 12px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(227,189,121,.3);color:#F3E8D6;font-size:16px"><input name="u" inputmode="url" placeholder="Link (https://...)" style="padding:11px 12px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(227,189,121,.3);color:#F3E8D6;font-size:16px"><button class="hx-btn pri" type="submit" style="justify-content:center">Save this link</button></form></div>';
+    var gaps = '<div class="hx-lkg" style="margin-top:14px"><div class="hx-k">Not connected yet</div>' + LINK_GAPS.map(function (g) { return '<div class="hx-row"><div class="hx-mu" style="color:#F3E8D6">' + E(g) + '</div></div>'; }).join('') + '</div>';
+    return '<input type="search" placeholder="Search your links" oninput="hxLinkFilter(this.value)" value="' + E(S.linkQ || '') + '" style="width:100%;padding:11px 12px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(227,189,121,.3);color:#F3E8D6;font-size:16px;margin-bottom:10px" aria-label="Search your links">' + quick + groups + mineHtml + gaps;
+  }
+  function linksCard(plain) {
+    return '<div class="hx-card' + (plain ? '' : ' fx-tilt hx-in') + '"><div class="hx-k">Every link for the business</div><p class="hx-mu" style="margin-bottom:6px">One place for the site, the forms, Gmail, Drive and the demos. Tap Open, or Copy to paste into an email.</p>' + linksBody() + '</div>';
+  }
+  function linksRefresh() {
+    var pg = document.getElementById('linksPage');
+    if (pg && pg.offsetParent !== null) { var y = window.scrollY; window.hxLinksPage(); window.scrollTo(0, y); if (S.linkQ) window.hxLinkFilter(S.linkQ); }
+    else renderHome();
+  }
+  window.hxLinksPage = function () { var pg = document.getElementById('linksPage'); if (pg) pg.innerHTML = linksCard(true); };
+  window.hxLinksGo = function () {
+    buzz(8);
+    if (isMobile() && pipelineVisible()) window.hxTab('links');
+    else if (typeof switchMainView === 'function') switchMainView('links');
+  };
+
+  /* ---------- digital marketing: paid clipping campaigns ---------- */
+  var CLIP_SUBS = [['start', 'Start here'], ['plat', 'Where to find campaigns'], ['camps', 'My campaigns'], ['accts', 'Accounts by platform'], ['tips', 'Tips and tricks'], ['watch', 'Watch-outs']];
+  var CLIP_PLATS = ['TikTok', 'Instagram', 'YouTube Shorts', 'X', 'Other'];
+  var CLIP_STATUS = ['Watching', 'Applied', 'Active', 'Paused', 'Done'];
+  var CLIP_SRC = [
+    ['Content Rewards: what clippers earn (Nov 16, 2026, the platform\'s own listings)', 'https://contentrewards.com/articles/how-much-do-clippers-make'],
+    ['Reap: how to become a clipper (Nov 2026, sells a clipping tool)', 'https://reap.video/blog/how-to-become-a-clipper'],
+    ['Clipped: best clipping platforms (Oct 2026, author sells a clipping app)', 'https://clipped.cc/blog/best-clipping-platforms-2026'],
+    ['NextClip: best clipping platforms (2026, sells a clipping tool)', 'https://www.nextclip.pro/blog/best-clipping-platforms-2026'],
+    ['Dexerto: YouTube Shorts and re-uploaded content (Oct 5, 2026)', 'https://www.dexerto.com/youtube/youtube-cracks-down-on-clipping-channels-in-shorts-update-prioritizing-original-content-3415700'],
+    ['Cut.Pro: reposts and original-content rules on X, Meta and YouTube (2026, sells clipping tools)', 'https://cut.pro/en/blog/reposts-dont-pay-x-meta-youtube-2026']
+  ];
+  var CLIP_FIND = [
+    { n: 'Whop Content Rewards', how: 'A marketplace. Each campaign sets its own rate, rules and budget. You join or apply, post, then submit the link.', rate: 'Median listed rate about $1.00 per 1,000 views. Half of campaigns list $1.00 to $2.00. Technology campaigns run highest, about $1.58.', watch: '10% fee on per-view campaigns. A clip stops earning 30 days after you submit it. Submit within 30 minutes of posting. Buying views is a permanent ban.', u: 'https://contentrewards.com/' },
+    { n: 'Vyro', how: 'Creator-run clipping programs. Rate is set per campaign.', rate: 'Live campaigns reported at $1.50 and $2.50 per 1,000 views. Other sources say $1 to $2, some about $3.', watch: 'Income stops if the creator ends the program. Brand rules are strict. Pays through Stripe or PayPal. Some campaigns cap payouts.' },
+    { n: 'Klippify', how: 'Campaign platform with one-click joining and AI view checks.', rate: 'Advertised at $1 per 1,000 verified views, paid weekly.', watch: 'Flat rate and a smaller list of campaigns than Whop. Fraud checks can void a payout.' },
+    { n: 'ClipAffiliates', how: 'Brands set the rate and the budget cap. Views are checked through the social platforms.', rate: 'Set by each brand.', watch: 'One source says no per-post caps. Check each campaign\'s budget before you start.', u: 'https://www.clipaffiliates.com/blog/how-to-start-clipping', ul: 'Their how-to guide' },
+    { n: 'Promote.fun', how: 'Campaign platform.', rate: '$0.20 to $2.25 per 1,000 views depending on the campaign.', watch: 'Wide range. Read the rate before you clip.' },
+    { n: 'Clipping.io', how: 'Campaign platform paid by views.', rate: 'Set per campaign. It claims $1.5 million paid out, which is its own claim.', watch: 'Confirm the rate and payout method inside the platform.' },
+    { n: 'Clipping.net', how: 'Campaign platform.', rate: 'About $50 per 100,000 views, which is $0.50 per 1,000.', watch: 'Lowest rate here and often a 100,000-view minimum before you get paid.' },
+    { n: 'Kick streamer programs', how: 'Individual streamers fund their own clipping programs.', rate: 'No figures published. Budgets can beat marketplace rates.', watch: 'Ends when the streamer ends it. Strict rules. High competition.' },
+    { n: 'Direct deals with mid-size creators', how: 'You pitch creators with about 10K to 500K followers using sample clips. This is where your own outreach skill pays off.', rate: 'Negotiated: a rate per 1,000 views or a flat monthly fee.', watch: 'No platform protection. You track views and chase payment yourself, so get terms in writing.' },
+    { n: 'X native clipping', how: 'Launched Nov 9, 2026. Clip 5 to 60 seconds, up to 30% of another creator\'s video, and repost with commentary.', rate: 'No per-view rate published. You and the original creator both have to be enrolled in Original Content Rewards to earn.', watch: 'Reported eligibility: 18+, Premium, 500 verified followers and 500,000 impressions in 90 days. Treat it as a bonus.' },
+    { n: 'Fiverr (sell clipping as a service)', how: 'Podcasters and coaches pay you per clip or per batch.', rate: 'You set the price. Pay is not tied to views.', watch: 'Fiverr takes a fee on each order and prices are competitive.' }
+  ];
+  var CLIP_PLAT_TIPS = {
+    'TikTok': ['Median listed rate about $1.00 per 1,000 views.', 'Upload from your phone or the app itself. Another app\'s watermark gets clips rejected.', 'Most campaigns need a public account.'],
+    'Instagram': ['Median listed rate about $1.00 per 1,000 views.', 'Post as a Reel. Meta says it favors original creators over reposters, so add your own captions, framing or commentary.', 'Use the paid partnership label when the brief asks for it.'],
+    'YouTube Shorts': ['Median listed rate about $1.10 to $1.43 per 1,000 views, the highest of the four.', 'YouTube is cutting the reach of re-uploaded Shorts that add nothing of your own (reported Oct 5, 2026). Add commentary, a real edit or a story.', 'Minor template tweaks do not count as adding value.'],
+    'X': ['Median listed rate about $1.00 per 1,000 views.', 'Native clipping launched Nov 9, 2026 and pays only if you and the original creator are both enrolled in Original Content Rewards.', 'Keep it as a bonus until you confirm you qualify.'],
+    'Other': ['Kick, Twitch, podcasts and brand pages. Rates are negotiated or set by the program.', 'Write the terms down before you post anything.']
+  };
+  var CLIP_TIPS = [
+    ['Pick one niche first', 'Technology campaigns post the highest median rate, about $1.58. AI and education creators are the same people you pitch for The AI Lab, so every clip doubles as research.'],
+    ['Start on the strongest second', 'Open on the punchline, the bold claim or the reaction. Most clips run 15 to 45 seconds.'],
+    ['Captions on every clip', 'Many people watch with the sound off. Big, clear captions, kept out of the zone the app covers.'],
+    ['9:16 and no old watermarks', 'Reframe to vertical. Export without another app\'s logo. Watermarks are a common reason for rejection.'],
+    ['Read the brief like a contract', 'Missing a required tag, mention, hook, length or ad disclosure is the most common reason a clip gets rejected. Copy the required lines into your caption before you post.'],
+    ['Post natively, once per platform', 'Upload to each app yourself. Do not post duplicates to the same account.'],
+    ['Submit the link right away', 'Some campaigns require submission within 30 minutes of posting. Do it while the app is still open.'],
+    ['Do not change what they meant', 'Do not cut a quote so it says something different. Brands remove campaigns and ban clippers for it.'],
+    ['Volume beats perfect', 'A few breakout clips usually come out of many posts. Post several a day once you have a rhythm.'],
+    ['Review at two weeks', 'Look at which hooks, topics and lengths got views. Make more of those and drop the rest.'],
+    ['Add something of your own', 'YouTube, Meta and X are all pushing down pure re-uploads. A short line of commentary, a better edit or a story keeps your reach.'],
+    ['Use your best clips as a portfolio', 'Once you have a few that did well, pitch mid-size creators directly. Direct deals can beat marketplace rates.']
+  ];
+  var CLIP_WATCH = [
+    ['Never pay to join', 'Legitimate marketplaces do not charge you to join. If a page asks for money up front, walk away.'],
+    ['Never share a login', 'No campaign needs your password. Do not rent, sell or hand over an account.'],
+    ['Never buy views', 'Bought or bot views void payouts. Content Rewards lists it as a permanent ban.'],
+    ['Earnings can be held or rejected', 'Pay starts after brand approval. Content Rewards holds earnings for rounds of about 10 days. Some clippers report holds of up to 90 days and rejected views. Do not count the money until it lands.'],
+    ['Income can vanish overnight', 'Creator programs end when the creator ends them. Spread across at least two campaigns.'],
+    ['Fees and caps shrink the number', 'Content Rewards takes 10% on per-view campaigns. Each campaign caps what one clip can earn. Realistic net estimates run from about $0.50 to $4 per 1,000 views, an unsourced estimate, so plan on the low end.'],
+    ['Rules on re-uploads keep tightening', 'YouTube, Meta and X all announced limits on unoriginal content in 2026. Always add something of your own and re-check the rules each month.'],
+    ['These are income, so track them', 'Payouts are income. Keep a record of every payout and ask a tax professional how to report it. I am not a tax advisor.'],
+    ['Rates are claims, not promises', 'Every rate on this page comes from the platforms\' own listings or from articles by companies that sell clipping tools. Check the live campaign before you commit.']
+  ];
+
+  function clipCamps() { try { return JSON.parse(ls.get('bgcs_clip_camps', '[]')) || []; } catch (e) { return []; } }
+  function clipCampsSet(a) { ls.set('bgcs_clip_camps', JSON.stringify(a)); }
+  function clipAccts() { try { return JSON.parse(ls.get('bgcs_clip_accts', '{}')) || {}; } catch (e) { return {}; } }
+  function clipSub() { var v = S.clipSub || ls.get('bgcs_clip_sub', 'start'); return CLIP_SUBS.some(function (x) { return x[0] === v; }) ? v : 'start'; }
+  function cmoney(n) { n = Math.round(n * 100) / 100; return '$' + n.toLocaleString('en-US', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 }); }
+  function campEarn(c) { return (c.views || 0) / 1000 * (c.rate || 0) * (1 - (c.fee || 0) / 100); }
+  function clipInput(extra) { return 'style="padding:11px 12px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(227,189,121,.3);color:#F3E8D6;font-size:16px;width:100%" ' + (extra || ''); }
+
+  window.hxClipSub = function (id) { S.clipSub = id; ls.set('bgcs_clip_sub', id); buzz(8); clipRefresh(); };
+  window.hxClipCalc = function (el) {
+    var r = el.closest('.clc'); if (!r) return;
+    function g(k) { var i = r.querySelector('[data-k=' + k + ']'); return parseFloat(i && i.value) || 0; }
+    var views = g('v'), rate = g('r'), fee = Math.min(100, g('f')), goal = g('g');
+    var net = rate * (1 - fee / 100);
+    r.querySelector('[data-o=earn]').textContent = cmoney(views / 1000 * net);
+    r.querySelector('[data-o=need]').textContent = net > 0 && goal > 0 ? Math.ceil(goal / net * 1000).toLocaleString('en-US') + ' views' : 'Add a rate and a goal';
+  };
+  window.hxClipAdd = function (ev) {
+    if (ev && ev.preventDefault) ev.preventDefault();
+    var f = ev && ev.target && ev.target.elements ? ev.target.elements : {};
+    var n = ((f.n && f.n.value) || '').trim().slice(0, 80); if (!n) { toast('Give the campaign a name first.'); return false; }
+    var a = clipCamps(); a.push({ id: Date.now(), n: n, p: (f.p && f.p.value) || 'TikTok', rate: parseFloat(f.r && f.r.value) || 0, fee: f.f && f.f.value !== '' ? Math.min(100, parseFloat(f.f.value) || 0) : 10, st: 'Watching', views: 0, niche: ((f.k && f.k.value) || '').trim().slice(0, 40), added: dayKey(new Date()) });
+    clipCampsSet(a); toast('Campaign saved.'); buzz(12); clipRefresh(); return false;
+  };
+  window.hxClipSt = function (id) { var a = clipCamps(); a.forEach(function (c) { if (c.id === id) c.st = CLIP_STATUS[(CLIP_STATUS.indexOf(c.st) + 1) % CLIP_STATUS.length]; }); clipCampsSet(a); buzz(8); clipRefresh(); };
+  window.hxClipV = function (id, v) { var a = clipCamps(); a.forEach(function (c) { if (c.id === id) c.views = Math.max(0, parseInt(v, 10) || 0); }); clipCampsSet(a); clipRefresh(); };
+  window.hxClipRm = function (id) { clipCampsSet(clipCamps().filter(function (c) { return c.id !== id; })); clipRefresh(); };
+  window.hxClipAcct = function (p, v) { var a = clipAccts(); a[p] = (v || '').trim().slice(0, 60); ls.set('bgcs_clip_accts', JSON.stringify(a)); };
+
+  function clipStart() {
+    var camps = clipCamps(), act = camps.filter(function (c) { return c.st === 'Active'; }).length;
+    return '<div class="hx-row" style="display:block"><b style="color:#E3BD79">Straight talk</b><p class="hx-mu" style="color:#F3E8D6;margin-top:4px">Clipping is side income that builds slowly. At a $1.50 rate and a 10% fee, $500 takes about 370,000 approved views. It will not close the gap to $14k by January on its own. I suggest a cap of 3 hours a week until your first emails are out. Change it if you disagree, but pick a number and hold to it.</p></div>' +
+      '<div class="hx-k" style="margin-top:14px">What clipping is</div><p class="hx-mu">You cut a short moment from a creator\'s, streamer\'s or brand\'s long video and post it on your own accounts. The campaign pays a set rate per 1,000 approved views. Clips are only allowed when the campaign says so in its brief.</p>' +
+      '<div class="hx-k" style="margin-top:14px">Your first week</div>' +
+      [['Day 1', 'Pick one niche. Open one fresh account on TikTok and one on Instagram. Keep them separate from your personal account and The AI Lab accounts.'], ['Day 2', 'Join two or three campaigns that have a clear brief and budget left. Add them to My campaigns.'], ['Days 3 to 6', 'Post two clips a day. Submit every link the moment you post.'], ['Day 7', 'Check what got approved. Write down which hook worked.']].map(function (x) { return '<div class="hx-row"><div style="min-width:64px;font-weight:800;color:#E3BD79">' + x[0] + '</div><div class="hx-mu" style="color:#F3E8D6">' + x[1] + '</div></div>'; }).join('') +
+      '<div class="hx-k" style="margin-top:14px">Before you join any campaign</div><p class="hx-mu">Check the rate per 1,000 views, the minimum before a clip is reviewed, the maximum one clip can earn, the budget left, the brief (tags, hooks, length, disclosure), the review window, the payout method and the fee.</p>' +
+      '<div class="hx-k" style="margin-top:14px">What would it pay?</div><div class="clc" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px"><label class="hx-mu">Approved views<input data-k="v" type="number" inputmode="numeric" min="0" value="100000" oninput="hxClipCalc(this)" ' + clipInput() + '></label><label class="hx-mu">Rate per 1,000 views ($)<input data-k="r" type="number" inputmode="decimal" min="0" step="0.05" value="1.5" oninput="hxClipCalc(this)" ' + clipInput() + '></label><label class="hx-mu">Platform fee (%)<input data-k="f" type="number" inputmode="decimal" min="0" max="100" value="10" oninput="hxClipCalc(this)" ' + clipInput() + '></label><label class="hx-mu">Money goal ($)<input data-k="g" type="number" inputmode="decimal" min="0" value="500" oninput="hxClipCalc(this)" ' + clipInput() + '></label>' +
+      '<div class="hx-row" style="grid-column:1/-1;display:flex;justify-content:space-between;gap:10px"><div><span class="hx-mu">You would earn</span><div data-o="earn" style="font-size:26px;font-weight:900;color:#E3BD79">$135</div></div><div style="text-align:right"><span class="hx-mu">Views needed for your goal</span><div data-o="need" style="font-size:20px;font-weight:900;color:#E3BD79">370,371 views</div></div></div></div>' +
+      '<p class="hx-mu" style="margin-top:8px">You have ' + camps.length + ' campaign' + (camps.length === 1 ? '' : 's') + ' saved and ' + act + ' active.</p>';
+  }
+  function clipPlat() {
+    return '<p class="hx-mu">Rates below come from the platforms\' own pages and from articles by companies that sell clipping tools. They are claims, not promises. Open the live campaign and confirm before you join.</p>' + CLIP_FIND.map(function (p) {
+      return '<div class="hx-row" style="display:block"><b style="font-size:14.5px">' + E(p.n) + '</b>' +
+        '<p class="hx-mu" style="margin-top:3px"><b style="color:#F3E8D6">How it works:</b> ' + E(p.how) + '</p>' +
+        '<p class="hx-mu" style="margin-top:3px"><b style="color:#F3E8D6">Pays:</b> ' + E(p.rate) + '</p>' +
+        '<p class="hx-mu" style="margin-top:3px"><b style="color:#E3BD79">Watch:</b> ' + E(p.watch) + '</p>' +
+        '<div style="margin-top:8px"><a class="hx-btn pri" href="' + E(p.u || ('https://www.google.com/search?q=' + encodeURIComponent(p.n + ' clipping'))) + '" target="_blank" rel="noopener">' + (p.u ? E(p.ul || 'Open') : 'Search it') + '</a></div></div>';
+    }).join('') + '<div class="hx-k" style="margin-top:14px">Where this came from</div>' + CLIP_SRC.map(function (s) { return '<div class="hx-row"><a class="hx-a" href="' + E(s[1]) + '" target="_blank" rel="noopener">' + E(s[0]) + '</a></div>'; }).join('');
+  }
+  function clipCampsView() {
+    var a = clipCamps(), tv = 0, te = 0;
+    a.forEach(function (c) { tv += c.views || 0; te += campEarn(c); });
+    var rows = a.map(function (c) {
+      return '<div class="hx-row" style="display:block"><div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start"><div style="min-width:0"><b style="font-size:14.5px">' + E(c.n) + '</b><p class="hx-mu" style="margin-top:2px">' + E(c.p) + (c.niche ? ' &middot; ' + E(c.niche) : '') + ' &middot; ' + cmoney(c.rate || 0) + ' per 1,000 &middot; fee ' + (c.fee || 0) + '%</p></div><button class="hx-btn" onclick="hxClipSt(' + c.id + ')" aria-label="Change status">' + E(c.st) + '</button></div>' +
+        '<div style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><label class="hx-mu" style="display:flex;gap:6px;align-items:center">Approved views <input type="number" inputmode="numeric" min="0" value="' + (c.views || 0) + '" onchange="hxClipV(' + c.id + ',this.value)" style="width:110px;padding:8px 10px;border-radius:10px;background:rgba(0,0,0,.28);border:1px solid rgba(227,189,121,.3);color:#F3E8D6;font-size:16px"></label><span style="font-weight:900;color:#E3BD79">' + cmoney(campEarn(c)) + ' after fee</span><button class="hx-btn" style="margin-left:auto" onclick="hxClipRm(' + c.id + ')" aria-label="Remove ' + E(c.n) + '">Remove</button></div></div>';
+    }).join('');
+    return '<div class="hx-row" style="display:flex;justify-content:space-between;gap:10px"><div><span class="hx-mu">Approved views</span><div style="font-size:24px;font-weight:900;color:#E3BD79">' + tv.toLocaleString('en-US') + '</div></div><div style="text-align:right"><span class="hx-mu">Earned after fees</span><div style="font-size:24px;font-weight:900;color:#E3BD79">' + cmoney(te) + '</div></div></div>' +
+      (rows || '<p class="hx-mu" style="margin-top:8px">No campaigns yet. Add the first one below. Tap its status button to move it from Watching to Applied to Active.</p>') +
+      '<div class="hx-k" style="margin-top:14px">Add a campaign</div><form onsubmit="return hxClipAdd(event)" style="display:grid;gap:8px"><input name="n" placeholder="Campaign or creator name" maxlength="80" ' + clipInput() + '><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><select name="p" ' + clipInput() + '>' + CLIP_PLATS.map(function (p) { return '<option>' + E(p) + '</option>'; }).join('') + '</select><input name="k" placeholder="Niche (example: tech)" maxlength="40" ' + clipInput() + '><input name="r" type="number" inputmode="decimal" min="0" step="0.05" placeholder="Rate per 1,000 ($)" ' + clipInput() + '><input name="f" type="number" inputmode="decimal" min="0" max="100" placeholder="Fee % (10)" ' + clipInput() + '></div><button class="hx-btn pri" type="submit" style="justify-content:center">Save campaign</button></form>';
+  }
+  function clipAcctView() {
+    var accts = clipAccts(), camps = clipCamps();
+    return '<p class="hx-mu">One block per platform. Keep each clip account to one niche so the app learns who to show it to.</p>' + CLIP_PLATS.map(function (p) {
+      var cs = camps.filter(function (c) { return c.p === p; }), v = 0; cs.forEach(function (c) { v += c.views || 0; });
+      return '<div class="hx-row" style="display:block"><div style="display:flex;justify-content:space-between;gap:8px;align-items:center"><b style="font-size:15px">' + E(p) + '</b><span class="hx-mu">' + cs.length + ' campaign' + (cs.length === 1 ? '' : 's') + ' &middot; ' + v.toLocaleString('en-US') + ' views</span></div>' +
+        '<input value="' + E(accts[p] || '') + '" placeholder="Your clip account handle" maxlength="60" onchange="hxClipAcct(\'' + p.replace(/'/g, '') + '\',this.value)" ' + clipInput('aria-label="' + E(p) + ' account handle"') + '>' +
+        '<ul class="hx-mu" style="margin:8px 0 0 18px;list-style:disc">' + (CLIP_PLAT_TIPS[p] || []).map(function (t) { return '<li style="margin-top:3px">' + E(t) + '</li>'; }).join('') + '</ul>' +
+        (cs.length ? '<p class="hx-mu" style="margin-top:6px"><b style="color:#F3E8D6">Campaigns here:</b> ' + cs.map(function (c) { return E(c.n) + ' (' + E(c.st) + ')'; }).join(', ') + '</p>' : '') + '</div>';
+    }).join('');
+  }
+  function clipList(items) { return items.map(function (t) { return '<div class="hx-row" style="display:block"><b style="font-size:14.5px">' + E(t[0]) + '</b><p class="hx-mu" style="margin-top:3px">' + E(t[1]) + '</p></div>'; }).join(''); }
+  function clipBody() {
+    var cur = clipSub();
+    var nav = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 12px">' + CLIP_SUBS.map(function (x) { return '<button class="hx-btn' + (x[0] === cur ? ' pri' : '') + '" onclick="hxClipSub(\'' + x[0] + '\')" aria-pressed="' + (x[0] === cur) + '">' + E(x[1]) + '</button>'; }).join('') + '</div>';
+    var body = cur === 'start' ? clipStart() : cur === 'plat' ? clipPlat() : cur === 'camps' ? clipCampsView() : cur === 'accts' ? clipAcctView() : cur === 'tips' ? clipList(CLIP_TIPS) : clipList(CLIP_WATCH);
+    return nav + body;
+  }
+  function clipCard(plain) {
+    return '<div class="hx-card' + (plain ? '' : ' fx-tilt hx-in') + '"><div class="hx-k">Digital marketing: clipping for pay</div><p class="hx-mu" style="margin-bottom:2px">This is for clipping other creators, streamers and brands through paid campaigns. It is separate from your own studio content.</p>' + clipBody() + '</div>';
+  }
+  function clipRefresh() {
+    var pg = document.getElementById('clipPage');
+    if (pg && pg.offsetParent !== null) { var y = window.scrollY; window.hxClipPage(); window.scrollTo(0, y); }
+    else renderHome();
+  }
+  window.hxClipPage = function () { var pg = document.getElementById('clipPage'); if (pg) pg.innerHTML = clipCard(true); };
+  window.hxClipGo = function () { buzz(8); if (isMobile() && pipelineVisible()) window.hxTab('clips'); else if (typeof switchMainView === 'function') switchMainView('clipping'); };
+
   /* ---------- render ---------- */
   var mq = null; try { mq = window.matchMedia('(max-width:1023px)'); } catch (e) {}
   function isMobile() { return !!(mq && mq.matches); }
@@ -604,6 +901,7 @@
   function renderHome() {
     var box = document.getElementById('homeCmd'); if (!box) return;
     if (drag || rsz) { S.dirty = true; return; }
+    S.cb = [];
     var m = coModel(), P = m.P, today = m.today, mob = isMobile();
     var booked = m.slots * m.c.classVal, pct = Math.min(100, Math.round(booked / m.c.goal * 100));
     var C = 2 * Math.PI * 54, off = C * (1 - pct / 100);
@@ -623,6 +921,8 @@
     var dateTxt = '<span id="hxClock">' + clockTxt() + '</span> &middot; ';
     var strip = '<div class="hx-strip"><div class="hx-hi"><div class="hx-hello">' + greeting() + ', Raeven</div><div class="hx-sub">' + dateTxt + E(levelName(wToday)) + ' &middot; ' + wToday + ' win' + (wToday === 1 ? '' : 's') + ' today</div></div>' +
       '<div class="hx-sr"><div class="hx-pips">' + pips + '</div><div class="hx-flame" title="Day streak">&#128293; ' + stk + '</div>' +
+      '<button class="hx-rf hx-lkbtn" onclick="hxLinksGo()" aria-label="Open all your links" title="All your links"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></button>' +
+      '<button class="hx-rf hx-clbtn" onclick="hxClipGo()" aria-label="Open clipping for pay" title="Clipping for pay"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/></svg></button>' +
       '<button class="hx-rf hx-cz' + (S.edit ? ' on' : '') + '" onclick="hxEdit()" aria-label="Customize your dashboard" title="Customize: move, resize, hide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9M19 6h1M4 12h3M13 12h7M4 18h11M21 18h-1"/><circle cx="16" cy="6" r="2.2"/><circle cx="10" cy="12" r="2.2"/><circle cx="18" cy="18" r="2.2"/></svg></button>' +
       '<button class="hx-rf' + (upd.busy ? ' spin' : '') + '" onclick="hxRefresh()" aria-label="Refresh the app" title="Refresh"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg></button></div></div>';
 
@@ -667,7 +967,7 @@
       '<button class="hx-q" onclick="coCopy()"><span>&#128203;</span><b>Copy summary</b><i>Paste into Claude</i></button></div></div>';
     var autos = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Running for you</div>' +
       [['Gmail to pipeline', 'Every night at 7:41 PM it logs what you sent and who replied. ' + (feedApplied ? feedApplied + ' updates applied so far.' : '')],
-       ['Market digest', 'Every night at 8:13 PM it researches competitors, who to market to, AI news and funding.']
+       ['News and grants', 'Every night at 8:13 PM it checks Georgia schools and AI, talking points, grants and new client leads. Only items that help you are kept.']
       ].map(function (a) { return '<div class="hx-row"><div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:800;color:#F3E8D6">' + E(a[0]) + ' <span class="hx-tag">auto</span></div><div class="hx-mu" style="font-size:12px">' + E(a[1]) + '</div></div></div>'; }).join('') + '</div>';
 
     var hot = P.filter(function (p) { return p.stage === 'Lead' || p.stage === 'Invoice Pending'; });
@@ -683,11 +983,15 @@
       next: function () { return hero; }, goal: function () { return ring; }, river: function () { return river; },
       tasks: function () { return tasksCardFn(mob ? (S.tab === 'board' ? 8 : 3) : 5); },
       quick: function () { return quick; }, warm: function () { return warm; }, autos: function () { return autos; },
-      news: function () { return newsCard(); }, comp: function () { return compCard; }, marketing: function () { return marketingCard(); },
+      newsga: function () { return newsSection('GA schools', 'Georgia schools and AI', 'Nothing new from Georgia districts that passes the filter.'); },
+      newsai: function () { return newsSection('AI in education', 'AI in education: talking points', 'No new talking points today.'); },
+      grants: function () { return newsSection('Grants', 'Grants and funding', 'No grants that fit you right now.'); },
+      radar: function () { return newsSection('Radar', 'New clients radar and funding shifts', 'Nothing new on the radar.'); },
+      links: function () { return linksCard(); }, clipping: function () { return clipCard(); }, comp: function () { return compCard; }, marketing: function () { return marketingCard(); },
       coach: function () { return coachCard(m); }, events: function () { return eventsCard(m); }
     };
     var lk = mob ? 'c' : 'w', L = layoutGet(lk), sub = mob ? (TAB_TILES[S.tab] || TAB_TILES.today) : null;
-    var avail = L.order.filter(function (id) { return !sub || sub.indexOf(id) >= 0; });
+    var avail = L.order.filter(function (id) { return sub ? sub.indexOf(id) >= 0 : (id !== 'links' && id !== 'clipping'); });
     var vis = avail.filter(function (id) { return !L.hidden[id]; });
     var hid = avail.filter(function (id) { return L.hidden[id]; });
     var tilesHtml = vis.map(function (id) { return tileHtml(id, CARDS[id](), L); }).join('');
@@ -703,16 +1007,16 @@
 
   /* ---------- customizable dashboard: tiles, drag, resize, hide, fold ---------- */
   var TILES = [['river', 'Where everyone is'], ['next', 'Do this next'], ['goal', 'Goal'], ['tasks', 'Your list'], ['quick', 'Quick actions'],
-    ['warm', 'Who replied'], ['autos', 'Running for you'], ['news', 'Market intel'], ['comp', 'Competitors'], ['marketing', 'Digital marketing'], ['coach', 'Coach'], ['events', 'Coming up']];
+    ['warm', 'Who replied'], ['autos', 'Running for you'], ['newsga', 'Georgia schools and AI'], ['newsai', 'AI talking points'], ['grants', 'Grants and funding'], ['radar', 'New clients radar'], ['comp', 'Competitors'], ['marketing', 'Studio content'], ['links', 'All your links'], ['clipping', 'Clipping for pay'], ['coach', 'Coach'], ['events', 'Coming up']];
   var TLABEL = {}; TILES.forEach(function (t) { TLABEL[t[0]] = t[1]; });
   var SIZES = ['S', 'M', 'L', 'F'];
-  var TAB_TILES = { today: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos'], board: ['river', 'warm', 'tasks'], clips: ['marketing'], intel: ['news', 'comp'] };
+  var TAB_TILES = { today: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos'], board: ['river', 'warm', 'tasks'], clips: ['clipping', 'marketing'], links: ['links'], intel: ['grants', 'radar', 'newsga', 'newsai', 'comp'] };
   var LKEY = { w: 'bgcs_home_layout', c: 'bgcs_home_layout_c' };
   var DEFL = {
-    w: { order: ['coach', 'river', 'next', 'goal', 'events', 'tasks', 'quick', 'warm', 'autos', 'news', 'comp', 'marketing'],
-         size: { coach: 'L', events: 'M', river: 'F', next: 'L', goal: 'S', tasks: 'L', quick: 'S', warm: 'S', autos: 'S', news: 'L', comp: 'S', marketing: 'F' } },
-    c: { order: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos', 'river', 'warm', 'news', 'comp', 'marketing'],
-         size: { coach: 'F', events: 'F', next: 'F', tasks: 'F', quick: 'M', goal: 'M', autos: 'F', river: 'F', warm: 'F', news: 'F', comp: 'F', marketing: 'F' } }
+    w: { order: ['coach', 'river', 'next', 'goal', 'events', 'tasks', 'quick', 'warm', 'autos', 'grants', 'radar', 'newsga', 'newsai', 'comp', 'marketing', 'links', 'clipping'],
+         size: { coach: 'L', events: 'M', river: 'F', next: 'L', goal: 'S', tasks: 'L', quick: 'S', warm: 'S', autos: 'S', grants: 'M', radar: 'M', newsga: 'M', newsai: 'M', comp: 'S', marketing: 'F', links: 'F', clipping: 'F' } },
+    c: { order: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos', 'river', 'warm', 'grants', 'radar', 'newsga', 'newsai', 'comp', 'clipping', 'marketing', 'links'],
+         size: { coach: 'F', events: 'F', next: 'F', tasks: 'F', quick: 'M', goal: 'M', autos: 'F', river: 'F', warm: 'F', grants: 'F', radar: 'F', newsga: 'F', newsai: 'F', comp: 'F', marketing: 'F', links: 'F', clipping: 'F' } }
   };
   var GRIP = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></svg>';
   var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
@@ -726,6 +1030,7 @@
     var L = { order: [], size: {}, hidden: {}, fold: {} };
     (Array.isArray(raw.order) ? raw.order : []).forEach(function (id) { if (TLABEL[id] && L.order.indexOf(id) < 0) L.order.push(id); });
     ['events', 'coach'].forEach(function (id) { if (L.order.indexOf(id) < 0 && d.order.indexOf(id) >= 0) L.order.unshift(id); });
+    if (L.order.indexOf('clipping') < 0) { var mi = L.order.indexOf('marketing'); if (mi >= 0) L.order.splice(mi, 0, 'clipping'); }
     d.order.forEach(function (id) { if (L.order.indexOf(id) < 0) L.order.push(id); });
     TILES.forEach(function (t) {
       var id = t[0], s = raw.size && raw.size[id];
@@ -739,7 +1044,7 @@
   function presetLayout(k, name) {
     var d = DEFL[k], L = { order: d.order.slice(), size: {}, hidden: {}, fold: {} };
     Object.keys(d.size).forEach(function (id) { L.size[id] = d.size[id]; });
-    if (name === 'focus') (k === 'w' ? ['news', 'comp', 'autos', 'marketing'] : ['comp', 'autos']).forEach(function (id) { L.hidden[id] = 1; });
+    if (name === 'focus') (k === 'w' ? ['newsga', 'newsai', 'radar', 'comp', 'autos', 'marketing'] : ['comp', 'autos']).forEach(function (id) { L.hidden[id] = 1; });
     if (name === 'marketing' && k === 'w') { L.order = ['marketing'].concat(d.order.filter(function (x) { return x !== 'marketing'; })); L.fold.comp = 1; L.fold.autos = 1; }
     return L;
   }
@@ -1005,7 +1310,8 @@
   var TABS = [
     ['today', 'Today', '<path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/>'],
     ['board', 'Board', '<rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/>'],
-    ['clips', 'Clips', '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/>'],
+    ['clips', 'Clipping', '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/>'],
+    ['links', 'Links', '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'],
     ['intel', 'Intel', '<path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/>'],
     ['coach', 'Ask', '<path d="M4 5h16v10H9l-5 4z"/>']
   ];
@@ -1235,6 +1541,7 @@
   setInterval(function () { try { drawBar(); } catch (e) {} }, 900);
   buildDock();
   renderHome();
+  try { window.hxLinksPage(); window.hxClipPage(); } catch (e) {}
   loadNews();
   setInterval(loadNews, 15 * 60 * 1000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) { try { renderHome(); } catch (e) {} } });

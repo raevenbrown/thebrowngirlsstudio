@@ -221,6 +221,12 @@ Meeting Outline
 <a href="#view=ailab" onclick="switchMainView('ailab')" id="nav-ailab" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="rocket" class="w-4 h-4 mr-3 text-amber-400"></i> AI Lab Sites
 </a>
+<a href="#view=links" onclick="switchMainView('links')" id="nav-links" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="link" class="w-4 h-4 mr-3 text-amber-300"></i> Links
+</a>
+<a href="#view=clipping" onclick="switchMainView('clipping')" id="nav-clipping" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="clapperboard" class="w-4 h-4 mr-3 text-amber-300"></i> Digital Marketing
+</a>
 </nav>
 </div>
 <!-- Bottom Left User Profile & Popup Menu -->
@@ -549,6 +555,8 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <p class="text-[11px] text-slate-500">Expenses are saved in this browser and included in your backup file. They do not sync between devices yet, so use one device to enter them or download the CSV.</p>
 </div>
 </div>
+<div id="mainView-links" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden"><div id="linksPage"></div></div>
+<div id="mainView-clipping" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden"><div id="clipPage"></div></div>
 <div id="mainView-ailab" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-5">
 <div class="border-b border-dark-600 pb-4">
@@ -4970,13 +4978,13 @@ document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor', 'links', 'clipping'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor', 'links', 'clipping'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -5012,6 +5020,14 @@ renderDashboard(true);
 if (viewName === 'feedback') {
 document.getElementById('pageTitle').innerText = "Feedback";
 renderFeedbackView();
+}
+if (viewName === 'clipping') {
+document.getElementById('pageTitle').innerText = "Digital Marketing: Clipping";
+try { hxClipPage(); } catch (e) {}
+}
+if (viewName === 'links') {
+document.getElementById('pageTitle').innerText = "All your links";
+try { hxLinksPage(); } catch (e) {}
 }
 if (viewName === 'ailab') {
 document.getElementById('pageTitle').innerText = "AI Lab Sites";
@@ -5874,7 +5890,7 @@ window.location.hash = `profile=${id}&tab=${tabToOpen}`;
 const lead = financialProspects.find(l => l.id === id);
 if(!lead) return;
 // Hide all views explicitly
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'links', 'clipping'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
@@ -6382,6 +6398,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.21-10"></script>
+<script src="pipeline-home.js?b=2026.11.21-11"></script>
 </body>
 </html>
