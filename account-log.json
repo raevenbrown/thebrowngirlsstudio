@@ -591,7 +591,7 @@
    "gq": "from:hello@janelleajones.com OR to:hello@janelleajones.com"
   },
   "205": {
-   "headline": "Friendly. You declined Career Day (Nov 19). Ward wants to stay in touch. Your Jan call ask has no reply yet.",
+   "headline": "Friendly. You declined Career Day (Nov 19). Ward wants to stay in touch. You followed up Nov 20 about Q1 2027 and there is no reply yet.",
    "lastReply": {
     "d": "2026-11-11",
     "who": "Dwayaa Ward",
@@ -665,6 +665,14 @@
        "sub": "Re: Career Day",
        "sum": "Asked for a call the week of Jan 11 or Jan 18. No reply yet.",
        "tag": "overdue"
+      },
+      {
+       "d": "2026-11-20",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Porterdale Elementary School's Career Day",
+       "sum": "Followed up to connect about Porterdale Elementary in Q1 2027. No reply yet.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-1a1cb3e95cf8c1d5"
       }
      ]
     },
