@@ -142,9 +142,8 @@
     '.hx-tl{flex:1 1 70px;min-width:0;font-size:12px;font-weight:800;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}',
     '.hx-tbb{min-width:34px;height:34px;padding:0 9px;border-radius:10px;border:1px solid rgba(199,153,79,.3);background:rgba(0,0,0,.25);color:var(--mu);font-size:11.5px;font-weight:800;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}',
     '.hx-tbb:hover{border-color:rgba(227,189,121,.7);color:var(--tx)}.hx-tbb.on{background:linear-gradient(135deg,#E3BD79,#C7994F);color:#2A160E;border-color:transparent}',
-    '.hx-szg{display:flex;gap:4px}.hx-sz2{display:none}.hx-mv{display:none}.hx-tbb .f2{display:none}.hx-fold .hx-tbb .f1{display:none}.hx-fold .hx-tbb .f2{display:inline}',
+    '.hx-szg{display:flex;gap:4px}.hx-sz2{display:none}.hx-mv{display:inline-flex}.hx-flash{animation:hxflash 1s ease-out}@keyframes hxflash{0%{box-shadow:0 0 0 3px #E3BD79,0 0 30px rgba(227,189,121,.7)}100%{box-shadow:0 0 0 0 rgba(227,189,121,0)}}.hx-tbb .f2{display:none}.hx-fold .hx-tbb .f1{display:none}.hx-fold .hx-tbb .f2{display:inline}',
     '@media(min-width:700px) and (max-width:1023px){.hx-sz3{display:none}.hx-sz2{display:flex}}',
-    '@media(max-width:1023px){.hx-mv{display:inline-flex}}',
     '@media(max-width:699px){.hx-szg{display:none!important}}',
     '.hx-editing .hx-rz{display:inline-flex;position:absolute;right:8px;bottom:8px;z-index:6;width:34px;height:34px;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(227,189,121,.65);background:rgba(42,22,14,.88);color:var(--gl);cursor:ew-resize;touch-action:none;padding:0}',
     '.hx-rz svg{width:18px;height:18px}',
@@ -300,6 +299,297 @@
   window.hxClipViews = function (id, v) { var a = clipsGet(); a.forEach(function (c) { if (c.id === id) c.views = Math.max(0, parseInt(v, 10) || 0); }); clipsSet(a); };
   window.hxClipDel = function (id) { clipsSet(clipsGet().filter(function (c) { return c.id !== id; })); renderHome(); };
 
+  /* ---------- daily quote, live clock ---------- */
+  var QUOTES = [
+    ["Whatever the mind can conceive and believe, it can achieve.", "Napoleon Hill"],
+    ["Desire is the starting point of all achievement.", "Napoleon Hill"],
+    ["Action is the real measure of intelligence.", "Napoleon Hill"],
+    ["Cherish your visions and your dreams, as they are the children of your soul.", "Napoleon Hill"],
+    ["Strength and growth come only through continuous effort and struggle.", "Napoleon Hill"],
+    ["Enter action with boldness.", "Robert Greene, The 48 Laws of Power (Law 28)"],
+    ["Plan all the way to the end.", "Robert Greene, The 48 Laws of Power (Law 29)"],
+    ["Re-create yourself.", "Robert Greene, The 48 Laws of Power (Law 25)"],
+    ["Court attention at all cost.", "Robert Greene, The 48 Laws of Power (Law 6)"],
+    ["The future belongs to those who learn more skills and combine them in creative ways.", "Robert Greene"],
+    ["Becoming is better than being.", "Carol Dweck, Mindset"],
+    ["Habits are the compound interest of self-improvement.", "James Clear, Atomic Habits"],
+    ["I am not a product of my circumstances. I am a product of my decisions.", "Stephen Covey"],
+    ["Begin with the end in mind.", "Stephen Covey"],
+    ["Courage starts with showing up and letting ourselves be seen.", "Brene Brown"],
+    ["First forget inspiration. Habit is more dependable.", "Octavia E. Butler"],
+    ["All that you touch you change. All that you change changes you.", "Octavia E. Butler"],
+    ["Nothing will work unless you do.", "Maya Angelou"],
+    ["You may encounter many defeats, but you must not be defeated.", "Maya Angelou"],
+    ["If they don't give you a seat at the table, bring a folding chair.", "Shirley Chisholm"],
+    ["I got my start by giving myself a start.", "Madam C.J. Walker"],
+    ["Don't sit down and wait for the opportunities to come. Get up and make them.", "Madam C.J. Walker"],
+    ["There are years that ask questions and years that answer.", "Zora Neale Hurston"],
+    ["Your silence will not protect you.", "Audre Lorde"],
+    ["Look closely at the present you are constructing: it should look like the future you are dreaming.", "Alice Walker"],
+    ["There is no limit to what we, as women, can accomplish.", "Michelle Obama"],
+    ["She believed she could, so she did.", "R.S. Grey"],
+    ["Well-behaved women seldom make history.", "Laurel Thatcher Ulrich"],
+    ["You must do the thing you think you cannot do.", "Eleanor Roosevelt"],
+    ["I attribute my success to this: I never gave or took any excuse.", "Florence Nightingale"],
+    ["Inaction breeds doubt and fear. Action breeds confidence and courage.", "Dale Carnegie"],
+    ["Whether you think you can, or you think you can't, you're right.", "Henry Ford"],
+    ["You don't have to be great to start, but you have to start to be great.", "Zig Ziglar"],
+    ["Start where you are. Use what you have. Do what you can.", "Arthur Ashe"],
+    ["It always seems impossible until it's done.", "Nelson Mandela"],
+    ["If there is no struggle, there is no progress.", "Frederick Douglass"],
+    ["Excellence is not an act, but a habit.", "Will Durant"],
+    ["What you seek is seeking you.", "Rumi"],
+    ["A journey of a thousand miles begins with a single step.", "Lao Tzu"],
+    ["Luck is what happens when preparation meets opportunity.", "Seneca"],
+    ["Do the thing and you will have the power.", "Ralph Waldo Emerson"],
+    ["Don't count the days, make the days count.", "Muhammad Ali"],
+    ["Well done is better than well said.", "Benjamin Franklin"],
+    ["Either write something worth reading or do something worth writing.", "Benjamin Franklin"],
+    ["Stay hungry, stay foolish.", "Steve Jobs"],
+    ["Done is better than perfect.", "Sheryl Sandberg"],
+    ["You miss 100% of the shots you don't take.", "Wayne Gretzky"],
+    ["Fortune favors the bold.", "Virgil"],
+    ["Success is the sum of small efforts, repeated day in and day out.", "Robert Collier"],
+    ["The harder I work, the luckier I get.", "Samuel Goldwyn"],
+    ["Hard choices, easy life. Easy choices, hard life.", "Jerzy Gregorek"],
+    ["Be so good they can't ignore you.", "Steve Martin"],
+    ["Opportunity is missed by most people because it is dressed in overalls and looks like work.", "Thomas Edison"],
+    ["Impossible is just an opinion.", "Paulo Coelho"]
+  ];
+  function dayNum() { var d = new Date(); return Math.floor((Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())) / 864e5); }
+  function quotePick() { var i = (dayNum() + (S.qoff || 0)) % QUOTES.length; return QUOTES[i]; }
+  function quoteHtml() {
+    var q = quotePick();
+    return '<div class="hx-quote"><div class="hx-qk">Today\'s mindset</div><div class="hx-qt">&ldquo;' + E(q[0]) + '&rdquo;</div><div class="hx-qa">&mdash; ' + E(q[1]) + '</div>' +
+      '<button class="hx-qn" onclick="hxQuote()" aria-label="Show another quote">Another</button></div>';
+  }
+  window.hxQuote = function () { S.qoff = (S.qoff || 0) + 1; var el = document.querySelector('#homeCmd .hx-quote'); if (el) el.outerHTML = quoteHtml(); };
+  function clockTxt() {
+    var d = new Date(), a = '', b = '';
+    try { a = d.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }); b = d.toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' }); } catch (e) {}
+    return a + ' &middot; ' + b;
+  }
+  setInterval(function () { var el = document.getElementById('hxClock'); if (el) el.innerHTML = clockTxt(); }, 15000);
+
+  /* ---------- account trail (from account-log.json) ---------- */
+  var GM = 'https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#';
+  function gmUrl(x) { if (!x) return ''; return x.indexOf('q:') === 0 ? GM + 'search/' + encodeURIComponent(x.slice(2)) : x; }
+  function gmSearch(q) { return GM + 'search/' + encodeURIComponent(q); }
+  function fmtD(d) {
+    if (!d) return ''; var p = String(d).split('-'); if (p.length < 3) return d;
+    var M = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return M[+p[1] - 1] + ' ' + (+p[2]) + (+p[0] !== new Date().getFullYear() ? ', ' + p[0] : '');
+  }
+  function loadTrail() {
+    fetch('account-log.json?ts=' + Date.now(), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function (j) { S.trail = j; try { ls.set('bgcs_trail_cache', JSON.stringify(j)); } catch (e) {} trailRefresh(); renderHome(); })
+      .catch(function () { if (!S.trail) { try { S.trail = JSON.parse(ls.get('bgcs_trail_cache', 'null')); } catch (e) {} if (S.trail) { trailRefresh(); renderHome(); } } });
+  }
+  function trailAcct(id) { return S.trail && S.trail.accounts ? S.trail.accounts[String(id)] : null; }
+  function trailTodoGet() { try { return JSON.parse(ls.get('bgcs_trail_todo', '{}')) || {}; } catch (e) { return {}; } }
+  window.hxTrailTodo = function (k) { var t = trailTodoGet(); if (t[k]) delete t[k]; else t[k] = 1; ls.set('bgcs_trail_todo', JSON.stringify(t)); if (t[k]) { winsAdd(); buzz(10); } renderTrail(); };
+  var DIRI = { out: ['&#8599;', 'You sent'], 'in': ['&#8601;', 'They wrote'], call: ['&#9742;', 'Call'], invite: ['&#128197;', 'Invite'], note: ['&#9998;', 'Note'] };
+  var TAGS = { win: 'Good sign', flag: 'Heads up', overdue: 'Overdue', draft: 'Not sent', sched: 'Scheduled', invoice: 'Invoice / paperwork', meet: 'Meeting' };
+  function itemHtml(x) {
+    var di = DIRI[x.dir] || DIRI.note;
+    var sub = x.gm ? '<a class="tr-a" href="' + E(gmUrl(x.gm)) + '" target="_blank" rel="noopener">' + E(x.sub) + '</a>' : E(x.sub);
+    return '<div class="tr-it tr-' + E(x.dir) + '"><div class="tr-ic" title="' + di[1] + '">' + di[0] + '</div><div class="tr-bd"><div class="tr-hd"><b>' + fmtD(x.d) + '</b> <span class="tr-wh">' + E(x.who) + '</span>' + (x.tag && TAGS[x.tag] ? ' <span class="tr-tag t-' + x.tag + '">' + TAGS[x.tag] + '</span>' : '') + '</div>' +
+      '<div class="tr-sb">' + sub + '</div><div class="tr-sm">' + E(x.sum) + '</div></div></div>';
+  }
+  function phaseHtml(p) {
+    var st = { done: 'Done', active: 'In progress', waiting: 'Waiting on them', todo: 'Not started' }[p.state] || '';
+    var inner = p.items && p.items.length ? p.items.map(itemHtml).join('') : '<div class="tr-mu" style="padding:8px 2px">Nothing logged yet.</div>';
+    var open = p.state === 'active' || p.state === 'waiting' || (p.items || []).length <= 2;
+    return '<details class="tr-ph"' + (open ? ' open' : '') + '><summary><span class="tr-n">' + p.n + '</span><span class="tr-pt">' + E(p.title) + '</span><span class="tr-st s-' + p.state + '">' + st + '</span><span class="tr-ct">' + (p.items || []).length + ' item' + ((p.items || []).length === 1 ? '' : 's') + '</span></summary>' + inner + '</details>';
+  }
+  window.renderTrail = function () {
+    var box = document.getElementById('trailBox'); if (!box) return;
+    var id = typeof currentProfileId !== 'undefined' ? currentProfileId : null;
+    var lead = id != null ? financialProspects.find(function (x) { return x.id === id; }) : null;
+    if (!S.trail) { box.innerHTML = '<div class="tr-mu">Loading the email trail...</div>'; loadTrail(); return; }
+    var a = trailAcct(id);
+    var gq = (a && a.gq) || (lead && lead.email ? 'from:' + lead.email + ' OR to:' + lead.email : '');
+    var gbtn = gq ? '<a class="tr-btn pri" href="' + E(gmSearch(gq)) + '" target="_blank" rel="noopener">Open all Gmail for this account</a>' : '';
+    if (!a) { box.innerHTML = '<div class="tr-card"><b>No email trail logged for this account yet.</b><p class="tr-mu" style="margin-top:6px">Tonight\'s Gmail check adds it as soon as there is something sent, received, scheduled or drafted.</p><div class="tr-row">' + gbtn + '</div></div>'; return; }
+    var tdo = trailTodoGet(), h = '';
+    h += '<div class="tr-hero"><div class="tr-k">Where this stands</div><div class="tr-h1">' + E(a.headline) + '</div><div class="tr-row">' + gbtn + '<span class="tr-mu">Read from Gmail ' + fmtD(S.trail.generated) + '</span></div></div>';
+    if (a.todo && a.todo.length) h += '<div class="tr-card"><div class="tr-k">What to do next</div>' + a.todo.map(function (t, i) { var k = id + ':' + i, on = !!tdo[k]; return '<label class="tr-todo' + (on ? ' on' : '') + '"><input type="checkbox" ' + (on ? 'checked ' : '') + 'onchange="hxTrailTodo(\'' + k + '\')"><span>' + E(t) + '</span></label>'; }).join('') + '</div>';
+    var f = a.facts || {};
+    h += '<div class="tr-grid">' +
+      '<div class="tr-card"><div class="tr-k">Address</div><div>' + (f.address ? E(f.address) : '<span class="tr-mu">Not in any email yet.</span>') + '</div></div>' +
+      '<div class="tr-card"><div class="tr-k">Phone</div><div>' + (f.phone ? E(f.phone) : '<span class="tr-mu">Not in any email yet.</span>') + '</div></div>' +
+      '<div class="tr-card"><div class="tr-k">Main email</div><div>' + (f.email ? '<a class="tr-a" href="mailto:' + E(f.email) + '">' + E(f.email) + '</a>' : '<span class="tr-mu">None yet.</span>') + '</div></div>' +
+      '<div class="tr-card"><div class="tr-k">Last reply</div><div>' + (a.lastReply ? '<b>' + fmtD(a.lastReply.d) + '</b> ' + E(a.lastReply.who) + '<div class="tr-mu">' + E(a.lastReply.text) + '</div>' : '<span class="tr-mu">No human reply in Gmail.</span>') + '</div></div></div>';
+    if (a.schedule && a.schedule.length) h += '<div class="tr-card"><div class="tr-k">Program schedule and dates</div>' + a.schedule.map(function (s) { return '<div class="tr-sc"><div class="tr-dt">' + E(s.approx ? s.t : fmtD(s.d)) + (s.approx ? '' : '<small>' + E(s.t || '') + '</small>') + '</div><div><b>' + E(s.title) + '</b><div class="tr-mu">' + E(s.detail || '') + '</div></div></div>'; }).join('') + '</div>';
+    h += '<div class="tr-k tr-sec">The 3 phases</div>' + (a.phases || []).map(phaseHtml).join('');
+    if (a.contacts && a.contacts.length) h += '<div class="tr-k tr-sec">People and team</div><div class="tr-grid">' + a.contacts.map(function (c) {
+      return '<div class="tr-card"><b>' + E(c.name) + '</b><div class="tr-mu">' + E(c.role) + '</div>' + (c.email ? '<div><a class="tr-a" href="mailto:' + E(c.email) + '">' + E(c.email) + '</a></div>' : '') + (c.phone ? '<div>' + E(c.phone) + '</div>' : '') + (c.addr ? '<div class="tr-mu">' + E(c.addr) + '</div>' : '') + (c.note ? '<div class="tr-mu" style="margin-top:4px">' + E(c.note) + '</div>' : '') + ((c.linked || []).length ? '<div class="tr-lk">Works with: ' + c.linked.map(E).join(', ') + '</div>' : '') + '</div>';
+    }).join('') + '</div>';
+    if (a.docs && a.docs.length) h += '<div class="tr-k tr-sec">Invoices, paperwork and meeting links</div><div class="tr-card">' + a.docs.map(function (d) { var u = d.url || gmUrl(d.gm); return '<div class="tr-doc"><b>' + E(d.type) + '</b> <span class="tr-mu">' + fmtD(d.date) + '</span><div class="tr-mu">' + E(d.note) + '</div>' + (u ? '<a class="tr-a" href="' + E(u) + '" target="_blank" rel="noopener">Open</a>' : '') + '</div>'; }).join('') + '</div>';
+    if (a.flags && a.flags.length) h += '<div class="tr-card tr-warn"><div class="tr-k">Heads up</div>' + a.flags.map(function (t) { return '<p>' + E(t) + '</p>'; }).join('') + '</div>';
+    if (a.related && a.related.length) h += '<div class="tr-k tr-sec">Connected accounts</div><div class="tr-row">' + a.related.map(function (r) { var q = financialProspects.find(function (x) { return x.id === r.id; }); return q ? '<button class="tr-chip" onclick="homeOpen(' + r.id + ',\'trail\')">' + E(q.org) + ' <small>' + E(r.why) + '</small></button>' : ''; }).join('') + '</div>';
+    box.innerHTML = h;
+  };
+  window.renderTrailContacts = function () {
+    var oc = document.getElementById('orgChartContainer'); if (!oc || !S.trail) return;
+    var id = typeof currentProfileId !== 'undefined' ? currentProfileId : null, a = trailAcct(id);
+    if (!a || !a.contacts || !a.contacts.length) return;
+    oc.innerHTML = a.contacts.map(function (c) { return '<div class="tr-card"><b>' + E(c.name) + '</b><div class="tr-mu">' + E(c.role) + '</div>' + (c.email ? '<div><a class="tr-a" href="mailto:' + E(c.email) + '">' + E(c.email) + '</a></div>' : '') + (c.phone ? '<div>' + E(c.phone) + '</div>' : '') + ((c.linked || []).length ? '<div class="tr-lk">Works with: ' + c.linked.map(E).join(', ') + '</div>' : '') + '</div>'; }).join('');
+  };
+  function trailRefresh() {
+    var pv = document.getElementById('profileView'); if (!pv || pv.classList.contains('hidden')) return;
+    var t = document.getElementById('tabContent-trail'); if (t && !t.classList.contains('hidden')) renderTrail();
+    renderTrailContacts();
+  }
+  loadTrail();
+
+  /* ---------- coach: pace, next moves ---------- */
+  function weekStart() { var d = new Date(); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); return d; }
+  function inWeek(ds) { if (!ds) return false; var t = new Date(String(ds).slice(0, 10) + 'T00:00:00'), ws = weekStart(), we = new Date(ws); we.setDate(we.getDate() + 7); return t >= ws && t < we; }
+  function paceModel(m) {
+    var P = m.P, now = new Date(), end = new Date('2026-12-31T23:59:59');
+    var days = Math.max(1, Math.ceil((end - now) / 864e5)), weeks = Math.max(1, Math.ceil(days / 7));
+    var need = Math.max(0, m.cap - m.slots), perClass = 12;
+    var target = Math.max(5, Math.ceil(need * perClass / weeks));
+    var sent = P.filter(function (p) { return inWeek(p.emailSentDate); }).length;
+    var calls = P.filter(function (p) { return inWeek(p.callDate) || (p.activities || []).some(function (a) { return /call|phone|dm|text/i.test(a.type || '') && inWeek(a.date); }); }).length;
+    var follow = P.filter(function (p) { return inWeek(p.fuDate); }).length;
+    var emailed = P.filter(function (p) { return ['First Touch Sent', 'Lead', 'Invoice Pending', 'Closed Won', 'Closed Lost'].indexOf(p.stage) >= 0; }).length;
+    var replied = P.filter(function (p) { return ['Lead', 'Invoice Pending', 'Closed Won'].indexOf(p.stage) >= 0; }).length;
+    var booked = P.filter(function (p) { return ['Invoice Pending', 'Closed Won'].indexOf(p.stage) >= 0; }).length;
+    var drafts = P.filter(function (p) { return p.stage === 'Email Drafted'; });
+    var wd = (now.getDay() + 6) % 7, expected = Math.ceil(target * (wd + 1) / 7);
+    return { weeks: weeks, days: days, need: need, target: target, sent: sent, calls: calls, follow: follow, emailed: emailed, replied: replied, booked: booked, drafts: drafts, expected: expected, behind: Math.max(0, expected - sent), daily: Math.max(1, Math.ceil(target / 5)) };
+  }
+  function bar(v, t) { var pct = Math.min(100, Math.round(v / Math.max(1, t) * 100)); return '<div class="co-bar"><i style="width:' + pct + '%"></i></div>'; }
+  function movesList(m, pm) {
+    var out = [], today = m.today;
+    m.tasks.filter(function (x) { return x.t.date <= today; }).slice(0, 1).forEach(function (x) { out.push({ t: x.t.title, o: x.p.org, pid: x.p.id, min: 5, tab: 'tasks' }); });
+    m.stale.slice(0, 1).forEach(function (p) { out.push({ t: 'Follow up with ' + p.org, o: 'First email sent ' + fmtD(p.emailSentDate) + ', no reply', pid: p.id, min: 3, tab: 'trail' }); });
+    pm.drafts.filter(function (p) { return p.email; }).slice(0, 3).forEach(function (p) { if (out.length < 3) out.push({ t: 'Read and send the draft to ' + p.org, o: 'Draft is waiting in Gmail', pid: p.id, min: 2, tab: 'trail' }); });
+    return out.slice(0, 3);
+  }
+  function coachCard(m) {
+    var pm = paceModel(m), mv = movesList(m, pm);
+    var ahead = pm.sent >= pm.expected;
+    var head = ahead ? 'You are on pace. Keep it rolling.' : 'We are behind schedule, and it is fixable.';
+    var say = ahead
+      ? pm.sent + ' first emails out this week against a target of ' + pm.target + '. Keep the same rhythm and do not coast.'
+      : pm.sent + ' of ' + pm.target + ' first emails went out this week. ' + (pm.drafts.length ? pm.drafts.length + ' drafts are already written and sitting in Gmail, so the hardest part is done. ' : '') + 'Today, send ' + pm.daily + ' and one follow-up, then stop. Small and finished beats big and stuck.';
+    var moves = mv.length ? mv.map(function (x, i) { return '<div class="co-mv"><span class="co-n">' + (i + 1) + '</span><div style="min-width:0;flex:1"><b>' + E(x.t) + '</b><div class="tr-mu">' + E(x.o) + ' &middot; about ' + x.min + ' min</div></div><button class="hx-btn pri" onclick="homeOpen(' + x.pid + ',\'' + x.tab + '\')">Open</button></div>'; }).join('') : '<p class="hx-mu">Nothing urgent. Pick one organization and research it for 10 minutes.</p>';
+    return '<div class="hx-card fx-tilt hx-in"><div class="hx-k">Coach &middot; ' + pm.days + ' days to Dec 31</div>' +
+      '<div class="co-h">' + E(head) + '</div><p class="hx-mu" style="margin:4px 0 10px">' + E(say) + '</p>' +
+      '<div class="co-grid"><div><div class="co-l"><span>First emails this week</span><b>' + pm.sent + ' / ' + pm.target + '</b></div>' + bar(pm.sent, pm.target) + '</div>' +
+      '<div><div class="co-l"><span>Follow-ups sent</span><b>' + pm.follow + ' / ' + Math.max(m.stale.length, 1) + ' due</b></div>' + bar(pm.follow, Math.max(m.stale.length, 1)) + '</div>' +
+      '<div><div class="co-l"><span>Calls or DMs</span><b>' + pm.calls + ' / 5</b></div>' + bar(pm.calls, 5) + '</div>' +
+      '<div><div class="co-l"><span>Classes booked</span><b>' + m.slots + ' / ' + m.cap + '</b></div>' + bar(m.slots, m.cap) + '</div></div>' +
+      '<p class="hx-mu" style="margin:10px 0 6px;font-size:12px"><b style="color:#F3E8D6">The math:</b> to land ' + pm.need + ' more recurring classes by Dec 31 you need about ' + pm.target + ' new first emails a week, a follow-up on every email 5 days old, and 5 calls or DMs. Your own numbers so far: ' + pm.emailed + ' organizations emailed, ' + pm.replied + ' replied, ' + pm.booked + ' booked. That is the pace we are working from. It is an estimate, so we adjust it as real results come in.</p>' +
+      '<div class="hx-k" style="margin-top:10px">Your next 3 small moves</div>' + moves +
+      '<div class="hx-btnrow" style="margin-top:10px"><button class="hx-btn pri" onclick="hxTimer()">' + (S.timer ? 'Stop sprint (' + timerFmt() + ')' : 'Start a 10-minute sprint') + '</button><button class="hx-btn" onclick="hxAsk(\'Give me a 3-step plan for the next hour. Use my pipeline, be direct, keep it small.\')">Ask for a plan</button><button class="hx-btn" onclick="hxNudge()">Straight talk</button></div></div>';
+  }
+
+  /* ---------- upcoming events ---------- */
+  var PREP = ['Send Dr. Bowden the student link and your AI tools answer (promised by Fri Nov 20)', 'Get rooms and start times for all 4 sessions', 'Ask if the parent take-home card with the QR code is approved', 'Print the QR cards once approved', 'Test the student page on a Chromebook', 'Pack laptop, USB-C and HDMI adapters, hotspot, printed class codes', 'Confirm W-9 and payment timing with accounts payable', 'Finalize the 4 session plans (game plan below)', 'After Dec 3: ask for a testimonial and an introduction to other schools'];
+  function prepGet() { try { return JSON.parse(ls.get('bgcs_home_prep', '{}')) || {}; } catch (e) { return {}; } }
+  window.hxPrep = function (i) { var t = prepGet(); if (t[i]) delete t[i]; else { t[i] = 1; winsAdd(); buzz(10); } ls.set('bgcs_home_prep', JSON.stringify(t)); renderHome(); };
+  function eventsCard(m) {
+    var today = m.today, ev = [];
+    if (S.trail && S.trail.accounts) Object.keys(S.trail.accounts).forEach(function (id) {
+      (S.trail.accounts[id].schedule || []).forEach(function (s) { if (s.d && s.d >= today) { var q = m.P.find(function (x) { return String(x.id) === id; }); ev.push({ d: s.d, approx: s.approx, t: s.t, title: s.title, org: q ? q.org : '', id: id }); } });
+    });
+    ev.sort(function (a, b) { return a.d < b.d ? -1 : 1; });
+    function inDays(d) { var n = Math.round((new Date(d + 'T00:00:00') - new Date(today + 'T00:00:00')) / 864e5); return n === 0 ? 'today' : n === 1 ? 'tomorrow' : 'in ' + n + ' days'; }
+    var list = ev.slice(0, 6).map(function (e) { return '<div class="hx-row" onclick="homeOpen(' + e.id + ',\'trail\')" style="cursor:pointer"><div class="ev-d"><b>' + E(e.approx ? e.t : fmtD(e.d)) + '</b>' + (e.approx ? '' : '<small>' + inDays(e.d) + '</small>') + '</div><div style="min-width:0"><b style="color:#F3E8D6">' + E(e.title) + '</b><div class="hx-mu" style="font-size:12px">' + E(e.org) + (e.t && !e.approx ? ' &middot; ' + E(e.t) : '') + '</div></div></div>'; }).join('') || '<p class="hx-mu">Nothing dated yet.</p>';
+    var pr = prepGet(), done = 0; PREP.forEach(function (_, i) { if (pr[i]) done++; });
+    var prep = PREP.map(function (t, i) { return '<label class="tr-todo' + (pr[i] ? ' on' : '') + '"><input type="checkbox" ' + (pr[i] ? 'checked ' : '') + 'onchange="hxPrep(' + i + ')"><span>' + E(t) + '</span></label>'; }).join('');
+    return '<div class="hx-card fx-tilt hx-in"><div class="hx-k">Coming up &middot; plan for it</div>' + list +
+      '<div class="hx-k" style="margin-top:12px">InspiHER prep &middot; ' + done + ' of ' + PREP.length + ' done</div>' + bar(done, PREP.length) + prep +
+      '<div class="ev-qr"><img src="inspiher-qr.png" alt="QR code to the Season 2 parent sign-up page" width="112" height="112"><div style="min-width:0;flex:1"><b style="color:#F3E8D6">Parent QR code</b><p class="hx-mu" style="font-size:12px;margin:2px 0 8px">Scans to the Season 2 sign-up page. Do not hand out until the district approves the take-home card.</p><div class="hx-btnrow"><a class="hx-btn pri" href="season2.html?src=inspiher" target="_blank" rel="noopener">Open the page</a><a class="hx-btn" href="inspiher-qr.png" download="inspiher-season2-qr.png">Download QR</a><a class="hx-btn" href="parent-card.html" target="_blank" rel="noopener">Print card</a><a class="hx-btn" href="inspiher-plan.html" target="_blank" rel="noopener">Session plan</a></div></div></div></div>';
+  }
+
+  /* ---------- styles for the new pieces ---------- */
+  (function () {
+    var css = [
+      '.hx-quote{position:relative;margin:0 0 14px;padding:16px 64px 16px 18px;border-radius:16px;border:1px solid rgba(199,153,79,.35);background:linear-gradient(135deg,rgba(199,153,79,.16),rgba(59,34,22,.9));}',
+      '.hx-qk{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C7994F;font-weight:800;margin-bottom:6px}',
+      '.hx-qt{font-family:Fraunces,Georgia,serif;font-size:clamp(17px,2.4vw,23px);line-height:1.3;color:#F3E8D6;font-weight:600}',
+      '.hx-qa{margin-top:6px;font-size:12.5px;color:#CDBA99}',
+      '.hx-qn{position:absolute;right:12px;top:12px;border:1px solid rgba(199,153,79,.4);background:transparent;color:#E3BD79;border-radius:999px;padding:5px 11px;font-size:11px;font-weight:800;cursor:pointer}',
+      '.co-h{font-family:Fraunces,Georgia,serif;font-size:21px;font-weight:700;color:#F3E8D6;line-height:1.25}',
+      '.co-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px 16px}',
+      '.co-l{display:flex;justify-content:space-between;gap:6px;font-size:12px;color:#CDBA99;margin-bottom:4px}.co-l b{color:#F3E8D6}',
+      '.co-bar{height:8px;border-radius:99px;background:rgba(199,153,79,.16);overflow:hidden}.co-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#C7994F,#F0CC8C)}',
+      '.co-mv{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(199,153,79,.14)}.co-mv:last-of-type{border-bottom:0}',
+      '.co-n{flex:none;width:26px;height:26px;border-radius:50%;background:rgba(199,153,79,.22);color:#E3BD79;font-weight:900;font-size:13px;display:flex;align-items:center;justify-content:center}',
+      '.ev-d{flex:none;min-width:70px;color:#E3BD79}.ev-d small{display:block;color:#9c8a6c;font-size:11px}',
+      '.ev-qr{display:flex;gap:12px;align-items:flex-start;margin-top:12px;padding:10px;border-radius:12px;background:rgba(0,0,0,.18);border:1px solid rgba(199,153,79,.2)}.ev-qr img{border-radius:8px;background:#fff;padding:5px;flex:none}',
+      '.tr-hero,.tr-card{border:1px solid rgba(199,153,79,.25);background:rgba(59,34,22,.7);border-radius:14px;padding:14px 16px;margin-bottom:12px;color:#F3E8D6}',
+      '.tr-hero{border-left:4px solid #C7994F;background:linear-gradient(135deg,rgba(199,153,79,.14),rgba(59,34,22,.8))}',
+      '.tr-h1{font-family:Fraunces,Georgia,serif;font-size:19px;font-weight:700;line-height:1.3;margin:2px 0 10px}',
+      '.tr-k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#C7994F;font-weight:800;margin-bottom:6px}.tr-sec{margin:18px 2px 8px}',
+      '.tr-mu{color:#CDBA99;font-size:12.5px;line-height:1.45}',
+      '.tr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.tr-grid .tr-card{margin-bottom:0}',
+      '.tr-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}',
+      '.tr-btn{display:inline-block;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:800;text-decoration:none;border:1px solid rgba(199,153,79,.5);color:#E3BD79}.tr-btn.pri{background:linear-gradient(135deg,#C7994F,#A9792F);color:#1d120e;border-color:transparent}',
+      '.tr-a{color:#E3BD79;text-decoration:underline;text-underline-offset:2px}',
+      '.tr-todo{display:flex;gap:10px;align-items:flex-start;padding:8px 2px;cursor:pointer;font-size:14px;line-height:1.4}.tr-todo input{margin-top:3px;width:18px;height:18px;accent-color:#C7994F;flex:none}.tr-todo.on span{opacity:.5;text-decoration:line-through}',
+      '.tr-sc{display:flex;gap:12px;padding:8px 0;border-bottom:1px solid rgba(199,153,79,.14)}.tr-sc:last-child{border-bottom:0}.tr-dt{flex:none;min-width:84px;color:#E3BD79;font-weight:800}.tr-dt small{display:block;color:#9c8a6c;font-weight:600}',
+      '.tr-ph{border:1px solid rgba(199,153,79,.25);background:rgba(59,34,22,.6);border-radius:14px;margin-bottom:10px;overflow:hidden}',
+      '.tr-ph>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 14px;flex-wrap:wrap}.tr-ph>summary::-webkit-details-marker{display:none}',
+      '.tr-n{flex:none;width:28px;height:28px;border-radius:50%;background:#C7994F;color:#1d120e;font-weight:900;display:flex;align-items:center;justify-content:center}',
+      '.tr-pt{font-weight:800;color:#F3E8D6;flex:1;min-width:140px}.tr-ct{color:#9c8a6c;font-size:12px}',
+      '.tr-st{font-size:11px;font-weight:800;border-radius:99px;padding:3px 9px;border:1px solid rgba(199,153,79,.4);color:#E3BD79}.tr-st.s-active{background:rgba(199,153,79,.22)}.tr-st.s-done{opacity:.75}.tr-st.s-todo{opacity:.55}',
+      '.tr-it{display:flex;gap:10px;padding:10px 14px;border-top:1px solid rgba(199,153,79,.14)}',
+      '.tr-ic{flex:none;width:28px;height:28px;border-radius:8px;background:rgba(199,153,79,.16);color:#E3BD79;display:flex;align-items:center;justify-content:center;font-size:15px}.tr-in .tr-ic{background:rgba(240,204,140,.3)}',
+      '.tr-bd{min-width:0;flex:1}.tr-hd{font-size:12.5px;color:#CDBA99}.tr-hd b{color:#E3BD79}.tr-wh{margin-left:4px}',
+      '.tr-sb{font-weight:700;font-size:13.5px;color:#F3E8D6;margin-top:1px;overflow-wrap:anywhere}.tr-sm{font-size:13px;color:#CDBA99;margin-top:2px;line-height:1.45}',
+      '.tr-tag{font-size:10px;font-weight:800;border-radius:99px;padding:2px 7px;margin-left:4px;border:1px solid rgba(199,153,79,.45);color:#E3BD79}.tr-tag.t-win{background:rgba(199,153,79,.25)}.tr-tag.t-overdue,.tr-tag.t-flag{border-color:#f0a090;color:#f0a090}',
+      '.tr-lk{margin-top:6px;font-size:12px;color:#E3BD79}.tr-doc{padding:8px 0;border-bottom:1px solid rgba(199,153,79,.14)}.tr-doc:last-child{border-bottom:0}',
+      '.tr-warn{border-color:rgba(240,160,144,.5)}.tr-warn p{margin:4px 0;font-size:13.5px;line-height:1.45}',
+      '.tr-chip{border:1px solid rgba(199,153,79,.45);background:rgba(199,153,79,.1);color:#F3E8D6;border-radius:99px;padding:7px 12px;font-size:12.5px;font-weight:700;cursor:pointer}.tr-chip small{color:#CDBA99;font-weight:500;margin-left:4px}'
+    ].join('');
+    var st = document.createElement('style'); st.id = 'hx-extra-css'; st.textContent = css; document.head.appendChild(st);
+  })();
+
+
+
+  /* ---------- straight-talk pop-up: stay on the goal ---------- */
+  (function () {
+    var css = '.hx-nd{position:fixed;inset:0;z-index:99999;background:rgba(20,10,6,.78);display:flex;align-items:center;justify-content:center;padding:18px;-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}' +
+      '.hx-ndc{max-width:460px;width:100%;border-radius:20px;border:1px solid rgba(199,153,79,.6);background:linear-gradient(160deg,#3B2216,#2A160E);padding:22px;color:#F3E8D6;box-shadow:0 20px 60px rgba(0,0,0,.6)}' +
+      '.hx-ndc h3{font-family:Fraunces,Georgia,serif;font-size:24px;line-height:1.2;margin:4px 0 10px}.hx-ndc p{font-size:15px;line-height:1.5;color:#E8D9BF;margin:0 0 10px}.hx-ndc .nk{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#E3BD79;font-weight:800}' +
+      '.hx-ndc .nb{display:flex;flex-direction:column;gap:8px;margin-top:14px}.hx-ndc button{border-radius:12px;padding:13px 14px;font-size:15px;font-weight:800;cursor:pointer;border:1px solid rgba(199,153,79,.5);background:transparent;color:#E3BD79}.hx-ndc button.p{background:linear-gradient(135deg,#C7994F,#A9792F);color:#1d120e;border-color:transparent}';
+    var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+  })();
+  function nudgeClose() { var n = document.getElementById('hxNudge'); if (n) n.remove(); }
+  function nudgeCheck(force) {
+    try {
+      if (document.getElementById('hxNudge')) return;
+      var pv = document.getElementById('pipelineView'); if (pv && pv.classList.contains('hidden')) return;
+      var prof = document.getElementById('profileView'); if (prof && !prof.classList.contains('hidden')) return;
+      if (S.edit || S.timer) return;
+      var last = +ls.get('bgcs_nudge_at', '0') || 0;
+      if (!force && Date.now() - last < 3 * 3600 * 1000) return;
+      var m = coModel(), pm = paceModel(m);
+      var behind = pm.sent < pm.expected && (pm.drafts.length > 0 || m.stale.length > 0 || m.overdue.length > 0);
+      if (!force && !behind) return;
+      var mv = movesList(m, pm), first = mv[0];
+      var d = document.createElement('div'); d.id = 'hxNudge'; d.className = 'hx-nd'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true');
+      d.innerHTML = '<div class="hx-ndc"><div class="nk">Straight talk from your coach</div><h3>Is this moving the goal, or is it busywork?</h3>' +
+        '<p>This week: <b>' + pm.sent + ' of ' + pm.target + '</b> first emails sent. <b>' + pm.drafts.length + '</b> drafts are written and still unsent. <b>' + m.stale.length + '</b> follow-ups are due. Booked recurring: <b>$' + Math.round(m.slots * m.c.classVal).toLocaleString() + '</b> of $' + Math.round(m.c.goal).toLocaleString() + '.</p>' +
+        '<p>New tabs, new tools and new ideas do not pay you. A sent email can. Do one small thing right now' + (first ? ': <b>' + E(first.t) + '</b>' : '') + '. Ten minutes, then you can decide what is next.</p>' +
+        '<div class="nb"><button class="p" id="hxNdGo">Okay. Start my 10-minute sprint</button><button id="hxNdLater">Not now. Remind me in 3 hours</button></div></div>';
+      document.body.appendChild(d);
+      ls.set('bgcs_nudge_at', String(Date.now()));
+      document.getElementById('hxNdGo').onclick = function () { nudgeClose(); if (!S.timer) timerStart(); if (first) homeOpen(first.pid, first.tab); };
+      document.getElementById('hxNdLater').onclick = nudgeClose;
+    } catch (e) {}
+  }
+  window.hxNudge = function () { nudgeCheck(true); };
+  setTimeout(function () { nudgeCheck(false); }, 6000);
+  var hiddenAt = 0;
+  document.addEventListener('visibilitychange', function () { if (document.hidden) hiddenAt = Date.now(); else if (hiddenAt && Date.now() - hiddenAt > 30 * 60000) setTimeout(function () { nudgeCheck(false); }, 1500); });
+
   /* ---------- render ---------- */
   var mq = null; try { mq = window.matchMedia('(max-width:1023px)'); } catch (e) {}
   function isMobile() { return !!(mq && mq.matches); }
@@ -330,7 +620,7 @@
     if (cands.length > 1) actBtns += '<button class="hx-btn" onclick="hxSkip()">Not this one</button>';
 
     var pips = ''; for (var i = 0; i < WIN_GOAL; i++) pips += '<span class="hx-pip' + (i < wToday ? ' on' : '') + '"></span>';
-    var dateTxt = ''; try { dateTxt = new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' }) + ' &middot; '; } catch (e) {}
+    var dateTxt = '<span id="hxClock">' + clockTxt() + '</span> &middot; ';
     var strip = '<div class="hx-strip"><div class="hx-hi"><div class="hx-hello">' + greeting() + ', Raeven</div><div class="hx-sub">' + dateTxt + E(levelName(wToday)) + ' &middot; ' + wToday + ' win' + (wToday === 1 ? '' : 's') + ' today</div></div>' +
       '<div class="hx-sr"><div class="hx-pips">' + pips + '</div><div class="hx-flame" title="Day streak">&#128293; ' + stk + '</div>' +
       '<button class="hx-rf hx-cz' + (S.edit ? ' on' : '') + '" onclick="hxEdit()" aria-label="Customize your dashboard" title="Customize: move, resize, hide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h9M19 6h1M4 12h3M13 12h7M4 18h11M21 18h-1"/><circle cx="16" cy="6" r="2.2"/><circle cx="10" cy="12" r="2.2"/><circle cx="18" cy="18" r="2.2"/></svg></button>' +
@@ -381,7 +671,7 @@
       ].map(function (a) { return '<div class="hx-row"><div style="flex:1;min-width:0"><div style="font-size:13.5px;font-weight:800;color:#F3E8D6">' + E(a[0]) + ' <span class="hx-tag">auto</span></div><div class="hx-mu" style="font-size:12px">' + E(a[1]) + '</div></div></div>'; }).join('') + '</div>';
 
     var hot = P.filter(function (p) { return p.stage === 'Lead' || p.stage === 'Invoice Pending'; });
-    var hotHtml = hot.length ? hot.map(function (p) { var a = (p.activities || [])[0]; return '<div class="hx-row" onclick="homeOpen(' + p.id + ')" style="cursor:pointer"><div style="min-width:0"><a class="hx-a" href="javascript:void(0)">' + E(p.org) + '</a> <span class="hx-tag">' + E(p.stage) + '</span>' + (a ? '<div class="hx-mu" style="font-size:12px">' + E(a.date) + ': ' + E(a.title) + '</div>' : '') + '</div></div>'; }).join('') : '<p class="hx-mu">No replies logged yet.</p>';
+    var hotHtml = hot.length ? hot.map(function (p) { var ta = trailAcct(p.id), lr = ta && ta.lastReply, a = (p.activities || [])[0]; var cnt2 = ta ? ta.phases.reduce(function (n, ph) { return n + (ph.items || []).length; }, 0) : 0; return '<div class="hx-row" onclick="homeOpen(' + p.id + ',\'trail\')" style="cursor:pointer"><div style="min-width:0"><a class="hx-a" href="javascript:void(0)">' + E(p.org) + '</a> <span class="hx-tag">' + E(p.stage) + '</span>' + (lr ? '<div class="hx-mu" style="font-size:12px"><b style="color:#E3BD79">' + fmtD(lr.d) + '</b> ' + E(lr.who) + ': ' + E(lr.text) + '</div>' : (a ? '<div class="hx-mu" style="font-size:12px">' + E(a.date) + ': ' + E(a.title) + '</div>' : '')) + (cnt2 ? '<div class="hx-mu" style="font-size:11px;margin-top:2px">' + cnt2 + ' emails logged &middot; tap to read all</div>' : '') + '</div></div>'; }).join('') : '<p class="hx-mu">No replies logged yet.</p>';
     var warm = '<div class="hx-card fx-tilt hx-4 hx-in"><div class="hx-k">Who replied &middot; ' + hot.length + '</div>' + hotHtml + '</div>';
 
     var comp = (typeof AD_COMP !== 'undefined' ? AD_COMP : []).slice(0, 3).map(function (x) { return '<div class="hx-row"><div><a class="hx-a" href="' + E(x[2]) + '" target="_blank" rel="noopener">' + E(x[0]) + '</a><div class="hx-mu" style="font-size:12px">' + E(x[1]) + '</div></div></div>'; }).join('');
@@ -393,7 +683,8 @@
       next: function () { return hero; }, goal: function () { return ring; }, river: function () { return river; },
       tasks: function () { return tasksCardFn(mob ? (S.tab === 'board' ? 8 : 3) : 5); },
       quick: function () { return quick; }, warm: function () { return warm; }, autos: function () { return autos; },
-      news: function () { return newsCard(); }, comp: function () { return compCard; }, marketing: function () { return marketingCard(); }
+      news: function () { return newsCard(); }, comp: function () { return compCard; }, marketing: function () { return marketingCard(); },
+      coach: function () { return coachCard(m); }, events: function () { return eventsCard(m); }
     };
     var lk = mob ? 'c' : 'w', L = layoutGet(lk), sub = mob ? (TAB_TILES[S.tab] || TAB_TILES.today) : null;
     var avail = L.order.filter(function (id) { return !sub || sub.indexOf(id) >= 0; });
@@ -402,7 +693,7 @@
     var tilesHtml = vis.map(function (id) { return tileHtml(id, CARDS[id](), L); }).join('');
     var body = panelHtml(lk, hid) + '<div class="hx-board">' + (tilesHtml || '<div class="hx-empty">Every card here is hidden. Tap the sliders button at the top to bring them back.</div>') + '</div>' + ((!mob || S.tab === 'today') ? verLine : '');
     box.className = S.edit ? 'hx-editing' : '';
-    box.innerHTML = strip + body;
+    box.innerHTML = strip + quoteHtml() + body;
     var bd = boardEl(); if (bd) { applySpans(bd); [].forEach.call(bd.querySelectorAll('.hx-tile'), syncTool); fitNow(); observe(bd); }
     countUp(box);
     if (!S.animated && !reduce) { requestAnimationFrame(function () { var fg = box.querySelector('.hx-ring .fg'); if (fg) { void fg.getBoundingClientRect(); fg.style.strokeDashoffset = fg.getAttribute('data-off'); } }); }
@@ -412,16 +703,16 @@
 
   /* ---------- customizable dashboard: tiles, drag, resize, hide, fold ---------- */
   var TILES = [['river', 'Where everyone is'], ['next', 'Do this next'], ['goal', 'Goal'], ['tasks', 'Your list'], ['quick', 'Quick actions'],
-    ['warm', 'Who replied'], ['autos', 'Running for you'], ['news', 'Market intel'], ['comp', 'Competitors'], ['marketing', 'Digital marketing']];
+    ['warm', 'Who replied'], ['autos', 'Running for you'], ['news', 'Market intel'], ['comp', 'Competitors'], ['marketing', 'Digital marketing'], ['coach', 'Coach'], ['events', 'Coming up']];
   var TLABEL = {}; TILES.forEach(function (t) { TLABEL[t[0]] = t[1]; });
   var SIZES = ['S', 'M', 'L', 'F'];
-  var TAB_TILES = { today: ['next', 'tasks', 'quick', 'goal', 'autos'], board: ['river', 'warm', 'tasks'], clips: ['marketing'], intel: ['news', 'comp'] };
+  var TAB_TILES = { today: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos'], board: ['river', 'warm', 'tasks'], clips: ['marketing'], intel: ['news', 'comp'] };
   var LKEY = { w: 'bgcs_home_layout', c: 'bgcs_home_layout_c' };
   var DEFL = {
-    w: { order: ['river', 'next', 'goal', 'tasks', 'quick', 'warm', 'autos', 'news', 'comp', 'marketing'],
-         size: { river: 'F', next: 'L', goal: 'S', tasks: 'L', quick: 'S', warm: 'S', autos: 'S', news: 'L', comp: 'S', marketing: 'F' } },
-    c: { order: ['next', 'tasks', 'quick', 'goal', 'autos', 'river', 'warm', 'news', 'comp', 'marketing'],
-         size: { next: 'F', tasks: 'F', quick: 'M', goal: 'M', autos: 'F', river: 'F', warm: 'F', news: 'F', comp: 'F', marketing: 'F' } }
+    w: { order: ['coach', 'river', 'next', 'goal', 'events', 'tasks', 'quick', 'warm', 'autos', 'news', 'comp', 'marketing'],
+         size: { coach: 'L', events: 'M', river: 'F', next: 'L', goal: 'S', tasks: 'L', quick: 'S', warm: 'S', autos: 'S', news: 'L', comp: 'S', marketing: 'F' } },
+    c: { order: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos', 'river', 'warm', 'news', 'comp', 'marketing'],
+         size: { coach: 'F', events: 'F', next: 'F', tasks: 'F', quick: 'M', goal: 'M', autos: 'F', river: 'F', warm: 'F', news: 'F', comp: 'F', marketing: 'F' } }
   };
   var GRIP = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></svg>';
   var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
@@ -434,6 +725,7 @@
     if (!raw || typeof raw !== 'object') raw = {};
     var L = { order: [], size: {}, hidden: {}, fold: {} };
     (Array.isArray(raw.order) ? raw.order : []).forEach(function (id) { if (TLABEL[id] && L.order.indexOf(id) < 0) L.order.push(id); });
+    ['events', 'coach'].forEach(function (id) { if (L.order.indexOf(id) < 0 && d.order.indexOf(id) >= 0) L.order.unshift(id); });
     d.order.forEach(function (id) { if (L.order.indexOf(id) < 0) L.order.push(id); });
     TILES.forEach(function (t) {
       var id = t[0], s = raw.size && raw.size[id];
@@ -459,7 +751,7 @@
     return '<div class="hx-tb"><button class="hx-grip" aria-label="Move ' + lab + '. Drag, or use the arrow keys." title="Drag to move">' + GRIP + '</button><span class="hx-tl">' + lab + '</span>' +
       '<span class="hx-szg hx-sz3">' + sb('S', '1/3') + sb('M', '1/2') + sb('L', '2/3') + sb('F', 'Full') + '</span>' +
       '<span class="hx-szg hx-sz2">' + sb('M', '1/2') + sb('F', 'Full') + '</span>' +
-      '<button class="hx-tbb hx-mv" data-hxa="up" aria-label="Move ' + lab + ' up">&#9650;</button><button class="hx-tbb hx-mv" data-hxa="down" aria-label="Move ' + lab + ' down">&#9660;</button>' +
+      '<button class="hx-tbb hx-mv" data-hxa="up" aria-label="Move ' + lab + ' up">&#9650;</button><button class="hx-tbb hx-mv" data-hxa="down" aria-label="Move ' + lab + ' down">&#9660;</button><button class="hx-tbb hx-mv" data-hxa="top" aria-label="Move ' + lab + ' to the top">Top</button>' +
       '<button class="hx-tbb" data-hxa="fold" aria-label="Fold or open ' + lab + '"><span class="f1">Fold</span><span class="f2">Open</span></button>' +
       '<button class="hx-tbb" data-hxa="hide" aria-label="Hide ' + lab + '">Hide</button></div>';
   }
@@ -582,6 +874,8 @@
       var v = b.getAttribute('data-v'); tile.setAttribute('data-size', v); L.size[id] = v; layoutSave(k, L); applySpans(board); syncTool(tile); fit();
     } else if ((act === 'up' || act === 'down') && tile) {
       moveTile(tile, act === 'up' ? -1 : 1, true);
+    } else if (act === 'top' && tile) {
+      moveTop(tile);
     } else if (act === 'preset') {
       layoutSave(k, presetLayout(k, b.getAttribute('data-v'))); renderHome(); toast('Layout applied');
     } else if (act === 'reset') {
@@ -590,13 +884,29 @@
       setEdit(false); try { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); } catch (e2) {}
     }
   });
+  function rectKey(t) { var r = t.getBoundingClientRect(); return Math.round(r.left) + ':' + Math.round(r.top + window.scrollY); }
+  function flash(tile) { tile.classList.remove('hx-flash'); void tile.offsetWidth; tile.classList.add('hx-flash'); setTimeout(function () { tile.classList.remove('hx-flash'); }, 1100); }
   function moveTile(tile, dir, focusGrip) {
     var board = boardEl(); if (!board) return;
-    var ts = tilesOf(board), i = ts.indexOf(tile), j = i + dir; if (i < 0 || j < 0 || j >= ts.length) return;
-    if (dir < 0) board.insertBefore(tile, ts[j]); else board.insertBefore(ts[j], tile);
+    var before = rectKey(tile), moved = false, guard = 0;
+    while (guard++ < 12) {
+      var ts = tilesOf(board), i = ts.indexOf(tile), j = i + dir; if (i < 0 || j < 0 || j >= ts.length) break;
+      if (dir < 0) board.insertBefore(tile, ts[j]); else board.insertBefore(ts[j], tile);
+      applySpans(board); fitNow(); moved = true;
+      if (rectKey(tile) !== before) break;
+    }
     persistOrder(board); applySpans(board); fitNow();
-    try { tile.scrollIntoView({ block: 'nearest', behavior: reduce ? 'auto' : 'smooth' }); } catch (e) {}
-    if (focusGrip) { var g = tile.querySelector('.hx-grip'); if (g) g.focus(); }
+    try { tile.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); } catch (e) {}
+    flash(tile);
+    if (!moved || rectKey(tile) === before) toast(dir < 0 ? 'Already at the top' : 'Already at the bottom');
+    if (focusGrip) { var g = tile.querySelector('.hx-grip'); if (g) g.focus({ preventScroll: true }); }
+  }
+  function moveTop(tile) {
+    var board = boardEl(); if (!board) return;
+    var ts = tilesOf(board); if (ts[0] === tile) { toast('Already at the top'); flash(tile); return; }
+    board.insertBefore(tile, ts[0]); persistOrder(board); applySpans(board); fitNow();
+    try { tile.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); } catch (e) {}
+    flash(tile); toast('Moved to the top');
   }
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && S.edit && !drag && !rsz) { setEdit(false); return; }

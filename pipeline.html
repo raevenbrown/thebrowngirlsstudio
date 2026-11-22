@@ -720,6 +720,7 @@ text-[10px]">Primary Contact</p>
 <!-- Interactive Tab Navigation -->
 <div class="grid grid-cols-2 sm:flex sm:space-x-2 gap-2 border-b border-dark-600
 pb-3">
+<button onclick="switchTab('trail')" id="tabBtn-trail" class="px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition text-center">Email Trail</button>
 <button onclick="switchTab('tasks')" id="tabBtn-tasks" class="px-3 sm:px-4 py-2.5
 rounded-xl text-xs font-semibold bg-amber-700 text-white shadow-md transition
 text-center">Tasks & Stage Progress</button>
@@ -740,6 +741,8 @@ text-center">Events & Folders</button>
 py-2.5 rounded-xl text-xs font-semibold bg-dark-700 text-slate-300 hover:bg-dark-600 transition
 text-center col-span-2 sm:col-span-1">Calendar & Events</button>
 </div>
+<!-- Tab: Email Trail (from Gmail audit, account-log.json) -->
+<div id="tabContent-trail" class="space-y-4 hidden"><div id="trailBox"></div></div>
 <!-- Tab 0: Tasks & Stage Progress -->
 <div id="tabContent-tasks" class="space-y-6">
 <div class="bg-dark-800 border border-dark-600 p-6 rounded-2xl space-y-6">
@@ -4843,7 +4846,7 @@ function homeDone(pid, ti) {
   saveFinancialProspects();
   renderHome();
 }
-function homeOpen(pid) { try { if (typeof openProfile === 'function') openProfile(pid); } catch (e) {} }
+function homeOpen(pid, tab) { try { if (typeof openProfile === 'function') openProfile(pid, tab || 'revenue'); } catch (e) {} }
 function renderHome() {
   var box = document.getElementById('homeCmd'); if (!box) return;
   var m = coModel(), P = m.P, E = homeEsc, today = m.today;
@@ -5043,7 +5046,7 @@ currentActiveTab = tabName;
 if (updateHash && currentProfileId !== null) {
 window.location.hash = `profile=${currentProfileId}&tab=${tabName}`;
 }
-['info', 'revenue', 'comms', 'events', 'calendar', 'tasks', 'activity'].forEach(t => {
+['trail', 'info', 'revenue', 'comms', 'events', 'calendar', 'tasks', 'activity'].forEach(t => {
 const el = document.getElementById('tabContent-' + t);
 const btn = document.getElementById('tabBtn-' + t);
 if (el) el.classList.add('hidden');
@@ -5053,6 +5056,9 @@ const activeEl = document.getElementById('tabContent-' + tabName);
 const activeBtn = document.getElementById('tabBtn-' + tabName);
 if (activeEl) activeEl.classList.remove('hidden');
 if (activeBtn) activeBtn.className = "px-3 sm:px-4 py-2.5 rounded-xl text-xs font-semibold bg-amber-700 text-white shadow-md transition text-center";
+if (tabName === 'trail') {
+try { renderTrail(); } catch (e) {}
+}
 if (tabName === 'calendar') {
 renderVisualCalendar();
 }
@@ -5896,6 +5902,7 @@ const orgContainer = document.getElementById('orgChartContainer');
 
 orgContainer.innerHTML = `<p class="text-xs text-slate-500 italic">No additional
 contacts added to this company profile yet.</p>`;
+try { if (window.renderTrailContacts) renderTrailContacts(); } catch (e) {}
 renderEmbeddedProspectTicket();
 renderTaxReceiptsList();
 renderClientCalendar();
@@ -6375,6 +6382,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.21-9"></script>
+<script src="pipeline-home.js?b=2026.11.21-10"></script>
 </body>
 </html>

@@ -1,0 +1,1888 @@
+{
+ "generated": "2026-11-22",
+ "source": "Read from the AI Lab Gmail (sent, received, drafts, scheduled) on Nov 22, 2026",
+ "accounts": {
+  "201": {
+   "headline": "Booked for InspiHER Dec 2-3 (4 one-hour sessions). Invoice with Dr. Williams, W-9 sent, rooms/times and payment timing still open.",
+   "lastReply": {
+    "d": "2026-11-16",
+    "who": "Dr. Molly Bowden",
+    "text": "Most AI tools are blocked for students. Link test welcome. Spaces and times not final."
+   },
+   "facts": {
+    "address": "10245 Eagle Drive, Covington, GA 30014 (district office, from email signatures; the InspiHER venue has not been given yet)",
+    "phone": "Dr. Williams 770-784-4943 or x1233. Dr. Bowden 770-787-1330 ext. 1308",
+    "email": "williams.jennifer@newton.k12.ga.us"
+   },
+   "schedule": [
+    {
+     "d": "2026-12-02",
+     "t": "Day 1 (Wed)",
+     "title": "InspiHER: two 1-hour sessions, 20 fifth graders each",
+     "detail": "Session title: \"AI & Me! An AI and Tech Discovery Workshop\". Room and times not confirmed yet."
+    },
+    {
+     "d": "2026-12-03",
+     "t": "Day 2 (Thu)",
+     "title": "InspiHER: two 1-hour sessions, grades 6-8 then 9-12, 20 girls each",
+     "detail": "Wi-Fi on site, students bring Chromebooks, ceiling projector or Cleartouch panel (not known which), tables or desks, spare power strips."
+    }
+   ],
+   "contacts": [
+    {
+     "name": "Dr. Jennifer Williams, Ed.D.",
+     "role": "Director of Instructional Technology & Media Services, Newton County Schools. Runs InspiHER (10th year).",
+     "email": "williams.jennifer@newton.k12.ga.us",
+     "phone": "770-784-4943 or x1233",
+     "addr": "10245 Eagle Drive, Covington, GA 30014",
+     "note": "Decision maker. Approved you for both InspiHER days on Oct 1.",
+     "linked": [
+      "Dr. Molly Bowden",
+      "Chantal Hendrix"
+     ]
+    },
+    {
+     "name": "Dr. Molly Bowden, Ed.D.",
+     "role": "Instructional Technology Specialist, Newton County Schools. Handles InspiHER logistics and signage.",
+     "email": "bowden.molly@newton.k12.ga.us",
+     "phone": "770-787-1330 ext. 1308",
+     "addr": "10245 Eagle Drive, Covington, GA 30014",
+     "note": "Works with Dr. Williams. Day-to-day contact for rooms, tech, schedule.",
+     "linked": [
+      "Dr. Jennifer Williams"
+     ]
+    },
+    {
+     "name": "Chantal Hendrix",
+     "role": "Newton County Schools (title not in her emails). Reports to Dr. Williams.",
+     "email": "hendrix.chantal@newton.k12.ga.us",
+     "phone": "",
+     "note": "Your first email (Aug 24) went to her. She looped in Dr. Williams on Aug 25.",
+     "linked": [
+      "Dr. Jennifer Williams"
+     ]
+    }
+   ],
+   "docs": [
+    {
+     "type": "Invoice",
+     "date": "2026-10-01",
+     "note": "Dr. Williams said on Oct 1 she already has your invoice. The invoice itself is not in Gmail. Confirm the amount and due date."
+    },
+    {
+     "type": "W-9 + EIN letter",
+     "date": "2026-10-01",
+     "note": "Sent to Dr. Williams for accounts payable. Asked for an ACH vendor form. Dr. Bowden said Nov 16 she would check on it.",
+     "gm": "q:subject:\"Follow-up & Career Day Impact Report\""
+    },
+    {
+     "type": "Curriculum proposal PDF",
+     "date": "2026-08-24",
+     "note": "Attached to the first email."
+    },
+    {
+     "type": "Meeting link",
+     "date": "2026-09-08",
+     "note": "Discovery call: district blocked Google Meet and Teams, call moved to phone.",
+     "url": "https://meet.google.com/gvx-skqd-szq"
+    }
+   ],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-08-24",
+       "dir": "out",
+       "who": "You to Chantal Hendrix",
+       "sub": "Applied AI & STEM Partnership Proposal // Newton County STEAM Academy Pilot",
+       "sum": "Your first email to Newton. Offered a free 1-hour after-school AI discovery session, a $25 hands-on studio hour and teacher tools. Curriculum proposal attached.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r4922161682298328143"
+      },
+      {
+       "d": "2026-08-25",
+       "dir": "in",
+       "who": "Chantal Hendrix",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Thanked you and copied her boss, Dr. Williams, as the right person to review.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r4922161682298328143"
+      },
+      {
+       "d": "2026-08-25",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Thanked her and said you look forward to talking with Dr. Williams."
+      },
+      {
+       "d": "2026-08-31",
+       "dir": "out",
+       "who": "You to Dr. Williams",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Followed up on the proposal and recapped the offer."
+      },
+      {
+       "d": "2026-08-31",
+       "dir": "in",
+       "who": "Dr. Williams",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Said she cannot approve after-school pilots and is not approving AI literacy programs with students at this time.",
+       "tag": "flag"
+      },
+      {
+       "d": "2026-08-31",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Gracious reply. Left the door open for educator PD later."
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-08-31",
+       "dir": "in",
+       "who": "Dr. Williams",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "45 minutes later she said she would like to learn more about your organization and asked for a Zoom."
+      },
+      {
+       "d": "2026-08-31",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Offered Wed Sept 2 (10 AM-1 PM) or Fri Sept 4 (9:30 AM-12:30 PM) and asked what areas she wanted to explore."
+      },
+      {
+       "d": "2026-09-02",
+       "dir": "in",
+       "who": "Dr. Williams",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Asked if you could meet Tuesday."
+      },
+      {
+       "d": "2026-09-03",
+       "dir": "in",
+       "who": "Dr. Williams",
+       "sub": "Re: Applied AI & STEM Partnership Proposal",
+       "sum": "Proposed 2:00 PM. You confirmed Tuesday Sept 8 at 2:00 PM."
+      },
+      {
+       "d": "2026-09-03",
+       "dir": "invite",
+       "who": "Dr. Williams",
+       "sub": "Accepted: Discovery Call: The Brown Girls Creative Studio x Newton County Schools",
+       "sum": "She accepted the calendar invite.",
+       "gm": "q:subject:\"Discovery Call\"",
+       "tag": "meet"
+      },
+      {
+       "d": "2026-09-08",
+       "dir": "call",
+       "who": "You and Dr. Williams",
+       "sub": "Discovery call",
+       "sum": "Google Meet and her Teams link were both blocked, so you moved to a phone call. Her follow-up on Oct 1 refers to \"our conversation.\"",
+       "gm": "q:subject:\"Discovery Call\"",
+       "tag": "meet"
+      },
+      {
+       "d": "2026-09-10",
+       "dir": "out",
+       "who": "You to Dr. Williams",
+       "sub": "InspiHER 2026 Proposal & Tech Partnership: AI & Tech Discovery Studio (Dec 2-3)",
+       "sum": "Congratulated her on 10 years of InspiHER and proposed your AI & Tech Discovery Studio.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-7359336999452710183"
+      }
+     ]
+    },
+    {
+     "n": 3,
+     "title": "InspiHER booking and delivery",
+     "state": "active",
+     "items": [
+      {
+       "d": "2026-10-01",
+       "dir": "out",
+       "who": "You to Dr. Williams",
+       "sub": "Follow-up & Career Day Impact Report",
+       "sum": "Shared your 5-session NCSA results (96% satisfaction), the live class-projects page, and asked to lock in InspiHER.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-6992105903060808690"
+      },
+      {
+       "d": "2026-10-01",
+       "dir": "in",
+       "who": "Dr. Williams",
+       "sub": "Re: Follow-up & Career Day Impact Report",
+       "sum": "\"I'd love to have you for both days.\" Asked for your W-9, said she has your invoice, plan to talk first week of November.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-6992105903060808690",
+       "tag": "win"
+      },
+      {
+       "d": "2026-10-01",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Follow-up & Career Day Impact Report",
+       "sum": "Sent W-9 and EIN letter for accounts payable. Asked for an ACH vendor form.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-6992105903060808690",
+       "tag": "invoice"
+      },
+      {
+       "d": "2026-10-02",
+       "dir": "in",
+       "who": "Dr. Williams",
+       "sub": "Re: Follow-up & Career Day Impact Report",
+       "sum": "Asked for your phone number to add to the invoice. You replied."
+      },
+      {
+       "d": "2026-10-27",
+       "dir": "in",
+       "who": "Dr. Molly Bowden",
+       "sub": "InspiHER Session",
+       "sum": "Asked for a session name, short description and a photo for the sign. Shared the 2026 theme: Be You, Be Confident, Be Courageous, Be Resilient, Be Great.",
+       "gm": "q:subject:\"InspiHER Session\""
+      },
+      {
+       "d": "2026-10-27",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: InspiHER Session",
+       "sum": "Accepted the title \"AI & Me! An AI and Tech Discovery Workshop\". Sent your logo. Asked group size, length and room setup."
+      },
+      {
+       "d": "2026-10-27",
+       "dir": "in",
+       "who": "Dr. Molly Bowden",
+       "sub": "Re: InspiHER Session",
+       "sum": "Day 1: two 1-hour sessions, 20 fifth graders each. Day 2: two 1-hour sessions, grades 6-8 and 9-12, 20 girls each. Walk-through coming.",
+       "tag": "win"
+      },
+      {
+       "d": "2026-11-02",
+       "dir": "in",
+       "who": "Dr. Molly Bowden",
+       "sub": "Re: InspiHER Session",
+       "sum": "Walk-through done: Wi-Fi on site, students bring Chromebooks, projector or Cleartouch panel (unknown), tables or desks, spare power strips."
+      },
+      {
+       "d": "2026-11-09",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: InspiHER Session",
+       "sum": "Asked about AI tools on Chromebooks, anonymous feedback and a take-home parent card, and payment timing."
+      },
+      {
+       "d": "2026-11-16",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: InspiHER Session",
+       "sum": "Follow-up: student web link test, AI restrictions, parent card approval, payment."
+      },
+      {
+       "d": "2026-11-16",
+       "dir": "in",
+       "who": "Dr. Molly Bowden",
+       "sub": "Re: InspiHER Session",
+       "sum": "Link test welcome. Most AI tools are blocked for students. Feedback probably fine, she will check with Dr. Williams. Will check on the W-9. Spaces and times not final.",
+       "tag": "flag"
+      },
+      {
+       "d": "2026-11-16",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: InspiHER Session",
+       "sum": "Promised the final student link and an answer on AI tools by the end of the week (Fri Nov 20).",
+       "tag": "overdue"
+      }
+     ]
+    }
+   ],
+   "todo": [
+    "Send Dr. Bowden the student link and your answer on AI tools. You promised it by Fri Nov 20, so it is overdue.",
+    "Ask Dr. Bowden for rooms and start times for all 4 sessions.",
+    "Ask whether accounts payable has your W-9 and when payment goes out.",
+    "Ask whether the parent take-home card with the QR code is approved. Do not hand it out until she says yes.",
+    "Pack: laptop, USB-C and HDMI adapters for either projector or Cleartouch panel, hotspot backup, printed class codes.",
+    "After Dec 3: ask Dr. Williams for a short testimonial and an introduction to other Newton schools."
+   ],
+   "flags": [
+    "Your first email went to Chantal Hendrix, not Dr. Williams.",
+    "On Aug 31 Dr. Williams said the district is not approving AI literacy programs with students. InspiHER is the exception, so do not count on more district class approvals. Grow through community programs.",
+    "Most AI tools are blocked for students. Plan the sessions as a browser activity with no logins, plus an adult-led demo on your laptop."
+   ],
+   "related": [
+    {
+     "id": 202,
+     "why": "Newton ASAP after-school"
+    },
+    {
+     "id": 205,
+     "why": "Porterdale Elementary"
+    },
+    {
+     "id": 206,
+     "why": "District office"
+    },
+    {
+     "id": 209,
+     "why": "NCSA"
+    },
+    {
+     "id": 210,
+     "why": "NCCA"
+    }
+   ],
+   "gq": "from:newton.k12.ga.us OR to:newton.k12.ga.us"
+  },
+  "202": {
+   "headline": "First email sent Nov 10. No reply after 12 days. Follow-up is overdue.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "sams.deena@newton.k12.ga.us"
+   },
+   "schedule": [],
+   "contacts": [
+    {
+     "name": "Deena Sams",
+     "role": "Newton County ASAP after-school program",
+     "email": "sams.deena@newton.k12.ga.us",
+     "phone": "",
+     "note": "ASAP is part of the district, so Dr. Williams may need to sign off.",
+     "linked": [
+      "Dr. Jennifer Williams"
+     ]
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-10",
+       "dir": "out",
+       "who": "You to Deena Sams",
+       "sub": "AI enrichment for ASAP after-school program",
+       "sum": "First email. Pitched AI as a thinking tool, not a shortcut.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-6420390061448105231"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Send a short follow-up (day 5-6 was Nov 15-16).",
+    "Ask who approves outside vendors for ASAP."
+   ],
+   "flags": [
+    "ASAP sits inside the district. Expect the same answer Dr. Williams gave on Aug 31 unless she vouches for you."
+   ],
+   "related": [
+    {
+     "id": 201,
+     "why": "Dr. Williams, district"
+    }
+   ],
+   "gq": "from:sams.deena@newton.k12.ga.us OR to:sams.deena@newton.k12.ga.us"
+  },
+  "203": {
+   "headline": "Warm. Spring 2027 is the target. Kathy Nealy's own message is not in this Gmail, so the paper trail has a gap.",
+   "lastReply": {
+    "d": "2026-10-21",
+    "who": "Kathy Nealy (per your Oct 21 reply)",
+    "text": "Spring 2027 looks like the best fit for her troops."
+   },
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "kathynealy@charter.net"
+   },
+   "schedule": [
+    {
+     "d": "2027-03-01",
+     "approx": true,
+     "t": "Spring 2027",
+     "title": "Target window for Girl Scout badge workshops (no date set)",
+     "detail": "Exact dates and troop sizes not agreed yet."
+    }
+   ],
+   "contacts": [
+    {
+     "name": "Kathy Nealy",
+     "role": "Girl Scouts, Newton County troops",
+     "email": "kathynealy@charter.net",
+     "phone": "",
+     "note": "Reached you before Oct 21. Message not found in Gmail. Check text, phone or another inbox.",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-10-21",
+       "dir": "out",
+       "who": "You to Kathy Nealy",
+       "sub": "STEM & AI Badge Workshops for Girl Scouts | The AI Lab x Newton County Troops (Spring 2027)",
+       "sum": "You thanked her for getting back to you and proposed Spring 2027 for her troops.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-6036804104936180597"
+      }
+     ]
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "waiting",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Ask Kathy for 2-3 Saturday dates, number of troops, and who pays.",
+    "Log where her first message came from so the trail is complete."
+   ],
+   "flags": [
+    "No reply from Kathy is visible in Gmail after your Oct 21 email."
+   ],
+   "related": [],
+   "gq": "from:kathynealy@charter.net OR to:kathynealy@charter.net"
+  },
+  "204": {
+   "headline": "Call is booked: Tue Jan 12, 2027, 9:30-10:00 AM. Janelle sent the calendar invite.",
+   "lastReply": {
+    "d": "2026-11-12",
+    "who": "Janelle Jones",
+    "text": "January 12th works well for me."
+   },
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "hello@janelleajones.com"
+   },
+   "schedule": [
+    {
+     "d": "2027-01-12",
+     "t": "9:30-10:00 AM",
+     "title": "Intro call with Janelle Jones (4kiddos)",
+     "detail": "Invite \"Raeven / Janelle\" received Nov 13."
+    }
+   ],
+   "contacts": [
+    {
+     "name": "Janelle Jones",
+     "role": "Founder, 4kiddos (Atlanta family activities guide)",
+     "email": "hello@janelleajones.com",
+     "phone": "",
+     "note": "Reaches parents. Good fit for the Season 2 sign-up and family events.",
+     "linked": []
+    }
+   ],
+   "docs": [
+    {
+     "type": "Meeting invite",
+     "date": "2026-11-13",
+     "note": "Google Calendar invite for Jan 12, 2027, 9:30-10:00 AM ET.",
+     "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1881729708698944906"
+    }
+   ],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-11",
+       "dir": "out",
+       "who": "You to Janelle Jones",
+       "sub": "Collaboration Inquiry: The AI Lab & 4kiddos Youth Programming for 2027",
+       "sum": "Introduced The AI Lab and asked about partnering on family workshops.",
+       "gm": "q:subject:\"4kiddos\""
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-12",
+       "dir": "in",
+       "who": "Janelle Jones",
+       "sub": "Re: Collaboration Inquiry",
+       "sum": "Open to a conversation in Q1.",
+       "tag": "win"
+      },
+      {
+       "d": "2026-11-12",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Collaboration Inquiry",
+       "sum": "Proposed the week of Jan 11."
+      },
+      {
+       "d": "2026-11-12",
+       "dir": "in",
+       "who": "Janelle Jones",
+       "sub": "Re: Collaboration Inquiry",
+       "sum": "Jan 12 works, not the 11th."
+      },
+      {
+       "d": "2026-11-12",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Collaboration Inquiry",
+       "sum": "Locked Jan 12 and offered 9 AM-12 PM."
+      },
+      {
+       "d": "2026-11-13",
+       "dir": "invite",
+       "who": "Janelle Jones",
+       "sub": "Invitation: Raeven / Janelle",
+       "sum": "Calendar invite for Tue Jan 12, 2027, 9:30-10:00 AM ET.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1881729708698944906",
+       "tag": "meet"
+      }
+     ]
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "waiting",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Add the call to your calendar if it did not auto-add.",
+    "Before the call: send her the Season 2 sign-up page so she sees what parents get."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:hello@janelleajones.com OR to:hello@janelleajones.com"
+  },
+  "205": {
+   "headline": "Friendly. You declined Career Day (Nov 19). Ward wants to stay in touch. Your Jan call ask has no reply yet.",
+   "lastReply": {
+    "d": "2026-11-11",
+    "who": "Dwayaa Ward",
+    "text": "Let's please keep in touch so we can make this happen in the future."
+   },
+   "facts": {
+    "address": "Porterdale Elementary School, Porterdale, GA (street address not in emails)",
+    "phone": "770-784-2928 ext. 3508",
+    "email": "ward.dwayaa@newton.k12.ga.us"
+   },
+   "schedule": [
+    {
+     "d": "2027-01-11",
+     "approx": true,
+     "t": "Week of Jan 11 or Jan 18",
+     "title": "Proposed call with Ms. Ward",
+     "detail": "You asked on Nov 12. No answer yet."
+    }
+   ],
+   "contacts": [
+    {
+     "name": "Dwayaa Ward",
+     "role": "School Counselor, Porterdale Elementary",
+     "email": "ward.dwayaa@newton.k12.ga.us",
+     "phone": "770-784-2928 ext. 3508",
+     "note": "Invited you to Career Day Nov 19 (8:00 AM arrival, 8:30-11:00 rotations).",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-11",
+       "dir": "in",
+       "who": "Dwayaa Ward",
+       "sub": "Porterdale Elementary School's Career Day",
+       "sum": "Invited you to Career Day, Thu Nov 19, 2026. Arrive 8:00 AM, rotations 8:30-11:00.",
+       "gm": "q:subject:\"Career Day\""
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "active",
+     "items": [
+      {
+       "d": "2026-11-11",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Porterdale Elementary School's Career Day",
+       "sum": "Declined Career Day because of a scheduling conflict and pitched a Q1 visit."
+      },
+      {
+       "d": "2026-11-11",
+       "dir": "in",
+       "who": "Dwayaa Ward",
+       "sub": "Re: Career Day",
+       "sum": "Understood. Asked to keep in touch.",
+       "tag": "win"
+      },
+      {
+       "d": "2026-11-12",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Career Day",
+       "sum": "Asked for a call the week of Jan 11 or Jan 18. No reply yet.",
+       "tag": "overdue"
+      }
+     ]
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Nudge Ms. Ward once after InspiHER (use the InspiHER photo and results as proof)."
+   ],
+   "flags": [
+    "Career Day is a chance to meet students and staff in person. Consider saying yes to the next one."
+   ],
+   "related": [
+    {
+     "id": 201,
+     "why": "Newton County Schools"
+    }
+   ],
+   "gq": "from:ward.dwayaa@newton.k12.ga.us OR to:ward.dwayaa@newton.k12.ga.us"
+  },
+  "206": {
+   "headline": "No reply. Tim Schmitt retired Nov 1 and is now at the Georgia Department of Education. Email went to John Pritchett instead.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "pritchett.john@newton.k12.ga.us"
+   },
+   "schedule": [],
+   "contacts": [
+    {
+     "name": "John Pritchett",
+     "role": "Newton County Schools (title not confirmed)",
+     "email": "pritchett.john@newton.k12.ga.us",
+     "phone": "",
+     "note": "Contacted Nov 13 after Schmitt's auto-reply.",
+     "linked": []
+    },
+    {
+     "name": "Dr. Tim Schmitt",
+     "role": "Retired from Newton County Schools Nov 1, 2026. Now CTAE Program Specialist, Georgia Department of Education.",
+     "email": "schmitt.tim@newton.k12.ga.us",
+     "phone": "",
+     "note": "A state-level CTAE contact can open doors across Georgia. Worth a short congratulations note.",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-12",
+       "dir": "out",
+       "who": "You to Tim Schmitt",
+       "sub": "Enhancing K-12 Tech & AI Readiness in Newton County Schools",
+       "sum": "First email to the district CTAE contact."
+      },
+      {
+       "d": "2026-11-13",
+       "dir": "in",
+       "who": "Tim Schmitt (auto-reply)",
+       "sub": "Automatic reply",
+       "sum": "Auto-reply only. Not a human reply. He retired from Newton County Schools Nov 1 and moved to the Georgia Department of Education.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1881728890311004323",
+       "tag": "flag"
+      },
+      {
+       "d": "2026-11-13",
+       "dir": "out",
+       "who": "You to John Pritchett",
+       "sub": "Following up from Tim Schmitt's transition: The AI Lab in Newton County Schools",
+       "sum": "Re-sent to Mr. Pritchett.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-1205583974694406715"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Follow up with Mr. Pritchett (day 5-6 passed).",
+    "Send Dr. Schmitt a brief congratulations on the GaDOE role."
+   ],
+   "flags": [
+    "Schmitt's auto-reply is not a reply, so this account should not count as \"replied\".",
+    "Part of the Nov 12 email went to raevenbrown014@gmail.com by mistake. Check that address."
+   ],
+   "related": [
+    {
+     "id": 201,
+     "why": "Dr. Williams, district"
+    }
+   ],
+   "gq": "from:newton.k12.ga.us OR to:schmitt.tim@newton.k12.ga.us"
+  },
+  "207": {
+   "headline": "No reply 9 days after the first email. Follow-up due.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "dustin.davis-austin@gcpsk12.org"
+   },
+   "schedule": [],
+   "contacts": [
+    {
+     "name": "Dustin Davis-Austin",
+     "role": "Gwinnett County Public Schools",
+     "email": "dustin.davis-austin@gcpsk12.org",
+     "phone": "",
+     "note": "",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-13",
+       "dir": "out",
+       "who": "You to Dustin Davis-Austin",
+       "sub": "Enhancing K-12 Tech & AI Pathways: The AI Lab in Gwinnett County Schools",
+       "sum": "First email. No reply in Gmail.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-5285826248329602313"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Send a short follow-up."
+   ],
+   "flags": [
+    "EdWeek (Jun 2026): Gwinnett identified $18M in admin costs it could cut. Pitch as low-cost and grant-fundable."
+   ],
+   "related": [],
+   "gq": "from:dustin.davis-austin@gcpsk12.org OR to:dustin.davis-austin@gcpsk12.org"
+  },
+  "208": {
+   "headline": "No reply 9 days after the first email. Follow-up due.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "beverly.holyfield@clayton.k12.ga.us"
+   },
+   "schedule": [],
+   "contacts": [
+    {
+     "name": "Dr. Beverly Holyfield",
+     "role": "Clayton County Public Schools",
+     "email": "beverly.holyfield@clayton.k12.ga.us",
+     "phone": "",
+     "note": "",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-13",
+       "dir": "out",
+       "who": "You to Dr. Beverly Holyfield",
+       "sub": "Bridging K-12 Tech Readiness & Employability: The AI Lab in Clayton County",
+       "sum": "First email. No reply in Gmail.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-8351471551127668190"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Send a short follow-up."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:beverly.holyfield@clayton.k12.ga.us OR to:beverly.holyfield@clayton.k12.ga.us"
+  },
+  "209": {
+   "headline": "No reply in 6+ weeks. A follow-up draft has been waiting since Nov 20.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "bunting.audria@newton.k12.ga.us"
+   },
+   "schedule": [],
+   "contacts": [
+    {
+     "name": "Audria Bunting",
+     "role": "Newton County STEAM Academy",
+     "email": "bunting.audria@newton.k12.ga.us",
+     "phone": "",
+     "note": "",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-10-07",
+       "dir": "out",
+       "who": "You to Audria Bunting",
+       "sub": "Locking in Q1 return! ( class portfolio review )",
+       "sum": "First email. No reply in Gmail.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r5932942850936239764"
+      },
+      {
+       "d": "2026-11-20",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Re: Locking in Q1 return!",
+       "sum": "A follow-up draft is in Gmail Drafts, not sent.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Send the waiting follow-up draft."
+   ],
+   "flags": [
+    "A teacher at NCSA asked about bringing you back for a longer session (your Oct 1 email). Lead with that."
+   ],
+   "related": [],
+   "gq": "from:bunting.audria@newton.k12.ga.us OR to:bunting.audria@newton.k12.ga.us"
+  },
+  "210": {
+   "headline": "No reply in 6+ weeks. A follow-up draft has been waiting since Nov 20. Ryan Allred was cc'd.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "shockley.linsey@newton.k12.ga.us"
+   },
+   "schedule": [],
+   "contacts": [
+    {
+     "name": "Linsey Shockley",
+     "role": "Newton College & Career Academy",
+     "email": "shockley.linsey@newton.k12.ga.us",
+     "phone": "",
+     "note": "",
+     "linked": []
+    },
+    {
+     "name": "Ryan Allred",
+     "role": "Newton County Schools (cc on your first email)",
+     "email": "allred.ryan@newton.k12.ga.us",
+     "phone": "",
+     "note": "",
+     "linked": [
+      "Linsey Shockley"
+     ]
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-10-08",
+       "dir": "out",
+       "who": "You to Linsey Shockley",
+       "sub": "100% Graduation + AI & STEM at NCCA",
+       "sum": "First email. No reply in Gmail.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r1848242199806297137"
+      },
+      {
+       "d": "2026-11-20",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Re: 100% Graduation + AI & STEM at NCCA",
+       "sum": "A follow-up draft is in Gmail Drafts, not sent.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Send the waiting follow-up draft."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:shockley.linsey@newton.k12.ga.us OR to:shockley.linsey@newton.k12.ga.us"
+  },
+  "211": {
+   "headline": "No reply in 6+ weeks. A follow-up draft has been waiting since Nov 20.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "ldawkins@hhbcga.org"
+   },
+   "schedule": [],
+   "contacts": [
+    {
+     "name": "Lisa Dawkins",
+     "role": "Heritage Hills (Boys & Girls Club)",
+     "email": "ldawkins@hhbcga.org",
+     "phone": "",
+     "note": "",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-10-07",
+       "dir": "out",
+       "who": "You to Lisa Dawkins",
+       "sub": "After-school STEM partnership for Heritage Hills families",
+       "sum": "First email. No reply in Gmail.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-4244742228526028432"
+      },
+      {
+       "d": "2026-11-20",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Re: After-school STEM partnership for Heritage Hills families",
+       "sum": "A follow-up draft is in Gmail Drafts, not sent.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Send the waiting follow-up draft."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:ldawkins@hhbcga.org OR to:ldawkins@hhbcga.org"
+  },
+  "212": {
+   "headline": "Real conversation. You answered their 6 questions. Waiting on PSI. Meeting target: second week of January.",
+   "lastReply": {
+    "d": "2026-11-16",
+    "who": "Progressive Steps team",
+    "text": "Asked for student counts, addresses, grades, days and hours, and whether programs are ongoing."
+   },
+   "facts": {
+    "address": "Locations not set yet. PSI asked for addresses once each site is confirmed.",
+    "phone": "470-896-0810",
+    "email": "psi@progressivestepsinc.org"
+   },
+   "schedule": [
+    {
+     "d": "2027-01-11",
+     "approx": true,
+     "t": "Second week of January",
+     "title": "Proposed meeting with PSI",
+     "detail": "You proposed it on Nov 16. Not confirmed."
+    }
+   ],
+   "contacts": [
+    {
+     "name": "Progressive Steps Inc. team",
+     "role": "After-school nutrition (meals) program",
+     "email": "psi@progressivestepsinc.org",
+     "phone": "470-896-0810",
+     "note": "Team inbox, no individual named.",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "done",
+     "items": [
+      {
+       "d": "2026-11-11",
+       "dir": "out",
+       "who": "You to Progressive Steps",
+       "sub": "Partnership Inquiry: Pairing The AI Lab Tech Education with Progressive Steps Meal Programs",
+       "sum": "Proposed pairing your classes with their meal program.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3671459887995261097"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "active",
+     "items": [
+      {
+       "d": "2026-11-16",
+       "dir": "in",
+       "who": "Progressive Steps",
+       "sub": "Re: Partnership Inquiry",
+       "sum": "They would love to explore it. Asked 6 questions: students per site, addresses, grades, days and hours, ongoing vs events, agreements.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3671459887995261097",
+       "tag": "win"
+      },
+      {
+       "d": "2026-11-16",
+       "dir": "out",
+       "who": "You",
+       "sub": "Re: Partnership Inquiry",
+       "sum": "Answered: about 20 students per class, grades 5-12, one-hour classes, 1-3 days a week or Saturdays, recurring from January, no long-term contracts, locations not final. Asked for a meeting the second week of January.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3671459887995261097"
+      }
+     ]
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "waiting",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Do not say meals are free until PSI confirms in writing.",
+    "When the first site is confirmed, send PSI the address and class days."
+   ],
+   "flags": [
+    "Their reply is a good sign but they have not offered a date yet."
+   ],
+   "related": [],
+   "gq": "from:progressivestepsinc.org OR to:progressivestepsinc.org"
+  },
+  "301": {
+   "headline": "Draft waiting since Nov 17. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "cscott@uga.edu"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring a STEM and AI workshop with Newton County 4-H",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Read the draft, personalize the first line, send it."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:cscott@uga.edu OR to:cscott@uga.edu"
+  },
+  "302": {
+   "headline": "Draft waiting since Nov 17. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "rcpsinfo@rockdale.k12.ga.us"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Introduction for the CTAE and Instructional Technology team: The AI Lab",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Read the draft, personalize the first line, send it."
+   ],
+   "flags": [
+    "General inbox. Find a named CTAE contact after they reply."
+   ],
+   "related": [],
+   "gq": "from:rcpsinfo@rockdale.k12.ga.us OR to:rcpsinfo@rockdale.k12.ga.us"
+  },
+  "303": {
+   "headline": "Draft waiting since Nov 20. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "sooraya.williams@ywcaatlanta.org"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring a collaboration with Teen Girls in Technology",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Verify the \"98%\" figure before sending."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:sooraya.williams@ywcaatlanta.org OR to:sooraya.williams@ywcaatlanta.org"
+  },
+  "304": {
+   "headline": "Draft waiting since Nov 17. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "program@iuatl.org"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring a collaboration with Inspiredu's Gen AI Labs",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Read the draft, personalize the first line, send it."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:program@iuatl.org OR to:program@iuatl.org"
+  },
+  "305": {
+   "headline": "Draft has no recipient yet. Find the local owner's email.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": ""
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring a collaboration in Atlanta (add the local owner's email)",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Find the local franchise owner's email, add it, then send."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": ""
+  },
+  "306": {
+   "headline": "Draft has no recipient yet. Find a contact email.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": ""
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring a collaboration with Atlanta CARES (add the contact's email)",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Find a contact email, add it, then send."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": ""
+  },
+  "307": {
+   "headline": "Draft waiting since Nov 17. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "hello@realimpactcenter.org"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring a collaboration with Real IMPACT Center",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Read the draft, personalize the first line, send it."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:hello@realimpactcenter.org OR to:hello@realimpactcenter.org"
+  },
+  "308": {
+   "headline": "Draft waiting since Nov 17. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "info@team3asp.com"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Adding an AI and tech enrichment option at Team3 After School Program",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Read the draft, personalize the first line, send it."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:info@team3asp.com OR to:info@team3asp.com"
+  },
+  "309": {
+   "headline": "Draft waiting since Nov 17. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "info@chromaela.com"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Introducing an AI and tech enrichment option for Chroma ELA, McDonough",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Read the draft, personalize the first line, send it."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:info@chromaela.com OR to:info@chromaela.com"
+  },
+  "310": {
+   "headline": "Two drafts exist for this account. Keep one, delete the other.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "info@blackgirlsdoengineer.org"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring a collaboration with Black Girls Do Engineer",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Delete the duplicate draft, send one."
+   ],
+   "flags": [
+    "Duplicate drafts in Gmail (Nov 18)."
+   ],
+   "related": [],
+   "gq": "from:info@blackgirlsdoengineer.org OR to:info@blackgirlsdoengineer.org"
+  },
+  "311": {
+   "headline": "Draft waiting since Nov 20. Not sent.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "nwilliams@bgcncg.com"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-17",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Exploring an AI and tech enrichment option for the Newton County Boys & Girls Club",
+       "sum": "Draft is in Gmail Drafts. Nothing sent yet.",
+       "tag": "draft"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Read the draft, personalize the first line, send it."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:nwilliams@bgcncg.com OR to:nwilliams@bgcncg.com"
+  },
+  "213": {
+   "headline": "No draft and no sent email found in Gmail. Pipeline said \"Email Drafted\", which was not accurate.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "info@newtoneducationfoundation.org"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Write the first email, or drop this account."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:info@newtoneducationfoundation.org OR to:info@newtoneducationfoundation.org"
+  },
+  "214": {
+   "headline": "No email found yet. Not contacted.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": ""
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Find a contact email first."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": ""
+  },
+  "215": {
+   "headline": "Not contacted yet.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "info@brilliantandkind.com"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Write the first email."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:info@brilliantandkind.com OR to:info@brilliantandkind.com"
+  },
+  "312": {
+   "headline": "Email is SCHEDULED to send Mon Nov 23 at 9:00 AM ET.",
+   "lastReply": null,
+   "facts": {
+    "address": "Johns Creek, GA",
+    "phone": "",
+    "email": "Rugayya@homeschoolhavencollective.com"
+   },
+   "schedule": [
+    {
+     "d": "2026-11-23",
+     "t": "9:00 AM",
+     "title": "Scheduled send: AI Enrichment Workshop Trial for 2027",
+     "detail": "Gmail will send it for you."
+    }
+   ],
+   "contacts": [
+    {
+     "name": "Dr. Romain",
+     "role": "Homeschool Haven Collective, Johns Creek. Supports grades 2-12 homeschool families.",
+     "email": "Rugayya@homeschoolhavencollective.com",
+     "phone": "",
+     "note": "Found via a feature in THE CREEK.",
+     "linked": []
+    }
+   ],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "active",
+     "items": [
+      {
+       "d": "2026-11-23",
+       "dir": "out",
+       "who": "Scheduled",
+       "sub": "AI Enrichment Workshop Trial for 2027 - The AI Lab",
+       "sum": "Scheduled in Gmail for Mon Nov 23, 9:00 AM ET.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1882495956337452161",
+       "tag": "sched"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [
+    "Nothing to do. Gmail sends it Monday 9 AM. Log the reply when it comes."
+   ],
+   "flags": [],
+   "related": [],
+   "gq": "from:homeschoolhavencollective.com OR to:homeschoolhavencollective.com"
+  }
+ }
+}

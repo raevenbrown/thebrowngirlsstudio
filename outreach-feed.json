@@ -385,6 +385,41 @@
    ],
    "taxReceipts": [],
    "_u": 1795200000000
+  },
+  {
+   "id": 312,
+   "org": "Homeschool Haven Collective (Johns Creek)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "Rugayya@homeschoolhavencollective.com",
+   "activities": [
+    {
+     "type": "Email",
+     "date": "2026-11-22",
+     "person": "Dr. Romain",
+     "title": "First email scheduled in Gmail for Mon Nov 23, 9:00 AM ET",
+     "phone": "",
+     "email": "Rugayya@homeschoolhavencollective.com",
+     "message": "AI Enrichment Workshop Trial for 2027. Homeschool collective for grades 2-12 in Johns Creek.",
+     "nextSteps": "Gmail sends it Monday. Log the reply.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Check Homeschool Haven reply (after Mon 9 AM send)",
+     "desc": "Scheduled email goes out Monday 9 AM ET. Follow up on day 5-6 if no reply.",
+     "date": "2026-11-28",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1795000000000
   }
  ],
  "updates": [
@@ -608,6 +643,22 @@
     "urgency": "Medium",
     "done": false,
     "active": true
+   }
+  },
+  {
+   "key": "fix-213-20261122",
+   "id": 213,
+   "stage": "Prospect",
+   "activity": {
+    "type": "Note",
+    "date": "2026-11-22",
+    "person": "",
+    "title": "Gmail audit: no draft and no sent email found",
+    "phone": "",
+    "email": "info@newtoneducationfoundation.org",
+    "message": "Stage corrected from Email Drafted to Prospect. Nothing has been drafted or sent to this account in Gmail.",
+    "nextSteps": "Write the first email or drop this account.",
+    "followUpDone": false
    }
   }
  ]
