@@ -1784,6 +1784,12 @@
      "date": "2026-11-22",
      "note": "You pasted the text on Nov 22. Four services: ongoing CS and STEM instruction, customized workshops (AI literacy included), extended instructional coverage, custom curriculum design. Mainly K-8. Pricing is a custom proposal and work starts after the agreement and required payment. Nothing about partner pay.",
      "url": "https://www.codingwithculture.com/schools-microschools-and-youth-organizations"
+    },
+    {
+     "type": "News coverage",
+     "date": "2025-10-22",
+     "note": "Bold Journey Magazine interview with Coach Victor Hicks. Also an EdTech Magazine Q&A from Apr 22, 2022.",
+     "url": "https://boldjourney.com/?p=904143"
     }
    ],
    "phases": [
@@ -1812,7 +1818,7 @@
    "flags": [
     "Their form page and schools page both list AI literacy, and the form adds AI training for teachers, so they compete with you directly on AI. Keep your pricing and curriculum out of the first email.",
     "Their schools page says nothing about partner pay, referral fees, facilitator rates or contracts. Ask him directly on the call and get any terms in writing.",
-    "Founder and CEO is Victor \"Coach\" Hicks. His own page says he writes curriculum for the Georgia Department of Education's computer science projects and is a CSTA Equity Fellow. A 2022 article said he also taught STEM at a Decatur school, so check whether that is still true."
+    "A Bold Journey interview (Oct 22, 2025) calls him Founder and Lead Instructor of Coding with Culture and says he is growing partnerships with schools and community programs in several places. It mentions Black and Brown students and identity, and does not mention girls or women. Do not bring up his past employment in any email."
    ],
    "related": [],
    "gq": "codingwithculture OR \"Coding with Culture\" OR \"Coach Hicks\""
