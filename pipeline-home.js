@@ -27,6 +27,7 @@
     '.hx-grid{display:grid;gap:16px;grid-template-columns:repeat(12,minmax(0,1fr))}',
     '.hx-grid>*{grid-column:span 12;min-width:0}',
     '@media(min-width:1024px){.hx-7{grid-column:span 7}.hx-5{grid-column:span 5}.hx-4{grid-column:span 4}.hx-8{grid-column:span 8}}',
+    '@media(min-width:1024px) and (max-width:1279px){.hx-7,.hx-5,.hx-8{grid-column:span 12}.hx-4{grid-column:span 6}}',
     '.hx-card{position:relative;border-radius:22px;padding:18px 20px;color:var(--tx);background:linear-gradient(145deg,rgba(74,45,29,.82),rgba(29,19,14,.94));border:1px solid rgba(199,153,79,.24);box-shadow:0 1px 0 rgba(255,235,200,.08) inset,0 18px 40px -18px rgba(0,0,0,.75),0 4px 10px -4px rgba(0,0,0,.5);transition:transform .25s ease,box-shadow .25s ease,border-color .25s;transform-style:preserve-3d;will-change:transform}',
     '.hx-card:hover{border-color:rgba(227,189,121,.5);box-shadow:0 1px 0 rgba(255,235,200,.1) inset,0 26px 50px -20px rgba(0,0,0,.85),0 0 0 1px rgba(199,153,79,.08)}',
     '.hx-card .hx-z{transform:translateZ(22px)}',
