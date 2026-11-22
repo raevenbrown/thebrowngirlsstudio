@@ -1745,16 +1745,39 @@
    "gq": "from:info@newtoneducationfoundation.org OR to:info@newtoneducationfoundation.org"
   },
   "214": {
-   "headline": "No email found yet. Not contacted.",
+   "headline": "Competitor and possible partner. Their own pages list AI literacy and teacher AI training for schools and microschools. Not contacted yet. Partner note drafted, task due Nov 24.",
    "lastReply": null,
    "facts": {
     "address": "",
-    "phone": "",
-    "email": ""
+    "phone": "404.652.0061 (from a sponsor listing on another site, not their own)",
+    "email": "info@codingwithculture.com (from the same sponsor listing)"
    },
    "schedule": [],
-   "contacts": [],
-   "docs": [],
+   "contacts": [
+    {
+     "name": "Victor \"Coach\" Hicks",
+     "role": "Named in your pipeline. Their partnership form also lists him as a \"how did you hear\" choice.",
+     "email": "",
+     "phone": "",
+     "addr": "",
+     "note": "No direct email found. Confirm the address before you send.",
+     "linked": []
+    }
+   ],
+   "docs": [
+    {
+     "type": "Partnership interest form",
+     "date": "2026-11-22",
+     "note": "A buyer intake form with 42 questions about budget, devices and staffing. It has no option for a vendor or partner. Do not fill it in as a vendor.",
+     "url": "https://docs.google.com/forms/d/e/1FAIpQLScxV6yGX2E1tt5ZkLWnrYZ1t2-760NBj9GnCht6MBYz-_5hCg/viewform"
+    },
+    {
+     "type": "Their schools page",
+     "date": "2026-11-22",
+     "note": "School and Microschool Partnerships, during the school day, for charter and independent schools, microschools, learning pods and K-8 programs.",
+     "url": "https://www.codingwithculture.com/schools-microschools-and-youth-organizations"
+    }
+   ],
    "phases": [
     {
      "n": 1,
@@ -1776,11 +1799,14 @@
     }
    ],
    "todo": [
-    "Find a contact email first."
+    "Send the partner note to Coach Hicks on Tuesday, after the buyer emails. Confirm the email address first."
    ],
-   "flags": [],
+   "flags": [
+    "Their form page says they offer AI literacy and an add-on of AI training for teachers, so they compete with you directly on AI. Keep your pricing and curriculum out of the first email.",
+    "The only email I found is info@codingwithculture.com, taken from a sponsor listing on another site. Confirm it before you send."
+   ],
    "related": [],
-   "gq": ""
+   "gq": "codingwithculture OR \"Coding with Culture\" OR \"Coach Hicks\""
   },
   "215": {
    "headline": "Not contacted yet.",
