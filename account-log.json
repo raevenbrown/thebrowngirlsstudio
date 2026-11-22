@@ -405,7 +405,7 @@
    ],
    "todo": [
     "Your payment email to Dr. Bowden is scheduled for Mon Nov 23, 8:00 AM ET. Watch for her reply, and for any answer on the W-9 and payment date.",
-    "Send Dr. Bowden the student link and your answer on AI tools. You promised it by Fri Nov 20, so it is overdue.",
+    "Hold the student link, the AI tools answer and the parent card until payment is confirmed in writing. Check Wed Nov 25. If still nothing by Mon Nov 30, decide whether to send the student link anyway so students can open it before Dec 2.",
     "Ask Dr. Bowden for rooms and start times for all 4 sessions.",
     "Ask whether accounts payable has your W-9 and when payment goes out.",
     "Ask whether the parent take-home card with the QR code is approved. Do not hand it out until she says yes.",
@@ -1361,7 +1361,7 @@
    "gq": "from:progressivestepsinc.org OR to:progressivestepsinc.org"
   },
   "301": {
-   "headline": "Draft waiting since Nov 17. Not sent.",
+   "headline": "Draft rewritten Nov 22 with Newton County 4-H details. Ready to read and send.",
    "lastReply": null,
    "facts": {
     "address": "",
@@ -1401,7 +1401,8 @@
     }
    ],
    "todo": [
-    "Read the draft, personalize the first line, send it."
+    "Read the rewritten draft, then send or schedule it.",
+    "Ask Ms. Scott which grades Club Night and the Homeschool Council reach, how 4-H brings in outside partners, and whether a one-hour workshop fits a club or family night."
    ],
    "flags": [],
    "related": [],

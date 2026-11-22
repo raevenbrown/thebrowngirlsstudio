@@ -2764,14 +2764,36 @@ const cutoff = Date.now() - 90 * 86400000;
 Object.keys(o).forEach(function (k) { if (o[k] < cutoff) delete o[k]; });
 return o;
 }
-function ghMergeById(localList, remoteList, tombs) {
+/* Task-level merge: the newer prospect copy wins, but a task's done state is settled per task
+   (latest tap wins; with no tap time on either side, completed wins) so one device never undoes another's checkmark. */
+function ghTaskKey(t) { return String(t.title || t.task || '') + '|' + String(t.date || ''); }
+function ghReconcileTasks(pick, other) {
+if (!pick || !other || !pick.clientTasks || !other.clientTasks || !other.clientTasks.length) return pick;
+const pool = {};
+other.clientTasks.forEach(function (t) { const k = ghTaskKey(t); (pool[k] = pool[k] || []).push(t); });
+let changed = false;
+const tasks = pick.clientTasks.map(function (t) {
+const q = pool[ghTaskKey(t)]; const o = (q && q.length) ? q.shift() : null;
+if (!o) return t;
+const td = t._dt || 0, od = o._dt || 0;
+let done = !!t.done, dt = td;
+if (od > td) { done = !!o.done; dt = od; }
+else if (od === td && o.done && !t.done) { done = true; }
+if (done === !!t.done && dt === td) return t;
+changed = true;
+const c = Object.assign({}, t, { done: done }); if (dt) c._dt = dt; return c;
+});
+return changed ? Object.assign({}, pick, { clientTasks: tasks }) : pick;
+}
+function ghMergeById(localList, remoteList, tombs, recon) {
 const lmap = {}; const rmap = {}; const order = [];
 localList.forEach(function (x) { lmap[x.id] = x; order.push(String(x.id)); });
 remoteList.forEach(function (x) { rmap[x.id] = x; if (!(x.id in lmap)) order.push(String(x.id)); });
 const out = [];
 order.forEach(function (id) {
 const l = lmap[id]; const r = rmap[id];
-const pick = (l && r) ? (((l._u || 0) >= (r._u || 0)) ? l : r) : (l || r);
+let pick = (l && r) ? (((l._u || 0) >= (r._u || 0)) ? l : r) : (l || r);
+if (l && r && recon) pick = recon(pick, pick === l ? r : l);
 const tomb = tombs[id];
 if (tomb && (pick._u || 0) <= tomb) return;
 out.push(pick);
@@ -2806,7 +2828,7 @@ const dp = ghTombMax(local.deleted.p, rd.p);
 const dn = ghTombMax(local.deleted.n, rd.n);
 return {
 v: 1, updatedAt: 0,
-prospects: ghMergeById(local.prospects, remote.prospects || [], dp),
+prospects: ghMergeById(local.prospects, remote.prospects || [], dp, ghReconcileTasks),
 notes: ghMergeById(local.notes, remote.notes || [], dn),
 people: Array.from(new Set(local.people.concat(remote.people || []))),
 sites: ghMergeById(local.sites || [], remote.sites || [], {}),
@@ -4469,6 +4491,46 @@ var DEFAULTS_JSON = JSON.stringify(defaultFinancialProspects);
     localStorage.setItem(FLAG, '1');
   } catch (e) {}
 })();
+(function () {
+  var FLAG = 'bgcs_holds_20261122';
+  try {
+    if (localStorage.getItem(FLAG)) return;
+    var cur = JSON.parse(localStorage.getItem('bgcs_financial_prospects') || 'null');
+    if (cur && cur.length) {
+      var n = Date.now(), changed = false;
+      cur.forEach(function (p) {
+        if (p.id === 201) {
+          (p.clientTasks || []).forEach(function (t) {
+            if (t.done) return;
+            if (/^Send Molly final portal link/.test(t.title || '')) {
+              t.title = 'Send Molly the AI tools answer, student link and parent card once payment is confirmed';
+              t.desc = 'On hold by choice: send only after payment is confirmed in writing. The payment email goes to Dr. Bowden Mon Nov 23 at 8:00 AM. If there is no answer by Mon Nov 30, decide whether to send the student link anyway so students can open it before Dec 2.';
+              t.date = '2026-11-25'; t.urgency = 'Medium'; changed = true;
+            } else if (/^Finish student profile link/.test(t.title || '')) {
+              t.title = 'Have the student profile link and parent card ready to send';
+              t.desc = 'Build it now so it can go out the same day payment is confirmed. Do not send before then.';
+              t.date = '2026-11-28'; t.urgency = 'Medium'; changed = true;
+            }
+          });
+          if (changed) p._u = n;
+        }
+        if (p.id === 301) {
+          var c4 = false;
+          (p.clientTasks || []).forEach(function (t) {
+            if (!t.done && /^Send draft to Newton County 4-H/.test(t.title || '')) {
+              t.desc = 'Draft rewritten Nov 22 with Newton County 4-H details (Club Night, Cooking & STEAM Club, Homeschool Council, how they bring in partners). Read it, then send or schedule it.';
+              t.date = '2026-11-23'; c4 = true;
+            }
+          });
+          if (c4) p._u = n;
+        }
+      });
+      localStorage.setItem('bgcs_financial_prospects', JSON.stringify(cur));
+      localStorage.setItem('bgcs_local_updated', String(n));
+    }
+    localStorage.setItem(FLAG, '1');
+  } catch (e) {}
+})();
 let financialProspects = JSON.parse(localStorage.getItem('bgcs_financial_prospects'));
 if (!financialProspects || financialProspects.length === 0) {
 financialProspects = defaultFinancialProspects;
@@ -4509,8 +4571,8 @@ function bgcsFeedSync() {
         var t = financialProspects.find(function (x) { return x.id === u.id; }); if (!t) return;
         A[k] = 1;
         if (u.stage) t.stage = u.stage; if (u.emailSentDate) t.emailSentDate = u.emailSentDate; if (u.emailStatus) t.emailStatus = u.emailStatus;
-        if (u.activity) (t.activities = t.activities || []).unshift(u.activity);
-        if (u.addTask) (t.clientTasks = t.clientTasks || []).push(u.addTask);
+        if (u.activity) { t.activities = t.activities || []; var _aj = JSON.stringify(u.activity); if (!t.activities.some(function (a) { return JSON.stringify(a) === _aj; })) t.activities.unshift(u.activity); }
+        if (u.addTask) { t.clientTasks = t.clientTasks || []; if (!t.clientTasks.some(function (x) { return (x.title || '') === (u.addTask.title || '') && (x.date || '') === (u.addTask.date || ''); })) t.clientTasks.push(u.addTask); }
         if (u.completeTasks) (t.clientTasks || []).forEach(function (ct) { if (!ct.done && u.completeTasks.some(function (m) { return (ct.title || '').indexOf(m) === 0; })) ct.done = true; });
         changed = true;
       });
@@ -4849,7 +4911,7 @@ function homeEsc(x) { return String(x == null ? '' : x).replace(/[&<>"]/g, funct
 function homeDone(pid, ti) {
   var p = (financialProspects || []).find(function (x) { return x.id === pid; });
   if (!p || !p.clientTasks || !p.clientTasks[ti]) return;
-  p.clientTasks[ti].done = !p.clientTasks[ti].done;
+  p.clientTasks[ti].done = !p.clientTasks[ti].done; p.clientTasks[ti]._dt = Date.now();
   try { logActivity(p.id, 'task', 'Task ' + (p.clientTasks[ti].done ? 'completed' : 'reopened') + ': ' + (p.clientTasks[ti].title || '')); } catch (e) {}
   saveFinancialProspects();
   renderHome();
@@ -5241,7 +5303,7 @@ lucide.createIcons();
 function toggleMasterTaskCore(prospectId, taskIdx) {
 let fp = financialProspects.find(p => p.id === prospectId);
 if (fp && fp.clientTasks && fp.clientTasks[taskIdx]) {
-fp.clientTasks[taskIdx].done = !fp.clientTasks[taskIdx].done;
+fp.clientTasks[taskIdx].done = !fp.clientTasks[taskIdx].done; fp.clientTasks[taskIdx]._dt = Date.now();
 logActivity(fp.id, 'task', 'Task ' + (fp.clientTasks[taskIdx].done ? 'completed' : 'reopened') + ': ' + (fp.clientTasks[taskIdx].title || fp.clientTasks[taskIdx].task));
 saveFinancialProspects();
 renderProspectTodosMaster();
@@ -5715,7 +5777,7 @@ lucide.createIcons();
 function toggleClientTaskCore(cIdx) {
 let lead = financialProspects.find(l => l.id === currentProfileId);
 if (lead && lead.clientTasks) {
-lead.clientTasks[cIdx].done = !lead.clientTasks[cIdx].done;
+lead.clientTasks[cIdx].done = !lead.clientTasks[cIdx].done; lead.clientTasks[cIdx]._dt = Date.now();
 logActivity(lead.id, 'task', 'Task ' + (lead.clientTasks[cIdx].done ? 'completed' : 'reopened') + ': ' + (lead.clientTasks[cIdx].title || lead.clientTasks[cIdx].task));
 saveFinancialProspects();
 renderClientTasks();
@@ -6398,6 +6460,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.21-11"></script>
+<script src="pipeline-home.js?b=2026.11.22-1"></script>
 </body>
 </html>

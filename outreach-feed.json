@@ -25,8 +25,8 @@
    "clientTasks": [
     {
      "title": "Send draft to Newton County 4-H",
-     "desc": "Draft is in Gmail Drafts. Read, personalize the first line, then send.",
-     "date": "2026-11-17",
+     "desc": "Draft rewritten Nov 22 with Newton County 4-H details (Club Night, Cooking & STEAM Club, Homeschool Council, how they bring in partners). Read it, then send or schedule it.",
+     "date": "2026-11-23",
      "assignee": "Raeven Brown",
      "urgency": "Medium",
      "done": false,
@@ -438,11 +438,11 @@
     "followUpDone": false
    },
    "addTask": {
-    "title": "Send Molly final portal link + AI tools answer",
-    "desc": "Short holding reply is in Gmail Drafts. Finish the profile link first; then send the full answer (no outside AI tool needed, simulator only).",
-    "date": "2026-11-19",
+    "title": "Send Molly the AI tools answer, student link and parent card once payment is confirmed",
+    "desc": "On hold by choice: send only after payment is confirmed in writing. The payment email goes to Dr. Bowden Mon Nov 23 at 8:00 AM. If there is no answer by Mon Nov 30, decide whether to send the student link anyway so students can open it before Dec 2.",
+    "date": "2026-11-25",
     "assignee": "Raeven Brown",
-    "urgency": "High (Urgent)",
+    "urgency": "Medium",
     "done": false,
     "active": true
    }
@@ -464,11 +464,11 @@
    "key": "task-profile-20261116",
    "id": 201,
    "addTask": {
-    "title": "Finish student profile link (portal) before replying fully to Molly",
-    "desc": "Then send Molly the test link, the AI tools answer (no outside AI, simulator only) and ask for final rooms and times.",
-    "date": "2026-11-19",
+    "title": "Have the student profile link and parent card ready to send",
+    "desc": "Build it now so it can go out the same day payment is confirmed. Do not send before then.",
+    "date": "2026-11-28",
     "assignee": "Raeven Brown",
-    "urgency": "High (Urgent)",
+    "urgency": "Medium",
     "done": false,
     "active": true
    }
@@ -1393,6 +1393,36 @@
     "email": "",
     "message": "Scheduled in Gmail for Mon Nov 23, 9:00 AM ET.",
     "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent.",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "hold-201-20261122",
+   "id": 201,
+   "activity": {
+    "type": "Note",
+    "date": "2026-11-22",
+    "person": "",
+    "title": "Holding the student link and parent card until payment is confirmed",
+    "phone": "",
+    "email": "",
+    "message": "Decision: the AI tools answer, student link and parent card go to Dr. Bowden after payment is confirmed in writing. Payment email is scheduled for Mon Nov 23, 8:00 AM.",
+    "nextSteps": "Check Wed Nov 25. If still nothing by Mon Nov 30, decide whether to send the student link anyway.",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "redraft-301-20261122",
+   "id": 301,
+   "activity": {
+    "type": "Note",
+    "date": "2026-11-22",
+    "person": "Charlene Scott",
+    "title": "4-H draft rewritten",
+    "phone": "",
+    "email": "",
+    "message": "Draft to Charlene Scott, 4-H Agent, rewritten with Newton County 4-H details: Club Night, Cooking & STEAM Club, Homeschool Council. Asks for a 15-minute call about grades reached and how 4-H brings in outside partners. Still a draft, not sent.",
+    "nextSteps": "Read it and send or schedule it.",
     "followUpDone": false
    }
   }
