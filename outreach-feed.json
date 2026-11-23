@@ -1542,6 +1542,63 @@
    "set": {
     "draftReady": true
    }
+  },
+  {
+   "key": "sched-212-20261123",
+   "id": 212,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Progressive Steps Inc. Team",
+    "title": "Scheduled: Re: Partnership Inquiry: Pairing The AI Lab Tech Education with Progressive Steps Meal Programs",
+    "phone": "",
+    "email": "",
+    "message": "Scheduled in Gmail for Mon Nov 23, 8:00 AM ET. Resends your answers to their 6 questions, numbered to match their list, then asks how meals work on their side (snack or dinner during class, take-home) and for 20 minutes the week of Dec 7 or the second week of January.",
+    "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent.",
+    "followUpDone": false
+   },
+   "completeTasks": [
+    "Follow up with Progressive Steps"
+   ],
+   "addTask": {
+    "title": "Check Progressive Steps reply (after Mon 8 AM send)",
+    "desc": "Scheduled email goes out Mon Nov 23, 8 AM ET. If no reply by Nov 30, nudge once. When they reply, book the call (week of Dec 7 or second week of January) and ask what PSI needs per site.",
+    "date": "2026-11-30",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "sched-313-20261130",
+   "id": 313,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-30",
+    "person": "Elisa A. Falcó",
+    "title": "Scheduled: Ivy Prep after-school STEM partnership",
+    "phone": "",
+    "email": "",
+    "message": "Scheduled in Gmail for Mon Nov 30, 8:30 AM ET, her first day back after Thanksgiving break (Ivy Prep is closed Nov 23-27). Congratulates her on the Executive Director role, mentions the STEM Teacher opening and the after-school activities, offers The AI Lab as an after-school STEM club or workshop series for Spring 2027, and asks for a 15-minute call in December or the second week of January.",
+    "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent.",
+    "followUpDone": false
+   },
+   "completeTasks": [
+    "Send draft to Ivy Prep Academy"
+   ],
+   "set": {
+    "draftReady": false
+   },
+   "addTask": {
+    "title": "Check Ivy Prep reply (after Mon Nov 30 send)",
+    "desc": "Scheduled email goes out Mon Nov 30, 8:30 AM ET. If no reply by Dec 7, send one short follow-up. Ivy Prep's last day before winter break is Dec 18.",
+    "date": "2026-12-07",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }

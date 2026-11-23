@@ -1272,7 +1272,7 @@
    "gq": "from:ldawkins@hhbcga.org OR to:ldawkins@hhbcga.org"
   },
   "212": {
-   "headline": "Real conversation. You answered their 6 questions. A short follow-up draft is ready, not sent. Meeting target: week of Dec 7 or second week of January.",
+   "headline": "Real conversation. You answered their 6 questions on Nov 16. A follow-up is scheduled for Mon Nov 23, 8:00 AM ET. It resends the numbered answers and asks for a call the week of Dec 7 or the second week of January.",
    "lastReply": {
     "d": "2026-11-16",
     "who": "Progressive Steps team",
@@ -1342,12 +1342,14 @@
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3671459887995261097"
       },
       {
-       "d": "2026-11-22",
-       "dir": "note",
-       "who": "Draft waiting",
+       "d": "2026-11-23",
+       "dir": "out",
+       "who": "Scheduled",
        "sub": "Re: Partnership Inquiry: Pairing The AI Lab Tech Education with Progressive Steps Meal Programs",
-       "sum": "A short follow-up draft is in Gmail Drafts, not sent. It asks what PSI needs to review a first site and offers a call the week of Dec 7 or the second week of January.",
-       "tag": "draft"
+       "sum": "Scheduled in Gmail for Mon Nov 23, 8:00 AM ET. Resends your answers to their 6 questions, numbered to match their list, then asks how meals work on their side and for 20 minutes the week of Dec 7 or the second week of January.",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3671459887995261097",
+       "tag": "sched",
+       "mid": "1a2087ded133de26"
       }
      ]
     },
@@ -1360,7 +1362,8 @@
    ],
    "todo": [
     "Do not say meals are free until PSI confirms in writing.",
-    "When the first site is confirmed, send PSI the address and class days."
+    "When the first site is confirmed, send PSI the address and class days.",
+    "If there is no reply by Mon Nov 30, nudge once. When they answer, book the call and ask what PSI needs at each site."
    ],
    "flags": [
     "Their reply is a good sign but they have not offered a date yet."
