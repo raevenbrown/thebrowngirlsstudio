@@ -1652,6 +1652,22 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "ivy-clean-draft-20261123",
+   "id": 313,
+   "completeTasks": [
+    "Schedule the corrected Ivy Prep email"
+   ],
+   "addTask": {
+    "title": "Schedule the clean Ivy Prep draft for Mon Nov 30, 8:30 AM",
+    "desc": "The scheduled copy was cancelled because its links were Google redirect links that expire Nov 24. A clean draft is in Gmail Drafts (to efalco@ivyprepacademy.org, subject \"Ivy Prep after-school STEM partnership\"). Its text says 100 students over five sessions, and both links sit in your signature as direct links. There are two Ivy drafts right now. Use the one where The Brown Girls Creative Studio and The AI Lab in the paragraph are plain text, not blue links. Discard the other. Then tap the arrow next to Send, choose Schedule send, and pick Mon Nov 30, 8:30 AM ET. Ivy Prep is closed Nov 23-27, so nothing needs to go out before then.",
+    "date": "2026-11-24",
+    "assignee": "Raeven Brown",
+    "urgency": "High",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
