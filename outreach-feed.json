@@ -420,6 +420,42 @@
    ],
    "taxReceipts": [],
    "_u": 1795000000000
+  },
+  {
+   "id": 313,
+   "org": "Ivy Preparatory Academy (Atlanta, girls K-8)",
+   "stage": "Email Drafted",
+   "classes": 1,
+   "price": 125.0,
+   "donation": 0,
+   "email": "ivyinfo@ivyprepacademy.org",
+   "draftReady": true,
+   "activities": [
+    {
+     "type": "Note",
+     "date": "2026-11-22",
+     "person": "Elisa A. Falcó",
+     "title": "New lead: Ivy Prep is hiring a STEM teacher; pitch an after-school AI Lab club instead",
+     "phone": "",
+     "email": "ivyinfo@ivyprepacademy.org",
+     "message": "Ivy Prep is Georgia's first single-gender K-8 charter school for girls (since 2008, 506 students, East Atlanta). Elisa A. Falcó became Executive Director July 1, 2026. Their STEM Teacher posting prefers but does not require a Georgia certificate, and mentions after-school activities. Plan: offer The AI Lab as an after-school club or multi-week series starting Spring 2027, not the classroom job. Draft is in Gmail, addressed to the school's public info inbox. Her direct address is not published; efalco@ivyprepacademy.org is a guess from another chat and is not verified.",
+     "nextSteps": "Read the draft, confirm the address, then send or schedule it.",
+     "followUpDone": false
+    }
+   ],
+   "clientTasks": [
+    {
+     "title": "Send draft to Ivy Prep Academy (after-school AI Lab pitch)",
+     "desc": "Draft is in Gmail. It goes to the school's public info inbox, so confirm Ms. Falcó's direct address first if you have a verified one. Pitch is an after-school club or workshop series for Spring 2027, not the STEM teacher job.",
+     "date": "2026-11-24",
+     "assignee": "Raeven Brown",
+     "urgency": "Medium",
+     "done": false,
+     "active": true
+    }
+   ],
+   "taxReceipts": [],
+   "_u": 1795397000000
   }
  ],
  "updates": [
