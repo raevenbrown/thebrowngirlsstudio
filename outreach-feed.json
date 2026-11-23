@@ -1599,6 +1599,32 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "fix-ivy-count-20261123",
+   "id": 313,
+   "addTask": {
+    "title": "Fix the student count in the scheduled Ivy Prep email",
+    "desc": "The scheduled email says \"more than 200 students over several sessions.\" The true number is 100 students over five sessions. In Gmail open Scheduled, open the Ivy Prep email, tap Cancel send, change that sentence, then schedule it again for Mon Nov 30, 8:30 AM ET. Also change \"Good Morning\" to \"Good morning\" if it still says that.",
+    "date": "2026-11-25",
+    "assignee": "Raeven Brown",
+    "urgency": "High",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "recount-after-inspiher-20261204",
+   "id": 201,
+   "addTask": {
+    "title": "After InspiHER: update the student count to \"more than 100\"",
+    "desc": "Once InspiHER finishes (Dec 2 and 3) the count passes 100. Change \"100 students\" to \"more than 100 students\" on the free event page, the class offer, and any new emails. Until then say 100.",
+    "date": "2026-12-04",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }

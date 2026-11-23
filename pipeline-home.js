@@ -755,8 +755,8 @@
     { id: 'cap', t: 'Capstone: Jade and Steve', s: 'The report, slides, script, findings and demo video.' }
   ];
   var FILES = [
-    { g: 'start', k: 'Doc', n: 'The AI Lab: Class Offer', u: 'https://claude.ai/artifact/NQ8r94iYTkEDXa8UBjsAhM', w: 'The one-page offer: $125 per student per month, about 20 per class, no long-term contract.', note: 'Opens when you are signed in to Claude.', top: 1 },
-    { g: 'start', k: 'Doc', n: 'Running the Studio with Claude as a Full Team', u: 'https://claude.ai/artifact/RynzDDsotu7FgeCaimguJv', w: 'Which Claude job covers sales, marketing, finance, legal and the rest.', note: 'Opens when you are signed in to Claude.' },
+    { g: 'start', k: 'Doc', n: 'The AI Lab: Class Offer', u: fxD('1PQ76QBX4rKO9upx_E5cgObrmd5aNLBrN5iU_Ur_N0XE'), w: 'The one-page offer: $125 per student per month, about 20 per class, no long-term contract.', top: 1 },
+    { g: 'start', k: 'Doc', n: 'Running the Studio with Claude as a Full Team', u: fxD('147LKT9duVgnk2FKqYCrA6MrsfRRMJGhArlPg0T--iF0'), w: 'Which Claude job covers sales, marketing, finance, legal and the rest.' },
     { g: 'start', k: 'Sheet', n: 'Contract lead tracker', u: fxS('1UW97Or2r9kIQVj01fYfy7_H3S1G4tkT26JEWwGMfUlI'), w: 'The older contract-lead tracking sheet.' },
     { g: 'start', k: 'Folder', n: 'The AI Lab (Drive folder)', u: fxF('1qiitUCbCztSJMPoxMuisvIc3_mPpcFuy'), w: 'Everything for the program in one folder.', top: 1 },
     { g: 'lab', k: 'Pages', n: '01 Career Day Run of Show', u: fxX('10ltaX7Pa_u9L8X8U82skfNtCmCIIDZkG'), w: 'The minute-by-minute plan for the free event.' },
