@@ -1272,7 +1272,7 @@
    "gq": "from:ldawkins@hhbcga.org OR to:ldawkins@hhbcga.org"
   },
   "212": {
-   "headline": "Real conversation. You answered their 6 questions. Waiting on PSI. Meeting target: second week of January.",
+   "headline": "Real conversation. You answered their 6 questions. A short follow-up draft is ready, not sent. Meeting target: week of Dec 7 or second week of January.",
    "lastReply": {
     "d": "2026-11-16",
     "who": "Progressive Steps team",
@@ -1340,6 +1340,14 @@
        "sub": "Re: Partnership Inquiry",
        "sum": "Answered: about 20 students per class, grades 5-12, one-hour classes, 1-3 days a week or Saturdays, recurring from January, no long-term contracts, locations not final. Asked for a meeting the second week of January.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3671459887995261097"
+      },
+      {
+       "d": "2026-11-22",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Re: Partnership Inquiry: Pairing The AI Lab Tech Education with Progressive Steps Meal Programs",
+       "sum": "A short follow-up draft is in Gmail Drafts, not sent. It asks what PSI needs to review a first site and offers a call the week of Dec 7 or the second week of January.",
+       "tag": "draft"
       }
      ]
     },
