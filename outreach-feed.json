@@ -1625,6 +1625,33 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "unschedule-ivy-20261123",
+   "id": 313,
+   "activity": {
+    "type": "Note",
+    "date": "2026-11-23",
+    "person": "Raeven Brown",
+    "title": "Ivy Prep email unscheduled to fix the student count",
+    "phone": "",
+    "email": "",
+    "message": "The email scheduled for Mon Nov 30 said \"more than 200 students over several sessions.\" The true number is 100 students over five sessions. The scheduled copy was cancelled, so nothing goes out on Nov 30 until you schedule the corrected draft. The corrected draft is in Gmail Drafts with the same subject and the same text, except that one sentence.",
+    "nextSteps": "Open the corrected draft in Gmail, check the two links, and schedule it for Mon Nov 30, 8:30 AM ET.",
+    "followUpDone": false
+   },
+   "completeTasks": [
+    "Fix the student count in the scheduled Ivy"
+   ],
+   "addTask": {
+    "title": "Schedule the corrected Ivy Prep email for Mon Nov 30, 8:30 AM",
+    "desc": "The old scheduled email was cancelled because it said 200 students. The corrected draft (100 students over five sessions) is in Gmail Drafts, subject \"Ivy Prep after-school STEM partnership,\" to efalco@ivyprepacademy.org. Open it, hover over both links to confirm they go to raevenbrown.github.io, then tap the arrow next to Send, choose Schedule send, and pick Mon Nov 30, 8:30 AM ET. Ivy Prep is closed Nov 23-27, so this is the same plan as before. Nothing sends until you schedule it.",
+    "date": "2026-11-24",
+    "assignee": "Raeven Brown",
+    "urgency": "High",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
