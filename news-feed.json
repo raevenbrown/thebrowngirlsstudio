@@ -1,8 +1,16 @@
 {
  "version": 2,
- "generated": "2026-11-22",
- "note": "Checked Nov 22. Added one verified grant. Dropped older items past the freshness window (APS Sept item, BOOST, 21st CCLC, Education Dept AI grant priority, June funding-risk items). Nothing new and verified from Georgia districts or Radar leads this run; several source pages could not be opened.",
+ "generated": "2026-11-23",
+ "note": "Checked Nov 23. Added one Rockdale board item (only the article lead was readable; article is subscriber-gated). LEGO CSTEC and BOOST grants are closed. Nothing new and verified for AI in education, Radar leads or funding risk.",
  "items": [
+  {
+   "cat": "GA schools",
+   "title": "Rockdale school board asks about timeline for student AI-ethics training",
+   "why": "At its Nov. 12 work session the Rockdale board asked when students will get AI-ethics training, so the district is looking for it. Email the Rockdale curriculum or technology director offering a short, teacher-guided AI literacy and ethics class, and cite the board's own question.",
+   "url": "https://www.rockdalecitizen.com/news/former-student-urges-rcps-to-prioritize-human-talent-over-ai/article_90a4d24f-e8ec-4aa6-ad70-0c8ee7101812.html",
+   "source": "Rockdale Citizen",
+   "date": "2026-11-19"
+  },
   {
    "cat": "Grants",
    "title": "Society for Science STEM Action Grants: small grants for community STEM nonprofits",
