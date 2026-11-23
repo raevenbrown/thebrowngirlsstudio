@@ -1668,6 +1668,24 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "ivy-rescheduled-20261123",
+   "id": 313,
+   "activity": {
+    "type": "Note",
+    "date": "2026-11-23",
+    "person": "Raeven Brown",
+    "title": "Ivy Prep email rescheduled with the corrected count and working links",
+    "phone": "",
+    "email": "",
+    "message": "Checked in Gmail: scheduled for Mon Nov 30, 8:00 AM ET (not 8:30 as noted earlier). The text says 100 students over five sessions, and the links point straight to the studio site. The earlier scheduled copy and the extra drafts are gone.",
+    "nextSteps": "Sends automatically. Tonight's Gmail check logs it as sent after Nov 30.",
+    "followUpDone": false
+   },
+   "completeTasks": [
+    "Schedule the clean Ivy Prep draft"
+   ]
   }
  ]
 }
