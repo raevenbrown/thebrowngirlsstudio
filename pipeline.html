@@ -224,6 +224,9 @@ Meeting Outline
 <a href="#view=links" onclick="switchMainView('links')" id="nav-links" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="link" class="w-4 h-4 mr-3 text-amber-300"></i> Links
 </a>
+<a href="#view=files" onclick="switchMainView('files')" id="nav-files" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
+<i data-lucide="folder" class="w-4 h-4 mr-3 text-amber-300"></i> Files
+</a>
 <a href="#view=clipping" onclick="switchMainView('clipping')" id="nav-clipping" class="flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition">
 <i data-lucide="clapperboard" class="w-4 h-4 mr-3 text-amber-300"></i> Digital Marketing
 </a>
@@ -556,6 +559,7 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 </div>
 </div>
 <div id="mainView-links" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden"><div id="linksPage"></div></div>
+<div id="mainView-files" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden"><div id="filesPage"></div></div>
 <div id="mainView-clipping" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden"><div id="clipPage"></div></div>
 <div id="mainView-ailab" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-5">
@@ -5044,13 +5048,13 @@ document.getElementById('mobileSidebarOverlay').classList.add('hidden');
 }
 return;
 }
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor', 'links', 'clipping'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor', 'links', 'files', 'clipping'].forEach(v => {
 const el = document.getElementById('mainView-' + v);
 if (el) el.classList.add('hidden');
 });
 document.getElementById('profileView').classList.add('hidden');
 document.getElementById('pipelineView').classList.add('hidden');
-['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor', 'links', 'clipping'].forEach(v => {
+['pipeline', 'goals', 'agenda', 'activity', 'ailab', 'feedback', 'dashboard', 'expenses', 'coach', 'advisor', 'links', 'files', 'clipping'].forEach(v => {
 const btn = document.getElementById('nav-' + v);
 if (btn) btn.className = "flex items-center px-3.5 py-2.5 rounded-xl text-slate-400 hover:text-slate-200 hover:bg-dark-700 transition";
 });
@@ -5090,6 +5094,10 @@ renderFeedbackView();
 if (viewName === 'clipping') {
 document.getElementById('pageTitle').innerText = "Digital Marketing: Clipping";
 try { hxClipPage(); } catch (e) {}
+}
+if (viewName === 'files') {
+document.getElementById('pageTitle').innerText = "Files";
+try { hxFilesPage(); } catch (e) {}
 }
 if (viewName === 'links') {
 document.getElementById('pageTitle').innerText = "All your links";
@@ -6464,6 +6472,6 @@ if (!bgcsCloudConfigured() && quCredId() && localStorage.getItem('bgcs_auth') ==
 initApp();
 
 </script>
-<script src="pipeline-home.js?b=2026.11.22-2"></script>
+<script src="pipeline-home.js?b=2026.11.23-1"></script>
 </body>
 </html>

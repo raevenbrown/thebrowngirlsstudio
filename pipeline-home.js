@@ -742,6 +742,104 @@
     else if (typeof switchMainView === 'function') switchMainView('links');
   };
 
+  /* ---------- files: every document in one place (links only; private files stay in Drive) ---------- */
+  function fxF(id) { return 'https://drive.google.com/drive/folders/' + id; }
+  function fxX(id) { return 'https://drive.google.com/file/d/' + id + '/view'; }
+  function fxD(id) { return 'https://docs.google.com/document/d/' + id + '/edit'; }
+  function fxS(id) { return 'https://docs.google.com/spreadsheets/d/' + id + '/edit'; }
+  function fxP(id) { return 'https://docs.google.com/presentation/d/' + id + '/edit'; }
+  var FILE_GROUPS = [
+    { id: 'start', t: 'Start here', s: 'The documents you reach for most.' },
+    { id: 'lab', t: 'The AI Lab program', s: 'Run of show, guides, rubric, schedule and proposal. The Pages files download first, then open in Pages on your Mac or iPhone.' },
+    { id: 'studio', t: 'Studio folders in Drive', s: 'One folder per kind of paper. The two marked Private hold money and legal papers.' },
+    { id: 'cap', t: 'Capstone: Jade and Steve', s: 'The report, slides, script, findings and demo video.' }
+  ];
+  var FILES = [
+    { g: 'start', k: 'Doc', n: 'The AI Lab: Class Offer', u: 'https://claude.ai/artifact/NQ8r94iYTkEDXa8UBjsAhM', w: 'The one-page offer: $125 per student per month, about 20 per class, no long-term contract.', note: 'Opens when you are signed in to Claude.', top: 1 },
+    { g: 'start', k: 'Doc', n: 'Running the Studio with Claude as a Full Team', u: 'https://claude.ai/artifact/RynzDDsotu7FgeCaimguJv', w: 'Which Claude job covers sales, marketing, finance, legal and the rest.', note: 'Opens when you are signed in to Claude.' },
+    { g: 'start', k: 'Sheet', n: 'Contract lead tracker', u: fxS('1UW97Or2r9kIQVj01fYfy7_H3S1G4tkT26JEWwGMfUlI'), w: 'The older contract-lead tracking sheet.' },
+    { g: 'start', k: 'Folder', n: 'The AI Lab (Drive folder)', u: fxF('1qiitUCbCztSJMPoxMuisvIc3_mPpcFuy'), w: 'Everything for the program in one folder.', top: 1 },
+    { g: 'lab', k: 'Pages', n: '01 Career Day Run of Show', u: fxX('10ltaX7Pa_u9L8X8U82skfNtCmCIIDZkG'), w: 'The minute-by-minute plan for the free event.' },
+    { g: 'lab', k: 'Pages', n: '02 Facilitation and Presentation Guide', u: fxX('13vFHRGCHqfmY-Dd0eIsrZtKxAhZ0AI5c'), w: 'What to say and do while you teach.' },
+    { g: 'lab', k: 'Pages', n: '03 STEM Sprint Challenges', u: fxX('1ivzXTSfMFBDQ8ZDzodq9n2zzvCajGDE8'), w: 'The challenges, including the ten-cup stack.' },
+    { g: 'lab', k: 'Pages', n: '04 Student Prototype Rubric', u: fxX('141OkFkmAc_xhCQMQk31ffh83HKGjCHiB'), w: 'How student work is scored.' },
+    { g: 'lab', k: 'Pages', n: '05 Prompting and Website Build Handout', u: fxX('1FVw08PQ-RehxKLPX9oALj8DNIoe9cv4e'), w: 'The student handout.' },
+    { g: 'lab', k: 'Pages', n: '06 December Cohort Schedule', u: fxX('1jYkT3TqoY7SvS4-8s1n5f6596a3ZJ0Ww'), w: 'Dates and times for the December cohort.' },
+    { g: 'lab', k: 'Pages', n: '07 School Partnership Proposal', u: fxX('1WrA1HcuRpyvikiKP_MLAI0Hk6O6bu4Ka'), w: 'The proposal you hand a school.', note: 'Check that its price and term match the one-page offer before you send it.' },
+    { g: 'lab', k: 'Pages', n: '08 Operations, Growth and Delivery Workflow', u: fxX('1-FWCkXgs_EtnGizF3chVXObg7pyoDAe5'), w: 'How the program runs from first email to final showcase.' },
+    { g: 'lab', k: 'PDF', n: 'Career Day Content Shot List (iPhone filming guide)', u: fxX('1dr9PaIWhtiBdYQGsbIXFmqjC9IhozCth'), w: 'The checklist of shots to film on the day.' },
+    { g: 'studio', k: 'Folder', n: 'The Brown Girls Creative Studio', u: fxF('1tiULlwLpYEQsMze5I3yT2VW2o6lV6Hvf'), w: 'The top studio folder.' },
+    { g: 'studio', k: 'Folder', n: 'Programs and Curriculum', u: fxF('1sMimEPBvwie0ECkQQbhJbPVL3yS0fDn9'), w: 'Program documents and the waitlist form.' },
+    { g: 'studio', k: 'Folder', n: 'Partners and Outreach', u: fxF('1Lr3EWPZi4qSwQFgKiggz_EqKfKfz_xCQ'), w: 'Agreements and lead trackers.' },
+    { g: 'studio', k: 'Folder', n: 'Marketing and Social', u: fxF('1FEURWUMmokbfKDiToCvbPC698tqqnsEM'), w: 'Content, flyers and posts.' },
+    { g: 'studio', k: 'Folder', n: 'Student Work (no names or faces)', u: fxF('1nznbD1oxMQ9O_IOZszUuwAL6Fd_be4b1'), w: 'Work you can show without naming or picturing a student.' },
+    { g: 'studio', k: 'Folder', n: 'Finances', u: fxF('1HH4L_541FnBprS0PdvNNshpIoDXw_VKR'), w: 'Invoices, receipts and money records.', priv: 1 },
+    { g: 'studio', k: 'Folder', n: 'Legal and Tax', u: fxF('1d6BNzSUL8w1oAxoFXdvrrmJLWYTFjAnz'), w: 'Tax and legal papers.', priv: 1 },
+    { g: 'cap', k: 'Doc', n: 'Research report', u: fxD('13XO2AqUL3sSo9Yqg1UrWMGl4vxRpPlM7A3oY6OBa00g'), w: 'Can a local AI be trusted with my own documents?' },
+    { g: 'cap', k: 'PDF', n: 'Research report (PDF)', u: fxX('1zjcbt_dKMOHuXrgTSATK4rOWJE0VlwMV'), w: 'The same report as a PDF.' },
+    { g: 'cap', k: 'Slides', n: 'Capstone defense slides', u: fxP('1GEJv82dkV-3vhppA3MzzDv73lH-mpNa9O1CJJmTBfYI'), w: 'The slides, with speaker notes.' },
+    { g: 'cap', k: 'PDF', n: 'Defense script', u: fxX('1uKw2vcYkfK8Iv2Fj0kkbWWsb6_gzK9mA'), w: 'What you say on each slide.' },
+    { g: 'cap', k: 'PDF', n: 'Findings log', u: fxX('1EvmkblqHRwxntTACJPUZc2zk1Fg98ICK'), w: 'Your test notes and results.' },
+    { g: 'cap', k: 'Video', n: 'Demo video', u: fxX('18u8ZK03FqF5TqkjkdOXJKwHV86WkyluW'), w: 'The recording of Jade and Steve running offline.' },
+    { g: 'cap', k: 'Folder', n: 'Code: Jade and Steve', u: fxF('1tyuEwrIqQeptURwA-LfDeUq4ZTOoY05T'), w: 'The scripts that run the two assistants.' },
+    { g: 'cap', k: 'Folder', n: 'Raeven: School and Career', u: fxF('1PeR8XDHOpuN507qdhfOMT6wPl7PzplPZ'), w: 'Coursework and career papers.', priv: 1 }
+  ];
+  function filesCustom() { try { return JSON.parse(ls.get('bgcs_files_custom', '[]')) || []; } catch (e) { return []; } }
+  window.hxFileAdd = function (ev) {
+    if (ev && ev.preventDefault) ev.preventDefault();
+    var f = ev && ev.target && ev.target.elements ? ev.target.elements : {}, n = ((f.n && f.n.value) || '').trim().slice(0, 80), u = safeUrl(f.u && f.u.value);
+    if (!n || !u) { toast('Add a name and a full link, like https://drive.google.com/...'); return false; }
+    var a = filesCustom(); a.push({ id: Date.now(), n: n, u: u, c: ((f.c && f.c.value) || 'mine') }); ls.set('bgcs_files_custom', JSON.stringify(a));
+    toast('Saved to your files.'); buzz(12); filesRefresh(); return false;
+  };
+  window.hxFileDel = function (id) { ls.set('bgcs_files_custom', JSON.stringify(filesCustom().filter(function (x) { return x.id !== id; }))); filesRefresh(); };
+  window.hxFileFilter = function (q) {
+    q = String(q || '').toLowerCase(); S.fileQ = q;
+    document.querySelectorAll('.hx-fl').forEach(function (r) { r.style.display = !q || (r.getAttribute('data-q') || '').indexOf(q) >= 0 ? '' : 'none'; });
+    document.querySelectorAll('.hx-flg').forEach(function (g) { var any = g.querySelector('.hx-fl:not([style*="none"])'); g.style.display = (!q || any) ? '' : 'none'; });
+  };
+  function fileRow(l, mine) {
+    var q = (l.n + ' ' + (l.w || '') + ' ' + (l.k || '') + (l.priv ? ' private' : '')).toLowerCase();
+    var badge = function (t, hot) { return '<span style="display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-left:8px;vertical-align:2px;border:1px solid ' + (hot ? 'rgba(227,189,121,.7);color:#E3BD79' : 'rgba(199,153,79,.35);color:#c9b48a') + '">' + E(t) + '</span>'; };
+    return '<div class="hx-row hx-fl" data-q="' + E(q) + '"><div style="min-width:0;flex:1">' +
+      '<b style="font-size:14.5px">' + E(l.n) + '</b>' + (l.k ? badge(l.k) : '') + (l.priv ? badge('Private', 1) : '') +
+      (l.w ? '<p class="hx-mu" style="margin-top:2px">' + E(l.w) + '</p>' : '') +
+      (l.note ? '<p class="hx-mu" style="margin-top:3px;font-size:12px"><b style="color:#E3BD79">Note:</b> ' + E(l.note) + '</p>' : '') + '</div>' +
+      '<div style="display:flex;gap:6px;flex-shrink:0;align-items:center;flex-wrap:wrap;justify-content:flex-end">' +
+      '<a class="hx-btn pri" href="' + E(l.u) + '" target="_blank" rel="noopener">Open</a>' +
+      '<button class="hx-btn" data-u="' + E(l.u) + '" onclick="hxLinkCopy(this.getAttribute(\'data-u\'))">Copy</button>' +
+      (mine ? '<button class="hx-btn" onclick="hxFileDel(' + l.id + ')" aria-label="Remove ' + E(l.n) + '">Remove</button>' : '') + '</div></div>';
+  }
+  function filesBody() {
+    var inp = 'padding:11px 12px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(227,189,121,.3);color:#F3E8D6;font-size:16px';
+    var top = FILES.filter(function (l) { return l.top; });
+    var quick = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 12px">' + top.map(function (l) { return '<a class="hx-btn pri" href="' + E(l.u) + '" target="_blank" rel="noopener">' + E(l.n.replace(' (Drive folder)', '')) + '</a>'; }).join('') + '</div>';
+    var groups = FILE_GROUPS.map(function (g) {
+      var items = FILES.filter(function (l) { return l.g === g.id; });
+      return '<div class="hx-flg" style="margin-top:14px"><div class="hx-k">' + E(g.t) + ' &middot; ' + items.length + '</div><p class="hx-mu" style="margin-bottom:4px">' + E(g.s) + '</p>' + items.map(function (l) { return fileRow(l); }).join('') + '</div>';
+    }).join('');
+    var mine = filesCustom();
+    var cats = FILE_GROUPS.map(function (g) { return '<option value="' + g.id + '">' + E(g.t) + '</option>'; }).join('') + '<option value="mine" selected>Other</option>';
+    var catName = {}; FILE_GROUPS.forEach(function (g) { catName[g.id] = g.t; });
+    var mineHtml = '<div class="hx-flg" style="margin-top:14px"><div class="hx-k">Files you added &middot; ' + mine.length + '</div>' +
+      (mine.length ? mine.map(function (l) { return fileRow({ id: l.id, n: l.n, u: l.u, k: catName[l.c] || '', w: '' }, true); }).join('') : '<p class="hx-mu">Nothing yet. Paste the link to any file you want here, like a Drive PDF, a Canva design or a signed agreement.</p>') +
+      '<form onsubmit="return hxFileAdd(event)" style="margin-top:10px;display:grid;gap:8px"><input name="n" placeholder="Name (example: Signed school agreement)" maxlength="80" style="' + inp + '" aria-label="File name"><input name="u" inputmode="url" placeholder="Link (https://...)" style="' + inp + '" aria-label="File link"><select name="c" style="' + inp + '" aria-label="Where it belongs">' + cats + '</select><button class="hx-btn pri" type="submit" style="justify-content:center">Save this file</button></form>' +
+      '<p class="hx-mu" style="margin-top:6px;font-size:12px">Files you add here stay on this device. The ones above are on every device.</p></div>';
+    var mac = '<div class="hx-flg" style="margin-top:14px"><div class="hx-k">Keep a copy on your Mac</div>' +
+      '<div class="hx-row"><div class="hx-mu" style="color:#F3E8D6">Your documents live in Google Drive, so this tab holds links, not the files. To have a spare on your Mac, install Google Drive for desktop and set the studio folders to be available offline. The Pages files already open on your Mac once downloaded.</div></div>' +
+      '<div class="hx-row"><div class="hx-mu" style="color:#F3E8D6">Private papers such as your tax and money records are not kept in this app or on the public site, and that is on purpose.</div></div></div>';
+    return '<input type="search" placeholder="Search your files" oninput="hxFileFilter(this.value)" value="' + E(S.fileQ || '') + '" style="width:100%;' + inp + ';margin-bottom:10px" aria-label="Search your files">' + quick + groups + mineHtml + mac;
+  }
+  function filesCard(plain) {
+    return '<div class="hx-card' + (plain ? '' : ' fx-tilt hx-in') + '"><div class="hx-k">Your files</div><p class="hx-mu" style="margin-bottom:6px">Every document in one place. Tap Open to see it in Drive, or Copy to paste the link into an email.</p>' + filesBody() + '</div>';
+  }
+  function filesRefresh() {
+    var pg = document.getElementById('filesPage');
+    if (pg && pg.offsetParent !== null) { var y = window.scrollY; window.hxFilesPage(); window.scrollTo(0, y); if (S.fileQ) window.hxFileFilter(S.fileQ); }
+    else renderHome();
+  }
+  window.hxFilesPage = function () { var pg = document.getElementById('filesPage'); if (pg) pg.innerHTML = filesCard(true); };
+
   /* ---------- digital marketing: paid clipping campaigns ---------- */
   var CLIP_SUBS = [['start', 'Start here'], ['plat', 'Where to find campaigns'], ['camps', 'My campaigns'], ['accts', 'Accounts by platform'], ['tips', 'Tips and tricks'], ['watch', 'Watch-outs']];
   var CLIP_PLATS = ['TikTok', 'Instagram', 'YouTube Shorts', 'X', 'Other'];
@@ -988,11 +1086,11 @@
       newsai: function () { return newsSection('AI in education', 'AI in education: talking points', 'No new talking points today.'); },
       grants: function () { return newsSection('Grants', 'Grants and funding', 'No grants that fit you right now.'); },
       radar: function () { return newsSection('Radar', 'New clients radar and funding shifts', 'Nothing new on the radar.'); },
-      links: function () { return linksCard(); }, clipping: function () { return clipCard(); }, comp: function () { return compCard; }, marketing: function () { return marketingCard(); },
+      files: function () { return filesCard(); }, links: function () { return linksCard(); }, clipping: function () { return clipCard(); }, comp: function () { return compCard; }, marketing: function () { return marketingCard(); },
       coach: function () { return coachCard(m); }, events: function () { return eventsCard(m); }
     };
     var lk = mob ? 'c' : 'w', L = layoutGet(lk), sub = mob ? (TAB_TILES[S.tab] || TAB_TILES.today) : null;
-    var avail = L.order.filter(function (id) { return sub ? sub.indexOf(id) >= 0 : (id !== 'links' && id !== 'clipping'); });
+    var avail = L.order.filter(function (id) { return sub ? sub.indexOf(id) >= 0 : (id !== 'links' && id !== 'clipping' && id !== 'files'); });
     var vis = avail.filter(function (id) { return !L.hidden[id]; });
     var hid = avail.filter(function (id) { return L.hidden[id]; });
     var tilesHtml = vis.map(function (id) { return tileHtml(id, CARDS[id](), L); }).join('');
@@ -1008,16 +1106,16 @@
 
   /* ---------- customizable dashboard: tiles, drag, resize, hide, fold ---------- */
   var TILES = [['river', 'Where everyone is'], ['next', 'Do this next'], ['goal', 'Goal'], ['tasks', 'Your list'], ['quick', 'Quick actions'],
-    ['warm', 'Who replied'], ['autos', 'Running for you'], ['newsga', 'Georgia schools and AI'], ['newsai', 'AI talking points'], ['grants', 'Grants and funding'], ['radar', 'New clients radar'], ['comp', 'Competitors'], ['marketing', 'Studio content'], ['links', 'All your links'], ['clipping', 'Clipping for pay'], ['coach', 'Coach'], ['events', 'Coming up']];
+    ['warm', 'Who replied'], ['autos', 'Running for you'], ['newsga', 'Georgia schools and AI'], ['newsai', 'AI talking points'], ['grants', 'Grants and funding'], ['radar', 'New clients radar'], ['comp', 'Competitors'], ['marketing', 'Studio content'], ['links', 'All your links'], ['files', 'Your files'], ['clipping', 'Clipping for pay'], ['coach', 'Coach'], ['events', 'Coming up']];
   var TLABEL = {}; TILES.forEach(function (t) { TLABEL[t[0]] = t[1]; });
   var SIZES = ['S', 'M', 'L', 'F'];
-  var TAB_TILES = { today: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos'], board: ['river', 'warm', 'tasks'], clips: ['clipping', 'marketing'], links: ['links'], intel: ['grants', 'radar', 'newsga', 'newsai', 'comp'] };
+  var TAB_TILES = { today: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos'], board: ['river', 'warm', 'tasks'], clips: ['clipping', 'marketing'], links: ['files', 'links'], intel: ['grants', 'radar', 'newsga', 'newsai', 'comp'] };
   var LKEY = { w: 'bgcs_home_layout', c: 'bgcs_home_layout_c' };
   var DEFL = {
-    w: { order: ['coach', 'river', 'next', 'goal', 'events', 'tasks', 'quick', 'warm', 'autos', 'grants', 'radar', 'newsga', 'newsai', 'comp', 'marketing', 'links', 'clipping'],
-         size: { coach: 'L', events: 'M', river: 'F', next: 'L', goal: 'S', tasks: 'L', quick: 'S', warm: 'S', autos: 'S', grants: 'M', radar: 'M', newsga: 'M', newsai: 'M', comp: 'S', marketing: 'F', links: 'F', clipping: 'F' } },
-    c: { order: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos', 'river', 'warm', 'grants', 'radar', 'newsga', 'newsai', 'comp', 'clipping', 'marketing', 'links'],
-         size: { coach: 'F', events: 'F', next: 'F', tasks: 'F', quick: 'M', goal: 'M', autos: 'F', river: 'F', warm: 'F', grants: 'F', radar: 'F', newsga: 'F', newsai: 'F', comp: 'F', marketing: 'F', links: 'F', clipping: 'F' } }
+    w: { order: ['coach', 'river', 'next', 'goal', 'events', 'tasks', 'quick', 'warm', 'autos', 'grants', 'radar', 'newsga', 'newsai', 'comp', 'marketing', 'links', 'files', 'clipping'],
+         size: { coach: 'L', events: 'M', river: 'F', next: 'L', goal: 'S', tasks: 'L', quick: 'S', warm: 'S', autos: 'S', grants: 'M', radar: 'M', newsga: 'M', newsai: 'M', comp: 'S', marketing: 'F', links: 'F', files: 'F', clipping: 'F' } },
+    c: { order: ['coach', 'next', 'tasks', 'events', 'quick', 'goal', 'autos', 'river', 'warm', 'grants', 'radar', 'newsga', 'newsai', 'comp', 'clipping', 'marketing', 'files', 'links'],
+         size: { coach: 'F', events: 'F', next: 'F', tasks: 'F', quick: 'M', goal: 'M', autos: 'F', river: 'F', warm: 'F', grants: 'F', radar: 'F', newsga: 'F', newsai: 'F', comp: 'F', marketing: 'F', links: 'F', files: 'F', clipping: 'F' } }
   };
   var GRIP = '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="9" cy="6" r="1.7"/><circle cx="15" cy="6" r="1.7"/><circle cx="9" cy="12" r="1.7"/><circle cx="15" cy="12" r="1.7"/><circle cx="9" cy="18" r="1.7"/><circle cx="15" cy="18" r="1.7"/></svg>';
   var CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>';
@@ -1031,6 +1129,7 @@
     var L = { order: [], size: {}, hidden: {}, fold: {} };
     (Array.isArray(raw.order) ? raw.order : []).forEach(function (id) { if (TLABEL[id] && L.order.indexOf(id) < 0) L.order.push(id); });
     ['events', 'coach'].forEach(function (id) { if (L.order.indexOf(id) < 0 && d.order.indexOf(id) >= 0) L.order.unshift(id); });
+    if (L.order.indexOf('files') < 0) { var fi = L.order.indexOf('links'); if (fi >= 0) L.order.splice(fi, 0, 'files'); }
     if (L.order.indexOf('clipping') < 0) { var mi = L.order.indexOf('marketing'); if (mi >= 0) L.order.splice(mi, 0, 'clipping'); }
     d.order.forEach(function (id) { if (L.order.indexOf(id) < 0) L.order.push(id); });
     TILES.forEach(function (t) {
@@ -1312,7 +1411,7 @@
     ['today', 'Today', '<path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/>'],
     ['board', 'Board', '<rect x="3" y="4" width="5" height="16" rx="1.5"/><rect x="10" y="4" width="5" height="10" rx="1.5"/><rect x="17" y="4" width="4" height="13" rx="1.5"/>'],
     ['clips', 'Clipping', '<rect x="3" y="5" width="18" height="14" rx="3"/><path d="M10 9.5v5l4.5-2.5z"/>'],
-    ['links', 'Links', '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>'],
+    ['links', 'Files', '<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>'],
     ['intel', 'Intel', '<path d="M3 17l5-5 4 4 8-9"/><path d="M15 7h5v5"/>'],
     ['coach', 'Ask', '<path d="M4 5h16v10H9l-5 4z"/>']
   ];
@@ -1542,7 +1641,7 @@
   setInterval(function () { try { drawBar(); } catch (e) {} }, 900);
   buildDock();
   renderHome();
-  try { window.hxLinksPage(); window.hxClipPage(); } catch (e) {}
+  try { window.hxLinksPage(); window.hxClipPage(); window.hxFilesPage(); } catch (e) {}
   loadNews();
   setInterval(loadNews, 15 * 60 * 1000);
   document.addEventListener('visibilitychange', function () { if (!document.hidden) { try { renderHome(); } catch (e) {} } });
