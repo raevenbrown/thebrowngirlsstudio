@@ -1686,6 +1686,88 @@
    "completeTasks": [
     "Schedule the clean Ivy Prep draft"
    ]
+  },
+  {
+   "key": "sent-201-20261123-0800",
+   "id": 201,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Dr. Molly Bowden",
+    "title": "Emailed: Re: InspiHER Session",
+    "phone": "",
+    "email": "bowden.molly@newton.k12.ga.us",
+    "message": "Closed the loop on payment before InspiHER: asked whether accounts payable has the W-9 and ACH vendor form and whether payment is issued before Dec 2.",
+    "nextSteps": "Watch for Dr. Bowden's answer on payment timing.",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "sent-212-20261123-0800",
+   "id": 212,
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Progressive Steps Inc. Team",
+    "title": "Emailed: Re: Partnership Inquiry: Pairing The AI Lab Tech Education with Progressive Steps Meal Programs",
+    "phone": "",
+    "email": "psi@progressivestepsinc.org",
+    "message": "Resent the numbered answers to their 6 questions, asked how meals work on their side, and asked for 20 minutes the second week of January.",
+    "nextSteps": "Nudge once if no reply by Nov 30.",
+    "followUpDone": false
+   }
+  },
+  {
+   "key": "sent-214-20261123-0900",
+   "id": 214,
+   "stage": "First Touch Sent",
+   "emailSentDate": "2026-11-23",
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Victor \"Coach\" Hicks",
+    "title": "Emailed: Partnering to reach young women in tech",
+    "phone": "",
+    "email": "victor.hicks@codingwithculture.com",
+    "message": "Partner note (info@codingwithculture.com copied): offered The AI Lab as a girls-centered program he can refer families to, and asked for 15 minutes before the holidays or the second week of January.",
+    "nextSteps": "Follow up in 5-7 days if no reply.",
+    "followUpDone": false
+   },
+   "addTask": {
+    "title": "Follow up with Coding with Culture",
+    "desc": "No reply yet to Nov 23 partner note.",
+    "date": "2026-11-29",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "sent-312-20261123-0900",
+   "id": 312,
+   "stage": "First Touch Sent",
+   "emailSentDate": "2026-11-23",
+   "activity": {
+    "type": "Email",
+    "date": "2026-11-23",
+    "person": "Dr. Romain",
+    "title": "Emailed: AI Enrichment Workshop Trial for 2027 – The AI Lab",
+    "phone": "",
+    "email": "Rugayya@homeschoolhavencollective.com",
+    "message": "Introduced The AI Lab after reading her feature in THE CREEK, offered a free trial session for Spring 2027 and asked for a call the second week of January.",
+    "nextSteps": "Follow up in 5-7 days if no reply.",
+    "followUpDone": false
+   },
+   "addTask": {
+    "title": "Follow up with Homeschool Haven Collective",
+    "desc": "No reply yet to Nov 23 email.",
+    "date": "2026-11-29",
+    "assignee": "Raeven Brown",
+    "urgency": "Medium",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }

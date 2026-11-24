@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-22",
+ "generated": "2026-11-23",
  "source": "Read from the AI Lab Gmail (sent, received, drafts, scheduled) on Nov 22, 2026. Full backfill of every in and out email per account.",
  "accounts": {
   "201": {
-   "headline": "Booked for InspiHER Dec 2-3 (4 one-hour sessions). Invoice with Dr. Williams, W-9 sent, rooms/times and payment timing still open.",
+   "headline": "Booked for InspiHER Dec 2-3 (4 one-hour sessions). Payment email sent Nov 23. Waiting on Dr. Bowden about payment timing, rooms and times.",
    "lastReply": {
     "d": "2026-11-16",
     "who": "Dr. Molly Bowden",
@@ -393,18 +393,17 @@
       {
        "d": "2026-11-23",
        "dir": "out",
-       "who": "Scheduled",
+       "who": "You to Dr. Bowden",
        "sub": "Re: InspiHER Session",
-       "sum": "Scheduled in Gmail for Mon Nov 23, 8:00 AM ET. Closes the loop on payment before InspiHER and refers to her Nov 16 note about your W-9 and Dr. Williams.",
+       "sum": "Sent Mon Nov 23, 8:00 AM ET. Asked whether accounts payable has your W-9 and the ACH vendor form, and whether payment is issued before Dec 2.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1880226189151113974",
-       "tag": "sched",
        "mid": "1a2087ded297b186"
       }
      ]
     }
    ],
    "todo": [
-    "Your payment email to Dr. Bowden is scheduled for Mon Nov 23, 8:00 AM ET. Watch for her reply, and for any answer on the W-9 and payment date.",
+    "Payment email went out Mon Nov 23, 8:00 AM ET. Watch for Dr. Bowden's reply on the W-9 and payment date.",
     "Hold the student link, the AI tools answer and the parent card until payment is confirmed in writing. Check Wed Nov 25. If still nothing by Mon Nov 30, decide whether to send the student link anyway so students can open it before Dec 2.",
     "Ask Dr. Bowden for rooms and start times for all 4 sessions.",
     "Ask whether accounts payable has your W-9 and when payment goes out.",
@@ -1272,7 +1271,7 @@
    "gq": "from:ldawkins@hhbcga.org OR to:ldawkins@hhbcga.org"
   },
   "212": {
-   "headline": "Real conversation. You answered their 6 questions on Nov 16. A follow-up is scheduled for Mon Nov 23, 8:00 AM ET. It resends the numbered answers and asks for a call the week of Dec 7 or the second week of January.",
+   "headline": "Real conversation. You answered their 6 questions on Nov 16 and resent them numbered on Nov 23 with a request for a call in the second week of January. Waiting on their reply.",
    "lastReply": {
     "d": "2026-11-16",
     "who": "Progressive Steps team",
@@ -1344,11 +1343,10 @@
       {
        "d": "2026-11-23",
        "dir": "out",
-       "who": "Scheduled",
+       "who": "You to Progressive Steps",
        "sub": "Re: Partnership Inquiry: Pairing The AI Lab Tech Education with Progressive Steps Meal Programs",
-       "sum": "Scheduled in Gmail for Mon Nov 23, 8:00 AM ET. Resends your answers to their 6 questions, numbered to match their list, then asks how meals work on their side and for 20 minutes the week of Dec 7 or the second week of January.",
+       "sum": "Sent Mon Nov 23, 8:00 AM ET. Resent your numbered answers to their 6 questions, asked how meals work on their side, and asked for 20 minutes the second week of January.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-a:r-3671459887995261097",
-       "tag": "sched",
        "mid": "1a2087ded133de26"
       }
      ]
@@ -1932,7 +1930,7 @@
    "gq": "from:info@newtoneducationfoundation.org OR to:info@newtoneducationfoundation.org"
   },
   "214": {
-   "headline": "Competitor and possible partner. Sells custom school partnerships (CS and STEM instruction, workshops with AI literacy, teacher coverage, custom curriculum) mainly for K-8. Partner note is scheduled to send Mon Nov 23 at 9:00 AM ET.",
+   "headline": "Competitor and possible partner. Partner note sent Mon Nov 23. Waiting on a reply; no call set.",
    "lastReply": null,
    "facts": {
     "address": "",
@@ -1944,7 +1942,7 @@
     {
      "name": "Victor \"Coach\" Hicks",
      "role": "Founder and CEO of Coding with Culture, per his own page. Their partnership form also lists him as a \"how did you hear\" choice.",
-     "email": "",
+     "email": "victor.hicks@codingwithculture.com",
      "phone": "",
      "addr": "",
      "note": "The partner note goes to an address from his own Instagram/Threads profile, with info@codingwithculture.com (from their site) copied.",
@@ -1975,16 +1973,15 @@
     {
      "n": 1,
      "title": "Welcome email",
-     "state": "todo",
+     "state": "done",
      "items": [
       {
        "d": "2026-11-23",
        "dir": "out",
-       "who": "Scheduled",
+       "who": "You to Coach Hicks",
        "sub": "Partnering to reach young women in tech",
-       "sum": "Scheduled in Gmail for Mon Nov 23, 9:00 AM ET. Partner note about sending girls and families to each other. Sent to the address from his own Instagram/Threads profile, with the info@ address from their site copied.",
+       "sum": "Sent Mon Nov 23, 9:00 AM ET. Partner note offering The AI Lab as a girls-centered program he can send families to, and asking for 15 minutes before the holidays or the second week of January. info@codingwithculture.com copied.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1882565623546332285",
-       "tag": "sched",
        "mid": "1a208b4dafcd545d"
       }
      ]
@@ -2003,7 +2000,7 @@
     }
    ],
    "todo": [
-    "Partner note sends Mon Nov 23 at 9:00 AM ET. If there is no reply in about a week, send one short follow-up."
+    "Partner note went out Mon Nov 23, 9:00 AM ET. If there is no reply in about a week, send one short follow-up."
    ],
    "flags": [
     "Their form page and schools page both list AI literacy, and the form adds AI training for teachers, so they compete with you directly on AI. Keep your pricing and curriculum out of the first email.",
@@ -2052,21 +2049,14 @@
    "gq": "from:info@brilliantandkind.com OR to:info@brilliantandkind.com"
   },
   "312": {
-   "headline": "Email is SCHEDULED to send Mon Nov 23 at 9:00 AM ET.",
+   "headline": "First email sent Mon Nov 23. Waiting on a reply; no call set.",
    "lastReply": null,
    "facts": {
     "address": "Johns Creek, GA",
     "phone": "",
     "email": "Rugayya@homeschoolhavencollective.com"
    },
-   "schedule": [
-    {
-     "d": "2026-11-23",
-     "t": "9:00 AM",
-     "title": "Scheduled send: AI Enrichment Workshop Trial for 2027",
-     "detail": "Gmail will send it for you."
-    }
-   ],
+   "schedule": [],
    "contacts": [
     {
      "name": "Dr. Romain",
@@ -2082,16 +2072,15 @@
     {
      "n": 1,
      "title": "Welcome email",
-     "state": "active",
+     "state": "done",
      "items": [
       {
        "d": "2026-11-23",
        "dir": "out",
-       "who": "Scheduled",
+       "who": "You to Dr. Romain",
        "sub": "AI Enrichment Workshop Trial for 2027 - The AI Lab",
-       "sum": "Scheduled in Gmail for Mon Nov 23, 9:00 AM ET.",
+       "sum": "Sent Mon Nov 23, 9:00 AM ET. Introduced The AI Lab after her feature in THE CREEK, offered a free trial session for Spring 2027 and asked for a call the second week of January.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1882495956337452161",
-       "tag": "sched",
        "mid": "1a208b4da6404311"
       }
      ]
@@ -2110,7 +2099,7 @@
     }
    ],
    "todo": [
-    "Nothing to do. Gmail sends it Monday 9 AM. Log the reply when it comes."
+    "Email went out Mon Nov 23, 9:00 AM ET. Follow up in 5-7 days if no reply."
    ],
    "flags": [],
    "related": [],
