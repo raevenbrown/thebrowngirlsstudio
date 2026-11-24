@@ -1,5 +1,5 @@
 {
- "generated": "2026-11-23",
+ "generated": "2026-11-24",
  "source": "Read from the AI Lab Gmail (sent, received, drafts, scheduled) on Nov 22, 2026. Full backfill of every in and out email per account.",
  "accounts": {
   "201": {
@@ -2104,6 +2104,53 @@
    "flags": [],
    "related": [],
    "gq": "from:homeschoolhavencollective.com OR to:homeschoolhavencollective.com"
+  },
+  "313": {
+   "headline": "First email is scheduled to send Mon Nov 30 at 8:00 AM ET. No reply yet.",
+   "lastReply": null,
+   "facts": {
+    "address": "",
+    "phone": "",
+    "email": "efalco@ivyprepacademy.org"
+   },
+   "schedule": [],
+   "contacts": [],
+   "docs": [],
+   "phases": [
+    {
+     "n": 1,
+     "title": "Welcome email",
+     "state": "todo",
+     "items": [
+      {
+       "d": "2026-11-30",
+       "dir": "out",
+       "who": "Scheduled",
+       "sub": "Ivy Prep after-school STEM partnership",
+       "sum": "Scheduled in Gmail to send Mon Nov 30 at 8:00 AM ET.",
+       "tag": "sched",
+       "mid": "1a22c8a7083c2e1f",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1882687821649865427"
+      }
+     ]
+    },
+    {
+     "n": 2,
+     "title": "Meeting set-up",
+     "state": "todo",
+     "items": []
+    },
+    {
+     "n": 3,
+     "title": "Booking",
+     "state": "todo",
+     "items": []
+    }
+   ],
+   "todo": [],
+   "flags": [],
+   "related": [],
+   "gq": "from:efalco@ivyprepacademy.org OR to:efalco@ivyprepacademy.org"
   }
  }
 }
