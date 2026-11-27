@@ -634,6 +634,7 @@
   var SITE = 'https://raevenbrown.github.io/thebrowngirlsstudio/';
   var GM = 'https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com';
   var LINK_GROUPS = [
+    { id: 'insp', t: 'InspiHER week (Dec 2 to 3)', s: 'Everything for the four sessions. The student page is unlisted, so keep it off the site for now.' },
     { id: 'site', t: 'Your website and pages', s: 'These live on your site.' },
     { id: 'forms', t: 'Google Forms and sign-ups', s: 'Where parents and schools sign up.' },
     { id: 'google', t: 'Gmail, calendar and Drive', s: 'All under creativemetrixbgcs@gmail.com.' },
@@ -641,6 +642,12 @@
     { id: 'demo', t: 'Lab project demos', s: 'Live demos linked from your Lab Projects page.' }
   ];
   var LINKS = [
+    { g: 'insp', n: 'InspiHER class page', u: SITE + 'inspiher-class.html', w: 'The four session pages. Students enter with the code on their card. The adult view has the Live AI box for the big screen.', note: 'Unlisted. Keep it off the site and do not share it until the district says yes.', top: 1 },
+    { g: 'insp', n: 'Student sharing agreement (draft)', u: 'https://claude.ai/artifact/4oZCZswnxzDy8UGJqKmfC7', w: 'Parent permission form, student privacy note and the questions for Newton County Schools.', note: 'A draft for the district and an attorney to review. It is not legal advice.' },
+    { g: 'insp', n: 'Live AI setup: Supabase secrets', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw/functions/secrets', w: 'Where the AI key and the Live AI passphrase go. If the link does not open, use Edge Functions, then Secrets.', note: 'Add ANTHROPIC_API_KEY (it may already be there for the pipeline coach) and INSPIHER_PASSPHRASE.' },
+    { g: 'insp', n: 'Live AI setup: Supabase functions', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw/functions', w: 'Shows inspiher-live and pipeline-chat, with logs if something breaks.' },
+    { g: 'insp', n: 'Live AI setup: Claude Console API keys', u: 'https://platform.claude.com/settings/keys', w: 'Create the AI key here. Never paste it into a chat or an email.' },
+    { g: 'insp', n: 'Live AI setup: Claude Console workspaces and spend limits', u: 'https://platform.claude.com/settings/workspaces', w: 'Make a workspace called InspiHER and set a small monthly spend limit on it.' },
     { g: 'site', n: 'Pipeline (this app)', u: SITE + 'pipeline.html', w: 'Your pipeline, coach and email trail.', top: 1 },
     { g: 'site', n: 'Main website', u: SITE, w: 'The Brown Girls Creative Studio home page.', top: 1 },
     { g: 'site', n: 'The AI Lab', u: SITE + 'labs.html', w: 'Program page: classes, December cohort and waitlist buttons.', top: 1 },
@@ -648,9 +655,9 @@
     { g: 'site', n: 'Free Family AI Event page', u: SITE + 'free-event.html', w: 'Event page with a parent waitlist button.' },
     { g: 'site', n: 'Season 2 interest page', u: SITE + 'season2.html', w: 'The page the InspiHER QR opens. It points to the interest form.', note: 'Hold this one back from Newton families until the district approves it.' },
     { g: 'site', n: 'Season 2 interest page (QR version)', u: SITE + 'season2.html?src=inspiher', w: 'Same page, tagged so you know the visit came from the QR code.' },
-    { g: 'site', n: 'Parent card', u: SITE + 'parent-card.html', w: 'The printable card with the QR code on it.' },
-    { g: 'site', n: 'InspiHER QR code image', u: SITE + 'inspiher-qr.png', w: 'The QR itself, for flyers, slides and the table sign.' },
-    { g: 'site', n: 'InspiHER session plan', u: SITE + 'inspiher-plan.html', w: 'The game plan for each InspiHER session.' },
+    { g: 'insp', n: 'Parent card', u: SITE + 'parent-card.html', w: 'The printable card with the QR code on it.' },
+    { g: 'insp', n: 'InspiHER QR code image', u: SITE + 'inspiher-qr.png', w: 'The QR itself, for flyers, slides and the table sign.' },
+    { g: 'insp', n: 'InspiHER session plan', u: SITE + 'inspiher-plan.html', w: 'The game plan for each InspiHER session.' },
     { g: 'site', n: 'Lab projects', u: SITE + 'lab-projects.html', w: 'Applied AI labs and engines you can show to schools.' },
     { g: 'site', n: 'Student project showcase', u: SITE + 'class-projects.html', w: 'NCSA student project showcase.' },
 
@@ -669,7 +676,7 @@
 
     { g: 'back', n: 'Site code on GitHub', u: 'https://github.com/raevenbrown/thebrowngirlsstudio', w: 'Where the site and this app live. Public.' },
     { g: 'back', n: 'Private data backup on GitHub', u: 'https://github.com/raevenbrown/bgcs-data-sync', w: 'Where the pipeline syncs between your devices. Private.' },
-    { g: 'back', n: 'Supabase project', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw', w: 'Database and the coach chat function.' },
+    { g: 'back', n: 'Supabase project', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw', w: 'Database, the pipeline coach chat and the InspiHER live AI function.' },
 
     { g: 'demo', n: 'Creative Metrix', u: 'https://v0-open-in-v0-gamma-nine-95.vercel.app/integrations', w: 'Integrations demo.' },
     { g: 'demo', n: 'AutoGuard Claims Dashboard', u: 'https://autoguard-claims-dashboard-lyuc6v8avzfjjmt5kt4qn3.streamlit.app/', w: 'Claims dashboard demo.' },
