@@ -127,6 +127,11 @@ body.xl{--scale:1.28}
 .msg.a.typing:after{content:'';display:inline-block;width:.5em;height:1.05em;margin-left:3px;vertical-align:-.15em;background:var(--gold2);animation:blink 1s steps(1) infinite}
 @keyframes blink{50%{opacity:0}}
 .aiwin .wait,.msg .wait{color:var(--dim);font-style:italic}
+.cwlist{display:grid;gap:6px;margin:8px 0}
+.cwi{display:flex;gap:10px;align-items:flex-start;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.cwi b{white-space:nowrap}.cwi span{flex:1;font-size:.92rem;overflow-wrap:anywhere}
+.cwi button{background:none;border:0;color:var(--dim);cursor:pointer;font-size:1.3rem;line-height:1;min-width:32px;min-height:32px}.cwi button:hover{color:var(--cream)}
+.cwwin{border:2px solid var(--gold2)}
 .lvrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
 .lvrow .chip{cursor:pointer;color:var(--cream);text-align:left} .lvrow .chip:hover{border-color:var(--gold2)}
 .f textarea.lvin{min-height:64px}
@@ -460,13 +465,63 @@ function wdraw(){var w=D.s3.w,el=$('wres');if(!el)return;
   '<div id="wclr"'+(w.gen?'':' hidden')+'><div class="pbox"><div class="lab">Clear prompt (4 parts)</div><p style="margin:2px 0">'+promptHTML(sc)+'</p></div>'+
   (S.teacher?'<p><button type="button" class="btn" data-act="runc">Run the clear prompt &#10024;</button></p>'+awinHTML('wc','Clear prompt'):'<div class="why"><b>On the big screen:</b> Ms. Brown runs both prompts with a real AI. Which answer would you rather get?</div>')+legend()+'<div class="why ok"><b>Same mission, better answer.</b> The only thing that changed was the prompt.</div></div>';
  el.innerHTML=h}
+/* ===== Class Prompt Wheel: the girls' own prompts go on the wheel, the wheel picks one ===== */
+var CWE=['&#11088;','&#128302;','&#127752;','&#129412;','&#128640;','&#127881;','&#128142;','&#127800;','&#129419;','&#127744;'];
+var CWO={cpw:{prompt:true,eyebrow:'Class Prompt Wheel',add:'Add a team\'s prompt',ph:'Type or paste the prompt the team read out loud. Made-up details only.'},ppw:{prompt:false,eyebrow:'Who pitches next?',add:'Add a team'}};
+var CWSAMPLE=['You are a friendly space guide. Explain why the Moon changes shape. My audience is a 6th grader who likes funny examples. Give it as 4 short sentences.',
+ 'You are a kind study coach. Plan a 5-day study week for my math test. I have 30 minutes a day after school. Give it as a table with one fun activity per day.',
+ 'You are a funny chef. Teach me a snack I can make with no oven. I am 12 and I only have a microwave. Give it as a 5-step checklist.',
+ 'You are a fair judge. Should a class have a pet hamster? Think about noise and weekend care. Give two reasons for and two against in short bullets.'];
+function cwS(id){var o=dd(id==='cpw'?'s3':'s4');return o[id]=o[id]||{list:[],pick:null,v:0}}
+function cwReset(id){var s=cwS(id);s.pick=null;s.v=(s.v||0)+1;WH[id]={cur:0,busy:false}}
+function cwForm(id){var o=CWO[id],s=cwS(id);
+ return '<div class="panel"><div class="eyebrow">'+o.add+'</div>'+
+  '<div class="f"><label for="cwl-'+id+'">'+(o.prompt?'Team name or initials':'Team name')+'</label><input id="cwl-'+id+'" maxlength="14" autocomplete="off" placeholder="Team '+(s.list.length+1)+'"></div>'+
+  (o.prompt?'<div class="f"><label for="cwp-'+id+'">Their prompt</label><textarea id="cwp-'+id+'" maxlength="220" placeholder="'+esc(o.ph)+'"></textarea><div class="hint">Read it first. Only what an adult types goes to the AI.</div></div>':'')+
+  '<p id="cwErr-'+id+'" class="err" hidden></p>'+
+  '<div class="lvrow"><button type="button" class="btn" data-act="cwadd" data-id="'+id+'">Add to the wheel</button>'+
+  (o.prompt?'<button type="button" class="chip" data-act="cwsample" data-id="'+id+'">Try it with 4 sample prompts</button>':'<button type="button" class="chip" data-act="cwquick" data-id="'+id+'">Add Team 1 to Team 6</button>')+
+  '<button type="button" class="chip" data-act="cwclear" data-id="'+id+'">Clear the wheel</button></div></div>'}
+function cwPanel(id){return cwForm(id)+'<div id="cwbody-'+id+'">'+cwBody(id)+'</div>'}
+function cwBody(id){var s=cwS(id),o=CWO[id],n=s.list.length;
+ if(!n)return '<div class="panel"><div class="eyebrow">'+o.eyebrow+'</div><p>'+(o.prompt?'Add each team\'s prompt as they read it out. The wheel needs at least 2.':'Add the teams. The wheel needs at least 2.')+'</p></div>';
+ var h='<div class="panel"><div class="eyebrow">'+o.eyebrow+' &middot; '+n+' on the wheel</div><div class="cwlist">'+s.list.map(function(x,i){return '<div class="cwi"><b>'+CWE[i%CWE.length]+' '+esc(x.n)+'</b><span>'+(o.prompt?esc(x.p):'')+'</span><button type="button" aria-label="Take '+esc(x.n)+' off the wheel" data-act="cwdel" data-id="'+id+'" data-i="'+i+'">&times;</button></div>'}).join('')+'</div>';
+ if(n<2)return h+'<p class="fine">Add one more to spin.</p></div>';
+ return h+'<div class="wheelwrap"><div>'+wheelHTML(id,cwItems(s))+'<div style="text-align:center"><button type="button" class="btn" id="cwSpin-'+id+'" data-act="cwspin" data-id="'+id+'">Spin the wheel!</button></div></div><div id="cwwin-'+id+'"></div></div></div>'}
+function cwItems(s){return s.list.map(function(x,i){return {e:CWE[i%CWE.length],k:x.n}})}
+function cwAfter(id){var g=$('wg-'+id);if(g&&WH[id]&&WH[id].cur){g.style.transition='none';g.style.transform='rotate('+WH[id].cur+'deg)';setTimeout(function(){g.style.transition=''},50)}cwWin(id)}
+function cwDraw(id){var el=$('cwbody-'+id);if(!el)return;el.innerHTML=cwBody(id);cwAfter(id);var l=$('cwl-'+id);if(l)l.placeholder='Team '+(cwS(id).list.length+1)}
+function cwWin(id){var s=cwS(id),o=CWO[id],el=$('cwwin-'+id);if(!el)return;
+ if(s.pick==null){el.innerHTML='<div class="pbox"><div class="lab">'+(o.prompt?'The winning prompt':'Who is next')+'</div><p>Spin the wheel to find out.</p></div>';return}
+ var x=s.list[s.pick],h='';
+ if(o.prompt){
+  h='<div class="pbox cwwin"><div class="lab">The wheel picked</div><p class="big" style="margin:4px 0">'+CWE[s.pick%CWE.length]+' '+esc(x.n)+'</p><p style="margin:2px 0">&ldquo;'+esc(x.p)+'&rdquo;</p></div>'+
+   '<div class="lvrow"><button type="button" class="btn" data-act="cwrun" data-id="'+id+'">Run it live &#10024;</button><button type="button" class="btn sm ghost" data-act="copyp" data-id="cwin">Copy prompt</button><button type="button" class="btn sm ghost" data-act="cwtake" data-id="'+id+'">Take it off and spin again</button></div>'+
+   awinHTML('cwin','Winning prompt')+
+   '<div class="why"><b>Ask the room:</b> Which of the four parts do you hear in this prompt? What is missing? What do you think the AI will do?</div>'+legend()}
+ else{h='<div class="pbox cwwin"><div class="lab">Up next</div><p class="big" style="margin:4px 0">'+CWE[s.pick%CWE.length]+' '+esc(x.n)+' pitches!</p></div><div class="lvrow"><button type="button" class="btn sm ghost" data-act="cwtake" data-id="'+id+'">Take it off and spin again</button></div>'}
+ el.innerHTML=h}
+function cwErr(id,m){var e=$('cwErr-'+id);if(e){e.textContent=m;e.hidden=false}}
+function cwAdd(id){var s=cwS(id),o=CWO[id],l=$('cwl-'+id),p=$('cwp-'+id),err='cwErr-'+id;if(!l)return;
+ if(s.list.length>=10){cwErr(id,'The wheel holds 10. Take one off first.');return}
+ var lab=(l.value||'').trim().slice(0,14)||('Team '+(s.list.length+1)),pr=p?(p.value||'').trim():'';
+ if(o.prompt&&pr.length<8){cwErr(id,'Type the team\'s prompt first.');return}
+ if(!guard([lab,pr],err))return;
+ s.list.push({n:lab,p:pr});l.value='';if(p)p.value='';cwReset(id);cwDraw(id);l.focus()}
 function sum(a){var n=0;for(var i=0;i<a.length;i++)n+=a[i]?1:0;return n}
 function vbox(i){var c=D.s3.c;return '<div class="pbox"><div class="f"><label for="v'+i+'">Version '+(i+1)+'</label><textarea id="v'+i+'" maxlength="220" data-live="v" data-i="'+i+'">'+esc(c.v[i])+'</textarea></div><div class="chips">'+[['+ Role','You are a '],['+ Task','Please '],['+ Details',' Details: '],['+ Format',' Give it as ']].map(function(x){return '<button type="button" class="chip" data-act="ins" data-i="'+i+'" data-v="'+x[1]+'">'+x[0]+'</button>'}).join('')+'</div><div class="chips">'+['Role','Task','Details','Format'].map(function(n,k){return '<label class="chip"><input type="checkbox" data-live="chk" data-i="'+i+'" data-k="'+k+'"'+(c.chk[i][k]?' checked':'')+'> '+n+'</label>'}).join('')+'<span class="badge" id="sc'+i+'">'+sum(c.chk[i])+' of 4</span></div></div>'}
 function s3chal(b){var c=dd('s3').c=D.s3.c||{v:['','',''],chk:[[0,0,0,0],[0,0,0,0],[0,0,0,0]],best:null};
  var sc=SC[(D.s3.w&&D.s3.w.pick!=null)?D.s3.w.pick:0];
- b.innerHTML=hero('Your turn','Improve the prompt, 3 times','<div class="pbox"><div class="lab">Mission</div><b>'+sc.e+' '+esc(sc.mission)+'</b></div>'+diceHTML('twist','Roll for a twist (optional)')+'<p class="fine">Write 3 versions. Each time add more of the 4 parts. Tick the parts you used. Use made-up details only.</p>'+vbox(0)+vbox(1)+vbox(2)+'<p id="vErr" class="err" hidden></p><h3>Pick your best version</h3><div class="opts">'+[0,1,2].map(function(i){return '<button type="button" class="opt'+(c.best===i?' sel':'')+'" data-act="best" data-v="'+i+'">Version '+(i+1)+'</button>'}).join('')+'</div><div id="bestOut"></div>');
+ b.innerHTML=hero('Your turn','Improve the prompt, 3 times','<div class="pbox"><div class="lab">Mission</div><b>'+sc.e+' '+esc(sc.mission)+'</b></div>'+diceHTML('twist','Roll for a twist (optional)')+'<p class="fine">Write 3 versions. Each time add more of the 4 parts. Tick the parts you used. Use made-up details only. Your best version goes on the Class Prompt Wheel.</p>'+vbox(0)+vbox(1)+vbox(2)+'<p id="vErr" class="err" hidden></p><h3>Pick your best version</h3><div class="opts">'+[0,1,2].map(function(i){return '<button type="button" class="opt'+(c.best===i?' sel':'')+'" data-act="best" data-v="'+i+'">Version '+(i+1)+'</button>'}).join('')+'</div><div id="bestOut"></div>');
  if(c.best!=null)bestDraw()}
 function bestDraw(){var c=D.s3.c,i=c.best;$('bestOut').innerHTML='<div class="why ok"><b>Your best: Version '+(i+1)+'</b> with '+sum(c.chk[i])+' of 4 parts. '+(sum(c.chk[i])===4?'All four parts. That is a strong prompt!':'Try adding the missing parts to make it even stronger.')+'</div>'}
+function s3show(b){var c=dd('s3').c=D.s3.c||{v:['','',''],chk:[[0,0,0,0],[0,0,0,0],[0,0,0,0]],best:null};
+ var bi=c.best!=null?c.best:(c.v[2]?2:(c.v[1]?1:(c.v[0]?0:null)));
+ var intro='<p>'+(S.teacher?'Each team reads its best prompt out loud. Type them in. When every team is on, spin. The wheel picks one prompt and a real AI runs it for the whole room.':'Read your team\'s best prompt out loud. Ms. Brown puts every team\'s prompt on the big wheel. The wheel picks one, and a real AI runs it. Everybody watches.')+'</p>';
+ if(S.teacher){b.innerHTML=hero('Prompt Showdown','Put every team\'s prompt on the wheel',intro)+cwPanel('cpw');cwAfter('cpw');return}
+ b.innerHTML=hero('Prompt Showdown','Your prompt could be picked!',intro)+'<div class="panel"><div class="eyebrow">Your team\'s best prompt</div>'+
+  (bi!=null&&c.v[bi]?'<div class="pbox"><div class="lab">Version '+(bi+1)+' &middot; '+sum(c.chk[bi])+' of 4 parts</div><p style="margin:2px 0">&ldquo;'+esc(c.v[bi])+'&rdquo;</p></div>':'<div class="why no"><b>No prompt yet.</b> Go back to Your turn and write at least one version.</div>')+
+  '<p>Read it out loud with your team. While the wheel spins, guess: will the winner have all four parts?</p>'+legend()+'</div>'}
 var MIST=[
  {topic:'Octopus facts',s:['Octopuses have three hearts.','Their blood is blue.','Most octopuses live for about 30 years.','An octopus has eight arms.'],bad:2,why:'Most octopus species live only about 1 to 5 years. AI said it in the same confident voice as the true facts.'},
  {topic:'Moon facts',s:['The Moon orbits the Earth.','The Moon makes its own light.','We see different shapes of the Moon, called phases.','One trip around the Earth takes about a month.'],bad:1,why:'The Moon does not make light. It reflects sunlight. AI can sound sure and still be wrong.'}];
@@ -480,15 +535,16 @@ function mshow(){var m=D.s3.m,q=MIST[m.r],ok=m.pick===q.bad,bs=document.querySel
  for(var i=0;i<bs.length;i++){bs[i].disabled=true;if(i===q.bad)bs[i].classList.add('good');else if(i===m.pick)bs[i].classList.add('bad')}
  $('mOut').innerHTML='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Good catch!':'Not that one.')+'</b> '+esc(q.why)+'</div><h3 style="margin-top:14px">How would you check it?</h3><div class="opts">'+HOW.map(function(h,i){return '<button type="button" class="opt'+(m.how===i?(h[1]?' good':' bad'):'')+'" data-act="mhow" data-v="'+i+'">'+esc(h[0])+'</button>'}).join('')+'</div>'+(m.how!=null?'<div class="why '+(HOW[m.how][1]?'ok':'no')+'">'+(HOW[m.how][1]?'Smart plan. Checking is a superpower.':'Careful. Sounding confident does not make it true.')+'</div><button type="button" class="btn" data-act="mnext">'+(m.r+1>=MIST.length?'Finish':'Next round')+'</button>':'')}
 SESS[3]={name:'Prompt Lab',em:'&#129514;',grades:['6th grade','7th grade','8th grade'],made:function(){var w=D.s3&&D.s3.w,sc=SC[(w&&w.pick!=null)?w.pick:0];return 'I wrote a clear 4-part prompt for: '+sc.mission},steps:[
- {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them they will write prompts, test them and fact-check one answer.',r:function(b){
+ {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them they will write prompts, put their best one on a class wheel, and fact-check one answer.',r:function(b){
   b.innerHTML=hero('Session 3 &middot; grades 6 to 8','Prompt Lab','<p class="sub">The same AI gives very different answers depending on what you ask. Today you learn to ask well, and to check what it says.</p>'+rules3())+'<div class="panel"><h3>The four parts of a strong prompt</h3>'+legend()+'<p>You will use all four today.</p></div>'}},
  {t:'Same ask, different answer',min:'5 to 15 min',tip:'Press Run both. A real AI answers the vague prompt and the clear prompt at the same time. If the network blocks it, use Copy prompt, or show the backup sample (it is labeled as pre-written).',r:function(b){var s=SC[2];
   b.innerHTML=hero('Look up','Same ask, different answer','<p>'+(S.teacher?'Press the button. A real AI answers both prompts at the same time.':'Ms. Brown runs a vague prompt and a clear prompt with a real AI on the big screen. Watch what changes.')+'</p>'+timerHTML('cmp',600))+'<div class="panel">'+(S.teacher?'<p><button type="button" class="btn" data-act="runboth">Run both with the real AI &#10024;</button></p>':'')+'<div class="vs"><div><div class="pbox"><div class="lab">Vague prompt</div><p style="margin:2px 0">&ldquo;'+esc(s.vague)+'&rdquo;</p></div>'+(S.teacher?awinHTML('cv','Vague prompt'):'')+'</div><div><div class="pbox"><div class="lab">Clear prompt</div><p style="margin:2px 0">'+promptHTML(s)+'</p></div>'+(S.teacher?awinHTML('cc','Clear prompt'):'')+'</div></div>'+legend()+'</div>'}},
  {t:'Prompt wheel',min:'15 to 25 min',tip:'Spin on the big screen. Run the vague prompt first and let the room groan, then reveal the clear prompt and run it. Girls can spin their own wheels too.',r:s3wheel},
- {t:'Your turn',min:'25 to 40 min',tip:'Teams of 2 to 4. Walk the room. Ask each team which of the four parts their Version 3 has.',r:s3chal},
- {t:'Catch the mistake',min:'40 to 50 min',tip:'Play the two rounds. Then run a live prompt below and let teams hunt for a mistake. A real AI can be wrong, and it can also be right. The skill is knowing how to check.',r:s3mist},
- {t:'Spark Card',min:'50 to 56 min',tip:'Initials only. Sharing is off unless the district approved it.',r:sparkR},
- {t:'Feedback',min:'56 to 60 min',tip:'Anonymous. Hold up the QR card only if the district approved it.',r:fbR}]};
+ {t:'Your turn',min:'25 to 38 min',tip:'Teams of 2 to 4. Walk the room. Ask each team which of the four parts their Version 3 has. Tell them their best version goes on the class wheel.',r:s3chal},
+ {t:'Prompt Showdown',min:'38 to 46 min',tip:'Each team reads its best prompt out loud and you type it onto the wheel (initials or Team numbers only). Spin. Run the winner live, or press Copy prompt and paste it into the AI on your laptop. Take the winner off and spin again if time allows.',r:s3show},
+ {t:'Catch the mistake',min:'46 to 52 min',tip:'Play the two rounds. Then run a live prompt below and let teams hunt for a mistake. A real AI can be wrong, and it can also be right. The skill is knowing how to check.',r:s3mist},
+ {t:'Spark Card',min:'52 to 57 min',tip:'Initials only. Sharing is off unless the district approved it.',r:sparkR},
+ {t:'Feedback',min:'57 to 60 min',tip:'Anonymous. Hold up the QR card only if the district approved it.',r:fbR}]};
 /* ===== Session 4: Future Builder ===== */
 var CAREERS=[
  {e:'&#129658;',k:'Doctor',help:['Spot patterns in scans for the doctor to double-check','Sort piles of records quickly','Explain instructions in simple words'],never:['Make the final decision alone','Share a patient\'s private information','Hide its own mistakes']},
@@ -507,7 +563,7 @@ function cdraw(){var c=D.s4.c,el=$('cres');if(!el)return;
 function pitchText(p){return 'The problem for girls my age is '+(p.a||'___')+'. My AI helper is called '+(p.b||'___')+'. It helps by '+(p.c||'___')+'. It must never '+(p.d||'___')+'. It will make a difference because '+(p.e||'___')+'.'}
 function s4pitch(b){var p=dd('s4').p=D.s4.p||{a:'',b:'',c:'',d:'',e:''};
  var F=[['a','The problem for girls my age is...'],['b','My AI helper is called... (made up)'],['c','It helps by...'],['d','It must never...'],['e','It will make a difference because...']];
- b.innerHTML=hero('Pitch your idea','60-second pitch','<p>Teams of four. Fill in the blanks, then practice out loud. Two pitches go live.</p>'+diceHTML('ptw','Roll for a pitch twist (optional)')+F.map(function(f){return '<div class="f"><label for="p'+f[0]+'">'+f[1]+'</label><input id="p'+f[0]+'" maxlength="70" autocomplete="off" data-live="pitch" data-k="'+f[0]+'" value="'+esc(p[f[0]])+'"></div>'}).join('')+'<p id="pErr" class="err" hidden></p><div class="pbox"><div class="lab">Your pitch</div><p id="pText" style="margin:2px 0">'+esc(pitchText(p))+'</p></div>'+timerHTML('pitch',60))}
+ b.innerHTML=hero('Pitch your idea','60-second pitch','<p>Teams of four. Fill in the blanks, then practice out loud. Two pitches go live.</p>'+diceHTML('ptw','Roll for a pitch twist (optional)')+F.map(function(f){return '<div class="f"><label for="p'+f[0]+'">'+f[1]+'</label><input id="p'+f[0]+'" maxlength="70" autocomplete="off" data-live="pitch" data-k="'+f[0]+'" value="'+esc(p[f[0]])+'"></div>'}).join('')+'<p id="pErr" class="err" hidden></p><div class="pbox"><div class="lab">Your pitch</div><p id="pText" style="margin:2px 0">'+esc(pitchText(p))+'</p></div>'+timerHTML('pitch',60))+(S.teacher?cwPanel('ppw'):'');if(S.teacher)cwAfter('ppw')}
 var PLEDGES=['I will say when I used AI.','I will check facts before I share them.','I will never put private info into an AI tool.','I will do my own thinking first.','I will give credit when AI helps me.','I will never use AI to be mean or to fool people.'];
 function s4pledge(b){var pl=dd('s4').pl=D.s4.pl||{pick:null,sig:''};
  b.innerHTML=hero('Honest-use pledge','One rule I will follow','<p>Pick the rule that matters most to you. Sign with your initials.</p><div class="opts" style="grid-template-columns:1fr">'+PLEDGES.map(function(x,i){return '<button type="button" class="opt'+(pl.pick===i?' sel':'')+'" data-act="plpick" data-v="'+i+'">'+esc(x)+'</button>'}).join('')+'</div><div class="f"><label for="plS">Sign with your initials (up to 3 letters)</label><input id="plS" maxlength="3" autocomplete="off" data-live="pl" value="'+esc(pl.sig)+'"></div><div id="plOut"></div>');pldraw()}
@@ -542,6 +598,15 @@ document.addEventListener('click',function(e){var el=e.target.closest('[data-act
  case 'pet':D.s2.p.pet=+v;[].forEach.call(document.querySelectorAll('[data-act=pet]'),function(x){x.classList.toggle('sel',x.dataset.v===v)});break;
  case 'testpet':runTests();tdraw();break;
  case 'vote':D.s2.vote=+v;s2parade($('stage').lastChild);break;
+ case 'cwadd':cwAdd(el.dataset.id);break;
+ case 'cwdel':var di=el.dataset.id,ds=cwS(di);ds.list.splice(+el.dataset.i,1);cwReset(di);cwDraw(di);break;
+ case 'cwclear':var ci0=el.dataset.id;cwS(ci0).list=[];cwReset(ci0);cwDraw(ci0);break;
+ case 'cwsample':var si=el.dataset.id,ss=cwS(si);CWSAMPLE.forEach(function(p,i){if(ss.list.length<10)ss.list.push({n:'Sample '+(ss.list.length+1),p:p})});cwReset(si);cwDraw(si);break;
+ case 'cwquick':var qi=el.dataset.id,qs=cwS(qi);qs.list=[1,2,3,4,5,6].map(function(n){return {n:'Team '+n,p:''}});cwReset(qi);cwDraw(qi);break;
+ case 'cwspin':var wi=el.dataset.id,ws=cwS(wi);if(ws.list.length<2)break;var wv=ws.v;ws.pick=null;cwWin(wi);el.disabled=true;
+  spinWheel(wi,ws.list.length,function(t){if(ws.v!==wv)return;ws.pick=t;if(CWO[wi].prompt)LV.p.cwin=ws.list[t].p;var sb=$('cwSpin-'+wi);if(sb)sb.disabled=false;cwWin(wi)});break;
+ case 'cwrun':var ri=el.dataset.id,rs=cwS(ri);if(rs.pick!=null)runLive('cwin',rs.list[rs.pick].p);break;
+ case 'cwtake':var ti=el.dataset.id,ts=cwS(ti);if(ts.pick!=null)ts.list.splice(ts.pick,1);cwReset(ti);cwDraw(ti);break;
  case 'spin':var w=D.s3.w;el.disabled=true;spinWheel('pw',SC.length,function(t){w.pick=t;w.gen=false;el.disabled=false;wdraw()});break;
  case 'wclear':D.s3.w.gen=true;var wr=$('wrev'),wc=$('wclr');if(wr)wr.hidden=true;if(wc)wc.hidden=false;break;
  case 'runv':runLive('wv',SC[D.s3.w.pick].vague,{backup:[SC[D.s3.w.pick].vres]});break;
@@ -590,7 +655,7 @@ function onLive(e){var el=e.target.closest('[data-live]');if(!el)return;var k=el
  if(k==='pitch'){var ok=guard([el.value],'pErr');if(ok){D.s4.p[el.dataset.k]=el.value;$('pText').textContent=pitchText(D.s4.p)}}
  if(k==='pl'){var s=el.value.replace(/[^A-Za-z]/g,'');D.s4.pl.sig=s;pldraw()}}
 document.addEventListener('input',onLive);document.addEventListener('change',onLive);
-document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='lvPass'){lvUnlock()}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&e.target&&e.target.id==='lvIn'){dockAsk()}});
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='lvPass'){lvUnlock()}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&e.target&&e.target.id==='lvIn'){dockAsk()}var kt=e.target&&e.target.id||'';if(e.key==='Enter'&&/^cwl-/.test(kt)&&CWO[kt.slice(4)]&&!CWO[kt.slice(4)].prompt){cwAdd(kt.slice(4))}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&/^cwp-/.test(kt)){cwAdd(kt.slice(4))}});
 $('next').addEventListener('click',function(){if(S.step<SESS[S.sid].steps.length-1){S.step++;render()}});
 $('back').addEventListener('click',function(){if(S.step>0){S.step--;render()}});
 function tryCode(){var v=$('code').value.trim().toLowerCase();if(!(window.crypto&&crypto.subtle)){$('gerr').textContent='Open this page with https so the code can be checked.';$('gerr').hidden=false;return}
