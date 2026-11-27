@@ -1768,6 +1768,41 @@
     "done": false,
     "active": true
    }
+  },
+  {
+   "key": "bowden-followup-20261127",
+   "id": 201,
+   "activity": {
+    "type": "Note",
+    "date": "2026-11-27",
+    "person": "Dr. Bowden",
+    "title": "Follow-up drafted: link, AI tools, rooms, photos, payment",
+    "message": "No reply since Nov 16. The Nov 17 promises (student link, AI-tools answer) had not been sent, so the follow-up leads with those, then asks for rooms and times, check-in contact, photo and parent-card policy, and the payment date. Draft is in Gmail; paste the student link before sending.",
+    "nextSteps": "Send today. If no reply by midday Mon Nov 30, call.",
+    "followUpDone": false
+   },
+   "addTask": {
+    "title": "Send the Bowden follow-up (paste the student link first)",
+    "desc": "Draft is in Gmail on the InspiHER Session thread. Asks for rooms and times, check-in contact, photo and parent-card policy, payment date. Also sends the student link and the AI-tools answer promised Nov 17.",
+    "date": "2026-11-27",
+    "assignee": "Raeven Brown",
+    "urgency": "High",
+    "done": false,
+    "active": true
+   }
+  },
+  {
+   "key": "bowden-call-20261130",
+   "id": 201,
+   "addTask": {
+    "title": "Call Dr. Bowden if no reply to the Nov 27 follow-up",
+    "desc": "Midday Monday. Four asks: rooms and times, check-in contact, photo and parent-card approval, payment timeline. Her number is in her email signature.",
+    "date": "2026-11-30",
+    "assignee": "Raeven Brown",
+    "urgency": "High",
+    "done": false,
+    "active": true
+   }
   }
  ]
 }
