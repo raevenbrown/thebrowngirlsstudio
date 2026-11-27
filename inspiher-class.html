@@ -163,7 +163,7 @@ body.xl{--scale:1.28}
 (function(){
 'use strict';
 /* ===== settings ===== */
-var CONFIG={COLLECT:false,SB_URL:'https://qlgnstoesdzmkcmyaqyw.supabase.co',SB_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ',LIVE_URL:'https://kvrwhzcgiddzylbctyqy.supabase.co/functions/v1/inspiher-live'};
+var CONFIG={COLLECT:false,SB_URL:'https://qlgnstoesdzmkcmyaqyw.supabase.co',SB_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ',LIVE_URL:'https://qlgnstoesdzmkcmyaqyw.supabase.co/functions/v1/inspiher-live'};
 var HASH={'94364d42fabb0be8e99f509a9a62f84c3a8c71b6b4d2da52b1c15a5473ba364b':1,'db88950fe98569668fa8dbbf604d6c8dc77785c57987de4ddf36cdf3ee31a9aa':2,'6c255dcbdb40231839633158fa0cc959ac7bf7a51162425e6889453f0d682e4a':3,'1a3a3734a687bec5ce5ca8a3dd27a0f986cfa2842d8d589c95833eb22014dcb7':4,'dd4f36e22eb098b73804d6a705808bbd513020e9a16927d8cc51a147fe1ee585':'T'};
 var $=function(i){return document.getElementById(i)};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -198,13 +198,14 @@ function lvMsg(code,status){
  if(code==='ai_unavailable')return 'The AI service did not answer. Check the key and credit in the Claude Console, or use Copy prompt.';
  if(code==='not_configured'||status===404||status===503)return 'Live AI is not switched on yet. Finish the Supabase setup, or use Copy prompt.';
  return 'Something went wrong. Use Copy prompt and paste it into your own AI.'}
+function lvHdr(){return {'Content-Type':'application/json','apikey':CONFIG.SB_KEY,'Authorization':'Bearer '+CONFIG.SB_KEY}}
 function liveStream(o){
  if(!LV.pass){o.onFail('Unlock Live AI first.','locked');return}
  var body={pass:LV.pass,messages:o.messages};if(o.persona)body.persona=o.persona;
  var acc='',fin=false;
  function fail(m,c){if(fin)return;fin=true;o.onFail(m,c)}
  function done(){if(fin)return;fin=true;if(acc)o.onDone(acc);else o.onFail('The AI sent nothing back. Try again.','empty')}
- fetch(CONFIG.LIVE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){
+ fetch(CONFIG.LIVE_URL,{method:'POST',headers:lvHdr(),body:JSON.stringify(body)}).then(function(r){
   if(!r.ok){return r.json().catch(function(){return {}}).then(function(j){if(r.status===401){LV.pass=null;try{sessionStorage.removeItem('insp_lp')}catch(e){}}fail(lvMsg(j.error,r.status),j.error||String(r.status))})}
   var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
   function line(l){if(l.indexOf('data:')!==0)return;var js=l.slice(5).trim();if(!js||js==='[DONE]')return;
@@ -262,7 +263,7 @@ function dockAsk(){var inp=$('lvIn'),er=$('lvErr');if(!inp||LV.busy)return;var q
   onDone:function(t){LV.hist.push({role:'assistant',content:t});end();dockMsgs(false)},
   onFail:function(m){LV.hist.pop();end();dockMsgs(false);var i2=$('lvIn'),e2=$('lvErr');if(i2)i2.value=q;if(e2){e2.textContent=m;e2.hidden=false}if(!LV.pass)dockDraw()}})}
 function lvUnlock(){var el=$('lvPass'),er=$('lvErr'),v=el&&el.value;if(!v)return;er.hidden=true;
- fetch(CONFIG.LIVE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pass:v,ping:true})}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){
+ fetch(CONFIG.LIVE_URL,{method:'POST',headers:lvHdr(),body:JSON.stringify({pass:v,ping:true})}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){
   if(r.ok&&j.ok){LV.pass=v;try{sessionStorage.setItem('insp_lp',v)}catch(e){}dockDraw();tbar();return}
   er.textContent=lvMsg(j.error,r.status);er.hidden=false})}).catch(function(){er.textContent='Could not reach the live AI. The school network may be blocking it.';er.hidden=false})}
 /* ===== dice ===== */
