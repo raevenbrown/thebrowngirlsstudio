@@ -113,8 +113,28 @@ p{margin:0 0 .8em} button,input,select,textarea{font:inherit}
 body.xl{--scale:1.28}
 .tbar{background:#1f3a2a;border-bottom:2px solid var(--ok);padding:8px 18px;font-size:.88rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 .tbar .btn{padding:.35rem .7rem;min-height:32px;font-size:.82rem}
+/* live AI */
+.livedock{max-width:940px;margin:0 auto;padding:0 18px 8px}
+.livedock .panel{border-color:var(--gold)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#ff6b6b;margin-right:7px;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.3}}
+.aiwin{border:1px solid var(--line);border-radius:12px;background:#1b0e08;overflow:hidden;margin:10px 0}
+.aiwin .hd{display:flex;justify-content:space-between;gap:8px;padding:8px 14px;background:#120a06;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:700}
+.aiwin .bd{padding:14px;display:grid;gap:10px;min-height:96px;align-content:start}
+.msg{max-width:94%;padding:10px 14px;border-radius:14px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}
+.msg.u{justify-self:end;background:var(--gold);color:#2a160e;font-weight:600;border-bottom-right-radius:4px}
+.msg.a{justify-self:start;background:var(--card2);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.a.typing:after{content:'';display:inline-block;width:.5em;height:1.05em;margin-left:3px;vertical-align:-.15em;background:var(--gold2);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.aiwin .wait,.msg .wait{color:var(--dim);font-style:italic}
+.lvrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.lvrow .chip{cursor:pointer;color:var(--cream);text-align:left} .lvrow .chip:hover{border-color:var(--gold2)}
+.f textarea.lvin{min-height:64px}
+.lvstat{font-size:.78rem;font-weight:800;letter-spacing:.1em}
+.lvstat.on{color:var(--ok)} .lvstat.off{color:var(--bad)}
+.lvk{margin-top:10px}
 @media print{.top,.foot,.prog,.tbar{display:none}}
-@media(prefers-reduced-motion:reduce){.wg{transition-duration:1s}.cardx{animation:none}.die.rolling{animation:none}}
+@media(prefers-reduced-motion:reduce){.wg{transition-duration:1s}.cardx{animation:none}.die.rolling{animation:none}.dot,.msg.a.typing:after{animation:none}}
 </style>
 </head>
 <body>
@@ -135,14 +155,15 @@ body.xl{--scale:1.28}
   <header class="top"><div class="logo">THE AI LAB <span>&middot; InspiHER 2026</span></div><div class="rules"><b>3 rules:</b> Be kind &middot; No personal info &middot; Ask when unsure</div></header>
   <div class="prog" id="prog" aria-hidden="true"></div>
   <main id="stage" class="stage" tabindex="-1"></main>
+  <section id="livedock" class="livedock" hidden></section>
   <nav class="foot"><button id="back" class="btn ghost" type="button">&larr; Back</button><span id="where"></span><button id="next" class="btn" type="button">Next &rarr;</button></nav>
-  <footer class="note"><b>About this page.</b> This page is just for today&rsquo;s class. You do not need an account. Use your initials only, like A.B. Never type your full name, your school, your phone number, your address, or anyone&rsquo;s email. If sharing is off, nothing you type leaves this Chromebook. You can ask Ms. Brown to take your work down at any time. To stop, close the page. Sample answers on this page were written ahead of time to show an idea. Ms. Brown runs the real AI on the big screen.</footer>
+  <footer class="note"><b>About this page.</b> This page is just for today&rsquo;s class. You do not need an account. Use your initials only, like A.B. Never type your full name, your school, your phone number, your address, or anyone&rsquo;s email. If sharing is off, nothing you type leaves this Chromebook. You can ask Ms. Brown to take your work down at any time. To stop, close the page. Answers marked LIVE come from a real AI. Ms. Brown types every prompt, so nothing you type goes to the AI. A real AI can be wrong, so we check what it says.</footer>
 </div>
 <script>
 (function(){
 'use strict';
 /* ===== settings ===== */
-var CONFIG={COLLECT:false,SB_URL:'https://qlgnstoesdzmkcmyaqyw.supabase.co',SB_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ'};
+var CONFIG={COLLECT:false,SB_URL:'https://qlgnstoesdzmkcmyaqyw.supabase.co',SB_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ',LIVE_URL:'https://kvrwhzcgiddzylbctyqy.supabase.co/functions/v1/inspiher-live'};
 var HASH={'94364d42fabb0be8e99f509a9a62f84c3a8c71b6b4d2da52b1c15a5473ba364b':1,'db88950fe98569668fa8dbbf604d6c8dc77785c57987de4ddf36cdf3ee31a9aa':2,'6c255dcbdb40231839633158fa0cc959ac7bf7a51162425e6889453f0d682e4a':3,'1a3a3734a687bec5ce5ca8a3dd27a0f986cfa2842d8d589c95833eb22014dcb7':4,'dd4f36e22eb098b73804d6a705808bbd513020e9a16927d8cc51a147fe1ee585':'T'};
 var $=function(i){return document.getElementById(i)};
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
@@ -163,6 +184,87 @@ function priv(t){t=String(t||'');
 function guard(vals,errId){for(var i=0;i<vals.length;i++){var p=priv(vals[i]);if(p){var e=$(errId);if(e){e.textContent='Take out '+p+' and try again. Keep it private and made up.';e.hidden=false}return false}}var e2=$(errId);if(e2)e2.hidden=true;return true}
 function post(table,row){if(!CONFIG.COLLECT)return Promise.resolve(false);
  return fetch(CONFIG.SB_URL+'/rest/v1/'+table,{method:'POST',headers:{'apikey':CONFIG.SB_KEY,'Authorization':'Bearer '+CONFIG.SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)}).then(function(r){return r.ok}).catch(function(){return false})}
+
+/* ===== live AI (adult view only) ===== */
+var LV={pass:null,open:false,hist:[],busy:false,p:{},bk:{},chips:[]};
+var LP={};
+try{LV.pass=sessionStorage.getItem('insp_lp')||null}catch(e){}
+function lvMsg(code,status){
+ if(code==='bad_passphrase')return 'That passphrase did not work.';
+ if(code==='locked')return 'Too many wrong passphrase tries from this network. Wait an hour.';
+ if(code==='daily_cap')return 'The daily live-AI limit was reached. Use Copy prompt, or raise the limit in Supabase.';
+ if(code==='private')return 'Take out private info (an email, a link, a phone number, or a name) and try again.';
+ if(code==='bad_messages'||code==='bad_persona'||code==='too_big')return 'That prompt was empty or too long. Keep it under 1,200 letters.';
+ if(code==='ai_unavailable')return 'The AI service did not answer. Check the key and credit in the Claude Console, or use Copy prompt.';
+ if(code==='not_configured'||status===404||status===503)return 'Live AI is not switched on yet. Finish the Supabase setup, or use Copy prompt.';
+ return 'Something went wrong. Use Copy prompt and paste it into your own AI.'}
+function liveStream(o){
+ if(!LV.pass){o.onFail('Unlock Live AI first.','locked');return}
+ var body={pass:LV.pass,messages:o.messages};if(o.persona)body.persona=o.persona;
+ var acc='',fin=false;
+ function fail(m,c){if(fin)return;fin=true;o.onFail(m,c)}
+ function done(){if(fin)return;fin=true;if(acc)o.onDone(acc);else o.onFail('The AI sent nothing back. Try again.','empty')}
+ fetch(CONFIG.LIVE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){
+  if(!r.ok){return r.json().catch(function(){return {}}).then(function(j){if(r.status===401){LV.pass=null;try{sessionStorage.removeItem('insp_lp')}catch(e){}}fail(lvMsg(j.error,r.status),j.error||String(r.status))})}
+  var rd=r.body.getReader(),dec=new TextDecoder(),buf='';
+  function line(l){if(l.indexOf('data:')!==0)return;var js=l.slice(5).trim();if(!js||js==='[DONE]')return;
+   try{var ev=JSON.parse(js);
+    if(ev.type==='content_block_delta'&&ev.delta&&ev.delta.type==='text_delta'){acc+=ev.delta.text;o.onText(acc)}
+    else if(ev.type==='error'){fail('The AI stopped in the middle. Try again.','stream')}}catch(e){}}
+  function pump(){return rd.read().then(function(x){
+   if(x.done){if(buf)line(buf);done();return}
+   buf+=dec.decode(x.value,{stream:true});var parts=buf.split('\n');buf=parts.pop();parts.forEach(line);return pump()})}
+  return pump()
+ }).catch(function(){fail('Could not reach the live AI. The school network may be blocking it. Use Copy prompt and paste it into your own AI.','net')})}
+function awinHTML(id,label){return '<div class="aiwin" id="aw-'+id+'"><div class="hd"><span><i class="dot"></i>LIVE &middot; real AI</span><span>'+esc(label||'')+'</span></div><div class="bd" id="ab-'+id+'"><div class="wait">Waiting for a prompt&hellip;</div></div></div>'}
+function copyText(t){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t).then(function(){return true}).catch(function(){return false});
+ var ta=document.createElement('textarea');ta.value=t;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();var ok=false;try{ok=document.execCommand('copy')}catch(e){}document.body.removeChild(ta);return Promise.resolve(ok)}
+function copyBtn(el,t){var o=el.textContent;copyText(t).then(function(ok){el.textContent=ok?'Copied!':'Copy failed';setTimeout(function(){el.textContent=o},1500)})}
+function needUnlock(){LV.open=true;dockDraw();tbar();var el=$('lvPass');if(el){if(el.scrollIntoView)el.scrollIntoView({block:'center'});el.focus()}}
+function runLive(id,prompt,o){o=o||{};var bd=$('ab-'+id);if(!bd)return;
+ if(!LV.pass){needUnlock();return}
+ if(priv(prompt)){bd.innerHTML='<div class="why no">Take out '+esc(priv(prompt))+' and try again.</div>';return}
+ LV.p[id]=prompt;if(o.backup)LV.bk[id]=o.backup;
+ bd.innerHTML='<div class="msg u">'+esc(prompt)+'</div><div class="msg a typing" id="am-'+id+'"><span class="wait">Thinking&hellip;</span></div>';
+ liveStream({messages:[{role:'user',content:prompt}],persona:o.persona,
+  onText:function(t){var a=$('am-'+id);if(a)a.textContent=t},
+  onDone:function(t){var a=$('am-'+id);if(a){a.classList.remove('typing');a.textContent=t}},
+  onFail:function(m){var a=$('am-'+id);if(a)a.outerHTML='<div class="why no"><b>Live AI did not answer.</b> '+esc(m)+'<div class="lvrow"><button type="button" class="btn sm ghost" data-act="copyp" data-id="'+id+'">Copy prompt</button>'+(LV.bk[id]?'<button type="button" class="btn sm ghost" data-act="backup" data-id="'+id+'">Show backup sample</button>':'')+'</div></div>'}})}
+function liveMini(id,title,prompts,note){LP[id]=prompts;
+ return '<div class="panel"><div class="eyebrow">'+title+'</div>'+(note?'<p class="fine">'+note+'</p>':'')+'<div class="lvrow">'+prompts.map(function(p,i){return '<button type="button" class="chip" data-act="lvrun" data-id="'+id+'" data-i="'+i+'">'+esc(p.length>56?p.slice(0,54)+'…':p)+'</button>'}).join('')+'</div>'+awinHTML(id,'Ms. Brown picks the prompt')+'</div>'}
+function watchBig(title,msg){return '<div class="panel"><div class="eyebrow">'+title+'</div><p class="big">'+msg+'</p><p>Watch closely. What does it get right? What would you double-check?</p></div>'}
+/* the dock: ask anything, chat style, for what the girls call out */
+function dockMsgs(typing){var bd=$('ab-dock');if(!bd)return;
+ if(!LV.hist.length&&!typing){bd.innerHTML='<div class="wait">Waiting for a prompt&hellip;</div>';return}
+ var h='';LV.hist.forEach(function(m){h+='<div class="msg '+(m.role==='user'?'u':'a')+'">'+esc(m.content)+'</div>'});
+ if(typing)h+='<div class="msg a typing" id="am-dock"><span class="wait">Thinking&hellip;</span></div>';
+ bd.innerHTML=h}
+function dockDraw(){var d=$('livedock');if(!d)return;
+ if(!S.teacher||!LV.open){d.hidden=true;d.innerHTML='';return}
+ d.hidden=false;
+ var st=SESS[S.sid]&&SESS[S.sid].steps[S.step];
+ LV.chips=(st&&st.live)||['Explain what AI is to a 10-year-old in 3 sentences.','Give me 3 fun facts about space. Number them.','Write a 4-line poem about a robot who loves pizza.'];
+ var h='<div class="panel"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><div class="eyebrow">Live AI &middot; big screen</div><span class="lvstat '+(LV.pass?'on':'off')+'">'+(LV.pass?'UNLOCKED':'LOCKED')+'</span></div>';
+ if(!LV.pass){d.innerHTML=h+'<p class="fine">Type the passphrase to turn on the live AI. Only adults see this box.</p><div class="f"><label for="lvPass">Passphrase</label><input id="lvPass" type="password" autocomplete="off" spellcheck="false"></div><button type="button" class="btn" data-act="lvunlock">Unlock</button><p id="lvErr" class="err" hidden></p></div>';return}
+ h+='<div class="lvrow">'+LV.chips.map(function(c,i){return '<button type="button" class="chip" data-act="lvchip" data-i="'+i+'">'+esc(c.length>46?c.slice(0,44)+'…':c)+'</button>'}).join('')+'</div>'+
+  '<div class="f"><label for="lvIn">Type what the girls call out</label><textarea id="lvIn" class="lvin" maxlength="600" placeholder="Type a prompt, then press Ask the AI"></textarea></div>'+
+  '<div class="lvrow"><button type="button" class="btn" id="lvAsk" data-act="lvask">Ask the AI</button><button type="button" class="btn sm ghost" data-act="lvcopy">Copy prompt</button><button type="button" class="btn sm ghost" data-act="lvnew">New chat</button><button type="button" class="btn sm ghost" data-act="lvlock">Lock</button></div><p id="lvErr" class="err" hidden></p>'+
+  '<div class="aiwin"><div class="hd"><span><i class="dot"></i>LIVE &middot; real AI</span><span>Chat</span></div><div class="bd" id="ab-dock"></div></div></div>';
+ d.innerHTML=h;dockMsgs(LV.busy)}
+function dockAsk(){var inp=$('lvIn'),er=$('lvErr');if(!inp||LV.busy)return;var q=inp.value.trim();if(!q)return;
+ var p=priv(q);if(p){er.textContent='Take out '+p+' and try again.';er.hidden=false;return}er.hidden=true;
+ LV.hist.push({role:'user',content:q});inp.value='';
+ var msgs=LV.hist.slice(-6);if(msgs[0].role!=='user')msgs=msgs.slice(1);
+ dockMsgs(true);LV.busy=true;var ab=$('lvAsk');if(ab)ab.disabled=true;
+ function end(){LV.busy=false;var b2=$('lvAsk');if(b2)b2.disabled=false}
+ liveStream({messages:msgs,
+  onText:function(t){var a=$('am-dock');if(a)a.textContent=t},
+  onDone:function(t){LV.hist.push({role:'assistant',content:t});end();dockMsgs(false)},
+  onFail:function(m){LV.hist.pop();end();dockMsgs(false);var i2=$('lvIn'),e2=$('lvErr');if(i2)i2.value=q;if(e2){e2.textContent=m;e2.hidden=false}if(!LV.pass)dockDraw()}})}
+function lvUnlock(){var el=$('lvPass'),er=$('lvErr'),v=el&&el.value;if(!v)return;er.hidden=true;
+ fetch(CONFIG.LIVE_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({pass:v,ping:true})}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){
+  if(r.ok&&j.ok){LV.pass=v;try{sessionStorage.setItem('insp_lp',v)}catch(e){}dockDraw();tbar();return}
+  er.textContent=lvMsg(j.error,r.status);er.hidden=false})}).catch(function(){er.textContent='Could not reach the live AI. The school network may be blocking it.';er.hidden=false})}
 /* ===== dice ===== */
 var PAT={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
 function faceHTML(n){var h='';for(var i=0;i<9;i++)h+='<i'+(PAT[n].indexOf(i)>=0?' class="on"':'')+'></i>';return h}
@@ -224,10 +326,10 @@ function render(){tClear();var ss=SESS[S.sid];if(!ss)return;var st=ss.steps[S.st
  var p='';for(var i=0;i<ss.steps.length;i++)p+='<i class="'+(i<S.step?'done':(i===S.step?'now':''))+'"></i>';$('prog').innerHTML=p;
  $('where').textContent='Session '+S.sid+' · '+ss.name+' · step '+(S.step+1)+' of '+ss.steps.length;
  $('back').style.visibility=S.step?'visible':'hidden';$('next').style.visibility=S.step<ss.steps.length-1?'visible':'hidden';
- tbar();window.scrollTo(0,0);save()}
+ tbar();dockDraw();window.scrollTo(0,0);save()}
 function tbar(){var t=$('tbar');if(!S.teacher){t.hidden=true;return}t.hidden=false;
  t.innerHTML='<b>Adult view</b> <span>Jump to:</span>'+[1,2,3,4].map(function(n){return '<button type="button" class="btn sm'+(S.sid===n?'':' ghost')+'" data-act="tsess" data-v="'+n+'">Session '+n+'</button>'}).join('')+
- '<button type="button" class="btn sm ghost" data-act="tbig">Big screen</button><button type="button" class="btn sm ghost" data-act="tnew">Clear this Chromebook</button>'}
+ '<button type="button" class="btn sm'+(LV.open?'':' ghost')+'" data-act="tlive">Live AI</button><button type="button" class="btn sm ghost" data-act="tbig">Big screen</button><button type="button" class="btn sm ghost" data-act="tnew">Clear this Chromebook</button>'}
 function start(n,step){S.sid=n;S.step=step||0;D={};render()}
 function unlock(v){$('gate').hidden=true;$('app').hidden=false;if(v==='T'){S.teacher=true;if(!S.sid){S.sid=1}}else{S.sid=v;S.teacher=false}S.step=0;D={};render()}
 /* ===== content: dice lists ===== */
@@ -240,6 +342,8 @@ var DICE={
 function dd(k){return D[k]||(D[k]={})}
 function pbtn(label,act,v,cls){return '<button type="button" class="opt'+(cls?' '+cls:'')+'" data-act="'+act+'" data-v="'+v+'">'+label+'</button>'}
 function hero(eyebrow,title,body){return '<div class="panel hero"><div class="eyebrow">'+eyebrow+'</div><h2>'+title+'</h2>'+(body||'')+'</div>'}
+var MEET=['Explain what AI is to a 10-year-old in 3 sentences.','Tell me a funny joke about a robot who is afraid of the dark.','Write a 4-line poem about a school day.','Give me 3 names for a robot pet and say why each one fits.'];
+function meetBlock(){return S.teacher?liveMini('meet','Meet the real AI &middot; big screen',MEET,'Press a prompt and watch a real AI answer. Girls can call out their own in the Live AI box at the top.'):watchBig('On the big screen','Ms. Brown will show you a real AI answering live.')}
 function rules3(){return '<div class="chips"><span class="chip gold">Be kind</span><span class="chip gold">No personal info</span><span class="chip gold">Ask when unsure</span></div>'}
 /* ===== Session 1: AI Detectives ===== */
 var DETECT=[
@@ -277,11 +381,11 @@ function gdraw(){var h=dd('s1').h||{name:'',job:0,nv:0,col:0},st=D.s1.stars=D.s1
  var cards=[['me',hcard(h.name,h.job,h.nv,COLORS[h.col],'Your helper')]].concat(SAMPLES.map(function(s,i){return ['s'+i,hcard(s[0],s[1],s[2],COLORS[s[3]],'Sample helper')]}));
  $('gal').innerHTML=cards.map(function(c){return '<div>'+c[1]+'<div style="text-align:center"><button type="button" class="star'+(st[c[0]]?' on':'')+'" data-act="star" data-v="'+c[0]+'">'+(st[c[0]]?'&#9733; Starred':'&#9734; Star')+'</button></div></div>'}).join('')}
 SESS[1]={name:'AI Detectives',em:'&#128373;',grades:['5th grade'],made:function(){var h=(D.s1&&D.s1.h)||{};return 'I built an AI helper named '+(h.name||'my helper')+'.'},steps:[
- {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Hands up for "I used it", "I saw it", "never heard of it". Say the three rules out loud.',r:function(b){
+ {t:'Welcome',min:'0 to 8 min',tip:'Ask: what do you think AI is? Hands up for "I used it", "I saw it", "never heard of it". Say the three rules out loud. Then run one or two prompts so they meet a real AI.',r:function(b){
   b.innerHTML=hero('Session 1 &middot; 5th grade','AI Detectives','<p class="sub">Your mission: find out what AI really is, spot what it gets right and wrong, and build your own AI helper.</p>'+rules3())+
   '<div class="panel"><h3>What do you think AI is?</h3><div class="opts">'+pbtn('I have used it','poll','used')+pbtn('I have seen it','poll','saw')+pbtn('Never heard of it','poll','never')+'</div><div id="pollOut"></div></div>'+
-  '<div class="panel"><h3>Here is the secret</h3><p class="big">AI is a computer that learns patterns from lots of examples.</p><p>It does not think like a person. It guesses from what it has seen. That is why good examples matter.</p></div>'}},
- {t:'Be the robot',min:'5 to 20 min',tip:'Unplugged. Pairs sort the picture cards by rules. One girl is the AI, her partner is the trainer. Swap. Debrief: what happens when the examples are bad?',r:function(b){
+  '<div class="panel"><h3>Here is the secret</h3><p class="big">AI is a computer that learns patterns from lots of examples.</p><p>It does not think like a person. It guesses from what it has seen. That is why good examples matter.</p></div>'+meetBlock()}},
+ {t:'Be the robot',min:'8 to 20 min',tip:'Unplugged. Pairs sort the picture cards by rules. One girl is the AI, her partner is the trainer. Swap. Debrief: what happens when the examples are bad?',r:function(b){
   b.innerHTML=hero('Unplugged','Be the robot','<p class="big">Close your Chromebook halfway. Look at your partner.</p><ol><li>One of you is the <b>AI</b>. The other is the <b>trainer</b>.</li><li>The trainer gives the AI one sorting rule at a time and sorts the picture cards.</li><li>The AI follows the rules exactly, even when they are silly.</li><li>Swap jobs.</li></ol><p><b>Think about it:</b> what happens when the examples are bad or confusing?</p>'+timerHTML('rob',900))}},
  {t:'Detective round',min:'20 to 32 min',tip:'Girls work alone or in pairs. Walk the room. When a pair argues about a case, ask what example the AI could have learned from.',r:s1det},
  {t:'AI helper card',min:'32 to 45 min',tip:'Remind: made-up names only. A girl who types a real name gets a gentle redo.',r:s1helper},
@@ -294,11 +398,15 @@ var TRIG=[['sit','hears "sit"'],['fetch','hears "fetch"'],['ball','sees a ball']
 var ACT=[['sits','sits down'],['fetches','fetches it'],['wags','wags its tail'],['hides','hides'],['barks','barks'],['naps','takes a nap']];
 var SITS=[{q:'A loud noise happens while a ball rolls by.',tr:['noise','ball']},{q:'A stranger walks up and says "fetch".',tr:['stranger','fetch']},{q:'It is bedtime, and someone says "sit".',tr:['bed','sit']}];
 function lab(list,k){for(var i=0;i<list.length;i++)if(list[i][0]===k)return list[i][1];return k}
+var PSIT=SITS.map(function(s){return s.q}).concat(['Someone says hello.','A bird lands on the roof.']);
+function petPersona(P){var rs=P.rules.map(function(r,i){return (i+1)+') When it '+lab(TRIG,r.w)+', it '+lab(ACT,r.a)+'.'}).join(' ');
+ return ('A robot '+PETS[P.pet][1].toLowerCase()+' named '+(P.name||'Pet')+'. '+(P.pow?'Superpower: '+P.pow+'. ':'')+'Rules: '+rs).slice(0,700)}
+function petLive(){return '<div class="panel"><div class="eyebrow">Test it with a real AI &middot; big screen</div><p class="fine">The real AI plays your pet and follows only your three rules. Pick a situation and watch what happens when no rule fits.</p><div class="lvrow">'+PSIT.map(function(q,i){return '<button type="button" class="chip" data-act="petai" data-i="'+i+'">'+esc(q)+'</button>'}).join('')+'</div>'+awinHTML('pet','Plays your pet')+'</div>'}
 function s2pet(b){var P=dd('s2').p=D.s2.p||{pet:0,name:'',pow:'',rules:[{w:'sit',a:'sits'},{w:'ball',a:'fetches'},{w:'noise',a:'hides'}],last:null,res:null,msg:''};
  b.innerHTML=hero('Step 1','Pick your robot pet','<div class="opts tight">'+PETS.map(function(x,i){return '<button type="button" class="opt'+(P.pet===i?' sel':'')+'" data-act="pet" data-v="'+i+'"><span style="font-size:1.8rem">'+x[0]+'</span><small>'+x[1]+'</small></button>'}).join('')+'</div>'+
   '<div class="f"><label for="petName">Name your pet (made up)</label><input id="petName" maxlength="16" autocomplete="off" data-live="pet" value="'+esc(P.name)+'"></div>'+diceHTML('pow','Roll for a pet superpower')+'<p id="petErr" class="err" hidden></p>')+
   '<div class="panel"><div class="eyebrow">Step 2</div><h2>Teach it 3 rules</h2><p>A rule says: when this happens, do that.</p><div id="rules"></div><button type="button" class="btn" data-act="testpet">Test my pet</button></div>'+
-  '<div class="panel"><div class="eyebrow">Step 3</div><h2>Tricky situations</h2><div id="testOut"><p>Press <b>Test my pet</b> to see what it does.</p></div></div>';
+  '<div class="panel"><div class="eyebrow">Step 3</div><h2>Tricky situations</h2><div id="testOut"><p>Press <b>Test my pet</b> to see what it does.</p></div></div>'+(S.teacher?petLive():'');
  rdraw();if(P.res)tdraw()}
 function rdraw(){var P=D.s2.p;$('rules').innerHTML=P.rules.map(function(r,i){return '<div class="pc"><b>'+(i+1)+'.</b> When it <select data-live="rule" data-i="'+i+'" data-k="w" aria-label="Rule '+(i+1)+' trigger">'+TRIG.map(function(t){return '<option value="'+t[0]+'"'+(r.w===t[0]?' selected':'')+'>'+t[1]+'</option>'}).join('')+'</select> the pet <select data-live="rule" data-i="'+i+'" data-k="a" aria-label="Rule '+(i+1)+' action">'+ACT.map(function(t){return '<option value="'+t[0]+'"'+(r.a===t[0]?' selected':'')+'>'+t[1]+'</option>'}).join('')+'</select></div>'}).join('')}
 function runTests(){var P=D.s2.p,ok=0,res=SITS.map(function(s){var acts=[],hit=[];P.rules.forEach(function(r){if(s.tr.indexOf(r.w)>=0){hit.push(r);if(acts.indexOf(r.a)<0)acts.push(r.a)}});
@@ -314,10 +422,10 @@ function s2parade(b){var P=dd('s2').p||{pet:0,name:'',pow:'',rules:[]},v=D.s2.vo
  b.innerHTML=hero('Pet parade','Show your pet. Vote for the most helpful pet.','<p>Each table shows one pet and the rule they had to fix. Then vote. You may vote for any pet but your own.</p>')+
  '<div class="cards">'+['<div>'+me+'<p class="fine" style="text-align:center">Your pet</p></div>'].concat(smp.map(function(s,i){return '<div><div class="cardx mini"><div class="em">'+s[0]+'</div><h3>'+s[1]+'</h3><p class="ln">'+s[2]+'</p><p class="ln">'+s[3]+'</p></div><div style="text-align:center"><button type="button" class="star'+(v===i?' on':'')+'" data-act="vote" data-v="'+i+'">'+(v===i?'&#9733; Your vote':'Vote')+'</button></div></div>'}).join('')).join('')+'</div><p class="fine">Votes stay on this Chromebook. Ms. Brown counts the room by hands.</p>'}
 SESS[2]={name:'Teach a Robot Pet',em:'&#128062;',grades:['5th grade'],made:function(){var P=(D.s2&&D.s2.p)||{};return 'I taught '+(P.name||'a robot pet')+' three rules and tested them on three tricky situations.'},steps:[
- {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them today they will teach a pet that follows rules, and rules always have gaps.',r:function(b){
+ {t:'Welcome',min:'0 to 8 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them today they will teach a pet that follows rules, and rules always have gaps. Run one or two prompts so they meet a real AI.',r:function(b){
   b.innerHTML=hero('Session 2 &middot; 5th grade','Teach a Robot Pet','<p class="sub">You are the trainer. Your pet only does what your rules say. What happens when a rule is missing or two rules disagree?</p>'+rules3())+
-  '<div class="panel"><h3>The idea</h3><p class="big">A machine does exactly what it is taught. Not more. Not less.</p><p>Good AI builders test their rules on tricky situations, then fix the gaps.</p></div>'}},
- {t:'Teach a classmate',min:'5 to 20 min',tip:'Unplugged. One girl is the robot pet. The group gives her rules one at a time. She does exactly what the rule says. Laugh. Debrief what broke.',r:function(b){
+  '<div class="panel"><h3>The idea</h3><p class="big">A machine does exactly what it is taught. Not more. Not less.</p><p>Good AI builders test their rules on tricky situations, then fix the gaps.</p></div>'+meetBlock()}},
+ {t:'Teach a classmate',min:'8 to 20 min',tip:'Unplugged. One girl is the robot pet. The group gives her rules one at a time. She does exactly what the rule says. Laugh. Debrief what broke.',r:function(b){
   b.innerHTML=hero('Unplugged','Teach a classmate','<p class="big">One of you is the robot pet. Everyone else is the trainer.</p><ol><li>The trainers give one rule at a time.</li><li>The pet does <b>exactly</b> what the rule says, nothing extra.</li><li>When a rule is unclear, the pet gets confused. Laugh, then fix the rule.</li></ol><p><b>Think about it:</b> which rule was missing?</p>'+timerHTML('pet',900))}},
  {t:'Design your pet',min:'20 to 45 min',tip:'Walk the room. A girl stuck at 1 of 3 is normal. Ask: which situation freezes the pet? What rule would cover it?',r:s2pet},
  {t:'Pet parade',min:'45 to 50 min',tip:'Each table shows one pet and the rule they fixed. Count votes by hands.',r:s2parade},
@@ -340,12 +448,16 @@ function s3wheel(b){var w=dd('s3').w=D.s3.w||{pick:null,gen:false};
  b.innerHTML=hero('Prompt Wheel','Spin for a mission','<div class="wheelwrap"><div>'+wheelHTML('pw',SC)+'<div style="text-align:center"><button type="button" class="btn" id="spinBtn" data-act="spin">Spin the wheel!</button></div></div><div id="wres"></div></div>');
  var g=$('wg-pw');if(g&&WH.pw){g.style.transition='none';g.style.transform='rotate('+WH.pw.cur+'deg)';setTimeout(function(){g.style.transition=''},50)}
  wdraw()}
+function clearText(s){return s.role+' '+s.task+' '+s.details+' '+s.format}
 function wdraw(){var w=D.s3.w,el=$('wres');if(!el)return;
  if(w.pick==null){el.innerHTML='<div class="pbox"><div class="lab">Your mission</div><p>Spin the wheel to find out. The wheel picks a mission and a vague prompt. Then we see what a clear prompt can do.</p></div>';return}
  var sc=SC[w.pick];
- var h='<div class="pbox"><div class="lab">Your mission</div><p class="big" style="margin:4px 0">'+sc.e+' '+esc(sc.mission)+'</p></div><div class="pbox"><div class="lab">Vague prompt</div><p style="margin:2px 0">&ldquo;'+esc(sc.vague)+'&rdquo;</p></div>';
- if(!w.gen)h+='<button type="button" class="btn" data-act="gen">Generate &#10024;</button><p class="fine">Ms. Brown types the winning prompt into a real AI on the big screen. Here you see sample answers written ahead of time.</p>';
- else h+='<div class="vs"><div>'+resHTML([sc.vres],true,'Sample answer to the vague prompt')+'</div><div><div class="pbox"><div class="lab">Clear prompt (4 parts)</div><p style="margin:2px 0">'+promptHTML(sc)+'</p></div>'+resHTML(sc.cres,false,'Sample answer to the clear prompt')+'</div></div>'+legend()+'<div class="why ok"><b>Same mission, better answer.</b> The only thing that changed was the prompt.</div>';
+ var h='<div class="pbox"><div class="lab">Your mission</div><p class="big" style="margin:4px 0">'+sc.e+' '+esc(sc.mission)+'</p></div>'+
+  '<div class="pbox"><div class="lab">Vague prompt</div><p style="margin:2px 0">&ldquo;'+esc(sc.vague)+'&rdquo;</p></div>'+
+  (S.teacher?'<p><button type="button" class="btn" data-act="runv">Run the vague prompt &#10024;</button></p>'+awinHTML('wv','Vague prompt'):'')+
+  '<p id="wrev"'+(w.gen?' hidden':'')+'><button type="button" class="btn ghost" data-act="wclear">Show a clear prompt</button></p>'+
+  '<div id="wclr"'+(w.gen?'':' hidden')+'><div class="pbox"><div class="lab">Clear prompt (4 parts)</div><p style="margin:2px 0">'+promptHTML(sc)+'</p></div>'+
+  (S.teacher?'<p><button type="button" class="btn" data-act="runc">Run the clear prompt &#10024;</button></p>'+awinHTML('wc','Clear prompt'):'<div class="why"><b>On the big screen:</b> Ms. Brown runs both prompts with a real AI. Which answer would you rather get?</div>')+legend()+'<div class="why ok"><b>Same mission, better answer.</b> The only thing that changed was the prompt.</div></div>';
  el.innerHTML=h}
 function sum(a){var n=0;for(var i=0;i<a.length;i++)n+=a[i]?1:0;return n}
 function vbox(i){var c=D.s3.c;return '<div class="pbox"><div class="f"><label for="v'+i+'">Version '+(i+1)+'</label><textarea id="v'+i+'" maxlength="220" data-live="v" data-i="'+i+'">'+esc(c.v[i])+'</textarea></div><div class="chips">'+[['+ Role','You are a '],['+ Task','Please '],['+ Details',' Details: '],['+ Format',' Give it as ']].map(function(x){return '<button type="button" class="chip" data-act="ins" data-i="'+i+'" data-v="'+x[1]+'">'+x[0]+'</button>'}).join('')+'</div><div class="chips">'+['Role','Task','Details','Format'].map(function(n,k){return '<label class="chip"><input type="checkbox" data-live="chk" data-i="'+i+'" data-k="'+k+'"'+(c.chk[i][k]?' checked':'')+'> '+n+'</label>'}).join('')+'<span class="badge" id="sc'+i+'">'+sum(c.chk[i])+' of 4</span></div></div>'}
@@ -361,7 +473,7 @@ var HOW=[['Check a second trustworthy source',1],['Ask a teacher or a librarian'
 function s3mist(b){var m=dd('s3').m=D.s3.m||{r:0,pick:null,how:null};
  if(m.r>=MIST.length){b.innerHTML=hero('Catch the mistake','You are the fact-checker','<p class="big"><span class="badge">Fact-checker</span></p><p>AI says everything in the same confident voice. Your job is to check before you share.</p><button type="button" class="btn" data-act="mistagain">Play again</button>');return}
  var q=MIST[m.r];
- b.innerHTML=hero('Catch the mistake &middot; round '+(m.r+1)+' of '+MIST.length,'One sentence is wrong. Which one?','<p class="fine">An AI wrote this about: '+esc(q.topic)+'</p><div class="opts" style="grid-template-columns:1fr">'+q.s.map(function(x,i){return '<button type="button" class="opt" data-act="mpick" data-v="'+i+'">'+esc(x)+'</button>'}).join('')+'</div><div id="mOut"></div>');
+ b.innerHTML=hero('Catch the mistake &middot; round '+(m.r+1)+' of '+MIST.length,'One sentence is wrong. Which one?','<p class="fine">An AI wrote this about: '+esc(q.topic)+'</p><div class="opts" style="grid-template-columns:1fr">'+q.s.map(function(x,i){return '<button type="button" class="opt" data-act="mpick" data-v="'+i+'">'+esc(x)+'</button>'}).join('')+'</div><div id="mOut"></div>')+(S.teacher?liveMini('mist','Now try it with a real AI &middot; big screen',['Tell me 5 facts about octopuses. One short sentence each.','Tell me 5 facts about the Moon. One short sentence each.','Tell me 5 facts about the Roman Empire. One short sentence each.'],'The AI may not make a mistake. If it does not, ask the room: how would you know?'):'');
  if(m.pick!=null)mshow()}
 function mshow(){var m=D.s3.m,q=MIST[m.r],ok=m.pick===q.bad,bs=document.querySelectorAll('[data-act=mpick]');
  for(var i=0;i<bs.length;i++){bs[i].disabled=true;if(i===q.bad)bs[i].classList.add('good');else if(i===m.pick)bs[i].classList.add('bad')}
@@ -369,11 +481,11 @@ function mshow(){var m=D.s3.m,q=MIST[m.r],ok=m.pick===q.bad,bs=document.querySel
 SESS[3]={name:'Prompt Lab',em:'&#129514;',grades:['6th grade','7th grade','8th grade'],made:function(){var w=D.s3&&D.s3.w,sc=SC[(w&&w.pick!=null)?w.pick:0];return 'I wrote a clear 4-part prompt for: '+sc.mission},steps:[
  {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them they will write prompts, test them and fact-check one answer.',r:function(b){
   b.innerHTML=hero('Session 3 &middot; grades 6 to 8','Prompt Lab','<p class="sub">The same AI gives very different answers depending on what you ask. Today you learn to ask well, and to check what it says.</p>'+rules3())+'<div class="panel"><h3>The four parts of a strong prompt</h3>'+legend()+'<p>You will use all four today.</p></div>'}},
- {t:'Same ask, different answer',min:'5 to 15 min',tip:'Adult-led on your laptop on the big screen: one vague prompt and one clear prompt. Show the difference live. This page shows pre-written samples as a backup.',r:function(b){var s=SC[2];
-  b.innerHTML=hero('Look up','Same ask, different answer','<p>Ms. Brown shows a vague prompt and a clear prompt on the big screen. Watch what changes.</p>'+timerHTML('cmp',600))+'<div class="panel"><div class="vs"><div><div class="pbox"><div class="lab">Vague prompt</div><p style="margin:2px 0">&ldquo;'+esc(s.vague)+'&rdquo;</p></div>'+resHTML([s.vres],true,'Sample answer')+'</div><div><div class="pbox"><div class="lab">Clear prompt</div><p style="margin:2px 0">'+promptHTML(s)+'</p></div>'+resHTML(s.cres,false,'Sample answer')+'</div></div>'+legend()+'</div>'}},
- {t:'Prompt wheel',min:'15 to 25 min',tip:'Put the wheel on the big screen if you want a whole-room spin. Each girl can also spin her own. Show the real AI answer for the winning prompt after the sample.',r:s3wheel},
+ {t:'Same ask, different answer',min:'5 to 15 min',tip:'Press Run both. A real AI answers the vague prompt and the clear prompt at the same time. If the network blocks it, use Copy prompt, or show the backup sample (it is labeled as pre-written).',r:function(b){var s=SC[2];
+  b.innerHTML=hero('Look up','Same ask, different answer','<p>'+(S.teacher?'Press the button. A real AI answers both prompts at the same time.':'Ms. Brown runs a vague prompt and a clear prompt with a real AI on the big screen. Watch what changes.')+'</p>'+timerHTML('cmp',600))+'<div class="panel">'+(S.teacher?'<p><button type="button" class="btn" data-act="runboth">Run both with the real AI &#10024;</button></p>':'')+'<div class="vs"><div><div class="pbox"><div class="lab">Vague prompt</div><p style="margin:2px 0">&ldquo;'+esc(s.vague)+'&rdquo;</p></div>'+(S.teacher?awinHTML('cv','Vague prompt'):'')+'</div><div><div class="pbox"><div class="lab">Clear prompt</div><p style="margin:2px 0">'+promptHTML(s)+'</p></div>'+(S.teacher?awinHTML('cc','Clear prompt'):'')+'</div></div>'+legend()+'</div>'}},
+ {t:'Prompt wheel',min:'15 to 25 min',tip:'Spin on the big screen. Run the vague prompt first and let the room groan, then reveal the clear prompt and run it. Girls can spin their own wheels too.',r:s3wheel},
  {t:'Your turn',min:'25 to 40 min',tip:'Teams of 2 to 4. Walk the room. Ask each team which of the four parts their Version 3 has.',r:s3chal},
- {t:'Catch the mistake',min:'40 to 50 min',tip:'Then show one real AI answer with a planted error from your handout and let teams find it.',r:s3mist},
+ {t:'Catch the mistake',min:'40 to 50 min',tip:'Play the two rounds. Then run a live prompt below and let teams hunt for a mistake. A real AI can be wrong, and it can also be right. The skill is knowing how to check.',r:s3mist},
  {t:'Spark Card',min:'50 to 56 min',tip:'Initials only. Sharing is off unless the district approved it.',r:sparkR},
  {t:'Feedback',min:'56 to 60 min',tip:'Anonymous. Hold up the QR card only if the district approved it.',r:fbR}]};
 /* ===== Session 4: Future Builder ===== */
@@ -400,12 +512,14 @@ function s4pledge(b){var pl=dd('s4').pl=D.s4.pl||{pick:null,sig:''};
  b.innerHTML=hero('Honest-use pledge','One rule I will follow','<p>Pick the rule that matters most to you. Sign with your initials.</p><div class="opts" style="grid-template-columns:1fr">'+PLEDGES.map(function(x,i){return '<button type="button" class="opt'+(pl.pick===i?' sel':'')+'" data-act="plpick" data-v="'+i+'">'+esc(x)+'</button>'}).join('')+'</div><div class="f"><label for="plS">Sign with your initials (up to 3 letters)</label><input id="plS" maxlength="3" autocomplete="off" data-live="pl" value="'+esc(pl.sig)+'"></div><div id="plOut"></div>');pldraw()}
 function pldraw(){var pl=D.s4.pl,el=$('plOut');if(!el)return;if(pl.pick==null||!pl.sig){el.innerHTML='';return}
  el.innerHTML='<div class="cardx"><div class="em">&#9997;</div><h3>My honest-use pledge</h3><p class="ln">'+esc(PLEDGES[pl.pick])+'</p><div class="by">Signed '+esc(initialsOut(pl.sig))+'</div></div>'}
+var DEMO=[['Turn a messy idea into a weekly plan','I have a science test on Friday, a soccer game on Saturday, and a project due Monday. I also need to sleep and see my friends. Make me a simple plan for the week, one line per day.'],['Explain one idea three ways','Explain how the internet works in three ways: to a 5-year-old, to a friend my age, and to a future engineer. Two sentences each.'],['Ask for sources, then check one','Give me 3 facts about how AI helps doctors today. For each fact, name a source I could check.']];
 SESS[4]={name:'Future Builder',em:'&#128640;',grades:['9th grade','10th grade','11th grade','12th grade'],made:function(){var p=D.s4&&D.s4.p;return 'I pitched an AI helper called '+((p&&p.b)||'my helper')+' that solves a real problem for girls my age.'},steps:[
  {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them today is about careers, an honest look at AI, and their own idea.',r:function(b){
   b.innerHTML=hero('Session 4 &middot; grades 9 to 12','Future Builder','<p class="sub">AI is already changing every career. Today you decide what it should help with, what it should never do, and what you want to build.</p>'+rules3())+'<div class="panel"><h3>Today</h3><div class="chips"><span class="chip gold">Careers and AI</span><span class="chip gold">Live demo</span><span class="chip gold">60-second pitch</span><span class="chip gold">Honest-use pledge</span></div></div>'}},
  {t:'Careers and AI',min:'5 to 15 min',tip:'Table groups list what AI can help with and what it should never do for their career. The wheel is optional. Use it to break a tie.',r:s4career},
- {t:'Live demo',min:'15 to 30 min',tip:'Adult-led on your laptop with your adult account. Three short demos. Girls call out what to ask next.',r:function(b){
-  b.innerHTML=hero('Look up','Live demo on the big screen','<p class="big">Ms. Brown runs three short demos.</p><ol><li>Turn a messy idea into a weekly plan.</li><li>Explain one idea three ways.</li><li>Ask for sources, then check one live.</li></ol><p><b>Your job:</b> call out what to ask next. Notice what the AI gets right, and what you would double-check.</p>'+timerHTML('demo',900))}},
+ {t:'Live demo',min:'15 to 30 min',tip:'Adult-led on your laptop. Three short demos with a real AI. Edit the prompt if the girls want a change. Use the Live AI button at the top for their ideas.',r:function(b){
+  b.innerHTML=hero('Look up','Live demo on the big screen',(S.teacher?'<p class="big">Press a demo. A real AI answers live.</p><p>Girls call out what to change. Edit the prompt box, then run it again.</p>':'<p class="big">Ms. Brown runs three short demos with a real AI.</p><ol><li>Turn a messy idea into a weekly plan.</li><li>Explain one idea three ways.</li><li>Ask for sources, then check one live.</li></ol><p><b>Your job:</b> call out what to ask next. Notice what the AI gets right, and what you would double-check.</p>')+timerHTML('demo',900))+
+  (S.teacher?'<p id="dmErr" class="err" hidden></p>'+DEMO.map(function(d,i){return '<div class="panel"><div class="eyebrow">Demo '+(i+1)+'</div><h3>'+esc(d[0])+'</h3><div class="f"><label for="dm'+i+'">Prompt (you can change it)</label><textarea id="dm'+i+'" class="lvin" maxlength="500">'+esc(d[1])+'</textarea></div><button type="button" class="btn" data-act="demo" data-i="'+i+'">Run demo '+(i+1)+' &#10024;</button>'+awinHTML('dm'+i,'Demo '+(i+1))+'</div>'}).join(''):'')}},
  {t:'Pitch',min:'30 to 48 min',tip:'Teams of four. Two pitches go live. Keep names made up. Walk the room and read a few pitches aloud.',r:s4pitch},
  {t:'Pledge',min:'48 to 50 min',tip:'Each girl picks one rule and signs with initials.',r:s4pledge},
  {t:'Spark Card',min:'50 to 56 min',tip:'Initials only. Sharing is off unless the district approved it.',r:sparkR},
@@ -428,7 +542,22 @@ document.addEventListener('click',function(e){var el=e.target.closest('[data-act
  case 'testpet':runTests();tdraw();break;
  case 'vote':D.s2.vote=+v;s2parade($('stage').lastChild);break;
  case 'spin':var w=D.s3.w;el.disabled=true;spinWheel('pw',SC.length,function(t){w.pick=t;w.gen=false;el.disabled=false;wdraw()});break;
- case 'gen':D.s3.w.gen=true;wdraw();break;
+ case 'wclear':D.s3.w.gen=true;var wr=$('wrev'),wc=$('wclr');if(wr)wr.hidden=true;if(wc)wc.hidden=false;break;
+ case 'runv':runLive('wv',SC[D.s3.w.pick].vague,{backup:[SC[D.s3.w.pick].vres]});break;
+ case 'runc':runLive('wc',clearText(SC[D.s3.w.pick]),{backup:SC[D.s3.w.pick].cres});break;
+ case 'runboth':var s2c=SC[2];runLive('cv',s2c.vague,{backup:[s2c.vres]});runLive('cc',clearText(s2c),{backup:s2c.cres});break;
+ case 'petai':runLive('pet','Situation: '+PSIT[+el.dataset.i],{persona:petPersona(D.s2.p)});break;
+ case 'demo':var dt=$('dm'+el.dataset.i).value.trim(),de=$('dmErr');if(!dt)break;if(priv(dt)){de.textContent='Take out '+priv(dt)+' and try again.';de.hidden=false;break}de.hidden=true;runLive('dm'+el.dataset.i,dt);break;
+ case 'lvrun':runLive(el.dataset.id,LP[el.dataset.id][+el.dataset.i]);break;
+ case 'tlive':LV.open=!LV.open;dockDraw();tbar();if(LV.open){var dk=$('livedock');if(dk&&dk.scrollIntoView)dk.scrollIntoView({block:'start'})}break;
+ case 'lvunlock':lvUnlock();break;
+ case 'lvchip':var ci=$('lvIn');if(ci){ci.value=LV.chips[+el.dataset.i];ci.focus()}break;
+ case 'lvask':dockAsk();break;
+ case 'lvcopy':var cv=$('lvIn');copyBtn(el,cv?cv.value:'');break;
+ case 'lvnew':if(!LV.busy){LV.hist=[];dockMsgs(false)}break;
+ case 'lvlock':LV.pass=null;try{sessionStorage.removeItem('insp_lp')}catch(x){}dockDraw();tbar();break;
+ case 'copyp':copyBtn(el,LV.p[el.dataset.id]||'');break;
+ case 'backup':var bk=LV.bk[el.dataset.id],bx=el.closest('.why');if(bk&&bx)bx.outerHTML=resHTML(bk,true,'BACKUP SAMPLE &middot; pre-written, not live');break;
  case 'ins':var ta=$('v'+el.dataset.i);ta.value=(ta.value+v).slice(0,220);ta.focus();D.s3.c.v[+el.dataset.i]=ta.value;break;
  case 'best':D.s3.c.best=+v;[].forEach.call(document.querySelectorAll('[data-act=best]'),function(x){x.classList.toggle('sel',x.dataset.v===v)});bestDraw();break;
  case 'mpick':if(D.s3.m.pick==null){D.s3.m.pick=+v;mshow()}break;
@@ -460,6 +589,7 @@ function onLive(e){var el=e.target.closest('[data-live]');if(!el)return;var k=el
  if(k==='pitch'){var ok=guard([el.value],'pErr');if(ok){D.s4.p[el.dataset.k]=el.value;$('pText').textContent=pitchText(D.s4.p)}}
  if(k==='pl'){var s=el.value.replace(/[^A-Za-z]/g,'');D.s4.pl.sig=s;pldraw()}}
 document.addEventListener('input',onLive);document.addEventListener('change',onLive);
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&e.target&&e.target.id==='lvPass'){lvUnlock()}if((e.ctrlKey||e.metaKey)&&e.key==='Enter'&&e.target&&e.target.id==='lvIn'){dockAsk()}});
 $('next').addEventListener('click',function(){if(S.step<SESS[S.sid].steps.length-1){S.step++;render()}});
 $('back').addEventListener('click',function(){if(S.step>0){S.step--;render()}});
 function tryCode(){var v=$('code').value.trim().toLowerCase();if(!(window.crypto&&crypto.subtle)){$('gerr').textContent='Open this page with https so the code can be checked.';$('gerr').hidden=false;return}
