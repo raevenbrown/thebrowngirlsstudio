@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#2A160E">
+<title>AI &amp; Me! | InspiHER 2026 | The AI Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Public+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{--bg:#2a160e;--card:#3b2216;--card2:#4a2c1c;--cream:#f3e8d6;--dim:#dcc9a8;--gold:#c7994f;--gold2:#e3bd79;--line:rgba(243,232,214,.18);--ok:#8fe0a8;--bad:#f5a39b;--scale:1}
+html{font-size:calc(16px*var(--scale))}
+body{margin:0;background:var(--bg);color:var(--cream);font-family:'Public Sans',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;line-height:1.5}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;margin:0 0 .4em;line-height:1.15;color:#fff}
+h1{font-size:clamp(2rem,6vw,3.2rem)} h2{font-size:clamp(1.5rem,4vw,2.1rem)} h3{font-size:1.2rem}
+p{margin:0 0 .8em} button,input,select,textarea{font:inherit}
+.eyebrow{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold2);font-weight:700}
+.sub{color:var(--dim)} .fine{font-size:.82rem;color:var(--dim)} .err{color:var(--bad);font-weight:600}
+[hidden]{display:none!important}
+.btn{background:var(--gold);color:#2a160e;border:0;border-radius:6px;padding:.8rem 1.2rem;font-weight:800;cursor:pointer;min-height:44px}
+.btn:hover{background:var(--gold2)} .btn:disabled{opacity:.45;cursor:default}
+.btn.ghost{background:transparent;color:var(--cream);border:2px solid var(--line)} .btn.ghost:hover{border-color:var(--gold2)}
+.btn.sm{padding:.45rem .8rem;min-height:36px;font-size:.9rem}
+.gate{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 30% 20%,#4a2c1c,#2a160e 60%)}
+.gate-card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:32px;max-width:440px;width:100%}
+.gate-card label{display:block;font-weight:700;margin:18px 0 6px}
+.gate-card input{width:100%;padding:14px;border-radius:6px;border:2px solid transparent;font-size:1.1rem;background:var(--cream);color:#2a160e;margin-bottom:12px}
+.gate-card input:focus,.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold2)}
+.top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:10px 18px;background:#1f0f09;border-bottom:1px solid var(--line)}
+.logo{font-weight:800;letter-spacing:.14em;font-size:.8rem;color:var(--gold2)} .logo span{color:var(--dim);letter-spacing:.06em;font-weight:600}
+.rules{font-size:.82rem;color:var(--dim)}
+.prog{display:flex;gap:6px;justify-content:center;padding:12px 18px 0;flex-wrap:wrap}
+.prog i{width:34px;height:8px;border-radius:5px;background:var(--card2)} .prog i.done{background:var(--gold)} .prog i.now{background:var(--gold2);box-shadow:0 0 0 2px rgba(227,189,121,.35)}
+.stage{max-width:940px;margin:0 auto;padding:18px 18px 8px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:24px;margin-bottom:16px}
+.panel.hero{background:linear-gradient(135deg,#4a2c1c,#3b2216)}
+.tip{background:rgba(143,224,168,.1);border:1px dashed var(--ok);border-radius:8px;padding:10px 14px;font-size:.88rem;margin-bottom:14px}
+.tip b{color:var(--ok)}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:10px;max-width:940px;margin:0 auto;padding:6px 18px 16px}
+#where{color:var(--dim);font-size:.85rem;text-align:center}
+.note{max-width:940px;margin:0 auto;padding:0 18px 36px;font-size:.78rem;color:var(--dim)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chip{background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:.4rem .9rem;font-size:.9rem}
+.chip.gold{background:rgba(199,153,79,.18);border-color:var(--gold)}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.opt{background:var(--card2);color:var(--cream);border:2px solid var(--line);border-radius:8px;padding:14px;cursor:pointer;text-align:left;font-weight:700;min-height:52px}
+.opts.tight{grid-template-columns:repeat(auto-fit,minmax(120px,1fr))}
+.opt:hover{border-color:var(--gold2)} .opt.sel{border-color:var(--gold2);background:rgba(199,153,79,.22)}
+.opt.good{border-color:var(--ok);background:rgba(143,224,168,.15)} .opt.bad{border-color:var(--bad);background:rgba(245,163,155,.12)}
+.opt small{display:block;font-weight:400;color:var(--dim);margin-top:2px}
+.why{margin-top:10px;padding:12px 14px;border-left:4px solid var(--gold2);background:rgba(227,189,121,.1);border-radius:0 8px 8px 0}
+.why.ok{border-color:var(--ok)} .why.no{border-color:var(--bad)}
+.big{font-size:1.5rem;font-family:'Fraunces',Georgia,serif;color:#fff;margin:6px 0 12px}
+.f{margin-bottom:14px} .f label{display:block;font-weight:700;margin-bottom:4px;font-size:.92rem}
+.f input,.f select,.f textarea{width:100%;padding:12px;border-radius:6px;border:2px solid transparent;background:var(--cream);color:#2a160e;font-size:1rem}
+.f textarea{min-height:76px;resize:vertical} .hint{font-size:.8rem;color:var(--dim);margin-top:3px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px} .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:700px){.row2,.row3{grid-template-columns:1fr}}
+.cardx{border:3px solid var(--gold2);border-radius:14px;padding:18px;background:linear-gradient(160deg,#4a2c1c,#2a160e);text-align:center}
+.cardx.pop{animation:pop .5s ease}
+.cardx .em{font-size:3rem;line-height:1} .cardx h3{margin:6px 0 2px} .cardx .by{color:var(--gold2);font-weight:700;font-size:.9rem}
+.cardx .ln{margin:8px 0 0;font-size:.95rem} .cardx .ft{margin-top:12px;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.cardx.mini{padding:12px;border-width:2px;text-align:left} .cardx.mini .em{font-size:2rem}
+@keyframes pop{0%{transform:scale(.88);opacity:0}100%{transform:scale(1);opacity:1}}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.star{background:transparent;border:2px solid var(--line);color:var(--gold2);border-radius:999px;padding:.3rem .8rem;cursor:pointer;font-weight:700;margin-top:8px}
+.star.on{background:var(--gold);color:#2a160e;border-color:var(--gold2)}
+/* dice */
+.diebox{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.die{width:84px;height:84px;background:var(--cream);border:0;border-radius:16px;padding:10px;cursor:pointer;box-shadow:0 5px 0 #b8a07a,0 8px 14px rgba(0,0,0,.4)}
+.die:active{transform:translateY(3px);box-shadow:0 2px 0 #b8a07a}
+.face{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);width:100%;height:100%}
+.face i{display:block;border-radius:50%;margin:14%}.face i.on{background:#2a160e}
+.die.rolling{animation:shake .25s linear infinite}
+@keyframes shake{0%{transform:rotate(-8deg)}50%{transform:rotate(8deg) translateY(-4px)}100%{transform:rotate(-8deg)}}
+.twist{flex:1;min-width:200px;font-weight:700;color:var(--gold2);font-size:1.05rem}
+.twist small{display:block;color:var(--dim);font-weight:400}
+/* wheel */
+.wheelwrap{display:grid;grid-template-columns:minmax(260px,340px) 1fr;gap:22px;align-items:start}
+@media(max-width:820px){.wheelwrap{grid-template-columns:1fr}}
+.wbox{position:relative;max-width:340px;margin:0 auto;width:100%}
+.pointer{position:absolute;left:50%;top:-8px;transform:translateX(-50%);width:0;height:0;border-left:15px solid transparent;border-right:15px solid transparent;border-top:30px solid var(--gold2);filter:drop-shadow(0 2px 2px rgba(0,0,0,.5));z-index:2}
+.wheel{display:block;width:100%;height:auto}
+.wg{transform-origin:170px 170px;transition:transform 4.2s cubic-bezier(.12,.7,.1,1)}
+.rim{fill:none;stroke:var(--rim);stroke-width:7}.hub{fill:var(--rim)}
+.sg0{fill:var(--f0)}.sg1{fill:var(--f1)}.sg2{fill:var(--f2)}.sg3{fill:var(--f3)}
+.tx0{fill:var(--x0)}.tx1{fill:var(--x1)}.tx2{fill:var(--x2)}.tx3{fill:var(--x3)}
+.wlab{font-size:14px;font-weight:800;font-family:'Public Sans',system-ui,sans-serif}
+[data-skin=gold]{--f0:#c7994f;--f1:#4a2c1c;--f2:#e3bd79;--f3:#6b3f28;--x0:#2a160e;--x1:#f3e8d6;--x2:#2a160e;--x3:#f3e8d6;--rim:#e3bd79}
+[data-skin=galaxy]{--f0:#6d28d9;--f1:#0e7490;--f2:#312e81;--f3:#a21caf;--x0:#fff;--x1:#fff;--x2:#fff;--x3:#fff;--rim:#67e8f9}
+[data-skin=candy]{--f0:#f472b6;--f1:#34d399;--f2:#fbbf24;--f3:#60a5fa;--x0:#3b0a2a;--x1:#04332a;--x2:#3b2a00;--x3:#05224a;--rim:#fff}
+.skins{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0;justify-content:center}
+.skins .chip{cursor:pointer;color:var(--cream)} .skins .chip.on{border-color:var(--gold2);background:rgba(199,153,79,.25);font-weight:800}
+.pbox{border-radius:8px;padding:12px 14px;margin:8px 0;background:var(--card2);border:1px solid var(--line)}
+.pbox .lab{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:700}
+.pt{padding:0 3px;border-radius:3px;color:#2a160e;font-weight:600} .pt.r{background:#f9a8d4}.pt.t{background:#fcd34d}.pt.d{background:#86efac}.pt.f{background:#93c5fd}
+.res{background:#f3e8d6;color:#2a160e;border-radius:8px;padding:12px 14px;margin:6px 0}
+.res.weak{opacity:.85} .res .lab{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#6b3f28;font-weight:800;display:block;margin-bottom:4px}
+.res ol,.res ul{margin:4px 0 0 18px;padding:0}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:14px} @media(max-width:760px){.vs{grid-template-columns:1fr}}
+.timer{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0}
+.timer .t{font-family:'Fraunces',Georgia,serif;font-size:3rem;color:#fff;min-width:130px}
+.pc{margin:6px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.pc select{padding:10px;border-radius:6px;border:2px solid transparent;background:var(--cream);color:#2a160e;font-size:.95rem}
+.out{padding:10px 12px;border-radius:8px;margin:6px 0;border:1px solid var(--line);background:var(--card2)}
+.out.ok{border-color:var(--ok)} .out.no{border-color:var(--bad)}
+.sw{display:flex;gap:8px;flex-wrap:wrap} .sw button{width:38px;height:38px;border-radius:50%;border:3px solid transparent;cursor:pointer} .sw button.sel{border-color:#fff}
+.gc{display:flex;gap:10px;align-items:flex-start;padding:8px 0}.gc input{width:22px;height:22px;margin-top:3px}
+.badge{display:inline-block;background:var(--gold);color:#2a160e;font-weight:800;border-radius:999px;padding:.3rem .9rem}
+body.xl{--scale:1.28}
+.tbar{background:#1f3a2a;border-bottom:2px solid var(--ok);padding:8px 18px;font-size:.88rem;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.tbar .btn{padding:.35rem .7rem;min-height:32px;font-size:.82rem}
+@media print{.top,.foot,.prog,.tbar{display:none}}
+@media(prefers-reduced-motion:reduce){.wg{transition-duration:1s}.cardx{animation:none}.die.rolling{animation:none}}
+</style>
+</head>
+<body>
+<div id="gate" class="gate">
+  <div class="gate-card">
+    <div class="eyebrow">InspiHER 2026 &middot; The AI Lab</div>
+    <h1>AI &amp; Me!</h1>
+    <p class="sub">An AI and Tech Discovery Workshop</p>
+    <label for="code">Class code</label>
+    <input id="code" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Type the code on your card">
+    <p id="gerr" class="err" hidden>That code did not work. Check your card and try again.</p>
+    <button id="gbtn" class="btn" type="button">Go in</button>
+    <p class="fine" style="margin-top:14px">No account. No email. Nothing to download.</p>
+  </div>
+</div>
+<div id="app" hidden>
+  <div id="tbar" class="tbar" hidden></div>
+  <header class="top"><div class="logo">THE AI LAB <span>&middot; InspiHER 2026</span></div><div class="rules"><b>3 rules:</b> Be kind &middot; No personal info &middot; Ask when unsure</div></header>
+  <div class="prog" id="prog" aria-hidden="true"></div>
+  <main id="stage" class="stage" tabindex="-1"></main>
+  <nav class="foot"><button id="back" class="btn ghost" type="button">&larr; Back</button><span id="where"></span><button id="next" class="btn" type="button">Next &rarr;</button></nav>
+  <footer class="note"><b>About this page.</b> This page is just for today&rsquo;s class. You do not need an account. Use your initials only, like A.B. Never type your full name, your school, your phone number, your address, or anyone&rsquo;s email. If sharing is off, nothing you type leaves this Chromebook. You can ask Ms. Brown to take your work down at any time. To stop, close the page. Sample answers on this page were written ahead of time to show an idea. Ms. Brown runs the real AI on the big screen.</footer>
+</div>
+<script>
+(function(){
+'use strict';
+/* ===== settings ===== */
+var CONFIG={COLLECT:false,SB_URL:'https://qlgnstoesdzmkcmyaqyw.supabase.co',SB_KEY:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ'};
+var HASH={'94364d42fabb0be8e99f509a9a62f84c3a8c71b6b4d2da52b1c15a5473ba364b':1,'db88950fe98569668fa8dbbf604d6c8dc77785c57987de4ddf36cdf3ee31a9aa':2,'6c255dcbdb40231839633158fa0cc959ac7bf7a51162425e6889453f0d682e4a':3,'1a3a3734a687bec5ce5ca8a3dd27a0f986cfa2842d8d589c95833eb22014dcb7':4,'dd4f36e22eb098b73804d6a705808bbd513020e9a16927d8cc51a147fe1ee585':'T'};
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function rnd(n){return Math.floor(Math.random()*n)}
+var reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+var S={sid:0,step:0,teacher:false,skin:'gold'};
+var D={};
+function save(){try{sessionStorage.setItem('insp_s',JSON.stringify({sid:S.sid,step:S.step,teacher:S.teacher,skin:S.skin,big:document.body.classList.contains('xl')}))}catch(e){}}
+function load(){try{var j=JSON.parse(sessionStorage.getItem('insp_s')||'null');if(j&&j.sid){S.sid=j.sid;S.step=j.step||0;S.teacher=!!j.teacher;S.skin=j.skin||'gold';if(j.big)document.body.classList.add('xl');return true}}catch(e){}return false}
+function sha(t){return crypto.subtle.digest('SHA-256',new TextEncoder().encode(t)).then(function(h){return Array.prototype.map.call(new Uint8Array(h),function(b){return('0'+b.toString(16)).slice(-2)}).join('')})}
+/* keep private things out of anything a girl types */
+function priv(t){t=String(t||'');
+ if(/@/.test(t))return 'an email address';
+ if(/https?:|www\.|\.(com|net|org|edu|gov)\b/i.test(t))return 'a web link';
+ if(t.replace(/\D/g,'').length>=7||/\d{5,}/.test(t))return 'a phone number or a long number';
+ if(/\b(my name is|i am called|i live (at|on|in)|my address|my phone|my number|call me at)\b/i.test(t))return 'private info';
+ return ''}
+function guard(vals,errId){for(var i=0;i<vals.length;i++){var p=priv(vals[i]);if(p){var e=$(errId);if(e){e.textContent='Take out '+p+' and try again. Keep it private and made up.';e.hidden=false}return false}}var e2=$(errId);if(e2)e2.hidden=true;return true}
+function post(table,row){if(!CONFIG.COLLECT)return Promise.resolve(false);
+ return fetch(CONFIG.SB_URL+'/rest/v1/'+table,{method:'POST',headers:{'apikey':CONFIG.SB_KEY,'Authorization':'Bearer '+CONFIG.SB_KEY,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(row)}).then(function(r){return r.ok}).catch(function(){return false})}
+/* ===== dice ===== */
+var PAT={1:[4],2:[0,8],3:[0,4,8],4:[0,2,6,8],5:[0,2,4,6,8],6:[0,2,3,5,6,8]};
+function faceHTML(n){var h='';for(var i=0;i<9;i++)h+='<i'+(PAT[n].indexOf(i)>=0?' class="on"':'')+'></i>';return h}
+function diceHTML(id,label){return '<div class="diebox"><button type="button" class="die" data-act="roll" data-d="'+id+'" aria-label="Roll the dice"><span class="face" id="face-'+id+'">'+faceHTML(1)+'</span></button><div class="twist" id="tw-'+id+'"><b>'+esc(label)+'</b><small>Tap the dice to roll.</small></div></div>'}
+function rollDie(id,list,cb){var b=document.querySelector('[data-d="'+id+'"]');if(!b||b.dataset.busy)return;b.dataset.busy='1';b.classList.add('rolling');var f=$('face-'+id),n=0,max=reduce?2:9;
+ var iv=setInterval(function(){f.innerHTML=faceHTML(1+rnd(6));if(++n>=max){clearInterval(iv);var r=1+rnd(6);f.innerHTML=faceHTML(r);b.classList.remove('rolling');delete b.dataset.busy;$('tw-'+id).innerHTML='<b>You rolled a '+r+'!</b><small>'+esc(list[r-1])+'</small>';if(cb)cb(r,list[r-1])}},95)}
+/* ===== wheel ===== */
+var WH={};
+function skinChips(){var L=[['gold','InspiHER Gold'],['galaxy','Galaxy'],['candy','Candy']];return '<div class="skins" role="group" aria-label="Wheel skin">'+L.map(function(s){return '<button type="button" class="chip'+(S.skin===s[0]?' on':'')+'" data-act="skin" data-v="'+s[0]+'">'+s[1]+'</button>'}).join('')+'</div>'}
+function wheelHTML(id,items){var n=items.length,a=360/n,R=160,cx=170,cy=170,h='<div data-skin="'+S.skin+'"><div class="wbox"><div class="pointer"></div><svg class="wheel" viewBox="0 0 340 340" role="img" aria-label="Spinning wheel"><g class="wg" id="wg-'+id+'">';
+ for(var i=0;i<n;i++){var a0=(i*a-90)*Math.PI/180,a1=((i+1)*a-90)*Math.PI/180;
+  var x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);
+  h+='<path class="sg'+(i%4)+'" d="M'+cx+' '+cy+' L'+x0.toFixed(2)+' '+y0.toFixed(2)+' A'+R+' '+R+' 0 0 1 '+x1.toFixed(2)+' '+y1.toFixed(2)+' Z" stroke="rgba(0,0,0,.25)" stroke-width="1.5"/>';
+  var mid=(i+0.5)*a-90;
+  h+='<text class="wlab tx'+(i%4)+'" transform="rotate('+mid.toFixed(2)+' '+cx+' '+cy+')" x="'+(cx+R-16)+'" y="'+(cy+5)+'" text-anchor="end">'+items[i].e+' '+esc(items[i].k)+'</text>'}
+ h+='<circle class="rim" cx="170" cy="170" r="160"/><circle class="hub" cx="170" cy="170" r="16"/></g></svg></div>'+skinChips()+'</div>';return h}
+function spinWheel(id,n,cb){var w=WH[id]||(WH[id]={cur:0,busy:false});if(w.busy)return;w.busy=true;var g=$('wg-'+id),a=360/n,t=rnd(n),j=a*(0.18+Math.random()*0.64);
+ var Rm=(360-(t*a+j))%360,curm=((w.cur%360)+360)%360,delta=((Rm-curm)+360)%360;
+ w.cur=w.cur+360*(reduce?1:4+rnd(3))+delta;g.style.transform='rotate('+w.cur+'deg)';
+ setTimeout(function(){w.busy=false;cb(t)},reduce?1100:4300)}
+/* ===== timer ===== */
+var TM={};
+function fmt(s){var m=Math.floor(s/60),r=s%60;return m+':'+(r<10?'0':'')+r}
+function timerHTML(id,sec){return '<div class="timer"><div class="t" id="tm-'+id+'">'+fmt(sec)+'</div><button type="button" class="btn sm" data-act="tgo" data-t="'+id+'" data-s="'+sec+'">Start</button><button type="button" class="btn sm ghost" data-act="treset" data-t="'+id+'" data-s="'+sec+'">Reset</button></div>'}
+function tClear(){for(var k in TM){if(TM[k].iv)clearInterval(TM[k].iv)}TM={}}
+function tGo(btn){var id=btn.dataset.t,sec=+btn.dataset.s,t=TM[id]||(TM[id]={left:sec,iv:null});
+ if(t.iv){clearInterval(t.iv);t.iv=null;btn.textContent='Resume';return}
+ btn.textContent='Pause';t.iv=setInterval(function(){t.left--;var el=$('tm-'+id);if(el)el.textContent=fmt(Math.max(0,t.left));if(t.left<=0){clearInterval(t.iv);t.iv=null;if(el)el.textContent='Time!';btn.textContent='Start';t.left=sec}},1000)}
+function tReset(btn){var id=btn.dataset.t,sec=+btn.dataset.s;if(TM[id]&&TM[id].iv)clearInterval(TM[id].iv);TM[id]={left:sec,iv:null};var el=$('tm-'+id);if(el)el.textContent=fmt(sec);var sb=document.querySelector('[data-act=tgo][data-t="'+id+'"]');if(sb)sb.textContent='Start'}
+/* ===== Spark Card (every session ends with one) ===== */
+function initialsOut(s){return s.toUpperCase().split('').join('.')+'.'}
+function sparkR(box){var ss=SESS[S.sid],sp=D.spark=D.spark||{};
+ box.innerHTML='<div class="panel hero"><div class="eyebrow">Your Spark Card</div><h2>Make your Spark Card</h2><p>This card is yours. It shows what you made and what inspires you. Use <b>initials only</b>.</p>'+
+ '<div class="row2"><div>'+
+ '<div class="f"><label for="spI">Your initials (up to 3 letters)</label><input id="spI" maxlength="3" autocomplete="off" value="'+esc(sp.i||'')+'" placeholder="A B"></div>'+
+ '<div class="f"><label for="spG">Your grade</label><select id="spG">'+ss.grades.map(function(g){return '<option'+(sp.g===g?' selected':'')+'>'+g+'</option>'}).join('')+'</select></div>'+
+ '<div class="f"><label for="spT">Name your card (up to 40 letters)</label><input id="spT" maxlength="40" autocomplete="off" value="'+esc(sp.t||'')+'" placeholder="Example: Robot Pet Rescue"></div>'+
+ '<div class="f"><label for="spB">Finish the sentence (up to 80 letters)</label><input id="spB" maxlength="80" autocomplete="off" value="'+esc(sp.b||'')+'" placeholder="I want to use tech to..."><div class="chips"><button type="button" class="chip" data-act="starter" data-v="I am inspired by ">I am inspired by...</button><button type="button" class="chip" data-act="starter" data-v="I want to use tech to ">I want to use tech to...</button><button type="button" class="chip" data-act="starter" data-v="One day I will build ">One day I will build...</button></div></div>'+
+ '<p id="spE" class="err" hidden></p><button type="button" class="btn" data-act="mkcard">Make my card</button></div>'+
+ '<div id="spCard"></div></div></div>';
+ if(sp.done)showCard()}
+function showCard(){var ss=SESS[S.sid],sp=D.spark,el=$('spCard');if(!el)return;
+ el.innerHTML='<div class="cardx pop"><div class="em">'+ss.em+'</div><h3>'+esc(sp.t)+'</h3><div class="by">'+esc(initialsOut(sp.i))+' &middot; '+esc(sp.g)+'</div><p class="ln">'+esc(ss.made())+'</p><p class="ln"><i>&ldquo;'+esc(sp.b)+'&rdquo;</i></p><div class="ft">InspiHER 2026 &middot; AI &amp; Me! &middot; The AI Lab</div></div>'+
+ (CONFIG.COLLECT?'<p class="fine" style="margin-top:12px">If you want Ms. Brown to have your card, tap send. She reads every card first.</p><button type="button" class="btn" data-act="sendcard">Send my card to Ms. Brown</button><p id="sendOut" class="fine"></p>'
+ :'<p class="fine" style="margin-top:12px"><b>Nothing was sent.</b> Your card stays on this Chromebook. Show it to Ms. Brown and your table. Ask Ms. Brown for your take-home card.</p>')}
+/* ===== anonymous feedback ===== */
+function fbR(box){D.fb=D.fb||{};
+ box.innerHTML='<div class="panel hero"><div class="eyebrow">Quick feedback &middot; anonymous</div><h2>How was today?</h2><p>No name. No initials. Just tap.</p>'+
+ '<div class="opts" id="fb1">'+[['love','Loved it'],['ok','It was okay'],['meh','Not for me']].map(function(o){return '<button type="button" class="opt'+(D.fb.m===o[0]?' sel':'')+'" data-act="fb" data-g="m" data-v="'+o[0]+'">'+o[1]+'</button>'}).join('')+'</div>'+
+ '<h3>What should we add next time?</h3><div class="opts" id="fb2">'+[['time','More time to build'],['robots','More robots and games'],['ai','More real AI on the screen'],['prizes','Prizes and stickers']].map(function(o){return '<button type="button" class="opt'+(D.fb.w===o[0]?' sel':'')+'" data-act="fb" data-g="w" data-v="'+o[0]+'">'+o[1]+'</button>'}).join('')+'</div>'+
+ '<div id="fbOut">'+(D.fb.m&&D.fb.w?fbThanks():'')+'</div></div>'}
+function fbThanks(){return '<div class="why ok"><b>Thank you!</b> You finished the workshop. You are an AI explorer now. Keep asking good questions, and keep your private info private.'+(CONFIG.COLLECT?' Your feedback was sent with no name.':' Nothing you tapped left this Chromebook.')+'</div>'}
+/* ===== navigation ===== */
+var SESS={};
+function render(){tClear();var ss=SESS[S.sid];if(!ss)return;var st=ss.steps[S.step],box=$('stage');
+ box.innerHTML='';
+ if(S.teacher&&st.tip){var tp=document.createElement('div');tp.className='tip';tp.innerHTML='<b>Adult tip'+(st.min?' &middot; '+esc(st.min):'')+':</b> '+esc(st.tip);box.appendChild(tp)}
+ var inner=document.createElement('div');box.appendChild(inner);st.r(inner);
+ var p='';for(var i=0;i<ss.steps.length;i++)p+='<i class="'+(i<S.step?'done':(i===S.step?'now':''))+'"></i>';$('prog').innerHTML=p;
+ $('where').textContent='Session '+S.sid+' · '+ss.name+' · step '+(S.step+1)+' of '+ss.steps.length;
+ $('back').style.visibility=S.step?'visible':'hidden';$('next').style.visibility=S.step<ss.steps.length-1?'visible':'hidden';
+ tbar();window.scrollTo(0,0);save()}
+function tbar(){var t=$('tbar');if(!S.teacher){t.hidden=true;return}t.hidden=false;
+ t.innerHTML='<b>Adult view</b> <span>Jump to:</span>'+[1,2,3,4].map(function(n){return '<button type="button" class="btn sm'+(S.sid===n?'':' ghost')+'" data-act="tsess" data-v="'+n+'">Session '+n+'</button>'}).join('')+
+ '<button type="button" class="btn sm ghost" data-act="tbig">Big screen</button><button type="button" class="btn sm ghost" data-act="tnew">Clear this Chromebook</button>'}
+function start(n,step){S.sid=n;S.step=step||0;D={};render()}
+function unlock(v){$('gate').hidden=true;$('app').hidden=false;if(v==='T'){S.teacher=true;if(!S.sid){S.sid=1}}else{S.sid=v;S.teacher=false}S.step=0;D={};render()}
+/* ===== content: dice lists ===== */
+var DICE={
+ hname:['Sparky','Nova','Pixel','Blossom','Echo','Orbit'],
+ pow:['It can fly','It is invisible on Tuesdays','It runs super fast','It speaks only in rhymes','It glows in the dark','It is as tiny as a button'],
+ twist:['Use only 25 words','Write it for a younger kid','Add a fun voice, like a pirate','Ask for exactly 3 ideas','Ask for a table','Start with "You are a..."'],
+ ptw:['Start with a question','Include one real number','Tell it as a tiny story','End with a call to action','Say what it must never do','Use a rhyme']
+};
+function dd(k){return D[k]||(D[k]={})}
+function pbtn(label,act,v,cls){return '<button type="button" class="opt'+(cls?' '+cls:'')+'" data-act="'+act+'" data-v="'+v+'">'+label+'</button>'}
+function hero(eyebrow,title,body){return '<div class="panel hero"><div class="eyebrow">'+eyebrow+'</div><h2>'+title+'</h2>'+(body||'')+'</div>'}
+function rules3(){return '<div class="chips"><span class="chip gold">Be kind</span><span class="chip gold">No personal info</span><span class="chip gold">Ask when unsure</span></div>'}
+/* ===== Session 1: AI Detectives ===== */
+var DETECT=[
+ ['Your phone guesses the next word while you type.',1,'AI. It learned from lots and lots of writing.'],
+ ['A light switch turns a lamp on and off.',0,'Not AI. It follows one fixed rule and never learns.'],
+ ['A video app suggests shows you might like.',1,'AI. It learned from what many people watched.'],
+ ['A music box plays the same song every time you open it.',0,'Not AI. It repeats. It does not learn anything.'],
+ ['Your phone unlocks when it sees your face.',1,'AI. It learned the patterns of faces from many examples.'],
+ ['A calculator adds 7 + 8.',0,'Not AI. It follows exact math rules.'],
+ ['An email app moves junk mail to the spam folder.',1,'AI. It learned what junk mail usually looks like.'],
+ ['A vending machine drops a snack after you put in coins.',0,'Not AI. It is a simple if-then rule.']];
+var JOBS=['helps me practice spelling words','reminds me to take a break','suggests fun science experiments','helps me plan my week','explains hard words in simple ways','helps me think up a story'];
+var NEVER=['share a secret','pretend to be a real person','be mean','make up facts','ask for my address','do my test for me'];
+var COLORS=['#f472b6','#60a5fa','#34d399','#fbbf24','#a78bfa','#fb7185'];
+var SAMPLES=[['Penny',0,3,2],['Zip',2,4,1],['Luna',3,0,4]];
+function s1det(b){var d=dd('s1').det=D.s1.det||{i:0,score:0,a:null};
+ if(d.i>=DETECT.length){var rk=d.score>=7?'Master Detective':(d.score>=5?'Detective':'Rookie Detective');
+  b.innerHTML=hero('Detective round','You scored '+d.score+' of '+DETECT.length,'<p class="big"><span class="badge">'+rk+'</span></p><p>AI learns from many examples. A plain machine follows one fixed rule and never learns. Now you can tell them apart.</p><button type="button" class="btn" data-act="detagain">Play again</button>');return}
+ var it=DETECT[d.i];
+ b.innerHTML=hero('Detective round &middot; case '+(d.i+1)+' of '+DETECT.length,'AI or not AI?','<p class="big">'+esc(it[0])+'</p><div class="opts">'+pbtn('AI','det',1)+pbtn('Not AI','det',0)+'</div><div id="detOut"></div>');
+ if(d.a!==null)showDet()}
+function showDet(){var d=D.s1.det,it=DETECT[d.i],ok=(d.a===it[1]);
+ var bs=document.querySelectorAll('[data-act=det]');for(var i=0;i<bs.length;i++){var v=+bs[i].dataset.v;bs[i].disabled=true;if(v===it[1])bs[i].classList.add('good');else if(v===d.a)bs[i].classList.add('bad')}
+ $('detOut').innerHTML='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Nice catch!':'Good guess. Here is the clue:')+'</b> '+esc(it[2])+'</div><button type="button" class="btn" style="margin-top:12px" data-act="detnext">'+(d.i+1>=DETECT.length?'See my score':'Next case')+'</button>'}
+function s1helper(b){var h=dd('s1').h=D.s1.h||{name:'',job:0,nv:0,col:0};
+ b.innerHTML=hero('Build it','Make your AI helper card','<p>Give your helper a made-up name, one job, and one thing it must never do.</p>'+diceHTML('hname','Roll for a name idea')+
+ '<div class="row2"><div><div class="f"><label for="hName">Helper name (made up, not a real person)</label><input id="hName" maxlength="20" autocomplete="off" data-live="h" value="'+esc(h.name)+'"></div>'+
+ '<div class="f"><label for="hJob">Its one job</label><select id="hJob" data-live="h">'+JOBS.map(function(j,i){return '<option value="'+i+'"'+(h.job===i?' selected':'')+'>'+j+'</option>'}).join('')+'</select></div>'+
+ '<div class="f"><label for="hNv">It must never...</label><select id="hNv" data-live="h">'+NEVER.map(function(j,i){return '<option value="'+i+'"'+(h.nv===i?' selected':'')+'>'+j+'</option>'}).join('')+'</select></div>'+
+ '<div class="f"><label>Its color</label><div class="sw">'+COLORS.map(function(c,i){return '<button type="button" class="'+(h.col===i?'sel':'')+'" style="background:'+c+'" data-act="hcol" data-v="'+i+'" aria-label="Color '+(i+1)+'"></button>'}).join('')+'</div></div><p id="hErr" class="err" hidden></p></div><div id="hCard"></div></div>');hdraw()}
+function hcard(n,j,nv,c,tag){return '<div class="cardx" style="border-color:'+c+'"><div class="em">&#129302;</div><h3>'+esc(n||'Your helper')+'</h3><div class="by" style="color:'+c+'">'+tag+'</div><p class="ln"><b>Its job:</b> '+esc(JOBS[j])+'</p><p class="ln"><b>It must never</b> '+esc(NEVER[nv])+'</p></div>'}
+function hdraw(){var h=D.s1.h;$('hCard').innerHTML=hcard(h.name,h.job,h.nv,COLORS[h.col],'AI helper')}
+function s1gal(b){b.innerHTML=hero('Gallery walk','Walk, look, and star two cards','<p>Visit two screens. Leave a gold star sticker on the helpers you like best. You can star two cards here too.</p><div class="cards" id="gal"></div>');gdraw()}
+function gdraw(){var h=dd('s1').h||{name:'',job:0,nv:0,col:0},st=D.s1.stars=D.s1.stars||{};
+ var cards=[['me',hcard(h.name,h.job,h.nv,COLORS[h.col],'Your helper')]].concat(SAMPLES.map(function(s,i){return ['s'+i,hcard(s[0],s[1],s[2],COLORS[s[3]],'Sample helper')]}));
+ $('gal').innerHTML=cards.map(function(c){return '<div>'+c[1]+'<div style="text-align:center"><button type="button" class="star'+(st[c[0]]?' on':'')+'" data-act="star" data-v="'+c[0]+'">'+(st[c[0]]?'&#9733; Starred':'&#9734; Star')+'</button></div></div>'}).join('')}
+SESS[1]={name:'AI Detectives',em:'&#128373;',grades:['5th grade'],made:function(){var h=(D.s1&&D.s1.h)||{};return 'I built an AI helper named '+(h.name||'my helper')+'.'},steps:[
+ {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Hands up for "I used it", "I saw it", "never heard of it". Say the three rules out loud.',r:function(b){
+  b.innerHTML=hero('Session 1 &middot; 5th grade','AI Detectives','<p class="sub">Your mission: find out what AI really is, spot what it gets right and wrong, and build your own AI helper.</p>'+rules3())+
+  '<div class="panel"><h3>What do you think AI is?</h3><div class="opts">'+pbtn('I have used it','poll','used')+pbtn('I have seen it','poll','saw')+pbtn('Never heard of it','poll','never')+'</div><div id="pollOut"></div></div>'+
+  '<div class="panel"><h3>Here is the secret</h3><p class="big">AI is a computer that learns patterns from lots of examples.</p><p>It does not think like a person. It guesses from what it has seen. That is why good examples matter.</p></div>'}},
+ {t:'Be the robot',min:'5 to 20 min',tip:'Unplugged. Pairs sort the picture cards by rules. One girl is the AI, her partner is the trainer. Swap. Debrief: what happens when the examples are bad?',r:function(b){
+  b.innerHTML=hero('Unplugged','Be the robot','<p class="big">Close your Chromebook halfway. Look at your partner.</p><ol><li>One of you is the <b>AI</b>. The other is the <b>trainer</b>.</li><li>The trainer gives the AI one sorting rule at a time and sorts the picture cards.</li><li>The AI follows the rules exactly, even when they are silly.</li><li>Swap jobs.</li></ol><p><b>Think about it:</b> what happens when the examples are bad or confusing?</p>'+timerHTML('rob',900))}},
+ {t:'Detective round',min:'20 to 32 min',tip:'Girls work alone or in pairs. Walk the room. When a pair argues about a case, ask what example the AI could have learned from.',r:s1det},
+ {t:'AI helper card',min:'32 to 45 min',tip:'Remind: made-up names only. A girl who types a real name gets a gentle redo.',r:s1helper},
+ {t:'Gallery walk',min:'45 to 50 min',tip:'Girls walk to two screens and leave a gold sticker on paper. Starring here is optional.',r:s1gal},
+ {t:'Spark Card',min:'50 to 56 min',tip:'Initials only. Check a few cards before anyone taps send. Sharing is off unless the district approved it.',r:sparkR},
+ {t:'Feedback',min:'56 to 60 min',tip:'Anonymous. Hold up the QR card only if the district approved it.',r:fbR}]};
+/* ===== Session 2: Teach a Robot Pet ===== */
+var PETS=[['&#128049;','Cat'],['&#128054;','Dog'],['&#128009;','Dragon'],['&#129417;','Owl'],['&#129418;','Fox'],['&#128048;','Bunny']];
+var TRIG=[['sit','hears "sit"'],['fetch','hears "fetch"'],['ball','sees a ball'],['noise','hears a loud noise'],['stranger','sees a stranger'],['bed','gets sleepy at bedtime']];
+var ACT=[['sits','sits down'],['fetches','fetches it'],['wags','wags its tail'],['hides','hides'],['barks','barks'],['naps','takes a nap']];
+var SITS=[{q:'A loud noise happens while a ball rolls by.',tr:['noise','ball']},{q:'A stranger walks up and says "fetch".',tr:['stranger','fetch']},{q:'It is bedtime, and someone says "sit".',tr:['bed','sit']}];
+function lab(list,k){for(var i=0;i<list.length;i++)if(list[i][0]===k)return list[i][1];return k}
+function s2pet(b){var P=dd('s2').p=D.s2.p||{pet:0,name:'',pow:'',rules:[{w:'sit',a:'sits'},{w:'ball',a:'fetches'},{w:'noise',a:'hides'}],last:null,res:null,msg:''};
+ b.innerHTML=hero('Step 1','Pick your robot pet','<div class="opts tight">'+PETS.map(function(x,i){return '<button type="button" class="opt'+(P.pet===i?' sel':'')+'" data-act="pet" data-v="'+i+'"><span style="font-size:1.8rem">'+x[0]+'</span><small>'+x[1]+'</small></button>'}).join('')+'</div>'+
+  '<div class="f"><label for="petName">Name your pet (made up)</label><input id="petName" maxlength="16" autocomplete="off" data-live="pet" value="'+esc(P.name)+'"></div>'+diceHTML('pow','Roll for a pet superpower')+'<p id="petErr" class="err" hidden></p>')+
+  '<div class="panel"><div class="eyebrow">Step 2</div><h2>Teach it 3 rules</h2><p>A rule says: when this happens, do that.</p><div id="rules"></div><button type="button" class="btn" data-act="testpet">Test my pet</button></div>'+
+  '<div class="panel"><div class="eyebrow">Step 3</div><h2>Tricky situations</h2><div id="testOut"><p>Press <b>Test my pet</b> to see what it does.</p></div></div>';
+ rdraw();if(P.res)tdraw()}
+function rdraw(){var P=D.s2.p;$('rules').innerHTML=P.rules.map(function(r,i){return '<div class="pc"><b>'+(i+1)+'.</b> When it <select data-live="rule" data-i="'+i+'" data-k="w" aria-label="Rule '+(i+1)+' trigger">'+TRIG.map(function(t){return '<option value="'+t[0]+'"'+(r.w===t[0]?' selected':'')+'>'+t[1]+'</option>'}).join('')+'</select> the pet <select data-live="rule" data-i="'+i+'" data-k="a" aria-label="Rule '+(i+1)+' action">'+ACT.map(function(t){return '<option value="'+t[0]+'"'+(r.a===t[0]?' selected':'')+'>'+t[1]+'</option>'}).join('')+'</select></div>'}).join('')}
+function runTests(){var P=D.s2.p,ok=0,res=SITS.map(function(s){var acts=[],hit=[];P.rules.forEach(function(r){if(s.tr.indexOf(r.w)>=0){hit.push(r);if(acts.indexOf(r.a)<0)acts.push(r.a)}});
+  var st=acts.length===0?'none':(acts.length===1?'ok':'clash');if(st==='ok')ok++;return {q:s.q,st:st,acts:acts,hit:hit}});
+ var msg='';if(P.last!=null){msg=ok>P.last?'You changed a rule and your pet got better! That is how AI builders work: test, find the gap, fix it.':(ok<P.last?'That made it worse. Real builders undo changes and try again.':'Same score. Try changing one rule and test again.')}
+ P.last=ok;P.res=res;P.score=ok;P.msg=msg}
+function tdraw(){var P=D.s2.p;$('testOut').innerHTML=P.res.map(function(r){var txt=r.st==='ok'?'Your pet '+lab(ACT,r.acts[0])+'.':(r.st==='none'?'Your pet freezes. No rule fits this!':'Your pet gets confused. Two rules disagree.');
+  return '<div class="out '+(r.st==='ok'?'ok':'no')+'"><b>'+esc(r.q)+'</b><br>'+(r.st==='ok'?'&#9989; ':(r.st==='none'?'&#129300; ':'&#128565; '))+esc(txt)+'</div>'}).join('')+
+  '<p><span class="badge">'+P.score+' of 3 handled</span></p>'+(P.msg?'<div class="why ok">'+esc(P.msg)+'</div>':'<div class="why">Tip: one rule can cover a situation. Change one rule and test again.</div>')}
+function s2parade(b){var P=dd('s2').p||{pet:0,name:'',pow:'',rules:[]},v=D.s2.vote;
+ var me='<div class="cardx"><div class="em">'+PETS[P.pet][0]+'</div><h3>'+esc(P.name||'Your pet')+'</h3><div class="by">'+PETS[P.pet][1]+(P.pow?' &middot; '+esc(P.pow):'')+'</div>'+P.rules.map(function(r){return '<p class="ln">When it '+esc(lab(TRIG,r.w))+', it '+esc(lab(ACT,r.a))+'.</p>'}).join('')+'</div>';
+ var smp=[['&#129417;','Hoot','When it hears "sit", it sits.','When it is bedtime, it naps.'],['&#128009;','Flare','When it sees a stranger, it barks.','When it hears a loud noise, it hides.'],['&#128048;','Biscuit','When it sees a ball, it fetches it.','When it hears "fetch", it fetches it.']];
+ b.innerHTML=hero('Pet parade','Show your pet. Vote for the most helpful pet.','<p>Each table shows one pet and the rule they had to fix. Then vote. You may vote for any pet but your own.</p>')+
+ '<div class="cards">'+['<div>'+me+'<p class="fine" style="text-align:center">Your pet</p></div>'].concat(smp.map(function(s,i){return '<div><div class="cardx mini"><div class="em">'+s[0]+'</div><h3>'+s[1]+'</h3><p class="ln">'+s[2]+'</p><p class="ln">'+s[3]+'</p></div><div style="text-align:center"><button type="button" class="star'+(v===i?' on':'')+'" data-act="vote" data-v="'+i+'">'+(v===i?'&#9733; Your vote':'Vote')+'</button></div></div>'}).join('')).join('')+'</div><p class="fine">Votes stay on this Chromebook. Ms. Brown counts the room by hands.</p>'}
+SESS[2]={name:'Teach a Robot Pet',em:'&#128062;',grades:['5th grade'],made:function(){var P=(D.s2&&D.s2.p)||{};return 'I taught '+(P.name||'a robot pet')+' three rules and tested them on three tricky situations.'},steps:[
+ {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them today they will teach a pet that follows rules, and rules always have gaps.',r:function(b){
+  b.innerHTML=hero('Session 2 &middot; 5th grade','Teach a Robot Pet','<p class="sub">You are the trainer. Your pet only does what your rules say. What happens when a rule is missing or two rules disagree?</p>'+rules3())+
+  '<div class="panel"><h3>The idea</h3><p class="big">A machine does exactly what it is taught. Not more. Not less.</p><p>Good AI builders test their rules on tricky situations, then fix the gaps.</p></div>'}},
+ {t:'Teach a classmate',min:'5 to 20 min',tip:'Unplugged. One girl is the robot pet. The group gives her rules one at a time. She does exactly what the rule says. Laugh. Debrief what broke.',r:function(b){
+  b.innerHTML=hero('Unplugged','Teach a classmate','<p class="big">One of you is the robot pet. Everyone else is the trainer.</p><ol><li>The trainers give one rule at a time.</li><li>The pet does <b>exactly</b> what the rule says, nothing extra.</li><li>When a rule is unclear, the pet gets confused. Laugh, then fix the rule.</li></ol><p><b>Think about it:</b> which rule was missing?</p>'+timerHTML('pet',900))}},
+ {t:'Design your pet',min:'20 to 45 min',tip:'Walk the room. A girl stuck at 1 of 3 is normal. Ask: which situation freezes the pet? What rule would cover it?',r:s2pet},
+ {t:'Pet parade',min:'45 to 50 min',tip:'Each table shows one pet and the rule they fixed. Count votes by hands.',r:s2parade},
+ {t:'Spark Card',min:'50 to 56 min',tip:'Initials only. Sharing is off unless the district approved it.',r:sparkR},
+ {t:'Feedback',min:'56 to 60 min',tip:'Anonymous. Hold up the QR card only if the district approved it.',r:fbR}]};
+/* ===== Session 3: Prompt Lab ===== */
+var SC=[
+ {e:'&#128197;',k:'Study week',mission:'Plan a study week for a science test.',vague:'Help me study.',role:'You are a friendly study coach.',task:'Plan a 5-day study week for my science test on Friday.',details:'I have 30 minutes a day after school and I get bored with flash cards.',format:'Give it as a table with one fun activity per day.',vres:'Studying is important! Make a plan, take breaks, and review your notes.',cres:['Mon: Make a comic strip of the water cycle (30 min)','Tue: Quiz a family member with 5 questions you write','Wed: Draw and label the diagram from memory','Thu: Teach it to a stuffed animal like you are the teacher','Fri: 10-minute recap, then rest. You are ready!']},
+ {e:'&#127755;',k:'Explain it',mission:'Explain how volcanoes work to a 5th grader.',vague:'Volcanoes.',role:'You are a fun science teacher.',task:'Explain how a volcano erupts.',details:'My audience is a 5th grader. Use one example from everyday life.',format:'Use 4 short sentences and end with a question to think about.',vres:'A volcano is an opening in the Earth\'s crust where melted rock, ash and gas can escape. There are many types of volcanoes around the world.',cres:['Deep underground, rock gets so hot it melts into magma.','Magma is lighter than the rock around it, so it rises, like bubbles in a shaken soda.','When the pressure builds, it bursts out as lava, ash and gas.','Think about it: why might some volcanoes erupt gently and others explode?']},
+ {e:'&#128054;',k:'Puppy care',mission:'Help me care for a new puppy.',vague:'Dogs.',role:'You are a kind veterinarian.',task:'Tell me how to keep a new puppy safe and happy in the first week.',details:'I am 12, the puppy is 8 weeks old, and we live in an apartment.',format:'Give me a checklist of 5 items.',vres:'Dogs are loyal pets. They need food, water and love.',cres:['[ ] Set up a quiet bed in one spot','[ ] Feed small meals at the same times each day','[ ] Take short potty trips often','[ ] Puppy-proof: hide wires and small objects','[ ] Call the vet to book the first checkup']},
+ {e:'&#127881;',k:'Party plan',mission:'Plan a surprise birthday party for a friend.',vague:'Party ideas.',role:'You are a creative party planner.',task:'Plan a surprise party for my friend\'s 12th birthday.',details:'She loves art. We have $30, 8 guests, and a backyard.',format:'Give a timeline with 4 steps and a short supply list.',vres:'Parties are fun! You could have cake, balloons, and games.',cres:['1) Guests hide and arrive 10 minutes early','2) Everyone yells Surprise!','3) Art station: decorate paper crowns','4) Cake and a group photo','Supplies: paper crowns, markers, plates, one cake']},
+ {e:'&#127936;',k:'Pep talk',mission:'Write a pep talk for my team before a game.',vague:'Team talk.',role:'You are an upbeat coach.',task:'Write a 30-second pep talk for my basketball team.',details:'We lost last week and we need to feel confident.',format:'Use short sentences I can say out loud, with one team chant at the end.',vres:'Good luck to the team! Play hard and do your best.',cres:['We lost last week. That was last week.','Today we pass, we cheer, we hustle.','Every one of us belongs on this court.','Hands in! On three, we say Together! One, two, three: Together!']},
+ {e:'&#127758;',k:'Less waste',mission:'Give ideas to reduce waste at school.',vague:'Recycling.',role:'You are an environmental scientist.',task:'Give 3 ideas to reduce waste in the school lunchroom.',details:'Our school has 500 students and no compost bins yet.',format:'For each idea, give one step we can start this week.',vres:'Recycling is good for the planet. Reduce, reuse, recycle!',cres:['1) Share table for unopened food. Start: ask lunch staff to set out one bin.','2) Reusable tray day. Start: poll students for one trial day.','3) Compost pilot. Start: email the garden club about one bin.']},
+ {e:'&#127918;',k:'Game idea',mission:'Invent a new game to play at recess.',vague:'A game.',role:'You are a game designer for kids.',task:'Invent a new recess game with no equipment.',details:'For 8 players in two teams of 4. It takes under 10 minutes and nobody is eliminated.',format:'Give the name, 3 rules and one way to win.',vres:'Games can be fun. You can play tag or hide and seek.',cres:['Name: Shadow Freeze','Rule 1: Players try to step on the other team\'s shadows.','Rule 2: If your shadow is stepped on, freeze and count to 5, then rejoin.','Rule 3: A teammate can high-five you to unfreeze early.','Win: the team with the fewest freezes after 8 minutes.']},
+ {e:'&#9993;',k:'Thank you',mission:'Write a thank-you note to a coach.',vague:'Thank you.',role:'You are a thoughtful writer.',task:'Write a thank-you note from me to my coach.',details:'She taught me to never give up, and my free throws got better this season.',format:'Keep it to 4 sentences, warm but not silly.',vres:'Thank you for everything. You are the best.',cres:['Dear Coach,','Thank you for teaching me to never give up.','My free throws got better because you believed in me.','This season changed how I see myself.','I am proud to be on your team.']}];
+function promptHTML(s){return '<span class="pt r">'+esc(s.role)+'</span> <span class="pt t">'+esc(s.task)+'</span> <span class="pt d">'+esc(s.details)+'</span> <span class="pt f">'+esc(s.format)+'</span>'}
+function legend(){return '<div class="chips"><span class="chip"><span class="pt r">Role</span> who the AI is</span><span class="chip"><span class="pt t">Task</span> what to do</span><span class="chip"><span class="pt d">Details</span> who and how much</span><span class="chip"><span class="pt f">Format</span> how it looks</span></div>'}
+function resHTML(lines,weak,label){return '<div class="res'+(weak?' weak':'')+'"><span class="lab">'+label+'</span>'+lines.map(function(l){return '<div>'+esc(l)+'</div>'}).join('')+'</div>'}
+function s3wheel(b){var w=dd('s3').w=D.s3.w||{pick:null,gen:false};
+ b.innerHTML=hero('Prompt Wheel','Spin for a mission','<div class="wheelwrap"><div>'+wheelHTML('pw',SC)+'<div style="text-align:center"><button type="button" class="btn" id="spinBtn" data-act="spin">Spin the wheel!</button></div></div><div id="wres"></div></div>');
+ var g=$('wg-pw');if(g&&WH.pw){g.style.transition='none';g.style.transform='rotate('+WH.pw.cur+'deg)';setTimeout(function(){g.style.transition=''},50)}
+ wdraw()}
+function wdraw(){var w=D.s3.w,el=$('wres');if(!el)return;
+ if(w.pick==null){el.innerHTML='<div class="pbox"><div class="lab">Your mission</div><p>Spin the wheel to find out. The wheel picks a mission and a vague prompt. Then we see what a clear prompt can do.</p></div>';return}
+ var sc=SC[w.pick];
+ var h='<div class="pbox"><div class="lab">Your mission</div><p class="big" style="margin:4px 0">'+sc.e+' '+esc(sc.mission)+'</p></div><div class="pbox"><div class="lab">Vague prompt</div><p style="margin:2px 0">&ldquo;'+esc(sc.vague)+'&rdquo;</p></div>';
+ if(!w.gen)h+='<button type="button" class="btn" data-act="gen">Generate &#10024;</button><p class="fine">Ms. Brown types the winning prompt into a real AI on the big screen. Here you see sample answers written ahead of time.</p>';
+ else h+='<div class="vs"><div>'+resHTML([sc.vres],true,'Sample answer to the vague prompt')+'</div><div><div class="pbox"><div class="lab">Clear prompt (4 parts)</div><p style="margin:2px 0">'+promptHTML(sc)+'</p></div>'+resHTML(sc.cres,false,'Sample answer to the clear prompt')+'</div></div>'+legend()+'<div class="why ok"><b>Same mission, better answer.</b> The only thing that changed was the prompt.</div>';
+ el.innerHTML=h}
+function sum(a){var n=0;for(var i=0;i<a.length;i++)n+=a[i]?1:0;return n}
+function vbox(i){var c=D.s3.c;return '<div class="pbox"><div class="f"><label for="v'+i+'">Version '+(i+1)+'</label><textarea id="v'+i+'" maxlength="220" data-live="v" data-i="'+i+'">'+esc(c.v[i])+'</textarea></div><div class="chips">'+[['+ Role','You are a '],['+ Task','Please '],['+ Details',' Details: '],['+ Format',' Give it as ']].map(function(x){return '<button type="button" class="chip" data-act="ins" data-i="'+i+'" data-v="'+x[1]+'">'+x[0]+'</button>'}).join('')+'</div><div class="chips">'+['Role','Task','Details','Format'].map(function(n,k){return '<label class="chip"><input type="checkbox" data-live="chk" data-i="'+i+'" data-k="'+k+'"'+(c.chk[i][k]?' checked':'')+'> '+n+'</label>'}).join('')+'<span class="badge" id="sc'+i+'">'+sum(c.chk[i])+' of 4</span></div></div>'}
+function s3chal(b){var c=dd('s3').c=D.s3.c||{v:['','',''],chk:[[0,0,0,0],[0,0,0,0],[0,0,0,0]],best:null};
+ var sc=SC[(D.s3.w&&D.s3.w.pick!=null)?D.s3.w.pick:0];
+ b.innerHTML=hero('Your turn','Improve the prompt, 3 times','<div class="pbox"><div class="lab">Mission</div><b>'+sc.e+' '+esc(sc.mission)+'</b></div>'+diceHTML('twist','Roll for a twist (optional)')+'<p class="fine">Write 3 versions. Each time add more of the 4 parts. Tick the parts you used. Use made-up details only.</p>'+vbox(0)+vbox(1)+vbox(2)+'<p id="vErr" class="err" hidden></p><h3>Pick your best version</h3><div class="opts">'+[0,1,2].map(function(i){return '<button type="button" class="opt'+(c.best===i?' sel':'')+'" data-act="best" data-v="'+i+'">Version '+(i+1)+'</button>'}).join('')+'</div><div id="bestOut"></div>');
+ if(c.best!=null)bestDraw()}
+function bestDraw(){var c=D.s3.c,i=c.best;$('bestOut').innerHTML='<div class="why ok"><b>Your best: Version '+(i+1)+'</b> with '+sum(c.chk[i])+' of 4 parts. '+(sum(c.chk[i])===4?'All four parts. That is a strong prompt!':'Try adding the missing parts to make it even stronger.')+'</div>'}
+var MIST=[
+ {topic:'Octopus facts',s:['Octopuses have three hearts.','Their blood is blue.','Most octopuses live for about 30 years.','An octopus has eight arms.'],bad:2,why:'Most octopus species live only about 1 to 5 years. AI said it in the same confident voice as the true facts.'},
+ {topic:'Moon facts',s:['The Moon orbits the Earth.','The Moon makes its own light.','We see different shapes of the Moon, called phases.','One trip around the Earth takes about a month.'],bad:1,why:'The Moon does not make light. It reflects sunlight. AI can sound sure and still be wrong.'}];
+var HOW=[['Check a second trustworthy source',1],['Ask a teacher or a librarian',1],['Ask the AI for its source, then check the source',1],['Just trust it. It sounded confident.',0]];
+function s3mist(b){var m=dd('s3').m=D.s3.m||{r:0,pick:null,how:null};
+ if(m.r>=MIST.length){b.innerHTML=hero('Catch the mistake','You are the fact-checker','<p class="big"><span class="badge">Fact-checker</span></p><p>AI says everything in the same confident voice. Your job is to check before you share.</p><button type="button" class="btn" data-act="mistagain">Play again</button>');return}
+ var q=MIST[m.r];
+ b.innerHTML=hero('Catch the mistake &middot; round '+(m.r+1)+' of '+MIST.length,'One sentence is wrong. Which one?','<p class="fine">An AI wrote this about: '+esc(q.topic)+'</p><div class="opts" style="grid-template-columns:1fr">'+q.s.map(function(x,i){return '<button type="button" class="opt" data-act="mpick" data-v="'+i+'">'+esc(x)+'</button>'}).join('')+'</div><div id="mOut"></div>');
+ if(m.pick!=null)mshow()}
+function mshow(){var m=D.s3.m,q=MIST[m.r],ok=m.pick===q.bad,bs=document.querySelectorAll('[data-act=mpick]');
+ for(var i=0;i<bs.length;i++){bs[i].disabled=true;if(i===q.bad)bs[i].classList.add('good');else if(i===m.pick)bs[i].classList.add('bad')}
+ $('mOut').innerHTML='<div class="why '+(ok?'ok':'no')+'"><b>'+(ok?'Good catch!':'Not that one.')+'</b> '+esc(q.why)+'</div><h3 style="margin-top:14px">How would you check it?</h3><div class="opts">'+HOW.map(function(h,i){return '<button type="button" class="opt'+(m.how===i?(h[1]?' good':' bad'):'')+'" data-act="mhow" data-v="'+i+'">'+esc(h[0])+'</button>'}).join('')+'</div>'+(m.how!=null?'<div class="why '+(HOW[m.how][1]?'ok':'no')+'">'+(HOW[m.how][1]?'Smart plan. Checking is a superpower.':'Careful. Sounding confident does not make it true.')+'</div><button type="button" class="btn" data-act="mnext">'+(m.r+1>=MIST.length?'Finish':'Next round')+'</button>':'')}
+SESS[3]={name:'Prompt Lab',em:'&#129514;',grades:['6th grade','7th grade','8th grade'],made:function(){var w=D.s3&&D.s3.w,sc=SC[(w&&w.pick!=null)?w.pick:0];return 'I wrote a clear 4-part prompt for: '+sc.mission},steps:[
+ {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them they will write prompts, test them and fact-check one answer.',r:function(b){
+  b.innerHTML=hero('Session 3 &middot; grades 6 to 8','Prompt Lab','<p class="sub">The same AI gives very different answers depending on what you ask. Today you learn to ask well, and to check what it says.</p>'+rules3())+'<div class="panel"><h3>The four parts of a strong prompt</h3>'+legend()+'<p>You will use all four today.</p></div>'}},
+ {t:'Same ask, different answer',min:'5 to 15 min',tip:'Adult-led on your laptop on the big screen: one vague prompt and one clear prompt. Show the difference live. This page shows pre-written samples as a backup.',r:function(b){var s=SC[2];
+  b.innerHTML=hero('Look up','Same ask, different answer','<p>Ms. Brown shows a vague prompt and a clear prompt on the big screen. Watch what changes.</p>'+timerHTML('cmp',600))+'<div class="panel"><div class="vs"><div><div class="pbox"><div class="lab">Vague prompt</div><p style="margin:2px 0">&ldquo;'+esc(s.vague)+'&rdquo;</p></div>'+resHTML([s.vres],true,'Sample answer')+'</div><div><div class="pbox"><div class="lab">Clear prompt</div><p style="margin:2px 0">'+promptHTML(s)+'</p></div>'+resHTML(s.cres,false,'Sample answer')+'</div></div>'+legend()+'</div>'}},
+ {t:'Prompt wheel',min:'15 to 25 min',tip:'Put the wheel on the big screen if you want a whole-room spin. Each girl can also spin her own. Show the real AI answer for the winning prompt after the sample.',r:s3wheel},
+ {t:'Your turn',min:'25 to 40 min',tip:'Teams of 2 to 4. Walk the room. Ask each team which of the four parts their Version 3 has.',r:s3chal},
+ {t:'Catch the mistake',min:'40 to 50 min',tip:'Then show one real AI answer with a planted error from your handout and let teams find it.',r:s3mist},
+ {t:'Spark Card',min:'50 to 56 min',tip:'Initials only. Sharing is off unless the district approved it.',r:sparkR},
+ {t:'Feedback',min:'56 to 60 min',tip:'Anonymous. Hold up the QR card only if the district approved it.',r:fbR}]};
+/* ===== Session 4: Future Builder ===== */
+var CAREERS=[
+ {e:'&#129658;',k:'Doctor',help:['Spot patterns in scans for the doctor to double-check','Sort piles of records quickly','Explain instructions in simple words'],never:['Make the final decision alone','Share a patient\'s private information','Hide its own mistakes']},
+ {e:'&#9878;',k:'Lawyer',help:['Find laws and past cases faster','Summarize long documents','Draft a first outline'],never:['Invent cases that do not exist','Decide who is guilty','Replace a lawyer\'s careful checking']},
+ {e:'&#128640;',k:'Engineer',help:['Suggest ways to test a design','Write and fix small pieces of code','Run thousands of safe simulations'],never:['Skip human safety checks','Approve a bridge by itself','Copy code it does not understand']},
+ {e:'&#127912;',k:'Designer',help:['Make quick sketches of ideas','Try 10 color palettes in seconds','Resize a design for different screens'],never:['Copy another artist\'s work','Decide what is beautiful for everyone','Take credit as the artist']},
+ {e:'&#127806;',k:'Farmer',help:['Predict weather and watering needs','Spot sick plants from photos','Plan the best planting dates'],never:['Ignore what the farmer sees in the field','Use private farm data without asking','Decide alone to spray chemicals']},
+ {e:'&#128240;',k:'Reporter',help:['Write out interview recordings','Find patterns in big data','Suggest questions to ask'],never:['Make up quotes or sources','Publish without a human fact-check','Pass off a fake photo as real']}];
+function s4career(b){var c=dd('s4').c=D.s4.c||{pick:null,h:[0,0,0],n:[0,0,0]};
+ b.innerHTML=hero('What jobs does AI touch?','Spin a career','<div class="wheelwrap"><div>'+wheelHTML('cw',CAREERS)+'<div style="text-align:center"><button type="button" class="btn" id="spinBtn" data-act="cspin">Spin the wheel!</button></div></div><div id="cres"></div></div>');
+ var g=$('wg-cw');if(g&&WH.cw){g.style.transition='none';g.style.transform='rotate('+WH.cw.cur+'deg)';setTimeout(function(){g.style.transition=''},50)}cdraw()}
+function cdraw(){var c=D.s4.c,el=$('cres');if(!el)return;
+ if(c.pick==null){el.innerHTML='<div class="pbox"><div class="lab">Your career</div><p>Spin to pick a career. Then decide what AI can help with, and what it should never do.</p></div>';return}
+ var k=CAREERS[c.pick];
+ el.innerHTML='<div class="pbox"><div class="lab">Your career</div><p class="big" style="margin:4px 0">'+k.e+' '+k.k+'</p></div><h3>AI can help with... <span class="fine">tick the ones you agree with</span></h3>'+k.help.map(function(x,i){return '<label class="gc"><input type="checkbox" data-live="ch" data-k="h" data-i="'+i+'"'+(c.h[i]?' checked':'')+'><span>'+esc(x)+'</span></label>'}).join('')+'<h3>AI should never...</h3>'+k.never.map(function(x,i){return '<label class="gc"><input type="checkbox" data-live="ch" data-k="n" data-i="'+i+'"'+(c.n[i]?' checked':'')+'><span>'+esc(x)+'</span></label>'}).join('')+'<div class="why">Good builders know both lists. AI is a tool. People stay in charge.</div>'}
+function pitchText(p){return 'The problem for girls my age is '+(p.a||'___')+'. My AI helper is called '+(p.b||'___')+'. It helps by '+(p.c||'___')+'. It must never '+(p.d||'___')+'. It will make a difference because '+(p.e||'___')+'.'}
+function s4pitch(b){var p=dd('s4').p=D.s4.p||{a:'',b:'',c:'',d:'',e:''};
+ var F=[['a','The problem for girls my age is...'],['b','My AI helper is called... (made up)'],['c','It helps by...'],['d','It must never...'],['e','It will make a difference because...']];
+ b.innerHTML=hero('Pitch your idea','60-second pitch','<p>Teams of four. Fill in the blanks, then practice out loud. Two pitches go live.</p>'+diceHTML('ptw','Roll for a pitch twist (optional)')+F.map(function(f){return '<div class="f"><label for="p'+f[0]+'">'+f[1]+'</label><input id="p'+f[0]+'" maxlength="70" autocomplete="off" data-live="pitch" data-k="'+f[0]+'" value="'+esc(p[f[0]])+'"></div>'}).join('')+'<p id="pErr" class="err" hidden></p><div class="pbox"><div class="lab">Your pitch</div><p id="pText" style="margin:2px 0">'+esc(pitchText(p))+'</p></div>'+timerHTML('pitch',60))}
+var PLEDGES=['I will say when I used AI.','I will check facts before I share them.','I will never put private info into an AI tool.','I will do my own thinking first.','I will give credit when AI helps me.','I will never use AI to be mean or to fool people.'];
+function s4pledge(b){var pl=dd('s4').pl=D.s4.pl||{pick:null,sig:''};
+ b.innerHTML=hero('Honest-use pledge','One rule I will follow','<p>Pick the rule that matters most to you. Sign with your initials.</p><div class="opts" style="grid-template-columns:1fr">'+PLEDGES.map(function(x,i){return '<button type="button" class="opt'+(pl.pick===i?' sel':'')+'" data-act="plpick" data-v="'+i+'">'+esc(x)+'</button>'}).join('')+'</div><div class="f"><label for="plS">Sign with your initials (up to 3 letters)</label><input id="plS" maxlength="3" autocomplete="off" data-live="pl" value="'+esc(pl.sig)+'"></div><div id="plOut"></div>');pldraw()}
+function pldraw(){var pl=D.s4.pl,el=$('plOut');if(!el)return;if(pl.pick==null||!pl.sig){el.innerHTML='';return}
+ el.innerHTML='<div class="cardx"><div class="em">&#9997;</div><h3>My honest-use pledge</h3><p class="ln">'+esc(PLEDGES[pl.pick])+'</p><div class="by">Signed '+esc(initialsOut(pl.sig))+'</div></div>'}
+SESS[4]={name:'Future Builder',em:'&#128640;',grades:['9th grade','10th grade','11th grade','12th grade'],made:function(){var p=D.s4&&D.s4.p;return 'I pitched an AI helper called '+((p&&p.b)||'my helper')+' that solves a real problem for girls my age.'},steps:[
+ {t:'Welcome',min:'0 to 5 min',tip:'Ask: what do you think AI is? Say the three rules. Tell them today is about careers, an honest look at AI, and their own idea.',r:function(b){
+  b.innerHTML=hero('Session 4 &middot; grades 9 to 12','Future Builder','<p class="sub">AI is already changing every career. Today you decide what it should help with, what it should never do, and what you want to build.</p>'+rules3())+'<div class="panel"><h3>Today</h3><div class="chips"><span class="chip gold">Careers and AI</span><span class="chip gold">Live demo</span><span class="chip gold">60-second pitch</span><span class="chip gold">Honest-use pledge</span></div></div>'}},
+ {t:'Careers and AI',min:'5 to 15 min',tip:'Table groups list what AI can help with and what it should never do for their career. The wheel is optional. Use it to break a tie.',r:s4career},
+ {t:'Live demo',min:'15 to 30 min',tip:'Adult-led on your laptop with your adult account. Three short demos. Girls call out what to ask next.',r:function(b){
+  b.innerHTML=hero('Look up','Live demo on the big screen','<p class="big">Ms. Brown runs three short demos.</p><ol><li>Turn a messy idea into a weekly plan.</li><li>Explain one idea three ways.</li><li>Ask for sources, then check one live.</li></ol><p><b>Your job:</b> call out what to ask next. Notice what the AI gets right, and what you would double-check.</p>'+timerHTML('demo',900))}},
+ {t:'Pitch',min:'30 to 48 min',tip:'Teams of four. Two pitches go live. Keep names made up. Walk the room and read a few pitches aloud.',r:s4pitch},
+ {t:'Pledge',min:'48 to 50 min',tip:'Each girl picks one rule and signs with initials.',r:s4pledge},
+ {t:'Spark Card',min:'50 to 56 min',tip:'Initials only. Sharing is off unless the district approved it.',r:sparkR},
+ {t:'Feedback',min:'56 to 60 min',tip:'Anonymous. Hold up the QR card only if the district approved it.',r:fbR}]};
+/* ===== events ===== */
+document.addEventListener('click',function(e){var el=e.target.closest('[data-act]');if(!el||el.disabled)return;var a=el.dataset.act,v=el.dataset.v;
+ switch(a){
+ case 'poll':var po={used:'Nice! You already know some AI. By the end you can explain it to a grown-up.',saw:'You have seen more AI than you think. Let us catch it in the wild.',never:'Perfect. You will be an expert by the end of today.'};
+  [].forEach.call(document.querySelectorAll('[data-act=poll]'),function(x){x.classList.toggle('sel',x===el)});$('pollOut').innerHTML='<div class="why ok">'+po[v]+'</div>';break;
+ case 'roll':rollDie(el.dataset.d,DICE[el.dataset.d],function(r,t){var id=el.dataset.d;
+  if(id==='hname'){dd('s1').h=D.s1.h||{name:'',job:0,nv:0,col:0};D.s1.h.name=t;var i=$('hName');if(i)i.value=t;hdraw()}
+  if(id==='pow'){D.s2.p.pow=t}});break;
+ case 'skin':S.skin=v;[].forEach.call(document.querySelectorAll('[data-skin]'),function(x){x.setAttribute('data-skin',v)});[].forEach.call(document.querySelectorAll('[data-act=skin]'),function(x){x.classList.toggle('on',x.dataset.v===v)});save();break;
+ case 'det':var d=D.s1.det;if(d.a!==null)break;d.a=+v;if(d.a===DETECT[d.i][1])d.score++;showDet();break;
+ case 'detnext':D.s1.det.i++;D.s1.det.a=null;s1det($('stage').lastChild);break;
+ case 'detagain':D.s1.det={i:0,score:0,a:null};s1det($('stage').lastChild);break;
+ case 'hcol':D.s1.h.col=+v;[].forEach.call(document.querySelectorAll('[data-act=hcol]'),function(x){x.classList.toggle('sel',x.dataset.v===v)});hdraw();break;
+ case 'star':var st=D.s1.stars,n=0;for(var k in st)if(st[k])n++;if(st[v])st[v]=false;else if(n<2)st[v]=true;gdraw();break;
+ case 'pet':D.s2.p.pet=+v;[].forEach.call(document.querySelectorAll('[data-act=pet]'),function(x){x.classList.toggle('sel',x.dataset.v===v)});break;
+ case 'testpet':runTests();tdraw();break;
+ case 'vote':D.s2.vote=+v;s2parade($('stage').lastChild);break;
+ case 'spin':var w=D.s3.w;el.disabled=true;spinWheel('pw',SC.length,function(t){w.pick=t;w.gen=false;el.disabled=false;wdraw()});break;
+ case 'gen':D.s3.w.gen=true;wdraw();break;
+ case 'ins':var ta=$('v'+el.dataset.i);ta.value=(ta.value+v).slice(0,220);ta.focus();D.s3.c.v[+el.dataset.i]=ta.value;break;
+ case 'best':D.s3.c.best=+v;[].forEach.call(document.querySelectorAll('[data-act=best]'),function(x){x.classList.toggle('sel',x.dataset.v===v)});bestDraw();break;
+ case 'mpick':if(D.s3.m.pick==null){D.s3.m.pick=+v;mshow()}break;
+ case 'mhow':D.s3.m.how=+v;mshow();break;
+ case 'mnext':D.s3.m={r:D.s3.m.r+1,pick:null,how:null};s3mist($('stage').lastChild);window.scrollTo(0,0);break;
+ case 'mistagain':D.s3.m={r:0,pick:null,how:null};s3mist($('stage').lastChild);break;
+ case 'cspin':var c=D.s4.c;el.disabled=true;spinWheel('cw',CAREERS.length,function(t){c.pick=t;c.h=[0,0,0];c.n=[0,0,0];el.disabled=false;cdraw()});break;
+ case 'plpick':D.s4.pl.pick=+v;[].forEach.call(document.querySelectorAll('[data-act=plpick]'),function(x){x.classList.toggle('sel',x.dataset.v===v)});pldraw();break;
+ case 'tgo':tGo(el);break;
+ case 'treset':tReset(el);break;
+ case 'starter':var f=$('spB');f.value=v;f.focus();break;
+ case 'mkcard':var i1=$('spI').value.replace(/[^A-Za-z]/g,''),t1=$('spT').value.trim(),b1=$('spB').value.trim(),g1=$('spG').value,er=$('spE');
+  if(!i1){er.textContent='Type your initials, like A B.';er.hidden=false;break}
+  if(!t1||!b1){er.textContent='Give your card a name and finish the sentence.';er.hidden=false;break}
+  if(!guard([t1,b1],'spE'))break;er.hidden=true;D.spark={i:i1,g:g1,t:t1,b:b1,done:true};showCard();break;
+ case 'sendcard':var sp=D.spark;el.disabled=true;post('inspiher_sparks',{session_no:S.sid,grade:sp.g,initials:sp.i.toUpperCase(),card_title:sp.t,made_text:SESS[S.sid].made().slice(0,160),bio:sp.b}).then(function(ok){$('sendOut').textContent=ok?'Sent! Ms. Brown will read it first.':'It did not send. Show your card to Ms. Brown instead.';el.disabled=ok});break;
+ case 'fb':D.fb=D.fb||{};D.fb[el.dataset.g]=v;if(D.fb.m&&D.fb.w&&!D.fb.sent){D.fb.sent=true;post('inspiher_feedback',{session_no:S.sid,mood:D.fb.m,wish:D.fb.w})}fbR($('stage').lastChild);break;
+ case 'tsess':S.sid=+v;S.step=0;D={};render();break;
+ case 'tbig':document.body.classList.toggle('xl');save();break;
+ case 'tnew':try{sessionStorage.clear()}catch(x){}location.reload();break;
+ }});
+function onLive(e){var el=e.target.closest('[data-live]');if(!el)return;var k=el.dataset.live;
+ if(k==='h'){var h=dd('s1').h=D.s1.h||{name:'',job:0,nv:0,col:0},nm=$('hName').value;if(!guard([nm],'hErr')){return}h.name=nm;h.job=+$('hJob').value;h.nv=+$('hNv').value;hdraw()}
+ if(k==='pet'){var nm2=el.value;if(guard([nm2],'petErr'))D.s2.p.name=nm2}
+ if(k==='rule'){D.s2.p.rules[+el.dataset.i][el.dataset.k]=el.value}
+ if(k==='v'){var i=+el.dataset.i;D.s3.c.v[i]=el.value;guard([el.value],'vErr')}
+ if(k==='chk'){var j=+el.dataset.i;D.s3.c.chk[j][+el.dataset.k]=el.checked?1:0;$('sc'+j).textContent=sum(D.s3.c.chk[j])+' of 4';if(D.s3.c.best===j)bestDraw()}
+ if(k==='ch'){D.s4.c[el.dataset.k][+el.dataset.i]=el.checked?1:0}
+ if(k==='pitch'){var ok=guard([el.value],'pErr');if(ok){D.s4.p[el.dataset.k]=el.value;$('pText').textContent=pitchText(D.s4.p)}}
+ if(k==='pl'){var s=el.value.replace(/[^A-Za-z]/g,'');D.s4.pl.sig=s;pldraw()}}
+document.addEventListener('input',onLive);document.addEventListener('change',onLive);
+$('next').addEventListener('click',function(){if(S.step<SESS[S.sid].steps.length-1){S.step++;render()}});
+$('back').addEventListener('click',function(){if(S.step>0){S.step--;render()}});
+function tryCode(){var v=$('code').value.trim().toLowerCase();if(!(window.crypto&&crypto.subtle)){$('gerr').textContent='Open this page with https so the code can be checked.';$('gerr').hidden=false;return}
+ sha(v).then(function(h){if(HASH[h]){$('gerr').hidden=true;unlock(HASH[h])}else $('gerr').hidden=false})}
+$('gbtn').addEventListener('click',tryCode);$('code').addEventListener('keydown',function(e){if(e.key==='Enter')tryCode()});
+if(load()){$('gate').hidden=true;$('app').hidden=false;D={};render()}
+})();
+</script>
+</body>
+</html>
