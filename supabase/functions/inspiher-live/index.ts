@@ -79,16 +79,22 @@ function looksPrivate(t: string): boolean {
 // Counters live in a small table when it exists (inspiher_ai_usage). If it does not,
 // fall back to memory on this server instance, which is weaker but still works.
 const mem = new Map<string, number>();
+function withTimeout<T>(p: PromiseLike<T>, ms: number): Promise<T> {
+  return new Promise((res, rej) => {
+    const t = setTimeout(() => rej(new Error("timeout")), ms);
+    Promise.resolve(p).then((v) => { clearTimeout(t); res(v); }, (e) => { clearTimeout(t); rej(e); });
+  });
+}
 async function peek(sb: any, day: string, kind: string, key: string): Promise<number> {
   try {
-    const r = await sb.rpc("inspiher_peek", { p_day: day, p_kind: kind, p_key: key });
+    const r: any = await withTimeout(sb.rpc("inspiher_peek", { p_day: day, p_kind: kind, p_key: key }), 1500);
     if (!r.error && typeof r.data === "number") return r.data;
   } catch (_) { /* fall through */ }
   return mem.get(`${day}|${kind}|${key}`) || 0;
 }
 async function bump(sb: any, day: string, kind: string, key: string): Promise<number> {
   try {
-    const r = await sb.rpc("inspiher_bump", { p_day: day, p_kind: kind, p_key: key });
+    const r: any = await withTimeout(sb.rpc("inspiher_bump", { p_day: day, p_kind: kind, p_key: key }), 1500);
     if (!r.error && typeof r.data === "number") return r.data;
   } catch (_) { /* fall through */ }
   const k = `${day}|${kind}|${key}`;
