@@ -562,6 +562,49 @@ id="payTax" data-val="Dedicated Pool">Dedicated Pool</p>
 <div id="mainView-files" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden"><div id="filesPage"></div></div>
 <div id="mainView-clipping" class="p-4 sm:p-8 space-y-6 max-w-5xl mx-auto w-full hidden"><div id="clipPage"></div></div>
 <div id="mainView-ailab" class="p-4 sm:p-8 space-y-6 max-w-7xl mx-auto w-full hidden">
+<!-- Live Class Gallery (Studio "Save to Class" -> Supabase class_sites / class_help) -->
+<div id="galCard" class="bg-dark-800 border border-amber-500/30 p-6 sm:p-8 rounded-2xl shadow-sm space-y-4">
+<div class="flex flex-wrap items-start justify-between gap-3 border-b border-dark-600 pb-4">
+<div><h2 class="text-xl font-bold text-slate-100">Live Class Gallery <span id="galLive" class="ml-2 align-middle text-[10px] font-bold uppercase tracking-wider text-emerald-400"></span></h2>
+<p class="text-xs text-slate-400 mt-1">Every group that taps <b>Save to Class</b> in the Studio shows up here and updates as they work. A &#128587; means they asked for help.</p></div>
+<div class="flex flex-wrap items-center gap-2 text-xs">
+<select id="galClass" onchange="galRender()" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-slate-200"><option value="">All classes</option></select>
+<select id="galShow" onchange="galRender()" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-slate-200"><option value="all">All groups</option><option value="help">Needs help</option><option value="approved">Approved</option></select>
+<button type="button" onclick="galLoad(true)" class="px-3 py-2 rounded-xl border border-dark-600 text-slate-200 font-semibold">Refresh</button>
+</div>
+</div>
+<div id="galCodes" class="bg-dark-700/40 border border-dark-600 rounded-2xl p-4 space-y-3 text-xs">
+<div class="flex flex-wrap items-end gap-2">
+<p class="w-full font-bold text-slate-200 text-sm">Class codes <span class="font-normal text-slate-500">&middot; one per grade. The code locks students to that grade.</span></p>
+<input id="galNewCode" maxlength="20" placeholder="e.g. BGCS1" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-slate-200 uppercase w-44">
+<select id="galNewGrade" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-slate-200"><option>5th Grade</option><option>6–8</option><option>9–12</option></select>
+<input id="galNewLabel" maxlength="80" placeholder="Label, e.g. Falcon MS 5th, Dec 4" class="rounded-xl bg-dark-700 border border-dark-600 px-3 py-2 text-slate-200 flex-1 min-w-[180px]">
+<button type="button" onclick="galAddCode()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-dark-900 font-bold">Create code</button>
+</div>
+<div id="galCodeList" class="flex flex-wrap gap-2"></div><p id="galCodeMsg" class="text-slate-500"></p>
+</div>
+<div id="galBox" class="text-xs text-slate-400">Open this tab to load the gallery.</div>
+</div>
+<div id="galModal" class="fixed inset-0 z-[95] bg-black/85 hidden p-2 sm:p-4" onclick="if(event.target===this)galClose()">
+<div class="bg-dark-800 border border-dark-600 rounded-2xl w-full h-full flex flex-col overflow-hidden">
+<div class="flex items-center justify-between gap-3 px-4 py-3 border-b border-dark-600">
+<div><p id="galMTitle" class="font-bold text-slate-100 text-sm"></p><p id="galMSub" class="text-[11px] text-slate-400"></p></div>
+<div class="flex items-center gap-2 text-xs"><button type="button" id="galMApprove" class="px-3 py-2 rounded-xl font-semibold"></button><button type="button" onclick="galClose()" class="px-3 py-2 rounded-xl border border-dark-600 text-slate-200 font-semibold">Close</button></div>
+</div>
+<div class="flex-1 grid lg:grid-cols-[1fr_340px] min-h-0">
+<iframe id="galFrame" title="Group site" sandbox="" class="w-full h-full min-h-[50vh] bg-white border-0"></iframe>
+<div class="flex flex-col min-h-0 border-t lg:border-t-0 lg:border-l border-dark-600">
+<p class="px-4 pt-3 text-[11px] font-bold uppercase tracking-wider text-slate-400">Help chat</p>
+<div id="galChat" class="flex-1 overflow-y-auto px-4 py-2 space-y-2 text-xs"></div>
+<div class="p-3 border-t border-dark-600 space-y-2">
+<textarea id="galReply" rows="3" maxlength="500" placeholder="Reply to this group..." class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-xs text-slate-200"></textarea>
+<div class="flex gap-2"><button type="button" onclick="galSendReply()" class="flex-1 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-dark-900 font-bold text-xs">Send reply</button><button type="button" onclick="galMarkDone()" class="px-3 py-2 rounded-xl border border-dark-600 text-slate-200 font-semibold text-xs">Mark helped</button></div>
+<p id="galMsg" class="text-[11px] text-slate-500"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="bg-dark-800 border border-dark-600 p-6 sm:p-8 rounded-2xl shadow-sm space-y-5">
 <div class="border-b border-dark-600 pb-4">
 <h2 class="text-xl font-bold text-slate-100">AI Lab Sites</h2>
@@ -5106,6 +5149,7 @@ try { hxLinksPage(); } catch (e) {}
 if (viewName === 'ailab') {
 document.getElementById('pageTitle').innerText = "AI Lab Sites";
 renderSiteSubmissions();
+try { galLoad(true); } catch (e) {}
 }
 if (viewName === 'advisor') {
 document.getElementById('pageTitle').innerText = "AI Coach";
@@ -6473,5 +6517,147 @@ initApp();
 
 </script>
 <script src="pipeline-home.js?b=2026.11.27-2"></script>
+<script>
+/* ===================== LIVE CLASS GALLERY + HELP CHAT ===================== */
+var GAL = { rows: [], codes: [], html: {}, stamp: {}, open: null, timer: 0, busy: false };
+function galNextCode() { var n = 0; GAL.codes.forEach(function (c) { var m = /^BGCS(\d+)$/.exec(c.code); if (m) n = Math.max(n, +m[1]); }); return 'BGCS' + (n + 1); }
+function galRenderCodes() {
+  var box = sxEl('galCodeList'); if (!box) return;
+  var nc = sxEl('galNewCode'); if (nc && !nc.value && document.activeElement !== nc) nc.value = galNextCode();
+  if (!GAL.codes.length) { box.innerHTML = '<p class="text-slate-500 italic">No class codes yet. Create one per grade before class, and write it on the board.</p>'; return; }
+  box.innerHTML = GAL.codes.map(function (c) {
+    var n = GAL.rows.filter(function (r) { return r.class_code === c.code; }).length;
+    return '<div class="flex items-center gap-2 rounded-xl border ' + (c.active ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-dark-600 opacity-60') + ' px-3 py-2">' +
+      '<span class="font-mono font-bold text-slate-100">' + escHtml(c.code) + '</span><span class="text-slate-400">' + escHtml(c.grade) + (c.label ? ' &middot; ' + escHtml(c.label) : '') + ' &middot; ' + n + ' group' + (n === 1 ? '' : 's') + '</span>' +
+      '<button type="button" onclick="galToggleCode(\'' + c.code + '\')" class="px-2 py-1 rounded-lg font-semibold ' + (c.active ? 'bg-dark-600 text-slate-200' : 'bg-emerald-600 text-white') + '">' + (c.active ? 'Close' : 'Reopen') + '</button>' +
+      (n ? '' : '<button type="button" onclick="galDelCode(\'' + c.code + '\')" class="px-2 py-1 rounded-lg text-rose-400" title="Delete code">&#10005;</button>') + '</div>';
+  }).join('');
+}
+async function galAddCode() {
+  var code = sxEl('galNewCode').value.trim().toUpperCase().replace(/\s+/g, '-'), grade = sxEl('galNewGrade').value, label = sxEl('galNewLabel').value.trim(), m = sxEl('galCodeMsg');
+  if (!/^[A-Z0-9-]{3,20}$/.test(code)) { m.textContent = 'Use 3 to 20 letters or numbers, like BGCS1.'; return; }
+  try { await galFetch('class_codes', { method: 'POST', body: { code: code, grade: grade, label: label || null }, headers: { Prefer: 'return=minimal' } }); sxEl('galNewCode').value = ''; m.textContent = code + ' is open for ' + grade + '. Write it on the board.'; galLoad(true); }
+  catch (e) { m.textContent = /duplicate|23505|409/.test(e.message) ? 'That code already exists.' : 'Could not create: ' + e.message; }
+}
+async function galToggleCode(code) {
+  var c = GAL.codes.filter(function (x) { return x.code === code; })[0]; if (!c) return;
+  if (c.active && !confirm('Close ' + code + '? Students in this class will stop saving and asking for help. Their sites stay in your gallery.')) return;
+  try { await galFetch('class_codes?code=eq.' + encodeURIComponent(code), { method: 'PATCH', body: { active: !c.active }, headers: { Prefer: 'return=minimal' } }); galLoad(true); } catch (e) { sxEl('galCodeMsg').textContent = 'Could not update: ' + e.message; }
+}
+async function galDelCode(code) {
+  if (!confirm('Delete class code ' + code + '?')) return;
+  try { await galFetch('class_codes?code=eq.' + encodeURIComponent(code), { method: 'DELETE', headers: { Prefer: 'return=minimal' } }); galLoad(true); } catch (e) { sxEl('galCodeMsg').textContent = 'Could not delete: ' + e.message; }
+}
+async function galFetch(path, opt) {
+  var tok = await sbToken(); if (!tok) { var e = new Error('signin'); e.signin = true; throw e; }
+  opt = opt || {};
+  var r = await fetch(SB_URL + '/rest/v1/' + path, { method: opt.method || 'GET', headers: Object.assign({ apikey: SB_KEY, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' }, opt.headers || {}), body: opt.body ? JSON.stringify(opt.body) : undefined });
+  if (r.status === 401 || r.status === 403) { try { localStorage.removeItem('bgcs_sb_rt'); sessionStorage.removeItem('bgcs_sb_at'); } catch (x) {} var e2 = new Error('signin'); e2.signin = true; throw e2; }
+  if (!r.ok) throw new Error(r.status + ' ' + (await r.text()).slice(0, 140));
+  var t = await r.text(); return t ? JSON.parse(t) : null;
+}
+async function galSignIn() {
+  var em = sxEl('galEmail').value.trim(), pw = sxEl('galPass').value, er = sxEl('galErr');
+  try {
+    var r = await fetch(SB_URL + '/auth/v1/token?grant_type=password', { method: 'POST', headers: { apikey: SB_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ email: em, password: pw }) });
+    if (!r.ok) { er.textContent = 'Wrong email or password.'; return; }
+    sbSave(await r.json()); galLoad(true);
+  } catch (e) { er.textContent = 'Could not reach Supabase. Check your connection.'; }
+}
+function galLoginForm(msg) {
+  return '<div class="space-y-2 max-w-md"><p class="font-semibold text-amber-300">' + escHtml(msg) + '</p><input id="galEmail" type="email" placeholder="Your Supabase owner email" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200"><input id="galPass" type="password" placeholder="Password" class="w-full rounded-xl bg-dark-700 border border-dark-600 p-2.5 text-slate-200" onkeydown="if(event.key===\'Enter\')galSignIn()"><p id="galErr" class="text-rose-500"></p><button type="button" onclick="galSignIn()" class="px-4 py-2.5 rounded-xl bg-amber-700 text-white font-semibold">Sign in to see the gallery</button></div>';
+}
+function galAgo(t) { var s = Math.max(0, Math.round((Date.now() - new Date(t).getTime()) / 1000)); return s < 60 ? 'just now' : s < 3600 ? Math.round(s / 60) + ' min ago' : s < 86400 ? Math.round(s / 3600) + ' hr ago' : new Date(t).toLocaleDateString(); }
+async function galLoad(force) {
+  var box = sxEl('galBox'); if (!box || GAL.busy) return;
+  GAL.busy = true;
+  try {
+    GAL.rows = await galFetch('class_sites?select=id,updated_at,class_code,grade,group_name,site_code,title,approved,needs_help&order=updated_at.desc&limit=200') || [];
+    GAL.codes = await galFetch('class_codes?select=code,grade,label,active,created_at&order=created_at.desc') || [];
+    var stale = GAL.rows.filter(function (r) { return GAL.stamp[r.id] !== r.updated_at; }).map(function (r) { return r.id; });
+    for (var i = 0; i < stale.length; i += 10) {
+      var part = stale.slice(i, i + 10);
+      var got = await galFetch('class_sites?select=id,updated_at,page_html&id=in.(' + part.join(',') + ')') || [];
+      got.forEach(function (g) { GAL.html[g.id] = g.page_html; GAL.stamp[g.id] = g.updated_at; });
+    }
+    var live = sxEl('galLive'); if (live) live.textContent = '● Live · updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', second: '2-digit' });
+    galClasses(); galRender(); galRenderCodes();
+    if (GAL.open) galRefreshOpen(stale.indexOf(GAL.open) >= 0);
+  } catch (e) {
+    clearInterval(GAL.timer); GAL.timer = 0;
+    box.innerHTML = e.signin ? galLoginForm('Sign in to load the class gallery.') : '<p class="text-rose-400">Could not load the gallery (' + escHtml(e.message) + ').</p>';
+  } finally { GAL.busy = false; if (!GAL.timer && sxEl('galBox') && !sxEl('galEmail')) galStart(); }
+}
+function galClasses() {
+  var sel = sxEl('galClass'), cur = sel.value;
+  sel.innerHTML = '<option value="">All classes</option>' + GAL.codes.map(function (c) { return '<option value="' + escHtml(c.code) + '"' + (c.code === cur ? ' selected' : '') + '>' + escHtml(c.code + ' \u00B7 ' + c.grade) + '</option>'; }).join('');
+}
+function galRender() {
+  var box = sxEl('galBox'), e = escHtml, cls = sxEl('galClass').value, show = sxEl('galShow').value;
+  var rows = GAL.rows.filter(function (r) { return (!cls || r.class_code === cls) && (show === 'all' || (show === 'help' ? r.needs_help : r.approved)); });
+  rows.sort(function (a, b) { return (b.needs_help - a.needs_help) || (a.updated_at < b.updated_at ? 1 : -1); });
+  if (!rows.length) { box.innerHTML = '<p class="italic text-slate-500 py-6 text-center">' + (GAL.rows.length ? 'No groups match this filter.' : 'No groups yet. When students tap Save to Class, they show up here.') + '</p>'; return; }
+  box.innerHTML = '<div class="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">' + rows.map(function (r) {
+    return '<div class="bg-dark-700/50 border ' + (r.needs_help ? 'border-amber-400 ring-2 ring-amber-400/40' : 'border-dark-600') + ' rounded-2xl overflow-hidden">' +
+      '<button type="button" onclick="galOpen(' + r.id + ')" class="block w-full text-left" title="Open this site">' +
+      '<div class="relative h-44 bg-white overflow-hidden"><iframe tabindex="-1" sandbox="" data-gal="' + r.id + '" class="pointer-events-none origin-top-left border-0" style="width:1280px;height:880px;transform:scale(.27)"></iframe>' +
+      (r.needs_help ? '<span class="absolute top-2 right-2 px-2 py-1 rounded-full bg-amber-400 text-dark-900 font-bold text-[11px]">&#128587; Needs help</span>' : '') +
+      (r.approved ? '<span class="absolute top-2 left-2 px-2 py-1 rounded-full bg-emerald-500 text-white font-bold text-[10px] uppercase">Approved</span>' : '') + '</div></button>' +
+      '<div class="p-3 space-y-1"><p class="font-bold text-slate-100 text-sm truncate">' + e(r.title || 'Untitled site') + '</p>' +
+      '<p class="text-slate-400 truncate">' + e(r.group_name) + ' &middot; ' + e(r.grade || '') + ' &middot; ' + e(r.class_code) + '</p>' +
+      '<p class="text-slate-500">Code ' + e(r.site_code) + ' &middot; ' + galAgo(r.updated_at) + '</p>' +
+      '<div class="flex gap-2 pt-2"><button type="button" onclick="galOpen(' + r.id + ')" class="flex-1 py-2 rounded-xl ' + (r.needs_help ? 'bg-amber-500 text-dark-900' : 'bg-dark-600 text-slate-100') + ' font-semibold">' + (r.needs_help ? 'Open + help' : 'Open site') + '</button>' +
+      '<button type="button" onclick="galApprove(' + r.id + ')" class="px-3 py-2 rounded-xl font-semibold ' + (r.approved ? 'border border-dark-500 text-slate-300' : 'bg-emerald-600 hover:bg-emerald-500 text-white') + '">' + (r.approved ? 'Unapprove' : 'Approve') + '</button>' +
+      '<button type="button" onclick="galRemove(' + r.id + ')" class="px-3 py-2 rounded-xl border border-rose-500/50 text-rose-400 font-semibold" title="Delete this site">&#10005;</button></div></div></div>';
+  }).join('') + '</div>';
+  box.querySelectorAll('iframe[data-gal]').forEach(function (f) { f.srcdoc = GAL.html[f.dataset.gal] || '<p style="font:14px sans-serif;padding:20px">Loading...</p>'; });
+}
+function galRow(id) { return GAL.rows.filter(function (r) { return r.id === id; })[0]; }
+async function galApprove(id) {
+  var r = galRow(id); if (!r) return;
+  try { await galFetch('class_sites?id=eq.' + id, { method: 'PATCH', body: { approved: !r.approved }, headers: { Prefer: 'return=minimal' } }); r.approved = !r.approved; galRender(); if (GAL.open === id) galRefreshOpen(false); } catch (e) { alert('Could not update: ' + e.message); }
+}
+async function galRemove(id) {
+  var r = galRow(id); if (!r || !confirm('Delete "' + (r.title || r.group_name) + '" from the gallery? Their code will stop working. This cannot be undone.')) return;
+  try { await galFetch('class_sites?id=eq.' + id, { method: 'DELETE', headers: { Prefer: 'return=minimal' } }); GAL.rows = GAL.rows.filter(function (x) { return x.id !== id; }); if (GAL.open === id) galClose(); galRender(); } catch (e) { alert('Could not delete: ' + e.message); }
+}
+function galOpen(id) {
+  var r = galRow(id); if (!r) return;
+  GAL.open = id; sxEl('galReply').value = ''; sxEl('galMsg').textContent = '';
+  var m = sxEl('galModal'); m.classList.remove('hidden'); m.classList.add('flex');
+  galRefreshOpen(true);
+}
+function galClose() { GAL.open = null; var m = sxEl('galModal'); m.classList.add('hidden'); m.classList.remove('flex'); sxEl('galFrame').srcdoc = ''; }
+async function galRefreshOpen(reloadFrame) {
+  var r = galRow(GAL.open); if (!r) return galClose();
+  sxEl('galMTitle').textContent = (r.title || 'Untitled site') + (r.needs_help ? '  🙋' : '');
+  sxEl('galMSub').textContent = r.group_name + ' · ' + (r.grade || '') + ' · class ' + r.class_code + ' · code ' + r.site_code + ' · ' + galAgo(r.updated_at);
+  var b = sxEl('galMApprove'); b.textContent = r.approved ? 'Unapprove' : 'Approve'; b.className = 'px-3 py-2 rounded-xl font-semibold ' + (r.approved ? 'border border-dark-500 text-slate-300' : 'bg-emerald-600 text-white'); b.onclick = function () { galApprove(r.id); };
+  if (reloadFrame) sxEl('galFrame').srcdoc = GAL.html[r.id] || '';
+  try {
+    var msgs = await galFetch('class_help?select=created_at,sender,message&site_id=eq.' + r.id + '&order=created_at.asc&limit=100') || [];
+    var c = sxEl('galChat');
+    c.innerHTML = msgs.length ? msgs.map(function (m) { var t = m.sender === 'teacher'; return '<div class="' + (t ? 'ml-6 bg-amber-500/15 border-amber-500/30' : 'mr-6 bg-dark-700 border-dark-600') + ' border rounded-xl p-2.5"><p class="text-[10px] uppercase tracking-wider font-bold ' + (t ? 'text-amber-300' : 'text-slate-400') + '">' + (t ? 'You' : escHtml(r.group_name)) + ' &middot; ' + galAgo(m.created_at) + '</p><p class="text-slate-200 whitespace-pre-wrap break-words">' + escHtml(m.message) + '</p></div>'; }).join('') : '<p class="italic text-slate-500">No messages from this group yet.</p>';
+    c.scrollTop = c.scrollHeight;
+  } catch (e) { sxEl('galMsg').textContent = 'Could not load chat: ' + e.message; }
+}
+async function galSendReply() {
+  var r = galRow(GAL.open), t = sxEl('galReply').value.trim(); if (!r || !t) return;
+  sxEl('galMsg').textContent = 'Sending...';
+  try {
+    await galFetch('class_help', { method: 'POST', body: { site_id: r.id, sender: 'teacher', message: t }, headers: { Prefer: 'return=minimal' } });
+    await galFetch('class_sites?id=eq.' + r.id, { method: 'PATCH', body: { needs_help: false }, headers: { Prefer: 'return=minimal' } });
+    r.needs_help = false; sxEl('galReply').value = ''; sxEl('galMsg').textContent = 'Sent. They see it in the Studio within 10 seconds.'; galRender(); galRefreshOpen(false);
+  } catch (e) { sxEl('galMsg').textContent = 'Did not send: ' + e.message; }
+}
+async function galMarkDone() {
+  var r = galRow(GAL.open); if (!r) return;
+  try { await galFetch('class_sites?id=eq.' + r.id, { method: 'PATCH', body: { needs_help: false }, headers: { Prefer: 'return=minimal' } }); r.needs_help = false; galRender(); galRefreshOpen(false); } catch (e) { sxEl('galMsg').textContent = 'Could not update: ' + e.message; }
+}
+function galVisible() { var v = sxEl('mainView-ailab'); return v && !v.classList.contains('hidden') && !document.hidden; }
+function galStart() { clearInterval(GAL.timer); GAL.timer = setInterval(function () { if (galVisible()) galLoad(false); }, 10000); }
+document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && GAL.open) galClose(); });
+</script>
+
 </body>
 </html>

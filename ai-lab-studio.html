@@ -225,6 +225,14 @@ textarea.inp{width:100%;min-height:86px;resize:vertical}
 .mb{border:0;border-radius:11px;background:var(--espresso);color:var(--cream);padding:9px 16px;font-weight:700;font-size:.8rem;min-height:38px}
 .mb:hover{background:#352E29}.mb.sec{background:var(--card);color:var(--espresso);border:1px solid var(--line2)}.mb.sec:hover{background:var(--blush)}.mb.go{background:var(--brass);color:var(--espresso)}
 .mb:disabled{opacity:.5}
+#grades button.lk{opacity:.35;cursor:not-allowed}
+.sitecode{font:700 2rem 'Space Mono',ui-monospace,monospace;letter-spacing:.25em;margin:4px 0 6px}
+.cst{font-weight:500;color:var(--muted);font-size:.66rem}
+.helpb{border:1px solid var(--line2);background:var(--card);border-radius:999px;font-size:.72rem;font-weight:700;padding:4px 10px;min-height:30px}
+.helpb.new{background:var(--brass);border-color:var(--brass)}
+.helplog{max-height:240px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;margin:6px 0 10px}
+.hm{border-radius:12px;padding:7px 10px;font-size:.82rem;max-width:85%;overflow-wrap:anywhere}.hm b{display:block;font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.hm.s{background:var(--card);border:1px solid var(--line);align-self:flex-end}.hm.t{background:var(--blush);align-self:flex-start}
 .pbook{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .pbook li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 11px}
 .pbook .pt{font-size:.82rem;overflow-wrap:anywhere}.pbook .pm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:.68rem;color:var(--muted)}
@@ -301,6 +309,7 @@ textarea.inp{width:100%;min-height:86px;resize:vertical}
     </div>
     <button type="button" class="hbtn" id="bBook">Prompt Book <span class="cnt" id="bookN">0</span></button>
     <button type="button" class="hbtn" id="bPrev"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg> Preview</button>
+    <button type="button" class="hbtn" id="bClass">Save to Class</button>
     <button type="button" class="hbtn brass" id="bExport" aria-haspopup="menu" aria-expanded="false">Export Site</button>
     <button type="button" class="hbtn icon" id="bMore" aria-haspopup="menu" aria-expanded="false" aria-label="More options"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
   </div>
@@ -308,7 +317,7 @@ textarea.inp{width:100%;min-height:86px;resize:vertical}
 
 <main class="split" id="split">
   <section class="chatpane" aria-label="Studio Director and Vibe Chat">
-    <div class="phead"><div class="ph-l"><i></i><span>Studio Director &bull; Vibe Chat</span></div><button type="button" class="linkb" id="bAbout">How this works</button><span id="modeBadge" class="mode">Guided Lesson &bull; 5th Grade</span></div>
+    <div class="phead"><div class="ph-l"><i></i><span>Studio Director &bull; Vibe Chat</span></div><button type="button" class="linkb" id="bAbout">How this works</button><button type="button" class="helpb" id="bHelp" title="Send a message to your teacher">&#128587; Help</button><span id="modeBadge" class="mode">Guided Lesson &bull; 5th Grade</span></div>
     <div class="gstrip" id="gstrip"></div>
     <div class="feed" id="feed" role="log" aria-live="polite" aria-label="Conversation with the Studio Director" tabindex="0"></div>
     <form class="composer" id="form" autocomplete="off">
@@ -837,12 +846,13 @@ const meta = {
   snaps: 0, exported: false, secs: 3600, running: false, sel: 'headline', view: 'site', goals: {}, nextId: 1,
 };
 const history = [];
-let saveT = 0;
+let saveT = 0, lastCloudState = '';
 
 function save() {
   clearTimeout(saveT);
   saveT = setTimeout(() => {
     try { localStorage.setItem(SAVE_KEY, JSON.stringify({ state, meta: Object.assign({}, meta, { running: false }) })); } catch (e) { /* storage full or blocked: fine */ }
+    if (typeof cloudSoon === 'function' && meta.cls && JSON.stringify(state) !== lastCloudState) { lastCloudState = JSON.stringify(state); cloudSoon(); }
   }, 250);
 }
 function load() {
@@ -863,6 +873,7 @@ function load() {
     meta.prompts = meta.prompts.filter((p) => p && typeof p.t === 'string').slice(0, 60);
     meta.gstep = clamp(parseInt(meta.gstep, 10) || 0, 0, 4);
     meta.nextId = Math.max(parseInt(meta.nextId, 10) || 1, 1 + meta.prompts.reduce((a, p) => Math.max(a, p.id || 0), 0));
+    if (meta.cls && !(typeof meta.cls === 'object' && /^[A-Z2-9]{6}$/.test(meta.cls.site || '') && /^[A-Z0-9-]{3,20}$/.test(meta.cls.code || '') && typeof meta.cls.group === 'string')) meta.cls = null;
     if (typeof meta.initials !== 'string' || !/^[A-Za-z]{0,3}$/.test(meta.initials)) meta.initials = '';
     return true;
   } catch (e) { return false; }
@@ -1493,7 +1504,7 @@ function checkGoals() {
 function renderStrip() {
   const el = $('gstrip'), P = gr();
   $('modeBadge').textContent = (meta.stage === 'guided' ? 'Guided Practice' : meta.stage === 'takeover' ? 'Full Takeover' : 'Guided Lesson') + ' • ' + meta.grade;
-  document.querySelectorAll('#grades button').forEach((b) => { const on = b.dataset.grade === meta.grade; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  document.querySelectorAll('#grades button').forEach((b) => { const on = b.dataset.grade === meta.grade, lk = !!(meta.cls && meta.cls.grade && !on); b.classList.toggle('on', on); b.classList.toggle('lk', lk); b.title = lk ? 'Locked by your class code' : ''; b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
   const gs = goalState();
   const sig = [meta.stage, meta.grade, meta.gstep, gs.done.length, gs.ids.length].join('|');
   if (sig === stripSig) return;
@@ -1546,6 +1557,7 @@ function enterTakeover(why) {
 }
 function setGrade(g) {
   if (!GRADES[g] || g === meta.grade) return;
+  if (meta.cls && meta.cls.grade && g !== meta.cls.grade) { toast('Your class code is set to ' + meta.cls.grade + '. Ask your teacher to change grades.'); return; }
   meta.grade = g; stripSig = '';
   if (meta.stage === 'intro' && !meta.prompts.length) { renderWelcome(); }
   else {
@@ -2452,6 +2464,137 @@ function wireToolbar() {
   document.addEventListener('visibilitychange', () => { if (document.hidden) flush(); });
 }
 
+
+/* =====================================================================
+   CLASS GALLERY + HELP (Supabase). A group saves its site to the class
+   gallery with a class code + team name (no last names). The 6-letter
+   "My site" code reopens it on any device. Help messages go to the
+   teacher's gallery in the pipeline. Students never read the tables
+   directly; they only use these 4 functions, and only with their code.
+   ===================================================================== */
+const SB_BASE = 'https://qlgnstoesdzmkcmyaqyw.supabase.co/rest/v1/rpc/';
+const rpc = (fn, body) => fetch(SB_BASE + fn, { method: 'POST', headers: lvHdr(), body: JSON.stringify(body) })
+  .then((r) => r.text().then((t) => { let j = null; try { j = t ? JSON.parse(t) : null; } catch (e) { /* fine */ } if (!r.ok) throw new Error((j && j.message) || ('Error ' + r.status)); return j; }));
+let cloudT = 0, cloudBusy = false, cloudDirty = false, helpT = 0, helpLast = 0;
+const cls = () => (meta.cls && /^[A-Z2-9]{6}$/.test(meta.cls.site || '') ? meta.cls : null);
+
+function clsBtn(status) {
+  const b = $('bClass'); if (!b) return;
+  const c = cls();
+  b.innerHTML = c ? ('&#9729; ' + esc(c.site) + (status ? ' <small class="cst">' + esc(status) + '</small>' : '')) : 'Save to Class';
+  b.title = c ? ('Saved to class ' + c.code + ' as ' + c.group + '. Tap for your My site code.') : 'Put your site in the class gallery';
+}
+function teamCheck(t) {
+  t = String(t || '').trim();
+  if (!t) return 'Add a team name.';
+  if (t.length > 40) return 'Keep the team name under 40 letters.';
+  const p = priv(t); if (p) return 'Take out ' + p + '. Keep it private.';
+  return '';
+}
+function cloudSave(manual) {
+  const c = cls(); if (!c) return Promise.resolve(false);
+  if (scanSite()) { clsBtn('not saved'); if (manual) exportGuard(); return Promise.resolve(false); }
+  if (cloudBusy) { cloudDirty = true; return Promise.resolve(false); }
+  cloudBusy = true; cloudDirty = false; clsBtn('saving…');
+  return rpc('save_class_site', { p_site_code: c.site, p_class_code: c.code, p_grade: c.grade, p_group_name: c.group, p_title: String(state.t.brand || '').slice(0, 80), p_html: exportHTML(false), p_state: state })
+    .then(() => { c.at = Date.now(); clsBtn('saved'); return true; })
+    .catch((e) => { const closed = /closed/i.test(e.message); clsBtn(closed ? 'class closed' : 'offline'); if (manual) toast(closed ? 'Your class is closed, so saving to class stopped. Export your site to keep it.' : 'Could not save to class: ' + e.message); return false; })
+    .finally(() => { cloudBusy = false; if (cloudDirty) cloudSoon(); });
+}
+function cloudSoon() { if (!cls()) return; clearTimeout(cloudT); clsBtn('editing'); cloudT = setTimeout(() => cloudSave(false), 8000); }
+
+function openClass() {
+  const c = cls();
+  if (c) {
+    openModal('Your class site', `<p>Your site is in class <b>${esc(c.code)}</b> as <b>${esc(c.group)}</b> (${esc(c.grade)}). It saves by itself while you work.</p>
+<h3>My site code</h3><p class="sitecode">${esc(c.site)}</p>
+<p class="tipl">Write this code on your card. On any iPad, open the Studio, tap <b>Save to Class</b>, then <b>Open my site</b> and type it.</p>
+<div class="row"><button type="button" class="mb go" data-act="clsSaveNow">Save now</button><button type="button" class="mb sec" data-act="help">Ask for help</button><button type="button" class="mb sec" data-act="clsUnlink">Stop saving on this device</button></div><p id="clsMsg" class="tipl"></p>`);
+    return;
+  }
+  openModal('Save to Class', `<p>Put your site in the class gallery so your teacher can see it live.</p>
+<div class="row"><input class="inp" id="clsCode" maxlength="20" placeholder="Class code (on the board)" aria-label="Class code" style="width:230px;text-transform:uppercase"></div>
+<p class="tipl">Your class code sets your grade level for the whole class.</p>
+<div class="row"><input class="inp" id="clsTeam" maxlength="40" placeholder="Team name" aria-label="Team name" style="width:320px"></div>
+<p class="tipl">Team name ideas: your business name (<b>Sweet Treats Co</b>), your initials (<b>RB + JT</b>), or your table (<b>Table 3</b>). No last names.</p>
+<div class="row"><button type="button" class="mb go" data-act="clsJoin">Save to class gallery</button></div><p id="clsMsg" class="perr" hidden></p>
+<h3>Already have a My site code?</h3>
+<div class="row"><input class="inp" id="clsOpen" maxlength="6" placeholder="6-letter code" aria-label="My site code" style="width:150px;text-transform:uppercase;letter-spacing:.15em"><button type="button" class="mb sec" data-act="clsOpenGo">Open my site</button></div>`);
+  $('clsCode').focus();
+}
+const clsErr = (m) => { const e = $('clsMsg'); if (!e) return toast(m); e.textContent = m; e.hidden = false; };
+ACT.clsJoin = (btn) => {
+  const code = $('clsCode').value.trim().toUpperCase().replace(/\s+/g, '-'), team = $('clsTeam').value.trim();
+  if (!/^[A-Z0-9-]{3,20}$/.test(code)) return clsErr('Type the class code from the board (letters and numbers).');
+  const bad = teamCheck(team); if (bad) return clsErr(bad);
+  if (!exportGuard()) return;
+  btn.disabled = true;
+  let grade = '';
+  rpc('check_class_code', { p_code: code }).then((g) => {
+    if (!g || !GRADES[g]) throw new Error('class code not open');
+    grade = g; meta.cls = null; setGrade(g);
+    return rpc('save_class_site', { p_site_code: null, p_class_code: code, p_grade: grade, p_group_name: team, p_title: String(state.t.brand || '').slice(0, 80), p_html: exportHTML(false), p_state: state });
+  }).then((site) => { meta.cls = { code, grade, group: team, site: String(site), at: Date.now() }; lastCloudState = JSON.stringify(state); save(); refresh(); clsBtn('saved'); startHelpPoll(); openClass(); toast('Saved to the class gallery'); })
+    .catch((e) => { btn.disabled = false; clsErr(/not open/i.test(e.message) ? 'That class code is not open. Check the board or ask your teacher.' : 'Could not save: ' + e.message); });
+};
+ACT.clsOpenGo = (btn) => {
+  const site = $('clsOpen').value.trim().toUpperCase();
+  if (!/^[A-Z2-9]{6}$/.test(site)) return clsErr('That code should be 6 letters and numbers.');
+  btn.disabled = true;
+  rpc('load_class_site', { p_site_code: site }).then((rows) => {
+    const r = rows && rows[0];
+    if (!r) { btn.disabled = false; return clsErr('No site has that code. Check each letter.'); }
+    const next = sanitizeState(r.state || {});
+    for (const k of Object.keys(next.t)) { if (priv(next.t[k])) { btn.disabled = false; return clsErr('That site has private info in it, so it did not open.'); } }
+    meta.cls = null; if (GRADES[r.grade]) setGrade(r.grade);
+    meta.cls = { code: r.class_code, grade: r.grade || meta.grade, group: r.group_name, site: r.site_code, at: Date.now() };
+    commit('open class site', () => { state = next; });
+    lastCloudState = JSON.stringify(state);
+    clsBtn('saved'); startHelpPoll(); closeModal(); toast('Opened ' + r.group_name + '’s site');
+  }).catch((e) => { btn.disabled = false; clsErr('Could not open: ' + e.message); });
+};
+ACT.clsSaveNow = () => { cloudSave(true).then((ok) => { const m = $('clsMsg'); if (m && ok) m.textContent = 'Saved just now.'; }); };
+ACT.clsUnlink = () => { clearTimeout(cloudT); stopHelpPoll(); meta.cls = null; save(); refresh(); clsBtn(); closeModal(); toast('This device stopped saving to class. Your code still works.'); };
+
+/* ---------- help chat ---------- */
+function helpBadge(n) { const b = $('bHelp'); if (b) b.classList.toggle('new', !!n); }
+function renderHelp(rows) {
+  const box = $('helpLog'); if (!box) return;
+  box.innerHTML = rows.length ? rows.map((m) => `<div class="hm ${m.sender === 'teacher' ? 't' : 's'}"><b>${m.sender === 'teacher' ? 'Teacher' : 'Your team'}</b>${esc(m.message)}</div>`).join('') : '<p class="tipl">No messages yet. Tell your teacher what you are stuck on.</p>';
+  box.scrollTop = box.scrollHeight;
+}
+function pollHelp() {
+  const c = cls(); if (!c) return Promise.resolve();
+  return rpc('get_class_help', { p_site_code: c.site }).then((rows) => {
+    rows = rows || [];
+    const replies = rows.filter((m) => m.sender === 'teacher').length;
+    const seen = c.seen || 0;
+    if ($('helpLog')) { renderHelp(rows); if (replies !== seen) { c.seen = replies; save(); } helpBadge(0); helpLast = replies; }
+    else if (replies > seen) { helpBadge(1); if (replies > helpLast) toast('Your teacher replied. Tap Help.'); helpLast = replies; }
+  }).catch(() => { /* offline: try again next tick */ });
+}
+function startHelpPoll() { stopHelpPoll(); if (!cls()) return; pollHelp(); helpT = setInterval(pollHelp, 10000); }
+function stopHelpPoll() { clearInterval(helpT); helpT = 0; }
+ACT.help = () => {
+  if (!cls()) { openModal('Ask for help', '<p>First save your site to the class gallery. Then your teacher can see your site and your message side by side.</p><div class="row"><button type="button" class="mb go" data-act="clsOpenModal">Save to Class</button></div>'); return; }
+  openModal('Ask for help', `<p class="tipl">Your teacher sees this next to your live site. Do not type names or private info.</p><div id="helpLog" class="helplog"><p class="tipl">Loading…</p></div>
+<textarea class="inp" id="helpTa" maxlength="300" placeholder="What are you stuck on? Example: our button color will not change." aria-label="Help message" style="min-height:64px"></textarea>
+<div class="row"><button type="button" class="mb go" data-act="helpSend">Send to teacher</button><span id="helpMsg" class="tipl"></span></div>`);
+  pollHelp(); $('helpTa').focus();
+};
+ACT.clsOpenModal = () => openClass();
+ACT.helpSend = (btn) => {
+  const t = $('helpTa').value.trim(), m = $('helpMsg');
+  if (!t) { m.textContent = 'Type your question first.'; return; }
+  const p = priv(t); if (p) { m.textContent = 'Take out ' + p + ' and try again.'; return; }
+  btn.disabled = true; m.textContent = 'Sending…';
+  cloudSave(false).then(() => rpc('send_class_help', { p_site_code: cls().site, p_message: t }))
+    .then(() => { $('helpTa').value = ''; m.textContent = 'Sent. Your teacher will reply here.'; btn.disabled = false; return pollHelp(); })
+    .catch((e) => { btn.disabled = false; m.textContent = 'Did not send: ' + e.message; });
+};
+$('bClass').addEventListener('click', openClass);
+$('bHelp').addEventListener('click', () => ACT.help());
+
 function init() {
   const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS_LINK; document.head.appendChild(l);
   fillFontSelects();
@@ -2465,6 +2608,7 @@ function init() {
   renderStrip(); drawClock(); updateCount(); updateBookCount();
   clockT = setInterval(tick, 1000);
   checkFonts();
+  lastCloudState = JSON.stringify(state); clsBtn(); startHelpPoll();
   window.__studio = { get state() { return state; }, get meta() { return meta; }, runPrompt, interpret, DEFAULT_STATE, buildExport, codeLines, priv };
 }
 init();
