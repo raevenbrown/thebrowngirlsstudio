@@ -1,9 +1,9 @@
 {
- "generated": "2026-11-24",
+ "generated": "2026-11-27",
  "source": "Read from the AI Lab Gmail (sent, received, drafts, scheduled) on Nov 22, 2026. Full backfill of every in and out email per account.",
  "accounts": {
   "201": {
-   "headline": "Booked for InspiHER Dec 2-3 (4 one-hour sessions). Payment email sent Nov 23. Waiting on Dr. Bowden about payment timing, rooms and times.",
+   "headline": "Booked for InspiHER Dec 2-3 (4 one-hour sessions). Payment email sent Nov 23. A follow-up to Dr. Bowden is drafted but not sent; still open: rooms and times, payment timing, student link and AI tools answer.",
    "lastReply": {
     "d": "2026-11-16",
     "who": "Dr. Molly Bowden",
@@ -398,6 +398,16 @@
        "sum": "Sent Mon Nov 23, 8:00 AM ET. Asked whether accounts payable has your W-9 and the ACH vendor form, and whether payment is issued before Dec 2.",
        "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1880226189151113974",
        "mid": "1a2087ded297b186"
+      },
+      {
+       "d": "2026-11-27",
+       "dir": "note",
+       "who": "Draft waiting",
+       "sub": "Re: InspiHER Session",
+       "sum": "Draft waiting. Not sent. Follow-up to Dr. Bowden with the student link to test (still a placeholder) and the AI tools answer, then asks for rooms and times, a check-in contact, photo and parent take-home card approval, and payment timing.",
+       "tag": "draft",
+       "gm": "https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com#all/thread-f:1880226189151113974",
+       "mid": "1a21e3093bd5d1b7"
       }
      ]
     }
