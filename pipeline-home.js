@@ -86,6 +86,8 @@
     '@media(min-width:700px){#hxSheet{left:50%;right:auto;width:520px;transform:translateX(-50%);animation:hxin .25s both}}',
     '.hx-grab{width:44px;height:5px;border-radius:5px;background:rgba(255,235,200,.25);margin:0 auto 12px}',
     '#hxBar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:none;justify-content:space-around;padding:6px 6px calc(6px + env(safe-area-inset-bottom));background:rgba(26,17,12,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(199,153,79,.3)}',
+    '#hxBar{-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}body.hx-typing #hxBar{display:none!important}',
+    'details.hx-lkg>summary,details.hx-flg>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:46px;padding:2px 2px;border-bottom:1px solid rgba(199,153,79,.22)}details.hx-lkg>summary::-webkit-details-marker,details.hx-flg>summary::-webkit-details-marker{display:none}details.hx-lkg>summary::after,details.hx-flg>summary::after{content:"+";font-size:22px;line-height:1;color:#E3BD79;font-weight:700;flex:none;width:28px;text-align:center}details[open].hx-lkg>summary::after,details[open].hx-flg>summary::after{content:"\\2212"}',
     '.hx-tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:7px 0 4px;border:0;background:none;color:#9c8a6c;font-size:10.5px;font-weight:800;letter-spacing:.03em;cursor:pointer;min-height:52px;border-radius:14px;transition:color .2s,transform .15s}',
     '.hx-tab svg{width:23px;height:23px}.hx-tab.on{color:#E3BD79}.hx-tab.on svg{filter:drop-shadow(0 0 6px rgba(227,189,121,.7))}.hx-tab:active{transform:scale(.92)}',
     '.hx-rf{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(199,153,79,.4);background:rgba(199,153,79,.12);color:#E3BD79;cursor:pointer;padding:0;flex:none}',
@@ -631,6 +633,14 @@
   }
 
   /* ---------- links: every link for the business in one place ---------- */
+  var GACCT = 'creativemetrixbgcs@gmail.com';
+  /* Drive and Docs files are private to this account, so tell Google which account to open them with. */
+  function gacct(u) {
+    try {
+      if (!/^https:\/\/(drive|docs)\.google\.com\//.test(u) || /\/forms\/d\/e\//.test(u) || /[?&]authuser=/.test(u)) return u;
+      return u + (u.indexOf('?') < 0 ? '?' : '&') + 'authuser=' + GACCT;
+    } catch (e) { return u; }
+  }
   var SITE = 'https://raevenbrown.github.io/thebrowngirlsstudio/';
   var GM = 'https://mail.google.com/mail/?authuser=creativemetrixbgcs@gmail.com';
   var LINK_GROUPS = [
@@ -638,16 +648,17 @@
     { id: 'site', t: 'Your website and pages', s: 'These live on your site.' },
     { id: 'forms', t: 'Google Forms and sign-ups', s: 'Where parents and schools sign up.' },
     { id: 'google', t: 'Gmail, calendar and Drive', s: 'All under creativemetrixbgcs@gmail.com.' },
-    { id: 'back', t: 'Behind the scenes', s: 'The code, the cloud sync and the database. You rarely need these.' },
+    { id: 'back', t: 'Behind the scenes', s: 'The code, the cloud sync, the database and the Live AI setup. You rarely need these. GitHub, Supabase and Claude Console ask you to sign in first.' },
     { id: 'demo', t: 'Lab project demos', s: 'Live demos linked from your Lab Projects page.' }
   ];
   var LINKS = [
     { g: 'insp', n: 'InspiHER class page', u: SITE + 'inspiher-class.html', w: 'The four session pages. Students enter with the code on their card. The adult view has the Live AI box for the big screen.', note: 'Unlisted. Keep it off the site and do not share it until the district says yes.', top: 1 },
+    { g: 'insp', n: 'Vibe City game (new, still in testing)', u: SITE + 'inspiher-game.html', w: 'The interactive coding game for the four sessions. The class page above stays the live one until you say to switch.', note: 'Unlisted. Class codes: spark1, spark2, spark3, spark4. Adult view: teacher26.' },
     { g: 'insp', n: 'Student sharing agreement (draft)', u: 'https://claude.ai/artifact/4oZCZswnxzDy8UGJqKmfC7', w: 'Parent permission form, student privacy note and the questions for Newton County Schools.', note: 'A draft for the district and an attorney to review. It is not legal advice.' },
-    { g: 'insp', n: 'Live AI setup: Supabase secrets', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw/functions/secrets', w: 'Where the AI key and the Live AI passphrase go. If the link does not open, use Edge Functions, then Secrets.', note: 'Add ANTHROPIC_API_KEY (it may already be there for the pipeline coach) and INSPIHER_PASSPHRASE.' },
-    { g: 'insp', n: 'Live AI setup: Supabase functions', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw/functions', w: 'Shows inspiher-live and pipeline-chat, with logs if something breaks.' },
-    { g: 'insp', n: 'Live AI setup: Claude Console API keys', u: 'https://platform.claude.com/settings/keys', w: 'Create the AI key here. Never paste it into a chat or an email.' },
-    { g: 'insp', n: 'Live AI setup: Claude Console workspaces and spend limits', u: 'https://platform.claude.com/settings/workspaces', w: 'Make a workspace called InspiHER and set a small monthly spend limit on it.' },
+    { g: 'back', n: 'Live AI setup: Supabase secrets', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw/functions/secrets', w: 'Where the AI key and the Live AI passphrase go. If the link does not open, use Edge Functions, then Secrets.', note: 'Add ANTHROPIC_API_KEY (it may already be there for the pipeline coach) and INSPIHER_PASSPHRASE.' },
+    { g: 'back', n: 'Live AI setup: Supabase functions', u: 'https://supabase.com/dashboard/project/qlgnstoesdzmkcmyaqyw/functions', w: 'Shows inspiher-live and pipeline-chat, with logs if something breaks.' },
+    { g: 'back', n: 'Live AI setup: Claude Console API keys', u: 'https://platform.claude.com/settings/keys', w: 'Create the AI key here. Never paste it into a chat or an email.' },
+    { g: 'back', n: 'Live AI setup: Claude Console workspaces and spend limits', u: 'https://platform.claude.com/settings/workspaces', w: 'Make a workspace called InspiHER and set a small monthly spend limit on it.' },
     { g: 'site', n: 'Pipeline (this app)', u: SITE + 'pipeline.html', w: 'Your pipeline, coach and email trail.', top: 1 },
     { g: 'site', n: 'Main website', u: SITE, w: 'The Brown Girls Creative Studio home page.', top: 1 },
     { g: 'site', n: 'The AI Lab', u: SITE + 'labs.html', w: 'Program page: classes, December cohort and waitlist buttons.', top: 1 },
@@ -683,6 +694,7 @@
     { g: 'demo', n: 'Coles Navigate360 IR Engine', u: 'https://ksu-institutional-ir-engine-nsfzyeyxgrogvxuzssmxib.streamlit.app/', w: 'Institutional research demo.' },
     { g: 'demo', n: 'Omnimetrix MSP Console', u: 'https://omnimetrix-msp-engine-mbx2qgs8zkdv2vx5jkprkd.streamlit.app/', w: 'Managed services console demo.' }
   ];
+  LINKS.forEach(function (l) { l.u = gacct(l.u); });
   var LINK_GAPS = [
     'No Instagram, TikTok, LinkedIn or YouTube link appears on any page of your site. Send them to me and I will add them here and to the site.',
     'Your site runs on a github.io address. A custom domain would look more professional on emails and the QR card. Say the word and I will walk you through it.',
@@ -706,7 +718,7 @@
   window.hxLinkFilter = function (q) {
     q = String(q || '').toLowerCase(); S.linkQ = q;
     document.querySelectorAll('.hx-lk').forEach(function (r) { r.style.display = !q || (r.getAttribute('data-q') || '').indexOf(q) >= 0 ? '' : 'none'; });
-    document.querySelectorAll('.hx-lkg').forEach(function (g) { var any = g.querySelector('.hx-lk:not([style*="none"])'); g.style.display = (!q || any) ? '' : 'none'; });
+    document.querySelectorAll('.hx-lkg').forEach(function (g) { var any = g.querySelector('.hx-lk:not([style*="none"])'); g.style.display = (!q || any) ? '' : 'none'; if (g.tagName === 'DETAILS' && q) g.open = !!any; });
   };
   function linkRow(l, mine) {
     var q = (l.n + ' ' + (l.w || '') + ' ' + l.u).toLowerCase();
@@ -714,7 +726,7 @@
       '<b style="font-size:14.5px">' + E(l.n) + '</b>' +
       (l.w ? '<p class="hx-mu" style="margin-top:2px">' + E(l.w) + '</p>' : '') +
       (l.note ? '<p class="hx-mu" style="margin-top:3px;font-size:12px"><b style="color:#E3BD79">Note:</b> ' + E(l.note) + '</p>' : '') +
-      '<p style="font-size:11px;color:#9c8a6c;margin-top:3px;word-break:break-all">' + E(l.u.replace(/^https?:\/\/(www\.)?/, '')) + '</p></div>' +
+      '<p style="font-size:11px;color:#9c8a6c;margin-top:3px">' + E(l.u.replace(/^https?:\/\/(www\.)?/, '').split(/[\/?#]/)[0]) + '</p></div>' +
       '<div style="display:flex;gap:6px;flex-shrink:0;align-items:center;flex-wrap:wrap;justify-content:flex-end">' +
       '<a class="hx-btn pri" href="' + E(l.u) + '" target="_blank" rel="noopener">Open</a>' +
       '<button class="hx-btn" data-u="' + E(l.u) + '" onclick="hxLinkCopy(this.getAttribute(\'data-u\'))">Copy</button>' +
@@ -723,9 +735,9 @@
   function linksBody() {
     var top = LINKS.filter(function (l) { return l.top; });
     var quick = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 12px">' + top.map(function (l) { return '<a class="hx-btn pri" href="' + E(l.u) + '" target="_blank" rel="noopener">' + E(l.n.replace(' (this app)', '')) + '</a>'; }).join('') + '</div>';
-    var groups = LINK_GROUPS.map(function (g) {
+    var groups = LINK_GROUPS.map(function (g, gi) {
       var items = LINKS.filter(function (l) { return l.g === g.id; });
-      return '<div class="hx-lkg" style="margin-top:14px"><div class="hx-k">' + E(g.t) + ' &middot; ' + items.length + '</div><p class="hx-mu" style="margin-bottom:4px">' + E(g.s) + '</p>' + items.map(function (l) { return linkRow(l); }).join('') + '</div>';
+      return '<details class="hx-lkg" style="margin-top:10px"' + (gi === 0 ? ' open' : '') + '><summary><div class="hx-k" style="margin:0">' + E(g.t) + ' &middot; ' + items.length + '</div></summary><p class="hx-mu" style="margin:6px 0 4px">' + E(g.s) + '</p>' + items.map(function (l) { return linkRow(l); }).join('') + '</details>';
     }).join('');
     var mine = linksCustom();
     var mineHtml = '<div class="hx-lkg" style="margin-top:14px"><div class="hx-k">Links you added &middot; ' + mine.length + '</div>' +
@@ -750,11 +762,11 @@
   };
 
   /* ---------- files: every document in one place (links only; private files stay in Drive) ---------- */
-  function fxF(id) { return 'https://drive.google.com/drive/folders/' + id; }
-  function fxX(id) { return 'https://drive.google.com/file/d/' + id + '/view'; }
-  function fxD(id) { return 'https://docs.google.com/document/d/' + id + '/edit'; }
-  function fxS(id) { return 'https://docs.google.com/spreadsheets/d/' + id + '/edit'; }
-  function fxP(id) { return 'https://docs.google.com/presentation/d/' + id + '/edit'; }
+  function fxF(id) { return gacct('https://drive.google.com/drive/folders/' + id); }
+  function fxX(id) { return gacct('https://drive.google.com/file/d/' + id + '/view'); }
+  function fxD(id) { return gacct('https://docs.google.com/document/d/' + id + '/edit'); }
+  function fxS(id) { return gacct('https://docs.google.com/spreadsheets/d/' + id + '/edit'); }
+  function fxP(id) { return gacct('https://docs.google.com/presentation/d/' + id + '/edit'); }
   var FILE_GROUPS = [
     { id: 'start', t: 'Start here', s: 'The documents you reach for most.' },
     { id: 'lab', t: 'The AI Lab program', s: 'Run of show, guides, rubric, schedule and proposal. The Pages files download first, then open in Pages on your Mac or iPhone.' },
@@ -803,7 +815,7 @@
   window.hxFileFilter = function (q) {
     q = String(q || '').toLowerCase(); S.fileQ = q;
     document.querySelectorAll('.hx-fl').forEach(function (r) { r.style.display = !q || (r.getAttribute('data-q') || '').indexOf(q) >= 0 ? '' : 'none'; });
-    document.querySelectorAll('.hx-flg').forEach(function (g) { var any = g.querySelector('.hx-fl:not([style*="none"])'); g.style.display = (!q || any) ? '' : 'none'; });
+    document.querySelectorAll('.hx-flg').forEach(function (g) { var any = g.querySelector('.hx-fl:not([style*="none"])'); g.style.display = (!q || any) ? '' : 'none'; if (g.tagName === 'DETAILS' && q) g.open = !!any; });
   };
   function fileRow(l, mine) {
     var q = (l.n + ' ' + (l.w || '') + ' ' + (l.k || '') + (l.priv ? ' private' : '')).toLowerCase();
@@ -821,9 +833,9 @@
     var inp = 'padding:11px 12px;border-radius:12px;background:rgba(0,0,0,.28);border:1px solid rgba(227,189,121,.3);color:#F3E8D6;font-size:16px';
     var top = FILES.filter(function (l) { return l.top; });
     var quick = '<div style="display:flex;flex-wrap:wrap;gap:8px;margin:2px 0 12px">' + top.map(function (l) { return '<a class="hx-btn pri" href="' + E(l.u) + '" target="_blank" rel="noopener">' + E(l.n.replace(' (Drive folder)', '')) + '</a>'; }).join('') + '</div>';
-    var groups = FILE_GROUPS.map(function (g) {
+    var groups = FILE_GROUPS.map(function (g, gi) {
       var items = FILES.filter(function (l) { return l.g === g.id; });
-      return '<div class="hx-flg" style="margin-top:14px"><div class="hx-k">' + E(g.t) + ' &middot; ' + items.length + '</div><p class="hx-mu" style="margin-bottom:4px">' + E(g.s) + '</p>' + items.map(function (l) { return fileRow(l); }).join('') + '</div>';
+      return '<details class="hx-flg" style="margin-top:10px"' + (gi === 0 ? ' open' : '') + '><summary><div class="hx-k" style="margin:0">' + E(g.t) + ' &middot; ' + items.length + '</div></summary><p class="hx-mu" style="margin:6px 0 4px">' + E(g.s) + '</p>' + items.map(function (l) { return fileRow(l); }).join('') + '</details>';
     }).join('');
     var mine = filesCustom();
     var cats = FILE_GROUPS.map(function (g) { return '<option value="' + g.id + '">' + E(g.t) + '</option>'; }).join('') + '<option value="mine" selected>Other</option>';
@@ -1441,6 +1453,29 @@
     var p = document.getElementById('hxPanel'); if (p) p.classList.remove('open');
     renderHome(); try { window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }); } catch (e) { window.scrollTo(0, 0); }
   };
+
+  /* iPhone home-screen apps can keep the screen area short after the keyboard closes, which leaves the tab bar floating mid-page.
+     Hide the bar while typing, then nudge the page so the phone measures the screen again. */
+  (function () {
+    var t1 = 0;
+    function isField(el) { return !!(el && el.tagName && /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName)); }
+    function settle() {
+      var vv = window.visualViewport; if (vv && vv.scale > 1.02) return;
+      var y = window.pageYOffset || 0, b = document.getElementById('hxBar');
+      try { window.scrollTo(0, y + 1); window.scrollTo(0, y); } catch (e) {}
+      if (b) { b.style.display = 'none'; void b.offsetHeight; b.style.display = (isMobile() && pipelineVisible()) ? 'flex' : 'none'; }
+    }
+    document.addEventListener('focusin', function (e) { if (isField(e.target)) document.body.classList.add('hx-typing'); });
+    document.addEventListener('focusout', function (e) {
+      if (!isField(e.target)) return;
+      setTimeout(function () {
+        if (isField(document.activeElement)) return;
+        document.body.classList.remove('hx-typing'); settle(); setTimeout(settle, 450);
+      }, 80);
+    });
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', function () { if (isField(document.activeElement)) return; clearTimeout(t1); t1 = setTimeout(settle, 150); });
+    window.addEventListener('pageshow', function () { clearTimeout(t1); t1 = setTimeout(settle, 200); });
+  })();
 
   /* ---------- quick log sheet: I sent an email ---------- */
   function sheetClose() { var s = document.getElementById('hxSheet'); if (s) s.remove(); var o = document.getElementById('hxVeil'); if (o) o.remove(); }
