@@ -1,8 +1,16 @@
 {
  "version": 2,
  "generated": "2026-11-27",
- "note": "Checked Nov 27. Searched Georgia district and state AI policy, AI in education, open grants and funding risk. Nothing new found and verified in the last 14 days, so earlier items still within their windows were kept.",
+ "note": "Checked Nov 27: Georgia district and state AI policy, AI in education, open grants, funding risk and new-client leads. One new verified item (Google Search and school AI). No new Georgia district votes, grants or leads verified in the last 14 days, so earlier items still in their windows were kept. LEGO BOOST page shows only the closed 2025-26 cycle, so it was left out.",
  "items": [
+  {
+   "cat": "AI in education",
+   "title": "Google says schools that turn off AI Overviews will lose Google Search access",
+   "why": "Schools that stay fully AI-free may lose Search for students, which pushes districts toward guided, teacher-led AI use. Tell principals your classes teach students to question and check AI answers with a teacher present, and offer that as the controlled option. The article gives no start date or grade range, so do not quote either.",
+   "url": "https://www.opb.org/article/2026/11/13/to-use-google-search-schools-have-to-keep-ai-overviews/",
+   "source": "OPB (NPR)",
+   "date": "2026-11-13"
+  },
   {
    "cat": "GA schools",
    "title": "Rockdale school board asks about timeline for student AI-ethics training",
