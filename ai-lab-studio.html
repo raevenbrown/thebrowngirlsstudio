@@ -1,0 +1,2476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#FAF7F2">
+<title>The AI Lab &mdash; Studio | The Brown Girls Creative Studio</title>
+<meta name="description" content="Learn to vibe code by building a real website. A classroom studio from The Brown Girls Creative Studio.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 3L20 7.5V16.5L12 21L4 16.5V7.5Z' fill='%231F1B18'/%3E%3Ccircle cx='12' cy='12' r='3' fill='%23B88A44'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@500;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+:root{--cream:#FAF7F2;--blush:#F3E5E2;--espresso:#1F1B18;--brass:#B88A44;--brass2:#A37736;--muted:#6A6059;--line:#E5DDD2;--line2:#D8CFC2;--card:#FFFDF9;--sand:#EFE9DF;--ok:#4F8F5B;--bad:#B3261E}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{margin:0;padding:0;background:var(--cream);color:var(--espresso);font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;overflow-x:hidden}
+body{min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;-webkit-tap-highlight-color:transparent}
+button,select,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer;touch-action:manipulation}
+.mono{font-family:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace}
+.skip{position:absolute;left:-999px;top:0;background:var(--espresso);color:var(--cream);padding:8px 12px;z-index:999;border-radius:0 0 8px 0}
+.skip:focus{left:0}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+[hidden]{display:none!important}
+
+/* ---------- header ---------- */
+.top{min-height:56px;flex:none;background:var(--cream);border-bottom:1px solid var(--line);padding:8px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;position:relative;z-index:30}
+.tl,.tr{display:flex;flex-wrap:wrap;align-items:center;gap:10px;min-width:0}
+.logo{width:32px;height:32px;border-radius:10px;background:var(--espresso);color:var(--cream);display:grid;place-items:center;flex:none}
+.ttl{font-family:'Playfair Display',Georgia,serif;font-weight:700;font-size:1.12rem;letter-spacing:-.01em;white-space:nowrap}
+.pill{background:var(--blush);border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:.7rem;font-weight:500;white-space:nowrap}
+.grades{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px}
+.grades button{border:0;background:transparent;color:var(--muted);padding:5px 11px;border-radius:999px;font-size:.72rem;font-weight:700;min-height:30px}
+.grades button:hover{color:var(--espresso)}
+.grades button.on{background:var(--espresso);color:var(--cream)}
+.clock{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px 6px 3px 10px}
+.cdot{width:8px;height:8px;border-radius:50%;background:var(--brass)}
+.cdot.run{animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+#clock{font-weight:700;font-size:.84rem;min-width:46px;font-variant-numeric:tabular-nums}
+.mini{border:0;background:transparent;color:var(--muted);font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:999px;min-height:28px}
+.mini.dk{background:var(--espresso);color:var(--cream)}
+.hbtn{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line2);background:var(--card);color:var(--espresso);border-radius:999px;padding:7px 14px;font-size:.78rem;font-weight:700;min-height:36px;white-space:nowrap}
+.hbtn:hover{background:var(--blush)}
+.hbtn.brass{background:var(--brass);border-color:var(--brass);color:var(--espresso)}
+.hbtn.brass:hover{background:var(--brass2)}
+.hbtn.icon{padding:7px 9px}
+.cnt{background:var(--espresso);color:var(--cream);border-radius:999px;font-size:.66rem;padding:1px 7px;min-width:18px;text-align:center}
+
+/* ---------- split layout ---------- */
+.split{display:flex;flex-direction:column;flex:1;min-height:0}
+.chatpane{background:var(--cream);border-bottom:1px solid var(--line);display:flex;flex-direction:column;min-height:0;height:clamp(420px,62vh,600px);flex:none}
+.canvaspane{background:var(--sand);display:flex;flex-direction:column;min-height:0;flex:1}
+@media(min-width:900px){
+ body{height:100vh;height:100dvh;overflow:hidden}
+ .split{flex-direction:row}
+ .chatpane{width:38%;min-width:360px;max-width:560px;height:auto;border-bottom:0;border-right:1px solid var(--line)}
+ .canvaspane{overflow:hidden}
+}
+.phead{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--line);flex:none}
+.ph-l{display:flex;align-items:center;gap:8px;font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.ph-l i{width:8px;height:8px;border-radius:50%;background:var(--brass)}
+.linkb{border:0;background:none;color:var(--brass2);font-size:.72rem;font-weight:700;text-decoration:underline;padding:4px;margin-left:auto}
+.mode{font-size:.7rem;font-weight:500;color:var(--muted);white-space:nowrap}
+
+/* guide strip: stays one fixed row so the chat never grows */
+.gstrip{flex:none;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#FFFDF9,#FAF7F2);padding:8px 14px;min-height:58px;display:flex;flex-direction:column;justify-content:center;gap:5px}
+.gs-top{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.gs-tag{font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brass2)}
+.gs-step{font-size:.8rem;font-weight:700}
+.gs-time{font-size:.7rem;color:var(--muted);margin-left:auto;font-variant-numeric:tabular-nums}
+.gs-bar{height:4px;border-radius:4px;background:var(--line);overflow:hidden}.gs-bar i{display:block;height:100%;background:var(--brass);transition:width .4s}
+.gs-row{display:flex;gap:6px;align-items:center;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px}
+.gs-row>*{flex:none}
+.gs-msg{font-size:.76rem;color:#3B332E;line-height:1.35}
+.chip{border:1px solid var(--line2);background:var(--card);color:var(--espresso);border-radius:999px;padding:5px 11px;font-size:.72rem;font-weight:600;min-height:30px;white-space:nowrap}
+.chip:hover{background:var(--blush)}
+.chip.dk{background:var(--espresso);border-color:var(--espresso);color:var(--cream)}
+.chip.dk:hover{background:#352E29}
+.chip.go{background:var(--brass);border-color:var(--brass);color:var(--espresso)}
+
+/* ---------- chat feed (fixed height, scrolls inside) ---------- */
+.feed{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:14px 14px 18px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.feed:focus-visible{outline-offset:-3px}
+@media(prefers-reduced-motion:reduce){.feed{scroll-behavior:auto}}
+.msg{animation:up .22s ease-out both;max-width:100%}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.msg{animation:none}}
+.msg.me{align-self:flex-end;max-width:90%;background:var(--espresso);color:var(--cream);border-radius:16px 16px 4px 16px;padding:9px 13px;font-size:.84rem;line-height:1.5;overflow-wrap:anywhere}
+.msg.sd{align-self:stretch;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 14px;font-size:.82rem;line-height:1.55;color:#2A2420;overflow-wrap:anywhere}
+.sdh{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.sdav{width:24px;height:24px;border-radius:50%;background:var(--blush);display:grid;place-items:center;font:700 .68rem 'Playfair Display',Georgia,serif}
+.sdn{font-size:.74rem;font-weight:800}
+.sdt{margin-left:auto;font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brass2)}
+.msg p{margin:0 0 8px}.msg p:last-child{margin-bottom:0}
+.lesson{background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;font-size:.78rem;line-height:1.55}
+.lesson p{margin:0 0 6px}.lesson p:last-child{margin:0}
+.fx{background:var(--blush);border-radius:10px;padding:8px 10px;margin:8px 0;font-size:.76rem;line-height:1.5}
+.fxh{font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--brass2);margin:8px 0 4px}
+.chg{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.chg li{display:flex;gap:6px;align-items:baseline;flex-wrap:wrap;font-size:.78rem}
+.chg .lb{font-weight:700}.chg .ar{color:var(--muted)}
+.chg .to{background:#fff;border:1px solid var(--line);border-radius:6px;padding:0 6px;font-weight:600}
+.sw{display:inline-block;width:11px;height:11px;border-radius:3px;border:1px solid rgba(0,0,0,.25);vertical-align:-1px;margin-right:4px}
+.pw{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0 4px;font-size:.74rem}
+.pw b{font-size:.64rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.pw .pc{border-radius:999px;padding:2px 9px;font-weight:700;font-size:.68rem;border:1px solid var(--line2);background:#fff;color:var(--muted)}
+.pw .pc.on{background:var(--espresso);color:var(--cream);border-color:var(--espresso)}
+.tipl{font-size:.76rem;color:var(--muted);margin-top:8px}
+.addrow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.samples{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.samples .sbtn{text-align:left;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:9px 11px;width:100%}
+.samples .sbtn:hover{background:#F3E5E2A6}
+.samples .sbtn.done{border-color:var(--brass);background:#fff}
+.sbtn .t{font-size:.78rem;font-weight:800}.sbtn .d{font-size:.7rem;color:var(--muted);margin-top:2px;display:block}
+.sprog{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:.66rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.thinking{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:.78rem}
+.dots i{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--brass);margin-right:3px;animation:bounce 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.5}40%{transform:scale(1);opacity:1}}
+
+/* ---------- composer (compact; never pushes the page) ---------- */
+.composer{flex:none;border-top:1px solid var(--line);padding:10px 12px 8px;background:var(--cream)}
+.cbox{display:flex;align-items:flex-end;gap:8px;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:7px 8px}
+.cbox:focus-within{border-color:var(--espresso)}
+.cbox textarea{flex:1;resize:none;border:0;background:transparent;outline:none;font-size:.88rem;line-height:1.4;padding:3px 6px;height:52px;max-height:84px;min-height:52px;overflow-y:auto}
+.cbox textarea::placeholder{color:#8A8078}
+.send{border:0;background:var(--espresso);color:var(--cream);border-radius:12px;padding:10px 18px;font-weight:700;font-size:.8rem;min-height:40px}
+.send:hover{background:#352E29}.send:disabled{opacity:.5}
+.cmeta{display:flex;justify-content:space-between;gap:8px;font-size:.64rem;color:var(--muted);padding:4px 6px 0}
+.perr{background:#FBE9E7;border:1px solid #F2C4BE;color:#7C1D14;border-radius:10px;padding:6px 10px;font-size:.76rem;margin-bottom:7px}
+
+/* ---------- canvas toolbar ---------- */
+.tbar{background:var(--card);border-bottom:1px solid var(--line);padding:8px 12px;display:flex;flex-direction:column;gap:7px;flex:none;position:relative;z-index:20}
+.trow{display:flex;flex-wrap:wrap;align-items:center;gap:7px}
+.seg{display:inline-flex;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:3px}
+.seg button{border:0;background:transparent;color:var(--muted);padding:5px 12px;border-radius:9px;font-size:.74rem;font-weight:700;min-height:30px}
+.seg button.on{background:var(--espresso);color:var(--cream)}
+.seg.sm button{padding:4px 9px;font-size:.7rem}
+.seltag{font-size:.72rem;font-weight:700;background:var(--blush);border:1px solid var(--line);border-radius:9px;padding:5px 10px;white-space:nowrap}
+.grp{display:inline-flex;background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:2px}
+.ib{border:0;background:transparent;border-radius:8px;width:32px;height:30px;display:grid;place-items:center;color:var(--espresso)}
+.ib:hover{background:var(--blush)}
+.tb{border:1px solid var(--line);background:var(--cream);border-radius:10px;padding:5px 11px;font-size:.72rem;font-weight:700;min-height:32px;white-space:nowrap}
+.tb:hover{background:var(--blush)}.tb.dk{background:var(--espresso);color:var(--cream);border-color:var(--espresso)}
+.tb:disabled,.ib:disabled{opacity:.4;cursor:default}
+.fld{display:inline-flex;align-items:center;gap:6px;background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:2px 8px;min-height:32px}
+.fld>span:first-child{font-size:.66rem;color:var(--muted);font-weight:600;white-space:nowrap}
+.fld select{border:0;background:transparent;font-size:.76rem;font-weight:700;max-width:140px;outline:none;cursor:pointer;min-height:28px}
+.fld input[type=number]{width:46px;border:0;background:transparent;font:700 .76rem 'Space Mono',ui-monospace,monospace;outline:none;text-align:center;-moz-appearance:textfield}
+.fld input[type=number]::-webkit-inner-spin-button{display:none}
+.fld .u{font-size:.66rem;color:var(--muted)}
+.step{border:0;background:var(--line);border-radius:7px;width:24px;height:24px;font-weight:800;line-height:1}
+.fld.clr input[type=color]{width:22px;height:22px;border:0;padding:0;background:none;cursor:pointer;border-radius:6px}
+.fld.clr input.hex{width:68px;border:0;background:transparent;font:700 .7rem 'Space Mono',ui-monospace,monospace;outline:none;text-transform:uppercase}
+.cpill{font-size:.68rem;font-weight:800;border-radius:999px;padding:5px 10px;border:1px solid var(--line2);background:#fff;white-space:nowrap}
+.cpill.good{background:#E4F1E6;border-color:#B9D8BE;color:#1E5128}.cpill.bad{background:#FBE9E7;border-color:#F2C4BE;color:#7C1D14}
+.fontnote{font-size:.7rem;color:#7C1D14;background:#FBE9E7;border-radius:8px;padding:5px 9px}
+@media(max-width:899px){
+ .tbar .trow{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:3px}
+ .tbar .trow>*{flex:none}
+}
+
+/* ---------- canvas ---------- */
+.stagewrap{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:14px 14px 26px;position:relative}
+@media(max-width:899px){.stagewrap{overflow:visible;min-height:100vh}}
+.panel{max-width:1040px;margin:0 auto}
+.board{position:relative;border-radius:22px;border:1px solid #DFD5C7;box-shadow:0 1px 2px rgba(31,27,24,.06);overflow:hidden;background:#fff}
+.board.dm .site{width:980px;max-width:none;transform-origin:0 0}
+.guides{position:absolute;inset:0;pointer-events:none;z-index:40}
+.gl{position:absolute;background:transparent}
+.gl.v{top:0;bottom:0;width:0;border-left:1px dashed #E5484D}
+.gl.h{left:0;right:0;height:0;border-top:1px dashed #E5484D}
+.gl.e{border-color:#B88A44}
+.gl.c{border-style:solid;border-color:#E5484D}
+.snapnote{position:absolute;left:50%;top:10px;transform:translateX(-50%);z-index:45;background:var(--espresso);color:var(--cream);font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:999px;pointer-events:none;white-space:nowrap}
+.tipline{font-size:.72rem;color:var(--muted);text-align:center;margin:12px 6px 0}
+.dr{position:relative;cursor:grab;transition:box-shadow .15s}
+.dr:hover{outline:1.5px dashed rgba(184,138,68,.8);outline-offset:3px}
+.dr.sel{outline:2px solid var(--brass);outline-offset:3px;z-index:5}
+.dr.sel{touch-action:none}
+.dr.drag{cursor:grabbing;z-index:30;box-shadow:0 18px 34px -12px rgba(31,27,24,.35)}
+.dr.flash{animation:flash 1.3s ease-out}
+@keyframes flash{0%{box-shadow:0 0 0 0 rgba(184,138,68,.9)}60%{box-shadow:0 0 0 10px rgba(184,138,68,0)}}
+@media(prefers-reduced-motion:reduce){.dr.flash{animation:none;outline:2px solid var(--brass)}}
+.dr [contenteditable=true],.dr[contenteditable=true]{outline:2px solid var(--brass);outline-offset:2px;cursor:text;border-radius:4px;background:rgba(184,138,68,.08)}
+[data-art]{pointer-events:none}
+
+/* ---------- code view ---------- */
+.code{background:#1F1B18;color:#F5EFE6;border-radius:22px;padding:14px;max-width:1040px}
+.codehead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap;font-size:.7rem;color:var(--brass)}
+.codepre{margin:0;background:#2A2420;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:10px 0;overflow-x:auto;font:.74rem/1.65 'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;counter-reset:ln;max-height:none}
+.ln{display:block;white-space:pre;padding:0 14px 0 52px;position:relative;counter-increment:ln}
+.ln::before{content:counter(ln);position:absolute;left:0;width:40px;text-align:right;color:#8A7F74;font-size:.66rem}
+.ln.hl{background:rgba(184,138,68,.22);box-shadow:inset 3px 0 0 var(--brass)}
+.ln .t{color:#E8C27A}.ln .a{color:#9FD3C7}.ln .s{color:#F2A58E}.ln .p{color:#9FD3C7}.ln .c{color:#8A7F74}.ln .hxs{display:inline-block;width:10px;height:10px;border-radius:3px;border:1px solid rgba(255,255,255,.4);margin-right:3px;vertical-align:-1px}
+
+/* ---------- popovers, modals, toast ---------- */
+.pop{position:fixed;z-index:120;background:var(--card);border:1px solid var(--line2);border-radius:14px;box-shadow:0 18px 40px -12px rgba(31,27,24,.35);padding:8px;min-width:210px;max-width:calc(100vw - 16px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);overflow:auto}
+.pop button.mi{display:block;width:100%;text-align:left;border:0;background:transparent;padding:9px 11px;border-radius:9px;font-size:.8rem;font-weight:600}
+.pop button.mi:hover,.pop button.mi:focus-visible{background:var(--blush)}
+.pop .sep{height:1px;background:var(--line);margin:5px 4px}
+.pop .mh{font-size:.62rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:6px 11px 3px}
+.mi small{display:block;font-weight:500;color:var(--muted);font-size:.68rem;margin-top:1px}
+.palgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;width:min(420px,calc(100vw - 32px))}
+.pcard{border:1px solid var(--line);background:var(--cream);border-radius:11px;padding:7px 9px;text-align:left}
+.pcard:hover{border-color:var(--brass);background:#fff}.pcard.on{border-color:var(--espresso);box-shadow:inset 0 0 0 1px var(--espresso)}
+.pcard .pn{font-size:.74rem;font-weight:800;display:block;margin-bottom:5px}
+.pcard .dots4{display:flex;gap:4px;align-items:center}.pcard .dots4 i{width:16px;height:16px;border-radius:50%;border:1px solid rgba(0,0,0,.2)}
+.pcard .hx{font:.62rem 'Space Mono',ui-monospace,monospace;color:var(--muted);margin-top:4px;display:block}
+.modal{position:fixed;inset:0;z-index:150;background:rgba(31,27,24,.55);display:grid;place-items:center;padding:14px;overflow-y:auto}
+.mcard{background:var(--cream);border:1px solid var(--line2);border-radius:20px;width:100%;max-width:640px;max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);display:flex;flex-direction:column;box-shadow:0 30px 60px -20px rgba(0,0,0,.5);outline:none}
+.mcard.wide{max-width:860px}
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 18px;border-bottom:1px solid var(--line);flex:none}
+.mhead h2{margin:0;font:700 1.15rem 'Playfair Display',Georgia,serif}
+.x{border:0;background:transparent;font-size:1.6rem;line-height:1;width:36px;height:36px;border-radius:10px}.x:hover{background:var(--blush)}
+.mbody{padding:14px 18px 18px;overflow-y:auto;font-size:.86rem;line-height:1.55}
+.mbody p{margin:0 0 10px}.mbody h3{font:800 .68rem 'DM Sans';letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:14px 0 6px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:8px 0}
+.inp{border:1px solid var(--line2);background:var(--card);border-radius:10px;padding:8px 11px;font-size:.86rem;min-height:38px;outline:none;max-width:100%}
+.inp:focus{border-color:var(--espresso)}
+textarea.inp{width:100%;min-height:86px;resize:vertical}
+.mb{border:0;border-radius:11px;background:var(--espresso);color:var(--cream);padding:9px 16px;font-weight:700;font-size:.8rem;min-height:38px}
+.mb:hover{background:#352E29}.mb.sec{background:var(--card);color:var(--espresso);border:1px solid var(--line2)}.mb.sec:hover{background:var(--blush)}.mb.go{background:var(--brass);color:var(--espresso)}
+.mb:disabled{opacity:.5}
+.pbook{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.pbook li{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 11px}
+.pbook .pt{font-size:.82rem;overflow-wrap:anywhere}.pbook .pm{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:.68rem;color:var(--muted)}
+.tag{border-radius:999px;padding:1px 8px;background:var(--blush);font-weight:700;font-size:.66rem}
+.empty{color:var(--muted);font-size:.84rem;padding:6px 0}
+.tilegrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media(max-width:560px){.tilegrid{grid-template-columns:1fr}}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:11px 13px}
+.tile b{display:block;margin-bottom:3px;font-size:.88rem}.tile p{margin:0;font-size:.8rem;color:#3B332E}
+.goals{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}.goals li{display:flex;gap:8px;align-items:center;font-size:.8rem;padding:3px 0}
+.goals .ck{width:18px;height:18px;border-radius:50%;border:2px solid var(--line2);flex:none;display:grid;place-items:center;font-size:.62rem;font-weight:900;color:#fff}.goals li.d .ck{background:var(--ok);border-color:var(--ok)}.goals li.d span:last-child{text-decoration:line-through;color:var(--muted)}
+#toast{position:fixed;right:16px;bottom:16px;z-index:200;background:var(--espresso);color:var(--cream);font-size:.78rem;font-weight:600;padding:9px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.15);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none;max-width:calc(100vw - 32px)}
+#toast.on{opacity:1;transform:none}
+
+/* ---------- full-screen preview ---------- */
+.pv{position:fixed;inset:0;z-index:180;background:#2A2420;display:flex;flex-direction:column}
+.pvbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 12px;background:var(--cream);border-bottom:1px solid var(--line);flex:none}
+.pvhint{font-size:.7rem;color:var(--muted);margin-left:auto}
+.pvstage{flex:1;min-height:0;display:flex;justify-content:center;background:repeating-linear-gradient(45deg,#2A2420,#2A2420 12px,#251F1B 12px,#251F1B 24px)}
+.pvstage iframe{border:0;background:#fff;width:100%;height:100%;transition:width .25s}
+.pvstage.dv iframe{box-shadow:0 0 0 1px rgba(255,255,255,.1),0 20px 60px rgba(0,0,0,.5)}
+
+/* ---------- class wheel (teacher) ---------- */
+.wheelbox{position:relative;width:min(320px,80vw);aspect-ratio:1;margin:6px auto}
+.wheelbox svg{width:100%;height:100%;display:block;transition:transform 4.6s cubic-bezier(.12,.7,.1,1)}
+.wptr{position:absolute;left:50%;top:-6px;transform:translateX(-50%);width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-top:20px solid var(--espresso);z-index:2;filter:drop-shadow(0 2px 0 #fff)}
+.aiwin{background:#1F1B18;color:#F5EFE6;border-radius:14px;padding:12px 14px;font-size:.84rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere;max-height:260px;overflow-y:auto;margin-top:10px}
+.aiwin .lab{font:800 .62rem 'DM Sans';letter-spacing:.12em;text-transform:uppercase;color:var(--brass);display:block;margin-bottom:5px}
+.wres{background:var(--card);border:2px solid var(--brass);border-radius:14px;padding:12px 14px;margin-top:10px}
+.wres .wm{font-size:.7rem;font-weight:800;color:var(--brass2);letter-spacing:.08em;text-transform:uppercase}
+.wres .wt{font-size:.92rem;margin:4px 0 8px;overflow-wrap:anywhere}
+
+.hide-md{display:inline-flex}.hide-sm{display:inline}
+@media(max-width:1180px){.hide-md{display:none}}
+@media(max-width:620px){.hide-sm{display:none}.ttl{font-size:1rem}.top{padding:8px 10px}}
+/* tablets and phones: keep the header and toolbar to a few slim, scrollable rows so the live site gets the room */
+@media(max-width:1240px){
+ .top{padding:6px 12px;gap:6px 10px}
+ .hbtn{padding:5px 11px;min-height:34px;font-size:.74rem}
+ .tbar{padding:6px 10px;gap:5px}
+ .tbar .trow{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:2px;padding-right:30px;-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 34px),transparent)}
+ .tbar .trow>*{flex:none}
+}
+@media(max-width:700px){
+ .tr{flex-wrap:nowrap;overflow-x:auto;width:100%;scrollbar-width:none;padding-bottom:2px}
+ .tr>*{flex:none}
+ .tl{width:100%}
+}
+@media print{.top,.chatpane,.tbar,#toast{display:none!important}body{height:auto;overflow:visible}}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#ta">Skip to the prompt box</a>
+
+<header class="top" id="top">
+  <div class="tl">
+    <a class="logo" href="index.html" title="Home: The Brown Girls Creative Studio" aria-label="Home: The Brown Girls Creative Studio">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z"/><circle cx="12" cy="12" r="3" fill="#B88A44" stroke="none"/></svg>
+    </a>
+    <span class="ttl">The AI Lab &mdash; Studio</span>
+    <span class="pill hide-md">The Brown Girls Creative Studio</span>
+    <div class="grades" id="grades" role="group" aria-label="Grade level">
+      <button type="button" data-grade="5th Grade" class="on">5th Grade</button>
+      <button type="button" data-grade="6&ndash;8">6&ndash;8</button>
+      <button type="button" data-grade="9&ndash;12">9&ndash;12</button>
+    </div>
+  </div>
+  <div class="tr">
+    <div class="clock" title="60-minute session timer">
+      <span class="cdot" id="cdot"></span><span id="clock" class="mono">60:00</span>
+      <button type="button" id="tStart" class="mini dk">Start</button>
+      <button type="button" id="tReset" class="mini">Reset</button>
+    </div>
+    <button type="button" class="hbtn" id="bBook">Prompt Book <span class="cnt" id="bookN">0</span></button>
+    <button type="button" class="hbtn" id="bPrev"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg> Preview</button>
+    <button type="button" class="hbtn brass" id="bExport" aria-haspopup="menu" aria-expanded="false">Export Site</button>
+    <button type="button" class="hbtn icon" id="bMore" aria-haspopup="menu" aria-expanded="false" aria-label="More options"><svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg></button>
+  </div>
+</header>
+
+<main class="split" id="split">
+  <section class="chatpane" aria-label="Studio Director and Vibe Chat">
+    <div class="phead"><div class="ph-l"><i></i><span>Studio Director &bull; Vibe Chat</span></div><button type="button" class="linkb" id="bAbout">How this works</button><span id="modeBadge" class="mode">Guided Lesson &bull; 5th Grade</span></div>
+    <div class="gstrip" id="gstrip"></div>
+    <div class="feed" id="feed" role="log" aria-live="polite" aria-label="Conversation with the Studio Director" tabindex="0"></div>
+    <form class="composer" id="form" autocomplete="off">
+      <div id="privErr" class="perr" role="alert" hidden></div>
+      <div class="cbox">
+        <textarea id="ta" rows="2" maxlength="700" spellcheck="true" aria-label="Type your prompt" placeholder="Describe your brand, audience, vibe, font size (px), colors, or what you're offering..."></textarea>
+        <button type="submit" class="send" id="send">Send</button>
+      </div>
+      <div class="cmeta"><span id="cnt">0 / 700</span><span class="hide-sm">Enter to send &middot; Shift+Enter for a new line</span></div>
+    </form>
+  </section>
+
+  <section class="canvaspane" aria-label="Live website studio canvas">
+    <div class="tbar" id="tbar">
+      <div class="trow">
+        <div class="seg" role="tablist" aria-label="View">
+          <button type="button" id="vSite" role="tab" aria-selected="true" class="on">Live Site</button>
+          <button type="button" id="vCode" role="tab" aria-selected="false">Live Code</button>
+        </div>
+        <span class="seltag" id="seltag">Selected: Hero headline</span>
+        <div class="grp" role="group" aria-label="Align the selected block">
+          <button type="button" class="ib" data-align="l" title="Align left edge to the page margin" aria-label="Align left"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 3v18"/><rect x="7" y="6" width="12" height="4" rx="1"/><rect x="7" y="14" width="7" height="4" rx="1"/></svg></button>
+          <button type="button" class="ib" data-align="c" title="Center horizontally" aria-label="Center horizontally"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v18"/><rect x="5" y="6" width="14" height="4" rx="1"/><rect x="8" y="14" width="8" height="4" rx="1"/></svg></button>
+          <button type="button" class="ib" data-align="r" title="Align right edge to the page margin" aria-label="Align right"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 3v18"/><rect x="5" y="6" width="12" height="4" rx="1"/><rect x="10" y="14" width="7" height="4" rx="1"/></svg></button>
+          <button type="button" class="ib" data-align="t" title="Align top" aria-label="Align top"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 4h18"/><rect x="6" y="7" width="4" height="12" rx="1"/><rect x="14" y="7" width="4" height="7" rx="1"/></svg></button>
+          <button type="button" class="ib" data-align="m" title="Center vertically" aria-label="Center vertically"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18"/><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="8" width="4" height="8" rx="1"/></svg></button>
+        </div>
+        <button type="button" class="tb" id="bEdit" title="Edit the words in the selected block (or double-click it)">Edit text</button>
+        <button type="button" class="tb" id="bResetOne" title="Put the selected block back where it started">Reset block</button>
+        <button type="button" class="tb" id="bResetAll" title="Put every block back where it started">Reset positions</button>
+      </div>
+      <div class="trow styl">
+        <label class="fld"><span>Heading font</span><select id="fHead" aria-label="Heading font"></select></label>
+        <label class="fld"><span>Body font</span><select id="fBody" aria-label="Body font"></select></label>
+        <label class="fld sz"><span>Size</span><button type="button" class="step" id="szDn" aria-label="Smaller">&minus;</button><input id="fSize" type="number" min="10" max="120" inputmode="numeric" aria-label="Font size in pixels"><span class="u">px</span><button type="button" class="step" id="szUp" aria-label="Bigger">+</button></label>
+        <button type="button" class="tb" id="bPal" aria-haspopup="dialog">Palettes</button>
+        <label class="fld clr" title="Accent color"><span>Accent</span><input type="color" id="cAcc" aria-label="Accent color"><input type="text" id="hAcc" class="hex" maxlength="7" aria-label="Accent hex code" spellcheck="false"></label>
+        <label class="fld clr" title="Page color"><span>Page</span><input type="color" id="cSur" aria-label="Page color"><input type="text" id="hSur" class="hex" maxlength="7" aria-label="Page hex code" spellcheck="false"></label>
+        <label class="fld clr" title="Text color"><span>Text</span><input type="color" id="cInk" aria-label="Text color"><input type="text" id="hInk" class="hex" maxlength="7" aria-label="Text hex code" spellcheck="false"></label>
+        <div class="seg sm" id="segR" role="group" aria-label="Corner style"><button type="button" data-r="sharp">Sharp</button><button type="button" data-r="soft" class="on">Soft</button><button type="button" data-r="round">Round</button></div>
+        <span class="cpill" id="cpill" title="How easy your text is to read on your page color (4.5 or more is good)">Contrast</span>
+      </div>
+      <div class="fontnote" id="fontnote" hidden>Google Fonts did not load on this network, so you are seeing backup fonts. Your picks are still saved.</div>
+    </div>
+
+    <div class="stagewrap" id="stage">
+      <div id="panelSite" class="panel">
+        <div class="board" id="board">
+          <div class="site" id="site"></div>
+          <div class="guides" id="guides" aria-hidden="true"></div>
+          <div class="snapnote" id="snapnote" hidden></div>
+        </div>
+        <p class="tipline">Tap or click a block to select it, then drag it. Double-click (or press Edit text) to change the words. Arrow keys nudge the selected block.</p>
+      </div>
+      <div id="panelCode" class="panel code" hidden>
+        <div class="codehead"><span class="mono">Live HTML &amp; CSS &middot; lines your last prompt changed glow gold</span><button type="button" class="tb dk" id="bCopyCode">Copy full page code</button></div>
+        <pre id="codepre" class="codepre" tabindex="0" aria-label="Live code"></pre>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="pop" class="pop" hidden></div>
+
+<div id="modal" class="modal" hidden>
+  <div class="mcard" role="dialog" aria-modal="true" aria-labelledby="mtitle" tabindex="-1">
+    <div class="mhead"><h2 id="mtitle"></h2><button type="button" class="x" id="mclose" aria-label="Close">&times;</button></div>
+    <div class="mbody" id="mbody"></div>
+  </div>
+</div>
+
+<div id="pv" class="pv" hidden>
+  <div class="pvbar">
+    <button type="button" class="hbtn brass" id="pvBack">&larr; Back to Studio</button>
+    <div class="seg dev" role="group" aria-label="Preview size">
+      <button type="button" data-w="100%" class="on">Desktop</button><button type="button" data-w="820px">Tablet</button><button type="button" data-w="390px">Phone</button>
+    </div>
+    <button type="button" class="hbtn" id="pvOne">Download one-pager</button>
+    <button type="button" class="hbtn" id="pvSite">Download website</button>
+    <span class="pvhint hide-md">Esc to go back</span>
+  </div>
+  <div class="pvstage"><iframe id="pvFrame" title="Full-screen preview of your website" sandbox="allow-same-origin"></iframe></div>
+</div>
+
+<script>
+(function(){
+'use strict';
+/* =====================================================================
+   DATA: palettes, fonts, colors, scenes, icons, grade coaching
+   ===================================================================== */
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const clamp = (n, a, b) => Math.max(a, Math.min(b, n));
+
+/* ---------- color math ---------- */
+function normHex(h) {
+  h = String(h || '').trim().replace(/^#/, '');
+  if (/^[0-9a-f]{3}$/i.test(h)) h = h.split('').map((c) => c + c).join('');
+  return /^[0-9a-f]{6}$/i.test(h) ? '#' + h.toUpperCase() : null;
+}
+const rgb = (h) => { h = normHex(h) || '#888888'; return [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16)); };
+const toHex = (a) => '#' + a.map((v) => ('0' + clamp(Math.round(v), 0, 255).toString(16)).slice(-2)).join('').toUpperCase();
+const mix = (a, b, t) => { const x = rgb(a), y = rgb(b); return toHex(x.map((v, i) => v + (y[i] - v) * t)); };
+const lum = (h) => { const c = rgb(h).map((v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); }); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
+const contrast = (a, b) => { const l1 = lum(a), l2 = lum(b); return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05); };
+const readableOn = (bg) => (contrast(bg, '#FFFFFF') >= contrast(bg, '#1F1B18') ? '#FFFFFF' : '#1F1B18');
+
+/* ---------- palettes (warm editorial first) ---------- */
+const PALETTES = [
+  { id: 'golden', n: 'Golden Hour', a: '#B88A44', s: '#FFFDF9', i: '#1F1B18', f: '#F3E5E2' },
+  { id: 'sage', n: 'Sage & Cream', a: '#6F8F72', s: '#F8FAF6', i: '#1F2A22', f: '#E4EDE3' },
+  { id: 'coral', n: 'Coral Sunrise', a: '#D47A6A', s: '#FFF9F7', i: '#2A1A17', f: '#FBE3DD' },
+  { id: 'clay', n: 'Terracotta Clay', a: '#C06A45', s: '#FBF5EF', i: '#2B1A12', f: '#F0DCCB' },
+  { id: 'ocean', n: 'Ocean Calm', a: '#2F6F8F', s: '#F4F9FB', i: '#112430', f: '#DCEBF2' },
+  { id: 'berry', n: 'Berry Pop', a: '#A2306E', s: '#FFF7FB', i: '#2A0F20', f: '#F8DCEB' },
+  { id: 'lav', n: 'Lavender Haze', a: '#7A63B8', s: '#FAF8FF', i: '#1F1A33', f: '#E8E2F7' },
+  { id: 'mint', n: 'Mint Fresh', a: '#2BA58A', s: '#F4FCF9', i: '#10261F', f: '#D7F2EA' },
+  { id: 'sunny', n: 'Sunny Day', a: '#E8A317', s: '#FFFCF2', i: '#2B2306', f: '#FCEFC4' },
+  { id: 'candy', n: 'Cotton Candy', a: '#E0689A', s: '#FFF6FB', i: '#33101F', f: '#FBD8E7' },
+  { id: 'cherry', n: 'Cherry Cola', a: '#B3261E', s: '#FFF8F6', i: '#2A0E0C', f: '#F6D7D3' },
+  { id: 'slate', n: 'Slate Modern', a: '#4A5A6A', s: '#F6F7F9', i: '#151A20', f: '#E1E6EC' },
+  { id: 'velvet', n: 'Velvet & Brass', a: '#C99A4B', s: '#241A16', i: '#F7EBDD', f: '#3A2B24', dark: 1 },
+  { id: 'midnight', n: 'Midnight Gold', a: '#D9B15B', s: '#14110F', i: '#F6EFE4', f: '#2A2420', dark: 1 },
+  { id: 'neon', n: 'Neon Night', a: '#00E5C7', s: '#0D0B1A', i: '#F1ECFF', f: '#1E1A33', dark: 1 },
+];
+const PAL = Object.fromEntries(PALETTES.map((p) => [p.id, p]));
+
+/* ---------- fonts (all free Google Fonts) ---------- */
+const FONTS = [
+  { n: 'Playfair Display', g: 'Serif', fb: "Georgia,'Times New Roman',serif", w: '500;700' },
+  { n: 'Lora', g: 'Serif', fb: "Georgia,serif", w: '500;700' },
+  { n: 'Fraunces', g: 'Serif', fb: "Georgia,serif", w: '500;700' },
+  { n: 'Cormorant Garamond', g: 'Serif', fb: "Georgia,serif", w: '500;700' },
+  { n: 'DM Sans', g: 'Sans-serif', fb: "system-ui,-apple-system,'Segoe UI',sans-serif", w: '400;500;700' },
+  { n: 'Poppins', g: 'Sans-serif', fb: "system-ui,'Segoe UI',sans-serif", w: '400;600;700' },
+  { n: 'Montserrat', g: 'Sans-serif', fb: "system-ui,'Segoe UI',sans-serif", w: '500;700' },
+  { n: 'Nunito', g: 'Sans-serif', fb: "system-ui,'Segoe UI',sans-serif", w: '500;800' },
+  { n: 'Quicksand', g: 'Sans-serif', fb: "system-ui,'Segoe UI',sans-serif", w: '500;700' },
+  { n: 'Rubik', g: 'Sans-serif', fb: "system-ui,'Segoe UI',sans-serif", w: '500;700' },
+  { n: 'Space Grotesk', g: 'Sans-serif', fb: "system-ui,'Segoe UI',sans-serif", w: '500;700' },
+  { n: 'Abril Fatface', g: 'Display', fb: "Georgia,serif", w: '400' },
+  { n: 'Bebas Neue', g: 'Display', fb: "Impact,'Arial Narrow',sans-serif", w: '400' },
+  { n: 'Righteous', g: 'Display', fb: "Impact,sans-serif", w: '400' },
+  { n: 'Fredoka', g: 'Display', fb: "'Arial Rounded MT Bold',system-ui,sans-serif", w: '500;700' },
+  { n: 'Pacifico', g: 'Script', fb: "'Brush Script MT',cursive", w: '400' },
+  { n: 'Caveat', g: 'Script', fb: "'Comic Sans MS',cursive", w: '500;700' },
+  { n: 'Lobster', g: 'Script', fb: "'Brush Script MT',cursive", w: '400' },
+  { n: 'Dancing Script', g: 'Script', fb: "'Brush Script MT',cursive", w: '500;700' },
+  { n: 'Space Mono', g: 'Mono', fb: "ui-monospace,SFMono-Regular,Menlo,monospace", w: '400;700' },
+];
+const FONT = Object.fromEntries(FONTS.map((f) => [f.n.toLowerCase(), f]));
+const fontStack = (n) => { const f = FONT[String(n).toLowerCase()] || FONT['dm sans']; return `'${f.n}',${f.fb}`; };
+const FONTS_LINK = 'https://fonts.googleapis.com/css2?' + FONTS.map((f) => 'family=' + f.n.replace(/ /g, '+') + (f.w === '400' ? '' : ':wght@' + f.w)).join('&') + '&display=swap';
+const fontLinkFor = (names) => {
+  const u = [...new Set(names)].map((n) => FONT[n.toLowerCase()]).filter(Boolean);
+  return 'https://fonts.googleapis.com/css2?' + u.map((f) => 'family=' + f.n.replace(/ /g, '+') + (f.w === '400' ? '' : ':wght@' + f.w)).join('&') + '&display=swap';
+};
+/* style words -> fonts */
+const FONT_WORDS = [
+  [/hand ?writ|handwrit|cursive|script|calligraphy/, 'Caveat'],
+  [/bubbly|bouncy|cute font|playful font/, 'Fredoka'],
+  [/chunky|heavy|poster|fat font/, 'Abril Fatface'],
+  [/tall|condensed|sporty|athletic/, 'Bebas Neue'],
+  [/retro|groovy|70s|diner/, 'Lobster'],
+  [/robot|techy|code|coding font|terminal|hacker|typewriter/, 'Space Mono'],
+  [/futur|sci-?fi/, 'Space Grotesk'],
+];
+
+/* ---------- color words ---------- */
+const COLORS = {
+  'red': '#C8372D', 'orange': '#E07B2D', 'yellow': '#E8B923', 'green': '#4F8F5B', 'blue': '#3567B0', 'purple': '#7A55B0', 'pink': '#E0689A',
+  'teal': '#2A8F8A', 'brown': '#8A5A3C', 'black': '#1F1B18', 'white': '#FFFFFF', 'gold': '#B88A44', 'silver': '#9AA3AD', 'cream': '#FAF3E3',
+  'beige': '#EADFCB', 'ivory': '#FBF7EA', 'navy': '#1F3558', 'coral': '#D47A6A', 'sage': '#6F8F72', 'lavender': '#9C88D0', 'mint': '#3FB79A',
+  'peach': '#EE9A78', 'turquoise': '#2BB5B0', 'magenta': '#C2328F', 'maroon': '#7A2236', 'olive': '#6B7B3A', 'rose': '#D9768F',
+  'sky blue': '#4F9BD0', 'baby blue': '#7FB2DC', 'hot pink': '#E8368F', 'burgundy': '#7C1F37', 'lilac': '#A98BD0', 'tan': '#B98E62',
+  'mustard': '#C99A1E', 'lime': '#6FA82A', 'violet': '#7F4FD0', 'aqua': '#2BA9B0', 'charcoal': '#3A3A3F', 'gray': '#808890', 'grey': '#808890',
+  'indigo': '#4B4FB0', 'forest green': '#2F6B3F', 'plum': '#7A3B69', 'baby pink': '#E58BAE', 'ruby': '#B2184F', 'copper': '#B26A3C',
+  'bronze': '#A06B35', 'terracotta': '#C06A45', 'blush': '#E6A5A0', 'brass': '#B88A44', 'espresso': '#4A3226', 'emerald': '#1E8B63', 'cobalt': '#2D55C8',
+  'dark brown': '#5A3A28', 'soft green': '#6F8F72', 'light green': '#6FA87A', 'dark green': '#2F6B3F', 'light blue': '#5FA3D6', 'dark blue': '#1F3F7A',
+};
+const COLOR_RE = new RegExp('\\b(' + Object.keys(COLORS).sort((a, b) => b.length - a.length).join('|') + ')\\b', 'g');
+const NEUTRALS = new Set(['cream', 'beige', 'ivory', 'white', 'black', 'charcoal', 'gray', 'grey', 'silver', 'navy', 'espresso', 'dark brown']);
+
+/* ---------- moods: words that set a whole vibe ---------- */
+const MOODS = [
+  { re: /botanical|wellness|calm|herbal|natural|nature|leafy|plant|spa\b|zen|peaceful/, pal: 'sage', head: 'Fraunces', body: 'DM Sans', scene: 'botanical', radius: 'soft', label: 'calm botanical' },
+  { re: /velvet|editorial|magazine|fancy|bold luxury|blush-?gold/, pal: 'velvet', head: 'Abril Fatface', body: 'DM Sans', radius: 'sharp', label: 'bold editorial' },
+  { re: /luxury|luxe|elegant|classy|premium|upscale/, pal: 'midnight', head: 'Cormorant Garamond', body: 'Montserrat', radius: 'sharp', label: 'elegant luxe' },
+  { re: /playful|bubbly|bouncy|fun\b|happy|joyful|cheery|silly/, pal: 'coral', head: 'Fredoka', body: 'Nunito', radius: 'round', label: 'playful' },
+  { re: /modern|clean|minimal|simple|sleek/, pal: 'slate', head: 'Space Grotesk', body: 'DM Sans', radius: 'soft', label: 'clean modern' },
+  { re: /neon|futur|cyber|sci-?fi|gaming|robot|techy|hacker/, pal: 'neon', head: 'Space Grotesk', body: 'Space Mono', radius: 'soft', label: 'futuristic' },
+  { re: /cute|girly|sweet|bubblegum|princess|cotton candy/, pal: 'candy', head: 'Pacifico', body: 'Quicksand', radius: 'round', label: 'cute and sweet' },
+  { re: /sunset|sunrise|cozy|warm glow/, pal: 'coral', head: 'Playfair Display', body: 'DM Sans', radius: 'soft', label: 'sunset warm' },
+  { re: /ocean|beach|waves|water|cool breeze|sea\b/, pal: 'ocean', head: 'Montserrat', body: 'DM Sans', radius: 'soft', label: 'ocean cool' },
+  { re: /berry|jam|raspberry/, pal: 'berry', head: 'Playfair Display', body: 'DM Sans', radius: 'soft', label: 'berry bright' },
+  { re: /dreamy|magical|unicorn|fairy|mystic/, pal: 'lav', head: 'Lora', body: 'Quicksand', radius: 'round', label: 'dreamy' },
+  { re: /earthy|boho|clay|desert|rustic|vintage/, pal: 'clay', head: 'Lora', body: 'DM Sans', radius: 'soft', label: 'earthy' },
+  { re: /minty|crisp/, pal: 'mint', head: 'Poppins', body: 'DM Sans', radius: 'soft', label: 'fresh' },
+  { re: /sunny|bright|energetic|energy|sporty|athletic/, pal: 'sunny', head: 'Bebas Neue', body: 'Poppins', radius: 'soft', label: 'bright and sunny' },
+];
+
+/* ---------- business types: art scene, headline, offers ---------- */
+const TYPES = [
+  { k: 'bakery', re: /bakery|bake|baking|cookie|cupcake|brownie|cake|dessert|treats|donut|pastry|bread/, scene: 'bakery', head: 'Sweet things, baked fresh.', offers: ['Signature cupcakes', 'Cookie box', 'Celebration cakes'] },
+  { k: 'botanical', re: /tea\b|herbal|plant|garden|flower|florist|wellness|yoga|spa\b|candle|soap|aromatherapy/, scene: 'botanical', head: 'Slow down. Grow something good.', offers: ['Herbal tea blends', 'Plant starter kit', 'Calm candle set'] },
+  { k: 'fashion', re: /fashion|boutique|clothes|clothing|jewelry|jewellery|bracelet|necklace|earring|accessor|shoes|sneaker|hoodie|tee\b|thrift|style\b|scarf|hat\b|bag\b/, scene: 'fashion', head: 'Wear the story you want to tell.', offers: ['Signature tee', 'Statement accessories', 'Style session'] },
+  { k: 'tech', re: /\bapp\b|tech|coding|code\b|games?\b|gaming|robot|website|web design|software|ai\b|computer/, scene: 'tech', head: 'Build the future, one tap at a time.', offers: ['Starter app', 'Game night pass', 'Code club session'] },
+  { k: 'beauty', re: /nails?\b|makeup|beauty|skincare|lip ?gloss|salon|hair\b|braid|lashes|glow/, scene: 'beauty', head: 'Glow on your own terms.', offers: ['Signature nail set', 'Glow skincare kit', 'Braid and style'] },
+  { k: 'art', re: /\bart\b|paint|draw|craft|sticker|bead|zine|poster|illustrat|sketch|creative|maker|handmade/, scene: 'art', head: 'Make something only you could make.', offers: ['Handmade kit', 'Sticker pack', 'Weekend workshop'] },
+  { k: 'pets', re: /pet\b|pets\b|dog|cat\b|puppy|kitten|grooming|walking|animal/, scene: 'pets', head: 'Happy pets, happy hearts.', offers: ['Dog walks', 'Pet sitting', 'Treat bundles'] },
+  { k: 'music', re: /music|dance|singing|band\b|dj\b|podcast|song|beats|choir/, scene: 'music', head: 'Turn up the good vibes.', offers: ['Beat pack', 'Dance class', 'Live set'] },
+  { k: 'books', re: /book|reading|tutor|homework|study|school supplies|\bwriting\b|journal|planner|library/, scene: 'books', head: 'Every page makes you braver.', offers: ['Study buddy session', 'Journal kit', 'Book club pass'] },
+];
+
+/* ---------- start content (placeholder business) ---------- */
+const DEFAULT_T = {
+  brand: 'Atelier Soleil', nav: 'Start Your Project', badge: 'Student-founded • The AI Lab',
+  headline: 'Golden-hour goods for creative people.',
+  sub: 'Atelier Soleil makes thoughtful things for dreamers and doers, one small batch at a time.',
+  cta1: 'Explore Offerings', cta2: 'Our Charter',
+  charterT: 'Brand Charter', charterP: 'Honest storytelling, kind words, and original work, every time.',
+  whoT: 'Who We Serve', whoP: 'Young creators and their families who love handmade, meaningful things.',
+  reachT: 'Reach', reachP: 'Online orders and pop-up days in Peach City. Say hello any time.',
+  offersH: 'Signature Offerings',
+  o1t: 'Signature Studio Drop', o1p: 'Small-batch goods built around a clear audience and story.', o1$: 'From $12',
+  o2t: 'Creator Starter Bundle', o2p: 'Everything you need to begin, in one beautiful box.', o2$: 'From $24',
+  o3t: 'Launch & Workshop Pass', o3p: 'Hands-on community time shaped by real feedback.', o3$: 'From $18',
+  foot: 'Made with care in The AI Lab',
+};
+const DEFAULT_STATE = () => ({
+  v: 1, t: Object.assign({}, DEFAULT_T), scene: 'studio', icons: ['sparkle', 'bag', 'star'],
+  headF: 'Playfair Display', bodyF: 'DM Sans', sizes: {}, accent: '#B88A44', surface: '#FFFDF9', ink: '#1F1B18', soft: '#F3E5E2', dark: false,
+  radius: 'soft', align: 'left', pos: {}, touched: {}, pal: 'golden',
+});
+
+/* ---------- node list (draggable blocks) ---------- */
+const NODES = {
+  brand: 'Brand name', nav: 'Top button', badge: 'Badge', headline: 'Hero headline', sub: 'Hero paragraph', cta1: 'Main button', cta2: 'Second button', art: 'Illustration',
+  charter: 'Brand Charter card', who: 'Who We Serve card', reach: 'Reach card', offersH: 'Offerings title', o1: 'Offering 1', o2: 'Offering 2', o3: 'Offering 3', foot: 'Footer',
+};
+const TEXT_NODES = new Set(['brand', 'nav', 'badge', 'headline', 'sub', 'cta1', 'cta2', 'charter', 'who', 'reach', 'offersH', 'o1', 'o2', 'o3', 'foot']);
+const KEY_NODE = {};
+Object.keys(DEFAULT_T).forEach((k) => {
+  KEY_NODE[k] = /^(charter|who|reach)/.test(k) ? k.replace(/[TP]$/, '') : /^o\d/.test(k) ? k.slice(0, 2) : k;
+});
+const MAXLEN = { brand: 28, nav: 26, badge: 40, headline: 90, sub: 170, cta1: 26, cta2: 26, charterT: 28, charterP: 130, whoT: 28, whoP: 130, reachT: 28, reachP: 130, offersH: 34, o1t: 32, o1p: 100, o1$: 14, o2t: 32, o2p: 100, o2$: 14, o3t: 32, o3p: 100, o3$: 14, foot: 60 };
+
+/* ---------- editorial illustrations (inline SVG, never emoji) ---------- */
+function artSVG(kind, c) {
+  const A = c.accent, I = c.ink, F = c.soft, S = c.surface;
+  const A2 = mix(A, I, 0.4), A3 = mix(A, S, 0.62), A4 = mix(A, S, 0.82);
+  const bg = `<rect width="360" height="240" rx="14" fill="${S}"/><circle cx="286" cy="58" r="34" fill="${A3}"/><path d="M0 188 Q96 118 190 168 T360 138 V240 H0 Z" fill="${F}"/>`;
+  const sp = (x, y, r, col) => `<path d="M${x} ${y - r}L${x + r * 0.28} ${y - r * 0.28}L${x + r} ${y}L${x + r * 0.28} ${y + r * 0.28}L${x} ${y + r}L${x - r * 0.28} ${y + r * 0.28}L${x - r} ${y}L${x - r * 0.28} ${y - r * 0.28}Z" fill="${col}"/>`;
+  const scenes = {
+    studio: `<rect x="46" y="44" width="166" height="122" rx="14" fill="${I}"/><circle cx="129" cy="88" r="21" fill="${A}"/><path d="M95 144Q129 114 163 144" fill="${F}"/><rect x="228" y="96" width="96" height="72" rx="12" fill="${S}" stroke="${A3}" stroke-width="2"/><line x1="242" y1="116" x2="308" y2="116" stroke="${I}" stroke-width="3" stroke-linecap="round"/><line x1="242" y1="132" x2="292" y2="132" stroke="${A}" stroke-width="3" stroke-linecap="round"/><circle cx="248" cy="149" r="5" fill="${I}"/><circle cx="263" cy="149" r="5" fill="${A}"/>${sp(56, 190, 9, A)}`,
+    botanical: `<path d="M130 210h92l-12-52h-68z" fill="${A2}"/><rect x="120" y="150" width="112" height="14" rx="5" fill="${I}"/><path d="M176 150C172 110 150 84 112 74c-6 40 16 70 64 76z" fill="${A}"/><path d="M176 150C180 106 206 76 248 68c4 44-22 76-72 82z" fill="${A2}"/><path d="M176 150C174 120 176 92 184 56" stroke="${I}" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M176 134c-14-18-30-28-50-34" stroke="${A3}" stroke-width="2.5" fill="none"/><rect x="266" y="150" width="56" height="44" rx="8" fill="${S}" stroke="${I}" stroke-width="3"/><path d="M322 162h12a10 10 0 0 1 0 20h-12" fill="none" stroke="${I}" stroke-width="3"/><path d="M282 140c-6-8 6-12 0-22M300 140c-6-8 6-12 0-22" stroke="${A}" stroke-width="3" fill="none" stroke-linecap="round"/>`,
+    bakery: `<path d="M118 214L130 150h100l12 64z" fill="${A2}"/><path d="M142 150l6 64M170 150l2 64M200 150l-2 64M222 150l-6 64" stroke="${A3}" stroke-width="3"/><ellipse cx="180" cy="148" rx="62" ry="16" fill="${A}"/><path d="M128 146c-6-30 22-44 52-44s58 14 52 44z" fill="${A3}"/><path d="M148 104c-4-22 14-34 32-34s36 12 32 34z" fill="${A}"/><circle cx="180" cy="62" r="11" fill="${I}"/><path d="M180 52c2-12 10-18 20-20" stroke="${I}" stroke-width="3" fill="none" stroke-linecap="round"/><g fill="${I}"><rect x="140" y="118" width="12" height="4" rx="2" transform="rotate(-24 146 120)"/><rect x="198" y="124" width="12" height="4" rx="2" transform="rotate(30 204 126)"/><rect x="170" y="90" width="12" height="4" rx="2" transform="rotate(-8 176 92)"/></g><path d="M270 168l50-26 14 38z" fill="${A4}" stroke="${I}" stroke-width="3" stroke-linejoin="round"/>`,
+    fashion: `<line x1="40" y1="64" x2="320" y2="64" stroke="${I}" stroke-width="5" stroke-linecap="round"/><path d="M180 64v-14a10 10 0 1 0-10-10" fill="none" stroke="${I}" stroke-width="4" stroke-linecap="round"/><path d="M180 64l-70 34 12 8h116l12-8z" fill="none" stroke="${I}" stroke-width="4" stroke-linejoin="round"/><path d="M152 104h56l22 98H130z" fill="${A}"/><path d="M152 104l28 20 28-20" fill="${A3}"/><rect x="146" y="150" width="68" height="10" fill="${A2}"/><rect x="252" y="130" width="62" height="62" rx="10" fill="${I}"/><path d="M268 130v-12a15 15 0 0 1 30 0v12" fill="none" stroke="${I}" stroke-width="5"/><circle cx="283" cy="160" r="7" fill="${A}"/>${sp(62, 140, 11, A)}`,
+    tech: `<rect x="70" y="52" width="170" height="108" rx="12" fill="${I}"/><rect x="80" y="62" width="150" height="88" rx="6" fill="${A4}"/><rect x="92" y="76" width="54" height="6" rx="3" fill="${A}"/><rect x="92" y="92" width="96" height="6" rx="3" fill="${I}" opacity=".7"/><rect x="104" y="108" width="70" height="6" rx="3" fill="${A2}"/><rect x="92" y="124" width="40" height="6" rx="3" fill="${I}" opacity=".7"/><path d="M52 168h206l-10 18H62z" fill="${A2}"/><rect x="262" y="84" width="52" height="96" rx="10" fill="${I}"/><rect x="268" y="94" width="40" height="70" rx="4" fill="${A}"/><circle cx="288" cy="172" r="3" fill="${A3}"/><path d="M290 36l10 20h-20z" fill="${A}"/>`,
+    art: `<path d="M62 150c-12-40 24-84 84-86 52-2 94 30 86 70-6 30-40 30-52 10-10-18-34-8-34 12 0 26-70 30-84-6z" fill="${A3}" stroke="${I}" stroke-width="3" stroke-linejoin="round"/><circle cx="104" cy="98" r="12" fill="${A}"/><circle cx="142" cy="82" r="11" fill="${I}"/><circle cx="184" cy="92" r="11" fill="${A2}"/><circle cx="208" cy="124" r="10" fill="${A}"/><rect x="258" y="52" width="14" height="124" rx="7" transform="rotate(28 265 114)" fill="${I}"/><path d="M296 50l14 24-28 8z" transform="rotate(28 300 66)" fill="${A}"/><path d="M60 206h250" stroke="${I}" stroke-width="3" stroke-linecap="round" stroke-dasharray="2 10"/>${sp(300, 176, 9, A2)}`,
+    pets: `<ellipse cx="180" cy="152" rx="46" ry="38" fill="${A}"/><ellipse cx="108" cy="104" rx="20" ry="26" transform="rotate(-24 108 104)" fill="${A}"/><ellipse cx="154" cy="74" rx="19" ry="26" transform="rotate(-8 154 74)" fill="${A}"/><ellipse cx="208" cy="74" rx="19" ry="26" transform="rotate(8 208 74)" fill="${A}"/><ellipse cx="252" cy="104" rx="20" ry="26" transform="rotate(24 252 104)" fill="${A}"/><path d="M262 188c-18-12-10-30 4-30 6 0 8 4 10 6 2-2 4-6 10-6 14 0 22 18 4 30l-14 10z" fill="${I}"/><rect x="40" y="170" width="70" height="16" rx="8" fill="${A2}" transform="rotate(-18 75 178)"/><circle cx="44" cy="156" r="10" fill="${A2}"/><circle cx="62" cy="144" r="10" fill="${A2}"/><circle cx="100" cy="186" r="10" fill="${A2}"/><circle cx="116" cy="174" r="10" fill="${A2}"/>`,
+    music: `<circle cx="150" cy="128" r="76" fill="${I}"/><circle cx="150" cy="128" r="58" fill="none" stroke="${A}" stroke-width="2" opacity=".8"/><circle cx="150" cy="128" r="42" fill="none" stroke="${A3}" stroke-width="2" opacity=".6"/><circle cx="150" cy="128" r="24" fill="${A}"/><circle cx="150" cy="128" r="5" fill="${S}"/><path d="M226 150V70l60-14v78" fill="none" stroke="${I}" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><ellipse cx="214" cy="152" rx="16" ry="12" fill="${I}"/><ellipse cx="274" cy="136" rx="16" ry="12" fill="${A2}"/><path d="M86 52a60 60 0 0 1 128 0" fill="none" stroke="${A}" stroke-width="7" stroke-linecap="round"/>${sp(310, 190, 10, A)}`,
+    beauty: `<rect x="150" y="70" width="52" height="34" rx="8" fill="${I}"/><rect x="132" y="98" width="88" height="96" rx="22" fill="${A}"/><rect x="146" y="116" width="22" height="58" rx="11" fill="${A3}" opacity=".7"/><rect x="62" y="130" width="22" height="62" rx="4" fill="${A2}"/><rect x="58" y="106" width="30" height="28" rx="4" fill="${I}"/><path d="M62 106l8-22h10l8 22z" fill="${A}"/><circle cx="270" cy="124" r="42" fill="${S}" stroke="${I}" stroke-width="5"/><circle cx="270" cy="124" r="32" fill="${A4}"/><rect x="262" y="164" width="16" height="36" rx="6" fill="${I}"/>${sp(240, 72, 12, A)}${sp(306, 88, 8, A2)}${sp(110, 70, 8, A2)}`,
+    books: `<rect x="66" y="152" width="170" height="26" rx="4" fill="${A}"/><rect x="76" y="124" width="150" height="26" rx="4" fill="${I}"/><rect x="60" y="96" width="162" height="26" rx="4" fill="${A2}"/><rect x="84" y="162" width="70" height="5" rx="2" fill="${S}" opacity=".7"/><rect x="92" y="134" width="60" height="5" rx="2" fill="${A3}"/><rect x="74" y="106" width="64" height="5" rx="2" fill="${S}" opacity=".7"/><path d="M252 90c20-12 40-12 60 0v90c-20-12-40-12-60 0z" fill="${S}" stroke="${I}" stroke-width="4" stroke-linejoin="round"/><path d="M312 90c20-12 36-12 46 0v90c-10-12-26-12-46 0z" fill="${A4}" stroke="${I}" stroke-width="4" stroke-linejoin="round" transform="translate(-6 0)"/><path d="M270 100v80M290 98v82" stroke="${A3}" stroke-width="2"/><path d="M96 96V64l10 8 10-8v32" fill="${A}"/>${sp(220, 66, 10, A)}`,
+  };
+  return `<svg viewBox="0 0 360 240" role="img" aria-label="Editorial illustration" xmlns="http://www.w3.org/2000/svg">${bg}${scenes[kind] || scenes.studio}</svg>`;
+}
+
+/* ---------- offering icons (24px line art) ---------- */
+const ICONS = {
+  sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8L21.5 18.5l-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/>',
+  cup: '<path d="M5 8h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5z"/><path d="M16 9h2a2.5 2.5 0 0 1 0 5h-2"/><path d="M8 3.5c0 1.2 1 1.2 1 2.4M12 3.5c0 1.2 1 1.2 1 2.4"/>',
+  leaf: '<path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14z"/><path d="M5 19c3-5 6-8 10-10"/>',
+  bag: '<path d="M6 8h12l1 12H5z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+  brush: '<path d="M14 4l6 6-7 7c-1 1-3 1-4 0l-2-2c-1-1-1-3 0-4z"/><path d="M9 15c-2 0-4 2-5 5 3 0 5-1 6-3"/>',
+  camera: '<path d="M4 8h4l1.5-2h5L16 8h4v11H4z"/><circle cx="12" cy="13.5" r="3.5"/>',
+  note: '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',
+  book: '<path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4z"/><path d="M20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/>',
+  heart: '<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/>',
+  cake: '<path d="M5 12h14v8H5z"/><path d="M5 16c2 1.6 3.5 1.6 7 0s5 0 7 0"/><path d="M12 12V8"/><path d="M12 8c-1.4-1.6 0-2.8 0-4 1.4 1.2 1.4 2.6 0 4z"/>',
+  star: '<path d="M12 3l2.8 5.8 6.2.9-4.5 4.4 1.1 6.2L12 17.4 6.4 20.3l1.1-6.2L3 9.7l6.2-.9z"/>',
+  gem: '<path d="M6 4h12l3 5-9 11L3 9z"/><path d="M3 9h18M9 4l3 5 3-5"/>',
+  shirt: '<path d="M8 4L3 7l2 4 2-1v10h10V10l2 1 2-4-5-3a4 4 0 0 1-8 0z"/>',
+  code: '<path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/>',
+  paw: '<circle cx="7" cy="10" r="1.8"/><circle cx="11" cy="6.5" r="1.8"/><circle cx="15.5" cy="7" r="1.8"/><circle cx="18" cy="11" r="1.8"/><path d="M12 19c-3.2 0-5-1.4-5-3.2 0-2 3-4.8 5-4.8s5 2.8 5 4.8c0 1.8-1.8 3.2-5 3.2z"/>',
+};
+const ICON_WORDS = [
+  [/tea|coffee|cup|drink|lemonade|boba|smoothie|juice|cocoa/, 'cup'], [/plant|leaf|herb|garden|flower|candle|soap/, 'leaf'],
+  [/cake|cookie|cupcake|brownie|bake|bread|treat|snack|donut|pastry|dessert/, 'cake'], [/paint|art\b|draw|craft|sticker|brush|zine|poster|print|design/, 'brush'],
+  [/photo|camera|video|film|picture/, 'camera'], [/music|song|beat|dance|band|sing|podcast|record/, 'note'],
+  [/book|journal|read|tutor|study|notebook|planner|homework|class\b|lesson/, 'book'], [/pet|dog|cat|puppy|paw|walk|groom/, 'paw'],
+  [/jewel|bead|ring|necklace|bracelet|earring|gem/, 'gem'], [/shirt|dress|hoodie|cloth|tee\b|hat\b|scarf|outfit|style/, 'shirt'],
+  [/app\b|code|game|website|robot|tech|program/, 'code'], [/nail|makeup|lip|gloss|hair|braid|skin|glow|beauty/, 'sparkle'],
+  [/kit|box|bundle|pack|bag|shop|order|gift/, 'bag'], [/care|love|heart|friend|kind/, 'heart'], [/pass|workshop|club|session|event|show/, 'star'],
+];
+const iconFor = (txt, i) => { const t = String(txt).toLowerCase(); for (const [re, k] of ICON_WORDS) if (re.test(t)) return k; return ['sparkle', 'bag', 'star'][i % 3]; };
+const iconSVG = (k) => `<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k] || ICONS.sparkle}</svg>`;
+
+/* ---------- grade coaching ---------- */
+const GRADES = {
+  '5th Grade': {
+    key: '5', tone: 'friendly',
+    ai: 'AI is a smart computer helper. It learned from lots of examples, so it can help you brainstorm ideas, write words, and make plans. It works best when you tell it clearly what you want.',
+    vibe: 'Vibe coding means you tell the AI what to build in plain words, like your business name, who it is for, the colors, and the feel. Then you watch your website change! You are the boss. The more details you give, the better it builds.',
+    formula: 'Tell it WHO it is for, WHAT you sell, and the VIBE you want.',
+    names: ['Sparkle Paws', 'Cookie Cloud', 'Bloom Buddies'],
+    ex: { name: 'Pretend your business is called Sparkle Paws. Watch the name change at the top.', offers: 'Pretend you sell friendship bracelets, stickers, and slime.', color: 'Pretend you love purple and pink.', font: 'Pretend you want a bubbly handwriting font.', aud: 'Pretend your shop is for kids who love pets.' },
+    samples: [
+      { t: 'Make a calm leafy shop called Dew & Root for kids and families. Use soft green and cream. Sell tea, journals, and plants.', star: 'Mood and typography', note: 'A calm, leafy feel with a soft serif headline.' },
+      { t: 'Make a fancy bold club called Velvet & Brass for teen artists. Use dark brown and gold. Sell zines, posters, and stickers.', star: 'Color palette and accent', note: 'A dark background with gold accents changes the whole feeling.' },
+      { t: 'Make a happy bubbly craft shop called Sunny Loom for young makers. Use coral and cream. Sell bead kits, sticker packs, and craft classes. Center everything.', star: 'Layout, offers and headline', note: 'Centered words and brand new offers change what visitors see first.' },
+    ],
+    ideas: ['Use pink and purple', 'Make it bubbly', 'Sell 3 things I love', 'Make my headline bigger', 'Use a handwriting font', 'Center everything'],
+    goals: ['name', 'aud', 'offers', 'color', 'font'],
+  },
+  '6–8': {
+    key: '68', tone: 'coach',
+    ai: 'AI is software trained on patterns in language. It can brainstorm, write copy, and draft structure when you give it clear direction. It does not know your goals unless you say them.',
+    vibe: 'Vibe coding is guiding AI with plain-English intent: your brand name, audience, mood, colors, fonts, and offers. You test it, read the live code, and refine step by step.',
+    formula: 'Prompt formula: NAME + AUDIENCE + MOOD + OFFERS + one exact detail (a px size or a hex color).',
+    names: ['Moonlit Bakes', 'Glow Lab', 'Stitch & Story'],
+    ex: { name: 'Try a placeholder name first: Moonlit Bakes. Watch the brand at the top change.', offers: 'Try three offers: cookie box, brownie bites, and custom cakes.', color: 'Try a palette: soft lavender with cream, or a hex like #7A63B8.', font: 'Try a font pairing: Abril Fatface headline with a Poppins body.', aud: 'Try an audience: busy families who love fresh treats.' },
+    samples: [
+      { t: 'Build a warm, calm botanical wellness studio called Dew & Root for students and families. Use a 52px headline, soft sage & cream mood, and sell herbal tea blends, journal kits, and studio passes.', star: 'Mood and typography', note: 'Words like calm and botanical shift the font and feel. The 52px sets the headline size.' },
+      { t: 'Create an editorial creative house called Velvet & Brass for teen creators. Use a 56px headline, bold espresso & blush-gold mood, and sell custom zines, creative direction, and launch kits.', star: 'Color palette and accent', note: 'Espresso and gold flip the site to a dark, bold editorial palette.' },
+      { t: 'Design a playful, modern studio called Sunny Loom for young makers. Use a 48px headline, warm coral & cream mood, center everything, and sell beadwork kits, sticker packs, and weekend workshops.', star: 'Layout, offers and headline', note: 'Centering and new offers change the structure of the page.' },
+    ],
+    ideas: ['Add a brand promise: We believe...', 'Use hex #7A63B8 as my accent', 'Headline font: Abril Fatface', 'Set the headline to 60px', 'Make corners sharp', 'Describe who we serve'],
+    goals: ['name', 'aud', 'offers', 'color', 'font', 'promise', 'hex', 'size'],
+  },
+  '9–12': {
+    key: '912', tone: 'pro',
+    ai: 'AI here means a language model: software that predicts useful text from patterns in huge amounts of data. It drafts quickly, but it can be wrong, so you decide, verify, and own the result.',
+    vibe: 'Vibe coding is directing AI with intent, constraints, and feedback loops. You write the spec, the AI drafts, and you inspect the code, test it, and iterate. A strong prompt states role, audience, tone, constraints, and format.',
+    formula: 'Prompt anatomy: GOAL + AUDIENCE + TONE + CONSTRAINTS (px, hex, alignment) + OFFERS. Then inspect the Live Code.',
+    names: ['North & Ivy', 'Parallel Studio', 'Ember Collective'],
+    ex: { name: 'Draft with a placeholder brand first: North & Ivy. Check how the wordmark and mark respond.', offers: 'Specify three offers with plain names: brand audit, logo sprint, launch site.', color: 'Constrain the palette: espresso on cream with a brass accent, or an exact hex like #C06A45.', font: 'Constrain typography: a Fraunces headline over a DM Sans body.', aud: 'Define the audience precisely: first-time founders who are in high school.' },
+    samples: [
+      { t: 'Design a calm botanical wellness brand called Dew & Root for busy students and families. Tone: gentle and trustworthy. Use a 52px Fraunces headline, sage #6F8F72 on cream, rounded corners, and center the hero. Offer herbal tea blends, journal kits, and studio passes.', star: 'Mood and typography', note: 'You set the tone, an exact font, size, and alignment. Check each one in Live Code.' },
+      { t: 'Create an editorial creative house called Velvet & Brass for teen creators who want to launch fast. Tone: confident. Use a 60px Abril Fatface headline, espresso and brass on a dark background, sharp corners, and left-align the hero. Sell custom zines, creative direction, and launch kits.', star: 'Color palette and accent', note: 'A dark palette, sharp corners, and a display font make a very different identity.' },
+      { t: 'Design a playful, modern maker studio called Sunny Loom for young makers and their parents. Tone: joyful. Use a 48px Pacifico headline, coral #D47A6A on cream, pill buttons, and center everything. Sell beadwork kits, sticker packs, and weekend workshops.', star: 'Layout, offers and headline', note: 'Alignment, corner shape, and offers are structure, not decoration. Compare them in the code.' },
+    ],
+    ideas: ['Tone: confident. Audience: first-time founders', 'Keep the headline under 8 words', 'Use exact hex #C06A45 for the accent', 'Pill buttons and sharp cards', 'Left-align the hero', 'Check my text contrast'],
+    goals: ['name', 'aud', 'offers', 'color', 'font', 'promise', 'hex', 'size', 'contrast', 'align'],
+  },
+};
+const GOAL_LABEL = {
+  name: 'Name your business', aud: 'Say who it is for', offers: 'Write your offerings', color: 'Pick your colors', font: 'Choose your fonts',
+  promise: 'Write a brand promise', hex: 'Use an exact hex color', size: 'Set a headline size', contrast: 'Reach readable contrast (4.5 or higher)', align: 'Line up blocks with the guides',
+};
+const GUIDED_STEPS = [
+  { id: 'name', title: 'Name it', key: 'name' }, { id: 'offers', title: 'Offer it', key: 'offers' }, { id: 'color', title: 'Color it', key: 'color' },
+  { id: 'font', title: 'Style it', key: 'font' }, { id: 'aud', title: 'Aim it', key: 'aud' },
+];
+const GUIDED_EX = {
+  name: (g) => `My business is called ${GRADES[g].names[0]}.`,
+  offers: (g) => (g === '5th Grade' ? 'I sell friendship bracelets, stickers, and slime.' : g === '6–8' ? 'We sell cookie boxes, brownie bites, and custom cakes.' : 'Offer a brand audit, a logo sprint, and a launch site.'),
+  color: (g) => (g === '5th Grade' ? 'Use purple and pink.' : g === '6–8' ? 'Use soft lavender and cream. Accent #7A63B8.' : 'Use espresso on cream with a terracotta #C06A45 accent.'),
+  font: (g) => (g === '5th Grade' ? 'Use a bubbly handwriting font for the headline.' : g === '6–8' ? 'Headline font Abril Fatface, body font Poppins.' : 'Use a Fraunces headline over a DM Sans body.'),
+  aud: (g) => (g === '5th Grade' ? 'It is for kids who love pets.' : g === '6–8' ? 'This is for busy families who love fresh treats.' : 'This is for first-time founders in high school.'),
+};
+const GUIDED_OWN = {
+  name: 'My business is called ', offers: 'I sell ', color: 'Use the colors ', font: 'Use the font ', aud: 'It is for ',
+};
+
+/* =====================================================================
+   SITE: the student's website (markup + css) and the standalone export
+   One generator is used by the Studio canvas, the full-screen preview,
+   the Live Code view, and both downloads, so they always match.
+   ===================================================================== */
+function derive(st) {
+  const dark = !!st.dark || lum(st.surface) < 0.18;
+  return {
+    accent: st.accent, accentInk: readableOn(st.accent), surface: st.surface, ink: st.ink, soft: st.soft, dark,
+    card: dark ? mix(st.surface, st.soft, 0.55) : mix(st.surface, '#FFFFFF', 0.6),
+    line: mix(st.surface, st.ink, 0.14), line2: mix(st.surface, st.ink, 0.26), muted: mix(st.surface, st.ink, 0.68),
+  };
+}
+const RADIUS = { sharp: [3, 3], soft: [16, 999], round: [28, 999] };
+
+function siteVars(st) {
+  const d = derive(st), r = RADIUS[st.radius] || RADIUS.soft, hs = st.sizes.headline || 48;
+  return `.site{--accent:${d.accent};--accent-ink:${d.accentInk};--surface:${d.surface};--ink:${d.ink};--soft:${d.soft};--card:${d.card};--line:${d.line};--line2:${d.line2};--muted:${d.muted};--hf:${fontStack(st.headF)};--bf:${fontStack(st.bodyF)};--rc:${r[0]}px;--rb:${r[1]}px;--hs:${hs}px}`;
+}
+function sizesCSS(st) {
+  let out = '';
+  Object.keys(st.sizes).forEach((id) => {
+    if (id === 'headline' || !/^[a-zA-Z0-9]+$/.test(id)) return;
+    const n = clamp(parseInt(st.sizes[id], 10) || 0, 10, 120);
+    if (n) out += `.site [data-id="${id}"]{font-size:${n}px}`;
+  });
+  return out;
+}
+function posCSS(st, artW, one) {
+  const rules = Object.keys(st.pos).filter((id) => /^[a-zA-Z0-9]+$/.test(id)).map((id) => ({ id, p: st.pos[id] })).filter((o) => Math.round(o.p.x) || Math.round(o.p.y))
+    .map((o) => `.site [data-id="${o.id}"]{transform:translate(${Math.round(o.p.x)}px,${Math.round(o.p.y)}px)}`);
+  if (!rules.length) return '';
+  const w = Math.round(artW || 980);
+  return `@media (min-width:${w}px){.page{max-width:${w}px}${rules.join('')}}`;
+}
+
+const SITE_CSS = `
+.site{container-type:inline-size;position:relative;background:var(--surface);color:var(--ink);font-family:var(--bf);line-height:1.55;overflow:hidden;font-size:16px;-webkit-text-size-adjust:100%}
+.site *{box-sizing:border-box}
+.site h1,.site h2,.site h3,.site p{margin:0}
+.site a{color:inherit;text-decoration:none}
+.site .hd{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:18px 36px;border-bottom:1px solid var(--line)}
+.site .brandw{font-family:var(--hf);font-weight:700;font-size:1.5em;letter-spacing:-.01em;display:inline-flex;align-items:center}
+.site .mark{display:inline-grid;place-items:center;width:1.45em;height:1.45em;border-radius:30%;background:var(--accent);color:var(--accent-ink);font-size:.62em;margin-right:.6em;font-family:var(--hf)}
+.site .navw{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.site .navl{display:flex;gap:18px;font-size:.88em;color:var(--muted)}
+.site .btn{display:inline-block;background:var(--accent);color:var(--accent-ink);border:1px solid transparent;border-radius:var(--rb);padding:.72em 1.35em;font-weight:600;font-size:.92em;line-height:1.2;cursor:default}
+.site .btn.dark{background:var(--ink);color:var(--surface)}
+.site .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line2)}
+.site .hero{display:grid;grid-template-columns:7fr 5fr;gap:30px;align-items:center;padding:38px 36px}
+.site .hcopy{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.site .badge{display:inline-block;background:var(--soft);color:var(--ink);font-size:.72em;letter-spacing:.14em;text-transform:uppercase;font-weight:700;padding:6px 14px;border-radius:999px}
+.site h1{font-family:var(--hf);font-size:var(--hs);line-height:1.08;letter-spacing:-.015em;font-weight:700}
+.site .lead{font-size:1.05em;color:var(--muted);max-width:34em}
+.site .btns{display:flex;flex-wrap:wrap;gap:12px;padding-top:4px}
+.site .hart{background:var(--soft);border:1px solid var(--line);border-radius:var(--rc);padding:14px}
+.site .hart svg{display:block;width:100%;height:auto;border-radius:max(calc(var(--rc) - 6px),2px)}
+.site .info{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;padding:0 36px 30px}
+.site .card{background:var(--card);border:1px solid var(--line);border-radius:var(--rc);padding:18px 20px}
+.site .info .eyebrow{font-size:.7em;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--accent);margin-bottom:6px;filter:brightness(var(--eb,1))}
+.site .info p{font-size:.92em;color:var(--muted)}
+.site .offers{padding:6px 36px 36px}
+.site .offers h2{font-family:var(--hf);font-size:1.9em;line-height:1.15;margin-bottom:16px;letter-spacing:-.01em;display:block;width:fit-content;max-width:100%}
+.site .ogrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.site .offer .oi{width:2.6em;height:2.6em;border-radius:calc(var(--rc) * .7);background:var(--soft);color:var(--accent);display:grid;place-items:center;margin-bottom:12px}
+.site .offer h3{font-family:var(--hf);font-size:1.15em;line-height:1.25;margin-bottom:4px}
+.site .offer p{font-size:.9em;color:var(--muted)}
+.site .offer .price{margin-top:12px;font-size:.78em;font-weight:700;letter-spacing:.06em;display:inline-block;background:var(--soft);color:var(--ink);padding:4px 11px;border-radius:999px}
+.site .ft{margin:0 36px 30px;background:var(--soft);border:1px solid var(--line);border-radius:var(--rc);padding:14px 20px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:.84em;color:var(--muted)}
+.site.ac .hero{grid-template-columns:1fr;text-align:center}
+.site.ac .hcopy{align-items:center}
+.site.ac .btns{justify-content:center}
+.site.ac .lead{margin-inline:auto}
+.site.ac .hart{max-width:420px;width:100%;margin-inline:auto}
+.site.ac .info .card,.site.ac .offer{text-align:center}
+.site.ac .offer .oi{margin-inline:auto}
+.site.ac .offers h2{margin-inline:auto;text-align:center}
+.site.ac .ft{justify-content:center;text-align:center}
+@container (max-width:700px){
+ .site .hd{padding:14px 20px}.site .hero{grid-template-columns:1fr;padding:26px 20px;gap:22px}.site h1{font-size:min(var(--hs),10.5cqw)}
+ .site .info{grid-template-columns:1fr;padding:0 20px 22px}.site .offers{padding:4px 20px 26px}.site .ogrid{grid-template-columns:1fr}.site .ft{margin:0 20px 22px}
+ .site .navl{display:none}.site .offers h2{font-size:1.5em}
+}
+@container (min-width:701px) and (max-width:860px){ .site .ogrid{grid-template-columns:repeat(2,1fr)} }
+`;
+
+const ONEPAGER_CSS = `
+body{margin:0;background:var(--page-bg,#EFE9DF)}
+.page{max-width:980px;margin:0 auto;box-shadow:0 0 0 1px rgba(0,0,0,.06)}
+.credit{max-width:980px;margin:0 auto;padding:14px 20px 28px;text-align:center;font:500 12px/1.5 system-ui,sans-serif;color:#6A6059}
+@media print{.credit{display:none}body{background:#fff}.page{box-shadow:none;max-width:none}}
+`;
+const PAGE_CSS = `*{box-sizing:border-box}body{margin:0;background:var(--page-bg,#EFE9DF)}.page{margin:0 auto}`;
+
+/* the markup. edit=true adds the studio hooks (drag, select, edit) */
+function siteMarkup(st, edit) {
+  const t = st.t, dr = (id, extra) => `data-id="${id}"${edit ? ` class="dr ${extra || ''}" tabindex="0"` : extra ? ` class="${extra}"` : ''}`;
+  const k = (key) => `data-k="${key}"`;
+  const mark = esc((t.brand.trim()[0] || 'A').toUpperCase());
+  const offer = (n) => `<div ${dr('o' + n, 'card offer')}><div class="oi" data-ico="${n - 1}">${iconSVG(st.icons[n - 1])}</div><h3 ${k('o' + n + 't')}>${esc(t['o' + n + 't'])}</h3><p ${k('o' + n + 'p')}>${esc(t['o' + n + 'p'])}</p><span class="price" ${k('o' + n + '$')}>${esc(t['o' + n + '$'])}</span></div>`;
+  const info = (id, key) => `<div ${dr(id, 'card')}><div class="eyebrow" ${k(key + 'T')}>${esc(t[key + 'T'])}</div><p ${k(key + 'P')}>${esc(t[key + 'P'])}</p></div>`;
+  return `<header class="hd"><div ${dr('brand', 'brandw')}><span class="mark" data-mark>${mark}</span><span ${k('brand')}>${esc(t.brand)}</span></div><div class="navw"><nav class="navl" aria-label="Page sections"><a href="#offers">Offerings</a><a href="#about">About</a><a href="#reach">Reach</a></nav><a ${dr('nav', 'btn dark')}><span ${k('nav')}>${esc(t.nav)}</span></a></div></header>
+<section class="hero"><div class="hcopy"><div ${dr('badge', 'badge')}><span ${k('badge')}>${esc(t.badge)}</span></div><h1 ${dr('headline')} ${k('headline')}>${esc(t.headline)}</h1><p ${dr('sub', 'lead')} ${k('sub')}>${esc(t.sub)}</p><div class="btns"><a ${dr('cta1', 'btn')} href="#offers"><span ${k('cta1')}>${esc(t.cta1)}</span></a><a ${dr('cta2', 'btn ghost')} href="#about"><span ${k('cta2')}>${esc(t.cta2)}</span></a></div></div><div ${dr('art', 'hart')}><div data-art>${artSVG(st.scene, derive(st))}</div></div></section>
+<section class="info" id="about">${info('charter', 'charter')}${info('who', 'who')}<div id="reach" style="display:contents">${info('reach', 'reach')}</div></section>
+<section class="offers" id="offers"><h2 ${dr('offersH')} ${k('offersH')}>${esc(t.offersH)}</h2><div class="ogrid">${offer(1)}${offer(2)}${offer(3)}</div></section>
+<footer ${dr('foot', 'ft')}><span ${k('foot')}>${esc(t.foot)}</span><span>© ${new Date().getFullYear()}</span></footer>`;
+}
+/* art uses derive() colors object with accent/ink/soft/surface keys: derive() has them all */
+
+/* the exported page keeps only the hooks its own CSS needs */
+function cleanMarkup(st) {
+  const used = new Set([...Object.keys(st.sizes), ...Object.keys(st.pos)]);
+  return siteMarkup(st, false)
+    .replace(/ data-k="[^"]*"/g, '').replace(/ data-mark/g, '').replace(/ data-ico="\d"/g, '').replace(/ data-art/g, '')
+    .replace(/ data-id="([a-zA-Z0-9]+)"/g, (m, id) => (used.has(id) ? m : ''));
+}
+
+function buildExport(st, opt) {
+  opt = opt || {};
+  const fonts = [st.headF, st.bodyF], d = derive(st);
+  const desc = String(st.t.sub || '').slice(0, 160);
+  const css = siteVars(st) + SITE_CSS + sizesCSS(st) + (opt.one ? ONEPAGER_CSS : PAGE_CSS) + posCSS(st, opt.artW, opt.one) + `:root{--page-bg:${mix(d.surface, d.ink, 0.07)}}`;
+  const credit = opt.one ? `<p class="credit">Built by a student in The AI Lab · The Brown Girls Creative Studio</p>` : '';
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>${esc(st.t.brand)}</title>
+<meta name="description" content="${esc(desc)}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="${fontLinkFor(fonts)}">
+<style>
+${css}
+</style>
+</head>
+<body>
+<div class="page">
+<div class="site${st.align === 'center' ? ' ac' : ''}" id="site">
+${cleanMarkup(st)}
+</div>
+</div>
+${credit}
+</body>
+</html>
+`;
+}
+
+/* =====================================================================
+   CORE: state, saving, privacy guard, reading prompts, "what changed"
+   The Studio Director is a PRACTICE BUILDER: it follows rules to read
+   the words a student types. It is not a real AI (see "How this works").
+   ===================================================================== */
+const SAVE_KEY = 'ailab_studio_v1';
+const clone = (o) => JSON.parse(JSON.stringify(o));
+let state = DEFAULT_STATE();
+const meta = {
+  grade: '5th Grade', stage: 'intro', gstep: 0, gex: {}, gstart: 0, tested: [], log: [], prompts: [], initials: '',
+  snaps: 0, exported: false, secs: 3600, running: false, sel: 'headline', view: 'site', goals: {}, nextId: 1,
+};
+const history = [];
+let saveT = 0;
+
+function save() {
+  clearTimeout(saveT);
+  saveT = setTimeout(() => {
+    try { localStorage.setItem(SAVE_KEY, JSON.stringify({ state, meta: Object.assign({}, meta, { running: false }) })); } catch (e) { /* storage full or blocked: fine */ }
+  }, 250);
+}
+function load() {
+  try {
+    const raw = localStorage.getItem(SAVE_KEY);
+    if (!raw) return false;
+    const j = JSON.parse(raw);
+    if (!j || !j.state) return false;
+    state = sanitizeState(j.state);
+    Object.assign(meta, j.meta || {});
+    meta.running = false; meta.view = 'site'; meta.hl = [];
+    if (!GRADES[meta.grade]) meta.grade = '5th Grade';
+    if (['intro', 'guided', 'takeover'].indexOf(meta.stage) < 0) meta.stage = 'intro';
+    meta.secs = clamp(parseInt(meta.secs, 10) || 3600, 0, 3600);
+    if (!NODES[meta.sel]) meta.sel = 'headline';
+    ['log', 'prompts', 'tested'].forEach((k) => { if (!Array.isArray(meta[k])) meta[k] = []; });
+    meta.log = meta.log.filter((m) => m && (m.k === 'me' || m.k === 'sd') && typeof m.h === 'string').slice(-60);
+    meta.prompts = meta.prompts.filter((p) => p && typeof p.t === 'string').slice(0, 60);
+    meta.gstep = clamp(parseInt(meta.gstep, 10) || 0, 0, 4);
+    meta.nextId = Math.max(parseInt(meta.nextId, 10) || 1, 1 + meta.prompts.reduce((a, p) => Math.max(a, p.id || 0), 0));
+    if (typeof meta.initials !== 'string' || !/^[A-Za-z]{0,3}$/.test(meta.initials)) meta.initials = '';
+    return true;
+  } catch (e) { return false; }
+}
+
+/* ---------- privacy: no emails, links, phone numbers, street addresses, or real names ---------- */
+function priv(t) {
+  t = String(t || '');
+  if (/@/.test(t)) return 'an email address';
+  if (/https?:|www\.|\.(com|net|org|edu|gov|io|co)\b/i.test(t)) return 'a web link';
+  if (t.replace(/\D/g, '').length >= 7 || /\d{5,}/.test(t)) return 'a phone number or long number';
+  if (/\b\d{1,5}\s+[A-Za-z]+\s+(st|street|ave|avenue|rd|road|dr|drive|ln|lane|blvd|boulevard|ct|court|way)\b/i.test(t)) return 'a street address';
+  if (/\b(my name is|i am called|my full name|i live (at|on|in)|my address|my phone|my number|call me at|my school is|i go to)\b/i.test(t)) return 'private info';
+  return '';
+}
+function scanSite() {
+  for (const k of Object.keys(state.t)) { const p = priv(state.t[k]); if (p) return { key: k, what: p }; }
+  return null;
+}
+
+/* ---------- small helpers for reading prompts ---------- */
+const titleCase = (s) => s.replace(/\b([a-z])([a-z']*)/g, (m, a, b) => (/^(and|of|the|a|an|to|in|on|for)$/.test(m) ? m : a.toUpperCase() + b));
+const sentence = (s) => { s = s.trim().replace(/\s+/g, ' '); return s ? s[0].toUpperCase() + s.slice(1) : s; };
+const NOT_AUD = /^(the |my |our |a |an )?(headline|title|heading|text|button|buttons|font|fonts|color|colors|colour|size|name|brand|page|site|website|whole|everything|it|them|now|today|me|body|paragraph|hero|top)\b/i;
+const FONT_NAMES = FONTS.map((f) => f.n);
+
+function setPalette(d, p, soft) {
+  d.accent = p.a; d.surface = p.s; d.ink = p.i; d.soft = p.f; d.dark = !!p.dark; d.pal = p.id;
+}
+function setAccent(d, hex) {
+  d.accent = hex; d.pal = null;
+  d.soft = d.dark ? mix(d.surface, hex, 0.16) : mix(hex, d.surface, 0.84);
+}
+function setSurfaceLight(d, hex) {
+  d.dark = false; d.surface = hex; d.ink = mix('#1F1B18', d.accent, 0.06); d.soft = mix(d.accent, hex, 0.84); d.pal = null;
+}
+function setSurfaceDark(d, hex) {
+  d.dark = true; d.surface = hex; d.ink = '#F6EFE4'; d.soft = mix(hex, d.accent, 0.14); d.pal = null;
+}
+function nameFromText(text) {
+  const STOP = "(?=\\s+(?:for|with|using|use|that|which|where|and|so|to|because|in|on|at|who|selling|sells|sell|offering|offers|offer|but|is|are|it|we)\\b|[.,;!?\"\\u201D]|$)";
+  const NAME = "([A-Za-z0-9][A-Za-z0-9&'\\u2019.\\-]*(?:\\s+[A-Za-z0-9&'\\u2019.\\-]+){0,4}?)";
+  const tries = [
+    new RegExp("\\b(?:called|named|name it|name is|rename (?:it|my \\w+) to|change (?:the )?name to)\\s+[\"\\u201C']?" + NAME + "[\"\\u201D']?" + STOP, 'i'),
+    new RegExp("\\b(?:business|brand|company|studio|shop|store|club|bakery|salon|team) is\\s+(?:called\\s+)?[\"\\u201C']?" + NAME + "[\"\\u201D']?" + STOP, 'i'),
+    new RegExp("\\b(?:i run|i own|i started|i'm starting|i am starting|we are|we're)\\s+(?:a |an |the )?[\"\\u201C']?" + NAME + "[\"\\u201D']?" + STOP, 'i'),
+  ];
+  for (const re of tries) {
+    const m = text.match(re);
+    if (m && m[1] && !/^(a|an|the|my|our|going|making|building)$/i.test(m[1].trim())) return m[1].trim();
+  }
+  return null;
+}
+
+/* interpret: read the words, change the draft d, report what was understood */
+function interpret(raw, d) {
+  const text = raw.replace(/\s+/g, ' ').trim(), low = text.toLowerCase();
+  const seen = {}, ops = [];
+  const T = d.t, oldBrand = T.brand, touch = (k) => { d.touched[k] = true; };
+  let rest = text;
+
+  /* quoted headline / button / tagline */
+  let m;
+  if ((m = text.match(/\b(?:headline|heading|title|big words)\b[^"“.!?]{0,28}["“]([^"”]{3,90})["”]/i)) || (m = text.match(/\b(?:headline|heading|title|big words)\s*(?:should say|says|is|to say|reads|:)\s+([^.!?\n"“”]{3,90})/i))) {
+    T.headline = sentence(m[1].replace(/\s+(and|then)\s+(use|sell|make|add|center)\b.*$/i, '').trim()); touch('headline'); seen.headline = 1; ops.push('headline'); rest = rest.replace(m[0], ' ');
+  }
+  if ((m = text.match(/\b(?:tagline|slogan|motto|subtitle|sub-?headline|paragraph|description)\s*(?:should say|says|is|reads|:)\s*["“']?([^"”.!?\n]{3,170})/i))) {
+    T.sub = sentence(m[1].trim()); touch('sub'); seen.sub = 1; ops.push('sub'); rest = rest.replace(m[0], ' ');
+  }
+  if ((m = text.match(/\b(?:top button|nav button|menu button)\s*(?:should say|says|is|reads|:)\s*["“']?([^"”.,!?\n]{2,26})/i))) {
+    T.nav = sentence(m[1].trim()); touch('nav'); seen.btn = 1; ops.push('nav'); rest = rest.replace(m[0], ' ');
+  }
+  if ((m = text.match(/\b(?:main button|button|call to action|cta)\s*(?:should say|says|is|reads|:)\s*["“']?([^"”.,!?\n]{2,26})/i))) {
+    T.cta1 = sentence(m[1].trim()); touch('cta1'); seen.btn = 1; ops.push('cta1'); rest = rest.replace(m[0], ' ');
+  }
+
+  /* business name */
+  const nm = nameFromText(rest);
+  if (nm) {
+    T.brand = /[A-Z]/.test(nm) && /[a-z]/.test(nm) ? nm : titleCase(nm.toLowerCase()); touch('brand'); seen.name = 1; ops.push('brand');
+  } else if (!Object.keys(seen).length && text.split(' ').length <= 4 && /^[A-Z0-9]/.test(text) && !/\b(use|make|add|sell|set|put|change|center|bigger|smaller|font|color|please)\b/i.test(text) && /^[A-Za-z0-9&'’.\- ]+$/.test(text)) {
+    T.brand = text.replace(/[.!?]+$/, ''); touch('brand'); seen.name = 1; ops.push('brand');
+  }
+
+  if (seen.name) {
+    /* a new name replaces the old one everywhere it was written, so the page never mixes two names */
+    T.brand = T.brand.replace(/[.\-\s]+$/, '').slice(0, MAXLEN.brand);
+    if (oldBrand.length >= 3 && T.brand !== oldBrand) Object.keys(T).forEach((k) => { if (k !== 'brand' && typeof T[k] === 'string') T[k] = T[k].split(oldBrand).join(T.brand); });
+  }
+
+  /* who it is for */
+  let aud = null;
+  const am = text.match(/\b(?:audience|customers?|target audience|who it'?s for)\s*(?:is|are|:)\s*([^.!?\n;]{3,60})/i);
+  if (am) aud = am[1].trim();
+  else {
+    const re = /\b(?:for|serves?|helps?|aimed at|made for|designed for|targets?)\s+((?:[A-Za-z0-9\-']+\s?){1,9}?)(?=\s*(?:[.,;!?]|$)|\s+(?:using|use|with|and (?:use|sell|make|offer|we|center|add)|sell|selling|offering|offers?|so|that|who|because|where|in the|in a|but|tone|center)\b)/gi;
+    let mm;
+    while ((mm = re.exec(text))) {
+      const before = text.slice(Math.max(0, mm.index - 14), mm.index).toLowerCase();
+      if (/(font|color|colors|size|headline|title|text|button|buttons|use|set|make|pick|choose|perfect|good|great|nice|px)\s*$/.test(before)) continue;
+      const cand = mm[1].trim();
+      if (NOT_AUD.test(cand) || /\d/.test(cand) || /^\$/.test(cand)) continue;
+      aud = cand; break;
+    }
+  }
+  if (aud) {
+    aud = aud.replace(/\s+(and|with|using)$/i, '');
+    T.whoP = sentence(`Made for ${aud.toLowerCase()}, with care and a lot of heart.`); touch('whoP');
+    if (!d.touched.sub) { T.sub = sentence(`${T.brand} is made for ${aud.toLowerCase()}: simple, kind, and one of a kind.`); }
+    d.audience = aud; seen.aud = aud; ops.push('aud');
+  }
+
+  /* offerings */
+  let offerText = '';
+  const om = text.match(/\b(?:sell(?:s|ing)?|offer(?:s|ing)?|we have|we do|we make|we bake|menu|services?|products?)\s*(?:is|are|include|includes|:)?\s+([^.!?\n]+)/i);
+  if (om) {
+    let list = om[1].replace(/\s+(?:and )?(?:use|using|with|make|center|align|in|on|for(?!\s*\$\d)|so|that)\s.*$/i, '').replace(/^(?:a |an |some |the |lots of |many )/i, '');
+    const items = list.split(/\s*,\s*|\s*;\s*|\s+and\s+|\s+&\s+(?=[A-Za-z]+\s+[A-Za-z])/).map((s) => s.replace(/^(?:(?:and|a|an|some|the)\s+)+/i, '').trim()).filter((s) => s.length > 1).slice(0, 3);
+    if (items.length) {
+      items.forEach((it, i) => {
+        let price = null;
+        const pm = it.match(/\$\s?(\d{1,3}(?:\.\d\d)?)/);
+        if (pm) { price = '$' + pm[1]; it = it.replace(pm[0], '').replace(/\s+(for|at)\s*$/i, '').trim(); }
+        const title = sentence(it.slice(0, 32));
+        T['o' + (i + 1) + 't'] = title; touch('o' + (i + 1) + 't');
+        T['o' + (i + 1) + 'p'] = [`Made with care for ${(d.audience || 'you').toLowerCase()}.`, 'A favorite pick, made your way.', 'Small batch, big heart.'][i];
+        T['o' + (i + 1) + '$'] = price ? 'From ' + price : 'Ask for price';
+        d.icons[i] = iconFor(it, i);
+      });
+      offerText = items.join(' ').toLowerCase(); seen.offers = items.length; ops.push('offers'); touch('offers');
+    }
+  }
+
+  /* promise / charter, reach */
+  if ((m = text.match(/\bwe believe\s+([^.!?\n]{4,110})/i))) { T.charterP = sentence('We believe ' + m[1].trim() + '.'); touch('charterP'); seen.promise = 1; ops.push('promise'); }
+  else if ((m = text.match(/\b(?:promise|mission|charter|our values?)\s*(?:is|are|:)\s*(?:that\s+)?["“']?([^"”.!?\n]{6,120})/i))) { T.charterP = sentence(m[1].trim() + '.'); touch('charterP'); seen.promise = 1; ops.push('promise'); }
+  if ((m = text.match(/\b(?:reach|based in|located in|we ship|shipping|serve people in|visit us|pop-?ups? in)\s*(?:is|are|:)?\s*(?:in\s+)?([^.!?\n]{4,100})/i))) { T.reachP = sentence(m[1].trim() + '.'); touch('reachP'); seen.reach = 1; ops.push('reach'); }
+
+  /* fonts: work out whether each named font is for the headline or the body */
+  const fm = [];
+  FONT_NAMES.forEach((n) => { const i = low.indexOf(n.toLowerCase()); if (i >= 0) fm.push({ n, i, len: n.length }); });
+  fm.sort((x, y) => x.i - y.i);
+  if (fm.length) {
+    const roles = fm.map((f) => {
+      const before = low.slice(Math.max(0, f.i - 24), f.i), after = low.slice(f.i + f.len, f.i + f.len + 24);
+      if (/(body|paragraph|text)\s*(font|text)?\s*(is|=|:|to|in|as|with)?\s*$/.test(before)) return 'b';
+      if (/(headline|heading|title|header)\s*(font)?\s*(is|=|:|to|in|as|with)?\s*$/.test(before)) return 'h';
+      if (/^\s*(for|on|as)\s+(the\s+|my\s+)?(body|paragraph|text)/.test(after) || /^\s*(body|paragraph)/.test(after)) return 'b';
+      if (/^\s*(for|on|as)\s+(the\s+|my\s+)?(headline|heading|title)/.test(after) || /^\s*(headline|heading|title|header)/.test(after)) return 'h';
+      return null;
+    });
+    roles.forEach((r, idx) => { if (!r) roles[idx] = fm.length > 1 && idx === 1 && roles[0] !== 'b' ? 'b' : 'h'; });
+    fm.forEach((f, idx) => {
+      if (roles[idx] === 'b') { d.bodyF = f.n; ops.push('bodyF'); } else { d.headF = f.n; ops.push('headF'); }
+    });
+    seen.font = 1; touch('font');
+  } else if (/\b(?:fonts?|typeface|lettering|handwriting|cursive|calligraphy)\b/.test(low)) {
+    for (const [re, fn] of FONT_WORDS) if (re.test(low)) { d.headF = fn; seen.font = 1; ops.push('headF'); touch('font'); break; }
+  }
+
+  /* corners and alignment */
+  if (/\bsharp\b|\bsquare[d]? corners?|\bboxy|\bno rounded/.test(low)) { d.radius = 'sharp'; seen.detail = 1; ops.push('radius'); }
+  else if (/\bpill\b|\b(very|fully|totally|completely|extra|super|really|all the way) round(ed)?\b|bubbly corners/.test(low)) { d.radius = 'round'; seen.detail = 1; ops.push('radius'); }
+  else if (/\brounded\b|\bround(ed)?\b.{0,20}\bcorners?|\bcorners?\b.{0,20}\bround(ed)?\b|soft corners|smooth corners/.test(low)) { d.radius = 'soft'; seen.detail = 1; ops.push('radius'); }
+  if (/\bleft[- ]?align|align (?:it |the hero |everything )?left|left aligned/.test(low)) { d.align = 'left'; seen.detail = 1; ops.push('align'); touch('align'); }
+  else if (/\bcenter(?:ed)?\b(?! of)/.test(low)) { d.align = 'center'; seen.detail = 1; ops.push('align'); touch('align'); }
+
+  /* sizes */
+  const sizeFor = (w) => (/head|title/.test(w) ? 'headline' : /para|body|text|sub/.test(w) ? 'sub' : /button/.test(w) ? 'cta1' : /brand|name/.test(w) ? 'brand' : 'headline');
+  let sm, sizeSet = false;
+  const reA = /(\d{2,3})\s*px\s*(headline|heading|title|paragraph|body|text|button|brand|name)?/g;
+  while ((sm = reA.exec(low))) {
+    const n = clamp(parseInt(sm[1], 10), 12, 120), id = sizeFor(sm[2] || '');
+    d.sizes[id] = n; if (id === 'cta1') d.sizes.cta2 = n; seen.size = n; seen.detail = 1; sizeSet = true; touch('size'); ops.push('size');
+  }
+  const reB = /\b(headline|heading|title|paragraph|body text|button|brand name)\b\s*(?:at|to|of|size|=)?\s*(\d{2,3})\s*px/g;
+  while ((sm = reB.exec(low))) { const n = clamp(parseInt(sm[2], 10), 12, 120), id = sizeFor(sm[1]); d.sizes[id] = n; seen.size = n; seen.detail = 1; sizeSet = true; touch('size'); ops.push('size'); }
+  if (!sizeSet) {
+    const rel = low.match(/\b(bigger|larger|huge|giant|much bigger|smaller|tiny|much smaller)\b[^.]{0,20}\b(headline|heading|title)|\b(headline|heading|title)\b[^.]{0,20}\b(bigger|larger|huge|giant|smaller|tiny)\b/);
+    if (rel) {
+      const w = rel[1] || rel[4], cur = d.sizes.headline || 48;
+      d.sizes.headline = clamp(cur + (/huge|giant/.test(w) ? 20 : /much bigger/.test(w) ? 14 : /bigger|larger/.test(w) ? 8 : /tiny|much smaller/.test(w) ? -16 : -8), 14, 120);
+      seen.size = d.sizes.headline; seen.detail = 1; touch('size'); ops.push('size');
+    }
+  }
+
+  /* business type and mood */
+  /* what they SELL decides the business type; who they sell TO does not */
+  let type = null;
+  const typeSrc = (offerText || low).replace(aud ? aud.toLowerCase() : '\u0000', ' ');
+  for (const ty of TYPES) if (ty.re.test(typeSrc)) { type = ty; break; }
+  if (!type && offerText) for (const ty of TYPES) if (ty.re.test(low)) { type = ty; break; }
+  let mood = null;
+  const moodLow = low.replace(/\b(?:[a-z\-]+\s+){0,3}(?:fonts?|typeface|handwriting|lettering|script)\b/g, ' ').replace(aud ? aud.toLowerCase() : '\u0000', ' ');
+  for (const mo of MOODS) if (mo.re.test(moodLow)) { mood = mo; break; }
+  if (type) { d.scene = type.scene; seen.type = type.k; ops.push('scene'); }
+  if (mood) { seen.mood = mood.label; if (mood.scene && !type) { d.scene = mood.scene; ops.push('scene'); } }
+
+  /* colors */
+  const hexes = [...text.matchAll(/#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g)].map((x) => normHex(x[1])).filter(Boolean);
+  const bgHex = (text.match(/(?:background|page|surface|bg)[^#.]{0,16}#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/i) || [])[1];
+  const inkHex = (text.match(/(?:text color|font color|ink|words)[^#.]{0,12}#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/i) || [])[1];
+  const named = [];
+  let cm;
+  COLOR_RE.lastIndex = 0;
+  while ((cm = COLOR_RE.exec(low))) named.push({ n: cm[1], hex: COLORS[cm[1]], i: cm.index });
+  const wantsDark = /\bdark (?:mode|theme|background|page|site)|night mode|black background|dark background/.test(low);
+  const wantsLight = /\bwhite background|light (?:mode|theme|background)|bright background/.test(low);
+
+  const baseP = mood ? PAL[mood.pal] : null;
+  let colorTouched = false;
+  if (baseP && !hexes.length && !named.some((c) => !NEUTRALS.has(c.n))) { setPalette(d, baseP); colorTouched = true; }
+  if (named.length || hexes.length || wantsDark || wantsLight) {
+    if (baseP && !colorTouched) { setPalette(d, baseP); }
+    const chroma = named.filter((c) => !NEUTRALS.has(c.n)), neut = named.filter((c) => NEUTRALS.has(c.n));
+    let acc = hexes.length ? (bgHex || inkHex ? hexes.filter((h) => h !== normHex(bgHex) && h !== normHex(inkHex))[0] : hexes[0]) : chroma.length ? chroma[0].hex : null;
+    if (!acc && !chroma.length && neut.length && !wantsDark && !wantsLight) acc = null;
+    if (acc) { setAccent(d, acc); colorTouched = true; if (hexes.length) { seen.hex = 1; } }
+    if (chroma.length > 1 && !hexes.length) { d.soft = d.dark ? mix(d.surface, chroma[1].hex, 0.2) : mix(chroma[1].hex, d.surface, 0.8); colorTouched = true; }
+    /* neutrals decide the page color */
+    const light = neut.find((c) => ['cream', 'beige', 'ivory', 'white'].includes(c.n));
+    const darkN = neut.find((c) => ['black', 'charcoal', 'navy', 'espresso', 'dark brown'].includes(c.n));
+    if (bgHex) { const b = normHex(bgHex); lum(b) < 0.18 ? setSurfaceDark(d, b) : setSurfaceLight(d, b); colorTouched = true; }
+    else if (wantsDark || (darkN && (acc || chroma.length) && !light)) { setSurfaceDark(d, darkN ? mix(darkN.hex, '#000000', darkN.n === 'espresso' || darkN.n === 'dark brown' ? 0.45 : 0.2) : '#14110F'); colorTouched = true; }
+    else if (light || wantsLight) { setSurfaceLight(d, mix(light ? light.hex : '#FFFFFF', '#FFFFFF', light && light.n === 'white' ? 0 : 0.5)); colorTouched = true; }
+    if (inkHex) { d.ink = normHex(inkHex); colorTouched = true; }
+    if (acc || chroma.length || bgHex || light || darkN) seen.color = 1;
+  }
+  if (colorTouched) { touch('color'); ops.push('color'); seen.color = 1; }
+  if (mood && !seen.color) { seen.color = 1; }
+
+  /* mood sets fonts / corners when the student did not name them */
+  if (mood) {
+    if (!ops.includes('headF')) { d.headF = mood.head; ops.push('headF'); }
+    if (!ops.includes('bodyF')) { d.bodyF = mood.body; }
+    if (!ops.includes('radius')) { d.radius = mood.radius; }
+    if (!ops.includes('font')) { seen.font = seen.font || 0; }
+    touch('mood'); ops.push('mood');
+  }
+  /* a business type fills in starter words only where the student has not written their own */
+  if (type) {
+    if (!d.touched.headline && !seen.headline) { T.headline = type.head; }
+    if (!d.touched.offers && !seen.offers) {
+      type.offers.forEach((o, i) => { T['o' + (i + 1) + 't'] = o; T['o' + (i + 1) + 'p'] = ['Made with care for you.', 'A favorite pick, made your way.', 'Small batch, big heart.'][i]; d.icons[i] = iconFor(o, i); });
+    }
+    if (!d.touched.sub && !seen.aud && !seen.sub) { const lead = seen.offers ? [T.o1t, T.o2t].filter(Boolean).map((x) => x.toLowerCase()).join(', ') : type.offers[0].toLowerCase(); T.sub = sentence(`${T.brand} brings you ${lead} and more, made with care and a lot of heart.`); }
+  }
+
+  /* a tone note counts for the older grades */
+  if (/\btone\s*[:\-]|\bsounds?\s+(?:friendly|confident|calm|warm|bold|gentle|joyful)\b|\bin a (?:friendly|confident|calm|warm|bold|gentle|joyful) voice/.test(low)) { seen.tone = 1; }
+
+  /* keep every line short enough to fit its block */
+  Object.keys(MAXLEN).forEach((k) => {
+    if (typeof T[k] === 'string' && T[k].length > MAXLEN[k]) T[k] = T[k].slice(0, MAXLEN[k] - 1).replace(/[\s,;:]+\S*$/, '').replace(/[.,;:]+$/, '') + '…';
+  });
+  return { seen, ops, found: Object.keys(seen).length > 0 || ops.length > 0 };
+}
+
+/* ---------- what changed ---------- */
+const CAT = { type: 'Typography & mood', color: 'Color palette & accent', layout: 'Layout, offers & headline' };
+function diffStates(a, b) {
+  const out = [], push = (cat, label, from, to, sw, node) => { if (from !== to) out.push({ cat, label, from, to, sw, node }); };
+  const lbl = { brand: 'Brand name', nav: 'Top button', badge: 'Badge', headline: 'Headline', sub: 'Paragraph', cta1: 'Main button', cta2: 'Second button', charterT: 'Charter title', charterP: 'Brand Charter', whoT: 'Who title', whoP: 'Who We Serve', reachT: 'Reach title', reachP: 'Reach', offersH: 'Offerings title', foot: 'Footer' };
+  Object.keys(lbl).forEach((k) => push('layout', lbl[k], a.t[k], b.t[k], 0, KEY_NODE[k]));
+  [1, 2, 3].forEach((n) => { push('layout', 'Offering ' + n, a.t['o' + n + 't'], b.t['o' + n + 't'], 0, 'o' + n); push('layout', 'Offering ' + n + ' price', a.t['o' + n + '$'], b.t['o' + n + '$'], 0, 'o' + n); });
+  push('layout', 'Illustration', a.scene, b.scene, 0, 'art');
+  push('layout', 'Alignment', a.align, b.align, 0, 'headline');
+  push('layout', 'Corners', a.radius, b.radius, 0, 'cta1');
+  push('type', 'Heading font', a.headF, b.headF, 0, 'headline');
+  push('type', 'Body font', a.bodyF, b.bodyF, 0, 'sub');
+  const ids = new Set([...Object.keys(a.sizes), ...Object.keys(b.sizes)]);
+  ids.forEach((id) => push('type', (NODES[id] || id) + ' size', a.sizes[id] ? a.sizes[id] + 'px' : 'auto', b.sizes[id] ? b.sizes[id] + 'px' : 'auto', 0, id));
+  push('color', 'Accent', a.accent, b.accent, 1, 'cta1');
+  push('color', 'Page color', a.surface, b.surface, 1, 'badge');
+  push('color', 'Text color', a.ink, b.ink, 1, 'headline');
+  return out;
+}
+function tidyVal(v) { return /^#[0-9A-F]{6}$/i.test(v) ? v.toUpperCase() : String(v); }
+
+/* ---------- prompt power: how many kinds of detail were in the prompt ---------- */
+const POWER = [['name', 'Name'], ['aud', 'Audience'], ['offers', 'Offers'], ['color', 'Mood / colors'], ['font', 'Font'], ['detail', 'Exact detail']];
+function powerOf(seen) {
+  const has = { name: !!seen.name, aud: !!seen.aud, offers: !!seen.offers, color: !!(seen.color || seen.mood), font: !!seen.font, detail: !!(seen.size || seen.detail || seen.hex || seen.tone) };
+  return { has, n: Object.values(has).filter(Boolean).length };
+}
+const ADD_TEXT = { name: ' My business is called ', aud: ' It is for ', offers: ' Sell ', color: ' Use the colors ', font: ' Use the font ', detail: ' Make the headline 56px.' };
+const ADD_LABEL = { name: 'a name', aud: 'who it is for', offers: 'what you offer', color: 'colors or a mood', font: 'a font', detail: 'an exact detail (px or #hex)' };
+
+function tipFor(grade, pw, ctx) {
+  const g = GRADES[grade];
+  const miss = POWER.map((p) => p[0]).filter((k) => !pw.has[k]);
+  let line;
+  if (!miss.length) line = grade === '5th Grade' ? 'Wow, you used every kind of detail! That is how real prompt writers do it.' : grade === '6–8' ? 'A full-power prompt. Now open Live Code and find where each detail landed.' : 'Complete spec. Open Live Code and trace each constraint to the CSS variable it set.';
+  else if (grade === '5th Grade') line = 'Next try: add ' + ADD_LABEL[miss[0]] + (miss[1] ? ' or ' + ADD_LABEL[miss[1]] : '') + '. ' + g.formula;
+  else if (grade === '6–8') line = 'To level up, add ' + ADD_LABEL[miss[0]] + (miss[1] ? ' and ' + ADD_LABEL[miss[1]] : '') + '. ' + g.formula;
+  else line = 'Tighten the spec: ' + ADD_LABEL[miss[0]] + (miss[1] ? ', ' + ADD_LABEL[miss[1]] : '') + '. ' + g.formula;
+  return { line, miss: miss.slice(0, 3) };
+}
+
+/* =====================================================================
+   SYNC: one place that keeps the canvas, toolbar, Live Code, goals and
+   saved copy in step with `state`.
+   ===================================================================== */
+const siteEl = $('site'), boardEl = $('board');
+const DESIGN_W = 980;
+let K = 1, styleEl = null, editing = null, codeDirty = true, lastUndoAt = 0, lastUndoLabel = '', toastT = 0;
+
+const NODE_KEYS = {
+  brand: ['brand'], nav: ['nav'], badge: ['badge'], headline: ['headline'], sub: ['sub'], cta1: ['cta1'], cta2: ['cta2'],
+  charter: ['charterT', 'charterP'], who: ['whoT', 'whoP'], reach: ['reachT', 'reachP'], offersH: ['offersH'],
+  o1: ['o1t', 'o1p', 'o1$'], o2: ['o2t', 'o2p', 'o2$'], o3: ['o3t', 'o3p', 'o3$'], foot: ['foot'],
+};
+const PRIMARY = { charter: 'charterP', who: 'whoP', reach: 'reachP', o1: 'o1t', o2: 'o2t', o3: 'o3t' };
+const SCENES = ['studio', 'botanical', 'bakery', 'fashion', 'tech', 'art', 'pets', 'music', 'beauty', 'books'];
+const OWN_OF_KEY = { brand: 'name', whoP: 'aud', charterP: 'promise', o1t: 'offers', o2t: 'offers', o3t: 'offers' };
+
+function toast(m) {
+  const t = $('toast');
+  t.textContent = m; t.classList.add('on');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2400);
+}
+/* Design mode: the site is always laid out at 980px (the desktop layout) and shrunk to fit,
+   like zooming out in Wix or Canva. That keeps positions the same on every screen. */
+const canDrag = () => boardEl.classList.contains('dm');
+function layoutBoard() {
+  const panel = $('panelSite');
+  if (!panel || panel.hidden) return;
+  const avail = Math.floor(boardEl.clientWidth);
+  if (avail < 40) return;
+  const was = boardEl.classList.contains('dm'), dm = avail >= 560;
+  boardEl.classList.toggle('dm', dm);
+  if (dm) {
+    K = Math.min(1, avail / DESIGN_W);
+    siteEl.style.transform = K < 1 ? 'scale(' + K.toFixed(4) + ')' : '';
+    siteEl.style.marginLeft = Math.max(0, Math.floor((avail - DESIGN_W * K) / 2)) + 'px';
+    boardEl.style.height = Math.ceil(siteEl.offsetHeight * K) + 'px';
+  } else {
+    K = 1; siteEl.style.transform = ''; siteEl.style.marginLeft = ''; boardEl.style.height = '';
+  }
+  if (was !== dm) syncToolbar();
+}
+const nodeEl = (id) => siteEl.querySelector('[data-id="' + id + '"]');
+const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'my-site';
+const own = (k) => { meta.own = meta.own || {}; meta.own[k] = true; };
+
+/* ---------- never trust saved or opened data: rebuild a clean state from it ---------- */
+function sanitizeState(o) {
+  const d = DEFAULT_STATE();
+  if (!o || typeof o !== 'object') return d;
+  const t = o.t && typeof o.t === 'object' ? o.t : {};
+  Object.keys(DEFAULT_T).forEach((k) => {
+    if (typeof t[k] === 'string') { const v = t[k].replace(/\s+/g, ' ').trim().slice(0, MAXLEN[k] || 120); if (v) d.t[k] = v; }
+  });
+  if (SCENES.includes(o.scene)) d.scene = o.scene;
+  if (Array.isArray(o.icons)) d.icons = [0, 1, 2].map((i) => (ICONS[o.icons[i]] ? o.icons[i] : d.icons[i]));
+  [['headF', 'headF'], ['bodyF', 'bodyF']].forEach(([a]) => { const f = typeof o[a] === 'string' && FONT[o[a].toLowerCase()]; if (f) d[a] = f.n; });
+  ['accent', 'surface', 'ink', 'soft'].forEach((k) => { const h = normHex(o[k]); if (h) d[k] = h; });
+  d.dark = !!o.dark;
+  if (RADIUS[o.radius]) d.radius = o.radius;
+  d.align = o.align === 'center' ? 'center' : 'left';
+  d.pal = typeof o.pal === 'string' && PAL[o.pal] ? o.pal : null;
+  if (o.sizes && typeof o.sizes === 'object') Object.keys(o.sizes).forEach((id) => { if (NODES[id] && id !== 'art') { const n = parseInt(o.sizes[id], 10); if (n >= 10 && n <= 120) d.sizes[id] = n; } });
+  if (o.pos && typeof o.pos === 'object') Object.keys(o.pos).forEach((id) => {
+    const p = o.pos[id];
+    if (NODES[id] && p && isFinite(p.x) && isFinite(p.y)) d.pos[id] = { x: clamp(Math.round(p.x), -1500, 1500), y: clamp(Math.round(p.y), -1500, 1500) };
+  });
+  if (o.touched && typeof o.touched === 'object') Object.keys(o.touched).forEach((k) => { if (/^[a-zA-Z0-9]{2,12}$/.test(k) && o.touched[k]) d.touched[k] = true; });
+  if (typeof o.audience === 'string') d.audience = o.audience.slice(0, 60);
+  return d;
+}
+
+/* ---------- canvas ---------- */
+function studioStyle() {
+  let pos = '', any = false;
+  Object.keys(state.pos).forEach((id) => {
+    if (!/^[a-zA-Z0-9]+$/.test(id)) return;
+    const p = state.pos[id], x = Math.round(p.x), y = Math.round(p.y);
+    if (x || y) { any = true; pos += `.site [data-id="${id}"]{transform:translate(${x}px,${y}px)}`; }
+  });
+  return siteVars(state) + SITE_CSS + sizesCSS(state) + (pos ? `@container (min-width:701px){${pos}}` : '');
+}
+function syncStyle() {
+  if (!styleEl) { styleEl = document.createElement('style'); styleEl.id = 'siteStyle'; document.head.appendChild(styleEl); }
+  styleEl.textContent = studioStyle();
+}
+function applySel() {
+  siteEl.querySelectorAll('.dr.sel').forEach((e) => e.classList.remove('sel'));
+  const e = nodeEl(meta.sel); if (e) e.classList.add('sel');
+}
+function renderSite(o) {
+  if (editing) return;
+  siteEl.className = 'site' + (state.align === 'center' ? ' ac' : '');
+  siteEl.innerHTML = siteMarkup(state, true);
+  applySel();
+  ((o && o.flash) || []).forEach((id) => { const e = nodeEl(id); if (e) { e.classList.remove('flash'); void e.offsetWidth; e.classList.add('flash'); } });
+}
+function selectNode(id) {
+  if (!NODES[id]) return;
+  meta.sel = id; applySel(); syncToolbar();
+}
+
+/* ---------- toolbar ---------- */
+function fillFontSelects() {
+  ['fHead', 'fBody'].forEach((id) => {
+    const sel = $(id); sel.innerHTML = '';
+    const groups = {};
+    FONTS.forEach((f) => { (groups[f.g] = groups[f.g] || []).push(f); });
+    Object.keys(groups).forEach((g) => {
+      const og = document.createElement('optgroup'); og.label = g;
+      groups[g].forEach((f) => { const o = document.createElement('option'); o.value = f.n; o.textContent = f.n; o.style.fontFamily = fontStack(f.n); og.appendChild(o); });
+      sel.appendChild(og);
+    });
+  });
+}
+function setIfIdle(el, v) { if (document.activeElement !== el) el.value = v; }
+function syncToolbar() {
+  $('fHead').value = state.headF; $('fBody').value = state.bodyF;
+  const id = meta.sel, e = nodeEl(id);
+  $('seltag').textContent = 'Selected: ' + (NODES[id] || 'nothing');
+  const noSize = id === 'art' || !e;
+  let sz = '';
+  if (!noSize) sz = state.sizes[id] || Math.round(parseFloat(getComputedStyle(e).fontSize)) || '';
+  setIfIdle($('fSize'), sz);
+  ['fSize', 'szDn', 'szUp'].forEach((k) => { $(k).disabled = noSize; });
+  setIfIdle($('cAcc'), state.accent.toLowerCase()); setIfIdle($('hAcc'), state.accent);
+  setIfIdle($('cSur'), state.surface.toLowerCase()); setIfIdle($('hSur'), state.surface);
+  setIfIdle($('cInk'), state.ink.toLowerCase()); setIfIdle($('hInk'), state.ink);
+  document.querySelectorAll('#segR button').forEach((b) => b.classList.toggle('on', b.dataset.r === state.radius));
+  const c = contrast(state.ink, state.surface), cp = $('cpill'), ok = c >= 4.5;
+  cp.textContent = 'Contrast ' + c.toFixed(1) + (ok ? ' · readable' : ' · hard to read');
+  cp.className = 'cpill ' + (ok ? 'good' : 'bad');
+  const drag = canDrag();
+  document.querySelectorAll('[data-align]').forEach((b) => { b.disabled = !drag; });
+  $('bEdit').disabled = !TEXT_NODES.has(id);
+  $('bResetOne').disabled = !(state.pos[id] && (state.pos[id].x || state.pos[id].y));
+  $('bResetAll').disabled = !Object.keys(state.pos).some((k) => state.pos[k].x || state.pos[k].y);
+}
+
+/* ---------- live code ---------- */
+function codeLines(st) {
+  const L = [], t = st.t;
+  const add = (k, raw, h) => L.push({ k, raw, h });
+  const sp = (c, s) => `<span class="${c}">${esc(s)}</span>`;
+  const cut = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
+  const plain = (k, raw, cls) => add(k, raw, cls ? sp(cls, raw) : esc(raw));
+  const css = (k, prop, val, sw) => add(k, `    ${prop}: ${val};`, `    ${sp('p', prop)}: ${sw ? `<span class="hxs" style="background:${esc(val)}"></span>` : ''}${sp('s', val)};`);
+  const el = (k, ind, open, text, close) => add(k, `${ind}${open}${text}${close}`, `${ind}${sp('t', open)}${esc(cut(text, 80))}${sp('t', close)}`);
+  const r = RADIUS[st.radius] || RADIUS.soft;
+  plain('c0', `<!-- ${cut(t.brand, 30)}: built in The AI Lab Studio -->`, 'c');
+  plain('c1', '<style>', 't');
+  plain('c2', '  .site {', 't');
+  css('accent', '--accent', st.accent, 1); css('surface', '--surface', st.surface, 1); css('ink', '--text', st.ink, 1); css('soft', '--soft', st.soft, 1);
+  css('headF', '--heading-font', fontStack(st.headF)); css('bodyF', '--body-font', fontStack(st.bodyF));
+  css('radius', '--corners', r[0] + 'px (' + st.radius + ')');
+  plain('c3', '  }', 't');
+  add('size:headline', `  h1 { font-size: ${st.sizes.headline || 48}px; }`, `  ${sp('t', 'h1')} { ${sp('p', 'font-size')}: ${sp('s', (st.sizes.headline || 48) + 'px')}; }`);
+  Object.keys(st.sizes).forEach((id) => { if (id !== 'headline') add('size:' + id, `  [data-id="${id}"] { font-size: ${st.sizes[id]}px; }`, `  ${sp('t', '[data-id="' + id + '"]')} { ${sp('p', 'font-size')}: ${sp('s', st.sizes[id] + 'px')}; }`); });
+  add('align', `  .hero { text-align: ${st.align}; }`, `  ${sp('t', '.hero')} { ${sp('p', 'text-align')}: ${sp('s', st.align)}; }`);
+  Object.keys(st.pos).forEach((id) => {
+    const p = st.pos[id]; if (!(Math.round(p.x) || Math.round(p.y))) return;
+    add('pos:' + id, `  [data-id="${id}"] { transform: translate(${Math.round(p.x)}px, ${Math.round(p.y)}px); }`, `  ${sp('t', '[data-id="' + id + '"]')} { ${sp('p', 'transform')}: ${sp('s', `translate(${Math.round(p.x)}px, ${Math.round(p.y)}px)`)}; }`);
+  });
+  plain('c4', '</style>', 't');
+  plain('b0', '<header>', 't');
+  el('t:brand', '  ', '<div class="brand">', t.brand, '</div>');
+  el('t:nav', '  ', '<a class="btn dark">', t.nav, '</a>');
+  plain('b1', '</header>', 't');
+  plain('b2', '<section class="hero">', 't');
+  el('t:badge', '  ', '<span class="badge">', t.badge, '</span>');
+  el('t:headline', '  ', '<h1>', t.headline, '</h1>');
+  el('t:sub', '  ', '<p class="lead">', t.sub, '</p>');
+  el('t:cta1', '  ', '<a class="btn">', t.cta1, '</a>');
+  el('t:cta2', '  ', '<a class="btn ghost">', t.cta2, '</a>');
+  add('scene', `  <div class="art" data-scene="${st.scene}"></div>`, `  ${sp('t', '<div class="art" data-scene="' + st.scene + '"></div>')}`);
+  plain('b3', '</section>', 't');
+  plain('b4', '<section class="info">', 't');
+  [['charter', 'Brand Charter'], ['who', 'Who We Serve'], ['reach', 'Reach']].forEach(([n]) => {
+    el('t:' + n + 'T', '  ', '<h3 class="eyebrow">', t[n + 'T'], '</h3>');
+    el('t:' + n + 'P', '  ', '<p>', t[n + 'P'], '</p>');
+  });
+  plain('b5', '</section>', 't');
+  plain('b6', '<section class="offers">', 't');
+  el('t:offersH', '  ', '<h2>', t.offersH, '</h2>');
+  [1, 2, 3].forEach((n) => {
+    add('icon:' + n, `  <div class="offer" data-icon="${st.icons[n - 1]}">`, `  ${sp('t', '<div class="offer" data-icon="' + st.icons[n - 1] + '">')}`);
+    el('t:o' + n + 't', '    ', '<h3>', t['o' + n + 't'], '</h3>');
+    el('t:o' + n + 'p', '    ', '<p>', t['o' + n + 'p'], '</p>');
+    el('t:o' + n + '$', '    ', '<span class="price">', t['o' + n + '$'], '</span>');
+    plain('e' + n, '  </div>', 't');
+  });
+  plain('b7', '</section>', 't');
+  el('t:foot', '', '<footer>', t.foot, '</footer>');
+  return L;
+}
+function markChanged(prev) {
+  const a = new Map(codeLines(prev).map((l) => [l.k, l.raw]));
+  meta.hl = codeLines(state).filter((l) => a.get(l.k) !== l.raw).map((l) => l.k);
+}
+function renderCode() {
+  const hl = new Set(meta.hl || []);
+  $('codepre').innerHTML = codeLines(state).map((l) => `<span class="ln${hl.has(l.k) ? ' hl' : ''}">${l.h}</span>`).join('');
+  codeDirty = false;
+  const f = $('codepre').querySelector('.ln.hl');
+  if (f && meta.view === 'code' && meta.hlScroll) { meta.hlScroll = false; try { f.scrollIntoView({ block: 'nearest' }); } catch (e) { /* ignore */ } }
+}
+function setView(v) {
+  meta.view = v === 'code' ? 'code' : 'site';
+  const code = meta.view === 'code';
+  $('panelSite').hidden = code; $('panelCode').hidden = !code;
+  [['vSite', !code], ['vCode', code]].forEach(([id, on]) => { $(id).classList.toggle('on', on); $(id).setAttribute('aria-selected', on ? 'true' : 'false'); });
+  if (code) { meta.hlScroll = true; renderCode(); } else { layoutBoard(); syncToolbar(); }
+}
+
+/* ---------- undo ---------- */
+function pushUndo(label) {
+  history.push({ s: JSON.stringify(state), label: label || 'change' });
+  if (history.length > 40) history.shift();
+  lastUndoAt = Date.now(); lastUndoLabel = label;
+}
+const undoGate = (label) => { if (Date.now() - lastUndoAt > 1500 || label !== lastUndoLabel) pushUndo(label); lastUndoAt = Date.now(); lastUndoLabel = label; };
+function undo() {
+  const h = history.pop();
+  if (!h) { toast('Nothing to undo yet'); return false; }
+  const prev = clone(state);
+  state = sanitizeState(JSON.parse(h.s));
+  markChanged(prev); refresh();
+  toast('Undid: ' + h.label);
+  return true;
+}
+
+/* ---------- the one refresh ---------- */
+function refresh(o) {
+  syncStyle(); renderSite(o); syncToolbar();
+  if (meta.view === 'code') renderCode(); else codeDirty = true;
+  if (typeof renderStrip === 'function') renderStrip();
+  save();
+}
+/* change the state by one clear step: undo point, change, highlight lines, redraw */
+function commit(label, fn, o) {
+  o = o || {};
+  const prev = clone(state);
+  if (!o.noUndo) undoGate(label);
+  fn(state);
+  markChanged(prev);
+  refresh(o);
+}
+
+/* =====================================================================
+   CHAT: Studio Director (a rules-based practice builder), the guided
+   lesson, grade tailoring, goals, and the session clock.
+   ===================================================================== */
+const feed = $('feed'), ta = $('ta');
+const ACT = {};
+const reduceMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+const gr = () => GRADES[meta.grade];
+const GUIDE_SECS = 300;
+let busy = false, stripSig = '';
+
+/* ---------- messages (the log lives inside .feed, which scrolls on its own) ---------- */
+function scrollFeed(el) {
+  requestAnimationFrame(() => {
+    if (el) feed.scrollTop = Math.max(0, el.getBoundingClientRect().top - feed.getBoundingClientRect().top + feed.scrollTop - 10);
+    else feed.scrollTop = feed.scrollHeight;
+  });
+}
+function mkMsg(kind, html) {
+  const el = document.createElement('div');
+  el.className = 'msg ' + kind;
+  el.innerHTML = kind === 'sd' ? '<div class="sdh"><span class="sdav">SD</span><span class="sdn">Studio Director</span><span class="sdt">practice builder</span></div>' + html : html;
+  return el;
+}
+function addMsg(kind, html, o) {
+  o = o || {};
+  const el = mkMsg(kind, html);
+  feed.appendChild(el);
+  if (!o.noLog) { meta.log.push({ k: kind, h: el.innerHTML }); if (meta.log.length > 60) meta.log.splice(0, meta.log.length - 60); save(); }
+  scrollFeed(o.top ? el : null);
+  return el;
+}
+function restoreFeed() {
+  feed.innerHTML = '';
+  (meta.log || []).forEach((m) => { if (m && (m.k === 'me' || m.k === 'sd') && typeof m.h === 'string') { const el = document.createElement('div'); el.className = 'msg ' + m.k; el.innerHTML = m.h; feed.appendChild(el); } });
+  scrollFeed();
+}
+
+/* ---------- lesson, samples, guided steps ---------- */
+function welcomeHTML() {
+  const g = meta.grade, P = gr();
+  const hello = g === '5th Grade' ? 'Hi, designer! I am your Studio Director. Today you will build a real website, and you are the boss.'
+    : g === '6–8' ? 'Welcome to the Studio. I am your Studio Director. You will build a live website by describing it, then refine it.'
+      : 'Welcome to the Studio. I am your Studio Director. You will direct a live build with prompts, then verify it in the code.';
+  return `<p><b>${esc(hello)}</b> The site on the right is a practice shop called Atelier Soleil. Everything you type changes it.</p>
+<div class="lesson"><p><b>What is AI?</b> ${esc(P.ai)}</p><p><b>What is vibe coding?</b> ${esc(P.vibe)}</p><p><b>Your formula:</b> ${esc(P.formula)}</p></div>
+<p><b>Try these 3 sample prompts.</b> Each one changes a different part of the site, and I will show you exactly what changed.</p>
+<div class="samples">${P.samples.map((s, i) => `<button type="button" class="sbtn${meta.tested.indexOf(i) >= 0 ? ' done' : ''}" data-act="sample" data-i="${i}"><span class="t">${i + 1}. ${esc(s.star)}</span><span class="d">${esc(s.t)}</span></button>`).join('')}</div>
+<div class="addrow"><button type="button" class="chip dk" data-act="startGuided">Start 5-minute guided practice</button><button type="button" class="chip" data-act="takeover">Skip to Full Takeover</button></div>`;
+}
+function renderWelcome() {
+  meta.log = []; feed.innerHTML = '';
+  addMsg('sd', welcomeHTML(), { top: true });
+}
+function stepHTML(i) {
+  const s = GUIDED_STEPS[i], g = meta.grade, P = gr();
+  return `<p><b>Step ${i + 1} of ${GUIDED_STEPS.length} &middot; ${esc(s.title)}</b></p><p>${esc(P.ex[s.key])}</p>
+<div class="lesson"><p><b>Practice prompt:</b> &ldquo;${esc(GUIDED_EX[s.key](g))}&rdquo;</p></div>
+<div class="addrow"><button type="button" class="chip dk" data-act="gtry">Try the practice prompt</button><button type="button" class="chip" data-act="gown">Write my own</button><button type="button" class="chip" data-act="gskip">Skip step</button></div>`;
+}
+
+/* ---------- goals ---------- */
+const OWNED = (k) => !!(meta.own && meta.own[k]);
+const GOAL_TEST = {
+  name: () => OWNED('name'), aud: () => OWNED('aud'), offers: () => OWNED('offers'), color: () => OWNED('color'), font: () => OWNED('font'),
+  promise: () => OWNED('promise'), hex: () => OWNED('hex'), size: () => OWNED('size'),
+  contrast: () => OWNED('color') && contrast(state.ink, state.surface) >= 4.5, align: () => (meta.snaps || 0) > 0,
+};
+function goalState() { const ids = gr().goals, done = ids.filter((i) => GOAL_TEST[i] && GOAL_TEST[i]()); return { ids, done }; }
+function checkGoals() {
+  const gs = goalState();
+  if (gs.done.length === gs.ids.length && !meta.goalsAll) {
+    meta.goalsAll = true;
+    toast('All goals done! Try Preview, then Export Site.');
+    addMsg('sd', `<p><b>All ${gs.ids.length} goals done.</b> Your site is ready to show off. Press <b>Preview</b> to see it full screen, then <b>Export Site</b> to download it.</p>`);
+  }
+  return gs;
+}
+
+/* ---------- strip + badge ---------- */
+function renderStrip() {
+  const el = $('gstrip'), P = gr();
+  $('modeBadge').textContent = (meta.stage === 'guided' ? 'Guided Practice' : meta.stage === 'takeover' ? 'Full Takeover' : 'Guided Lesson') + ' • ' + meta.grade;
+  document.querySelectorAll('#grades button').forEach((b) => { const on = b.dataset.grade === meta.grade; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  const gs = goalState();
+  const sig = [meta.stage, meta.grade, meta.gstep, gs.done.length, gs.ids.length].join('|');
+  if (sig === stripSig) return;
+  stripSig = sig;
+  let h = '';
+  if (meta.stage === 'intro') {
+    h = `<div class="gs-top"><span class="gs-tag">Start here</span><span class="gs-step">Read, try a sample, then practice</span></div>
+<div class="gs-row"><button type="button" class="chip dk" data-act="startGuided">Start 5-minute guided practice</button><button type="button" class="chip go" data-act="takeover">Full Takeover</button></div>`;
+  } else if (meta.stage === 'guided') {
+    const s = GUIDED_STEPS[Math.min(meta.gstep, GUIDED_STEPS.length - 1)];
+    h = `<div class="gs-top"><span class="gs-tag">Guided practice</span><span class="gs-step">Step ${meta.gstep + 1} of ${GUIDED_STEPS.length}: ${esc(s.title)}</span><span class="gs-time" id="gsTime">5:00</span></div>
+<div class="gs-bar"><i id="gsBar" style="width:0%"></i></div>
+<div class="gs-row"><button type="button" class="chip dk" data-act="gtry">Try the practice prompt</button><button type="button" class="chip" data-act="gown">Write my own</button><button type="button" class="chip" data-act="gskip">Skip step</button><button type="button" class="chip go" data-act="takeover">Jump to Full Takeover</button></div>`;
+  } else {
+    h = `<div class="gs-top"><span class="gs-tag">Full takeover</span><span class="gs-step">Your studio. You decide.</span><span class="gs-time">Goals ${gs.done.length}/${gs.ids.length}</span></div>
+<div class="gs-row"><button type="button" class="chip dk" data-act="goals">My goals</button>${P.ideas.map((t) => `<button type="button" class="chip" data-act="ins" data-t="${esc(t)}">${esc(t)}</button>`).join('')}</div>`;
+  }
+  el.innerHTML = h;
+  tickGuided();
+}
+function tickGuided() {
+  if (meta.stage !== 'guided') return;
+  const left = Math.max(0, GUIDE_SECS - Math.floor((Date.now() - meta.gstart) / 1000));
+  const t = $('gsTime'), b = $('gsBar');
+  if (t) t.textContent = Math.floor(left / 60) + ':' + ('0' + (left % 60)).slice(-2) + ' left';
+  if (b) b.style.width = Math.round(((GUIDE_SECS - left) / GUIDE_SECS) * 100) + '%';
+  if (left <= 0) enterTakeover('time');
+}
+
+/* ---------- stage changes ---------- */
+function startGuided() {
+  if (meta.stage === 'guided') return;
+  pushUndo('start guided practice');
+  state = DEFAULT_STATE(); meta.own = {}; meta.hl = [];
+  meta.stage = 'guided'; meta.gstep = 0; meta.gdone = {}; meta.gstart = Date.now();
+  stripSig = ''; refresh();
+  addMsg('sd', `<p><b>Guided practice: 5 short steps.</b> The site is back to the practice shop. For each step you can <b>try a practice prompt</b> first, then <b>write your own</b>, so you can see what each kind of detail does. The timer in the bar above shows your 5 minutes. You can jump to Full Takeover any time.</p>` + stepHTML(0), { top: true });
+}
+function enterTakeover(why) {
+  if (meta.stage === 'takeover') return;
+  meta.stage = 'takeover'; stripSig = '';
+  const names = GRADES[meta.grade].names, still = names.indexOf(state.t.brand) >= 0 || state.t.brand === DEFAULT_T.brand;
+  const P = gr();
+  let h = `<p><b>${why === 'time' ? 'Guided time is up.' : why === 'done' ? 'You finished every step!' : 'Full Takeover.'}</b> The rest of the session is yours. I will stay here with ideas, but you drive.</p>`;
+  if (still) h += `<p>Your site still has <b>practice words</b> (${esc(state.t.brand)}). Replace them with your own business name, offerings, audience, charter, fonts, and colors.</p>`;
+  h += `<div class="addrow">${P.ideas.slice(0, 4).map((t) => `<button type="button" class="chip" data-act="ins" data-t="${esc(t)}">${esc(t)}</button>`).join('')}<button type="button" class="chip dk" data-act="goals">My goals</button></div>`;
+  addMsg('sd', h, { top: true });
+  if (!meta.running) startClock();
+  refresh();
+}
+function setGrade(g) {
+  if (!GRADES[g] || g === meta.grade) return;
+  meta.grade = g; stripSig = '';
+  if (meta.stage === 'intro' && !meta.prompts.length) { renderWelcome(); }
+  else {
+    const P = gr();
+    addMsg('sd', `<p><b>Switched to ${esc(g)}.</b> ${esc(P.formula)}</p><div class="addrow">${P.ideas.slice(0, 4).map((t) => `<button type="button" class="chip" data-act="ins" data-t="${esc(t)}">${esc(t)}</button>`).join('')}</div>` + (meta.stage === 'guided' ? stepHTML(Math.min(meta.gstep, GUIDED_STEPS.length - 1)) : ''), { top: true });
+  }
+  refresh();
+}
+
+/* ---------- reading a prompt and replying ---------- */
+const LEADS = {
+  '5th Grade': ['Done! Look at your website.', 'Nice! Your site just changed.', 'Got it! Watch the right side.', 'Ooh, I see what you want!'],
+  '6–8': ['Done. Your site updated live.', 'Applied. Check the canvas.', 'Nice direction. Here is what moved.'],
+  '9–12': ['Applied. Here is the diff.', 'Spec received. These properties changed.', 'Done. Review the changes below.'],
+};
+let leadN = 0;
+const lead = () => { const a = LEADS[meta.grade]; return a[leadN++ % a.length]; };
+const fmtVal = (v) => { v = String(v == null ? '' : v); return v.length > 42 ? v.slice(0, 41) + '…' : v; };
+const swatch = (v) => (/^#[0-9A-F]{6}$/i.test(v) ? `<i class="sw" style="background:${esc(v)}"></i>` : '');
+
+function changesHTML(diff) {
+  if (!diff.length) return '';
+  let out = '';
+  ['type', 'color', 'layout'].forEach((cat) => {
+    const items = diff.filter((x) => x.cat === cat);
+    if (!items.length) return;
+    out += `<div class="fxh">${esc(CAT[cat])}</div><ul class="chg">` + items.slice(0, 6).map((x) => {
+      const textual = cat === 'layout' && ['Illustration', 'Alignment', 'Corners'].indexOf(x.label) < 0;
+      const to = `<span class="to">${swatch(tidyVal(x.to))}${esc(fmtVal(tidyVal(x.to)))}</span>`;
+      return `<li><span class="lb">${esc(x.label)}</span>${textual ? '' : `<span class="ar">${swatch(tidyVal(x.from))}${esc(fmtVal(tidyVal(x.from)))} &rarr;</span>`}${to}</li>`;
+    }).join('') + (items.length > 6 ? `<li><span class="ar">+${items.length - 6} more</span></li>` : '') + '</ul>';
+  });
+  return out;
+}
+const powerHTML = (pw) => `<div class="pw"><b>Prompt power ${pw.n}/6</b>${POWER.map(([k, l]) => `<span class="pc${pw.has[k] ? ' on' : ''}">${esc(l)}</span>`).join('')}</div>`;
+
+function replyHTML(res, diff, o) {
+  const P = gr(), pw = powerOf(res.seen), tip = tipFor(meta.grade, pw);
+  let h = '';
+  if (!res.found) {
+    h += `<p><b>I could not find a business detail in that.</b> I am a practice builder, so I look for things like a name, who it is for, what you sell, colors, fonts, and sizes.</p><p class="tipl">${esc(P.formula)}</p>`;
+    h += `<div class="addrow">${P.ideas.slice(0, 3).map((t) => `<button type="button" class="chip" data-act="ins" data-t="${esc(t)}">${esc(t)}</button>`).join('')}</div>`;
+    return h;
+  }
+  h += `<p><b>${esc(lead())}</b>${o.sample != null ? ' Compared with the starter shop (Atelier Soleil):' : ''}</p>`;
+  if (o.sample != null) h += `<div class="fx"><b>${esc(P.samples[o.sample].star)}.</b> ${esc(P.samples[o.sample].note)}</div>`;
+  h += diff.length ? changesHTML(diff) : `<p>I understood that, but nothing changed because your site already has it.</p>`;
+  h += powerHTML(pw);
+  if (o.ex) h += `<p class="tipl"><b>That was the practice version.</b> Now make it yours: tap <b>Write my own</b> and type your real idea.</p>`;
+  else h += `<p class="tipl">${esc(tip.line)}</p>`;
+  const chips = [];
+  if (!o.ex && o.sample == null) tip.miss.forEach((k) => chips.push(`<button type="button" class="chip" data-act="ins" data-t="${esc(ADD_TEXT[k])}">+ ${esc(ADD_LABEL[k])}</button>`));
+  if (o.ex) chips.push('<button type="button" class="chip dk" data-act="gown">Write my own</button>', '<button type="button" class="chip" data-act="gskip">Next step</button>');
+  if (o.sample != null) {
+    if (meta.tested.length >= 3) chips.push('<button type="button" class="chip dk" data-act="startGuided">You tried all 3! Start guided practice</button>');
+    else chips.push('<button type="button" class="chip dk" data-act="startGuided">Start guided practice</button>');
+  }
+  if (meta.grade !== '5th Grade' && !meta.codeHint) { meta.codeHint = true; chips.push('<button type="button" class="chip" data-act="code">See the Live Code</button>'); }
+  if (window.innerWidth < 900) chips.push('<button type="button" class="chip" data-act="see">See my site</button>');
+  chips.push('<button type="button" class="chip" data-act="undo">Undo</button>');
+  h += `<div class="addrow">${chips.join('')}</div>`;
+  return h;
+}
+
+function showPriv(what) { const e = $('privErr'); e.textContent = 'Take out ' + what + ' and try again. Keep it private and made up.'; e.hidden = false; }
+function hidePriv() { $('privErr').hidden = true; }
+
+function noteOwn(res, o) {
+  if (o.ex || o.sample != null || o.wheel) return;
+  const s = res.seen;
+  if (s.name) own('name'); if (s.aud) own('aud'); if (s.offers) own('offers'); if (s.color || s.mood) own('color'); if (s.font) own('font');
+  if (s.promise) own('promise'); if (s.hex) own('hex'); if (s.size) own('size');
+}
+function advanceGuided(res, o) {
+  if (meta.stage !== 'guided' || o.ex || o.sample != null || o.wheel || !res.found) return;
+  meta.gdone = meta.gdone || {};
+  GUIDED_STEPS.forEach((s) => { if (res.seen[s.key]) meta.gdone[s.id] = true; });
+  nextStep();
+}
+function nextStep() {
+  const nx = GUIDED_STEPS.findIndex((s) => !meta.gdone[s.id]);
+  if (nx < 0) { setTimeout(() => enterTakeover('done'), 650); return; }
+  if (nx !== meta.gstep || meta.gdone[GUIDED_STEPS[meta.gstep].id]) {
+    meta.gstep = nx; stripSig = '';
+    setTimeout(() => { addMsg('sd', '<p><b>That one is yours now.</b> Next step:</p>' + stepHTML(nx), { top: true }); renderStrip(); }, 650);
+  }
+}
+
+function runPrompt(raw, o) {
+  o = o || {};
+  if (busy) return false;
+  const text = String(raw || '').replace(/\s+/g, ' ').trim();
+  if (!text) return false;
+  const pe = priv(text);
+  if (pe) { showPriv(pe); return false; }
+  hidePriv();
+  busy = true; $('send').disabled = true;
+  addMsg('me', esc(text));
+  const prev = clone(state), base = o.fresh ? DEFAULT_STATE() : clone(state), d = clone(base);
+  const res = interpret(text, d);
+  const th = addMsg('sd', '<div class="thinking"><span class="dots"><i></i><i></i><i></i></span> Reading your prompt&hellip;</div>', { noLog: true });
+  setTimeout(() => {
+    th.remove();
+    meta.prompts.unshift({ id: meta.nextId++, t: text, g: meta.grade, ts: Date.now(), src: o.sample != null ? 'sample' : o.ex ? 'example' : o.wheel ? 'wheel' : 'own' });
+    if (meta.prompts.length > 60) meta.prompts.length = 60;
+    let diff = [];
+    if (res.found) {
+      if (o.ex) d.touched = Object.assign({}, base.touched);
+      pushUndo(o.sample != null ? 'sample prompt' : 'prompt');
+      const cmp = o.fresh ? DEFAULT_STATE() : prev;
+      state = d;
+      diff = diffStates(cmp, state);
+      markChanged(cmp);
+      if (o.sample != null && meta.tested.indexOf(o.sample) < 0) meta.tested.push(o.sample);
+      noteOwn(res, o);
+      const flash = [];
+      diff.forEach((x) => { if (x.node && flash.indexOf(x.node) < 0) flash.push(x.node); });
+      refresh({ flash });
+    }
+    addMsg('sd', replyHTML(res, diff, o), { top: true });
+    advanceGuided(res, o);
+    checkGoals(); renderStrip(); updateBookCount();
+    busy = false; $('send').disabled = false; save();
+    if (o.sample != null && window.innerWidth < 900) toast('Scroll down to see your site change');
+  }, reduceMotion ? 0 : 480);
+  return true;
+}
+
+/* ---------- clock ---------- */
+let clockT = 0;
+const fmtClock = (s) => Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2);
+function drawClock() {
+  $('clock').textContent = fmtClock(meta.secs);
+  $('cdot').classList.toggle('run', !!meta.running);
+  $('tStart').textContent = meta.running ? 'Pause' : (meta.secs < 3600 ? 'Resume' : 'Start');
+}
+function startClock() { meta.running = true; drawClock(); }
+function tick() {
+  if (meta.running) {
+    meta.secs = Math.max(0, meta.secs - 1);
+    if (meta.secs === 0) { meta.running = false; toast('Time is up! Save your work with Export Site.'); addMsg('sd', '<p><b>Time is up.</b> Press <b>Export Site</b> to download your website, then share it with your teacher.</p>'); }
+    drawClock();
+    if (meta.secs % 15 === 0) save();
+  }
+  tickGuided();
+}
+
+/* ---------- actions (feed buttons, strip chips, menus all use these) ---------- */
+function insertText(t) {
+  const cur = ta.value;
+  ta.value = (cur && !/\s$/.test(cur) ? cur + ' ' : cur) + t.trim() + ' ';
+  ta.dispatchEvent(new Event('input'));
+  ta.focus();
+  ta.setSelectionRange(ta.value.length, ta.value.length);
+}
+ACT.sample = (el) => { const i = parseInt(el.dataset.i, 10); const s = gr().samples[i]; if (s) runPrompt(s.t, { sample: i, fresh: true }); };
+ACT.startGuided = () => startGuided();
+ACT.takeover = () => enterTakeover('skip');
+ACT.ins = (el) => insertText(el.dataset.t || '');
+ACT.undo = () => { undo(); };
+ACT.see = () => { $('split').querySelector('.canvaspane').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' }); };
+ACT.code = () => { setView('code'); if (window.innerWidth < 900) ACT.see(); };
+ACT.gtry = () => {
+  const s = GUIDED_STEPS[Math.min(meta.gstep, GUIDED_STEPS.length - 1)];
+  if (meta.stage !== 'guided') return;
+  runPrompt(GUIDED_EX[s.key](meta.grade), { ex: true });
+};
+ACT.gown = () => {
+  const s = GUIDED_STEPS[Math.min(meta.gstep, GUIDED_STEPS.length - 1)];
+  ta.value = GUIDED_OWN[s.key]; ta.dispatchEvent(new Event('input')); ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
+  toast('Finish the sentence in your own words');
+};
+ACT.gskip = () => {
+  if (meta.stage !== 'guided') return;
+  meta.gdone = meta.gdone || {}; meta.gdone[GUIDED_STEPS[Math.min(meta.gstep, GUIDED_STEPS.length - 1)].id] = true;
+  nextStep();
+};
+ACT.goals = (el) => {
+  const gs = goalState();
+  openPop(el, `<div class="mh">Your goals &middot; ${esc(meta.grade)} &middot; ${gs.done.length}/${gs.ids.length}</div><ul class="goals" style="padding:4px 10px 8px">${gs.ids.map((id) => { const d = gs.done.indexOf(id) >= 0; return `<li class="${d ? 'd' : ''}"><span class="ck">${d ? '&#10003;' : ''}</span><span>${esc(GOAL_LABEL[id])}</span></li>`; }).join('')}</ul>`);
+};
+
+document.addEventListener('click', (e) => {
+  const b = e.target.closest && e.target.closest('[data-act]');
+  if (!b || (e.target.closest('#site'))) return;
+  const f = ACT[b.dataset.act];
+  if (f) { e.preventDefault(); f(b, e); }
+});
+
+/* ---------- composer ---------- */
+function updateCount() { $('cnt').textContent = ta.value.length + ' / 700'; }
+function updateBookCount() { $('bookN').textContent = String(meta.prompts.filter((p) => p.src === 'own').length); }
+ta.addEventListener('input', () => { updateCount(); if (!$('privErr').hidden) hidePriv(); });
+ta.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) { e.preventDefault(); $('form').requestSubmit ? $('form').requestSubmit() : $('send').click(); }
+});
+$('form').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const v = ta.value;
+  if (runPrompt(v, {})) { ta.value = ''; updateCount(); }
+});
+document.querySelectorAll('#grades button').forEach((b) => b.addEventListener('click', () => setGrade(b.dataset.grade)));
+$('tStart').addEventListener('click', () => { meta.running = !meta.running; drawClock(); save(); });
+$('tReset').addEventListener('click', () => { meta.running = false; meta.secs = 3600; drawClock(); save(); });
+
+/* =====================================================================
+   CANVAS: select, drag with Wix / Instagram-Story style guides,
+   align buttons, arrow nudging, and inline text editing.
+   ===================================================================== */
+const guidesEl = $('guides'), snapnote = $('snapnote');
+const MARGIN = 36, SNAP = 6;
+let drag = null, noteT = 0;
+
+/* all block math is in page pixels (980 wide); K turns screen pixels into page pixels */
+const relRect = (el, S) => { const r = el.getBoundingClientRect(); return { l: (r.left - S.left) / K, t: (r.top - S.top) / K, r: (r.right - S.left) / K, b: (r.bottom - S.top) / K, w: r.width / K, h: r.height / K }; };
+
+function collectTargets(id, S) {
+  const out = [];
+  siteEl.querySelectorAll('.dr').forEach((e) => {
+    if (e.dataset.id === id) return;
+    const r = relRect(e, S);
+    if (r.w < 2 || r.h < 2) return;
+    out.push({ id: e.dataset.id, name: NODES[e.dataset.id] || 'block', l: r.l, t: r.t, r: r.r, b: r.b, cx: (r.l + r.r) / 2, cy: (r.t + r.b) / 2 });
+  });
+  return out;
+}
+
+/* find where a dragged rectangle snaps. R is the proposed rectangle (relative to the page). */
+function snapRect(R, targets, W, H, thr) {
+  const info = { dx: 0, dy: 0, v: [], h: [], gaps: [], notes: [] };
+  const cxs = [{ x: W / 2, k: 'c', n: 'Centered on the page' }, { x: MARGIN, k: 'e', n: 'Page margin' }, { x: W - MARGIN, k: 'e', n: 'Page margin' }];
+  const cys = [{ y: H / 2, k: 'c', n: 'Centered on the page' }];
+  targets.forEach((o) => {
+    [o.l, o.cx, o.r].forEach((x) => cxs.push({ x, k: 'a', n: 'Lined up with ' + o.name }));
+    [o.t, o.cy, o.b].forEach((y) => cys.push({ y, k: 'a', n: 'Lined up with ' + o.name }));
+  });
+  const refsX = [R.l, (R.l + R.r) / 2, R.r], refsY = [R.t, (R.t + R.b) / 2, R.b];
+  let bx = null, by = null;
+  let bxs = 1e9, bys = 1e9;
+  /* the page center wins close calls, like Wix and Instagram Stories */
+  refsX.forEach((rx) => cxs.forEach((c) => { const d = c.x - rx, sc = Math.abs(d) - (c.k === 'c' ? 3 : 0); if (Math.abs(d) <= thr && sc < bxs) { bxs = sc; bx = d; } }));
+  refsY.forEach((ry) => cys.forEach((c) => { const d = c.y - ry, sc = Math.abs(d) - (c.k === 'c' ? 3 : 0); if (Math.abs(d) <= thr && sc < bys) { bys = sc; by = d; } }));
+  if (bx !== null) info.dx = bx;
+  if (by !== null) info.dy = by;
+  let Q = { l: R.l + info.dx, t: R.t + info.dy, r: R.r + info.dx, b: R.b + info.dy };
+  /* equal spacing: same gap above and below, or left and right */
+  const ov = (a0, a1, b0, b1) => a0 < b1 - 1 && a1 > b0 + 1;
+  if (by === null) {
+    const A = targets.filter((o) => ov(o.l, o.r, Q.l, Q.r) && o.b <= Q.t + 1).sort((p, q) => q.b - p.b)[0];
+    const B = targets.filter((o) => ov(o.l, o.r, Q.l, Q.r) && o.t >= Q.b - 1).sort((p, q) => p.t - q.t)[0];
+    if (A && B) { const g1 = Q.t - A.b, g2 = B.t - Q.b; if (Math.abs(g1 - g2) <= thr * 1.5) { info.dy = (g2 - g1) / 2; Q = { l: Q.l, t: Q.t + info.dy, r: Q.r, b: Q.b + info.dy }; info.eqY = true; } }
+  }
+  if (bx === null) {
+    const A = targets.filter((o) => ov(o.t, o.b, Q.t, Q.b) && o.r <= Q.l + 1).sort((p, q) => q.r - p.r)[0];
+    const B = targets.filter((o) => ov(o.t, o.b, Q.t, Q.b) && o.l >= Q.r - 1).sort((p, q) => p.l - q.l)[0];
+    if (A && B) { const g1 = Q.l - A.r, g2 = B.l - Q.r; if (Math.abs(g1 - g2) <= thr * 1.5) { info.dx = (g2 - g1) / 2; Q = { l: Q.l + info.dx, t: Q.t, r: Q.r + info.dx, b: Q.b }; info.eqX = true; } }
+  }
+  /* which guide lines to draw: every one the final rectangle now touches */
+  const seenV = {}, seenH = {};
+  [Q.l, (Q.l + Q.r) / 2, Q.r].forEach((rx) => cxs.forEach((c) => { if (Math.abs(c.x - rx) < 0.9) { const key = Math.round(c.x); if (!seenV[key] || c.k === 'c') { seenV[key] = c; } } }));
+  [Q.t, (Q.t + Q.b) / 2, Q.b].forEach((ry) => cys.forEach((c) => { if (Math.abs(c.y - ry) < 0.9) { const key = Math.round(c.y); if (!seenH[key] || c.k === 'c') { seenH[key] = c; } } }));
+  Object.keys(seenV).forEach((k) => { info.v.push({ x: seenV[k].x, k: seenV[k].k }); info.notes.push(seenV[k].n); });
+  Object.keys(seenH).forEach((k) => { info.h.push({ y: seenH[k].y, k: seenH[k].k }); info.notes.push(seenH[k].n); });
+  if (info.eqY) {
+    const A = targets.filter((o) => ov(o.l, o.r, Q.l, Q.r) && o.b <= Q.t + 1).sort((p, q) => q.b - p.b)[0], B = targets.filter((o) => ov(o.l, o.r, Q.l, Q.r) && o.t >= Q.b - 1).sort((p, q) => p.t - q.t)[0];
+    if (A && B) { const g = Math.round(Q.t - A.b), cx = (Q.l + Q.r) / 2; info.gaps.push({ x: cx, y: (A.b + Q.t) / 2, v: g }, { x: cx, y: (Q.b + B.t) / 2, v: g }); info.notes.push('Equal spacing ' + g + 'px'); }
+  }
+  if (info.eqX) {
+    const A = targets.filter((o) => ov(o.t, o.b, Q.t, Q.b) && o.r <= Q.l + 1).sort((p, q) => q.r - p.r)[0], B = targets.filter((o) => ov(o.t, o.b, Q.t, Q.b) && o.l >= Q.r - 1).sort((p, q) => p.l - q.l)[0];
+    if (A && B) { const g = Math.round(Q.l - A.r), cy = (Q.t + Q.b) / 2; info.gaps.push({ x: (A.r + Q.l) / 2, y: cy, v: g }, { x: (Q.r + B.l) / 2, y: cy, v: g }); info.notes.push('Equal spacing ' + g + 'px'); }
+  }
+  info.snapped = info.v.length > 0 || info.h.length > 0 || info.gaps.length > 0;
+  return info;
+}
+
+function drawGuides(info) {
+  if (!info) { guidesEl.innerHTML = ''; snapnote.hidden = true; return; }
+  const B = boardEl.getBoundingClientRect(), S = siteEl.getBoundingClientRect(), ox = S.left - B.left, oy = S.top - B.top;
+  let h = '';
+  info.v.forEach((l) => { h += `<div class="gl v ${l.k}" style="left:${(ox + l.x * K).toFixed(1)}px"></div>`; });
+  info.h.forEach((l) => { h += `<div class="gl h ${l.k}" style="top:${(oy + l.y * K).toFixed(1)}px"></div>`; });
+  info.gaps.forEach((g) => { h += `<div class="gl" style="left:${(ox + g.x * K).toFixed(1)}px;top:${(oy + g.y * K).toFixed(1)}px;transform:translate(-50%,-50%);background:#E5484D;color:#fff;font:700 10px/1 'Space Mono',monospace;padding:3px 7px;border-radius:999px">${g.v}</div>`; });
+  guidesEl.innerHTML = h;
+  const notes = info.notes.filter((n, i, a) => a.indexOf(n) === i).slice(0, 2);
+  if (notes.length) { snapnote.textContent = notes.join(' · '); snapnote.hidden = false; } else snapnote.hidden = true;
+}
+function flashNote(msg) {
+  snapnote.textContent = msg; snapnote.hidden = false;
+  clearTimeout(noteT); noteT = setTimeout(() => { if (!drag) snapnote.hidden = true; }, 1800);
+}
+
+/* ---------- pointer: select + drag ---------- */
+siteEl.addEventListener('pointerdown', (e) => {
+  if (editing) return;
+  const el = e.target.closest && e.target.closest('.dr');
+  if (!el) return;
+  const id = el.dataset.id, wasSel = meta.sel === id;
+  selectNode(id);
+  if (e.button !== undefined && e.button !== 0) return;
+  if (!canDrag()) { flashNote('This screen is too narrow to drag blocks. Try a tablet or computer.'); return; }
+  if (e.pointerType === 'touch' && !wasSel) return; /* first tap selects, then drag */
+  const S = siteEl.getBoundingClientRect(), r0 = relRect(el, S), p = state.pos[id] || { x: 0, y: 0 };
+  drag = { id, el, pid: e.pointerId, x0: e.clientX, y0: e.clientY, started: false, base: { x: p.x, y: p.y }, r0, W: S.width / K, H: S.height / K, targets: collectTargets(id, S), cur: { x: p.x, y: p.y }, snapped: false };
+  try { el.setPointerCapture(e.pointerId); } catch (err) { /* fine */ }
+});
+siteEl.addEventListener('pointermove', (e) => {
+  if (!drag || e.pointerId !== drag.pid) return;
+  const ddx = (e.clientX - drag.x0) / K, ddy = (e.clientY - drag.y0) / K;
+  if (!drag.started) {
+    if (Math.hypot(ddx, ddy) < 4) return;
+    drag.started = true; drag.el.classList.add('drag');
+  }
+  e.preventDefault();
+  let dx = ddx, dy = ddy;
+  const R0 = drag.r0, W = drag.W, H = drag.H;
+  let R = { l: R0.l + dx, t: R0.t + dy, r: R0.r + dx, b: R0.b + dy };
+  if (R.l < 0) dx -= R.l; if (R.r > W) dx -= R.r - W; if (R.t < 0) dy -= R.t; if (R.b > H) dy -= R.b - H;
+  R = { l: R0.l + dx, t: R0.t + dy, r: R0.r + dx, b: R0.b + dy };
+  let info = null;
+  if (!e.altKey) {
+    info = snapRect(R, drag.targets, W, H, (e.pointerType === 'touch' ? SNAP + 4 : SNAP) / K);
+    dx += info.dx; dy += info.dy;
+  }
+  drag.cur = { x: drag.base.x + dx, y: drag.base.y + dy };
+  drag.snapped = !!(info && info.snapped);
+  drag.el.style.transform = `translate(${Math.round(drag.cur.x)}px,${Math.round(drag.cur.y)}px)`;
+  drawGuides(info && info.snapped ? info : null);
+});
+function endDrag(e, cancel) {
+  if (!drag || (e && e.pointerId !== drag.pid)) return;
+  const d = drag; drag = null;
+  drawGuides(null);
+  try { d.el.releasePointerCapture(d.pid); } catch (err) { /* fine */ }
+  d.el.classList.remove('drag');
+  if (!d.started) return;
+  if (cancel) { d.el.style.transform = ''; return; }
+  const x = Math.round(d.cur.x), y = Math.round(d.cur.y);
+  if (d.snapped) { meta.snaps = (meta.snaps || 0) + 1; toast('Snapped into line'); }
+  commit('move block', (st) => { st.pos[d.id] = { x, y }; }, { flash: [] });
+  checkGoals();
+}
+siteEl.addEventListener('pointerup', (e) => endDrag(e, false));
+siteEl.addEventListener('pointercancel', (e) => endDrag(e, true));
+siteEl.addEventListener('click', (e) => { if (e.target.closest && e.target.closest('a')) e.preventDefault(); });
+siteEl.addEventListener('focusin', (e) => {
+  const el = e.target.closest && e.target.closest('.dr');
+  if (el && !editing && el.dataset.id !== meta.sel) selectNode(el.dataset.id);
+});
+
+/* ---------- keyboard: arrows nudge, Enter edits ---------- */
+function nudge(id, dx, dy) {
+  commit('nudge block', (st) => { const p = st.pos[id] || { x: 0, y: 0 }; st.pos[id] = { x: p.x + dx, y: p.y + dy }; });
+  const e = nodeEl(id); if (e) { try { e.focus({ preventScroll: true }); } catch (err) { /* fine */ } }
+}
+siteEl.addEventListener('keydown', (e) => {
+  if (editing) return;
+  const el = e.target.closest && e.target.closest('.dr');
+  if (!el) return;
+  const id = el.dataset.id;
+  if (e.key === 'Enter') { e.preventDefault(); startEdit(id); return; }
+  const k = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[e.key];
+  if (!k) return;
+  e.preventDefault();
+  if (!canDrag()) { flashNote('This screen is too narrow to move blocks. Try a tablet or computer.'); return; }
+  const s = e.shiftKey ? 10 : 1;
+  nudge(id, k[0] * s, k[1] * s);
+});
+
+/* ---------- align buttons ---------- */
+function rowMate(id, R, S) {
+  let best = null, bd = 1e9;
+  siteEl.querySelectorAll('.dr').forEach((e) => {
+    if (e.dataset.id === id) return;
+    const o = relRect(e, S);
+    if (o.w < 2 || o.h < 2) return;
+    const ov = Math.min(R.b, o.b) - Math.max(R.t, o.t);
+    if (ov < Math.min(R.h, o.h) * 0.25) return;
+    const dist = o.l >= R.r ? o.l - R.r : R.l >= o.r ? R.l - o.r : 0;
+    if (dist < bd) { bd = dist; best = o; }
+  });
+  return best;
+}
+function alignSel(kind) {
+  const id = meta.sel, el = nodeEl(id);
+  if (!el) return;
+  if (!canDrag()) { flashNote('This screen is too narrow to align blocks. Try a tablet or computer.'); return; }
+  const S = siteEl.getBoundingClientRect(), R = relRect(el, S), W = S.width / K;
+  let dx = 0, dy = 0, label = '';
+  if (kind === 'l') { dx = MARGIN - R.l; label = 'Aligned to the left margin'; }
+  else if (kind === 'r') { dx = (W - MARGIN) - R.r; label = 'Aligned to the right margin'; }
+  else if (kind === 'c') { dx = W / 2 - (R.l + R.r) / 2; label = 'Centered on the page'; }
+  else {
+    const mate = rowMate(id, R, S);
+    let T;
+    if (mate) T = { t: mate.t, b: mate.b, n: NODES[nodeIdOf(mate, S)] || 'the block beside it' };
+    else { const sec = el.closest('section,header,footer'); const sr = sec ? relRect(sec, S) : { t: 0, b: S.height }; T = { t: sr.t, b: sr.b, n: 'its section' }; }
+    if (kind === 't') { dy = T.t - R.t; label = 'Top lined up with ' + T.n; } else { dy = (T.t + T.b) / 2 - (R.t + R.b) / 2; label = 'Centered beside ' + T.n; }
+  }
+  dx = clamp(dx, -R.l, W - R.r);
+  if (Math.abs(dx) < 0.5 && Math.abs(dy) < 0.5) { toast('Already lined up'); return; }
+  commit('align block', (st) => { const p = st.pos[id] || { x: 0, y: 0 }; st.pos[id] = { x: Math.round(p.x + dx), y: Math.round(p.y + dy) }; }, { flash: [id] });
+  meta.snaps = (meta.snaps || 0) + 1;
+  toast(label); checkGoals();
+}
+function nodeIdOf(rect, S) {
+  let found = null;
+  siteEl.querySelectorAll('.dr').forEach((e) => { const o = relRect(e, S); if (Math.abs(o.l - rect.l) < 0.5 && Math.abs(o.t - rect.t) < 0.5) found = e.dataset.id; });
+  return found;
+}
+
+/* ---------- inline text editing ---------- */
+function startEdit(id, keyEl) {
+  if (!TEXT_NODES.has(id) || editing) return;
+  const root = nodeEl(id);
+  if (!root) return;
+  let el = keyEl && root.contains(keyEl) ? keyEl : null;
+  if (!el) { const key = PRIMARY[id] || id; el = root.matches('[data-k="' + key + '"]') ? root : root.querySelector('[data-k="' + key + '"]'); }
+  if (!el) return;
+  selectNode(id);
+  editing = { el, key: el.dataset.k, prev: state.t[el.dataset.k] };
+  el.contentEditable = 'true';
+  el.focus();
+  const rg = document.createRange(); rg.selectNodeContents(el);
+  const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(rg);
+  flashNote('Type your words. Enter saves, Esc cancels.');
+}
+const rebrandAll = (st, oldB, newB) => {
+  if (oldB.length < 3 || oldB === newB) return;
+  Object.keys(st.t).forEach((k) => { if (k !== 'brand' && typeof st.t[k] === 'string') st.t[k] = st.t[k].split(oldB).join(newB).slice(0, MAXLEN[k] || 140); });
+};
+function endEdit(save) {
+  if (!editing) return;
+  const ed = editing; editing = null;
+  const el = ed.el;
+  el.removeAttribute('contenteditable');
+  const txt = el.textContent.replace(/\s+/g, ' ').trim().slice(0, MAXLEN[ed.key] || 120);
+  if (!save || !txt || txt === ed.prev) { refresh(); return; }
+  const pe = priv(txt);
+  if (pe) { toast('Take out ' + pe + ' and try again.'); refresh(); return; }
+  commit('edit text', (st) => {
+    const old = st.t.brand;
+    st.t[ed.key] = txt; st.touched[ed.key] = true;
+    if (OWN_OF_KEY[ed.key]) own(OWN_OF_KEY[ed.key]);
+    if (ed.key === 'brand') rebrandAll(st, old, txt);
+  }, { flash: [KEY_NODE[ed.key]] });
+  checkGoals();
+}
+siteEl.addEventListener('focusout', (e) => { if (editing && e.target === editing.el) endEdit(true); });
+siteEl.addEventListener('keydown', (e) => {
+  if (!editing || e.target !== editing.el) return;
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); e.stopPropagation(); editing.el.blur(); }
+  else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); const ed = editing; endEdit(false); const n = nodeEl(KEY_NODE[ed.key]); if (n) try { n.focus({ preventScroll: true }); } catch (err) { /* fine */ } }
+}, true);
+siteEl.addEventListener('input', (e) => {
+  if (!editing || e.target !== editing.el) return;
+  const max = MAXLEN[editing.key] || 120;
+  if (editing.el.textContent.length > max) {
+    editing.el.textContent = editing.el.textContent.slice(0, max);
+    const rg = document.createRange(); rg.selectNodeContents(editing.el); rg.collapse(false);
+    const s = window.getSelection(); s.removeAllRanges(); s.addRange(rg);
+  }
+});
+siteEl.addEventListener('paste', (e) => {
+  if (!editing) return;
+  e.preventDefault();
+  const t = ((e.clipboardData || window.clipboardData).getData('text') || '').replace(/\s+/g, ' ');
+  document.execCommand('insertText', false, t);
+});
+siteEl.addEventListener('dblclick', (e) => {
+  const dr = e.target.closest && e.target.closest('.dr');
+  if (!dr || editing) return;
+  startEdit(dr.dataset.id, e.target.closest('[data-k]'));
+});
+
+/* =====================================================================
+   MODALS + MENUS: palettes, export, full-screen preview, Prompt Book,
+   projects, how it works, and the adult-only teacher tools (class wheel
+   and live AI).
+   ===================================================================== */
+const CONFIG = { LIVE_URL: 'https://qlgnstoesdzmkcmyaqyw.supabase.co/functions/v1/inspiher-live', SB_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFsZ25zdG9lc2R6bWtjbXlhcXl3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczNjg2NDgsImV4cCI6MjEwMjk0NDY0OH0.7p3zQALq-208_CLcHEsHAEePx0QoA4AN8BxCrzJ9CuQ' };
+const T_HASH = 'dd4f36e22eb098b73804d6a705808bbd513020e9a16927d8cc51a147fe1ee585';
+const pop = $('pop');
+let popAnchor = null, modalOpener = null, tUnlocked = false, LVpass = null;
+try { tUnlocked = sessionStorage.getItem('ailab_t') === '1'; LVpass = sessionStorage.getItem('insp_lp') || null; } catch (e) { /* storage blocked */ }
+
+/* ---------- popovers ---------- */
+function openPop(anchor, html) {
+  closePop();
+  pop.innerHTML = html; pop.hidden = false; popAnchor = anchor;
+  if (anchor && anchor.setAttribute) anchor.setAttribute('aria-expanded', 'true');
+  pop.style.left = '0px'; pop.style.top = '0px';
+  const a = anchor.getBoundingClientRect(), pw = pop.offsetWidth, ph = pop.offsetHeight, vw = window.innerWidth, vh = window.innerHeight;
+  const left = Math.min(Math.max(8, a.left), Math.max(8, vw - pw - 8));
+  let top = a.bottom + 6;
+  if (top + ph > vh - 8) top = Math.max(8, a.top - ph - 6);
+  pop.style.left = left + 'px'; pop.style.top = top + 'px';
+}
+function closePop() {
+  if (pop.hidden) return;
+  pop.hidden = true; pop.innerHTML = '';
+  if (popAnchor && popAnchor.setAttribute) popAnchor.setAttribute('aria-expanded', 'false');
+  popAnchor = null;
+}
+document.addEventListener('pointerdown', (e) => { if (!pop.hidden && !pop.contains(e.target) && !(popAnchor && popAnchor.contains(e.target))) closePop(); }, true);
+pop.addEventListener('click', (e) => { if (e.target.closest('.mi,.pcard')) closePop(); });
+window.addEventListener('resize', () => closePop());
+
+/* ---------- modal ---------- */
+function openModal(title, html, o) {
+  o = o || {};
+  closePop();
+  $('mtitle').textContent = title; $('mbody').innerHTML = html;
+  const m = $('modal'), c = m.querySelector('.mcard');
+  c.classList.toggle('wide', !!o.wide);
+  modalOpener = document.activeElement;
+  m.hidden = false; document.body.style.overflow = 'hidden';
+  c.focus();
+  return $('mbody');
+}
+function closeModal() {
+  if ($('modal').hidden) return;
+  $('modal').hidden = true; $('mbody').innerHTML = ''; document.body.style.overflow = '';
+  if (modalOpener && modalOpener.focus) { try { modalOpener.focus({ preventScroll: true }); } catch (e) { /* fine */ } }
+}
+$('mclose').addEventListener('click', closeModal);
+$('modal').addEventListener('pointerdown', (e) => { if (e.target === $('modal')) closeModal(); });
+$('modal').addEventListener('keydown', (e) => {
+  if (e.key !== 'Tab') return;
+  const f = [...$('modal').querySelectorAll('button,input,textarea,select,a[href]')].filter((x) => !x.disabled && x.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === $('modal').querySelector('.mcard'))) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+
+/* ---------- helpers ---------- */
+function copyText(t) {
+  if (navigator.clipboard && navigator.clipboard.writeText) return navigator.clipboard.writeText(t).then(() => true).catch(() => false);
+  const x = document.createElement('textarea'); x.value = t; x.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(x); x.select();
+  let ok = false; try { ok = document.execCommand('copy'); } catch (e) { /* fine */ }
+  document.body.removeChild(x); return Promise.resolve(ok);
+}
+function download(name, text, type) {
+  const b = new Blob([text], { type: type || 'text/html;charset=utf-8' }), u = URL.createObjectURL(b), a = document.createElement('a');
+  a.href = u; a.download = name; a.style.display = 'none'; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(u), 3000);
+}
+const sha256 = (t) => crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then((h) => Array.prototype.map.call(new Uint8Array(h), (b) => ('0' + b.toString(16)).slice(-2)).join(''));
+const exportHTML = (one) => buildExport(state, { one, artW: DESIGN_W });
+
+/* ---------- palettes ---------- */
+$('bPal').addEventListener('click', (e) => {
+  const cur = state.pal;
+  openPop(e.currentTarget, `<div class="mh">Palettes &middot; tap one, then fine-tune with the color boxes</div><div class="palgrid">${PALETTES.map((p) => `<button type="button" class="pcard${cur === p.id ? ' on' : ''}" data-act="pal" data-id="${p.id}"><span class="pn">${esc(p.n)}</span><span class="dots4"><i style="background:${p.a}"></i><i style="background:${p.s}"></i><i style="background:${p.i}"></i><i style="background:${p.f}"></i></span><span class="hx">${p.a} &middot; ${p.s}</span></button>`).join('')}</div>`);
+});
+ACT.pal = (el) => {
+  const p = PAL[el.dataset.id]; if (!p) return;
+  commit('palette', (st) => { setPalette(st, p); st.touched.color = true; own('color'); }, { flash: ['cta1', 'badge'] });
+  toast(p.n + ' palette');
+  checkGoals();
+};
+
+/* ---------- export + preview ---------- */
+function exportGuard() {
+  const hit = scanSite();
+  if (!hit) return true;
+  const node = KEY_NODE[hit.key];
+  openModal('One more step before you export', `<p>Your site has <b>${esc(hit.what)}</b> in the <b>${esc(NODES[node] || 'text')}</b> block. Private things must stay off a website, even a practice one. Take it out, then export again.</p><div class="row"><button type="button" class="mb" data-act="fixHit" data-n="${esc(node)}">Show me the block</button></div>`);
+  return false;
+}
+ACT.fixHit = (el) => { closeModal(); setView('site'); selectNode(el.dataset.n); const e = nodeEl(el.dataset.n); if (e) { e.scrollIntoView({ block: 'center' }); startEdit(el.dataset.n); } };
+ACT.dlSite = () => { if (!exportGuard()) return; download(slug(state.t.brand) + '-website.html', exportHTML(false)); meta.exported = true; save(); toast('Downloaded your website file'); };
+ACT.dlOne = () => { if (!exportGuard()) return; download(slug(state.t.brand) + '-one-pager.html', exportHTML(true)); meta.exported = true; save(); toast('Downloaded your one-pager'); };
+ACT.copyPage = () => { if (!exportGuard()) return; copyText(exportHTML(false)).then((ok) => toast(ok ? 'Copied the full page code' : 'Copy did not work here')); };
+$('bExport').addEventListener('click', (e) => {
+  openPop(e.currentTarget, `<div class="mh">Export your site</div>
+<button type="button" class="mi" data-act="dlSite">Download website<small>One clean .html file. Opens in any browser.</small></button>
+<button type="button" class="mi" data-act="dlOne">Download one-pager<small>A showcase page you can link from another site.</small></button>
+<div class="sep"></div>
+<button type="button" class="mi" data-act="copyPage">Copy page code<small>Paste it into any HTML file or editor.</small></button>`);
+});
+
+function setDevice(w) {
+  const f = $('pvFrame');
+  f.style.width = w; f.style.maxWidth = '100%';
+  $('pv').querySelector('.pvstage').classList.toggle('dv', w !== '100%');
+  document.querySelectorAll('#pv .dev button').forEach((b) => b.classList.toggle('on', b.dataset.w === w));
+}
+function openPreview() {
+  closePop(); closeModal(); $('toast').classList.remove('on');
+  if (editing) endEdit(true);
+  $('pvFrame').srcdoc = exportHTML(false);
+  $('pv').hidden = false; document.body.style.overflow = 'hidden';
+  setDevice('100%');
+  $('pvBack').focus();
+}
+function closePreview() {
+  if ($('pv').hidden) return;
+  $('pv').hidden = true; $('pvFrame').srcdoc = ''; document.body.style.overflow = '';
+  try { $('bPrev').focus({ preventScroll: true }); } catch (e) { /* fine */ }
+}
+$('bPrev').addEventListener('click', openPreview);
+$('pvBack').addEventListener('click', closePreview);
+document.querySelectorAll('#pv .dev button').forEach((b) => b.addEventListener('click', () => setDevice(b.dataset.w)));
+$('pvOne').addEventListener('click', () => ACT.dlOne());
+$('pvSite').addEventListener('click', () => ACT.dlSite());
+
+/* ---------- Prompt Book + class cards ---------- */
+const cardFor = (p) => '#AILAB ' + (meta.initials || '??').toUpperCase() + ' | ' + p.g + ' | ' + p.t;
+function needInitials() {
+  if (/^[A-Za-z]{2,3}$/.test(meta.initials)) return false;
+  toast('Add your initials first (2 or 3 letters)');
+  const i = $('inits'); if (i) i.focus();
+  return true;
+}
+function openBook() {
+  const mine = meta.prompts.filter((p) => p.src === 'own');
+  let h = `<p>Your prompts stay on <b>this computer</b>. A class card shows only your <b>initials and grade</b>, never your full name. Use made-up business names.</p>
+<div class="row"><label for="inits"><b>Your initials</b></label><input class="inp" id="inits" maxlength="3" autocomplete="off" style="width:90px;text-transform:uppercase" value="${esc(meta.initials)}" placeholder="TB"><span class="tipl">2 or 3 letters</span></div>`;
+  if (!mine.length) h += '<p class="empty">No prompts yet. Type one in the chat and it will show up here.</p>';
+  else h += `<ul class="pbook">${mine.map((p) => `<li><div class="pt">${esc(p.t)}</div><div class="pm"><span class="tag">${esc(p.g)}</span><button type="button" class="mb sec" data-act="bkReuse" data-id="${p.id}">Use again</button><button type="button" class="mb sec" data-act="bkCard" data-id="${p.id}">Copy class card</button><button type="button" class="mb sec" data-act="bkDel" data-id="${p.id}">Delete</button></div></li>`).join('')}</ul><div class="row"><button type="button" class="mb go" data-act="bkAll">Copy all class cards</button></div>`;
+  openModal('Prompt Book', h, { wide: true });
+  $('inits').addEventListener('input', (e) => { const v = e.target.value.replace(/[^A-Za-z]/g, '').toUpperCase().slice(0, 3); e.target.value = v; meta.initials = v; save(); });
+}
+const bookItem = (el) => meta.prompts.find((p) => String(p.id) === el.dataset.id);
+ACT.book = () => openBook();
+ACT.bkReuse = (el) => { const p = bookItem(el); if (!p) return; closeModal(); ta.value = p.t; ta.dispatchEvent(new Event('input')); ta.focus(); };
+ACT.bkCard = (el) => { const p = bookItem(el); if (!p || needInitials()) return; copyText(cardFor(p)).then((ok) => toast(ok ? 'Copied. Paste it to your teacher.' : 'Copy did not work here')); };
+ACT.bkAll = () => { if (needInitials()) return; const mine = meta.prompts.filter((p) => p.src === 'own'); copyText(mine.map(cardFor).join('\n')).then((ok) => toast(ok ? 'Copied ' + mine.length + ' class cards' : 'Copy did not work here')); };
+ACT.bkDel = (el) => { meta.prompts = meta.prompts.filter((p) => String(p.id) !== el.dataset.id); save(); updateBookCount(); openBook(); };
+$('bBook').addEventListener('click', openBook);
+
+/* ---------- how this works ---------- */
+function openAbout() {
+  openModal('How this works', `<div class="tilegrid">
+<div class="tile"><b>The Studio Director</b><p>It is a <b>practice builder</b>. It follows rules to read what you type (names, colors, fonts, sizes, offers) and changes the site. It is not a live AI model, but writing good prompts is the same skill you use with real AI.</p></div>
+<div class="tile"><b>Real AI, with your teacher</b><p>Your teacher can run a class prompt through a real AI and show what it does, then you compare.</p></div>
+<div class="tile"><b>Private by design</b><p>No accounts. Nothing leaves this computer. Use made-up names. Never type real names, emails, links, phone numbers, or addresses.</p></div>
+<div class="tile"><b>Saved for you</b><p>Your work saves on this computer as you go. Use <b>Save project file</b> in the menu to move it to another computer.</p></div>
+<div class="tile"><b>Move things around</b><p>Tap a block, then drag it. Guide lines show the center, margins, and other blocks. Arrow keys nudge. Hold Alt to turn snapping off.</p></div>
+<div class="tile"><b>Fonts</b><p>Fonts come from Google Fonts and need the internet. If they are blocked, your picks are still saved and you will see backup fonts.</p></div>
+</div>`, { wide: true });
+}
+ACT.about = () => openAbout();
+$('bAbout').addEventListener('click', openAbout);
+
+/* ---------- projects ---------- */
+const fileIn = document.createElement('input');
+fileIn.type = 'file'; fileIn.accept = '.json,application/json'; fileIn.hidden = true; document.body.appendChild(fileIn);
+ACT.saveProj = () => { download(slug(state.t.brand) + '-studio-project.json', JSON.stringify({ app: 'ailab-studio', v: 1, state }, null, 1), 'application/json'); toast('Saved your project file'); };
+ACT.openProj = () => { fileIn.value = ''; fileIn.click(); };
+fileIn.addEventListener('change', () => {
+  const f = fileIn.files && fileIn.files[0];
+  if (!f) return;
+  if (f.size > 200000) { toast('That file is too big to be a Studio project'); return; }
+  const rd = new FileReader();
+  rd.onload = () => {
+    let j; try { j = JSON.parse(String(rd.result)); } catch (e) { toast('That file did not open. Is it a Studio project?'); return; }
+    if (!j || j.app !== 'ailab-studio' || !j.state) { toast('That is not a Studio project file'); return; }
+    const next = sanitizeState(j.state);
+    for (const k of Object.keys(next.t)) { const p = priv(next.t[k]); if (p) { toast('That project has ' + p + ' in it, so I did not open it'); return; } }
+    commit('open project', () => { state = next; });
+    toast('Opened your project');
+  };
+  rd.readAsText(f);
+});
+ACT.newSite = () => {
+  openModal('Start a fresh site?', '<p>This puts the practice shop back on the canvas. You can still press <b>Undo</b> right after.</p><div class="row"><button type="button" class="mb" data-act="newYes">Start fresh</button><button type="button" class="mb sec" data-act="modalNo">Keep working</button></div>');
+};
+ACT.newYes = () => { closeModal(); commit('start fresh', () => { state = DEFAULT_STATE(); }); meta.own = {}; toast('Fresh practice site'); };
+ACT.modalNo = () => closeModal();
+ACT.home = () => { location.href = 'index.html'; };
+ACT.undoMenu = () => { undo(); };
+ACT.goalsMenu = () => ACT.goals($('bMore'));
+$('bMore').addEventListener('click', (e) => {
+  const gs = goalState();
+  openPop(e.currentTarget, `<div class="mh">Studio</div>
+<button type="button" class="mi" data-act="goalsMenu">My goals<small>${gs.done.length} of ${gs.ids.length} done</small></button>
+<button type="button" class="mi" data-act="book">Prompt Book</button>
+<button type="button" class="mi" data-act="undoMenu">Undo last change</button>
+<div class="sep"></div>
+<button type="button" class="mi" data-act="saveProj">Save project file</button>
+<button type="button" class="mi" data-act="openProj">Open project file</button>
+<button type="button" class="mi" data-act="newSite">Start a fresh site</button>
+<div class="sep"></div>
+<button type="button" class="mi" data-act="about">How this works</button>
+<button type="button" class="mi" data-act="teacher">Teacher tools</button>
+<button type="button" class="mi" data-act="home">Back to The Brown Girls Creative Studio</button>`);
+});
+
+/* ---------- teacher tools: class wheel + live AI (adults only) ---------- */
+let wheelItems = [], winner = null, wrot = 0, spinning = false, aiBusy = false, aiImproved = '';
+function openTeacher() {
+  if (!tUnlocked) {
+    openModal('Teacher tools', '<p>These tools are for adults. Enter the teacher code.</p><div class="row"><input class="inp" id="tcode" type="password" autocomplete="off" style="width:200px" aria-label="Teacher code"><button type="button" class="mb" data-act="tUnlock">Unlock</button></div><p id="terr" class="tipl" hidden></p>');
+    $('tcode').addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); ACT.tUnlock(); } });
+    $('tcode').focus();
+    return;
+  }
+  renderTeacher();
+}
+ACT.teacher = () => openTeacher();
+ACT.tUnlock = () => {
+  sha256($('tcode').value.trim()).then((h) => {
+    if (h === T_HASH) { tUnlocked = true; try { sessionStorage.setItem('ailab_t', '1'); } catch (e) { /* fine */ } renderTeacher(); }
+    else { const t = $('terr'); t.textContent = 'That code did not work.'; t.hidden = false; }
+  });
+};
+function renderTeacher() {
+  openModal('Teacher tools', `<h3>Class wheel</h3>
+<p>Students copy a class card from their Prompt Book. Paste the cards here, one per line, then spin to pick a prompt to run on the projector.</p>
+<textarea class="inp" id="wcards" rows="4" placeholder="#AILAB TB | 6–8 | Make a calm leafy shop called Dew &amp; Root..." aria-label="Class cards"></textarea>
+<div class="row"><button type="button" class="mb" data-act="wBuild">Build wheel</button><button type="button" class="mb sec" data-act="wDemo">Load demo cards</button><span id="wmsg" class="tipl"></span></div>
+<div id="wheelWrap"></div><div id="wres"></div>
+<h3>Live AI</h3>
+<p>Runs a prompt through a real AI. It needs the teacher passphrase you set in Supabase. Prompts with private info are blocked.</p>
+<div class="row"><input class="inp" id="lpass" type="password" autocomplete="off" style="width:220px" placeholder="Live AI passphrase" aria-label="Live AI passphrase"><button type="button" class="mb" data-act="lvUnlock">Unlock live AI</button><span id="lstat" class="tipl">${LVpass ? 'Unlocked for this tab.' : 'Locked.'}</span></div>`, { wide: true });
+}
+const shortG = (g) => (g === '5th Grade' ? '5th' : g);
+function parseCards(txt) {
+  let skipped = 0;
+  const items = txt.split(/\n+/).map((l) => l.trim()).filter(Boolean).map((l) => {
+    const m = l.match(/^#AILAB\s+([A-Za-z]{1,3})\s*\|\s*([^|]+?)\s*\|\s*(.+)$/i);
+    if (!m) { skipped++; return null; }
+    const t = m[3].trim();
+    if (priv(t)) { skipped++; return null; }
+    return { i: m[1].toUpperCase(), g: m[2].trim(), t: t.slice(0, 700) };
+  }).filter(Boolean).slice(0, 24);
+  return { items, skipped };
+}
+function wheelSVG(items) {
+  const n = items.length, cx = 150, cy = 150, R = 146, cols = ['#F3E5E2', '#EFE9DF', '#EAD9B6', '#E3E9DD'];
+  const pt = (a, r) => [cx + r * Math.sin((a * Math.PI) / 180), cy - r * Math.cos((a * Math.PI) / 180)];
+  const fs = n <= 8 ? 14 : n <= 14 ? 11 : 9;
+  let s = '<svg viewBox="0 0 300 300" id="wsvg" role="img" aria-label="Class wheel"><circle cx="150" cy="150" r="148" fill="#1F1B18"/>';
+  items.forEach((it, i) => {
+    const a0 = (i * 360) / n, a1 = ((i + 1) * 360) / n, p0 = pt(a0, R), p1 = pt(a1, R), mid = (a0 + a1) / 2;
+    s += n === 1 ? `<circle cx="150" cy="150" r="${R}" fill="${cols[0]}"/>` : `<path d="M${cx} ${cy}L${p0[0].toFixed(2)} ${p0[1].toFixed(2)}A${R} ${R} 0 ${a1 - a0 > 180 ? 1 : 0} 1 ${p1[0].toFixed(2)} ${p1[1].toFixed(2)}Z" fill="${cols[i % cols.length]}" stroke="#1F1B18" stroke-width="1.5"/>`;
+    s += `<text transform="rotate(${mid.toFixed(2)} ${cx} ${cy})" x="${cx}" y="${cy - 92}" text-anchor="middle" font-family="DM Sans,sans-serif" font-weight="700" font-size="${fs}" fill="#1F1B18">${esc(it.i)} &#183; ${esc(shortG(it.g))}</text>`;
+  });
+  return s + '<circle cx="150" cy="150" r="14" fill="#B88A44" stroke="#1F1B18" stroke-width="2"/></svg>';
+}
+function buildWheel(items) {
+  wheelItems = items; winner = null; wrot = 0; aiImproved = '';
+  $('wres').innerHTML = '';
+  $('wheelWrap').innerHTML = items.length ? `<div class="wheelbox"><div class="wptr"></div>${wheelSVG(items)}</div><div class="row" style="justify-content:center"><button type="button" class="mb go" data-act="wSpin">Spin the wheel</button></div>` : '';
+}
+ACT.wBuild = () => {
+  const { items, skipped } = parseCards($('wcards').value);
+  buildWheel(items);
+  $('wmsg').textContent = items.length ? items.length + ' card' + (items.length === 1 ? '' : 's') + (skipped ? ', ' + skipped + ' skipped' : '') : 'No class cards found. Each line starts with #AILAB.';
+};
+ACT.wDemo = () => {
+  const out = [];
+  Object.keys(GRADES).forEach((g, gi) => GRADES[g].samples.forEach((s, i) => out.push('#AILAB ' + ['AB', 'CD', 'EF', 'GH', 'JK', 'LM', 'NP', 'QR', 'ST'][gi * 3 + i] + ' | ' + g + ' | ' + s.t)));
+  $('wcards').value = out.join('\n');
+  ACT.wBuild();
+};
+ACT.wSpin = () => {
+  const n = wheelItems.length;
+  if (!n || spinning) return;
+  spinning = true;
+  const idx = crypto.getRandomValues(new Uint32Array(1))[0] % n, seg = 360 / n, c = (idx + 0.5) * seg + (Math.random() - 0.5) * seg * 0.6;
+  wrot = Math.ceil(wrot / 360) * 360 + 360 * 5 + (360 - c);
+  const svg = $('wsvg');
+  if (reduceMotion) svg.style.transition = 'none';
+  svg.style.transform = 'rotate(' + wrot + 'deg)';
+  $('wres').innerHTML = '';
+  setTimeout(() => {
+    spinning = false; winner = wheelItems[idx];
+    $('wres').innerHTML = `<div class="wres"><div class="wm">Picked: ${esc(winner.i)} &middot; ${esc(winner.g)}</div><div class="wt">${esc(winner.t)}</div><div class="row"><button type="button" class="mb" data-act="wApply">Run it in the Studio</button><button type="button" class="mb go" data-act="wLive">Improve it with live AI</button><button type="button" class="mb sec" data-act="wCopy">Copy prompt</button></div><div id="aiOut"></div></div>`;
+    const w = $('wres'); if (w && w.scrollIntoView) w.scrollIntoView({ block: 'nearest', behavior: reduceMotion ? 'auto' : 'smooth' });
+  }, reduceMotion ? 50 : 4700);
+};
+ACT.wCopy = () => { if (winner) copyText(winner.t).then((ok) => toast(ok ? 'Copied the prompt' : 'Copy did not work here')); };
+ACT.wApply = () => { if (!winner) return; const t = winner.t; closeModal(); runPrompt(t, { wheel: true }); };
+ACT.wApplyAI = () => { if (!aiImproved) return; const t = aiImproved; closeModal(); runPrompt(t, { wheel: true }); };
+
+/* live AI client (same contract as the game: one edge function, SSE stream) */
+const lvMsg = (code, status) => ({
+  bad_passphrase: 'That passphrase did not work.', locked: 'Too many wrong tries from this network. Wait an hour.',
+  daily_cap: 'The daily live-AI limit was reached.', private: 'Take out private info (an email, a link, a phone number, or a name) and try again.',
+  bad_messages: 'That prompt was empty or too long.', bad_persona: 'That prompt was empty or too long.', too_big: 'That prompt was too long.',
+  ai_unavailable: 'The AI service did not answer. Check the key and credit in the Claude Console.', not_configured: 'Live AI is not switched on yet. Finish the Supabase setup.',
+}[code] || (status === 404 || status === 503 ? 'Live AI is not switched on yet. Finish the Supabase setup.' : 'Something went wrong. Copy the prompt and use your own AI.'));
+const lvHdr = () => ({ 'Content-Type': 'application/json', apikey: CONFIG.SB_KEY, Authorization: 'Bearer ' + CONFIG.SB_KEY });
+ACT.lvUnlock = () => {
+  const v = $('lpass').value.trim(), st = $('lstat');
+  if (!v) { st.textContent = 'Type the passphrase first.'; return; }
+  st.textContent = 'Checking…';
+  fetch(CONFIG.LIVE_URL, { method: 'POST', headers: lvHdr(), body: JSON.stringify({ pass: v, ping: true }) })
+    .then((r) => r.json().catch(() => ({})).then((j) => {
+      if (r.ok && j.ok) { LVpass = v; try { sessionStorage.setItem('insp_lp', v); } catch (e) { /* fine */ } st.textContent = 'Unlocked for this tab.'; $('lpass').value = ''; }
+      else st.textContent = r.ok ? lvMsg('bad_passphrase') : lvMsg(j.error, r.status);
+    })).catch(() => { st.textContent = 'Could not reach live AI. The network may be blocking it.'; });
+};
+const LIVE_PERSONA = "You are the Studio Director in a kids' website-building class (grades 5 to 12). Be kind, specific, and brief. Never ask for or repeat personal information. Use only made-up business names.";
+function liveStream(o) {
+  let acc = '', fin = false;
+  const fail = (m) => { if (!fin) { fin = true; o.onFail(m); } };
+  const done = () => { if (!fin) { fin = true; acc ? o.onDone(acc) : o.onFail('The AI sent nothing back. Try again.'); } };
+  fetch(CONFIG.LIVE_URL, { method: 'POST', headers: lvHdr(), body: JSON.stringify({ pass: LVpass, messages: o.messages, persona: LIVE_PERSONA }) }).then((r) => {
+    if (!r.ok) return r.json().catch(() => ({})).then((j) => { if (r.status === 401) { LVpass = null; try { sessionStorage.removeItem('insp_lp'); } catch (e) { /* fine */ } } fail(lvMsg(j.error, r.status)); });
+    const rd = r.body.getReader(), dec = new TextDecoder(); let buf = '';
+    const line = (l) => {
+      if (l.indexOf('data:') !== 0) return;
+      const js = l.slice(5).trim(); if (!js || js === '[DONE]') return;
+      try { const ev = JSON.parse(js); if (ev.type === 'content_block_delta' && ev.delta && ev.delta.type === 'text_delta') { acc += ev.delta.text; o.onText(acc); } else if (ev.type === 'error') fail('The AI stopped in the middle. Try again.'); } catch (e) { /* skip bad line */ }
+    };
+    const pump = () => rd.read().then((x) => { if (x.done) { if (buf) line(buf); done(); return; } buf += dec.decode(x.value, { stream: true }); const parts = buf.split('\n'); buf = parts.pop(); parts.forEach(line); return pump(); });
+    return pump();
+  }).catch(() => fail('Could not reach live AI. The school network may be blocking it. Use Copy prompt instead.'));
+}
+ACT.wLive = () => {
+  if (!winner || aiBusy) return;
+  const out = $('aiOut');
+  if (!LVpass) { out.innerHTML = '<p class="tipl">Unlock live AI below first.</p>'; const l = $('lpass'); if (l) l.focus(); return; }
+  if (priv(winner.t)) { out.innerHTML = '<p class="tipl">That prompt has private info, so it was not sent.</p>'; return; }
+  aiBusy = true; aiImproved = '';
+  out.innerHTML = '<div class="aiwin"><span class="lab">Live AI &middot; thinking</span><span id="aiTxt">Thinking&hellip;</span></div>';
+  const msg = `A student wrote this website prompt for a made-up business: "${winner.t.slice(0, 600)}"\nReply in exactly this format, nothing else.\nFEEDBACK: one kind sentence about what is strong.\nIMPROVED: a better version of the prompt in one paragraph under 380 characters. Keep their business name. Add one missing detail such as the audience, colors, a font, or a headline size in px.`;
+  liveStream({
+    messages: [{ role: 'user', content: msg }],
+    onText: (t) => { const a = $('aiTxt'); if (a) a.textContent = t; },
+    onDone: (t) => {
+      aiBusy = false;
+      const im = (t.match(/IMPROVED:\s*([\s\S]+)$/i) || [])[1];
+      const fb = (t.match(/FEEDBACK:\s*([\s\S]*?)(?:\n\s*IMPROVED:|$)/i) || [])[1];
+      aiImproved = im ? im.replace(/\s+/g, ' ').trim().slice(0, 600) : '';
+      if (aiImproved && priv(aiImproved)) aiImproved = '';
+      const o2 = $('aiOut'); if (!o2) return;
+      o2.innerHTML = `<div class="aiwin"><span class="lab">Live AI</span>${esc(fb ? fb.trim() : t.trim())}</div>` + (aiImproved ? `<div class="wres" style="margin-top:10px"><div class="wm">Improved prompt</div><div class="wt">${esc(aiImproved)}</div><div class="row"><button type="button" class="mb go" data-act="wApplyAI">Run the improved prompt</button></div></div>` : '');
+    },
+    onFail: (m) => { aiBusy = false; const o2 = $('aiOut'); if (o2) o2.innerHTML = `<div class="aiwin"><span class="lab">Live AI did not answer</span>${esc(m)}</div>`; },
+  });
+};
+
+/* ---------- Google Fonts check ---------- */
+function checkFonts() {
+  const show = () => { $('fontnote').hidden = false; };
+  if (!document.fonts || !document.fonts.load) return;
+  const t = setTimeout(show, 6000);
+  document.fonts.load('700 20px "Playfair Display"').then((a) => { clearTimeout(t); if (!a.length) show(); }).catch(() => { clearTimeout(t); show(); });
+}
+
+/* =====================================================================
+   INIT: wire the toolbar, keyboard, and start up
+   ===================================================================== */
+function applySize(n) {
+  const id = meta.sel;
+  if (id === 'art') return;
+  n = clamp(Math.round(n), 10, 120);
+  commit('font size', (st) => { st.sizes[id] = n; st.touched.size = true; own('size'); }, { flash: [id] });
+  checkGoals();
+}
+function colorEdit(kind, hex, viaText) {
+  const h = normHex(hex);
+  if (!h) { toast('Use a hex code like #B88A44'); syncToolbar(); return; }
+  commit(kind + ' color', (st) => {
+    if (kind === 'accent') setAccent(st, h);
+    else if (kind === 'surface') { if (lum(h) < 0.18) setSurfaceDark(st, h); else setSurfaceLight(st, h); }
+    else st.ink = h;
+    st.pal = null; st.touched.color = true; own('color'); if (viaText) own('hex');
+  }, { flash: kind === 'accent' ? ['cta1', 'badge'] : kind === 'ink' ? ['headline'] : ['badge'] });
+  checkGoals();
+}
+function wireToolbar() {
+  $('vSite').addEventListener('click', () => setView('site'));
+  $('vCode').addEventListener('click', () => setView('code'));
+  $('fHead').addEventListener('change', (e) => { const v = e.target.value; commit('heading font', (st) => { st.headF = v; st.touched.font = true; own('font'); }, { flash: ['headline'] }); checkGoals(); });
+  $('fBody').addEventListener('change', (e) => { const v = e.target.value; commit('body font', (st) => { st.bodyF = v; st.touched.font = true; own('font'); }, { flash: ['sub'] }); checkGoals(); });
+  $('fSize').addEventListener('change', (e) => { const n = parseInt(e.target.value, 10); if (isFinite(n)) applySize(n); else syncToolbar(); });
+  const stepBy = (dir) => applySize((parseInt($('fSize').value, 10) || 16) + dir * (meta.sel === 'headline' ? 4 : 2));
+  $('szUp').addEventListener('click', () => stepBy(1));
+  $('szDn').addEventListener('click', () => stepBy(-1));
+  [['cAcc', 'hAcc', 'accent'], ['cSur', 'hSur', 'surface'], ['cInk', 'hInk', 'ink']].forEach(([c, h, k]) => {
+    $(c).addEventListener('input', (e) => colorEdit(k, e.target.value, false));
+    $(h).addEventListener('change', (e) => colorEdit(k, e.target.value, true));
+    $(h).addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); e.target.blur(); } });
+  });
+  document.querySelectorAll('#segR button').forEach((b) => b.addEventListener('click', () => commit('corners', (st) => { st.radius = b.dataset.r; st.touched.radius = true; }, { flash: ['cta1'] })));
+  document.querySelectorAll('[data-align]').forEach((b) => b.addEventListener('click', () => alignSel(b.dataset.align)));
+  $('bEdit').addEventListener('click', () => startEdit(meta.sel));
+  $('bResetOne').addEventListener('click', () => { const id = meta.sel; commit('reset block', (st) => { delete st.pos[id]; if (!Object.keys(st.pos).length) delete st.artW; }, { flash: [id] }); toast('Block back where it started'); });
+  $('bResetAll').addEventListener('click', () => { commit('reset positions', (st) => { st.pos = {}; delete st.artW; }); toast('All blocks back where they started'); });
+  $('bCopyCode').addEventListener('click', () => { if (!exportGuard()) return; copyText(exportHTML(false)).then((ok) => toast(ok ? 'Copied the full page code' : 'Copy did not work here')); });
+  let rt = 0;
+  window.addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => { layoutBoard(); syncToolbar(); if (meta.view === 'code') renderCode(); }, 120); });
+  if (window.ResizeObserver) { let raf = 0; const ro = new ResizeObserver(() => { cancelAnimationFrame(raf); raf = requestAnimationFrame(layoutBoard); }); ro.observe($('panelSite')); ro.observe(siteEl); }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      if (!$('pv').hidden) { closePreview(); return; }
+      if (!$('modal').hidden) { closeModal(); return; }
+      if (!pop.hidden) { closePop(); return; }
+    }
+    if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'z') {
+      const t = e.target;
+      if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return;
+      e.preventDefault(); undo();
+    }
+  });
+  const flush = () => { clearTimeout(saveT); try { localStorage.setItem(SAVE_KEY, JSON.stringify({ state, meta: Object.assign({}, meta, { running: false }) })); } catch (err) { /* fine */ } };
+  window.addEventListener('pagehide', flush);
+  document.addEventListener('visibilitychange', () => { if (document.hidden) flush(); });
+}
+
+function init() {
+  const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS_LINK; document.head.appendChild(l);
+  fillFontSelects();
+  const had = load();
+  if (!had) state = DEFAULT_STATE();
+  wireToolbar();
+  setView('site');
+  syncStyle(); renderSite(); layoutBoard(); syncToolbar();
+  if (meta.log.length) restoreFeed(); else renderWelcome();
+  selectNode(meta.sel || 'headline');
+  renderStrip(); drawClock(); updateCount(); updateBookCount();
+  clockT = setInterval(tick, 1000);
+  checkFonts();
+  window.__studio = { get state() { return state; }, get meta() { return meta; }, runPrompt, interpret, DEFAULT_STATE, buildExport, codeLines, priv };
+}
+init();
+
+
+})();
+</script>
+</body>
+</html>
