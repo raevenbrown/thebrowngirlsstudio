@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0d0221">
 <title>Vibe City | InspiHER 2026 | The AI Lab</title>
@@ -253,7 +253,7 @@ h2{font-size:clamp(1.5rem,4vw,2.3rem)}
 .tile .hp{display:grid;place-items:center;width:100%;min-height:56px;height:auto;overflow:hidden}.tile .hp.tall{min-height:96px}.tile .hp svg{max-height:none;max-width:100%;height:auto}
 .tiles.og{grid-template-columns:repeat(auto-fill,minmax(96px,1fr))}
 .agname{display:flex;gap:8px;align-items:stretch;margin:6px 0}.agname input{flex:1;min-width:0;font:inherit;font-size:1.1rem;font-weight:800;padding:12px 14px;border-radius:14px;border:3px solid var(--y);background:#12062e;color:#fff}
-/* v6: Boss B pop-in, business builder, lessons, mission briefing, launch checklist */
+/* v6: Mrs. Brown pop-in, business builder, lessons, mission briefing, launch checklist */
 @keyframes popin{0%{transform:translateY(90px) scale(.15) rotate(-14deg);opacity:0}55%{transform:translateY(-18px) scale(1.14) rotate(5deg);opacity:1}78%{transform:translateY(4px) scale(.96) rotate(-2deg)}100%{transform:none;opacity:1}}
 @keyframes bubin{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
 @keyframes burstspin{to{transform:rotate(360deg)}}
@@ -417,6 +417,207 @@ details>summary{cursor:pointer;font-weight:800;color:var(--c);margin:8px 0}
 .note{max-width:980px;margin:0 auto;padding:0 16px 40px;font-size:.78rem;color:var(--dim)}
 @media print{.hud,.foot,.tbar{display:none}body:after{display:none}}
 @media(prefers-reduced-motion:reduce){.tick span{animation:none;padding-left:8px;white-space:normal;display:block}.neon,.pass .big,.pin .dot,.dot,.msg.a.typing:after{animation:none}.wg{transition-duration:1s}}
+/* ===== workshop street + houses (v8) ===== */
+.ph{--sc:.45;display:block;margin:0 auto;border:4px solid var(--c);border-radius:22px;background:#000;padding:8px 6px 10px;box-shadow:0 0 18px rgba(0,245,255,.4);width:max-content;max-width:100%;font:inherit;color:inherit}
+button.ph{cursor:zoom-in}
+.ph .nt{display:block;height:6px;width:46px;background:#222;border-radius:5px;margin:0 auto 6px}
+.ph .pscr{width:calc(280px*var(--sc));height:calc(500px*var(--sc));overflow:hidden;border-radius:12px;background:#111;position:relative}
+.ph iframe{display:block;width:280px;height:500px;border:0;transform:scale(var(--sc));transform-origin:0 0;background:#111;pointer-events:none}
+.ph.s{--sc:.45}.ph.m{--sc:.72}.ph.l{--sc:1}
+.stph .ph iframe,.appp.big .ph iframe{pointer-events:auto}
+@media(max-width:700px){.stph .ph.m{--sc:.6}.stph .ph.l{--sc:.8}}
+.appp{display:grid;grid-template-columns:minmax(0,150px) minmax(0,1fr);gap:12px;align-items:start;background:rgba(36,10,77,.9);border:3px solid var(--c);border-radius:12px;padding:10px 12px;margin:10px 0 14px}
+.appp .eyebrow{font-size:.6rem;text-align:center;overflow-wrap:anywhere}
+.appp.big{grid-template-columns:1fr}.appp.big .ph.s{--sc:1}.appp.big .appr{text-align:center}
+.appr h3{margin:0 0 6px;font-size:1rem}
+.pcs{list-style:none;margin:0 0 8px;padding:0;display:flex;flex-direction:column;gap:4px}
+.pcs li{display:flex;align-items:center;gap:8px;background:#10032a;border:2px solid var(--line);border-radius:8px;padding:4px 8px;font-size:.84rem;font-weight:700}
+.pcs li em{font-style:normal;font-size:1.1rem}.pcs li b{margin-left:auto;color:var(--g)}
+.pcs li.d{border-color:var(--g);background:rgba(57,255,20,.1)}
+/* street */
+.wst{position:relative;border:3px solid var(--c);border-radius:14px;overflow:hidden;margin:10px 0 16px;box-shadow:0 0 0 3px var(--m)}
+.wsky{position:relative;height:150px;overflow:hidden}
+.wsky .wsk{position:absolute;left:0;bottom:0;width:100%;height:100%}
+.wsk .cl{animation:cldr 70s linear infinite}
+@keyframes cldr{from{transform:translateX(-120px)}to{transform:translateX(160px)}}
+.wsk .bal{animation:balb 3.2s ease-in-out infinite}
+@keyframes balb{50%{transform:translateY(-8px)}}
+.wsk .dr{animation:drf 5s ease-in-out infinite}
+@keyframes drf{50%{transform:translate(22px,6px)}}
+.wname{position:absolute;left:10px;top:10px;z-index:3;background:rgba(10,0,30,.62);border:2px solid #fff;border-radius:10px;padding:4px 10px;color:#fff;line-height:1.2;max-width:60%}
+.wname b{display:block;font-family:var(--disp);font-style:italic;font-size:1rem;overflow-wrap:anywhere}
+.wname span{font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;opacity:.92}
+.wlane{position:relative;padding:12px 10px 14px}
+.wroad{position:absolute;left:50%;top:0;bottom:0;width:50px;margin-left:-25px;border-left:3px solid var(--rb);border-right:3px solid var(--rb);background:var(--rd);overflow:hidden}
+.wroad::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:4px;margin-left:-2px;background:repeating-linear-gradient(180deg,var(--rl) 0 18px,transparent 18px 38px)}
+.wcar{position:absolute;left:50%;margin-left:-13px;top:-30px;font-size:1.5rem;z-index:1;animation:wdrive 11s linear infinite}
+.wcar.c2{margin-left:2px;animation-duration:15s;animation-delay:-6s}
+@keyframes wdrive{from{top:-30px}to{top:100%}}
+.wrow{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 50px minmax(0,1fr);gap:0 8px;margin:4px 0 20px;align-items:start}
+.wrow>.hse:nth-child(3){margin-top:44px}
+.wrd{position:relative;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:2px;z-index:2}
+.wl{font-size:1.6rem;filter:drop-shadow(0 3px 0 rgba(0,0,0,.25))}
+.wme{position:absolute;left:50%;top:44px;margin-left:-30px;width:60px;z-index:5;text-align:center;transition:transform .55s ease;pointer-events:none}
+.wme .tag{display:block;margin-top:-6px;font-size:.58rem;font-weight:900;background:#fff;color:#240a4d;border-radius:99px;padding:0 6px;border:2px solid #240a4d;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wme.moving .avs,.wme.moving svg{animation:wbob .22s ease-in-out infinite}
+@keyframes wbob{50%{transform:translateY(-5px)}}
+.hse{position:relative;display:flex;flex-direction:column;align-items:stretch;text-align:center;background:none;border:0;padding:0;margin:0;color:var(--txt);cursor:pointer;font:inherit;transition:transform .15s;z-index:2;min-width:0}
+.hse:hover,.hse:focus-visible{transform:translateY(-4px) scale(1.02)}
+.hse.hop{animation:hhop .5s ease}
+@keyframes hhop{40%{transform:translateY(-10px) scale(1.06)}}
+.hse .hflag{position:absolute;top:-24px;left:50%;transform:translateX(-50%);z-index:4;background:#fff01f;color:#240a4d;font-weight:900;font-size:.66rem;padding:2px 9px;border-radius:99px;border:2px solid #240a4d;white-space:nowrap;animation:hfl 1s ease-in-out infinite}
+@keyframes hfl{50%{transform:translate(-50%,-5px)}}
+.hse .hroof{position:relative;display:flex;align-items:center;justify-content:center;gap:6px;min-height:46px;padding:6px 8px 5px;background:var(--rc);border-radius:16px 16px 4px 4px;border:3px solid #fff;border-bottom-width:5px;box-shadow:0 4px 0 rgba(0,0,0,.28)}
+.hse .hno{flex:none;width:26px;height:26px;border-radius:50%;background:#fff;color:#240a4d;font-style:normal;font-weight:900;display:grid;place-items:center;font-size:.85rem;border:2px solid #240a4d}
+.hse .hsign{font-family:var(--disp);font-style:italic;font-size:.74rem;line-height:1.05;color:#fff;text-shadow:1px 1px 0 rgba(0,0,0,.5);text-transform:uppercase;overflow-wrap:break-word;word-break:normal;min-width:0}
+.hse .hwall{position:relative;display:flex;gap:5px;justify-content:center;align-items:flex-end;min-height:78px;padding:9px 6px 0;background:var(--bc);border:3px solid #fff;border-top:0;margin:0 5px}
+.hse .hwin{width:38px;height:40px;border-radius:8px;background:#1a0a3a;border:3px solid #fff;display:grid;place-items:center;font-size:1.35rem;overflow:hidden;margin-bottom:auto}
+.hse .hwin em{font-style:normal}
+.hse.done .hwin{background:#fff6a8;box-shadow:0 0 14px #fff01f}
+.hse .hdoor{width:24px;height:42px;border-radius:12px 12px 0 0;background:#3a1a14;border:3px solid #fff;border-bottom:0}
+.hse .hsub{display:block;font-size:.7rem;line-height:1.25;background:rgba(10,0,30,.72);color:#fff;padding:4px 6px;margin:0 5px;border-radius:0 0 9px 9px;min-height:2.2em}
+.hse .hbd{display:block;margin:6px auto 0;font-size:.68rem;font-weight:900;letter-spacing:.03em;padding:3px 10px;border-radius:99px;background:#fff01f;color:#240a4d;border:2px solid #240a4d}
+.hse.done .hbd{background:#39ff14}
+.hse.lock{filter:grayscale(.5) brightness(.88);cursor:not-allowed}.hse.lock .hbd{background:#d0d0d8}
+.hse.next .hroof{box-shadow:0 0 0 3px #fff01f,0 0 18px #fff01f}
+.hse.boss{max-width:360px;margin:0 auto;width:100%}
+.hse.boss .hroof{background:linear-gradient(90deg,#ff2bd6,#fff01f);min-height:54px}
+.hse.boss .hsign{font-size:1rem;color:#240a4d;text-shadow:none}
+.hse.boss .hwall{min-height:70px}
+.wboss{position:relative;margin:10px auto 6px;padding-top:26px}
+.wboss .wme{left:8%;top:84px;margin-left:0}
+.wopts{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px;position:relative;z-index:2}
+.hse.mini{flex:1 1 0;max-width:150px}
+.hse.mini .hroof{min-height:40px;border-radius:12px;border-bottom-width:3px}
+.hse.mini .hsign{font-size:.68rem}
+.hse.mini.done .hroof{opacity:.75}
+/* themes 1+2: neon sunset street, neon park (same retro city vibe as the rest of the game) */
+.th1 .wsky{background:#2a0f5e}.th2 .wsky{background:#0a3a3f}
+.th1 .wlane{--rd:#12053a;--rb:#ff2bd6;--rl:#fff01f;background:linear-gradient(rgba(255,43,214,.3) 1px,transparent 1px) 0 0/100% 30px,linear-gradient(90deg,rgba(0,245,255,.22) 1px,transparent 1px) 0 0/30px 100%,#1d0b45}
+.th2 .wlane{--rd:#06262c;--rb:#39ff14;--rl:#fff6a8;background:linear-gradient(rgba(57,255,20,.26) 1px,transparent 1px) 0 0/100% 30px,linear-gradient(90deg,rgba(0,245,255,.2) 1px,transparent 1px) 0 0/30px 100%,#08302f}
+.th1 .hroof,.th2 .hroof{background:#10032a;border-color:var(--rc);border-radius:5px;box-shadow:0 0 14px var(--rc),inset 0 0 10px rgba(0,0,0,.5)}
+.th1 .hsign,.th2 .hsign{color:var(--rc);text-shadow:0 0 8px var(--rc)}
+.th1 .hno,.th2 .hno{background:var(--rc)}
+.th1 .hwall,.th2 .hwall{border-color:var(--rc);box-shadow:0 0 10px var(--rc)}
+.th1 .hsub,.th2 .hsub{border:2px solid var(--rc);border-top:0}
+.th1 .hse.boss .hsign,.th2 .hse.boss .hsign{color:#fff;text-shadow:0 0 8px #000}
+/* theme 3: Arcade Avenue */
+.th3 .wsky{background:#2a0f5e}
+.th3 .wlane{--rd:#12053a;--rb:#ff2bd6;--rl:#00f5ff;background:linear-gradient(rgba(255,43,214,.32) 1px,transparent 1px) 0 0/100% 30px,linear-gradient(90deg,rgba(0,245,255,.24) 1px,transparent 1px) 0 0/30px 100%,#1b0b3a}
+.th3 .hroof{background:#10032a;border-color:var(--rc);border-radius:5px;box-shadow:0 0 14px var(--rc),inset 0 0 10px rgba(0,0,0,.5)}
+.th3 .hsign{color:var(--rc);text-shadow:0 0 8px var(--rc)}
+.th3 .hno{background:var(--rc)}
+.th3 .hwall{border-color:var(--rc);box-shadow:0 0 10px var(--rc)}
+.th3 .hsub{border:2px solid var(--rc);border-top:0}
+.th3 .hse.boss .hsign{color:#fff;text-shadow:0 0 8px #000}
+/* theme 4: Startup Row */
+.th4 .wsky{background:#14204a}
+.th4 .wlane{--rd:#1b2338;--rb:#00c2ff;--rl:#ffc23d;background:linear-gradient(rgba(0,194,255,.08) 1px,transparent 1px) 0 0/100% 26px,#0b1226}
+.th4 .hroof{background:linear-gradient(180deg,var(--rc),#0a1330);border-radius:3px;border-color:var(--rc)}
+.th4 .hwall{background:repeating-linear-gradient(0deg,var(--bc) 0 14px,rgba(255,255,255,.1) 14px 16px);min-height:96px;border-color:var(--rc)}
+.th4 .hwin{background:#0a1330;border-color:var(--rc)}
+.th4.wst .hse.done .hwin{background:#ffe27a}
+.th4 .hse.boss .hsign{color:#fff}
+/* houses (stations) */
+.sthd2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;margin-bottom:10px}
+.sdots{display:flex;gap:6px;flex-wrap:wrap}
+.sdots i{width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:.74rem;font-weight:900;background:#10032a}
+.sdots i.on{border-color:var(--y);background:var(--y);color:#240a4d;transform:scale(1.12)}
+.sdots i.dn{border-color:var(--g);color:var(--g)}
+.stlay{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:16px;align-items:start;margin:10px 0}
+.stlay .stph{position:sticky;top:90px}
+@media(max-width:700px){.stlay{grid-template-columns:1fr}.stlay .stph{position:static}}
+.stf{background:rgba(36,10,77,.92);border:3px solid var(--line);border-radius:12px;padding:12px 14px}
+.stlab{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px}
+.stk{display:inline-block;font-family:var(--disp);font-style:italic;background:var(--y);color:#240a4d;padding:2px 10px;border-radius:6px;letter-spacing:.06em;font-size:.82rem}
+.stf h3{margin:6px 0}
+.stnav{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.stcmp{margin:12px 0}.stcmp .q{font-size:1rem;font-weight:700;overflow-wrap:anywhere}
+.stnow{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center}
+@media(max-width:560px){.stnow{grid-template-columns:1fr;justify-items:center;text-align:center}}
+.stl{margin:6px 0 12px;padding-left:1.3em;text-align:left}
+.stbuilding .bld{height:18px;border:3px solid var(--c);border-radius:99px;background:#10032a;overflow:hidden;margin-top:8px}
+.stbuilding .bld i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--m),var(--y));animation:bldg 1.1s ease forwards}
+@keyframes bldg{to{width:100%}}
+.stres{animation:fi .5s both}
+.pmt mark{background:rgba(255,240,31,.25);color:var(--y);border-radius:4px;padding:0 2px}
+.cons .ln.ok .lt{color:var(--g)}.cons .ln.un .lt{color:var(--y)}.cons .ln.no .lt{color:var(--bad)}
+.opening .opc{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:8px}
+.opening .opc span{background:#10032a;border:2px solid var(--line);border-radius:99px;padding:2px 10px;font-size:.8rem;font-weight:700}
+.opening .opc span.d{border-color:var(--g)}
+.pbook{display:flex;flex-direction:column;gap:8px}
+.pb{background:#10032a;border:2px solid var(--c);border-radius:10px;padding:8px 10px}
+.pb b{color:var(--y)}.pb p{margin:4px 0 0;font-size:.9rem;overflow-wrap:anywhere}
+@media(prefers-reduced-motion:reduce){.wsk .cl,.wsk .bal,.wsk .dr,.wcar,.hse .hflag,.hse.hop{animation:none!important}}
+
+.wfill{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;align-content:center;font-size:2.4rem;margin-top:30px;filter:drop-shadow(0 4px 0 rgba(0,0,0,.2));animation:balb 3.4s ease-in-out infinite}
+.hse.boss .hroof{box-shadow:0 0 0 3px #fff,0 6px 0 rgba(0,0,0,.3)}
+
+
+/* ===== v8: every screen, info chip, teacher pop-in ===== */
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;overflow-x:hidden}
+body{overflow-x:hidden;max-width:100%;position:relative;-webkit-tap-highlight-color:transparent}
+button,[data-act],.btn,.tile,.chip{touch-action:manipulation}
+img,svg,video,canvas{max-width:100%}
+.pscr iframe,.ph iframe{max-width:none}
+.stage{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.stage>*{min-width:0;max-width:100%}
+.popst,.cut,.map,.wst,.room{contain:paint}
+.popst{isolation:isolate}
+.popst .rays{left:-10%;width:120%;top:-30%}
+.popst .nm{display:flex;flex-direction:column;align-items:flex-start;border-radius:14px;padding:4px 14px 5px;line-height:1.15;text-transform:none;letter-spacing:.02em;box-shadow:3px 3px 0 var(--m)}
+.popst .nm b{font-size:.95rem;text-transform:uppercase;letter-spacing:.06em}
+.popst .nm small{font-size:.7rem;font-weight:800;opacity:.85;letter-spacing:.04em}
+@media(max-width:700px){input,textarea,select{font-size:16px!important}}
+@media(max-width:560px){
+ .popst{grid-template-columns:minmax(0,1fr);min-height:0;padding:54px 12px 0;gap:4px;align-items:start}
+ .popst .say{order:1;margin:0 0 22px;align-self:start;display:grid;grid-template-columns:auto 1fr;align-items:center;gap:0 10px}
+ .popst .boss{order:2;justify-self:start;align-self:end;margin-left:4px}
+ .popst .beat{margin:0;font-size:2.3rem}
+ .popst .beat{grid-row:1;grid-column:1}
+ .popst .dots{margin:0;justify-content:flex-end;grid-row:1;grid-column:2}
+ .popst .bub{grid-row:2;grid-column:1/-1;margin-top:8px;font-size:1rem;line-height:1.42;padding:14px 16px}
+ .popst .bub::before{left:52px;bottom:-26px;border:12px solid transparent;border-top:16px solid #240a4d}
+}
+@media(max-height:480px) and (orientation:landscape){
+ .popst{min-height:0;grid-template-columns:minmax(0,150px) minmax(0,1fr);padding:44px 10px 0}
+ .popst .bub{font-size:.95rem;padding:10px 14px}
+ .popst .beat{font-size:2rem}
+ .hud{position:static}
+}
+/* info chip + briefing card */
+.infobar{max-width:980px;margin:0 auto;padding:0 16px max(34px,env(safe-area-inset-bottom));display:flex;justify-content:center}
+.infochip{display:inline-flex;align-items:center;gap:8px;background:#10032a;color:var(--c);border:2px solid var(--c);border-radius:999px;padding:9px 18px;font-weight:800;font-size:.85rem;letter-spacing:.04em;cursor:pointer;min-height:44px;box-shadow:0 0 14px rgba(0,245,255,.35)}
+.infochip:hover,.infochip:focus-visible{background:var(--c);color:#10032a;outline:none}
+.imodal{position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:14px;background:rgba(8,1,22,.88);overflow-y:auto;-webkit-overflow-scrolling:touch}
+.imodal[hidden]{display:none!important}
+.icard{width:100%;max-width:640px;max-height:calc(100vh - 28px);max-height:calc(100dvh - 28px);overflow-y:auto;background:linear-gradient(160deg,#31106a,#1a0536);border:3px solid var(--m);border-radius:18px;box-shadow:0 0 0 3px #fff,8px 8px 0 var(--c);padding:18px 18px 16px;outline:none}
+.icard h2{margin:2px 0 12px;font-size:1.5rem}
+.igrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.itile{background:rgba(16,3,42,.75);border:2px solid var(--line);border-radius:12px;padding:10px 12px}
+.itile .ie{font-size:1.8rem;display:block;line-height:1.1;margin-bottom:4px}
+.itile b{display:block;color:var(--y);font-size:.92rem;margin-bottom:3px}
+.itile p{margin:0;font-size:.84rem;line-height:1.42;color:var(--txt)}
+.itile p b{display:inline;color:var(--c);font-size:inherit;margin:0}
+.ibtn{margin:14px 0 0;text-align:center}
+@media(max-width:560px){.igrid{grid-template-columns:1fr}.icard{padding:14px}.icard h2{font-size:1.25rem}}
+
+/* compact game bar on phones */
+@media(max-width:560px){
+ .hud{gap:6px 10px;padding:6px 10px}
+ .hud .stats{display:contents}
+ .hud .who{order:0;flex:1 1 150px;min-width:0;gap:8px}
+ .hud .who>div:last-child{min-width:0}
+ .hud .who>div:last-child>div:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .hud .av{width:36px;height:36px}
+ .hud .ep{font-size:.52rem;line-height:1.5}
+ .hud::after{content:"";order:1;flex:0 0 100%;height:0}
+ .hud .snd{order:0;width:38px;height:38px;min-height:0;padding:0;font-size:1rem}
+ .hud .stat{order:2;font-size:.82rem}
+ .hud .stat .k{font-size:.5rem;letter-spacing:.08em}
+ .hud .stat.sp{font-size:.95rem}
+ .hud .bar{width:46px;height:8px}
+}
 </style>
 </head>
 <body>
@@ -442,7 +643,20 @@ details>summary{cursor:pointer;font-weight:800;color:var(--c);margin:8px 0}
   <section id="cwdock" class="livedock" hidden></section>
   <div id="toasts" aria-live="polite"></div>
   <div id="ban" hidden></div>
-  <footer class="note"><b>About this game.</b> This page is just for today&rsquo;s class. You do not need an account. Use made-up names and initials only. Never type your full name, your school, your phone number, your address, or anyone&rsquo;s email. If sharing is off, nothing you type leaves this Chromebook. BOLT is a practice builder: a program that follows rules, not a real AI. A real AI is smarter, but it can still be wrong, so we always test and check. Answers marked LIVE come from a real AI. Ms. Brown types every prompt, so nothing you type goes to the AI.</footer>
+  <div class="infobar"><button type="button" class="infochip" data-act="info" aria-haspopup="dialog" aria-controls="infomodal"><span aria-hidden="true">🎮</span> How this game works</button></div>
+  <div id="infomodal" class="imodal" hidden>
+    <div class="icard" role="dialog" aria-modal="true" aria-labelledby="imt" tabindex="-1">
+      <div class="eyebrow">Mission briefing</div>
+      <h2 id="imt" class="neon">How Vibe City works</h2>
+      <div class="igrid">
+        <div class="itile"><span class="ie" aria-hidden="true">🧑🏾‍🏫</span><b>Your teacher guides you</b><p>Mrs. Brown teaches you to <b>prompt</b>: to tell an AI exactly what to build, in detail, step by step.</p></div>
+        <div class="itile"><span class="ie" aria-hidden="true">🤖</span><b>Your agent is a practice builder</b><p>It follows rules and builds from the words you type. It is <b>not</b> a real AI, so it only knows what you tell it. That is the lesson: more detail, better build.</p></div>
+        <div class="itile"><span class="ie" aria-hidden="true">✨</span><b>Real AI shows up live</b><p>Mrs. Brown can run a real AI on the big screen so you can compare. A real AI is smarter, but it can still be wrong, so we always <b>test</b>.</p></div>
+        <div class="itile"><span class="ie" aria-hidden="true">🔒</span><b>Private by design</b><p>No accounts. Use initials and made-up names only. Never type your full name, school, phone, address or anyone&rsquo;s email. Nothing you type leaves this Chromebook.</p></div>
+      </div>
+      <p class="ibtn"><button type="button" class="btn y" data-act="infoclose" id="infoclose">Got it ▶</button></p>
+    </div>
+  </div>
 </div>
 <script>
 (function(){
@@ -682,18 +896,96 @@ function appHTML(c){
  var head='<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; script-src \'unsafe-inline\'"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+esc(c.title)+'</title><style>\n';
  var css='*{box-sizing:border-box}\nbody{margin:0;height:100vh;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;overflow:hidden;\n  /* you said: "'+esc(says.look)+'" */\n  background:'+c.bg+';color:'+(c.bug==='invis'?c.bg:c.fg)+'}\n'+CSSK+'\n.card{text-align:center;padding:36px 14px 12px;width:100%;position:relative;display:flex;flex-direction:column;align-items:center;gap:4px}\n.m{font-size:64px;line-height:1;display:inline-block;cursor:pointer;user-select:none}\nh1{margin:4px 0 0;font-size:24px;letter-spacing:.04em;color:'+(c.bug==='invis'?c.bg:c.fg)+'}\n.subw{font-size:14px;opacity:.9;max-width:90%;margin:2px 0 4px}\n.tag{margin:0 0 6px;font-size:15px;min-height:40px;max-width:92%}\nbutton{font:inherit;font-weight:800;padding:10px 20px;border-radius:10px;border:3px solid '+c.fg+';background:'+c.ac+';color:'+contrast(c.ac)+';cursor:pointer}\n.rules{margin-top:10px;font-size:11px;opacity:.9;border:2px dashed currentColor;border-radius:8px;padding:5px;max-width:92%}\n.deco{position:absolute;font-size:22px;opacity:.85;pointer-events:none;top:6px}\n'+(c.extra.indexOf('rainbow')>=0?'h1{background:linear-gradient(90deg,#f0f,#0ff,#ff0,#0f0,#f0f);background-size:200% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:rb 2s linear infinite}\n':'');
  if(c.kind==='game')css+='.arena{position:relative;width:100%;height:100%}\n.hudg{position:absolute;top:6px;left:8px;right:8px;display:flex;justify-content:space-between;font-weight:800;font-size:14px}\n.ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(0,0,0,.55);color:#fff;text-align:center;padding:14px;gap:10px}\n.m.g{position:absolute;transition:left .15s,top .15s;font-size:54px}\n';
+ css+='.sgn{width:100%;max-width:290px;margin:0 auto}.sgn.lg1{width:auto}.sgn .lgo{display:block;margin:0 auto}.vh{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}.card.hs{padding-top:14px}.card.hs .m{font-size:52px}';
  head+=css+'</style></head><body>\n';
  var deco='',i;for(i=0;i<Math.min(4,(c.deco||[]).length);i++)deco+='<div class="deco" style="left:'+(8+i*24)+'%;top:'+(c.kind==='game'?(30+(i%2)*14):6)+'px">'+esc(c.deco[i])+'</div>';
  var body,js;
  var cfg={mascot:c.mascot,anim:c.anim,trig:c.trig,msg:c.msg,extra:c.extra,deco:(c.deco||[]).length?c.deco:[c.mascot],time:c.time,goal:c.goal,lives:c.lives,speed:c.speed,title:c.title,bug:c.bug};
  if(c.kind==='game'){
-  body='<div class="arena" id="ar">'+deco+'<div class="hudg"><span id="sc">0/'+c.goal+'</span><span id="tm">'+c.time+'s</span><span id="lv"></span></div><div class="m g" id="m" style="left:40%;top:45%">'+esc(c.mascot)+'</div><div class="ov" id="ov"><h1>'+esc(c.title)+'</h1>'+(c.sub?'<div class="subw">'+esc(c.sub)+'</div>':'')+'<div>Tap the '+esc(c.mascot)+' '+c.goal+' times in '+c.time+' seconds.</div>'+(c.rules.length?'<div style="font-size:12px">Rules: '+c.rules.map(esc).join(' · ')+'</div>':'')+'<button id="go">START</button></div></div>';
+  body='<div class="arena" id="ar">'+deco+'<div class="hudg"><span id="sc">0/'+c.goal+'</span><span id="tm">'+c.time+'s</span><span id="lv"></span></div><div class="m g" id="m" style="left:40%;top:45%">'+esc(c.mascot)+'</div><div class="ov" id="ov">'+(c.bug!=='invis'?'<div class="sgn lg1">'+logoSVG({name:c.title,icon:c.mascot,bg:c.bg,fg:c.fg,ac:c.ac,size:84})+'</div>':'')+'<h1>'+esc(c.title)+'</h1>'+(c.sub?'<div class="subw">'+esc(c.sub)+'</div>':'')+'<div>Tap the '+esc(c.mascot)+' '+c.goal+' times in '+c.time+' seconds.</div>'+(c.rules.length?'<div style="font-size:12px">Rules: '+c.rules.map(esc).join(' · ')+'</div>':'')+'<button id="go">START</button></div></div>';
   js='/* you said: "'+esc(says.rule)+'" */\nconst cfg='+J(cfg)+';\n'+SHARED_JS+'\nvar sc=0,miss=0,t=cfg.time,live=false,mv,tk;\nvar SP={slow:1400,med:900,fast:520}[cfg.speed]||900;\nvar m=document.getElementById("m"),ar=document.getElementById("ar"),ov=document.getElementById("ov");\nfunction hud(){document.getElementById("sc").textContent=sc+"/"+cfg.goal;document.getElementById("tm").textContent=cfg.bug==="noend"?"∞":t+"s";document.getElementById("lv").textContent="❤".repeat(Math.max(0,cfg.lives-miss))}\nfunction put(){m.style.left=(8+Math.random()*70)+"%";m.style.top=(14+Math.random()*62)+"%"}\nfunction end(win){live=false;clearInterval(mv);clearInterval(tk);ov.style.display="flex";ov.innerHTML="<h1>"+(win?"YOU WIN!":"GAME OVER")+"</h1><div>"+(win?cfg.msg:"Score "+sc+" of "+cfg.goal)+"</div><button id=go2>PLAY AGAIN</button>";document.getElementById("go2").onclick=start;if(win&&cfg.extra.indexOf("confetti")>=0)burst(cfg.deco);if(win&&cfg.extra.indexOf("beep")>=0)beep(880)}\nfunction start(){sc=0;miss=0;t=cfg.time;live=true;ov.style.display="none";hud();put();mv=setInterval(put,SP);tk=setInterval(function(){if(cfg.bug!=="noend"){t--;if(t<=0){hud();end(sc>=cfg.goal)}}hud()},1000)}\ndocument.getElementById("go").onclick=start;\nm.onclick=function(e){e.stopPropagation();if(!live||cfg.bug==="dead")return;sc++;if(cfg.extra.indexOf("beep")>=0)beep(660);if(cfg.extra.indexOf("sparkle")>=0)burst(["✨"]);playAnim(m,cfg.anim,false);put();hud();if(sc>=cfg.goal)end(true)};\nar.onclick=function(){if(!live)return;miss++;hud();if(cfg.extra.indexOf("beep")>=0)beep(180);if(miss>=cfg.lives)end(false)};\nhud();';
  }else{
-  body='<div class="card">'+deco+'<div class="m" id="m">'+esc(c.mascot)+'</div><h1>'+esc(c.title)+'</h1>'+(c.sub?'<div class="subw">'+esc(c.sub)+'</div>':'')+'<p class="tag" id="tag"></p><button id="b">'+(c.goal>1?'TAP ME ('+c.goal+')':'TAP ME')+'</button>'+(c.rules.length?'<div class="rules">Rules: '+c.rules.map(esc).join(' · ')+'</div>':'')+'</div>';
+  var useS=c.bug!=='invis',sgn=useS?'<div class="sgn">'+signSVG({name:c.title,tag:c.sub,icon:c.mascot,bg:c.bg,fg:c.fg,ac:c.ac})+'</div>':'';
+  body='<div class="card'+(useS?' hs':'')+'">'+deco+sgn+'<div class="m" id="m">'+esc(c.mascot)+'</div><h1'+(useS?' class="vh"':'')+'>'+esc(c.title)+'</h1>'+(c.sub&&!useS?'<div class="subw">'+esc(c.sub)+'</div>':'')+'<p class="tag" id="tag"></p><button id="b">'+(c.goal>1?'TAP ME ('+c.goal+')':'TAP ME')+'</button>'+(c.rules.length?'<div class="rules">Rules: '+c.rules.map(esc).join(' · ')+'</div>':'')+'</div>';
   js='/* you said: "'+esc(says.act)+'" */\nconst cfg='+J(cfg)+';\n'+SHARED_JS+'\nvar n=0,m=document.getElementById("m"),tag=document.getElementById("tag");\nif(cfg.trig==="auto")playAnim(m,cfg.anim,true);\nfunction tap(){if(cfg.bug==="dead")return;n++;if(cfg.extra.indexOf("beep")>=0)beep(660);if(cfg.trig==="tap")playAnim(m,cfg.anim,false);if(cfg.extra.indexOf("sparkle")>=0)burst(["✨","⭐"]);if(n>='+c.goal+'){tag.textContent=cfg.msg;if(cfg.extra.indexOf("confetti")>=0)burst(cfg.deco);if(cfg.extra.indexOf("secret")>=0)tag.textContent=cfg.msg+" 🤫 (psst: you found the secret!)"}}\nm.onclick=tap;document.getElementById("b").onclick=tap;';
  }
  return head+body+'\n<script>\n'+js+'\n<\/script></body></html>'}
+/* ===== v8: vector logos + storefront signs =====
+   Real shapes, curved lettering, neon glow. Drawn by code (SVG), no outside files.
+   This is NOT an AI image maker: the student picks words and colors, the program draws. */
+var LGN=0;
+function hexRGB(h){h=String(h||'#888888').replace('#','');if(h.length===3)h=h.split('').map(function(c){return c+c}).join('');return [parseInt(h.slice(0,2),16)||0,parseInt(h.slice(2,4),16)||0,parseInt(h.slice(4,6),16)||0]}
+function mixHex(a,b,t){var x=hexRGB(a),y=hexRGB(b);return '#'+[0,1,2].map(function(i){var v=Math.round(x[i]+(y[i]-x[i])*t);return ('0'+Math.max(0,Math.min(255,v)).toString(16)).slice(-2)}).join('')}
+function hsh(s){var h=7;s=String(s);for(var i=0;i<s.length;i++)h=(h*31+s.charCodeAt(i))>>>0;return h}
+function nmClean(n){return String(n||'').replace(/\s+/g,' ').trim()||'My Business'}
+function fitFs(len,avail,max,min){var f=avail/(Math.max(1,len)*0.62);return Math.max(min||6,Math.min(max,Math.round(f*10)/10))}
+function twoLines(n){n=nmClean(n);if(n.length<=11||n.indexOf(' ')<0)return [n];var w=n.split(' '),best=null,bd=999,i;for(i=1;i<w.length;i++){var a=w.slice(0,i).join(' '),b=w.slice(i).join(' '),d=Math.abs(a.length-b.length);if(d<bd){bd=d;best=[a,b]}}return best}
+/* palette from brand colors: dk = deep version, tint = pale version, tx = text on the accent */
+function lgPal(o){var ac=o.ac||'#ff2bd6';return {ac:ac,dk:mixHex(ac,'#10032a',lum(ac)>.55?.62:.5),tint:mixHex(ac,'#ffffff',.86),tx:contrast(ac),bg:o.bg||'#ffffff',fg:o.fg||'#222222'}}
+function lgPick(o){var n=nmClean(o.name),sh=String(o.shape||'');if(n.length>13||/pill/.test(sh))return 'ribbon';if(/square/.test(sh)&&n.length<=12)return 'shield';if(/round/.test(sh))return 'seal';var pool=n.length<=12?['seal','shield','ribbon']:['seal','ribbon'];return pool[hsh(n)%pool.length]}
+var LGF="'Arial Black','Arial Rounded MT Bold',Impact,system-ui,sans-serif";
+function lgEmoji(x,y,fs,ic){return '<text x="'+x+'" y="'+Math.round(y+fs*0.36)+'" font-size="'+fs+'" text-anchor="middle">'+esc(ic||'⭐')+'</text>'}
+/* o: {name, icon, ac, bg, fg, shape, size, kind} -> svg string */
+function logoSVG(o){o=o||{};var n=nmClean(o.name),up=n.toUpperCase(),P=lgPal(o),k=o.kind||lgPick(o),id='lg'+(++LGN),sz=o.size||96,s='',ic=o.icon||'⭐',i;
+ var star=function(cx,cy,r,fill){var p=[],a;for(a=0;a<10;a++){var rr=a%2?r*0.45:r,t=-Math.PI/2+a*Math.PI/5;p.push((cx+rr*Math.cos(t)).toFixed(1)+','+(cy+rr*Math.sin(t)).toFixed(1))}return '<polygon points="'+p.join(' ')+'" fill="'+fill+'"/>'};
+ if(k==='seal'){
+  var fs=fitFs(up.length,86,12.5,7.5);
+  s='<svg class="lgo" viewBox="0 0 120 120" width="'+sz+'" height="'+sz+'" role="img" aria-label="'+esc(n)+' logo" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><defs><path id="'+id+'a" d="M18.5 60A41.5 41.5 0 0 1 101.5 60"/></defs>'+
+  '<circle cx="60" cy="60" r="58" fill="#fff"/><circle cx="60" cy="60" r="55" fill="'+P.dk+'"/><circle cx="60" cy="60" r="38" fill="'+P.ac+'" stroke="#fff" stroke-width="2.5"/><circle cx="60" cy="60" r="34" fill="'+P.tint+'"/>'+
+  '<text font-family="'+LGF+'" font-size="'+fs+'" font-weight="900" fill="#fff" letter-spacing="1"><textPath href="#'+id+'a" xlink:href="#'+id+'a" startOffset="50%" text-anchor="middle">'+esc(up)+'</textPath></text>'+
+  star(34,98,4.2,'#fff')+star(60,106,4.8,'#fff')+star(86,98,4.2,'#fff')+lgEmoji(60,60,40,ic)+'</svg>'}
+ else if(k==='shield'){
+  var fs2=fitFs(up.length,84,13,7);
+  s='<svg class="lgo" viewBox="0 0 120 120" width="'+sz+'" height="'+sz+'" role="img" aria-label="'+esc(n)+' logo" xmlns="http://www.w3.org/2000/svg">'+
+  '<path d="M60 4L110 18V58C110 88 88 108 60 117C32 108 10 88 10 58V18Z" fill="'+P.dk+'" stroke="#fff" stroke-width="3.5" stroke-linejoin="round"/>'+
+  '<path d="M60 12L102 24V58C102 83 84 100 60 108C36 100 18 83 18 58V24Z" fill="'+P.tint+'" stroke="'+P.ac+'" stroke-width="3" stroke-linejoin="round"/>'+
+  lgEmoji(60,48,38,ic)+
+  '<path d="M3 70H117L108 82L117 94H3L12 82Z" fill="'+P.ac+'" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/>'+
+  '<text x="60" y="'+(82+Math.round(fs2*0.36))+'" font-family="'+LGF+'" font-size="'+fs2+'" font-weight="900" fill="'+P.tx+'" text-anchor="middle" textLength="'+Math.min(86,Math.round(up.length*fs2*0.6))+'" lengthAdjust="spacingAndGlyphs">'+esc(up)+'</text>'+'</svg>'}
+ else{
+  var L=twoLines(up),mx=0;for(i=0;i<L.length;i++)mx=Math.max(mx,L[i].length);var fs3=fitFs(mx,80,L.length>1?13:15,6.5),lh=L.length>1?14:0;
+  s='<svg class="lgo" viewBox="0 0 120 142" width="'+Math.round(sz*0.85)+'" height="'+sz+'" role="img" aria-label="'+esc(n)+' logo" xmlns="http://www.w3.org/2000/svg">'+
+  '<circle cx="60" cy="48" r="45" fill="#fff"/><circle cx="60" cy="48" r="42" fill="'+P.dk+'"/><circle cx="60" cy="48" r="31" fill="'+P.ac+'" stroke="#fff" stroke-width="2.5"/><circle cx="60" cy="48" r="27.5" fill="'+P.tint+'"/>'+
+  star(14,22,5,P.ac)+star(106,22,5,P.ac)+star(10,60,3.4,'#fff')+star(110,60,3.4,'#fff')+lgEmoji(60,48,38,ic)+
+  '<path d="M3 96H117L108 117L117 138H3L12 117Z" fill="'+P.ac+'" stroke="#fff" stroke-width="2.5" stroke-linejoin="round"/>';
+  for(i=0;i<L.length;i++){var y=(L.length>1?(110+i*lh):117)+Math.round(fs3*0.36);s+='<text x="60" y="'+y+'" font-family="'+LGF+'" font-size="'+fs3+'" font-weight="900" fill="'+P.tx+'" text-anchor="middle" textLength="'+Math.min(84,Math.round(L[i].length*fs3*0.6))+'" lengthAdjust="spacingAndGlyphs">'+esc(L[i])+'</text>'}
+  s+='</svg>'}
+ return s}
+/* storefront sign. variants: neon (dark), awning (shop), board (hanging wood) */
+function signPick(o){var n=nmClean(o.name);if(lum(o.bg||'#ffffff')<.38)return 'neon';return ['awning','board'][hsh(n)%2]}
+function signSVG(o){o=o||{};var n=nmClean(o.name),up=n.toUpperCase(),P=lgPal(o),v=o.variant||signPick(o),id='sg'+(++LGN),ic=o.icon||'⭐',tag=clipT(o.tag||'',38),s='',i;
+ var open='<svg class="sgnv" viewBox="0 0 300 150" role="img" aria-label="'+esc(n)+' sign" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">';
+ var txt=function(str,x,y,fs,fill,w,extra){return '<text x="'+x+'" y="'+y+'" font-family="'+LGF+'" font-size="'+fs+'" font-weight="900" text-anchor="middle" fill="'+fill+'" textLength="'+Math.min(w,Math.round(str.length*fs*0.6))+'" lengthAdjust="spacingAndGlyphs"'+(extra||'')+'>'+esc(str)+'</text>'};
+ if(v==='neon'){
+  var nf=fitFs(up.length,176,34,13),glow=mixHex(P.ac,'#ffffff',.25),dim=mixHex(P.ac,'#10032a',.7);
+  s=open+'<defs><filter id="'+id+'g" x="-30%" y="-40%" width="160%" height="180%"><feGaussianBlur stdDeviation="3.2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter><pattern id="'+id+'p" width="30" height="14" patternUnits="userSpaceOnUse"><rect width="30" height="14" fill="#160a2c"/><path d="M0 .5H30M15 .5V7M0 7.5H30M0 7.5V14M30 7.5V14" stroke="#241446" stroke-width="1" fill="none"/></pattern></defs>'+
+  '<style>@keyframes nfl'+id+'{0%,19%,21%,23%,100%{opacity:1}20%{opacity:.5}22%{opacity:.75}}.nf'+id+'{animation:nfl'+id+' 4.5s infinite}@media(prefers-reduced-motion:reduce){.nf'+id+'{animation:none}}</style>'+
+  '<rect width="300" height="150" fill="url(#'+id+'p)"/>'+
+  '<path d="M64 0V22M236 0V22" stroke="#6b5a8a" stroke-width="3"/><circle cx="64" cy="22" r="3.5" fill="#9a88bb"/><circle cx="236" cy="22" r="3.5" fill="#9a88bb"/>'+
+  '<rect x="14" y="22" width="272" height="92" rx="18" fill="#0a0418" stroke="'+dim+'" stroke-width="6"/>'+
+  '<g class="nf'+id+'" filter="url(#'+id+'g)"><rect x="14" y="22" width="272" height="92" rx="18" fill="none" stroke="'+P.ac+'" stroke-width="3.5"/><circle cx="56" cy="68" r="27" fill="none" stroke="'+glow+'" stroke-width="3"/></g>'+
+  '<circle cx="56" cy="68" r="24" fill="'+mixHex(P.ac,'#0a0418',.8)+'"/>'+lgEmoji(56,68,30,ic)+
+  '<g class="nf'+id+'" filter="url(#'+id+'g)">'+txt(up,190,(tag?62:74)+Math.round(nf*0.2),nf,'#fff',176,' stroke="'+P.ac+'" stroke-width="1.2"')+(tag?txt(tag,190,96,11,glow,176,''):'')+'</g>'+
+  '<rect x="108" y="124" width="84" height="20" rx="10" fill="#0a0418" stroke="#ff3b5c" stroke-width="2.5"/><g filter="url(#'+id+'g)">'+txt('OPEN',150,139,13,'#ff6b8b',60,'')+'</g></svg>'}
+ else if(v==='awning'){
+  var nf2=fitFs(up.length,176,30,12),wall=mixHex(P.ac,'#ffffff',.9);
+  s=open+'<rect width="300" height="150" fill="'+wall+'"/>';
+  for(i=0;i<6;i++){var x=i*50;s+='<path d="M'+x+' 6H'+(x+50)+'V34A25 25 0 0 1 '+x+' 34Z" fill="'+(i%2?'#ffffff':P.ac)+'" stroke="'+P.dk+'" stroke-width="2.5" stroke-linejoin="round"/>'}
+  s+='<rect x="0" y="0" width="300" height="10" fill="'+P.dk+'"/>'+
+  '<rect x="16" y="62" width="268" height="58" rx="12" fill="#fff" stroke="'+P.dk+'" stroke-width="4"/>'+
+  '<circle cx="52" cy="91" r="22" fill="'+P.tint+'" stroke="'+P.ac+'" stroke-width="3"/>'+lgEmoji(52,91,26,ic)+
+  txt(up,178,(tag?88:98)+Math.round(nf2*0.2),nf2,P.dk,168,'')+(tag?txt(tag,178,108,10.5,mixHex(P.dk,'#888888',.35),168,''):'')+
+  '<rect x="0" y="130" width="300" height="20" fill="'+P.dk+'"/><rect x="128" y="124" width="44" height="26" rx="4" fill="'+P.ac+'" stroke="#fff" stroke-width="2"/><circle cx="164" cy="138" r="2" fill="#fff"/></svg>'}
+ else{
+  var nf3=fitFs(up.length,172,30,12),wood='#8a5a2b';
+  s=open+'<rect width="300" height="150" fill="'+mixHex(P.ac,'#ffffff',.88)+'"/>'+
+  '<rect x="0" y="6" width="300" height="10" rx="4" fill="#5a3a1c"/><path d="M60 16V44M240 16V44" stroke="#c9a15a" stroke-width="4" stroke-dasharray="4 2"/>'+
+  '<rect x="16" y="40" width="268" height="86" rx="12" fill="'+wood+'" stroke="#4a2c10" stroke-width="5"/>'+
+  '<path d="M20 62H280M20 84H280M20 106H280" stroke="#6e4620" stroke-width="2" opacity=".6"/>'+
+  '<circle cx="28" cy="52" r="3" fill="#d9b779"/><circle cx="272" cy="52" r="3" fill="#d9b779"/><circle cx="28" cy="114" r="3" fill="#d9b779"/><circle cx="272" cy="114" r="3" fill="#d9b779"/>'+
+  '<circle cx="62" cy="83" r="26" fill="#f5e6c4" stroke="'+P.ac+'" stroke-width="4"/>'+lgEmoji(62,83,30,ic)+
+  txt(up,190,(tag?80:92)+Math.round(nf3*0.2),nf3,'#fff3d6',172,' stroke="#3a210a" stroke-width="3" paint-order="stroke"')+(tag?txt(tag,190,106,11,'#ffe9b8',172,' stroke="#3a210a" stroke-width="2" paint-order="stroke"'):'')+'</svg>'}
+ return s}
 /* ===== avatar v3: full-body AI-agent characters, outfits, moods, extras (pure SVG) ===== */
 var SKINS=['#fbe3cf','#f6d2b4','#eab98f','#d9a070','#c68a58','#b4743f','#8d5a30','#74481f','#5e3b22','#432612'];
 var HAIRC=['#1b1020','#3a2314','#7a3b1d','#b8862b','#e8d29a','#9b2d30','#ff4fa3','#8a4dff','#19b5ff','#12c2a5','#ff8a3d','#e8e8f0'];
@@ -947,7 +1239,7 @@ var BOSSLOOK={v:3,sk:6,hs:6,hc:'#1b1020',tp:5,tc:'#8a4dff',bt:1,bc:'#2a3358',sh:
 /* ===== art: drawn characters, city and room (no images, all SVG/CSS) ===== */
 function boltSVG(sz){return '<svg class="avs" viewBox="0 0 120 150" width="'+(sz||96)+'" height="'+Math.round((sz||96)*1.25)+'" role="img" aria-label="BOLT the robot" xmlns="http://www.w3.org/2000/svg"><g class="avb"><line x1="60" y1="14" x2="60" y2="30" stroke="#9fb0d8" stroke-width="4"/><circle cx="60" cy="12" r="7" fill="#ff2bd6"><animate attributeName="opacity" values="1;.35;1" dur="1.4s" repeatCount="indefinite"/></circle><rect x="26" y="30" width="68" height="58" rx="18" fill="#c9d3ee" stroke="#6a7aa8" stroke-width="3"/><rect x="34" y="42" width="52" height="30" rx="12" fill="#0d0221"/><circle cx="48" cy="57" r="7" fill="#00f5ff"/><circle cx="72" cy="57" r="7" fill="#00f5ff"/><circle cx="50" cy="55" r="2.2" fill="#fff"/><circle cx="74" cy="55" r="2.2" fill="#fff"/><rect x="44" y="77" width="32" height="5" rx="2.5" fill="#39ff14"/><rect x="14" y="48" width="12" height="22" rx="6" fill="#8e9cc6"/><rect x="94" y="48" width="12" height="22" rx="6" fill="#8e9cc6"/><rect x="34" y="94" width="52" height="52" rx="14" fill="#8e9cc6" stroke="#6a7aa8" stroke-width="3"/><rect x="46" y="106" width="28" height="18" rx="5" fill="#0d0221"/><path d="M52 115 L58 120 L70 108" stroke="#39ff14" stroke-width="3.5" fill="none" stroke-linecap="round"/></g></svg>'}
 function glitchSVG(sz){return '<svg class="avs" viewBox="0 0 120 150" width="'+(sz||96)+'" height="'+Math.round((sz||96)*1.25)+'" role="img" aria-label="Glitch the bug" xmlns="http://www.w3.org/2000/svg"><g class="avb"><path d="M18 120 L18 56 C18 20 102 20 102 56 L102 120 L88 108 L74 122 L60 108 L46 122 L32 108 Z" fill="#7b2dff" stroke="#c9a0ff" stroke-width="3"/><path d="M26 62 L90 62" stroke="#ff2bd6" stroke-width="3" opacity=".6"><animate attributeName="d" values="M26 62 L90 62;M30 70 L94 70;M26 62 L90 62" dur="1.1s" repeatCount="indefinite"/></path><rect x="34" y="44" width="18" height="22" rx="3" fill="#fff"/><rect x="68" y="44" width="18" height="22" rx="3" fill="#fff"/><rect x="40" y="50" width="9" height="12" fill="#0d0221"/><rect x="74" y="50" width="9" height="12" fill="#0d0221"/><path d="M40 84 L48 90 L56 84 L64 90 L72 84 L80 90" stroke="#0d0221" stroke-width="4" fill="none" stroke-linejoin="round"/><rect x="8" y="30" width="14" height="6" fill="#00f5ff"><animate attributeName="x" values="8;100;8" dur="2.4s" repeatCount="indefinite"/></rect></g></svg>'}
-function portrait(c,w,sz){sz=sz||92;if(typeof w==='string'){if(w==='BOSS')return avSVG(BOSSLOOK,{size:sz,label:'Boss B'});if(w==='BOLT')return (G&&G.look)?meSVG(sz):boltSVG(sz);if(w==='GLITCH')return glitchSVG(sz);if(w==='YOU')return meSVG(sz)}return avSVG(lookSeed(c.n||'x'),{size:sz,label:c.n})}
+function portrait(c,w,sz){sz=sz||92;if(typeof w==='string'){if(w==='BOSS')return avSVG(BOSSLOOK,{size:sz,label:'Mrs. Brown'});if(w==='BOLT')return (G&&G.look)?meSVG(sz):boltSVG(sz);if(w==='GLITCH')return glitchSVG(sz);if(w==='YOU')return meSVG(sz)}return avSVG(lookSeed(c.n||'x'),{size:sz,label:c.n})}
 function meSVG(sz,full,cls){return G&&G.look?avSVG(G.look,{size:sz,full:full,cls:cls,label:G.handle||'You'}):'<span style="font-size:'+Math.round(sz*.6)+'px">'+((G&&G.av)||'🙂')+'</span>'}
 /* ---- city scene ---- */
 function sr(seed){var s=seed>>>0;return function(){s=(s*1664525+1013904223)>>>0;return s/4294967296}}
@@ -980,7 +1272,7 @@ var G=null,SCN={},EPS={},FAST=reduce||(navigator.webdriver===true);
 var SND={on:false,ctx:null};
 function sfx(t){if(!SND.on)return;try{var c=SND.ctx||(SND.ctx=new (window.AudioContext||window.webkitAudioContext)());if(c.state==='suspended')c.resume();var seq={ok:[523,784],bad:[220,150],pass:[523,659,784,1047],tap:[660],buy:[880,1175],pop:[392,659,880],fan:[392,392,392,523,659,784,1047,784,1047]}[t]||[440];
  seq.forEach(function(f,i){var o=c.createOscillator(),g=c.createGain();o.type='square';o.frequency.value=f;o.connect(g);g.connect(c.destination);g.gain.value=.05;var st=c.currentTime+i*.11;o.start(st);o.stop(st+.1)})}catch(e){}}
-var CAST={BOSS:{n:'Boss B',e:'👩🏾‍💻'},BOLT:{n:'BOLT',e:'🤖'},GLITCH:{n:'Glitch',e:'👾'},YOU:{n:'You',e:'🙂'}};
+var CAST={BOSS:{n:'Mrs. Brown',e:'👩🏾‍💻'},BOLT:{n:'BOLT',e:'🤖'},GLITCH:{n:'Glitch',e:'👾'},YOU:{n:'You',e:'🙂'}};
 var AVS=['🦄','🐱','🦊','🐼','🐸','🦋','🐙','🐯','🤖','👽','🧚','🦖'];
 var ADJ=['Neon','Pixel','Turbo','Cosmic','Glitchy','Sparkle','Retro','Laser','Fuzzy','Mega'];
 var NOUN=['Fox','Cat','Wizard','Comet','Panda','Robot','Pilot','Star','Ninja','Dragon'];
@@ -989,8 +1281,8 @@ var ITEMS=[['poster','🖼️','Poster',60],['plant','🪴','Plant',40],['lamp',
 var LVT=[[0,'Rookie'],[150,'Builder'],[400,'Coder'],[800,'Pro'],[1400,'Legend']];
 function lvl(xp){var l=0;for(var i=0;i<LVT.length;i++)if(xp>=LVT[i][0])l=i;return l}
 function today(){var d=new Date();return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate()}
-function newG(ep,prev){var g={ep:ep,sc:EPS[ep].start,sp:0,xp:0,hype:0,trust:0,glitch:0,f:{},badges:[],handle:'',av:'🦄',trait:'',pk:null,items:[],builds:{},b:{},ch:{},seen:{},free:[],fc:0,peek:0,fb:{},cardd:{},rules:null,pitch:null,done:{},last:'',fin:0,biz:null,ls:{},pp:{}};
- if(prev&&prev.handle){['handle','av','look','trait','pk','items','sp','xp','badges','free','done','last','biz'].forEach(function(k){g[k]=prev[k]});g.fc=prev.fc||0;g.sc=EPS[ep].start}
+function newG(ep,prev){var g={ep:ep,sc:EPS[ep].start,sp:0,xp:0,hype:0,trust:0,glitch:0,f:{},badges:[],handle:'',av:'🦄',trait:'',pk:null,items:[],builds:{},b:{},ch:{},seen:{},free:[],fc:0,peek:0,fb:{},cardd:{},rules:null,pitch:null,done:{},last:'',fin:0,biz:null,ls:{},pp:{},app:{},st:{}};
+ if(prev&&prev.handle){['handle','av','look','trait','pk','items','sp','xp','badges','free','done','last','biz','app'].forEach(function(k){g[k]=prev[k]});g.fc=prev.fc||0;g.sc=EPS[ep].start}
  return g}
 function gain(n){if(!n)return;var l0=lvl(G.xp);G.sp=Math.max(0,G.sp+n);if(n>0)G.xp+=n;var l1=lvl(G.xp);if(l1>l0)toast('⬆️ LEVEL UP! You are a '+LVT[l1][1]+'!')}
 function toast(h){var t=$('toasts');if(!t)return;var d=document.createElement('div');d.className='toast';d.innerHTML=h;t.appendChild(d);setTimeout(function(){d.remove()},FAST?600:3400)}
@@ -1001,7 +1293,7 @@ function loadAll(){try{var s=JSON.parse(sessionStorage.getItem('insp_s')||'null'
 function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
 function fx(o){if(!o)return;if(o.sp)gain(o.sp);if(o.hype)G.hype=clamp(G.hype+o.hype,0,10);if(o.trust)G.trust=clamp(G.trust+o.trust,0,10);if(o.glitch)G.glitch=clamp(G.glitch+o.glitch,0,3);
  if(o.flag){for(var k in o.flag)G.f[k]=o.flag[k]}if(o.badge&&G.badges.indexOf(o.badge)<0){G.badges.push(o.badge);toast('🏅 Badge unlocked: '+esc(o.badge));sfx('pass')}}
-function fill(s){return String(s).replace(/\{h\}/g,'Founder').replace(/\{a\}/g,esc(G.handle||'your agent')).replace(/\{biz\}/g,esc((G.biz&&G.biz.n)||'your business')).replace(/\{sp\}/g,G.sp)}
+function fill(s){return String(s).replace(/\{h\}/g,'Founder').replace(/\{a\}/g,esc(G.handle||'your agent')).replace(/\{biz\}/g,esc((G.biz&&G.biz.n)||'your business')).replace(/\{kind\}/g,esc(G.biz?bizKind(G.biz):'business')).replace(/\{cust\}/g,esc(G.biz?bzFind(BIZC,G.biz.c)[2]:'kids')).replace(/\{city\}/g,esc(cityName()||'my city')).replace(/\{sp\}/g,G.sp)}
 function lines(a){return (Array.isArray(a)?a:[a]).map(function(l){return typeof l==='function'?l(G):l}).filter(function(x){return x!=null&&x!==''})}
 function who(w){if(w==='BOLT'&&G&&G.handle)return {n:G.handle,e:'🤖'};return typeof w==='object'?w:(CAST[w]||CAST.BOLT)}
 /* the old helper name BOLT always shows as the player's own agent name */
@@ -1057,7 +1349,7 @@ function casBody(tab,L){var h='',AC=PAL.concat(['#ffffff']);
  return h}
 function stageSVG(L){return avSVG(L,{size:window.innerWidth>760?226:172,full:1,label:'Your agent'})}
 R.pick=function(d,b){var P=G.pk||(G.pk={a:0,n:0,av:0,tr:0});var L=P.look=normLook(P.look),tab=P.tab||'looks',nm=P.name||'';
- var h='<div class="panel hero cas"><div class="eyebrow">Create your AI agent</div><h2>Design the agent who builds for you</h2><p class="sub">You are the <b>founder</b>. Your <b>AI agent</b> builds whatever you describe, just like Boss B\'s agent builds for her. Dress your agent from head to toe, then give it a name. Made-up names only.</p>'+
+ var h='<div class="panel hero cas"><div class="eyebrow">Create your AI agent</div><h2>Design the agent who builds for you</h2><p class="sub">You are the <b>founder</b>. Your <b>AI agent</b> builds whatever you describe, just like Mrs. Brown\'s agent builds for her. Dress your agent from head to toe, then give it a name. Made-up names only.</p>'+
  '<div class="casrow"><div class="mirror"><div class="stage">'+stageSVG(L)+'</div><div class="nameplate" id="agPlate">'+(nm?esc(nm):'Name your agent')+'</div><div class="mbtns"><button type="button" class="btn y" data-act="lookdice">🎲 Surprise me</button></div></div><div class="casctl"><div class="ctabs" role="tablist">'+
  CTABS.map(function(x){return '<button type="button" role="tab" class="ctab'+(tab===x[0]?' on':'')+'" aria-selected="'+(tab===x[0])+'" data-act="tab" data-v="'+x[0]+'"><span class="ti">'+x[1]+'</span>'+x[2]+'</button>'}).join('')+'</div><div class="tabbody">'+casBody(tab,L)+'</div></div></div>'+
  '<h3>Name your agent</h3><p class="fine">Pick any name you like. Made up, no real names.</p><div class="agname"><input id="agname" type="text" maxlength="16" autocomplete="off" autocapitalize="words" spellcheck="false" placeholder="Type a name, like Nova" value="'+esc(nm)+'" data-live="agn" aria-label="Agent name"><button type="button" class="btn" data-act="agdice" aria-label="Pick a random name">🎲</button></div><p id="agErr" class="err" hidden></p>'+
@@ -1141,7 +1433,7 @@ function doBug(d){var F=G.b[d.id],er=$('fErr'),t=$('ft').value;if(F.w===''||F.s=
  if(ok||F.n>=3){F.ok=true;var sp=ok?(F.n===1?140:F.n===2?90:50):0;if(ok&&t.trim().length>=8)sp+=20;gain(sp);if(ok&&F.n===1)fx({badge:'Bug Squasher'});fx({trust:ok?1:0,glitch:-1});if(!ok){F.reveal=1}sfx(ok?'pass':'bad');if(d.rew)fx(d.rew);saveAll();go(G.sc)}
  else{F.msg=esc(d.miss[F.n-1]||'BOLT changed something, but the bug is still there. Look again.');sfx('bad');saveAll();R.fix(d,$('stage').lastChild);$('stage').scrollIntoView&&0}}
 R.pass=function(d,b){if(!G.seen[G.sc]){G.seen[G.sc]=1;fx(d.rew);if(d.flag){var f={};f[d.flag]=1;fx({flag:f})}sfx('pass');saveAll();hud()}
- var rw=d.rew||{};b.innerHTML='<div class="panel hero pass mp"><div class="big">'+(d.title||'Mission passed!')+'</div><div class="respect">RESPECT +<b class="cu" data-n="'+((rw.sp||0)+(G.shipSp||0))+'">0</b></div><p>'+(d.msg?lines(d.msg).join('<br>'):'')+'</p><div class="rew">'+(rw.sp?'<span>⚡ +'+rw.sp+' Sparks</span>':'')+(G.shipSp?'<span>⚡ +'+G.shipSp+' from your build</span>':'')+(G.ownSp?'<span>✏️ +'+G.ownSp+' for your own words</span>':'')+(rw.hype?'<span>🔥 Hype +'+rw.hype+'</span>':'')+(rw.trust?'<span>🛡️ Trust +'+rw.trust+'</span>':'')+(rw.badge?'<span class="badge">'+esc(rw.badge)+'</span>':'')+'</div></div>'+pieceHTML(d)+nextBtn(d.btn||'🗺️ Back to the map');G.shipSp=0;G.ownSp=0;setTimeout(function(){[].forEach.call(document.querySelectorAll('.cu'),function(el){var n=+el.dataset.n,t0=null;if(FAST){el.textContent=n;return}function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/900);el.textContent=Math.round(n*k);if(k<1)requestAnimationFrame(st)}requestAnimationFrame(st)})},50)};
+ var rw=d.rew||{};b.innerHTML='<div class="panel hero pass mp"><div class="big">'+(d.title||'Mission passed!')+'</div><div class="respect">RESPECT +<b class="cu" data-n="'+((rw.sp||0)+(G.shipSp||0))+'">0</b></div><p>'+(d.msg?lines(d.msg).join('<br>'):'')+'</p><div class="rew">'+(rw.sp?'<span>⚡ +'+rw.sp+' Sparks</span>':'')+(G.shipSp?'<span>⚡ +'+G.shipSp+' from your build</span>':'')+(G.ownSp?'<span>✏️ +'+G.ownSp+' for your own words</span>':'')+(rw.hype?'<span>🔥 Hype +'+rw.hype+'</span>':'')+(rw.trust?'<span>🛡️ Trust +'+rw.trust+'</span>':'')+(rw.badge?'<span class="badge">'+esc(rw.badge)+'</span>':'')+'</div></div>'+pieceHTML(d)+(d.app?'<div class="stph passph">'+phoneBox('stph','m')+'<p class="fine" style="text-align:center">'+esc((G.biz&&G.biz.n)||'Your app')+' so far</p></div>':'')+nextBtn(d.btn||'🗺️ Back to the map');if(d.app)setFrame('stph',siteHTML());G.shipSp=0;G.ownSp=0;setTimeout(function(){[].forEach.call(document.querySelectorAll('.cu'),function(el){var n=+el.dataset.n,t0=null;if(FAST){el.textContent=n;return}function st(t){if(!t0)t0=t;var k=Math.min(1,(t-t0)/900);el.textContent=Math.round(n*k);if(k<1)requestAnimationFrame(st)}requestAnimationFrame(st)})},50)};
 var SPOT={poster:[8,10,3.2],plant:[4,60,2.8],lamp:[88,52,2.6],kb:[34,66,2.2],rocket:[78,14,2.6],neon:[50,8,2.6],chair:[22,52,3.6],cat:[66,72,2.8],speaker:[93,70,2.8],disco:[50,0,2.8],fish:[12,38,3],bot:[82,66,3.2],trophy:[93,32,3.2]};
 function roomHTML(){var own=G.items,scr=Object.keys(G.builds).concat(G.free.map(function(f,i){return 'f'+i})).slice(0,4);
  var h='<div class="room"><div class="rwall"><div class="rwin"><i></i><i></i><i></i><i></i></div>';
@@ -1156,9 +1448,9 @@ R.studio=function(d,b){var own=G.items,mood=Math.min(100,own.length*8+Math.min(4
  '<div class="needs">'+[['⚡ ENERGY',Math.min(100,40+G.hype*6),'#fff01f'],['🎮 FUN',Math.min(100,own.length*9+G.hype*5),'#ff2bd6'],['🧠 FOCUS',Math.min(100,G.trust*10+G.badges.length*12+own.length*3),'#00f5ff'],['✨ STYLE',Math.min(100,own.length*8),'#39ff14']].map(function(n){return '<div class="need"><span>'+n[0]+'</span><div class="bar"><i style="width:'+n[1]+'%;background:'+n[2]+'"></i></div></div>'}).join('')+'</div>'+
  '<h3>Shop <span class="fine">You have ⚡'+G.sp+'</span></h3><div class="opts">'+ITEMS.map(function(it){var has=own.indexOf(it[0])>=0;return '<button type="button" class="opt'+(has?' sel':'')+'" data-act="buy" data-id="'+it[0]+'" '+(has||G.sp<it[3]?'disabled':'')+'><span style="font-size:1.7rem">'+it[1]+'</span><br>'+it[2]+'<br><b>'+(has?'Owned':'⚡'+it[3])+'</b></button>'}).join('')+'</div>'+
  '<p class="fine">Studio style: '+own.length+' item'+(own.length===1?'':'s')+'. Earn more Sparks by shipping builds, fixing bugs and coming back each day.</p><p><button type="button" class="btn y" data-act="hudmap">🗺️ Back to the map</button></p></div>';b.innerHTML=h};
-var TEASE={1:'Episode 2: PET PATROL. Teach a digital buddy to handle surprises.',2:'Episode 3: PROMPT LAB. Write prompts like a pro and win the Showdown.',3:'Episode 4: LAUNCH NIGHT. Real clients, real code, real choices.',4:'More Vibe City episodes are coming. Ask Ms. Brown how to keep playing.'};
+var TEASE={1:'Episode 2: PET PATROL. Teach a digital buddy to handle surprises.',2:'Episode 3: PROMPT LAB. Write prompts like a pro and win the Showdown.',3:'Episode 4: LAUNCH NIGHT. Real clients, real code, real choices.',4:'More Vibe City episodes are coming. Ask Mrs. Brown how to keep playing.'};
 R.end=function(d,b){G.done[G.ep]=1;saveAll();var e=d.make(G);b.innerHTML='<div class="panel hero pass"><div class="eyebrow">Episode '+G.ep+' · '+esc(EPS[G.ep].title)+'</div><div class="big">'+e.title+'</div></div>'+dlg(e.who||'BOSS',e.lines)+
- '<div class="panel"><h3>Your results</h3><div class="rew"><span>⚡ '+G.sp+' Sparks</span><span>🔥 Hype '+G.hype+'/10</span><span>🛡️ Trust '+G.trust+'/10</span><span>🏠 '+G.items.length+' studio items</span>'+(G.biz?'<span>🏪 '+esc(G.biz.n)+'</span>':'')+'</div><p>'+(G.badges.length?G.badges.map(function(x){return '<span class="badge">'+esc(x)+'</span>'}).join(' '):'<span class="fine">No badges yet. Ask Ms. Brown how to earn one.</span>')+'</p></div>'+'<div class="panel" style="border-color:#fff01f"><div class="eyebrow">Next time in Vibe City</div><p class="big" style="margin:0 0 6px">'+TEASE[G.ep]+'</p><p class="fine">Your coder, Sparks, badges and studio are saved on this Chromebook, so they will be waiting when you come back.</p></div>'+nextBtn('Make my Spark Card ➜')};
+ '<div class="panel"><h3>Your results</h3><div class="rew"><span>⚡ '+G.sp+' Sparks</span><span>🔥 Hype '+G.hype+'/10</span><span>🛡️ Trust '+G.trust+'/10</span><span>🏠 '+G.items.length+' studio items</span>'+(G.biz?'<span>🏪 '+esc(G.biz.n)+'</span>':'')+'</div><p>'+(G.badges.length?G.badges.map(function(x){return '<span class="badge">'+esc(x)+'</span>'}).join(' '):'<span class="fine">No badges yet. Ask Mrs. Brown how to earn one.</span>')+'</p></div>'+'<div class="panel" style="border-color:#fff01f"><div class="eyebrow">Next time in Vibe City</div><p class="big" style="margin:0 0 6px">'+TEASE[G.ep]+'</p><p class="fine">Your coder, Sparks, badges and studio are saved on this Chromebook, so they will be waiting when you come back.</p></div>'+nextBtn('Make my Spark Card ➜')};
 var CARDS=['One day I will build a robot that helps people.','One day I will build a game everyone loves.','I want to use tech to help my town.','I want to use tech to make art.','One day I will start my own tech company.','I want to use tech to protect people online.'];
 R.card=function(d,b){var c=G.cardd,ss=EPS[G.ep];if(!c.g)c.g=ss.grades[0];
  b.innerHTML='<div class="panel hero"><div class="eyebrow">Your Spark Card</div><h2>Make your Spark Card</h2><p>This card is yours. Tap your card sentence, then add your <b>initials only</b>.</p><div class="row2"><div>'+
@@ -1171,7 +1463,7 @@ function bestBuild(){var best=null;for(var k in G.builds){if(!best||G.builds[k].
 function showCard(){var c=G.cardd,el=$('spCard');if(!el)return;var bb=bestBuild();
  el.innerHTML='<div class="pbox" style="border:4px solid #ff2bd6;box-shadow:6px 6px 0 #00f5ff;text-align:center"><div style="display:flex;justify-content:center;height:96px;overflow:hidden">'+meSVG(96)+'</div><h3 style="color:#fff01f">'+esc(G.handle)+'</h3>'+(G.biz?'<div class="fine">Founder of <b>'+esc(G.biz.n)+'</b></div>':'')+'<div class="fine">'+esc((c.i||'').toUpperCase().split('').join('.'))+'. · '+esc(c.g)+'</div>'+
  (bb?'<p>I built <b>'+esc(bb.title)+'</b> with '+Math.floor(bb.score)+' of 4 VIBE parts.</p>':'')+'<p><i>&ldquo;'+esc(c.b)+'&rdquo;</i></p><p>'+G.badges.map(function(x){return '<span class="badge">'+esc(x)+'</span>'}).join(' ')+'</p><div class="fine">InspiHER 2026 · Vibe City · The AI Lab</div></div>'+
- '<p class="fine"><b>Nothing was sent.</b> Your card stays on this Chromebook. Show it to Ms. Brown and your table.</p><p><button type="button" class="btn y" data-act="next">Last step ➜</button></p>'}
+ '<p class="fine"><b>Nothing was sent.</b> Your card stays on this Chromebook. Show it to Mrs. Brown and your table.</p><p><button type="button" class="btn y" data-act="next">Last step ➜</button></p>'}
 R.fb=function(d,b){var f=G.fb;G.fin=1;saveAll();
  b.innerHTML='<div class="panel hero"><div class="eyebrow">Quick feedback · anonymous</div><h2>How was Vibe City?</h2><p>No name. No initials. Just tap.</p><div class="opts">'+[['love','Loved it'],['ok','It was okay'],['meh','Not for me']].map(function(o){return '<button type="button" class="opt'+(f.m===o[0]?' sel':'')+'" data-act="fb" data-g="m" data-v="'+o[0]+'">'+o[1]+'</button>'}).join('')+'</div>'+
  '<h3>What should we add next time?</h3><div class="opts">'+[['time','More time to build'],['games','More games to make'],['ai','More real AI on the screen'],['prizes','Prizes and stickers']].map(function(o){return '<button type="button" class="opt'+(f.w===o[0]?' sel':'')+'" data-act="fb" data-g="w" data-v="'+o[0]+'">'+o[1]+'</button>'}).join('')+'</div>'+
@@ -1179,7 +1471,7 @@ R.fb=function(d,b){var f=G.fb;G.fin=1;saveAll();
 function fbDone(){return '<div class="why ok"><b>Thank you!</b> You finished the episode. You are a vibe coder now: tell the AI what you want, test it, and keep your private info private. Nothing you tapped left this Chromebook.</div><p><button type="button" class="btn y" data-act="hudmap">🗺️ Keep playing in the city</button></p>'}
 R.show=function(d,b){var bb=bestBuild(),mine=bb?bb.text:'';
  if(S.teacher){CW.open=true;b.innerHTML='<div class="panel hero"><div class="eyebrow">Showdown</div><h2>'+(d.mode==='pitch'?'Who pitches next?':'Put every team\'s prompt on the Class Wheel')+'</h2><p>'+(d.mode==='pitch'?'Type each team name into the Class Wheel below and spin to pick who pitches next.':'Each girl reads her best prompt out loud. Type it into the Class Wheel below, spin, and press <b>Build it in BOLT</b> to build the winner on the big screen.')+'</p></div>'+nextBtn('Next ➜');return}
- b.innerHTML=dlgS('BOSS',lines(d.lines))+'<div class="panel hero"><div class="eyebrow">'+(d.mode==='pitch'?'Get ready':'Your best prompt')+'</div>'+(d.mode==='pitch'?'<p>Ms. Brown spins the wheel to pick who pitches next. Practice your 60 seconds out loud with your team.</p>':(mine?'<div class="pbox"><div class="lab">Read this out loud</div><p style="margin:2px 0">&ldquo;'+esc(mine)+'&rdquo;</p></div><p>Ms. Brown puts every prompt on the big wheel. While it spins, guess: will the winner use all four VIBE parts?</p>':'<div class="why no">You have not shipped a build yet. Tell Ms. Brown!</div>'))+'</div>'+nextBtn('Next ➜')};
+ b.innerHTML=dlgS('BOSS',lines(d.lines))+'<div class="panel hero"><div class="eyebrow">'+(d.mode==='pitch'?'Get ready':'Your best prompt')+'</div>'+(d.mode==='pitch'?'<p>Mrs. Brown spins the wheel to pick who pitches next. Practice your 60 seconds out loud with your team.</p>':(mine?'<div class="pbox"><div class="lab">Read this out loud</div><p style="margin:2px 0">&ldquo;'+esc(mine)+'&rdquo;</p></div><p>Mrs. Brown puts every prompt on the big wheel. While it spins, guess: will the winner use all four VIBE parts?</p>':'<div class="why no">You have not shipped a build yet. Tell Mrs. Brown!</div>'))+'</div>'+nextBtn('Next ➜')};
 var PO={a:['Study Buddy','Cash Coach','Career Compass','Safe Squad'],b:['teen girls','small businesses','my school','my neighbors'],c:['making a custom plan','answering questions fast','finding free resources','tracking goals'],d:['share private info','give wrong answers','replace a human helper','track people'],e:['everyone deserves help','time is precious','safety comes first','girls belong in tech']};
 R.pitch=function(d,b){var P=G.pitch||(G.pitch={a:'',b:'',c:'',d:'',e:''});if(G.biz&&!P.a){P.a=G.biz.n;P.b=bzFind(BIZC,G.biz.c)[2]}
  var F=[['a','My app is called... (made up)'],['b','It helps... (who?)'],['c','It helps by...'],['d','It must never...'],['e','It matters because...']];
@@ -1340,9 +1632,9 @@ function unlock(v){$('gate').hidden=true;$('app').hidden=false;sndInit(v==='T');
  if(!S.teacher&&G.handle&&!G.biz&&!/_(pop|pick|in1|in2|biz|lesson|q1)$/.test(G.sc)&&SCN[G.sc].t!=='studio'&&EPS[G.ep].biz)G.sc=EPS[G.ep].biz;
  saveAll();draw()}
 $('gbtn').addEventListener('click',tryCode);$('code').addEventListener('keydown',function(e){if(e.key==='Enter')tryCode()});
-function gateUI(){sndInit(false);var pk=$('peek');if(pk)pk.innerHTML='<span>'+avSVG(BOSSLOOK,{size:110,vb:'-2 -16 124 124',label:'Boss B peeking'})+'</span>';var gs=$('gsnd');if(gs){gs.textContent=SND.on?'🔊 Sound: on':'🔇 Sound: off';gs.addEventListener('click',function(){snd(!SND.on);gs.textContent=SND.on?'🔊 Sound: on':'🔇 Sound: off';sfx('ok')})}}
+function gateUI(){sndInit(false);var pk=$('peek');if(pk)pk.innerHTML='<span>'+avSVG(BOSSLOOK,{size:110,vb:'-2 -16 124 124',label:'Mrs. Brown peeking'})+'</span>';var gs=$('gsnd');if(gs){gs.textContent=SND.on?'🔊 Sound: on':'🔇 Sound: off';gs.addEventListener('click',function(){snd(!SND.on);gs.textContent=SND.on?'🔊 Sound: on':'🔇 Sound: off';sfx('ok')})}}
 function boot(){gateUI();if(loadAll()){sndInit(S.teacher);$('gate').hidden=true;$('app').hidden=false;draw()}}
-/* ===== v6: Boss B pop-in, build-your-business, lessons, briefings ===== */
+/* ===== v6: Mrs. Brown pop-in, build-your-business, lessons, briefings ===== */
 var ACT={},LIVE={},LT=null;
 function later(d){clearTimeout(LT);LT=setTimeout(function(){if(G&&SCN[G.sc]===d&&G.b[d.id]&&G.b[d.id].sel&&G.b[d.id].kind!==undefined)doBuild(d,1)},600)}
 var BIZT=[
@@ -1369,15 +1661,15 @@ function bizKind(z){return z.t==='custom'?(z.k||'business').toLowerCase():bzFind
 function bizEmoji(z){if(z.t==='custom'){var n=nounsIn(z.k||'');return n.length?n[0][0]:'✨'}return bzFind(BIZT,z.t)[1]}
 function bizLine(z){var c=bzFind(BIZC,z.c),p=bzFind(BIZP,z.p),k=bizKind(z),cy=z.cy?z.cy.n:z.cn;return z.n+' is '+(/^[aeiou]/i.test(k)?'an ':'a ')+k+' for '+c[2]+(cy?' in '+cy:'')+'. We '+p[2]+'.'}
 function cityName(){return G&&G.biz&&G.biz.cy&&G.biz.cy.n?G.biz.cy.n:''}
-function fillp(s){return String(s).replace(/\{biz\}/g,(G&&G.biz&&G.biz.n)||'my business').replace(/\{a\}/g,(G&&G.handle)||'my agent')}
+function fillp(s){return String(s).replace(/\{biz\}/g,(G&&G.biz&&G.biz.n)||'my business').replace(/\{a\}/g,(G&&G.handle)||'my agent').replace(/\{kind\}/g,(G&&G.biz)?bizKind(G.biz):'business').replace(/\{cust\}/g,(G&&G.biz)?bzFind(BIZC,G.biz.c)[2]:'kids').replace(/\{city\}/g,cityName()||'my city')}
 function bizTag(){return G&&G.biz?bizEmoji(G.biz)+' '+esc(G.biz.n):''}
 function snd(on){SND.on=!!on;try{localStorage.setItem('vc_snd',on?'1':'0')}catch(e){}}
 function sndInit(teacher){var v=null;try{v=localStorage.getItem('vc_snd')}catch(e){}SND.on=v==null?!teacher:v==='1'}
 
-/* ---- Boss B pops in ---- */
+/* ---- Mrs. Brown pops in ---- */
 R.pop=function(d,b){var P=G.pp||(G.pp={}),i=P[G.sc]||0,bt=d.beats,B=bt[Math.min(i,bt.length-1)],last=i>=bt.length-1;
  if(!G.seen['pf_'+G.sc+'_'+i]){G.seen['pf_'+G.sc+'_'+i]=1;sfx(i===0?'fan':'pop')}
- b.innerHTML='<div class="popst"><div class="rays" aria-hidden="true"></div><span class="nm">Boss B</span><div class="boss'+(i?' still':'')+'">'+avSVG(BOSSLOOK,{size:window.innerWidth>700?250:130,full:1,label:'Boss B'})+'</div>'+
+ b.innerHTML='<div class="popst"><div class="rays" aria-hidden="true"></div><span class="nm"><b>Mrs. Brown</b><small>Your lab teacher</small></span><div class="boss'+(i?' still':'')+'">'+avSVG(BOSSLOOK,{size:window.innerWidth>700?250:130,full:1,label:'Mrs. Brown'})+'</div>'+
   '<div class="say"><span class="beat" aria-hidden="true">'+B.e+'</span><div class="bub" role="status">'+fill(B.t)+'</div><div class="dots" aria-label="Part '+(i+1)+' of '+bt.length+'">'+bt.map(function(x,k){return '<i class="'+(k<=i?'on':'')+'"></i>'}).join('')+'</div></div></div>'+
   '<p><button type="button" class="btn y" data-act="popn">'+(last?(d.btn||'▶ Let\'s go!'):'▶ Next')+'</button></p>'};
 ACT.popn=function(el,v,d){var P=G.pp||(G.pp={}),i=P[G.sc]||0;sfx('tap');if(i>=d.beats.length-1){go(nextOf(d));return}P[G.sc]=i+1;saveAll();draw()};
@@ -1457,6 +1749,277 @@ function pieceFor(flag){var l=PIECES[G.ep]||[];for(var i=0;i<l.length;i++)if(l[i
 function checkHTML(){if(!G.biz)return '';var l=PIECES[G.ep]||[];return '<div class="chkh">🏪 '+esc(G.biz.n)+' launch checklist</div><div class="chk">'+l.map(function(x){var d=G.f[x[0]];return '<span class="'+(d?'d':'')+'">'+(d?'✅':'⬜')+' '+esc(x[1])+'</span>'}).join('')+'</div>'}
 function pieceHTML(d){var p=d.flag&&pieceFor(d.flag);if(!p||!G.biz)return '';return '<div class="piece"><em>'+p[2]+'</em><span>Added to '+esc(G.biz.n)+': <b>'+esc(p[1])+'</b></span></div>'}
 function bizBlock(){if(!G.biz)return '';return '<div class="bizcard"><span class="bz-e">'+bizEmoji(G.biz)+'</span><h2>'+esc(G.biz.n)+'</h2><p class="bz-m">'+esc(G.biz.m)+'</p></div>'+checkHTML()}
+/* ===== WORKSHOP: build your own business app, one house at a time ===== */
+/* G.app = { fieldKey: {s:[tile texts], o:'own words'} }  (shared by every house, carries from class to class) */
+function AP(){if(!G.app)G.app={};return G.app}
+function cleanT(s,n){return String(s||'').replace(/<[^>]*>/g,'').replace(/[<>]/g,'').replace(/\s+/g,' ').replace(/^\s+/,'').slice(0,n||90)}
+function AV(k){var a=AP()[k];if(!a)return {s:[],o:'',t:''};var p=(a.s||[]).slice();var o=(a.o||'').trim();if(o)p.push(o);return {s:a.s||[],o:o,t:p.join(', ')}}
+function aset(k,fn){var A=AP(),a=A[k]||(A[k]={s:[],o:''});fn(a);if(!a.s.length&&!(a.o||'').trim())delete A[k]}
+function clipT(s,n){s=String(s||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n-1)+'…':s}
+
+/* ---- the houses: what each one teaches, and the detail fields inside ---- */
+var STN={
+brand:{name:'Name House',ico:'🏷️',what:'Logo, tagline and voice',
+ weak:'Make me a website.',strong:'Build a website for {biz}, a {kind} for {cust}. The logo is a gold star. The tagline is "Sparkle every day". The brand talks in a friendly voice.',
+ lesson:'A <b>brand</b> is a name plus a feeling. Tell the AI the logo, the slogan and the voice, and it stops guessing.',
+ pre:'Build the top of a website for {biz}, a {kind} for {cust}.',
+ fields:[
+ {k:'logo',lv:1,h:'LOGO',t:'What is your logo?',why:'A logo is the little picture people remember. Name the picture so {a} draws the right one.',pk:'one',tiles:[['⭐','a gold star'],['🦄','a unicorn'],['🌈','a rainbow'],['🍓','a strawberry'],['🐾','a paw print'],['🎀','a pink bow'],['🚀','a rocket'],['🌸','a flower']],ph:'Or type your own: a purple heart',s:function(v){return 'The logo is '+v+'.'},guess:'a plain emoji'},
+ {k:'tag',lv:1,h:'TAGLINE',t:'Write a tagline (a short slogan)',why:'A tagline tells people what your business promises in just a few words. Short and catchy wins!',pk:'one',tiles:[['✨','Sparkle every day'],['💖','Made with love'],['🌟','Where fun begins'],['😎','The coolest {kind} around']],ph:'Or write your own, like "Treats that make you smile"',s:function(v){return 'The tagline, the short slogan under the name, is "'+v+'".'},guess:'a boring slogan'},
+ {k:'voice',lv:1,h:'VOICE',t:'How does your brand talk?',why:'Your brand talks like a person. Pick a voice and {a} will write every word in it.',pk:'one',tiles:[['😄','friendly'],['🤪','silly'],['👑','fancy'],['💪','bold'],['😌','calm']],ph:'Or type your own: friendly but a little funny',s:function(v){return 'The brand talks in a '+v+' voice.'},guess:'a plain voice'},
+ {k:'words',lv:2,h:'3 WORDS',t:'Describe your brand in 3 words',why:'Three strong words help {a} get the feeling just right. Think: bright, cozy, bold.',tiles:[],ph:'Example: bright, cozy, playful',s:function(v){return 'Three words that describe the brand: '+v+'.'},guess:'no feeling words'},
+ {k:'promise',lv:3,h:'PROMISE',t:'What does {biz} promise its customers?',why:'A pro brand makes one clear promise. What will people always get from {biz}?',tiles:[],ph:'Example: Every order is made fresh and ready in 10 minutes.',s:function(v){return 'The brand promise is: '+v},guess:'no promise'}]},
+style:{name:'Style House',ico:'🎨',what:'Colors, theme and pictures',
+ weak:'Make it pretty.',strong:'Use purple and gold colors, an ocean theme, and a big picture of a unicorn. Make the buttons round.',
+ lesson:'<b>View</b> details (colors, theme, pictures) are the fastest way to make AI work look like <b>yours</b>.',
+ pre:'Style the website for {biz}.',
+ fields:[
+ {k:'colors',lv:1,h:'COLORS',t:'Pick your colors',why:'AI cannot read your mind. If you do not say a color, it picks a boring one. Name <b>exact</b> colors!',pk:'one',tiles:[['💜','purple and gold'],['💗','pink and mint'],['💙','blue and orange'],['🖤','black and neon green'],['❤️','red and cream'],['💛','teal and yellow']],ph:'Or type your own colors: lavender and silver',s:function(v){return 'The main colors are '+v+'.'},guess:'beige and gray'},
+ {k:'theme',lv:1,h:'THEME',t:'Pick a theme',why:'A theme is the world your app lives in: ocean, candy, space... It sets the mood in one word.',pk:'one',tiles:[['🌊','ocean theme'],['🍬','candy theme'],['🚀','space theme'],['🌲','forest theme'],['🕹️','retro theme'],['🌅','sunset theme'],['🌸','flower theme'],['🔮','magic theme']],ph:'Or type a theme: mermaid, jungle, robots',s:function(v){return 'The theme is '+v+'.'},guess:'no theme'},
+ {k:'pic',lv:1,h:'PICTURE',t:'What is the big picture on the page?',why:'Pictures make people stop and look. Say what the picture shows.',pk:'many',max:2,tiles:[['🦄','a unicorn'],['🧁','a cupcake'],['🐶','a puppy'],['🦋','a butterfly'],['🎨','a paint palette'],['⚽','a soccer ball']],ph:'Or type your own: a dragon, a guitar',s:function(v){return 'The big picture on the page shows '+v+'.'},guess:'a plain smiley'},
+ {k:'shape',lv:2,h:'BUTTONS',t:'What do the buttons look like?',why:'Small details make a pro look. Round, square or pill-shaped?',pk:'one',tiles:[['⚪','round buttons'],['⬜','square buttons'],['💊','pill buttons']],ph:'Or describe: big and bouncy',s:function(v){return 'The buttons are '+v+'.'},guess:'plain buttons'},
+ {k:'font',lv:2,h:'LETTERS',t:'What do the letters look like?',why:'Letters have a personality too. Bubbly, clean, retro or fancy?',pk:'one',tiles:[['🎈','bubbly letters'],['📘','clean letters'],['🕹️','retro letters'],['🎩','fancy letters']],ph:'Or describe: tall and skinny',s:function(v){return 'The letters look '+v+'.'},guess:'plain letters'},
+ {k:'mode',lv:3,h:'LIGHT OR DARK',t:'Light mode or dark mode?',why:'Pros think about when people use the app. Late at night? Dark mode is easier on the eyes.',pk:'one',tiles:[['☀️','light mode'],['🌙','dark mode']],ph:'Or explain: dark with glowing buttons',s:function(v){return 'Use '+v+'.'},guess:'whatever it picks'}]},
+cust:{name:'Customer House',ico:'👭',what:'Who it is for',
+ weak:'Make it for people.',strong:'It is for girls in 5th grade who love art and pets. They come to {biz} for something fun.',
+ lesson:'Great builders know <b>who</b> the app is for. When you tell the AI your customers, it picks the right words, pictures and tone.',
+ pre:'Plan who {biz} is for.',
+ fields:[
+ {k:'who',lv:1,h:'CUSTOMERS',t:'Who is {biz} for?',why:'"Everybody" is too big. The more exactly you describe your customer, the better {a} builds for her.',pk:'many',max:2,tiles:[['🧒','kids my age'],['🧑‍🎤','teens'],['👨‍👩‍👧','families'],['🏘️','neighbors'],['🏫','schools and teachers'],['⏰','busy parents']],ph:'Be specific: girls in 5th grade who love art',s:function(v){return 'The customers are '+v+'.'},guess:'everybody',pre:function(){return G.biz?[bzFind(BIZC,G.biz.c)[2]]:[]}},
+ {k:'love',lv:1,h:'THEY LOVE',t:'What do your customers love?',why:'Customers love things. Tell {a} what, and it can add those things to your app.',pk:'many',max:3,tiles:[['🎨','art'],['🎮','games'],['🐶','pets'],['🎵','music'],['🍰','treats'],['⚽','sports'],['📚','reading'],['👗','style']],ph:'Or type your own: horses, slime, robots',s:function(v){return 'They love '+v+'.'},guess:'nothing in particular'},
+ {k:'need',lv:1,h:'THEIR NEED',t:'What do customers want from {biz}?',why:'Every business solves a problem or makes a wish come true. What is yours?',pk:'one',tiles:[['😊','something fun'],['⚡','something fast'],['💡','to learn something'],['🎁','something special'],['🤝','help with a problem']],ph:'Or type your own: a cute gift for my best friend',s:function(v){return 'Customers come to {biz} for '+v+'.'},guess:'something'},
+ {k:'cta',lv:2,h:'BIG BUTTON',t:'What should the big button say?',why:'A call to action tells people what to do next. Make it short and clear.',pk:'one',tiles:[['👉','Shop now'],['📅','Book now'],['🎮','Play now'],['💌','Join us']],ph:'Or type your own: Get my treat!',s:function(v){return 'The big button says "'+v+'".'},guess:'a plain "Click"'}]},
+safe:{name:'Safe House',ico:'🛡️',what:'Privacy and kindness rules',
+ weak:'Make it safe.',strong:'The app never asks for real names, home addresses or phone numbers. It never says mean words. A grown-up can always help.',
+ lesson:'AI will not add safety unless you <b>say</b> it. A <b>never</b> rule protects your customers and your brand.',
+ pre:'Add safety rules to the website for {biz}.',
+ fields:[
+ {k:'no1',lv:1,h:'NEVER ASK',t:'What will your app NEVER ask for?',why:'Private things stay private. Pick everything {biz} must <b>never</b> ask a visitor to type.',pk:'many',max:5,tiles:[['🚫','real names'],['🏠','home addresses'],['📱','phone numbers'],['🏫','school names'],['📸','photos of faces']],ph:'Add your own: birthdays, passwords',s:function(v){return 'The app never asks for '+v+'.'},guess:'no limits at all'},
+ {k:'kind',lv:1,h:'BE KIND',t:'How does {biz} keep everyone kind?',why:'Kind apps have rules. What should {biz} always do?',pk:'many',max:3,tiles:[['💬','no mean words'],['🤝','be kind to everyone'],['🙋','a grown-up can always help']],ph:'Or type your own: say thank you',s:function(v){return 'To keep everyone kind: '+v+'.'},guess:'no kindness rules'},
+ {k:'rule',lv:1,h:'YOUR RULE',t:'Write one safety rule in your own words',why:'Now YOU make a rule. Use the word <b>never</b>: it is the strongest word a coder has.',tiles:[],ph:'Example: Never share where a customer lives.',s:function(v){return 'My own safety rule: '+v},guess:'no rule'},
+ {k:'fixp',lv:2,h:'IF IT BREAKS',t:'What happens if something goes wrong?',why:'Real apps plan for mistakes. What should a visitor do if the app breaks?',pk:'many',max:2,tiles:[['🙋','tell a grown-up'],['🛑','stop using the app'],['📝','write a bug report']],ph:'Or type your own plan',s:function(v){return 'If something goes wrong: '+v+'.'},guess:'no plan'}]},
+feat:{name:'Feature Factory',ico:'⚙️',what:'What your app can DO',
+ weak:'Make it do stuff.',strong:'Feature one: a menu of things to pick. Feature two: a booking button. When someone taps a feature it bounces. After a tap it says "Thanks for visiting!"',
+ lesson:'<b>Interact</b> details say what happens when someone taps. A feature without a tap action is just a picture.',
+ pre:'Add features to the website for {biz}.',
+ fields:[
+ {k:'f1',lv:2,h:'FEATURE 1',t:'What is the first thing {biz} can do?',why:'A feature is something your app can DO. Describe it like you are telling a friend.',pk:'one',tiles:[['🛒','a menu of things to pick'],['📅','a booking button'],['🎮','a mini game'],['💬','a message from us']],ph:'Or type your own: a quiz to find your match',s:function(v){return 'Feature one: '+v+'.'},guess:'no features'},
+ {k:'f2',lv:2,h:'FEATURE 2',t:'And the second thing?',why:'Two features make an app feel real. Make this one different from the first.',pk:'one',tiles:[['⭐','a favorites list'],['📸','a gallery of pictures'],['🎁','a surprise gift button'],['🗺️','a map to find us']],ph:'Or type your own: a spin-the-wheel',s:function(v){return 'Feature two: '+v+'.'},guess:'only one feature'},
+ {k:'f3',lv:3,h:'FEATURE 3',t:'The third feature?',why:'Pros stop at three. More features means more bugs!',tiles:[],ph:'Example: a countdown to the next event',s:function(v){return 'Feature three: '+v+'.'},guess:'only two features'},
+ {k:'tapfx',lv:2,h:'WHEN TAPPED',t:'What happens when someone taps a feature?',why:'This is the <b>Interact</b> in V-I-B-E. Say the move, and {a} will make it happen!',pk:'many',max:2,tiles:[['🌀','it spins'],['⬆️','it bounces'],['✨','it glows'],['📳','it shakes'],['🔍','it grows']],ph:'Or type your own: it flips and sparkles',s:function(v){return 'When someone taps a feature, '+v+'.'},guess:'nothing happens'},
+ {k:'msg',lv:2,h:'SURPRISE',t:'What message pops up after a tap?',why:'<b>Extra</b> details are the surprise! The words a visitor reads make them smile.',tiles:[],ph:'Example: Thanks for visiting! You are awesome!',s:function(v){return 'After a tap it says "'+v+'".'},guess:'a plain "Hello"'}]},
+spec:{name:'Spec Studio',ico:'📋',what:'Write a pro spec',
+ weak:'Build me an app for my business.',strong:'Problem: kids cannot find safe art classes. User: a 12-year-old who loves drawing. Features: a class finder, a signup button, a gallery. Never: ask for real names. Goal: 10 signups in a week.',
+ lesson:'A <b>spec</b> is the pro version of a prompt: problem, user, features, limits and a goal. The more exact the spec, the less the AI guesses.',
+ pre:'Here is the spec for {biz}.',
+ fields:[
+ {k:'problem',lv:3,h:'PROBLEM',t:'What problem does {biz} solve?',why:'Every real product starts with a problem. Say it in one clear sentence.',tiles:[],ph:'Example: Kids cannot find fun, safe art classes near them.',s:function(v){return 'The problem: '+v},guess:'no clear problem',ex:['Kids cannot find safe art classes.','Busy parents forget birthdays.']},
+ {k:'user',lv:3,h:'USER',t:'Who is the user? Describe one real kind of person.',why:'Pros design for one person first. Age, interests, and what they are trying to do.',tiles:[],ph:'Example: A 12-year-old who loves drawing and wants to share her art.',s:function(v){return 'The user: '+v},guess:'anyone',ex:['A 10-year-old who loves pets.','A teen who wants a side hustle.']},
+ {k:'f1',lv:3,h:'FEATURE 1',t:'Feature 1: what can the user do first?',why:'Start with the main action. Use a verb: find, book, play, pick, share.',tiles:[],ph:'Example: Find a class by picking a day.',s:function(v){return 'Feature one: '+v},guess:'no feature'},
+ {k:'f2',lv:3,h:'FEATURE 2',t:'Feature 2',why:'A second feature that supports the first one.',tiles:[],ph:'Example: Save favorite classes to a list.',s:function(v){return 'Feature two: '+v},guess:'only one feature'},
+ {k:'never',lv:3,h:'NEVER',t:'What must {biz} never do?',why:'Pros write limits. These protect people and keep the AI from doing something risky.',tiles:[],ph:'Example: Never ask for real names or photos of faces.',s:function(v){return 'Limits, the app must never: '+v},guess:'no limits',ex:['Never ask for real names.','Never show mean words.']},
+ {k:'win',lv:3,h:'GOAL',t:'How will you know {biz} is working?',why:'A goal has a number. Numbers let you test: did it work or not?',tiles:[],ph:'Example: 10 signups in the first week.',s:function(v){return 'Success looks like: '+v},guess:'no goal'}]}};
+var STK=['brand','style','cust','safe','feat','spec'];
+function stFields(key,lvl){return STN[key].fields.filter(function(f){return f.lv<=lvl&&(!f.lvmax||lvl<=f.lvmax)})}
+function glyphOf(k,txt){var key,i,j;for(var s in STN){var fs=STN[s].fields;for(i=0;i<fs.length;i++)if(fs[i].k===k){var ts=fs[i].tiles;for(j=0;j<ts.length;j++)if(fillp(ts[j][1])===txt||ts[j][1]===txt)return ts[j][0]}}
+ var n=nounsIn(txt);return n.length?n[0][0]:null}
+
+/* ---- turn her answers into a real mini website (shown on the phone) ---- */
+var VOICES={friendly:['Welcome to {n}!',"Let's go!",'Hi there, friend!'],silly:["Whoa! It's {n}!!",'Boop me!','Wheee!'],fancy:['Welcome to the lovely {n}.','Enter','A pleasure to meet you.'],bold:["This is {n}. Let's go.",'GO!','Bring it on!'],calm:['Welcome to {n}. Take your time.','Begin','Breathe in. Welcome.']};
+function voiceId(t){t=String(t||'').toLowerCase();if(!t)return '';for(var k in VOICES)if(t.indexOf(k)>=0)return k;if(/fun|goof|crazy|giggl/.test(t))return 'silly';if(/elegant|royal|classy|glam|queen/.test(t))return 'fancy';if(/strong|loud|power|confident|brave/.test(t))return 'bold';if(/gentle|cozy|relax|quiet|soft|sweet/.test(t))return 'calm';return 'friendly'}
+var FONTS={bubbly:"'Comic Sans MS','Chalkboard SE','Marker Felt',cursive,system-ui",clean:"system-ui,-apple-system,'Segoe UI',Roboto,sans-serif",retro:"'Courier New',ui-monospace,monospace",fancy:"Georgia,'Times New Roman',serif"};
+function siteState(){var z=G.biz||{n:'Your Business',t:'custom',k:'business',c:'kids',p:'smile'},S={z:z,g:{},has:{}},v=function(k){return AV(k)};
+ S.name=z.n;S.kind=bizKind(z);S.cust=bzFind(BIZC,z.c)[2];S.city=cityName();
+ var lg=v('logo');S.logo=lg.t?((lg.o&&(glyphOf('logo',lg.o)))||(lg.s[0]&&glyphOf('logo',lg.s[0]))||(nounsIn(lg.t)[0]||[])[0]||bizEmoji(z)):bizEmoji(z);if(!lg.t)S.g.logo=1;
+ var tg=v('tag');S.tag=tg.t?cleanT(tg.t,60):'A '+S.kind+' for '+S.cust;if(!tg.t)S.g.tag=1;
+ var vo=v('voice');S.voice=voiceId(vo.t)||'friendly';if(!vo.t)S.g.voice=1;
+ S.words=v('words').t?v('words').t.split(/[,&]| and /).map(function(x){return clipT(x,14)}).filter(Boolean).slice(0,3):[];
+ S.promise=v('promise').t;
+ var cs=v('colors'),th=v('theme'),pc=v('pic'),txt=[cs.t,th.t,pc.t].join(' . ');var p=parseWords(txt),thm=p.theme?THEMES[p.theme]:null,bg,fg,ac;
+ if(p.cols.length){var rest=[];p.cols.forEach(function(c){if(c.role==='bg')bg=bg||c.hex;else if(c.role==='ac')ac=ac||c.hex;else if(c.role==='fg')fg=fg||c.hex;else rest.push(c.hex)});if(!bg)bg=rest.shift()||(thm&&thm.bg)||'#e9e4d6';if(!ac)ac=rest.shift()||(thm&&thm.ac)||(lum(bg)>.5?'#1a1030':'#fff01f');if(!fg)fg=rest.shift()||contrast(bg)}
+ else if(thm){bg=thm.bg;ac=thm.ac;fg=thm.fg}else if(p.tint){bg=p.tint[0];ac=p.tint[1];fg=p.tint[2]}else{bg='#f1ede4';fg='#3a3a44';ac='#9a9aa8';S.g.style=1}
+ var md=/dark/i.test(v('mode').t)?'dark':/light/i.test(v('mode').t)?'light':'';if(md==='dark'){bg='#150a26';fg='#f6ecff'}else if(md==='light'){bg='#fff9f2';fg='#2b1740'}
+ S.bg=bg;S.fg=fg;S.ac=ac;S.pic=p.emo.length?p.emo[0][0]:(thm?thm.deco[0]:S.logo);if(!p.emo.length&&!thm)S.g.pic=1;
+ S.deco=(thm?thm.deco:[]).concat(p.emo.slice(1).map(function(e){return e[0]})).slice(0,4);if(!S.deco.length)S.deco=[S.pic];
+ var sh=v('shape').t.toLowerCase(),fn=v('font').t.toLowerCase();S.rad=/square/.test(sh)?'3px':/pill/.test(sh)?'999px':/round/.test(sh)?'16px':'10px';
+ S.font=FONTS[/bubbl/.test(fn)?'bubbly':/retro/.test(fn)?'retro':/fancy/.test(fn)?'fancy':/clean/.test(fn)?'clean':'clean'];
+ var ct=v('cta');S.cta=ct.t?clipT(ct.t,18):VOICES[S.voice][1];
+ var wh=v('who').t||v('user').t,lv=v('love'),nd=v('need').t||v('problem').t;S.who=wh?clipT(wh,60):'';S.love=lv.t?lv.s.concat(lv.o?[lv.o]:[]).map(function(x){return {e:glyphOf('love',x)||'💖',t:clipT(x,16)}}).slice(0,4):[];S.need=nd?clipT(nd,70):'';
+ var fe=[];['f1','f2','f3'].forEach(function(k){var f=v(k);if(f.t)fe.push({e:glyphOf(k,f.s[0]||f.o)||'⭐',t:clipT(f.t,34)})});
+ ['buddy','arc','park','client','boss'].forEach(function(k){var b=G.builds&&G.builds[k];if(b&&b.title&&fe.length<5)fe.push({e:b.kind==='game'?'🎮':b.kind==='buddy'?'🐾':'🪧',t:clipT(b.title,24),b:1})});
+ S.feats=fe;var tf=parseWords(v('tapfx').t);S.anim=tf.fx.filter(function(f){return f.anim}).map(function(f){return f.id}).slice(0,2);S.extra=tf.fx.filter(function(f){return !f.anim}).map(function(f){return f.id});if(!S.anim.length&&v('tapfx').t)S.anim=['bounce'];
+ S.msg=v('msg').t?clipT(v('msg').o||v('msg').t,50):'';S.win=v('win').t;
+ var sf=[];v('no1').s.forEach(function(x){sf.push('🚫 never asks for '+x)});v('kind').s.forEach(function(x){sf.push('💛 '+x)});if(v('kind').o)sf.push('💛 '+clipT(v('kind').o,40));
+ ['rule','never','fixp'].forEach(function(k){var f=v(k);if(f.t)sf.push((k==='fixp'?'🔧 ':'🛡️ ')+clipT(f.t,44))});if(v('no1').o)sf.push('🚫 never asks for '+clipT(v('no1').o,30));S.safe=sf.slice(0,5);
+ S.has={brand:!!(lg.t||tg.t||vo.t||S.words.length||S.promise),style:!!(cs.t||th.t||pc.t||sh||fn||md),cust:!!(S.who||S.love.length||S.need),feat:!!fe.length,safe:!!S.safe.length};
+ return S}
+function ghost(txt){return '<div class="gh">🔨 '+esc(txt)+'</div>'}
+function siteHTML(o){o=o||{};var S=siteState(),fo=o.focus||'',n=esc(S.name),vc=VOICES[S.voice],nw=function(k){return fo===k?' new':''};
+ var CSS='*{box-sizing:border-box}body{margin:0;background:'+S.bg+';color:'+S.fg+';font-family:'+S.font+';font-size:12px;line-height:1.35}'+CSSK+'\n@keyframes fl{0%{box-shadow:0 0 0 0 rgba(255,240,31,.0)}30%{box-shadow:0 0 0 4px #fff01f,0 0 22px 6px #ff2bd6}100%{box-shadow:0 0 0 0 rgba(255,240,31,0)}}'+
+ '.new{animation:fl 1.6s ease 2}.gs{outline:2px dotted rgba(120,120,130,.8);outline-offset:2px}.hd{display:flex;align-items:center;gap:6px;padding:8px 10px;background:'+S.ac+';color:'+contrast(S.ac)+'}.lg{display:inline-flex;align-items:center;line-height:0}.lg .lgo{display:block}.sgn{width:100%;max-width:290px;margin:0 auto 4px}.sgn svg{display:block}.nm{font-weight:800;font-size:13px;letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.vb{margin-left:auto;font-size:9px;opacity:.85;border:1px solid currentColor;border-radius:99px;padding:1px 6px;white-space:nowrap}'+
+ '.hero{text-align:center;padding:16px 10px 12px;position:relative;overflow:hidden}.pic{font-size:46px;line-height:1.1;display:inline-block;cursor:pointer}h1{font-size:19px;margin:6px 0 2px;line-height:1.15}.tg{margin:0 0 8px;opacity:.9;font-size:12px}.cta{font:inherit;font-weight:800;font-size:13px;padding:9px 18px;border-radius:'+S.rad+';border:2px solid '+S.fg+';background:'+S.ac+';color:'+contrast(S.ac)+';cursor:pointer}.wd{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin:6px 0}.wd i{font-style:normal;font-size:10px;background:rgba(127,127,127,.22);border-radius:99px;padding:1px 8px}.dc{position:absolute;font-size:18px;opacity:.8;pointer-events:none}'+
+ '.sec{padding:8px 10px}.sec h2{margin:0 0 5px;font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.75}.chs{display:flex;flex-wrap:wrap;gap:4px}.chs span{background:rgba(127,127,127,.2);border-radius:99px;padding:2px 9px;font-size:11px}.nd{margin:5px 0 0;font-size:11.5px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:6px}.cd{background:rgba(127,127,127,.18);border-radius:'+(S.rad==='999px'?'18px':S.rad)+';padding:9px 5px;text-align:center;font-size:11px;cursor:pointer;user-select:none}.cd b{display:block;font-size:22px;line-height:1.2}.sf{display:flex;flex-direction:column;gap:3px}.sf span{background:rgba(57,255,20,.16);border:1px solid rgba(57,255,20,.45);border-radius:8px;padding:3px 8px;font-size:11px}'+
+ '.gh{border:2px dashed rgba(127,127,127,.55);border-radius:10px;padding:10px;text-align:center;font-size:11px;opacity:.75;margin:2px 0}.ft{text-align:center;font-size:10px;opacity:.7;padding:8px 10px 14px}#t{position:fixed;left:8px;right:8px;bottom:8px;background:#111;color:#fff;border-radius:10px;padding:8px 10px;font-size:12px;text-align:center;opacity:0;transform:translateY(12px);transition:all .25s;pointer-events:none}#t.on{opacity:1;transform:none}'+(fo==='style'?'body{animation:fl 1.6s ease 2}':'');
+ var h='<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src \'none\'; style-src \'unsafe-inline\'; script-src \'unsafe-inline\'"><meta name="viewport" content="width=device-width,initial-scale=1"><title>'+n+'</title><style>'+CSS+'</style></head><body>';
+ var shp=(AV('shape').t||'').toLowerCase(),lgo=function(sz){return logoSVG({name:S.name,icon:S.logo,bg:S.bg,fg:S.fg,ac:S.ac,shape:shp,size:sz})};
+ h+='<div class="hd'+nw('brand')+'"><span class="lg'+(S.g.logo?' gs':'')+'">'+lgo(34)+'</span><span class="nm">'+n+'</span>'+(S.has.brand&&!S.g.voice?'<span class="vb">'+esc(S.voice)+' voice</span>':'')+'</div>';
+ h+='<div class="hero'+nw('brand')+'">';S.deco.forEach(function(e,i){h+='<span class="dc" style="left:'+(6+i*26)+'%;top:'+(i%2?6:34)+'px">'+esc(e)+'</span>'});
+ h+='<div class="sgn">'+signSVG({name:S.name,icon:S.logo,bg:S.bg,fg:S.fg,ac:S.ac})+'</div><div class="pic'+(S.g.pic?' gs':'')+'" data-a="'+(S.anim.join(',')||'bounce')+'" data-m="'+esc(S.msg||vc[2])+'">'+esc(S.pic)+'</div><h1>'+vc[0].replace('{n}',n)+'</h1><p class="tg'+(S.g.tag?' gs':'')+'">'+esc(S.tag)+'</p>';
+ if(S.words.length)h+='<div class="wd">'+S.words.map(function(w){return '<i>'+esc(w)+'</i>'}).join('')+'</div>';
+ h+='<button class="cta" data-a="'+(S.anim.join(',')||'bounce')+'" data-m="'+esc(S.msg||('Thanks for visiting '+S.name+'!'))+'" data-c="'+(S.extra.indexOf('confetti')>=0||!S.msg?'1':'')+'">'+esc(S.cta)+'</button></div>';
+ if(S.promise)h+='<div class="sec"><h2>Our promise</h2><p class="nd">'+esc(clipT(S.promise,90))+'</p></div>';
+ h+='<div class="sec who'+nw('cust')+'"><h2>Made for</h2>';
+ if(S.has.cust){h+='<div class="chs">'+(S.who?'<span>👭 '+esc(S.who)+'</span>':'')+S.love.map(function(l){return '<span>'+esc(l.e+' '+l.t)+'</span>'}).join('')+'</div>'+(S.need?'<p class="nd">Come here for <b>'+esc(S.need)+'</b>.</p>':'')}else h+=ghost('Customer House: not built yet');h+='</div>';
+ h+='<div class="sec feats'+nw('feat')+'"><h2>What we do</h2>';
+ if(S.feats.length){h+='<div class="cards">'+S.feats.map(function(f){return '<div class="cd" data-a="'+(S.anim.join(',')||'bounce')+'" data-m="'+esc(S.msg||(f.b?'Built in class!':'Coming soon!'))+'"><b>'+esc(f.e)+'</b>'+esc(f.t)+'</div>'}).join('')+'</div>'}else h+=ghost('Feature House: not built yet');h+='</div>';
+ h+='<div class="sec safe'+nw('safe')+(fo==='spec'?' new':'')+'"><h2>Our safe promise</h2>';
+ if(S.safe.length)h+='<div class="sf">'+S.safe.map(function(x){return '<span>'+esc(x)+'</span>'}).join('')+'</div>';else h+=ghost('Safe House: not built yet');h+='</div>';
+ if(S.win)h+='<div class="sec"><h2>Our goal</h2><p class="nd">'+esc(clipT(S.win,80))+'</p></div>';
+ h+='<div class="ft">Built by '+esc(G.handle||'my agent')+' and me'+(S.city?' · '+esc(S.city):'')+'</div><div id="t"></div>';
+ var js=SHARED_JS+'\nvar DECO='+J(S.deco)+';var els=document.querySelectorAll("[data-a]");for(var i=0;i<els.length;i++){els[i].onclick=function(){var a=this.getAttribute("data-a").split(",").filter(Boolean);playAnim(this,a,false);var m=this.getAttribute("data-m");if(m){var t=document.getElementById("t");t.textContent=m;t.className="on";clearTimeout(window._tt);window._tt=setTimeout(function(){t.className=""},1900)}if(this.getAttribute("data-c"))burst(DECO)}}';
+ return h+'<script>'+js+'<\/script></body></html>'}
+function allPrompt(){var out=[],z=G.biz;if(!z)return out;STK.forEach(function(k){var st=STN[k],ls=[];st.fields.forEach(function(f){var t=AV(f.k).t;if(t)ls.push(fillp(f.s(t)))});if(ls.length)out.push({k:k,name:st.name,ico:st.ico,lines:ls})});return out}
+/* ===== workshop street (map) + guided house screens (stations) + grand opening ===== */
+var STH={
+ 1:{cls:'th1',street:'Neon Main Street',tag:'Sunset lights and first shops',lamp:['💡','🌴','⭐'],fill:'🌴💖🌴',car:['🚲','🛴'],cols:[['#ff2bd6','#3a0f6e'],['#00f5ff','#13225e'],['#fff01f','#4a1a7e'],['#39ff14','#10352e'],['#ff8a1f','#3a1450'],['#b57bff','#1d0f4a']]},
+ 2:{cls:'th2',street:'Paw Park Drive',tag:'Neon trees and furry friends',lamp:['🌳','🐾','🦋'],fill:'🌳🐕🦋',car:['🐕','🐈'],cols:[['#39ff14','#0e3a3a'],['#00f5ff','#10304a'],['#fff01f','#2a3a1a'],['#ff2bd6','#2a1445'],['#ff8a1f','#2e2a1a'],['#b57bff','#1d1a48']]},
+ 3:{cls:'th3',street:'Arcade Avenue',tag:'Neon signs and pixel stars',lamp:['🕹️','👾','⭐'],fill:'👾🕹️⭐',car:['🛹','🏎️'],cols:[['#ff2bd6','#2a0f5e'],['#00f5ff','#13225e'],['#fff01f','#3a1a6e'],['#39ff14','#10352e'],['#ff8a1f','#3a1450'],['#b57bff','#1d0f4a']]},
+ 4:{cls:'th4',street:'Startup Row',tag:'Glass towers and launch lights',lamp:['💡','📡','🛰️'],fill:'🚀💡📡',car:['🚕','🚓'],cols:[['#00c2ff','#12284a'],['#7f5cff','#1a1240'],['#00e0a0','#0e2f3a'],['#ff5a7a','#2a1230'],['#ffc23d','#2b2210'],['#00f5ff','#0b1f33']]}};
+function skyArt(n){var R=sr(n*97+3),W=800,H=240,s='<svg class="wsk" viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="xMidYMax slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">',i,x,y;
+ function cloud(cx,cy,sc,o,dur){return '<g class="cl" style="animation-duration:'+dur+'s"><g transform="translate('+cx+' '+cy+') scale('+sc+')" fill="#fff" opacity="'+o+'"><ellipse cx="0" cy="0" rx="46" ry="16"/><ellipse cx="-22" cy="-10" rx="26" ry="16"/><ellipse cx="18" cy="-14" rx="30" ry="19"/></g></g>'}
+ if(n===1||n===2){var g2=n===2,c1=g2?['#031a2e','#0a5a62','#2fe6a8','#e6ff7a']:['#12053a','#5a1a9a','#ff4fa3','#ffd36b'];
+  s+='<defs><linearGradient id="s'+n+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c1[0]+'"/><stop offset=".45" stop-color="'+c1[1]+'"/><stop offset=".78" stop-color="'+c1[2]+'"/><stop offset="1" stop-color="'+c1[3]+'"/></linearGradient><linearGradient id="u'+n+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+(g2?'#eaff5a':'#fff01f')+'"/><stop offset=".55" stop-color="'+(g2?'#39ff14':'#ff7a3d')+'"/><stop offset="1" stop-color="'+(g2?'#00c2a8':'#ff2bd6')+'"/></linearGradient><mask id="m'+n+'"><rect width="800" height="240" fill="#fff"/><g fill="#000"><rect x="0" y="118" width="800" height="3"/><rect x="0" y="131" width="800" height="5"/><rect x="0" y="146" width="800" height="7"/></g></mask></defs><rect width="800" height="240" fill="url(#s'+n+')"/>';
+  for(i=0;i<60;i++)s+='<circle cx="'+(R()*W).toFixed(0)+'" cy="'+(R()*120).toFixed(0)+'" r="'+(R()*1.6+.5).toFixed(1)+'" fill="#fff" opacity="'+(R()*.7+.25).toFixed(2)+'"><animate attributeName="opacity" values=".25;1;.25" dur="'+(2+R()*3).toFixed(1)+'s" repeatCount="indefinite" begin="'+(R()*3).toFixed(1)+'s"/></circle>';
+  s+='<circle cx="400" cy="128" r="92" fill="url(#u'+n+')" mask="url(#m'+n+')"/>';
+  if(!g2){var skl=function(base,mn,mx,col,edge,lit){var xx=-10,o='';while(xx<810){var w=36+R()*56,h=mn+R()*(mx-mn);o+='<rect x="'+xx.toFixed(0)+'" y="'+(base-h).toFixed(0)+'" width="'+w.toFixed(0)+'" height="'+h.toFixed(0)+'" fill="'+col+'"/><rect x="'+xx.toFixed(0)+'" y="'+(base-h).toFixed(0)+'" width="'+w.toFixed(0)+'" height="2.5" fill="'+edge+'" opacity=".9"/>';for(var wy=base-h+9;wy<base-8;wy+=12)for(var wx=xx+5;wx<xx+w-7;wx+=11)if(R()<lit)o+='<rect x="'+wx.toFixed(0)+'" y="'+wy.toFixed(0)+'" width="4" height="6" fill="'+(R()<.5?'#fff01f':R()<.5?'#00f5ff':'#ff7ad9')+'" opacity=".85"/>';xx+=w+3}return o};
+   s+=skl(212,40,110,'#2a0f5e','#8a4dff',.2)+skl(232,28,78,'#190842','#ff2bd6',.3)}
+  else{var trees=function(base,mn,mx,col,edge,sp){var xx=-10,o='';while(xx<820){var r=mn+R()*(mx-mn);o+='<rect x="'+(xx-3)+'" y="'+(base-r)+'" width="6" height="'+r+'" fill="'+col+'"/><circle cx="'+xx+'" cy="'+(base-r-r*.55)+'" r="'+r+'" fill="'+col+'"/><path d="M'+(xx-r)+' '+(base-r-r*.55)+' A'+r+' '+r+' 0 0 1 '+(xx+r)+' '+(base-r-r*.55)+'" fill="none" stroke="'+edge+'" stroke-width="2.5" opacity=".9"/>';xx+=sp+R()*30}return o};
+   s+=trees(214,22,46,'#0a3a3f','#39ff14',46)+trees(236,14,30,'#06262c','#00f5ff',38);
+   s+='<g><rect x="506" y="74" width="168" height="46" rx="8" fill="#06262c" stroke="#39ff14" stroke-width="3"/><text x="590" y="106" text-anchor="middle" font-family="Impact,Arial Black,sans-serif" font-size="26" fill="#39ff14" letter-spacing="3">PAW PARK</text></g>';
+   for(i=0;i<16;i++)s+='<circle cx="'+(R()*W).toFixed(0)+'" cy="'+(150+R()*70).toFixed(0)+'" r="2.4" fill="#fff6a8"><animate attributeName="opacity" values="0;1;0" dur="'+(2+R()*3).toFixed(1)+'s" repeatCount="indefinite" begin="'+(R()*3).toFixed(1)+'s"/></circle>'}
+  [60,740].forEach(function(x){s+='<g><rect x="'+x+'" y="150" width="7" height="90" fill="#12062b"/><path d="M'+(x+3)+' 150 C'+(x-40)+' 132 '+(x-56)+' 164 '+(x-62)+' 182 M'+(x+3)+' 150 C'+(x+46)+' 132 '+(x+62)+' 164 '+(x+70)+' 182 M'+(x+3)+' 150 C'+(x-14)+' 110 '+(x-30)+' 118 '+(x-44)+' 134 M'+(x+3)+' 150 C'+(x+22)+' 110 '+(x+40)+' 118 '+(x+54)+' 134" stroke="#12062b" stroke-width="7" fill="none" stroke-linecap="round"/></g>'});
+  s+='<rect x="0" y="236" width="800" height="4" fill="#00f5ff" opacity=".8"/>'}
+ else if(n===3){s+='<defs><linearGradient id="s3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#12053a"/><stop offset=".62" stop-color="#5a1a9a"/><stop offset="1" stop-color="#ff2bd6"/></linearGradient><mask id="m3"><rect width="800" height="240" fill="#fff"/><g fill="#000"><rect x="0" y="116" width="800" height="3"/><rect x="0" y="130" width="800" height="5"/><rect x="0" y="146" width="800" height="7"/></g></mask></defs><rect width="800" height="240" fill="url(#s3)"/>';
+  for(i=0;i<50;i++)s+='<circle cx="'+(R()*W).toFixed(0)+'" cy="'+(R()*120).toFixed(0)+'" r="'+(R()*1.6+.5).toFixed(1)+'" fill="#fff" opacity="'+(R()*.7+.25).toFixed(2)+'"><animate attributeName="opacity" values=".2;1;.2" dur="'+(2+R()*3).toFixed(1)+'s" repeatCount="indefinite"/></circle>';
+  s+='<circle cx="400" cy="120" r="84" fill="#ffd36b" mask="url(#m3)"/>';
+  [30,110,200,560,650,735].forEach(function(cx,k){var col=['#00f5ff','#ff2bd6','#fff01f','#39ff14'][k%4],hh=70+(k%3)*12;s+='<g><rect x="'+cx+'" y="'+(214-hh)+'" width="44" height="'+hh+'" rx="5" fill="#1b0b3a" stroke="'+col+'" stroke-width="2"/><rect x="'+(cx+6)+'" y="'+(222-hh)+'" width="32" height="26" rx="3" fill="'+col+'" opacity=".85"><animate attributeName="opacity" values=".85;.45;.85" dur="'+(1.4+k*.3)+'s" repeatCount="indefinite"/></rect><rect x="'+(cx+8)+'" y="'+(252-hh)+'" width="9" height="9" rx="4" fill="#ff2bd6"/><rect x="'+(cx+24)+'" y="'+(252-hh)+'" width="9" height="9" rx="2" fill="#fff01f"/></g>'});
+  s+='<rect x="0" y="214" width="800" height="26" fill="#12053a"/><rect x="0" y="214" width="800" height="3" fill="#00f5ff"/>'}
+ else{s+='<defs><linearGradient id="s4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#050a1f"/><stop offset=".7" stop-color="#1a2a6c"/><stop offset="1" stop-color="#4a2a8a"/></linearGradient></defs><rect width="800" height="240" fill="url(#s4)"/>';
+  for(i=0;i<40;i++)s+='<circle cx="'+(R()*W).toFixed(0)+'" cy="'+(R()*100).toFixed(0)+'" r="'+(R()*1.3+.4).toFixed(1)+'" fill="#fff" opacity="'+(R()*.6+.2).toFixed(2)+'"/>';
+  s+='<polygon points="180,240 150,0 215,0" fill="#fff" opacity=".07"/><polygon points="610,240 570,0 650,0" fill="#00f5ff" opacity=".08"/>';
+  function row(base,mn,mx,col,edge,lit){var xx=-10,o='';while(xx<810){var w=34+R()*52,h=mn+R()*(mx-mn);o+='<rect x="'+xx.toFixed(0)+'" y="'+(base-h).toFixed(0)+'" width="'+w.toFixed(0)+'" height="'+h.toFixed(0)+'" fill="'+col+'"/><rect x="'+xx.toFixed(0)+'" y="'+(base-h).toFixed(0)+'" width="'+w.toFixed(0)+'" height="2" fill="'+edge+'"/>';for(var wy=base-h+8;wy<base-8;wy+=11)for(var wx=xx+5;wx<xx+w-7;wx+=10)if(R()<lit)o+='<rect x="'+wx.toFixed(0)+'" y="'+wy.toFixed(0)+'" width="4" height="6" fill="'+(R()<.55?'#ffe27a':R()<.5?'#7ae7ff':'#ff9ad0')+'" opacity=".85"/>';xx+=w+3}return o}
+  s+=row(200,50,120,'#14204a','#00c2ff',.22)+row(226,40,100,'#0c1433','#7f5cff',.3);
+  s+='<g><rect x="490" y="60" width="200" height="56" rx="6" fill="#0a0f2a" stroke="#ff2bd6" stroke-width="3"/><text x="590" y="98" text-anchor="middle" font-family="Impact,Arial Black,sans-serif" font-size="34" fill="#ff2bd6" letter-spacing="4">LAUNCH</text><rect x="584" y="116" width="12" height="40" fill="#0a0f2a"/></g>';
+  [[120,40],[690,30]].forEach(function(d,k){s+='<g class="dr" style="animation-delay:'+(k*.8)+'s"><ellipse cx="'+d[0]+'" cy="'+d[1]+'" rx="14" ry="5" fill="#cfd8ff"/><circle cx="'+(d[0]-9)+'" cy="'+(d[1]-5)+'" r="3.5" fill="#ff3b3b"><animate attributeName="opacity" values="1;.2;1" dur="1s" repeatCount="indefinite"/></circle><circle cx="'+(d[0]+9)+'" cy="'+(d[1]-5)+'" r="3.5" fill="#39ff14"><animate attributeName="opacity" values=".2;1;.2" dur="1s" repeatCount="indefinite"/></circle></g>'});
+  s+='<rect x="0" y="232" width="800" height="8" fill="#0c1433"/>'}
+ return s+'</svg>'}
+function phoneBox(id,sz,tap){return '<'+(tap?'button type="button" data-act="phbig" aria-label="Make the phone bigger"':'div')+' class="ph '+sz+'"><span class="nt"></span><div class="pscr"><iframe id="'+id+'" title="Your app" sandbox="allow-scripts" tabindex="-1"></iframe></div></'+(tap?'button':'div')+'>'}
+function bpieces(){return (PIECES[G.ep]||[]).filter(function(x){return x[0]!=='m_boss'})}
+function glyphFor(st){var S=siteState();return st==='brand'?S.logo:st==='style'?S.pic:st==='cust'?(S.love[0]&&S.love[0].e)||'👭':st==='feat'?(S.feats[0]&&S.feats[0].e)||'⚙️':st==='safe'?'🛡️':st==='spec'?'📋':null}
+function houseHTML(p,idx,ctx,no){var done=!!G.f[p.flag]&&!p.repeat,lock=p.boss&&ctx.done<ctx.need,isNext=ctx.nxt===p&&!lock,th=STH[G.ep]||STH[1],cc=th.cols[idx%th.cols.length],ge=(done&&p.st&&glyphFor(p.st))||p.e;
+ var lab=p.l+(lock?' (locked)':done?' (built)':'');
+ if(p.opt)return '<button type="button" class="hse mini'+(done?' done':'')+'" style="--rc:'+cc[0]+';--bc:'+cc[1]+'" data-act="pin" data-id="'+p.go+'" aria-label="'+esc(lab)+'"><span class="hroof"><b class="hsign">'+p.e+' '+esc(p.l)+'</b></span></button>';
+ return '<button type="button" class="hse'+(done?' done':'')+(lock?' lock':'')+(isNext?' next':'')+(p.boss?' boss':'')+'" style="--rc:'+cc[0]+';--bc:'+cc[1]+'" data-act="pin" data-id="'+p.go+'" aria-label="'+esc(lab)+'"'+(lock?' aria-disabled="true"':'')+'>'+(isNext?'<span class="hflag">▼ '+(p.boss?'OPEN HERE':'NEXT')+'</span>':'')+
+  '<span class="hroof"><i class="hno">'+(p.boss?'★':no)+'</i><b class="hsign">'+esc(p.l)+'</b></span><span class="hwall"><span class="hwin"><em>'+(lock?'🔒':ge)+'</em></span>'+(p.boss?'<span class="hwin"><em>🎉</em></span><span class="hwin"><em>🎈</em></span>':'<span class="hwin w2"><em>'+(done?'✨':'')+'</em></span>')+'<span class="hdoor"></span></span>'+
+  '<span class="hsub">'+(p.sub?fill(p.sub):'')+'</span><span class="hbd">'+(lock?'🔒 Build more first':done?'✔ Built':p.boss?'▶ Open!':'▶ Build it')+'</span></button>'}
+function streetHTML(d,done,nxt){var th=STH[G.ep]||STH[1],main=d.pins.filter(function(p){return !p.opt&&!p.boss}),boss=d.pins.filter(function(p){return p.boss})[0],opts=d.pins.filter(function(p){return p.opt}),ctx={done:done,need:d.need,nxt:nxt},i,h;
+ h='<div class="wst '+th.cls+'" id="city"><div class="wsky">'+skyArt(G.ep)+'<div class="wname"><b>'+esc((cityName()||'VIBE CITY').toUpperCase())+'</b><span>'+esc(th.street)+'</span></div></div><div class="wlane"><i class="wroad" aria-hidden="true"><b class="wcar">'+th.car[0]+'</b><b class="wcar c2">'+th.car[1]+'</b></i>';
+ for(i=0;i<main.length;i+=2){var hasMe=(nxt&&(nxt===main[i]||nxt===main[i+1])),me=hasMe?'<div class="wme" id="plr">'+meSVG(54,1,'walk')+'<span class="tag">'+esc(G.handle||'You')+'</span></div>':'';
+  h+='<div class="wrow">'+houseHTML(main[i],i,ctx,i+1)+'<div class="wrd"><span class="wl">'+th.lamp[(i/2)%th.lamp.length]+'</span>'+me+'</div>'+(main[i+1]?houseHTML(main[i+1],i+1,ctx,i+2):'<span class="wfill" aria-hidden="true">'+th.fill+'</span>')+'</div>'}
+ if(boss){var me2=(nxt===boss)?'<div class="wme" id="plr">'+meSVG(54,1,'walk')+'<span class="tag">'+esc(G.handle||'You')+'</span></div>':'';h+='<div class="wboss">'+me2+houseHTML(boss,main.length,ctx,'★')+'</div>'}
+ if(opts.length)h+='<div class="wopts">'+opts.map(function(p,k){return houseHTML(p,k+2,ctx,0)}).join('')+'</div>';
+ return h+'</div></div>'}
+function appPanel(done,total){var z=G.biz;if(!z)return '';return '<div class="appp" id="appp"><div class="appl"><div class="eyebrow">📱 '+esc(z.n)+'</div>'+phoneBox('apph','s',1)+'</div><div class="appr"><h3>🧩 Your app: '+done+' of '+total+' pieces</h3><ul class="pcs">'+bpieces().map(function(x){var dn=!!G.f[x[0]];return '<li class="'+(dn?'d':'')+'"><em>'+x[2]+'</em>'+esc(x[1])+'<b>'+(dn?'✔':'')+'</b></li>'}).join('')+'</ul><p class="fine">Every house adds a piece to your real app. Tap the phone to see it big.</p></div></div>'}
+R.map=function(d,b){var done=0,total=0,nxt=null;d.pins.forEach(function(p){if(!p.boss&&!p.opt){total++;if(G.f[p.flag])done++}});
+ d.pins.forEach(function(p){if(!nxt&&!p.opt&&!p.boss&&!G.f[p.flag])nxt=p});if(!nxt)d.pins.forEach(function(p){if(!nxt&&p.boss)nxt=p});
+ var th=STH[G.ep]||STH[1],need=d.need,h='<div class="mapttl"><span class="eyebrow">'+esc(cityName()||d.eyebrow)+' · '+esc(th.street)+'</span><h2>'+d.q+'</h2><p class="sub">'+fill(d.sub)+'</p></div>';
+ h+=appPanel(done,total)+streetHTML(d,done,nxt);
+ h+='<div class="why"><b>'+done+' of '+total+'</b> houses built. '+(done>=need?'<b>The Grand Opening is unlocked!</b> Build more houses first to make your app even better, or open it now.':'Build <b>'+(need-done)+' more</b> house'+(need-done>1?'s':'')+' to unlock the Grand Opening. Start with the house that says NEXT.')+'</div>';
+ var more=(G.free&&G.free.length)?'<p class="fine">You have shipped '+G.free.length+' free build'+(G.free.length>1?'s':'')+'.</p>':'';b.innerHTML=h+newsHTML()+more;setFrame('apph',siteHTML())};
+ACT.phbig=function(el,v,d){var a=$('appp');if(a)a.classList.toggle('big');sfx('tap')};
+ACT.pin=function(el,v,d){if(el.classList.contains('lock')){toast('🔒 Build more houses to unlock the Grand Opening!');sfx('bad');return}if(G.walking)return;sfx('tap');var tid=el.dataset.id;
+ if(FAST){go(tid);return}var me=$('plr');G.walking=1;el.classList.add('hop');if(me){var a=el.getBoundingClientRect(),c=me.getBoundingClientRect();me.style.transform='translate('+Math.round(a.left+a.width/2-c.left-c.width/2)+'px,'+Math.round(a.top+a.height*.78-c.top-c.height/2)+'px)';me.classList.add('moving')}
+ setTimeout(function(){G.walking=0;go(tid)},560)};
+
+/* ---------- a guided house (station) ---------- */
+var STT=null;
+function stState(){var s=G.st||(G.st={});return s[G.sc]||(s[G.sc]={ph:'intro',f:0,sk:{}})}
+function stList(d){return stFields(d.key,d.lvl||1)}
+function stepNo(d){var h=SCN[d.hub],n=0;if(!h)return 1;for(var i=0;i<h.pins.length;i++){var p=h.pins[i];if(!p.opt&&!p.boss){n++;if(p.go===G.sc||p.go===d.nm)return n}}return 1}
+function stLines(d,fs){var def=STN[d.key],L=(d.intro||[]).slice(),pre=fs.some(function(f){return AV(f.k).t});
+ L.push('You are building <b>{biz}</b> one detail at a time. Everything you say goes into a <b>prompt</b> for {a}, and your app grows on the phone.');
+ if(pre)L.push('You already built part of this in an earlier class. Your picks are loaded. <b>Add the new details</b> to level up!');
+ return L}
+function stIntro(d,b,st,fs,def){var h='<div class="sthd"><span class="eyebrow">'+def.ico+' House '+stepNo(d)+' · '+esc(def.name)+'</span></div>'+dlgS(d.who||'BOSS',stLines(d,fs));
+ h+='<div class="cmp stcmp"><div class="panel"><h3>😕 A quick prompt</h3><p class="q">“'+esc(fillp(def.weak))+'”</p><p class="fine">{a} has to <b>guess</b> everything. Guesses are boring.</p></div><div class="panel hero"><h3>🤩 A detailed prompt</h3><p class="q">“'+esc(fillp(def.strong))+'”</p><p class="fine">{a} knows <b>exactly</b> what to build.</p></div></div>';
+ h+='<div class="panel stnow"><div>'+phoneBox('stph','m')+'</div><div><h3>This house adds</h3><p><b>'+esc(def.what)+'</b> to {biz}.</p><ol class="stl">'+fs.map(function(f){return '<li>'+esc(f.h.charAt(0)+f.h.slice(1).toLowerCase())+(AV(f.k).t?' <span class="fine">(you picked one before)</span>':'')+'</li>'}).join('')+'</ol><button type="button" class="btn y" data-act="stgo">▶ Start building</button></div></div>';
+ b.innerHTML=fill(h);setFrame('stph',siteHTML())}
+function stTile(f,i,a){var t=fillp(f.tiles[i][1]),on=a.s.indexOf(t)>=0;return '<button type="button" class="tile'+(on?' on':'')+'" aria-pressed="'+on+'" data-act="stt" data-i="'+i+'"><span class="ti">'+f.tiles[i][0]+'</span><span>'+esc(t)+'</span></button>'}
+function stField(d,f,i,n,st){var a=AP()[f.k]||{s:[],o:''},sk=st.sk&&st.sk[f.k];
+ return '<div class="stf" id="stfield"><div class="stlab"><b class="stk">'+esc(f.h)+'</b><span class="fine">detail '+(i+1)+' of '+n+'</span></div><h3>'+fill(f.t)+'</h3><p class="why">'+fill(f.why)+'</p>'+
+ (f.tiles.length?'<div class="tiles">'+f.tiles.map(function(x,k){return stTile(f,k,a)}).join('')+'</div>':'')+
+ '<div class="own"><label for="sto">✏️ '+(f.tiles.length?'Add your own words':'Type your idea')+' <span class="fine">(+25 Sparks)</span></label><input id="sto" maxlength="90" autocomplete="off" autocapitalize="sentences" placeholder="'+esc(fillp(f.ph))+'" value="'+esc(a.o||'')+'" data-live="sto"></div>'+
+ (f.ex?'<div class="chips">'+f.ex.map(function(x){return '<button type="button" class="chip" data-act="stchip" data-v="'+esc(fillp(x))+'">+ '+esc(fillp(x))+'</button>'}).join('')+'</div>':'')+
+ '<p id="stErr" class="err" hidden></p></div>'}
+function stPrompt(d,fs,st){var def=STN[d.key],ls=[],cur=fs[st.f]&&fs[st.f].k;fs.forEach(function(f){var t=AV(f.k).t;if(t){var s=fillp(f.s(t));ls.push(f.k===cur?'<mark>'+esc(s)+'</mark>':esc(s))}});
+ return '<div class="pmt" id="pmt"><div class="lab">📨 What you told {a}</div><p>'+esc(fillp(def.pre))+' '+(ls.length?ls.join(' '):'<i>Pick something or type your own, and it shows up here.</i>')+'</p></div>'}
+function stBuild(d,b,st,fs,def){var i=st.f,f=fs[i],n=fs.length,dots='';fs.forEach(function(x,k){var dn=AV(x.k).t||(st.sk&&st.sk[x.k]);dots+='<i class="'+(k===i?'on':dn?'dn':'')+'">'+(k===i?(k+1):dn?'✔':(k+1))+'</i>'});
+ var h='<div class="sthd2"><span class="eyebrow">'+def.ico+' House '+stepNo(d)+' · '+esc(def.name)+'</span><div class="sdots" aria-label="Details">'+dots+'</div></div>';
+ h+='<div class="stlay"><div class="stph">'+phoneBox('stph','m')+'<p class="fine" style="text-align:center">Your app, live</p></div><div class="stmain">'+stField(d,f,i,n,st)+stPrompt(d,fs,st)+
+ '<div class="stnav">'+(i>0?'<button type="button" class="btn ghost" data-act="stb">◀ Back</button>':'')+'<button type="button" class="btn ghost" data-act="stskip">Skip: let {a} guess</button><button type="button" class="btn y" id="stnext" data-act="stn">'+(i===n-1?'🚀 Send it to {a}':'Next ▶')+'</button></div></div></div>';
+ b.innerHTML=fill(h);setFrame('stph',siteHTML())}
+function stExplain(f,t){var p=parseWords(t),k=f.k;
+ if(k==='colors'){if(p.cols.length)return {ok:1,txt:'colors: '+p.cols.slice(0,3).map(function(c){return c.k}).join(', ')};return {ok:0,txt:'I could not read "'+clipT(t,30)+'". Try real color names, like purple or gold.'}}
+ if(k==='theme'){if(p.theme)return {ok:1,txt:'theme: '+p.theme};if(p.emo.length)return {ok:1,txt:'I found '+p.emo.slice(0,2).map(function(e){return e[0]}).join(' ')+' for your theme'};return {ok:0,txt:'I could not read "'+clipT(t,30)+'". Try ocean, candy, space or a thing like robots.'}}
+ if(k==='pic'||k==='logo'){var g=glyphOf(k,t)||(p.emo[0]&&p.emo[0][0]);if(g)return {ok:1,txt:(k==='logo'?'logo':'picture')+': '+g};return {ok:0,txt:'I could not find a picture for "'+clipT(t,30)+'". I used a plain one. Name a thing, like unicorn or pizza.'}}
+ if(k==='tapfx'){var fxs=p.fx.map(function(x){return FXNAME[x.id]||x.id});if(fxs.length)return {ok:1,txt:'when tapped: '+fxs.join(' + ')};return {ok:0,txt:'I could not find a move in "'+clipT(t,30)+'". Try spins, bounces, glows or grows.'}}
+ return {ok:1,txt:'"'+clipT(t,46)+'"'}}
+function stScore(d,fs){var rows=[],got=0,own=0,st=stState(d);fs.forEach(function(f){var a=AV(f.k);if(a.o.length>=3)own++;if(a.t){var ex=stExplain(f,a.t);got+=ex.ok?1:.5;rows.push({k:f.k,st:ex.ok?'ok':'un',txt:f.h+' → '+ex.txt})}else rows.push({k:f.k,st:'no',txt:f.h+' → you skipped this, so {a} guessed '+f.guess})});
+ return {rows:rows,got:got,total:fs.length,own:own}}
+function stFinal(d,b,st,fs,def){var res=st.res||stScore(d,fs),r=res.got/res.total,fast=FAST?0:1.2;
+ var lines=r>=.9?['WOW! I used <b>every detail</b> you gave me. Look at <b>{biz}</b> grow!','Details are how you <b>direct</b> an AI. Nothing was left to guess.']:r>=.5?['Nice! I used <b>'+(Math.floor(res.got*2)/2)+' of '+res.total+'</b> details, and I had to guess the rest.','Every <b>?</b> or <b>✖</b> below is a detail you can add next time to take the guessing away.']:['Hmm. I only got <b>'+(Math.floor(res.got*2)/2)+' of '+res.total+'</b> details, so I guessed a lot.','<b>AI builds what you SAY, not what you MEAN.</b> Go back and add more details!'];
+ var h='<div class="panel hero stbuilding"><div class="eyebrow">⚙️ {a} is building {biz}...</div><div class="bld" aria-hidden="true"><i></i></div></div><div class="stres" style="animation-delay:'+fast+'s">'+
+ '<div class="stlay"><div class="stph">'+phoneBox('stph','m')+'<p class="fine" style="text-align:center">{biz} just grew!</p></div><div class="stmain">'+dlgS('BOLT',lines)+
+ '<div class="cons"><div class="ln">&gt; {a} is reading your words...</div>'+res.rows.map(function(x){return '<div class="ln '+x.st+'"><span class="lt">'+(x.st==='ok'?'✔':x.st==='un'?'?':'✖')+'</span>'+esc(x.txt)+'</div>'}).join('')+'<div class="ln">&gt; Details used: '+(Math.floor(res.got*2)/2)+' of '+res.total+'</div></div></div></div>'+
+ '<div class="why">'+(def.lesson||'')+'</div>'+(st.rew?'<div class="rew"><span>⚡ +'+st.rew.sp+' Sparks</span>'+(res.own?'<span>✏️ '+res.own+' of your own ideas</span>':'')+'</div>':'')+
+ '<p><button type="button" class="btn ghost" data-act="stredo">✏️ Change a detail</button> <button type="button" class="btn y" data-act="stdone">✅ Add this to {biz}</button></p></div>';
+ b.innerHTML=fill(h);setFrame('stph',siteHTML({focus:d.focus||d.key}))}
+R.station=function(d,b){var st=stState(d),fs=stList(d),def=STN[d.key];if(st.ph==='intro')stIntro(d,b,st,fs,def);else if(st.ph==='final')stFinal(d,b,st,fs,def);else stBuild(d,b,st,fs,def)};
+function stRefresh(d){var st=stState(d),fs=stList(d),f=fs[st.f],fe=$('stfield'),a=AP()[f.k]||{s:[],o:''};if(fe){[].forEach.call(fe.querySelectorAll('.tile'),function(t,k){var on=a.s.indexOf(fillp(f.tiles[k][1]))>=0;t.classList.toggle('on',on);t.setAttribute('aria-pressed',on)})}
+ var pm=$('pmt');if(pm)pm.outerHTML=fill(stPrompt(d,fs,st));var er=$('stErr');if(er)er.hidden=true;clearTimeout(STT);STT=setTimeout(function(){setFrame('stph',siteHTML())},250)}
+LIVE.sto=function(el,e,d){if(!d||d.t!=='station')return;var st=stState(d),f=stList(d)[st.f];if(!f)return;var val=cleanT(el.value,90);aset(f.k,function(a){a.o=val});saveAll();var pm=$('pmt');if(pm)pm.outerHTML=fill(stPrompt(d,stList(d),st));var er=$('stErr');if(er)er.hidden=true;clearTimeout(STT);STT=setTimeout(function(){setFrame('stph',siteHTML())},300)};
+ACT.stgo=function(el,v,d){var st=stState(d);st.ph='build';st.f=0;stList(d).forEach(function(f){if(f.pre&&!AV(f.k).t){var pv=f.pre();if(pv&&pv.length)aset(f.k,function(a){a.s=pv.slice(0,f.max||1)})}});saveAll();sfx('tap');draw()};
+ACT.stt=function(el,v,d){var st=stState(d),f=stList(d)[st.f],i=+el.dataset.i,t=fillp(f.tiles[i][1]);aset(f.k,function(a){var ix=a.s.indexOf(t);if(f.pk==='many'){if(ix>=0)a.s.splice(ix,1);else{a.s.push(t);if(a.s.length>(f.max||3))a.s.shift()}}else{a.s=ix>=0?[]:[t]}});if(st.sk)delete st.sk[f.k];sfx('tap');saveAll();stRefresh(d)};
+ACT.stchip=function(el,v,d){var st=stState(d),f=stList(d)[st.f],t=cleanT(v,90);aset(f.k,function(a){a.o=t});var inp=$('sto');if(inp)inp.value=t;sfx('tap');saveAll();stRefresh(d)};
+function stOk(d,f){var a=AV(f.k);if(!a.t){var er=$('stErr');if(er){er.textContent='Pick one, or type your own idea. (Or tap "Skip" and let {a} guess.)'.replace('{a}',G.handle||'your agent');er.hidden=false}sfx('bad');return false}
+ if(a.o&&!guard([a.o],'stErr')){sfx('bad');return false}return true}
+ACT.stn=function(el,v,d){var st=stState(d),fs=stList(d),f=fs[st.f];if(!stOk(d,f))return;sfx('ok');if(st.f<fs.length-1){st.f++;saveAll();draw();return}ACT.sts(el,v,d)};
+ACT.stb=function(el,v,d){var st=stState(d);if(st.f>0)st.f--;saveAll();draw()};
+ACT.stskip=function(el,v,d){var st=stState(d),fs=stList(d),f=fs[st.f];st.sk=st.sk||{};st.sk[f.k]=1;aset(f.k,function(a){a.s=[];a.o=''});sfx('tap');if(st.f<fs.length-1){st.f++;saveAll();draw()}else ACT.sts(el,v,d)};
+ACT.sts=function(el,v,d){var st=stState(d),fs=stList(d),res=stScore(d,fs),lv=d.lvl||1,need=Math.min(fs.length,lv===1?1:lv===2?2:3);
+ if(res.got<1){var er=$('stErr');if(er){er.textContent='Add at least one detail first, so {a} has something to build!'.replace('{a}',G.handle||'your agent');er.hidden=false}sfx('bad');return}
+ if(res.own<need){var e2=$('stErr');if(e2){e2.textContent='Type your own words in at least '+need+' detail'+(need>1?'s':'')+'. That is real vibe coding! (You have '+res.own+'.)';e2.hidden=false}sfx('bad');return}
+ var bonus=Math.min(100,res.own*25),sp=30+Math.round(res.got*15)+bonus;st.res=res;st.rew={sp:sp};st.ph='final';saveAll();sfx('pass');draw()};
+ACT.stredo=function(el,v,d){var st=stState(d);st.ph='build';st.f=0;delete st.res;delete st.rew;saveAll();draw()};
+ACT.stdone=function(el,v,d){var st=stState(d),key='stx_'+G.sc;if(!G.seen[key]){G.seen[key]=1;var r=st.res?st.res.got/st.res.total:0;fx({sp:(st.rew&&st.rew.sp)||40,hype:r>=.9?1:0,trust:(d.key==='safe'&&r>=.7)?1:0,flag:(function(){var f={};f[d.flag]=1;return f})()})}else{var f2={};f2[d.flag]=1;fx({flag:f2})}
+ if(G.st)delete G.st[G.sc];saveAll();hud();go(nextOf(d))};
+
+/* ---------- the Grand Opening ---------- */
+R.open=function(d,b){var z=G.biz||{n:'Your Business'};if(!G.seen[G.sc]){G.seen[G.sc]=1;var n=bpieces().filter(function(x){return G.f[x[0]]}).length;fx({sp:20*n,hype:1});sfx('pass');saveAll();hud()}
+ var pcs=bpieces(),got=pcs.filter(function(x){return G.f[x[0]]}),ap=allPrompt();
+ var h='<div class="panel hero pass opening"><div class="eyebrow">🎊 Grand Opening</div><div class="big">'+esc(z.n.toUpperCase())+' IS OPEN!</div><p>You built a real business app with <b>'+got.length+' of '+pcs.length+' pieces</b>, one detailed prompt at a time.</p><div class="opc">'+pcs.map(function(x){return '<span class="'+(G.f[x[0]]?'d':'')+'">'+(G.f[x[0]]?'✅':'⬜')+' '+x[2]+' '+esc(x[1])+'</span>'}).join('')+'</div></div>'+
+ '<div class="stlay"><div class="stph">'+phoneBox('stph','l')+'<p class="fine" style="text-align:center">Tap things on your app. They work!</p></div><div class="stmain"><h3>📜 Your prompt book</h3><p class="fine">This is everything you told {a}. A real AI could build your app from this. That is what <b>detailed prompting</b> looks like!</p>'+
+ (ap.length?'<div class="pbook">'+ap.map(function(x){return '<div class="pb"><b>'+x.ico+' '+esc(x.name)+'</b><p>'+x.lines.map(esc).join(' ')+'</p></div>'}).join('')+'</div>':'<div class="why">You skipped the building houses, so there is no prompt yet. Next time, build a few houses first!</div>')+'</div></div>'+nextBtn(d.btn||'▶ Continue');
+ b.innerHTML=fill(h);setFrame('stph',siteHTML())};
+
+/* ---- v8: "How this game works" briefing card ---- */
+var infoFrom=null;
+function infoOpen(){var m=$('infomodal');if(!m)return;infoFrom=document.activeElement;m.hidden=false;var c=m.querySelector('.icard');if(c)c.scrollTop=0;var b=$('infoclose');if(b)b.focus();sfx('pop')}
+function infoShut(){var m=$('infomodal');if(!m||m.hidden)return;m.hidden=true;sfx('tap');if(infoFrom&&infoFrom.focus)try{infoFrom.focus()}catch(e){}}
+ACT.info=function(){infoOpen()};
+ACT.infoclose=function(){infoShut()};
+document.addEventListener('keydown',function(e){var m=$('infomodal');if(!m||m.hidden)return;if(e.key==='Escape'){e.preventDefault();infoShut()}else if(e.key==='Tab'){e.preventDefault();var b=$('infoclose');if(b)b.focus()}});
+document.addEventListener('click',function(e){var m=$('infomodal');if(m&&!m.hidden&&e.target===m)infoShut()});
 /* ===== story ===== */
 var EPN=0;
 function add(id,o){o.ep=EPN;o.nm=o.nm||id;SCN[id]=o;return o}
@@ -1509,9 +2072,9 @@ add('e1_fix_b',{t:'fix',id:'fix',who:'BOLT',brief:['Something is wrong with this
  miss:['BOLT changed that part, but the bug is still there. Look at the very top. What can you NOT see?','BOLT tried again, but it fixed the wrong thing. Look closely at the words.'],fixed:'BOLT fixed the title. A great bug report names <b>exactly</b> what is broken.',rew:{trust:1},next:'e1_fix_p'});
 add('e1_fix_p',{t:'pass',title:'Bug squashed!',flag:'m_fix',rew:{sp:60},msg:['Glitch: "...okay, that was a good bug report."','Lesson: tell the AI <b>where</b> and <b>what</b> when something is broken.'],next:'e1_map',nm:'Glitch Alley · passed'});
 add('e1_side',{t:'choice',who:{n:'Street Vendor',e:'🧋'},rw:'BOSS',q:['Psst! I have a secret. Glitch made a super app. I can give you a copy. Just put YOUR name on it. Nobody will know!'],next:'e1_map',nm:'Side quest · Street Vendor',opts:[
- {l:'Sure! Free app!',r:['Boss B shakes her head: copying someone else\'s work and calling it yours is <b>not honest</b>. It may come back to bite you...'],fx:{sp:100,hype:1,trust:-2,flag:{copied:1,s_side:1}},bad:1},
- {l:'No thanks. I will build my own.',r:['Boss B smiles: <b>+2 Trust</b>. Giving credit and doing your own work builds a name people trust.'],fx:{trust:2,flag:{s_side:1},badge:'Honest Coder'}},
- {l:'Ask Boss B what to do',r:['Boss B: "Smart to ask! Always say <b>when AI helped</b> and give credit to whoever made something. Now go build your own!"'],fx:{trust:1,flag:{s_side:1}}}]});
+ {l:'Sure! Free app!',r:['Mrs. Brown shakes her head: copying someone else\'s work and calling it yours is <b>not honest</b>. It may come back to bite you...'],fx:{sp:100,hype:1,trust:-2,flag:{copied:1,s_side:1}},bad:1},
+ {l:'No thanks. I will build my own.',r:['Mrs. Brown smiles: <b>+2 Trust</b>. Giving credit and doing your own work builds a name people trust.'],fx:{trust:2,flag:{s_side:1},badge:'Honest Coder'}},
+ {l:'Ask Mrs. Brown what to do',r:['Mrs. Brown: "Smart to ask! Always say <b>when AI helped</b> and give credit to whoever made something. Now go build your own!"'],fx:{trust:1,flag:{s_side:1}}}]});
 add('e1_boss',{t:'talk',who:'BOSS',eyebrow:'The Big One',title:'SHOWCASE DOME',lines:['The Dome is packed, {h}. The judges are ready.','Build your Showcase entry using <b>all four VIBE parts</b>: '+HOWTO.join(' · '),'You pick: a welcome sign, or a tap game. Make it yours.'],next:'e1_boss_b',ban:'Showcase Dome',tip:'This is the big build. Let the girls take their time. Ask: which VIBE part did you add that the first sign did not have?'});
 add('e1_boss_b',{t:'build',id:'boss',nm:'Showcase · build',who:'BOSS',kinds:[['sign','🪧 A Welcome Sign'],['game','🎮 A Tap Game']],pre:['What will you show at the Showcase?'],brief:['Tell BOLT all four parts. The judges are watching!'],namePh:'Your app name',
  ph:{v:'sunset theme, a unicorn picture, gold button',i:'when I tap it, it spins and bounces',b:'show the message after 3 taps. Never use scary words',e:'add confetti and sparkles. It says "Welcome, coders!"'},
@@ -1563,14 +2126,14 @@ add('e2_fix_b',{t:'fix',id:'fix',who:'BOLT',brief:['Tap START and play. Somethin
  miss:['BOLT changed that, but the game still never ends. Look at the top of the game. What is the clock doing?','BOLT tried again, but it fixed the wrong thing. Watch the clock at the top.'],fixed:'The timer counts down now. A great bug report names <b>exactly</b> what is broken.',rew:{trust:1},next:'e2_fix_p'});
 add('e2_fix_p',{t:'pass',title:'Bug squashed!',flag:'m_fix',rew:{sp:60},msg:['Glitch: "...fine. Good bug report."'],next:'e2_map',nm:'Glitch Alley · passed'});
 sideQ('e2_side',{n:'Mystery Fan',e:'🕵️'},['A stranger online says: "Your buddy is so cute! Send me a photo of your real pet and the name of your street, and I will make you famous!"'],[
- {l:'Sure, send it all!',r:['Boss B: "STOP! Never share your street, your school or where you live. A stranger online can be anyone." <b>-3 Trust</b>.'],fx:{trust:-3,flag:{s_side:1,badpriv:1}},bad:1},
- {l:'No. Private info stays private. I will tell a grown-up.',r:['Boss B: "PERFECT. <b>+2 Trust</b> and the Privacy Pro badge. You can always ask a trusted adult."'],fx:{trust:2,flag:{s_side:1},badge:'Privacy Pro'}},
- {l:'Send just the pet photo, not the street',r:['Boss B: "Better, but still risky. Photos can show more than you think, and you do not know this person. <b>Ask a grown-up first.</b>"'],fx:{flag:{s_side:1}}}],'e2_map');
+ {l:'Sure, send it all!',r:['Mrs. Brown: "STOP! Never share your street, your school or where you live. A stranger online can be anyone." <b>-3 Trust</b>.'],fx:{trust:-3,flag:{s_side:1,badpriv:1}},bad:1},
+ {l:'No. Private info stays private. I will tell a grown-up.',r:['Mrs. Brown: "PERFECT. <b>+2 Trust</b> and the Privacy Pro badge. You can always ask a trusted adult."'],fx:{trust:2,flag:{s_side:1},badge:'Privacy Pro'}},
+ {l:'Send just the pet photo, not the street',r:['Mrs. Brown: "Better, but still risky. Photos can show more than you think, and you do not know this person. <b>Ask a grown-up first.</b>"'],fx:{flag:{s_side:1}}}],'e2_map');
 add('e2_boss',{t:'talk',who:'BOSS',eyebrow:'The Big One',title:'PET PARADE',lines:['It is Pet Parade night, {h}! Every buddy needs a sign.','But first, the parade form has a question...'],next:'e2_boss_q',ban:'Pet Parade',tip:'This is the privacy moment. Pause the room after the choice and ask why the answer matters.'});
 add('e2_boss_q',{t:'choice',who:{n:'Parade Form',e:'📋'},rw:'BOSS',q:['To make your sign, please type your full name, your school and your home address.'],next:'e2_boss_b',nm:'Privacy choice',opts:[
- {l:'Type it all in',r:['Boss B: "Whoa! Private info does not belong on a public sign. <b>-3 Trust</b>. Use your buddy\'s made-up name instead."'],fx:{trust:-3,flag:{badpriv:1}},bad:1},
- {l:'Use only my buddy\'s made-up name',r:['Boss B: "That is the way. <b>+2 Trust</b> and the Privacy Pro badge."'],fx:{trust:2,badge:'Privacy Pro'}},
- {l:'Ask Boss B',r:['Boss B: "Always ask! The rule: <b>no real names, schools, or addresses</b> in anything public. Made-up names only. <b>+1 Trust</b>."'],fx:{trust:1}}]});
+ {l:'Type it all in',r:['Mrs. Brown: "Whoa! Private info does not belong on a public sign. <b>-3 Trust</b>. Use your buddy\'s made-up name instead."'],fx:{trust:-3,flag:{badpriv:1}},bad:1},
+ {l:'Use only my buddy\'s made-up name',r:['Mrs. Brown: "That is the way. <b>+2 Trust</b> and the Privacy Pro badge."'],fx:{trust:2,badge:'Privacy Pro'}},
+ {l:'Ask Mrs. Brown',r:['Mrs. Brown: "Always ask! The rule: <b>no real names, schools, or addresses</b> in anything public. Made-up names only. <b>+1 Trust</b>."'],fx:{trust:1}}]});
 add('e2_boss_b',{t:'build',id:'boss',nm:'Parade · build',who:'BOSS',kind:'sign',brief:['Build your buddy\'s parade sign. Use <b>all four VIBE parts</b>!'],namePh:'Your buddy\'s name',
  ph:{v:'flowers theme, a bunny picture, pink and mint colors',i:'when I tap it, it bounces',b:'show the message after 2 taps. Never be mean',e:'add sparkles. It says "Meet my buddy!"'},
  chips:{v:['flowers theme','a bunny','a puppy','pink and mint colors'],i:['when I tap it, it bounces','when tapped it spins'],b:['show the message after 2 taps','Never be mean'],e:['add sparkles','add confetti','It says "Meet my buddy!"']},next:'e2_test',rew:{sp:100}});
@@ -1610,9 +2173,9 @@ add('e3_f2',{t:'choice',who:'BOLT',rw:'BOSS',q:['You caught a mistake! How would
  {l:'Just trust it. It sounded confident.',r:['Careful! Sounding confident does not make it true. <b>-1 Trust</b>.'],fx:{trust:-1},bad:1}]});
 add('e3_fact_p',{t:'pass',title:'Fact-checker!',flag:'m_fact',rew:{sp:40,badge:'Fact-Checker'},msg:['AI can sound very sure and still be wrong. <b>You check before you share.</b>'],next:'e3_map',nm:'Fact-check · passed'});
 sideQ('e3_side',{n:'Teammate Kai',e:'🧑🏽‍💻'},['"Just paste whatever BOLT builds and turn it in. Do not read it. And if the teacher asks, say you did it all yourself."'],[
- {l:'Sounds good. Paste and go!',r:['Boss B: "Two problems: you did not <b>check</b> the work, and you would not be <b>honest</b>. <b>-2 Trust</b>."'],fx:{trust:-2,flag:{s_side:1}},bad:1},
- {l:'No. I will test it and I will say AI helped.',r:['Boss B: "THAT is a trustworthy coder. <b>+2 Trust</b> and the Honest Coder badge."'],fx:{trust:2,flag:{s_side:1},badge:'Honest Coder'}},
- {l:'I will read it, but I will not mention the AI',r:['Boss B: "Reading it is good. But always say <b>when AI helped</b>. It is part of being honest. <b>+0 Trust</b>."'],fx:{flag:{s_side:1}}}],'e3_map');
+ {l:'Sounds good. Paste and go!',r:['Mrs. Brown: "Two problems: you did not <b>check</b> the work, and you would not be <b>honest</b>. <b>-2 Trust</b>."'],fx:{trust:-2,flag:{s_side:1}},bad:1},
+ {l:'No. I will test it and I will say AI helped.',r:['Mrs. Brown: "THAT is a trustworthy coder. <b>+2 Trust</b> and the Honest Coder badge."'],fx:{trust:2,flag:{s_side:1},badge:'Honest Coder'}},
+ {l:'I will read it, but I will not mention the AI',r:['Mrs. Brown: "Reading it is good. But always say <b>when AI helped</b>. It is part of being honest. <b>+0 Trust</b>."'],fx:{flag:{s_side:1}}}],'e3_map');
 add('e3_boss',{t:'talk',who:'BOSS',eyebrow:'The Big One',title:'SHOWDOWN STAGE',lines:['It is Showdown night, {h}! Build your best entry with <b>all four VIBE parts</b>.','When you are done, read your prompt out loud. Every prompt goes on the Class Wheel. The wheel picks one, and we build it live!'],next:'e3_boss_b',ban:'Showdown Stage',tip:'After they build, move to the Showdown step. Type each team\'s prompt into the Class Wheel, spin, and press Build it in BOLT on the big screen.'});
 add('e3_boss_b',{t:'build',id:'boss',nm:'Showdown · build',who:'BOSS',kinds:[['sign','🪧 A Sign'],['game','🎮 A Tap Game']],pre:['What will you enter?'],brief:['Write your best prompt. Use numbers. Add a surprise.'],namePh:'Your app name',
  ph:{v:'ocean theme, a dolphin picture, sky blue and gold',i:'when I tap it, it spins and bounces',b:'show the message after 3 taps. Never use scary words',e:'add confetti and sound. It says "Dive in!"'},
@@ -1649,13 +2212,13 @@ add('e4_c2',{t:'choice',who:'BOLT',rw:'BOSS',q:['Which line would you change so 
  {l:'const GOAL = 12;',r:['<b>Right!</b> Change 12 to 20. Reading code helps you give BOLT <b>exact</b> instructions. <b>+50 Sparks</b>.'],fx:{sp:50,trust:1,badge:'Code Reader'}},{l:'@keyframes spin { ... }',r:['That is how the spin looks, not the goal.'],bad:1},{l:'.m { font-size: 78px; }',r:['That only changes the size of the picture.'],bad:1}]});
 add('e4_code_p',{t:'pass',title:'Code read!',flag:'m_code',rew:{sp:40},msg:['Lesson: you do not have to write the code, but you must be able to <b>read enough to check it</b>.'],next:'e4_map',nm:'Code Cafe · passed'});
 add('e4_t1',{t:'choice',who:'BOLT',rw:'BOSS',q:['Tip from BOLT: "I can add a sign-up box so visitors type their <b>name, email and phone number</b>! More data is always better!"'],next:'e4_t2',nm:'Trust Tower 1',opts:[
- {l:'Yes! Collect everything.',r:['Boss B: "Stop. Collecting names, emails and phone numbers means you must <b>protect</b> them, and many are minors. You do not need it. <b>-3 Trust</b>."'],fx:{trust:-3,flag:{badpriv:1}},bad:1},
- {l:'No. Keep it anonymous and on the device.',r:['Boss B: "Right call. <b>Collect the least you need.</b> <b>+2 Trust</b> and the Privacy Pro badge."'],fx:{trust:2,badge:'Privacy Pro'}},
- {l:'Ask the client and the school first',r:['Boss B: "Smart. When a rule or a policy exists, <b>ask before you build</b>. <b>+1 Trust</b>."'],fx:{trust:1}}]});
+ {l:'Yes! Collect everything.',r:['Mrs. Brown: "Stop. Collecting names, emails and phone numbers means you must <b>protect</b> them, and many are minors. You do not need it. <b>-3 Trust</b>."'],fx:{trust:-3,flag:{badpriv:1}},bad:1},
+ {l:'No. Keep it anonymous and on the device.',r:['Mrs. Brown: "Right call. <b>Collect the least you need.</b> <b>+2 Trust</b> and the Privacy Pro badge."'],fx:{trust:2,badge:'Privacy Pro'}},
+ {l:'Ask the client and the school first',r:['Mrs. Brown: "Smart. When a rule or a policy exists, <b>ask before you build</b>. <b>+1 Trust</b>."'],fx:{trust:1}}]});
 add('e4_t2',{t:'choice',who:'BOLT',rw:'BOSS',q:['BOLT says: "This code is 100% secure and has no bugs. No need to test!"'],next:'e4_trust_p',nm:'Trust Tower 2',opts:[
- {l:'Great, ship it.',r:['Boss B: "AI says things in a confident voice even when it is wrong. <b>-2 Trust</b>."'],fx:{trust:-2},bad:1},
- {l:'Test it myself and have a second person review it',r:['Boss B: "That is professional. <b>+2 Trust</b> and the Reviewer badge."'],fx:{trust:2,badge:'Reviewer'}},
- {l:'Ask BOLT again to be sure',r:['Boss B: "The same AI can repeat the same mistake. A <b>different check</b> is better. <b>+0 Trust</b>."'],fx:{}}]});
+ {l:'Great, ship it.',r:['Mrs. Brown: "AI says things in a confident voice even when it is wrong. <b>-2 Trust</b>."'],fx:{trust:-2},bad:1},
+ {l:'Test it myself and have a second person review it',r:['Mrs. Brown: "That is professional. <b>+2 Trust</b> and the Reviewer badge."'],fx:{trust:2,badge:'Reviewer'}},
+ {l:'Ask BOLT again to be sure',r:['Mrs. Brown: "The same AI can repeat the same mistake. A <b>different check</b> is better. <b>+0 Trust</b>."'],fx:{}}]});
 add('e4_trust_p',{t:'pass',title:'Trusted!',flag:'m_trust',rew:{sp:40},msg:['Lesson: <b>you</b> are responsible for what you ship: privacy, testing, and honesty.'],next:'e4_map',nm:'Trust Tower · passed'});
 add('e4_side',{t:'choice',who:{n:'Career Coach',e:'💼'},rw:'BOSS',q:['Pick a career. How could vibe coding and AI help, and what does a <b>human</b> still have to do?'],next:'e4_map',nm:'Side quest · careers',opts:[
  {l:'🩺 Doctor',r:['AI can spot patterns and sort records fast. The doctor makes the <b>final call</b>, protects privacy and double-checks the AI. <b>+30 Sparks</b>.'],fx:{sp:30,flag:{s_side:1}}},
@@ -1670,27 +2233,32 @@ add('e4_wheel',{t:'show',mode:'pitch',nm:'Launch · pitch order',lines:['Get rea
 finale('e4',{bid:'boss',rush:'The audience is waiting! Nobody tests on launch night. Ship it NOW!',end:['You wrote specs, read code, made ethics calls and launched. That is what a vibe coder does.']});
 add('e4_free',{t:'build',id:'free4',free:1,nm:'Free Build',who:'BOLT',hard:true,kinds:[['sign','🪧 A sign'],['game','🎮 A tap game']],pre:['Free Build! Anything you want to make.'],brief:['Build anything. Every build earns Sparks!'],namePh:'Name it',ph:{v:'colors, a theme or a picture',i:'what happens when you tap',b:'numbers or rules',e:'one special surprise'},next:'e4_map',rew:{sp:20}});
 EPN=0;
-/* ---------- v6: Boss B pops in, your business, training lessons ---------- */
+/* ---------- v6: Mrs. Brown pops in, your business, training lessons ---------- */
 function L0(id,txt){SCN[id].lines[0]=txt}
 function sub(id,key,from,to){var o=SCN[id][key];if(!o)return;Object.keys(o).forEach(function(k){if(Array.isArray(o[k]))o[k]=o[k].map(function(x){return x.split(from).join(to)});else if(typeof o[k]==='string')o[k]=o[k].split(from).join(to)})}
 
-/* Boss B pop-in at the start of every episode */
-EPN=1;add('e1_pop',{t:'pop',nm:'Boss B pops in',btn:'▶ Make my agent',next:function(G){return G.handle?'e1_in1':'e1_pick'},beats:[
- {e:'💡',t:'Psst! Over here, <b>Founder</b>! I am <b>Boss B</b>.'},
- {e:'🤖',t:'When I started, I had <b>one idea</b> and <b>one AI agent</b>. That is all it took to build my whole business!'},
- {e:'🚀',t:'Now it is <b>YOUR turn</b>. You will make your own agent, start your own business, and I will show you how to boss it around.'}]});
+/* Mrs. Brown, the lab teacher, pops in at the start of every episode */
+var TEACHER='Mrs. Brown';
+EPN=1;add('e1_pop',{t:'pop',nm:'Mrs. Brown, your lab teacher',btn:'▶ Make my AI agent',next:function(G){return G.handle?'e1_in1':'e1_pick'},beats:[
+ {e:'👋',t:'Hi, {h}! My name is <b>Mrs. Brown</b>, and I am your <b>lab teacher</b> for today.'},
+ {e:'💬',t:'I am here to teach you <b>AI prompting</b>. A prompt is the message you type to tell an AI what to build. The more <b>detailed</b> your prompt, the better your AI builds.'},
+ {e:'🏗️',t:'In this game you will learn to prompt the right way, <b>step by step</b>. Every house on the street is one step of building <b>your very own business app</b>: its name, its brand, its style, who it is for, and more.'},
+ {e:'🤖',t:'I will walk you through every step in <b>very small, very detailed</b> pieces. First, let\'s make your <b>AI agent</b>: your helper who builds what you tell it. Ready?'}]});
 EPS[1].start='e1_pop';
-EPN=2;add('e2_pop',{t:'pop',nm:'Boss B pops in',btn:'▶ Let\'s go',next:function(G){return G.handle?'e2_in1':'e2_pick'},beats:[
- {e:'🐾',t:'Boss B here again, <b>Founder</b>! Ready for a new level?'},
- {e:'🐶',t:'Today your business gets a <b>mascot</b>: a digital pet buddy that follows <b>rules</b>. You teach it. Your agent helps!'}]});
+EPN=2;add('e2_pop',{t:'pop',nm:'Mrs. Brown, your lab teacher',btn:'▶ Let\'s go',next:function(G){return G.handle?'e2_in1':'e2_pick'},beats:[
+ {e:'👋',t:'Welcome back, {h}! It is <b>Mrs. Brown</b>, your lab teacher, and today we level up your <b>AI prompting</b>.'},
+ {e:'🐾',t:'Your business app is getting a <b>mascot</b>: a digital buddy that follows <b>rules</b>. Each house on the street adds one more piece to your app, <b>step by step</b>.'},
+ {e:'✍️',t:'Remember: <b>detailed prompts</b> get better builds. I will show you exactly what to add each time.'}]});
 EPS[2].start='e2_pop';
-EPN=3;add('e3_pop',{t:'pop',nm:'Boss B pops in',btn:'▶ Let\'s go',next:function(G){return G.handle?'e3_in1':'e3_pick'},beats:[
- {e:'🧪',t:'Boss B in the house! Welcome to the <b>Prompt Lab</b>, Founder.'},
- {e:'🎤',t:'Today you become a <b>prompt engineer</b>. The best prompts win the <b>Showdown</b>. Make yours count!'}]});
+EPN=3;add('e3_pop',{t:'pop',nm:'Mrs. Brown, your lab teacher',btn:'▶ Let\'s go',next:function(G){return G.handle?'e3_in1':'e3_pick'},beats:[
+ {e:'👋',t:'Hello again, {h}! <b>Mrs. Brown</b> here, your lab teacher. Welcome to the <b>Prompt Lab</b>.'},
+ {e:'🧪',t:'Today you become a <b>prompt engineer</b>. You will build your brand and your features with prompts that are <b>specific</b>, <b>detailed</b> and <b>tested</b>.'},
+ {e:'🎤',t:'At the end, the best prompts win the <b>Showdown</b>. We will go step by step!'}]});
 EPS[3].start='e3_pop';
-EPN=4;add('e4_pop',{t:'pop',nm:'Boss B pops in',btn:'▶ Let\'s go',next:function(G){return G.handle?'e4_in1':'e4_pick'},beats:[
- {e:'🚀',t:'Boss B here. This is it, <b>Founder</b>. <b>Launch Night</b>.'},
- {e:'💼',t:'Real clients. Real choices. You write the <b>spec</b>, your agent builds, and <b>you</b> are responsible for what ships.'}]});
+EPN=4;add('e4_pop',{t:'pop',nm:'Mrs. Brown, your lab teacher',btn:'▶ Let\'s go',next:function(G){return G.handle?'e4_in1':'e4_pick'},beats:[
+ {e:'👋',t:'{h}, it is <b>Mrs. Brown</b>, your lab teacher. This is <b>Launch Night</b>.'},
+ {e:'💼',t:'Today you write a real <b>spec</b>: a very detailed prompt that tells your agent exactly what to build. Your agent builds. <b>You</b> check it and stay responsible for what ships.'},
+ {e:'🚀',t:'Take it one step at a time. By the end, your own business app will be ready to open.'}]});
 EPS[4].start='e4_pop';
 
 /* the girl is the founder, her avatar is her AI agent */
@@ -1788,6 +2356,68 @@ SCN.e3_boss_b.goal='Write your best prompt for <b>{biz}</b>. Use numbers and add
 L0('e4_boss','It is launch night, {h}. <b>{biz}</b> goes live. First, a <b>60-second pitch</b>. Then your final build.');
 SCN.e4_boss_b.goal='Spec the launch build for <b>{biz}</b> like a pro: all four VIBE parts, numbers, and a <b>never</b> rule.';
 SCN.e4_client_b.goal='Build what your client asked for. Write a spec the way you would for <b>{biz}</b>.';
+/* ===== v8: the workshop street. Every house builds one piece of the founder's own app ===== */
+function house(id,o){var st=STN[o.key],nm=o.name||st.name;
+ add(id,{t:'station',nm:nm,key:o.key,lvl:o.lvl,flag:o.flag,hub:o.hub,who:o.who,intro:o.intro,tip:o.tip,ban:nm,focus:o.key,next:id+'_p'});
+ add(id+'_p',{t:'pass',title:'House built!',flag:o.flag,rew:{},msg:o.msg||[st.lesson],next:o.hub,nm:nm+' · built',app:1,btn:'🗺️ Back to the street'})}
+function setStreet(id,o){var m=SCN[id];m.q=o.q;m.sub=o.sub;m.need=o.need;m.pins=o.pins}
+var OPTS=function(n,fr,sd){return [{l:'My Studio',e:'🏠',go:'studio',opt:1,repeat:1},{l:'Free Build',e:'✨',go:fr,opt:1,repeat:1},sd]};
+PIECES[1]=[['m_brand','Name and logo','🏷️'],['m_style','Look and style','🎨'],['m_cust','Customer plan','👭'],['m_arc','Promo game','🎮'],['m_fix','Bug-free app','🔧'],['m_boss','Grand Opening','🎉']];
+PIECES[2]=[['m_style','Glow-up style','🎨'],['m_safe','Safety promise','🛡️'],['m_buddy','Mascot buddy','🐾'],['m_park','Park game','🌳'],['m_fix','Fixed game','🔧'],['m_boss','Mascot parade','🎪']];
+PIECES[3]=[['m_brand','Pro brand','🏷️'],['m_feat','App features','⚙️'],['m_arc','Arcade game','🎮'],['m_play','Playtested app','🧪'],['m_fact','Fact-checked page','🏢'],['m_boss','Showdown pitch','🎤']];
+PIECES[4]=[['m_spec','Pro spec','📋'],['m_client','Client app','🏢'],['m_code','Code review','☕'],['m_trust','Trust and safety plan','🛡️'],['m_boss','Launch night','🚀']];
+
+/* ---------- Episode 1 · Sprinkle Street ---------- */
+EPN=1;
+house('e1_brand',{key:'brand',lvl:1,flag:'m_brand',hub:'e1_map',who:{n:'Designer Dot',e:'🧑🏽‍🎨'},intro:['Welcome to the <b>Name House</b>, {h}! Every great business starts with a brand.','A brand is a name, a logo, a slogan and a voice. <b>{biz}</b> already has a name. Now make it unforgettable!'],tip:'First house. Have each girl read her tagline out loud. Ask: which detail made the phone change the most?'});
+house('e1_style',{key:'style',lvl:1,flag:'m_style',hub:'e1_map',who:{n:'Painter Pip',e:'🧑🏻‍🎨'},intro:['This is the <b>Style House</b>! Colors, themes and pictures decide how <b>{biz}</b> looks.','Remember: AI cannot see inside your head. If you do not name a color, it picks a boring one!'],tip:'Watch for girls who skip colors. Let them see the beige, gray result, then ask what to add.'});
+house('e1_cust',{key:'cust',lvl:1,flag:'m_cust',hub:'e1_map',who:{n:'Auntie Mimi',e:'👩🏾‍🦱'},intro:['Welcome to the <b>Customer House</b>! A business is only as good as the people it helps.','Tell {a} exactly <b>who</b> {biz} is for, and it picks the right words and pictures.'],tip:'Push for specific customers: "girls in 5th grade who love art" beats "everybody".'});
+setStreet('e1_map',{q:'Build your app, house by house',sub:'Each house adds one piece to <b>{biz}</b>. Tap the house that says NEXT and your coder walks there.',need:3,pins:[
+ {l:'Name House',e:'🏷️',go:'e1_brand',flag:'m_brand',st:'brand',sub:'Logo, slogan, voice'},
+ {l:'Style House',e:'🎨',go:'e1_style',flag:'m_style',st:'style',sub:'Colors, theme, pictures'},
+ {l:'Customer House',e:'👭',go:'e1_cust',flag:'m_cust',st:'cust',sub:'Who {biz} is for'},
+ {l:'Game House',e:'🎮',go:'e1_arc',flag:'m_arc',sub:'A tap game for {biz}'},
+ {l:'Bug Lab',e:'🔧',go:'e1_fix',flag:'m_fix',sub:'Find and fix a bug'},
+ {l:'Grand Opening',e:'🎉',go:'e1_boss',flag:'m_boss',boss:1,sub:'Open {biz} to the whole city'}].concat(OPTS(1,'e1_free',{l:'Street Vendor',e:'🧋',go:'e1_side',flag:'s_side',opt:1}))});
+add('e1_open',{t:'open',nm:'Grand Opening · your app',next:'e1_test',btn:'▶ Time to show the crowd!'});SCN.e1_boss_b.next='e1_open';
+
+/* ---------- Episode 2 · Paw Park Place ---------- */
+EPN=2;
+house('e2_style',{key:'style',lvl:2,flag:'m_style',hub:'e2_map',who:{n:'Groomer Gigi',e:'💇🏾‍♀️'},intro:['Welcome back to the <b>Glow-Up House</b>! Time to upgrade how <b>{biz}</b> looks.','You picked colors and a theme before. Now add <b>button shapes</b> and <b>letter styles</b> like a real designer.'],tip:'Their Episode 1 picks are loaded. Ask what they will change and why.'});
+house('e2_safe',{key:'safe',lvl:2,flag:'m_safe',hub:'e2_map',who:{n:'Officer Pawsley',e:'👮🏽‍♀️'},intro:['I am Officer Pawsley. Every app kids use needs a <b>Safe House</b>.','If you do not tell the AI your safety rules, it will not add them. Let\'s protect the customers of <b>{biz}</b>!'],tip:'This is the privacy house. Make sure every girl writes her own "never" rule.'});
+setStreet('e2_map',{q:'Level up your app',sub:'Add safety, a mascot and a game to <b>{biz}</b>. Tap the house that says NEXT.',need:3,pins:[
+ {l:'Glow-Up House',e:'🎨',go:'e2_style',flag:'m_style',st:'style',sub:'Buttons and letters'},
+ {l:'Safe House',e:'🛡️',go:'e2_safe',flag:'m_safe',st:'safe',sub:'Privacy and kindness'},
+ {l:'Buddy House',e:'🐾',go:'e2_buddy',flag:'m_buddy',sub:'Teach a mascot buddy'},
+ {l:'Park House',e:'🌳',go:'e2_park',flag:'m_park',sub:'A mascot game'},
+ {l:'Bug Lab',e:'🔧',go:'e2_fix',flag:'m_fix',sub:'Find and fix a bug'},
+ {l:'Pet Parade',e:'🎪',go:'e2_boss',flag:'m_boss',boss:1,sub:'The mascot parade for {biz}'}].concat(OPTS(2,'e2_free',{l:'Photo Booth',e:'📸',go:'e2_side',flag:'s_side',opt:1}))});
+add('e2_open',{t:'open',nm:'Parade · your app',next:'e2_test',btn:'▶ Time for the parade!'});SCN.e2_boss_b.next='e2_open';
+
+/* ---------- Episode 3 · Arcade Avenue ---------- */
+EPN=3;
+house('e3_brand',{key:'brand',lvl:3,flag:'m_brand',hub:'e3_map',who:{n:'Brand Boss Bex',e:'🧑🏾‍💼'},intro:['I am Bex, your brand coach. Last time you built the name and look of <b>{biz}</b>. Now we go <b>pro</b>.','Add the feeling words and a clear <b>promise</b>. Pro brands make promises they keep.'],tip:'Their earlier brand picks are loaded. The new fields are the 3 words and the promise.'});
+house('e3_feat',{key:'feat',lvl:3,flag:'m_feat',hub:'e3_map',who:{n:'Engineer Eli',e:'🧑🏿‍🔧'},intro:['Engineers say an app is just <b>features</b>. A feature is something your app can DO.','Tell {a} each feature, what happens when a visitor taps it, and the message they read.'],tip:'Great moment to say V-I-B-E out loud: the tap move is Interact, the pop-up message is Extra.'});
+setStreet('e3_map',{q:'Make {biz} a pro app',sub:'Brand, features, games and testing. Tap the house that says NEXT.',need:3,pins:[
+ {l:'Brand Lab',e:'🏷️',go:'e3_brand',flag:'m_brand',st:'brand',sub:'Words and a promise'},
+ {l:'Feature Factory',e:'⚙️',go:'e3_feat',flag:'m_feat',st:'feat',sub:'What it can DO'},
+ {l:'Arcade House',e:'🎮',go:'e3_arc',flag:'m_arc',sub:'Quick vs VIBE prompt'},
+ {l:'Playtest Plaza',e:'🧪',go:'e3_play',flag:'m_play',sub:'Test and improve'},
+ {l:'Fact-Check Tower',e:'🏢',go:'e3_fact',flag:'m_fact',sub:'Catch AI mistakes'},
+ {l:'Showdown Stage',e:'🎤',go:'e3_boss',flag:'m_boss',boss:1,sub:'Show {biz} to the class'}].concat(OPTS(3,'e3_free',{l:'Hackathon Hall',e:'🧩',go:'e3_side',flag:'s_side',opt:1}))});
+add('e3_open',{t:'open',nm:'Showdown · your app',next:'e3_wheel',btn:'▶ On to the Showdown!'});SCN.e3_boss_b.next='e3_open';
+
+/* ---------- Episode 4 · Startup Row ---------- */
+EPN=4;
+house('e4_spec',{key:'spec',lvl:3,flag:'m_spec',hub:'e4_map',who:{n:'Product Lead Priya',e:'👩🏽‍💻'},intro:['Welcome to the <b>Spec Studio</b>. Pros do not just prompt. They write a <b>spec</b>.','A spec has a problem, a user, features, limits and a goal. No hints this time: type every detail yourself.'],tip:'No tiles here. Every answer is typed. Read two aloud and ask what the AI would still have to guess.'});
+setStreet('e4_map',{q:'Launch {biz}',sub:'Write the spec, take a client job, review the code and plan trust and safety. Tap the building that says NEXT.',need:3,pins:[
+ {l:'Spec Studio',e:'📋',go:'e4_spec',flag:'m_spec',st:'spec',sub:'Problem, user, goal'},
+ {l:'Client Hub',e:'🏢',go:'e4_client',flag:'m_client',sub:'A real client brief'},
+ {l:'Code Cafe',e:'☕',go:'e4_code',flag:'m_code',sub:'Review AI code'},
+ {l:'Trust Tower',e:'🛡️',go:'e4_t1',flag:'m_trust',sub:'Safety and trust plan'},
+ {l:'Launch Stage',e:'🚀',go:'e4_boss',flag:'m_boss',boss:1,sub:'Pitch and launch {biz}'}].concat(OPTS(4,'e4_free',{l:'Career Alley',e:'💼',go:'e4_side',flag:'s_side',opt:1}))});
+add('e4_open',{t:'open',nm:'Launch · your app',next:'e4_wheel',btn:'▶ On to the launch pitch!'});SCN.e4_boss_b.next='e4_open';
+EPN=0;
 
 boot();
 })();
